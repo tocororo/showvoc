@@ -6,7 +6,8 @@ import { SearchComponent } from './search/search.component';
 import { MappingsComponent } from './mappings/mappings.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: "/home", pathMatch: 'full' },
+  { path: "home", component: HomeComponent },
   { path: 'datasets', component: DatasetsComponent },
   { path: 'search', component: SearchComponent },
   { path: 'mappings', component: MappingsComponent },

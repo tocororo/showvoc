@@ -4,15 +4,17 @@ html {
 }
 
 body {
-    margin-bottom: 100px; /* In order to avoid footer over */
+    margin-bottom: 60px;
 }
 
 .footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 100px;
+    height: 60px;
 }
+
+/* Bootstrap extension */
 
 .modal-xxl .modal-lg {
     width: 90% !important;
@@ -25,3 +27,12 @@ body {
     line-height  : .5;
     border-radius : .2rem;
 }
+
+
+
+
+/* Bootstrap override */
+
+/* .container {
+    max-width: 1200px;
+} */

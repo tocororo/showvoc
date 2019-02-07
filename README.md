@@ -27,7 +27,7 @@ The directory `/dist` is the distribution that contains the static assets of the
 This distribution can be deployed on any http server. Alternatively, the war file can be deployed on any application server.
 
 
-##	BUILDING WITH NG-CLI
+##	BUILDING WITH NPM
 
 ### Prerequisites
 
@@ -43,10 +43,10 @@ npm install  # or just: npm i
 
 ### Building
 
-After having installed the dependencies, run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+After having installed the dependencies, run `npm run buildprod` in order to generate a production build the project. The build artifacts will be stored in the `dist/` directory.
 
 
 ### Different Deployments
 
-In order to run the PMKI portal in development mode, it is possible also to run `ng serve`.
+In order to run the PMKI portal in development mode, it is possible also to run `npm run start`.
 This command will serve the portal on a development server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.

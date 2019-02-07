@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">PMKI</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="navbarCollapsed = !navbarCollapsed">
+    <a class="navbar-brand text-info" [routerLink]="['/home']" style="font-weight: bold">PMKI</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation" (click)="navbarCollapsed = !navbarCollapsed">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -16,17 +16,31 @@
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/mappings']" routerLinkActive="active">Mappings</a>
             </li>
-                
+
+            <!-- <li class="nav-item dropdown" ngbDropdown>
+                <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" ngbDropdownToggle>
+                    Dropdown link
+                </a>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <a class="dropdown-item">Action</a>
+                    <a class="dropdown-item">Another action</a>
+                    <a class="dropdown-item">Something else here</a>
+                </div>
+            </li> -->
+
         </ul>
 
         <ul class="navbar-nav">
-            <button class="btn btn-outline-success">Login</button>
+            <button class="btn btn-outline-info">Login</button>
         </ul>
     </div>
-
 </nav>
 
-<div class="container-fluid">
-    <router-outlet></router-outlet>
-</div>
-<footer class="footer bg-success pt-4 mt-5"></footer>
+<router-outlet></router-outlet>
+
+<footer class="footer bg-info">
+    <!-- <div class="container-fluid text-dark" style="font-weight: bold;">
+        <span>v. {{appVersion}}</span>
+        <span class="pull-right">© <a href="http://art.uniroma2.it/" class="text-dark" target="_blank">ART Group</a>, 2016</span>
+    </div> -->
+</footer>
