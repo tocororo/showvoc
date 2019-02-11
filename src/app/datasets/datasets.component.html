@@ -1,4 +1,4 @@
-<div class="container my-1">
+<div class="container my-3">
 	<h1>Browse PMKI datasets</h1>
 
 	<div class="row">
@@ -8,15 +8,21 @@
 					Dataset type
 				</div>
 				<div class="card-body">
+					<!-- <div *ngFor="let dt of datasetTypeFacets" class="form-check">
+						<label class="form-check-label">
+							<input class="form-check-input" type="checkbox" [(ngModel)]="dt.checked" (ngModelChange)="onFacetChange()">
+							{{dt.type}}
+						</label>
+					</div> -->
 					<div class="form-check">
 						<label class="form-check-label">
-							<input class="form-check-input" type="checkbox">
+							<input class="form-check-input" type="checkbox" [(ngModel)]="kosCheck" (ngModelChange)="onFacetChange()">
 							KOS
 						</label>
 					</div>
 					<div class="form-check">
 						<label class="form-check-label">
-							<input class="form-check-input" type="checkbox">
+							<input class="form-check-input" type="checkbox" [(ngModel)]="lexiconsCheck" (ngModelChange)="onFacetChange()">
 							Lexicons
 						</label>
 					</div>
@@ -41,9 +47,9 @@
 			<div class="row">
 				<div class="col">
 					<div class="input-group">
-						<input type="text" class="form-control" [(ngModel)]="searchString" (keydown.enter)="searchKeyHandler($event)" placeholder="Search">
+						<input type="text" class="form-control" [(ngModel)]="searchString" (keydown.enter)="searchDataset()" placeholder="Search">
 						<div class="input-group-append">
-							<button class="btn btn-outline-info" (click)="searchDataset()" [disabled]="!searchString">
+							<button class="btn btn-info" (click)="searchDataset()">
 								<i class="fa fa-search"></i>
 							</button>
 						</div>
@@ -53,14 +59,22 @@
 
 			<div class="row my-2">
 				<div class="col">
-					<div *ngIf="searching" class="spinner-border text-info" role="status"></div>
-					<div *ngFor="let dataset of datasets" class="card mb-1">
-						<div class="card-body">
-							<h5 class="card-title">{{dataset.title}}</h5>
-							<h6 class="card-subtitle mb-2 text-muted">
-								<a [href]="dataset.url" target="_blank">{{dataset.url}}</a>
-							</h6>
-							<p class="card-text">{{dataset.description}}</p>
+					<!-- Spinner during search -->
+					<div *ngIf="searching" class="spinner-border text-info"></div>
+					<!-- When datasets is empty and search is finished -->
+					<h3 *ngIf="!searching && datasets.length == 0">No dataset found for '{{searchString}}'</h3>
+					<!-- Results -->
+					<div class="scrollableContainer">
+						<div *ngFor="let dataset of datasets" class="card mb-1">
+							<div class="card-body">
+								<h5 class="card-title">
+									<a routerLink="/datasets/{{dataset.title}}">{{dataset.title}}</a>
+								</h5>
+								<h6 class="card-subtitle mb-2">
+									<a [href]="dataset.url" target="_blank" class="text-success">{{dataset.url}}</a>
+								</h6>
+								<p class="card-text text-secondary">{{dataset.description}}</p>
+							</div>
 						</div>
 					</div>
 				</div>

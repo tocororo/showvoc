@@ -1,0 +1,45 @@
+.treeNode {
+    min-height: 24px;
+    /* margin: 2px 0px; */
+    display: flex;
+    align-items: center;
+
+    /* for positioning 'absolute' children (instNum label in classTreeNode) */
+    /* position: relative; */
+}
+.treeNode .expandCollapseBtnContainer {
+    min-width: 16px;
+}
+.treeNode rdf-resource {
+    flex: 1;
+    min-height: 24px;
+    cursor: pointer;
+}
+
+.expandCollapseBtnContainer > img {
+    cursor: pointer;
+}
+
+.subTree {
+	padding-left:15px;
+}
+
+/* .listNodeItem {
+    display: flex;
+    align-items: center;
+    min-height: 24px;
+}
+
+.listNodeItem input {
+    min-width: 13px;
+}
+
+.listNodeItem rdf-resource {
+	border-radius: 2px;
+	flex: 1;
+} */
+
+.selectedResource {
+    background-color: #cde8ff !important;
+    border: 1px solid #7bc3ff !important;
+}

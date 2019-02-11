@@ -1,0 +1,15 @@
+<div class="rdfResourceIcon">
+    <ng-template [ngIf]="imgSrc">
+        <img *ngIf="!resourceWithLang; else resWithLangBlock" [src]="imgSrc">    
+        <ng-template #resWithLangBlock>
+            <div *ngIf="!langFlagAvailable" class="flagIcon" [title]="lang">
+                <img [src]="getUnknownFlagImgSrc()" [ngClass]="{disabled: !isExplicit()}">
+                <span>{{lang}}</span>
+            </div>
+            <img *ngIf="langFlagAvailable" [src]="imgSrc" [title]="lang" [ngClass]="{disabled: !isExplicit()}">
+        </ng-template>
+    </ng-template>
+</div>
+<span [title]="resource.getValue().toNT()" style="margin-right: 6px;">
+	{{getRendering()}}
+</span>

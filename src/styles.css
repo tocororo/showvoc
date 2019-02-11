@@ -14,6 +14,55 @@ body {
     height: 60px;
 }
 
+/* html, body {
+    height: 100%;
+}
+
+app-root {
+    height: 100%;
+}
+
+.pageComponent {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    overflow-y: hidden;
+}
+.pageComponent > div.container, .pageComponent > div.container-fluid {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    width: 100%;
+    height: 60px;
+}
+
+.scrollableContainer {
+    overflow: auto;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-flow: column;
+} */
+
+
+
+
+
+
+/* To apply to the arrow.png image (that points down) in order to change orientation */
+.arrow-left {
+    transform: rotate(90deg);
+}
+.arrow-up {
+    transform: rotate(180deg);
+}
+.arrow-right {
+    transform: rotate(270deg);
+}
+/* ====================== */
+
 /* Bootstrap extension */
 
 .modal-xxl .modal-lg {
@@ -29,10 +78,10 @@ body {
 }
 
 
-
-
 /* Bootstrap override */
 
-/* .container {
-    max-width: 1200px;
-} */
+.tab-content {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-top: 0;
+}

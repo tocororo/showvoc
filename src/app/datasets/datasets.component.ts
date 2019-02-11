@@ -1,44 +1,53 @@
 import { Component, OnInit } from '@angular/core';
-import { Dataset } from '../models/Datasets';
+import { Dataset, Model } from '../models/Datasets';
 
 @Component({
 	selector: 'app-datasets',
 	templateUrl: './datasets.component.html',
-	styleUrls: ['./datasets.component.css']
+	styleUrls: ['./datasets.component.css'],
 })
 export class DatasetsComponent implements OnInit {
 
+	// datasetTypeFacets: { type: string, checked: boolean }[] = [
+	// 	{ type: "KOS", checked: true },
+	// 	{ type: "Lexicon", checked: true }
+	// ];
+
 	languages: string[] = ["de", "fr", "en", "es", "it"];
+	kosCheck: boolean = true;
+	lexiconsCheck: boolean = true;
 
-	datasets: Dataset[];
-
-	private mockDatasets: Dataset[] = [
+	allDatasets: Dataset[] = [
 		{
 			title: "Agrovoc",
 			url: "http://aims.fao.org/vest-registry/vocabularies/agrovoc",
-			description: "A controlled vocabulary covering all areas of interest of the Food and Agriculture Organization (FAO) of the United Nations."
+			description: "A controlled vocabulary covering all areas of interest of the Food and Agriculture Organization (FAO) of the United Nations.",
+			model: Model.SKOS,
+			lexicalizationModel: "SKOS-XL"
 		},
 		{
 			title: "Eurovoc",
 			url: "http://publications.europa.eu/resource/dataset/eurovoc",
-			description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+			description: "EuroVoc is a multilingual, multidisciplinary thesaurus covering the activities of the EU, the European Parliament in particular. It contains terms in 23 EU languages (Bulgarian, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, French, German, Greek, Hungarian, Italian, Latvian, Lithuanian, Maltese, Polish, Portuguese, Romanian, Slovak, Slovenian, Spanish and Swedish), plus in three languages of countries which are candidates for EU accession: македонски (mk), shqip (sq) and cрпски (sr).",
+			model: Model.SKOS,
+			lexicalizationModel: "SKOS-XL"
 		},
 		{
 			title: "Teseo",
 			url: "https://www.senato.it/3235?testo_generico=745",
-			description: "TESEO (TEsauro SEnato per l'Organizzazione dei documenti parlamentari) è un sistema di classificazione usato nelle più importanti banche dati del Senato, della Camera e di alcune Regioni."
+			description: "TESEO (TEsauro SEnato per l'Organizzazione dei documenti parlamentari) è un sistema di classificazione usato nelle più importanti banche dati del Senato, della Camera e di alcune Regioni.",
+			model: Model.SKOS,
+			lexicalizationModel: "SKOS-XL"
 		},
 		{
-			title: "dcterms",
-			url: "http://purl.org/dc/terms/",
-			description: "an up-to-date specification of all metadata terms maintained by the Dublin Core Metadata Initiative, including properties, vocabulary encoding schemes, syntax encoding schemes, and classes."
+			title: "WordNet",
+			url: "https://wordnet.princeton.edu/",
+			description: "WordNet® is a large lexical database of English. Nouns, verbs, adjectives and adverbs are grouped into sets of cognitive synonyms (synsets), each expressing a distinct concept. Synsets are interlinked by means of conceptual-semantic and lexical relations.",
+			model: Model.OntoLex,
+			lexicalizationModel: "OntoLex"
 		},
-		{
-			title: "foaf",
-			url: "http://xmlns.com/foaf/0.1/",
-			description: "FOAF is a project devoted to linking people and information using the Web. Regardless of whether information is in people's heads, in physical or digital documents, or in the form of factual data, it can be linked."
-		},
-	]
+	];
+	datasets: Dataset[] = this.allDatasets;
 
 	searchString: string;
 	searching: boolean = false;
@@ -48,21 +57,57 @@ export class DatasetsComponent implements OnInit {
 	ngOnInit() {
 	}
 
-	searchKeyHandler(event: KeyboardEvent) {
-		if (this.searchString != null && this.searchString.trim() != "") {
-			this.searchDataset();
-		}
-	}
-
 	searchDataset() {
 		this.searching = true;
-		this.datasets = null;
+		this.datasets = [];
 		setTimeout(() => {
-			this.datasets = this.mockDatasets;
+			this.allDatasets.forEach(d => {
+				if (
+					this.datasetMatchesFacets(d) && 
+					(this.searchString == null || this.searchString.trim() == "" || 
+					d.title.toUpperCase().includes(this.searchString.toUpperCase()) || d.description.toUpperCase().includes(this.searchString.toUpperCase()))
+				) {
+					this.datasets.push(d);
+				}
+			});
+
 			this.searching = false;
 		}, 500);
 	}
 
+	/**
+	 * Returns true if the dataset matches the facets
+	 */
+	private datasetMatchesFacets(dataset: Dataset): boolean {
+		if (this.lexiconsCheck && dataset.model == Model.OntoLex) {
+			return true;
+		}
+		if (this.kosCheck && dataset.model == Model.SKOS) {
+			return true;
+		}
+		return false;
+	}
+
+	onFacetChange() {
+		this.searchDataset();
+		// this.searching = true;
+		// this.datasets = [];
+		// setTimeout(() => {
+		// 	if (this.searchString == null || this.searchString.trim() == "") {
+		// 		this.datasets = this.allDatasets;
+		// 	} else {
+		// 		this.allDatasets.forEach(d => {
+		// 			if (d.title.includes(this.searchString) || d.description.includes(this.searchString)) {
+		// 				this.datasets.push(d);
+		// 			}
+		// 		});
+		// 	}
+		// 	this.searching = false;
+		// }, 500);
+	}
+
 }
+
+
 
 

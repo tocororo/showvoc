@@ -1,0 +1,45 @@
+<div class="container my-3">
+
+    <h1>{{datasetId}}</h1>
+
+    <ngb-tabset [destroyOnHide]="false">
+        <ngb-tab title="Concept">
+            <ng-template ngbTabContent>
+                <concept-tree></concept-tree>
+            </ng-template>
+        </ngb-tab>
+        
+        <ngb-tab title="Collection">
+            <ng-template ngbTabContent>
+                <collection-tree></collection-tree>
+            </ng-template>
+        </ngb-tab>
+
+        <ngb-tab title="Scheme">
+            <ng-template ngbTabContent>
+                <scheme-list></scheme-list>
+            </ng-template>
+        </ngb-tab>
+
+        <ngb-tab title="Property">
+            <ng-template ngbTabContent>
+                <property-tree></property-tree>
+            </ng-template>
+        </ngb-tab>
+
+        <ngb-tab title="Lexicon">
+            <ng-template ngbTabContent>
+                <lexicon-list></lexicon-list>
+            </ng-template>
+        </ngb-tab>
+
+        <ngb-tab title="LexEntry">
+            <ng-template ngbTabContent>
+                <lexical-entry-list></lexical-entry-list>
+            </ng-template>
+        </ngb-tab>
+
+
+    </ngb-tabset>
+
+</div>

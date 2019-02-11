@@ -1,3 +1,4 @@
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -8,6 +9,7 @@ import { CustomReuseStrategy } from './CustomReuseStrategy';
 import { DatasetsModule } from './datasets/datasets.module';
 import { HomeComponent } from './home/home.component';
 import { MappingsModule } from './mappings/mappings.module';
+import { NotFoundComponent } from './not-found.component';
 import { SearchModule } from './search/search.module';
 
 
@@ -15,18 +17,23 @@ import { SearchModule } from './search/search.module';
 	declarations: [
 		AppComponent,
 		HomeComponent,
+		NotFoundComponent
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
+		NgbModule,
 
 		DatasetsModule,
 		SearchModule,
 		MappingsModule,
-		NgbModule
 	],
 	providers: [
-		{ provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
+		{ provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
+		/** Uses the HashLocationStrategy instead of the default "HTML 5 pushState" PathLocationStrategy.
+		 * This solves the 404 error problem when reloading a page in a production server
+		 */
+		{ provide: LocationStrategy, useClass: HashLocationStrategy }
 	],
 	bootstrap: [AppComponent]
 })

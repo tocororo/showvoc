@@ -1,4 +1,4 @@
-<div class="container my-1">
+<div class="container my-3">
 
 	<h1>Search</h1>
 
@@ -7,7 +7,7 @@
 			<div class="input-group">
 				<input type="text" class="form-control" [(ngModel)]="searchString" (keydown.enter)="searchKeyHandler($event)" placeholder="Search">
 				<div class="input-group-append">
-					<button class="btn btn-outline-info" (click)="searchDataset()" [disabled]="!searchString">
+					<button class="btn btn-info" (click)="search()" [disabled]="!searchString">
 						<i class="fa fa-search"></i>
 					</button>
 				</div>
@@ -17,7 +17,7 @@
 
 	<div class="row my-2">
 		<div class="col">
-			<div *ngIf="searching" class="spinner-border text-info" role="status"></div>
+			<div *ngIf="searching" class="spinner-border text-info"></div>
 			<div *ngFor="let result of searchResults" class="card mb-1">
 				<div class="card-body">
 					<h5 class="card-title">{{result}}</h5>

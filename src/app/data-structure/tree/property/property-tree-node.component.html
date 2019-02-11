@@ -1,0 +1,16 @@
+<div class="treeNode">
+    <div class="expandCollapseBtnContainer">
+        <ng-template [ngIf]="showExpandCollapse()">
+            <img *ngIf="!open" src="./assets/images/icons/arrow.png" class="arrow-right" (click)="expandNode()">
+            <img *ngIf="open" src="./assets/images/icons/arrow.png" (click)="collapseNode()">
+        </ng-template>
+    </div>
+    <rdf-resource [resource]="node" [rendering]="rendering" (click)="selectNode()"
+        [ngClass]="{selectedResource : node.getAttribute('selected')}"></rdf-resource>
+</div>
+
+<div class="subTree" *ngIf="node.getAttribute('more') == 1">
+    <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
+    <property-tree-node *ngFor="let n of children" [node]="n" [rendering]="rendering" (nodeSelected)="onNodeSelected($event)">
+    </property-tree-node>
+</div>

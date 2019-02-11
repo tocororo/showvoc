@@ -1,0 +1,3 @@
+<div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
+<property-tree-node *ngFor="let n of nodes" [node]="n" [rendering]="rendering" (nodeSelected)="onNodeSelected($event)">
+</property-tree-node> 
