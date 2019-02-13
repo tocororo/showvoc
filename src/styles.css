@@ -14,11 +14,12 @@ body {
     height: 60px;
 }
 
+/*
 html, body {
     height: 100%;
 }
 
-/* app-root {
+ app-root {
     height: 100%;
 }
 
