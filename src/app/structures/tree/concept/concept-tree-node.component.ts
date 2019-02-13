@@ -4,11 +4,11 @@ import { AbstractTreeNode } from '../abstract-tree-node';
 import { TreeServices } from '../tree-services';
 
 @Component({
-	selector: 'collection-tree-node',
-	templateUrl: './collection-tree-node.component.html',
-	styleUrls: ['../../data-structure.css']
+	selector: 'concept-tree-node',
+	templateUrl: './concept-tree-node.component.html',
+	styleUrls: ['../../structures.css']
 })
-export class CollectionTreeNodeComponent extends AbstractTreeNode {
+export class ConceptTreeNodeComponent extends AbstractTreeNode {
 
 	constructor() {
 		super()
@@ -18,7 +18,7 @@ export class CollectionTreeNodeComponent extends AbstractTreeNode {
      * Implementation of the expansion. It calls the  service for getting the child of a node in the given tree
      */
     expandNodeImpl() {
-        let expangNode = TreeServices.getExpandNodeImpl(this.node, RDFResourceRolesEnum.skosCollection);
+        let expangNode = TreeServices.getExpandNodeImpl(this.node, RDFResourceRolesEnum.concept);
         return expangNode(this.node);
     };
 

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
+import { RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { AbstractTree } from '../abstract-tree';
 import { TreeServices } from '../tree-services';
-import { RDFResourceRolesEnum } from 'src/app/models/Resources';
 
 @Component({
-	selector: 'concept-tree',
-	templateUrl: './concept-tree.component.html',
-	styleUrls: ['../../data-structure.css'],
+	selector: 'collection-tree',
+	templateUrl: './collection-tree.component.html',
+	styleUrls: ['../../structures.css'],
 })
-export class ConceptTreeComponent extends AbstractTree {
+export class CollectionTreeComponent extends AbstractTree {
 
 	constructor() {
 		super();
@@ -16,7 +16,7 @@ export class ConceptTreeComponent extends AbstractTree {
 
     initImpl() {
         this.loading = true;
-		let getRootsImpl = TreeServices.getRootsImpl(RDFResourceRolesEnum.concept);
+		let getRootsImpl = TreeServices.getRootsImpl(RDFResourceRolesEnum.skosCollection);
 		getRootsImpl().subscribe(nodes => {
 			this.loading = false;
 			this.nodes = nodes;

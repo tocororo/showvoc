@@ -6,7 +6,7 @@ import { RDFResourceRolesEnum } from 'src/app/models/Resources';
 @Component({
 	selector: 'scheme-list',
 	templateUrl: './scheme-list.component.html',
-	styleUrls: ['../../data-structure.css']
+	styleUrls: ['../../structures.css']
 })
 export class SchemeListComponent extends AbstractList {
 

@@ -1,45 +1,18 @@
-<div class="container my-3">
+<div class="container-fluid my-3">
 
-    <h1>{{datasetId}}</h1>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body" style="padding: 0.75rem">
+                    <h3>{{dataset?.id}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <ngb-tabset [destroyOnHide]="false">
-        <ngb-tab title="Concept">
-            <ng-template ngbTabContent>
-                <concept-tree></concept-tree>
-            </ng-template>
-        </ngb-tab>
-        
-        <ngb-tab title="Collection">
-            <ng-template ngbTabContent>
-                <collection-tree></collection-tree>
-            </ng-template>
-        </ngb-tab>
-
-        <ngb-tab title="Scheme">
-            <ng-template ngbTabContent>
-                <scheme-list></scheme-list>
-            </ng-template>
-        </ngb-tab>
-
-        <ngb-tab title="Property">
-            <ng-template ngbTabContent>
-                <property-tree></property-tree>
-            </ng-template>
-        </ngb-tab>
-
-        <ngb-tab title="Lexicon">
-            <ng-template ngbTabContent>
-                <lexicon-list></lexicon-list>
-            </ng-template>
-        </ngb-tab>
-
-        <ngb-tab title="LexEntry">
-            <ng-template ngbTabContent>
-                <lexical-entry-list></lexical-entry-list>
-            </ng-template>
-        </ngb-tab>
-
-
-    </ngb-tabset>
+    <resizable-layout *ngIf="dataset" class="mt-2">
+        <structure-tabset left [dataset]="dataset" (nodeSelected)="onNodeSelected($event)"></structure-tabset>
+        <resource-view right *ngIf="resource" [resource]="resource"></resource-view>
+    </resizable-layout>
 
 </div>

@@ -14,11 +14,11 @@ body {
     height: 60px;
 }
 
-/* html, body {
+html, body {
     height: 100%;
 }
 
-app-root {
+/* app-root {
     height: 100%;
 }
 
@@ -65,10 +65,22 @@ app-root {
 
 /* Bootstrap extension */
 
-.modal-xxl .modal-lg {
-    width: 90% !important;
-    max-width: 90%;
+.modal-full.modal-dialog {
+    width: 95% !important;
+    max-width: 95%;
 }
+
+/* .text-info {
+    color: #0c5460;
+}
+
+.text-warning {
+    color: #856404;
+}
+
+.text-danger {
+    color: #721c24;
+} */
 
 .btn-group-xs > .btn, .btn-xs {
     padding  : .25rem .4rem;
@@ -84,4 +96,13 @@ app-root {
     padding: 8px;
     border: 1px solid #ddd;
     border-top: 0;
+}
+
+.nav-tabs>li>a {
+    font-size: 12px;
+    padding: 6px 8px;
+}
+
+.card-header {
+    padding: 6px 8px;
 }

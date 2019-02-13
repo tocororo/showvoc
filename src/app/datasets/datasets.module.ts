@@ -1,12 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DatasetsComponent } from './datasets.component';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DatasetViewComponent } from './dataset-view/dataset-view.component';
 import { RouterModule } from '@angular/router';
-import { DataStructureModule } from '../data-structure/data-structure.module';
+import { StructuresModule } from '../structures/structures.module';
+import { DatasetViewComponent } from './dataset-view/dataset-view.component';
+import { DatasetsComponent } from './datasets.component';
 import { WidgetModule } from '../widget/widget.module';
-import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
+import { ResourceViewModule } from '../resource-view/resource-view.module';
 
 @NgModule({
 	declarations: [DatasetsComponent, DatasetViewComponent],
@@ -14,9 +15,12 @@ import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 		CommonModule,
 		FormsModule,
 		RouterModule,
-		DataStructureModule,
-		NgbTabsetModule
-		// WidgetModule
+		WidgetModule,
+		StructuresModule,
+		ResourceViewModule
+	],
+	providers: [
+		BasicModalsServices
 	]
 })
 export class DatasetsModule { }

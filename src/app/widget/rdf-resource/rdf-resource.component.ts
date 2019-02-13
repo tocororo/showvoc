@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { AnnotatedValue, Value, ResAttribute, RDFResourceRolesEnum, Literal, Resource, ResourceUtils } from 'src/app/models/Resources';
-import { UIUtils } from 'src/app/Utils/UIUtils';
+import { UIUtils } from 'src/app/utils/UIUtils';
 
 @Component({
 	selector: 'rdf-resource',

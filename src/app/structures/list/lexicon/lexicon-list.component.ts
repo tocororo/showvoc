@@ -6,7 +6,7 @@ import { RDFResourceRolesEnum } from 'src/app/models/Resources';
 @Component({
 	selector: 'lexicon-list',
 	templateUrl: './lexicon-list.component.html',
-	styleUrls: ['../../data-structure.css']
+	styleUrls: ['../../structures.css']
 })
 export class LexiconListComponent extends AbstractList {
 

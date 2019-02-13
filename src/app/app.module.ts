@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { MappingsModule } from './mappings/mappings.module';
 import { NotFoundComponent } from './not-found.component';
 import { SearchModule } from './search/search.module';
+import { ModalsModule } from './modal-dialogs/modals.module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { SearchModule } from './search/search.module';
 		DatasetsModule,
 		SearchModule,
 		MappingsModule,
+		ModalsModule
 	],
 	providers: [
 		{ provide: RouteReuseStrategy, useClass: CustomReuseStrategy },

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AnnotatedValue, Value, ResAttribute, RDFResourceRolesEnum, IRI } from 'src/app/models/Resources';
-import { SKOS } from 'src/app/models/Vocabulary';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { Dataset, DatasetService } from 'src/app/models/Datasets';
+import { AnnotatedValue, IRI } from 'src/app/models/Resources';
+import { PMKIContext } from 'src/app/utils/PMKIContext';
 
 @Component({
 	selector: 'app-dataset-view',
@@ -10,19 +13,39 @@ import { SKOS } from 'src/app/models/Vocabulary';
 })
 export class DatasetViewComponent implements OnInit {
 
-	datasetId: string;
+	dataset: Dataset;
 
-	resource: AnnotatedValue<Value>;
+	private resource: AnnotatedValue<IRI> = null;
 
-	constructor(private route: ActivatedRoute) { }
+	constructor(private basicModals: BasicModalsServices, private route: ActivatedRoute, private router: Router) { }
 
 	ngOnInit() {
-		this.datasetId = this.route.snapshot.paramMap.get('id');
+		let datasetId = this.route.snapshot.paramMap.get('id');
 
-		let value: IRI = SKOS.concept;
-		this.resource = new AnnotatedValue(value);
-		this.resource.setAttribute(ResAttribute.ROLE, RDFResourceRolesEnum.cls);
-		this.resource.setAttribute(ResAttribute.SHOW, value.getIRI().replace(value.getNamespace(), SKOS.prefix + ":"));
+		this.dataset = PMKIContext.getDataset();
+		/**
+		 * the idea is that in production, the user could access the page of the dataset with the direct link,
+		 * so the dataset in the ctx could be null and it needs to be retrieved from the server
+		 */
+		if (this.dataset == null) {
+			//retrieve dataset description with a service invocation
+			DatasetService.getDataset(datasetId).subscribe(d => {
+				this.dataset = d;
+				if (d == null) {
+					this.basicModals.alert("Dataset not found", "The requested dateset (id: '" + datasetId + 
+						"') does not exist. You will be redirect to the home page.", ModalType.warning).then(
+						confirm => { this.router.navigate(["/"]) },
+						cancel => { this.router.navigate(["/"]) }
+					);
+					//alert?
+					// this.router.navigate(["/datasets"], { queryParams: { search: datasetId } });
+				}
+			});
+		}
 	}
 
+	onNodeSelected(node: AnnotatedValue<IRI>) {
+        this.resource = node;
+	}
+	
 }
