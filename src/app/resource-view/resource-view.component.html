@@ -1,9 +1,71 @@
 <div class="card">
     <div class="card-header">
-        <rdf-resource [resource]="resource"></rdf-resource>
+        <div class="row">
+            <div class="col">
+                <rdf-resource [resource]="resource"></rdf-resource>
+            </div>
+            <div class="col col-10">
+                <input class="form-control form-control-xs" [ngModel]="resource.getValue().stringValue()" readonly>
+            </div>
+        </div>
     </div>
     <div class="card-body">
-        {{resource | json}}
+        <table class="table table-sm">
+            <colgroup>
+                <col style="width: 1%">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th scope="row">ID</th>
+                    <td>{{resource.getValue().stringValue()}}</td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Type</th>
+                    <td>{{resource.getAttribute('role')}}</td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" rowspan="3" nowrap>Preferred label</th>
+                    <td>preferred label@en</td>
+                </tr>
+                <tr>
+                    <td>etichetta preferita@it</td>
+                </tr>
+                <tr>
+                    <td>étiquette préférée@fr</td>
+                </tr>
+
+
+                <tr>
+                    <th scope="row" rowspan="2">Note</th>
+                    <td>
+                        Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row" rowspan="4">Related</th>
+                    <td>:relatedOne</td>
+                </tr>
+                <tr>
+                    <td>:relatedTwo</td>
+                </tr>
+                <tr>
+                    <td>:relatedThree</td>
+                </tr>
+                <tr>
+                    <td>:relatedFour</td>
+                </tr>
+
+            </tbody>
+        </table>
     </div>
 </div>
-

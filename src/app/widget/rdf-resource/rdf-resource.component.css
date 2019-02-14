@@ -1,6 +1,9 @@
 :host {
     font-size: 12px;
-    box-sizing: border-box;
+    min-height: 16px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 2px;
 }
 .rdfResourceIcon {
     width: 16px;

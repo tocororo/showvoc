@@ -6,7 +6,7 @@ import { PMKIContext } from '../utils/PMKIContext';
 @Component({
 	selector: 'app-datasets',
 	templateUrl: './datasets.component.html',
-	styleUrls: ['./datasets.component.css'],
+	styleUrls: ['./datasets.component.css']
 })
 export class DatasetsComponent implements OnInit {
 

@@ -38,9 +38,24 @@
 
 <router-outlet></router-outlet>
 
-<footer class="footer bg-info">
-    <!-- <div class="container-fluid text-dark" style="font-weight: bold;">
-        <span>v. {{appVersion}}</span>
-        <span class="pull-right">© <a href="http://art.uniroma2.it/" class="text-dark" target="_blank">ART Group</a>, 2016</span>
-    </div> -->
+<footer class="footer bg-info py-1">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="btn-group btn-group-sm btn-group-info dropup" ngbDropdown placement="top-rigth">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>
+                        About PMKI
+                    </button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                        <a class="dropdown-item" href="#">PMKI website</a>
+                        <a class="dropdown-item" href="#">Contuct us</a>
+                        <a class="dropdown-item" href="#">Support</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <a class="btn btn-sm btn-info pull-right" href="http://art.uniroma2.it/" target="_blank">© ART Group</a>
+            </div>
+        </div>
+    </div>
 </footer>

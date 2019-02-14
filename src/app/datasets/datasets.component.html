@@ -64,17 +64,15 @@
 					<!-- When datasets is empty and search is finished -->
 					<h3 *ngIf="!loading && datasets.length == 0">No dataset found for '{{searchString}}'</h3>
 					<!-- Results -->
-					<div class="scrollableContainer">
-						<div *ngFor="let dataset of datasets" class="card mb-1">
-							<div class="card-body">
-								<h5 class="card-title">
-									<a [routerLink]="" (click)="goToDataset(dataset)">{{dataset.title}}</a>
-								</h5>
-								<h6 class="card-subtitle mb-2">
-									<a [href]="dataset.url" target="_blank" class="text-success">{{dataset.url}}</a>
-								</h6>
-								<p class="card-text text-secondary">{{dataset.description}}</p>
-							</div>
+					<div *ngFor="let dataset of datasets" class="card mb-1">
+						<div class="card-body">
+							<h5 class="card-title">
+								<a [routerLink]="" (click)="goToDataset(dataset)">{{dataset.title}}</a>
+							</h5>
+							<h6 class="card-subtitle mb-2">
+								<a [href]="dataset.url" target="_blank" class="text-success">{{dataset.url}}</a>
+							</h6>
+							<p class="card-text text-secondary">{{dataset.description}}</p>
 						</div>
 					</div>
 				</div>
