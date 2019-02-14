@@ -60,9 +60,8 @@ export class ResizableLayoutComponent {
         let endMousedownX = event.clientX;
         let diffX: number = this.startMousedownX - endMousedownX;
 
-        //remove the 15px padding of the col that interfere with the computation of the flex
-        let leftDivWidth: number = this.leftDiv.nativeElement.offsetWidth - 15;
-        let rightDivWidth: number = this.rightDiv.nativeElement.offsetWidth - 15;
+        let leftDivWidth: number = this.leftDiv.nativeElement.offsetWidth;
+        let rightDivWidth: number = this.rightDiv.nativeElement.offsetWidth;
 
         /**
          * Compute the leftFlex based on the following mathematical proportion:

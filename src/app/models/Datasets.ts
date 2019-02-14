@@ -21,7 +21,7 @@ export enum Model {
 
 //MOCK, to remove later
 export class DatasetService {
-    private static mockDataset: Dataset[] = [
+    static mockDataset: Dataset[] = [
         {
             id: "agrovoc",
             title: "Agrovoc",

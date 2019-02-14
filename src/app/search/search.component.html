@@ -15,13 +15,26 @@
 		</div>
 	</div>
 
+	
+
 	<div class="row my-2">
 		<div class="col">
-			<div *ngIf="searching" class="spinner-border text-info"></div>
-			<div *ngFor="let result of searchResults" class="card mb-1">
-				<div class="card-body">
-					<h5 class="card-title">{{result}}</h5>
-				</div>
+			<!-- Spinner during search -->
+			<div *ngIf="loading" class="spinner-border text-info"></div>
+			<!-- # of results when searching is finished -->
+			<p *ngIf="!loading && searchResults" class="card-text text-secondary">Found in {{searchResults.length}} datasets</p>
+
+			<div *ngFor="let result of searchResults" class="mb-4">
+				<h5 class="card-title">
+					<a [routerLink]="" (click)="goToDataset(result.dataset)">{{result.dataset.title}}</a>
+				</h5>
+				<h6 class="card-subtitle mb-2">
+					<a [href]="result.dataset.url" target="_blank" class="text-success">{{result.dataset.url}}</a>
+				</h6>
+				<p>
+					<span [title]="result.resource.getValue().toNT()" style="font-weight: bold">{{result.resource.getShow()}}</span>
+					<span *ngIf="result.resourceDescription" class="text-secondary"> - {{result.resourceDescription}}</span>
+				</p>
 			</div>
 		</div>
 	</div>

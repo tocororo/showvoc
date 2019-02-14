@@ -1,37 +1,43 @@
-<ngb-tabset [destroyOnHide]="false">
-    <ngb-tab title="Concept">
-        <ng-template ngbTabContent>
-            <concept-tree (nodeSelected)="onNodeSelected($event)"></concept-tree>
-        </ng-template>
-    </ngb-tab>
-    
-    <ngb-tab *ngIf="dataset.model == 'SKOS'" title="Collection">
-        <ng-template ngbTabContent>
-            <collection-tree (nodeSelected)="onNodeSelected($event)"></collection-tree>
-        </ng-template>
-    </ngb-tab>
+<div left class="card flex-fill">
+    <div class="card-body d-flex flex-fill p-0">
 
-    <ngb-tab *ngIf="dataset.model == 'SKOS'" title="Scheme">
-        <ng-template ngbTabContent>
-            <scheme-list (nodeSelected)="onNodeSelected($event)"></scheme-list>
-        </ng-template>
-    </ngb-tab>
+        <ngb-tabset [destroyOnHide]="false" class="flex-fill">
+            <ngb-tab title="Concept">
+                <ng-template ngbTabContent>
+                    <concept-tree (nodeSelected)="onNodeSelected($event)"></concept-tree>
+                </ng-template>
+            </ngb-tab>
 
-    <ngb-tab title="Property">
-        <ng-template ngbTabContent>
-            <property-tree (nodeSelected)="onNodeSelected($event)"></property-tree>
-        </ng-template>
-    </ngb-tab>
+            <ngb-tab *ngIf="dataset.model == 'SKOS'" title="Collection">
+                <ng-template ngbTabContent>
+                    <collection-tree (nodeSelected)="onNodeSelected($event)"></collection-tree>
+                </ng-template>
+            </ngb-tab>
 
-    <ngb-tab *ngIf="dataset.model == 'OntoLex'" title="Lexicon">
-        <ng-template ngbTabContent>
-            <lexicon-list (nodeSelected)="onNodeSelected($event)"></lexicon-list>
-        </ng-template>
-    </ngb-tab>
+            <ngb-tab *ngIf="dataset.model == 'SKOS'" title="Scheme">
+                <ng-template ngbTabContent>
+                    <scheme-list (nodeSelected)="onNodeSelected($event)"></scheme-list>
+                </ng-template>
+            </ngb-tab>
 
-    <ngb-tab *ngIf="dataset.model == 'OntoLex'" title="LexEntry">
-        <ng-template ngbTabContent>
-            <lexical-entry-list (nodeSelected)="onNodeSelected($event)"></lexical-entry-list>
-        </ng-template>
-    </ngb-tab>
-</ngb-tabset>
+            <ngb-tab title="Property">
+                <ng-template ngbTabContent>
+                    <property-tree (nodeSelected)="onNodeSelected($event)"></property-tree>
+                </ng-template>
+            </ngb-tab>
+
+            <ngb-tab *ngIf="dataset.model == 'OntoLex'" title="Lexicon">
+                <ng-template ngbTabContent>
+                    <lexicon-list (nodeSelected)="onNodeSelected($event)"></lexicon-list>
+                </ng-template>
+            </ngb-tab>
+
+            <ngb-tab *ngIf="dataset.model == 'OntoLex'" title="LexEntry">
+                <ng-template ngbTabContent>
+                    <lexical-entry-list (nodeSelected)="onNodeSelected($event)"></lexical-entry-list>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+
+    </div>
+</div>

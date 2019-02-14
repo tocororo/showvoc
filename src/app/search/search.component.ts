@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Dataset, DatasetService } from '../models/Datasets';
+import { SearchResult, SearchService } from '../models/Search';
+import { PMKIContext } from '../utils/PMKIContext';
 
 @Component({
 	selector: 'app-search',
@@ -6,13 +10,13 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-
-	constructor() { }
-
+	
 	searchString: string;
-	searching: boolean = false;
+	loading: boolean = false;
 
-	searchResults: string[];
+	searchResults: SearchResult[];
+
+	constructor(private router: Router) { }
 
 	ngOnInit() {
 	}
@@ -24,12 +28,19 @@ export class SearchComponent implements OnInit {
 	}
 
 	search() {
-		this.searching = true;
-		this.searchResults = null;
-		setTimeout(() => {
-			this.searchResults = ["uno", "due", "tre"];
-			this.searching = false;
-		}, 500);
+		this.loading = true;
+		this.searchResults = [];
+		SearchService.getSearchResults(this.searchString).subscribe(
+			results => {
+				this.searchResults = results;
+				this.loading = false;
+			}
+		)
+	}
+
+	private goToDataset(dataset: Dataset) {
+		PMKIContext.setDataset(dataset);
+		this.router.navigate(["/datasets/" + dataset.id]);
 	}
 
 }

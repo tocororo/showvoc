@@ -1,7 +1,7 @@
-<div #leftdiv [ngStyle]="{ 'flex': leftFlex }" class="col" style="padding-right: 0px;">
+<div #leftdiv [ngStyle]="{ 'flex': leftFlex }" class="d-flex">
     <ng-content select="[left]"></ng-content>
 </div>
 <div *ngIf="rightProvided()" class="resizerX" (mousedown)="onMousedown($event);"></div>
-<div #rightdiv [ngStyle]="{ 'flex': rightProvided() ? rightFlex : 0 }" class="col" style="padding-left: 0px;">
+<div #rightdiv [ngStyle]="{ 'flex': rightProvided() ? rightFlex : 0 }" class="d-flex">
     <ng-content select="[right]"></ng-content>
 </div>

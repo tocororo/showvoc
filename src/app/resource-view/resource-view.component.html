@@ -1,12 +1,8 @@
 <div class="card">
     <div class="card-header">
-        <div class="row">
-            <div class="col">
-                <rdf-resource [resource]="resource"></rdf-resource>
-            </div>
-            <div class="col col-10">
-                <input class="form-control form-control-xs" [ngModel]="resource.getValue().stringValue()" readonly>
-            </div>
+        <div class="d-flex align-items-center">
+            <rdf-resource [resource]="resource"></rdf-resource>
+            <input class="form-control form-control-sm ml-2" [ngModel]="resource.getValue().stringValue()" readonly>
         </div>
     </div>
     <div class="card-body">

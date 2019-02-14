@@ -161,10 +161,11 @@ export class Literal extends Value {
 
 export class AnnotatedValue<T extends Value> {
     private value: T;
-    private attributes: { [key: string]: any } = {};
+    private attributes: { [key: string]: any };
 
-    constructor(value: T) {
+    constructor(value: T, attributes?: { [key: string]: any }) {
         this.value = value;
+        this.attributes = attributes ? attributes : {};
     }
 
     getValue(): T {
