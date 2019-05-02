@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 import { WidgetModule } from '../widget/widget.module';
 import { LexicalEntryListComponent } from './list/lexical-entry/lexical-entry-list.component';
@@ -23,7 +24,7 @@ import { PropertyTreeComponent } from './tree/property/property-tree.component';
 		PropertyTreeComponent, PropertyTreeNodeComponent,
 	],
 	imports: [
-		CommonModule, WidgetModule, NgbTabsetModule
+		CommonModule, FormsModule, WidgetModule, NgbTabsetModule
 	],
 	exports: [
 		StructureTabsetComponent,

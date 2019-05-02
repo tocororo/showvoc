@@ -1,5 +1,7 @@
 import { EventEmitter, Input, Output, OnInit } from "@angular/core";
 import { AnnotatedValue, IRI, ResAttribute, RDFResourceRolesEnum } from '../models/Resources';
+import { Subscription } from 'rxjs';
+import { PMKIEventHandler } from '../utils/PMKIEventHandler';
 
 export abstract class AbstractStruct implements OnInit {
 
@@ -11,13 +13,17 @@ export abstract class AbstractStruct implements OnInit {
      * ATTRIBUTES
      */
 
+    eventSubscriptions: Subscription[] = [];
+
     selectedNode: AnnotatedValue<IRI>;
     loading: boolean = false;
 
     /**
      * CONSTRUCTOR
      */
-    constructor() {
+    protected eventHandler: PMKIEventHandler;
+    constructor(eventHandler: PMKIEventHandler) {
+        this.eventHandler = eventHandler;
     }
 
     /**
@@ -26,7 +32,11 @@ export abstract class AbstractStruct implements OnInit {
 
     ngOnInit() {
         this.init();
-	}
+    }
+    
+    ngOnDestroy() {
+        this.eventHandler.unsubscribeAll(this.eventSubscriptions);
+    }
 
 
     abstract init(): void;

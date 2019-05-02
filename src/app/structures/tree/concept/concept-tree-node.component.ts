@@ -1,16 +1,19 @@
-import { Component } from '@angular/core';
-import { RDFResourceRolesEnum } from 'src/app/models/Resources';
+import { Component, Input } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { IRI } from 'src/app/models/Resources';
+import { SkosServices } from 'src/app/services/skos.service';
+import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTreeNode } from '../abstract-tree-node';
-import { TreeServices } from '../tree-services';
 
 @Component({
 	selector: 'concept-tree-node',
 	templateUrl: './concept-tree-node.component.html',
-	styleUrls: ['../../structures.css']
 })
 export class ConceptTreeNodeComponent extends AbstractTreeNode {
 
-	constructor() {
+	@Input() schemes: IRI[];
+
+	constructor(private skosService: SkosServices) {
 		super()
 	}
 
@@ -18,8 +21,13 @@ export class ConceptTreeNodeComponent extends AbstractTreeNode {
      * Implementation of the expansion. It calls the  service for getting the child of a node in the given tree
      */
     expandNodeImpl() {
-        let expangNode = TreeServices.getExpandNodeImpl(this.node, RDFResourceRolesEnum.concept);
-        return expangNode(this.node);
+		return this.skosService.getNarrowerConcepts(this.node.getValue(), this.schemes).pipe(
+            map(concepts => {
+                let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
+				ResourceUtils.sortResources(concepts, orderAttribute);
+				return concepts;
+            })
+        );
     };
 
 }

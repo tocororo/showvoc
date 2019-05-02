@@ -14,6 +14,22 @@ body {
     height: 40px;
 }
 
+.vbox {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+}
+
+.hbox {
+    display: flex;
+    flex-flow: row;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+}
+
 
 /* html, body {
     height: 100%;
@@ -36,23 +52,7 @@ body {
 
 .footer {
     width: 100%;
-    height: 60px;
-}
-
-.vbox {
-    display: flex;
-    flex-flow: column;
-    flex: 1;
-    min-height: 0;
-    min-width: 0;
-}
-
-.hbox {
-    display: flex;
-    flex-flow: row;
-    flex: 1;
-    min-height: 0;
-    min-width: 0;
+    height: 40px;
 }
 
 .scrollableContainer {
@@ -64,7 +64,9 @@ body {
 } */
 
 
-
+.expandCollapseBtnContainer > img {
+    cursor: pointer;
+}
 
 /* To apply to the arrow.png image (that points down) in order to change orientation */
 .arrow-left {
@@ -76,6 +78,121 @@ body {
 .arrow-right {
     transform: rotate(270deg);
 }
+
+.structureComponent rdf-resource:hover {
+    background-color: #e5f3ff;
+}
+
+rdf-resource {
+    font-size: 12px;
+    line-height: 12px;
+    min-height: 16px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 2px;
+}
+rdf-resource > .rdfResourceIcon {
+    width: 16px;
+    height: 16px;
+}
+rdf-resource > .rdfResourceText {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 4px;
+    margin-left: 2px;
+    margin-right: 6px;
+}
+
+.proposedAddRes {
+    background-color: #dff0d8;
+    color: #3c763d;
+    border-color: #d6e9c6 !important;
+}
+.proposedRemoveRes {
+    background-color: #f2dede;
+    color: #a94442;
+    border-color: #ebccd1 !important;
+}
+.proposedAddTriple {
+    color: green;
+    font-style: italic;
+}
+.proposedRemoveTriple {
+    color: darkred;
+    text-decoration: line-through;
+}
+
+/* Ellipsis of the content of a rdf-resource in a card-header (heading of ResView) */
+.card-header rdf-resource > span {
+	max-width: 200px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.treeNode {
+    min-height: 24px;
+    margin: 2px 0px;
+    display: flex;
+    align-items: center;
+    position: relative; /* for positioning 'absolute' children (instNum label in classTreeNode) */
+}
+.treeNode .expandCollapseBtnContainer {
+    min-width: 16px;
+}
+.treeNode rdf-resource {
+    flex: 1;
+    min-height: 24px;
+    cursor: pointer;
+}
+
+.subTree {
+	padding-left:15px;
+}
+
+.listNodeItem {
+    display: flex;
+    align-items: center;
+    min-height: 24px;
+}
+
+.listNodeItem input {
+    min-width: 13px;
+}
+
+.listNodeItem rdf-resource {
+	border-radius: 2px;
+	flex: 1;
+}
+
+.selectedResource {
+    background-color: #cde8ff !important;
+    border: 1px solid #7bc3ff !important;
+}
+
+
+.listItem {
+    padding: 3px;
+    width: 100%;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+}
+.listItem:hover {
+    background-color: #e5f3ff;
+}
+.listItem.active {
+    background-color: #cde8ff;
+}
+.listItem rdf-resource {
+	border-radius: 2px;
+	flex: 1;
+}
+.listItem.disabled {
+    cursor: not-allowed;
+    color: #999;
+}
+
 /* ====================== */
 
 /* Bootstrap extension */
@@ -122,4 +239,28 @@ ul.nav-tabs {
 
 .dropdown-menu>a {
     padding: 3px 10px;
+}
+
+.modal-dialog {
+    max-width: 600px; /* Default in Bootstrap is 500px, in my opinion it's too small, I prefer 600px like in Bootstrap 3 */
+}
+/* Following modal classe overrides are in order to avoid that modals exceed window height */
+.modal-header {
+    display: block; /* override the flex */
+}
+.modal-title {
+    display: inline-block
+}
+.modal-body {
+    display: flex;
+    flex-flow: column;
+}
+.modal-footer {
+    display: block;
+    text-align: right;
+}
+.modal-content>* { /* any modal */
+    max-height: 90vh;
+    display: flex;
+    flex-flow: column;
 }

@@ -1,3 +1,4 @@
+
 /**
  * Value, Resource, IRI, BNode and Literal are for the most copied from the RDF4J API.
  * I added some methods for utility.
@@ -197,284 +198,57 @@ export class AnnotatedValue<T extends Value> {
         }
         return show;
     }
-}
-
-export class ResourceUtils {
-
-    // /**
-    //  * Sort an Array of Resource by the given attribute.
-    //  * @param list 
-    //  * @param attribute
-    //  */
-    // static sortResources(list: Value[], attribute: SortAttribute) {
-    //     //sort by show
-    //     if (attribute == SortAttribute.show) {
-    //         list.sort(
-    //             function (r1: ARTNode, r2: ARTNode) {
-    //                 return r1.getShow().toLowerCase().localeCompare(r2.getShow().toLowerCase());
-    //             }
-    //         );
-    //     }
-    //     if (attribute == SortAttribute.value) {
-    //         list.sort(
-    //             function (r1: ARTNode, r2: ARTNode) {
-    //                 return r1.getNominalValue().localeCompare(r2.getNominalValue());
-    //             }
-    //         );
-    //     }
-    // }
-
-    // /**
-    //  * Tells if a list contains a given node
-    //  */
-    // static containsNode(list: ARTNode[], node: ARTNode): boolean {
-    //     return this.indexOfNode(list, node) != -1;
-    // }
-
-    // static indexOfNode(list: ARTNode[], node: ARTNode): number {
-    //     for (var i = 0; i < list.length; i++) {
-    //         if (list[i].getNominalValue() == node.getNominalValue()) {
-    //             return i;
-    //         }
-    //     }
-    //     return -1;
-    // }
 
     /**
-     * Returns the rendering of a resource.
-     * If rendering is true, returns the show of the resource.
-     * If rendering is false, if the resource is a URI resource, reuturns its qname (if not available, the whole uri), if the
-     * resource isn't a URI resource, returns the show.
-     * @param resource 
-     * @param rendering 
+     * Returns the graph where the annotated resource is defined (collected from the nature).
      */
-    static getRendering(resource: AnnotatedValue<Value>, rendering: boolean) {
-        if (rendering) {
-            return resource.getShow();
-        } else {
-            if (resource.getValue() instanceof IRI) {
-                let qname = resource.getAttribute(ResAttribute.QNAME);
-                if (qname != undefined) {
-                    return qname;
-                } else {
-                    return (<IRI>resource.getValue()).getIRI();
-                }
-            } else {
-                return resource.getShow();
+    getResourceGraphs(): IRI[] {
+        let resGraphs: IRI[] = []
+        if (this.value instanceof Resource) {
+            let nature: ResourceNature[] = this.attributes[ResAttribute.NATURE];
+            if (nature != null) {
+                //iterate over the natures and collect the graph without duplicates
+                nature.forEach(n => {
+                    n.graphs.forEach(ng => {
+                        if (resGraphs.find(rg => rg.equals(ng)) == null) {
+                            resGraphs.push(ng);
+                        }
+                    });
+                });
             }
         }
+        return resGraphs;
     }
 
-    // /**
-    //  * 
-    //  * @param nTripleNode 
-    //  */
-    // static parseNode(nTripleNode: string): ARTNode {
-    //     let node: ARTNode;
-    //     try {
-    //         node = ResourceUtils.parseURI(nTripleNode);
-    //     } catch (err) {}
-    //     if (node == null) {
-    //         try {
-    //             node = ResourceUtils.parseLiteral(nTripleNode);
-    //         } catch (err) {}
-    //     }
-    //     if (node == null) {
-    //         try {
-    //             node = ResourceUtils.parseBNode(nTripleNode);
-    //         } catch (err) {}
-    //     }
-    //     if (node == null) {
-    //         throw new Error("Not a legal N-Triples representation: " + nTripleNode);
-    //     }
-    //     return node;
-    // }
+    getTripleGraphs(): IRI[] {
+        let tripleGraphs: IRI[] = this.attributes[ResAttribute.GRAPHS];
+        if (tripleGraphs == null) {
+            tripleGraphs = [];
+        }
+        return tripleGraphs;
+    }
 
-    // /**
-    //  * Given an NT serialization of a URI, creates and returns an ARTURIResource object.
-    //  * Code inspired by org.eclipse.rdf4j.rio.ntriples.NTripleUtils#parseURI()
-    //  * @param nTriplesURI 
-    //  */
-    // static parseURI(nTriplesURI: string): ARTURIResource {
-    //     if (nTriplesURI.startsWith("<") && nTriplesURI.endsWith(">")) {
-    //         let uri: string = nTriplesURI.substring(1, nTriplesURI.length - 1);
-    //         uri = decodeURI(uri);
-    //         return new ARTURIResource(uri);
-    //     }
-    //     else {
-    //         throw new Error("Not a legal N-Triples URI: " + nTriplesURI);
-    //     }
-    // }
-
-    // /**
-    //  * Given an NT serialization of a literal, creates and returns an ARTLiteral object.
-    //  * Code inspired by org.eclipse.rdf4j.rio.ntriples.NTripleUtils#parseLiteral()
-    //  * @param nTriplesLiteral
-    //  */
-    // static parseLiteral(nTriplesLiteral: string): ARTLiteral {
-    //     if (nTriplesLiteral.startsWith("\"")) {
-    //         // Find string separation points
-    //         let endLabelIdx: number = this.findEndOfLabel(nTriplesLiteral);
-
-    //         if (endLabelIdx != -1) {
-    //             let startLangIdx: number = nTriplesLiteral.indexOf("@", endLabelIdx);
-    //             let startDtIdx: number = nTriplesLiteral.indexOf("^^", endLabelIdx);
-
-    //             if (startLangIdx != -1 && startDtIdx != -1) {
-    //                 throw new Error("Literals can not have both a language and a datatype");
-    //             }
-
-    //             // Get label
-    //             let label: string = nTriplesLiteral.substring(1, endLabelIdx);
-    //             label = label.replace(/\\"/g, '"');
-
-    //             if (startLangIdx != -1) {
-    //                 // Get language
-    //                 let language: string = nTriplesLiteral.substring(startLangIdx + 1);
-    //                 return new ARTLiteral(label, null, language);
-    //             }
-    //             else if (startDtIdx != -1) {
-    //                 // Get datatype
-    //                 let datatype: string = nTriplesLiteral.substring(startDtIdx + 2);
-    //                 let dtURI: ARTURIResource = this.parseURI(datatype);
-    //                 return new ARTLiteral(label, dtURI.getURI());
-    //             }
-    //             else {
-    //                 return new ARTLiteral(label);
-    //             }
-    //         }
-    //     }
-    //     throw new Error("Not a legal N-Triples literal: " + nTriplesLiteral);
-    // }
-
-    // /**
-	//  * Finds the end of the label in a literal string. This method takes into account that characters can be
-	//  * escaped using backslashes.
-    //  * Code inspired by org.eclipse.rdf4j.rio.ntriples.NTripleUtils#parseLiteral()
-    //  * 
-	//  * @return The index of the double quote ending the label, or <tt>-1</tt> if it could not be found.
-	//  */
-    // private static findEndOfLabel(nTriplesLiteral: string): number {
-    //     // First character of literal is guaranteed to be a double
-    //     // quote, start search at second character.
-    //     let previousWasBackslash: boolean = false;
-    //     for (var i = 1; i < nTriplesLiteral.length; i++) {
-    //         let c: string = nTriplesLiteral.charAt(i);
-    //         if (c == '"' && !previousWasBackslash) {
-    //             return i;
-    //         }
-    //         else if (c == '\\' && !previousWasBackslash) {
-    //             previousWasBackslash = true; // start of escape
-    //         }
-    //         else if (previousWasBackslash) {
-    //             previousWasBackslash = false; // c was escaped
-    //         }
-    //     }
-    //     return -1;
-    // }
-
-    // static parseBNode(nTriplesBNode: string): ARTBNode {
-    //     if (nTriplesBNode.startsWith("_:")) {
-    //         return new ARTBNode(nTriplesBNode);
-    //     } else {
-    //         throw new Error("Not a legal N-Triples Blank Node: " + nTriplesBNode);
-    //     }
-    // }
-
-    // static isQName(nTripleQName: string, prefixMapping: PrefixMapping[]): boolean {
-    //     let colonIdx: number = nTripleQName.indexOf(":");
-    //     if (colonIdx != -1) {
-    //         if (nTripleQName.includes(" ")) { //QName cannot contains whitespace (nTripleQName could represent a manch expr)
-    //             return false;
-    //         }
-    //         let prefix: string = nTripleQName.substring(0, colonIdx);
-    //         for (var i = 0; i < prefixMapping.length; i++) {
-    //             if (prefixMapping[i].prefix == prefix) {
-    //                 return true;
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // }
-
-    // static parseQName(nTripleQName: string, prefixMapping: PrefixMapping[]): ARTURIResource {
-    //     let colonIdx: number = nTripleQName.indexOf(":");
-    //     if (colonIdx != -1) {
-    //         let prefix: string = nTripleQName.substring(0, colonIdx);
-    //         let localName: string = nTripleQName.substring(colonIdx + 1);
-    //         //resolve prefix
-    //         let namespace: string;
-    //         for (var i = 0; i < prefixMapping.length; i++) {
-    //             if (prefixMapping[i].prefix == prefix) {
-    //                 return new ARTURIResource(prefixMapping[i].namespace + localName);
-    //             }
-    //         }
-    //     } else {
-    //         throw new Error("Not a legal N-Triples QName: " + nTripleQName);
-    //     }
-    // }
-
-    // /**
-    //  * Returns the qname of a IRI if the prefix-namespace is found, null otherwise
-    //  * @param resource
-    //  * @param prefixMapping 
-    //  */
-    // static getQName(iri: string, prefixMapping: PrefixMapping[]): string {
-    //     for (var i = 0; i < prefixMapping.length; i++) {
-    //         if (iri.startsWith(prefixMapping[i].namespace)) {
-    //             return iri.replace(prefixMapping[i].namespace, prefixMapping[i].prefix + ":");
-    //         }
-    //     }
-    //     return null;
-    // }
-
-    // /**
-    //  * Returns true if the resource is in the staging (add or remove) graph, false otherwise
-    //  * @param resource 
-    //  */
-    // static isReourceInStaging(resource: ARTNode): boolean {
-    //     let graphs: ARTURIResource[] = resource.getGraphs();
-    //     for (var i = 0; i < graphs.length; i++) {
-    //         //I can't figure out why cannot use SemanticTurkey.stagingAddGraph here (error "cannot read 'cls' of undefined")
-    //         // if (graphs[i].getURI() == SemanticTurkey.stagingAddGraph || graphs[i].getURI() == SemanticTurkey.stagingRemoveGraph) {
-    //         if (graphs[i].getURI().startsWith("http://semanticturkey.uniroma2.it/ns/validation#staging-add-graph/") ||
-    //             graphs[i].getURI().startsWith("http://semanticturkey.uniroma2.it/ns/validation#staging-remove-graph/")) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
-    // /**
-    //  * Taken from it.uniroma2.art.semanticturkey.data.role.RDFResourceRoles
-    //  * @param subsumer 
-    //  * @param subsumee 
-    //  * @param undeterminedSubsumeesAll 
-    //  */
-    // static roleSubsumes(subsumer: RDFResourceRolesEnum, subsumee: RDFResourceRolesEnum, undeterminedSubsumeesAll?: boolean) {
-    //     if (subsumer == subsumee) {
-    //         return true;
-    //     }
-    //     if (subsumer == RDFResourceRolesEnum.undetermined && undeterminedSubsumeesAll) {
-    //         return true;
-    //     }
-    //     if (subsumer == RDFResourceRolesEnum.property) {
-    //         return subsumee == RDFResourceRolesEnum.objectProperty || subsumee == RDFResourceRolesEnum.datatypeProperty
-    //             || subsumee == RDFResourceRolesEnum.annotationProperty || subsumee == RDFResourceRolesEnum.ontologyProperty;
-    //     }
-    //     if (subsumer == RDFResourceRolesEnum.skosCollection && subsumee == RDFResourceRolesEnum.skosOrderedCollection) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
-    // static testIRI(iri: string) {
-    //     let iriRegexp = new RegExp("\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]");
-    //     return iriRegexp.test(iri);
-    // }
-
+    /**
+     * Adds a nature (pair role-graph) to the annotated value
+     * @param role 
+     * @param graph 
+     */
+    addNature(role: RDFResourceRolesEnum, graph: IRI) {
+        if (this.value instanceof Resource) {
+            let resNature: ResourceNature[] = this.attributes[ResAttribute.NATURE];
+            if (resNature == null) {
+                resNature = [];
+            }
+            let n = resNature.find(n => n.role == role);
+            if (n != null) {
+                n.graphs.push(graph);
+            } else {
+                resNature.push({ role: role, graphs: [graph] });
+            }
+            this.attributes[ResAttribute.NATURE] = resNature;
+        }
+    }
 }
-
 
 export class ResAttribute {
     public static SHOW = "show";
@@ -482,14 +256,28 @@ export class ResAttribute {
     public static ROLE = "role";
     public static EXPLICIT = "explicit";
     public static MORE = "more";
+    public static NUM_INST = "numInst";
+    public static HAS_CUSTOM_RANGE = "hasCustomRange";
+    public static RESOURCE_POSITION = "resourcePosition";
+    public static ACCESS_METHOD = "accessMethod";
     public static LANG = "lang";
-    public static GRAPHS = "graphs"; //used in getResourceView response
+    public static GRAPHS = "graphs"; //used for the objects in getResourceView response
+    public static MEMBERS = "members"; //used for ordered collections
+    public static INDEX = "index"; //used for members of ordered collections
+    public static IN_SCHEME = "inScheme"; //used only in Skos.getSchemesMatrixPerConcept()
     public static NATURE = "nature"; //content is a triple separated by "-": <uri of class of resource> - <graph of ???> - <deprecated true/false>
+    public static SCHEMES = "schemes"; //attribute of concepts in searchResource response
+    public static TRIPLE_SCOPE = "tripleScope"; //used in the object in getResourceView
 
+    //never in st responses, result of nature parsing
     public static DEPRECATED = "deprecated";
 
     //never in st responses, added because are useful for tree
     public static SELECTED = "selected"; //if true, render the node as selected
+    public static NEW = "new"; //if true, the resource is made visible after the treeNodeComponent is initialized
+
+    //useful in ResourceView to render potentially reified resource as not reified
+    public static NOT_REIFIED = "notReified";//
 }
 
 
@@ -525,4 +313,106 @@ export enum RDFTypesEnum {
     typedLiteral = "typedLiteral",
     undetermined = "undetermined",
     uri = "uri"
+}
+
+export class PredicateObjects {
+    private predicate: AnnotatedValue<IRI>;
+    private objects: AnnotatedValue<Value>[];
+
+    constructor(predicate: AnnotatedValue<IRI>, objects: AnnotatedValue<Value>[]) {
+        this.predicate = predicate;
+        this.objects = objects;
+    }
+
+    getPredicate(): AnnotatedValue<IRI> {
+        return this.predicate;
+    };
+
+    getObjects(): AnnotatedValue<Value>[] {
+        return this.objects;
+    };
+}
+
+
+export abstract class ResourcePosition {
+    position: ResourcePositionEnum;
+    
+    isLocal(): boolean {
+        return false;
+    }
+    isRemote(): boolean {
+        return false;
+    }
+    isUnknown(): boolean {
+        return false;
+    }
+
+    abstract serialize(): string;
+
+    static deserialize(resPositionJson: string): ResourcePosition {
+        if (resPositionJson.startsWith(ResourcePositionEnum.local)) {
+            return new LocalResourcePosition(resPositionJson.substring(resPositionJson.indexOf(":")+1));
+        } else if (resPositionJson.startsWith(ResourcePositionEnum.remote)) {
+            return new RemoteResourcePosition(resPositionJson.substring(resPositionJson.indexOf(":")+1));
+        } else { //if (resPositionJson.startsWith(ResourcePositionEnum.unknown)) {
+            return new UnknownResourcePosition();
+        }
+    }
+}
+export class LocalResourcePosition extends ResourcePosition {
+    project: string;
+    constructor(project: string) {
+        super();
+        this.position = ResourcePositionEnum.local;
+        this.project = project;
+    }
+    isLocal(): boolean {
+        return true;
+    }
+    serialize(): string {
+        return this.position + ":" + this.project;
+    }
+}
+export class RemoteResourcePosition extends ResourcePosition {
+    datasetMetadata: IRI;
+    constructor(datasetMetadata: string) {
+        super();
+        this.position = ResourcePositionEnum.remote;
+        this.datasetMetadata = new IRI(datasetMetadata);
+    }
+    isRemote(): boolean {
+        return true;
+    }
+    serialize(): string {
+        return this.position + ":" + this.datasetMetadata.getIRI();
+    }
+}
+export class UnknownResourcePosition extends ResourcePosition {
+    constructor() {
+        super();
+        this.position = ResourcePositionEnum.unknown;
+    }
+    isUnknown(): boolean {
+        return true;
+    }
+    serialize(): string {
+        return this.position + ":";
+    }
+}
+export enum ResourcePositionEnum {
+    local = "local",
+    remote = "remote",
+    unknown = "unknown"
+}
+export enum TripleScopes {
+    local = "local",
+    staged = "staged",
+    del_staged = "del_staged",
+    imported = "imported",
+    inferred = "inferred"
+}
+
+export class ResourceNature {
+    role: RDFResourceRolesEnum;
+    graphs: IRI[];
 }

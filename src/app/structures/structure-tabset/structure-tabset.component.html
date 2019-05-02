@@ -8,13 +8,13 @@
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab *ngIf="dataset.model == 'SKOS'" title="Collection">
+            <ngb-tab *ngIf="model == 'SKOS'" title="Collection">
                 <ng-template ngbTabContent>
                     <collection-tree (nodeSelected)="onNodeSelected($event)"></collection-tree>
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab *ngIf="dataset.model == 'SKOS'" title="Scheme">
+            <ngb-tab *ngIf="model == 'SKOS'" title="Scheme">
                 <ng-template ngbTabContent>
                     <scheme-list (nodeSelected)="onNodeSelected($event)"></scheme-list>
                 </ng-template>
@@ -26,13 +26,13 @@
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab *ngIf="dataset.model == 'OntoLex'" title="Lexicon">
+            <ngb-tab *ngIf="model == 'OntoLex'" title="Lexicon">
                 <ng-template ngbTabContent>
                     <lexicon-list (nodeSelected)="onNodeSelected($event)"></lexicon-list>
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab *ngIf="dataset.model == 'OntoLex'" title="LexEntry">
+            <ngb-tab *ngIf="model == 'OntoLex'" title="LexEntry">
                 <ng-template ngbTabContent>
                     <lexical-entry-list (nodeSelected)="onNodeSelected($event)"></lexical-entry-list>
                 </ng-template>

@@ -1,26 +1,30 @@
 import { Component } from '@angular/core';
-import { RDFResourceRolesEnum } from 'src/app/models/Resources';
+import { SkosServices } from 'src/app/services/skos.service';
+import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
+import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTree } from '../abstract-tree';
-import { TreeServices } from '../tree-services';
 
 @Component({
 	selector: 'collection-tree',
 	templateUrl: './collection-tree.component.html',
-	styleUrls: ['../../structures.css'],
+	host: { class: "structureComponent" }
 })
 export class CollectionTreeComponent extends AbstractTree {
 
-	constructor() {
-		super();
+	constructor(private skosService: SkosServices, eventHandler: PMKIEventHandler) {
+		super(eventHandler);
 	}
 
     initImpl() {
-        this.loading = true;
-		let getRootsImpl = TreeServices.getRootsImpl(RDFResourceRolesEnum.skosCollection);
-		getRootsImpl().subscribe(nodes => {
-			this.loading = false;
-			this.nodes = nodes;
-		});
+		this.loading = true;
+		this.skosService.getRootCollections().subscribe(
+			collections => {
+				this.loading = false;
+				let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
+				ResourceUtils.sortResources(collections, orderAttribute);
+				this.nodes = collections;
+			}
+		);
     }
 
 }

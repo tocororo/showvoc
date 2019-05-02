@@ -1,3 +1,4 @@
+import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { AnnotatedValue, IRI, ResAttribute } from '../../models/Resources';
 import { AbstractStruct } from '../abstract-structure';
 
@@ -13,8 +14,8 @@ export abstract class AbstractList extends AbstractStruct {
     /**
      * CONSTRUCTOR
      */
-    constructor() {
-        super();
+    constructor(eventHandler: PMKIEventHandler) {
+        super(eventHandler);
     }
 
     /**

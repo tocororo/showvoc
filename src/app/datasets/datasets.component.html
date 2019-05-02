@@ -8,12 +8,6 @@
 					Dataset type
 				</div>
 				<div class="card-body">
-					<!-- <div *ngFor="let dt of datasetTypeFacets" class="form-check">
-						<label class="form-check-label">
-							<input class="form-check-input" type="checkbox" [(ngModel)]="dt.checked" (ngModelChange)="onFacetChange()">
-							{{dt.type}}
-						</label>
-					</div> -->
 					<div class="form-check">
 						<label class="form-check-label">
 							<input class="form-check-input" type="checkbox" [(ngModel)]="kosCheck" (ngModelChange)="onFacetChange()">
@@ -62,17 +56,26 @@
 					<!-- Spinner during search -->
 					<div *ngIf="loading" class="spinner-border text-info"></div>
 					<!-- When datasets is empty and search is finished -->
-					<h3 *ngIf="!loading && datasets.length == 0">No dataset found for '{{searchString}}'</h3>
+					<h3 *ngIf="!loading && projects.length == 0">No dataset found for '{{lastSearch}}'</h3>
 					<!-- Results -->
-					<div *ngFor="let dataset of datasets" class="card mb-1">
+					<div *ngFor="let p of projects" class="card mb-1">
 						<div class="card-body">
 							<h5 class="card-title">
-								<a [routerLink]="" (click)="goToDataset(dataset)">{{dataset.title}}</a>
+								<p *ngIf="!p.isOpen()" class="text-muted">{{p.getName()}}</p>
+								<a *ngIf="p.isOpen()" [routerLink]="" (click)="goToProject(p)">{{p.getName()}}</a>
 							</h5>
-							<h6 class="card-subtitle mb-2">
-								<a [href]="dataset.url" target="_blank" class="text-success">{{dataset.url}}</a>
-							</h6>
-							<p class="card-text text-secondary">{{dataset.description}}</p>
+							<div class="p-1 border-left border-bottom" style="position: absolute; top: 0; right: 0; border-bottom-left-radius: 5px">
+								<span class="mr-2">
+									<span class="mr-1">Model:</span><span class="badge badge-info">{{p.getModelType(true)}}</span>
+								</span>
+								<span>
+									<span class="mr-1">Lexicalization:</span><span class="badge badge-info">{{p.getLexicalizationModelType(true)}}</span>
+								</span>
+							</div>
+							<!-- <h6 class="card-subtitle mb-2">
+								<a [href]="p.getBaseURI()" target="_blank" class="text-success">{{p.getBaseURI()}}</a>
+							</h6> -->
+							<p class="card-text text-secondary">{{p.getBaseURI()}}</p>
 						</div>
 					</div>
 				</div>

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { RDFResourceRolesEnum } from 'src/app/models/Resources';
+import { map } from 'rxjs/operators';
+import { SkosServices } from 'src/app/services/skos.service';
+import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTreeNode } from '../abstract-tree-node';
-import { TreeServices } from '../tree-services';
 
 @Component({
 	selector: 'collection-tree-node',
 	templateUrl: './collection-tree-node.component.html',
-	styleUrls: ['../../structures.css']
 })
 export class CollectionTreeNodeComponent extends AbstractTreeNode {
 
-	constructor() {
+	constructor(private skosService: SkosServices) {
 		super()
 	}
 
@@ -18,8 +18,13 @@ export class CollectionTreeNodeComponent extends AbstractTreeNode {
      * Implementation of the expansion. It calls the  service for getting the child of a node in the given tree
      */
     expandNodeImpl() {
-        let expangNode = TreeServices.getExpandNodeImpl(this.node, RDFResourceRolesEnum.skosCollection);
-        return expangNode(this.node);
+        return this.skosService.getNestedCollections(this.node.getValue()).pipe(
+            map(collections => {
+                let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
+				ResourceUtils.sortResources(collections, orderAttribute);
+				return collections;
+            })
+        );
     };
 
 }

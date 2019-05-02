@@ -3,8 +3,7 @@ import { AbstractNode } from '../abstract-node';
 
 @Component({
 	selector: 'list-node',
-	templateUrl: './list-node.component.html',
-	styleUrls: ['../structures.css']
+	templateUrl: './list-node.component.html'
 })
 export class ListNodeComponent extends AbstractNode implements OnInit {
 

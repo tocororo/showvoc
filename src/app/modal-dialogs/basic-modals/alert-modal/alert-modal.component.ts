@@ -12,14 +12,16 @@ export class AlertModalComponent implements OnInit {
 	@Input() title: string;
 	@Input() message: string;
 	@Input() type: ModalType;
+	@Input() details: string;
 
 	titleClass: string;
 	alertClass: string;
 
+	detailsCollapsed: boolean = true;
+
 	constructor(public activeModal: NgbActiveModal) { }
 
 	ngOnInit() {
-		console.log("type", this.type);
 		if (this.type == ModalType.info) {
 			this.titleClass = "text-info";
 			this.alertClass = "alert alert-info";

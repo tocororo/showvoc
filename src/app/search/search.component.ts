@@ -7,7 +7,7 @@ import { PMKIContext } from '../utils/PMKIContext';
 @Component({
 	selector: 'app-search',
 	templateUrl: './search.component.html',
-	styleUrls: ['./search.component.css']
+	host: { class: "pageComponent" }
 })
 export class SearchComponent implements OnInit {
 	

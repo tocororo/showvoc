@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Dataset, Model, DatasetService } from '../models/Datasets';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Project } from '../models/Project';
+import { OntoLex, SKOS } from '../models/Vocabulary';
+import { ProjectsServices } from '../services/projects.service';
 import { PMKIContext } from '../utils/PMKIContext';
 
 @Component({
 	selector: 'app-datasets',
 	templateUrl: './datasets.component.html',
-	styleUrls: ['./datasets.component.css']
+	host: { class: "pageComponent" }
 })
 export class DatasetsComponent implements OnInit {
 
@@ -14,42 +16,54 @@ export class DatasetsComponent implements OnInit {
 	kosCheck: boolean = true;
 	lexiconsCheck: boolean = true;
 
-	allDatasets: Dataset[] = [];
-	datasets: Dataset[] = [];
+	projects: Project[] = [];
 
 	searchString: string;
+	lastSearch: string;
 	loading: boolean = false;
 
-	constructor(private route: ActivatedRoute, private router: Router) { }
+	constructor(private route: ActivatedRoute, private router: Router, private projectService: ProjectsServices) { }
 
 	ngOnInit() {
 		this.route.queryParams.subscribe(params => {
 			let search = params['search'];
 			this.searchString = search;
-
 			this.searchDataset();
 		});
 	}
 
 	searchDataset() {
-		let modelFacets: Model[] = [];
-		if (this.kosCheck) modelFacets.push(Model.SKOS);
-		if (this.lexiconsCheck) modelFacets.push(Model.OntoLex);
+		this.lastSearch = this.searchString;
+
+		let modelFacets: string[] = [];
+		if (this.kosCheck) modelFacets.push(SKOS.uri);
+		if (this.lexiconsCheck) modelFacets.push(OntoLex.uri);
 
 		this.loading = true;
-		DatasetService.getDatasets(this.searchString, modelFacets).subscribe(datasets => {
-			this.loading = false;
-			this.datasets = datasets;
-		});
+		this.projectService.listProjects(null, false, false).subscribe(
+			projects => {
+				this.projects = [];
+				//filter the results according the search string and the facets
+				projects.forEach(p => {
+					if (
+						(this.searchString == null || this.searchString.trim() == "" || p.getName().toUpperCase().includes(this.searchString.toUpperCase()) || p.getBaseURI().toUpperCase().includes(this.searchString.toUpperCase())) &&
+						(modelFacets == null || modelFacets.includes(p.getModelType()))
+					) {
+						this.projects.push(p);
+					}
+				});
+				this.loading = false;
+			}
+		)
 	}
 
 	onFacetChange() {
 		this.searchDataset();
 	}
 
-	private goToDataset(dataset: Dataset) {
-		PMKIContext.setDataset(dataset);
-		this.router.navigate(["/datasets/" + dataset.id]);
+	private goToProject(project: Project) {
+		PMKIContext.setProject(project);
+		this.router.navigate(["/datasets/" + project.getName()]);
 	}
 
 }

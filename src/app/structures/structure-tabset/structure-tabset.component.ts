@@ -1,5 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
-import { Dataset } from 'src/app/models/Datasets';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AnnotatedValue, IRI } from 'src/app/models/Resources';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
 
@@ -8,16 +7,16 @@ import { PMKIContext } from 'src/app/utils/PMKIContext';
 	templateUrl: './structure-tabset.component.html',
 })
 export class StructureTabsetComponent implements OnInit {
-    @Input() dataset: Dataset;
     @Output() nodeSelected = new EventEmitter<AnnotatedValue<IRI>>();
 
-    // private dataset: Dataset;
+    private model: string;
     private selectedNode: AnnotatedValue<IRI>;
 
-	constructor() {
-    }
+	constructor() { }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.model = PMKIContext.getProject().getModelType(true);
+    }
     
     onNodeSelected(node: AnnotatedValue<IRI>) {
         this.nodeSelected.emit(node);

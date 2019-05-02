@@ -15,12 +15,13 @@ export class BasicModalsServices {
 	 * @param type if provided, the message will be put in an proper-styled alert
 	 * @param options 
 	 */
-    alert(title: string, message: string, type?: ModalType, options?: ModalOptions) {
+    alert(title: string, message: string, type?: ModalType, details?: string, options?: ModalOptions) {
 		let _options: ModalOptions = new ModalOptions().merge(options);
 		const modalRef: NgbModalRef = this.modalService.open(AlertModalComponent, _options );
         modalRef.componentInstance.title = title;
         modalRef.componentInstance.message = message;
-        modalRef.componentInstance.type = type;
+		modalRef.componentInstance.type = type;
+		modalRef.componentInstance.details = details;
         return modalRef.result;
     }
 

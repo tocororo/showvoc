@@ -11,6 +11,6 @@
 
 <div class="subTree" *ngIf="node.getAttribute('more') == 1">
     <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
-    <concept-tree-node *ngFor="let n of children" [node]="n" [rendering]="rendering" (nodeSelected)="onNodeSelected($event)">
+    <concept-tree-node *ngFor="let n of children" [node]="n" [schemes]="schemes" [rendering]="rendering" (nodeSelected)="onNodeSelected($event)">
     </concept-tree-node>
 </div>

@@ -1,3 +1,6 @@
 <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
-<list-node *ngFor="let n of nodes" [node]="n" [rendering]="rendering" (nodeSelected)="onNodeSelected($event)">
-</list-node>
+<div *ngFor="let n of nodes" class="listNodeItem">
+    <input type="checkbox" style="margin-right: 5px;" [(ngModel)]="n.checked" (ngModelChange)="updateActiveSchemesPref()">
+    <list-node [node]="n" [rendering]="rendering" (nodeSelected)="onNodeSelected($event)" style="flex: 1;">
+    </list-node>
+</div>

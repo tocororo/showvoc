@@ -1,26 +1,30 @@
 import { Component } from '@angular/core';
+import { PropertiesServices } from 'src/app/services/properties.service';
+import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
+import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTree } from '../abstract-tree';
-import { TreeServices } from '../tree-services';
-import { RDFResourceRolesEnum } from 'src/app/models/Resources';
 
 @Component({
 	selector: 'property-tree',
 	templateUrl: './property-tree.component.html',
-	styleUrls: ['../../structures.css'],
+	host: { class: "structureComponent" }
 })
 export class PropertyTreeComponent extends AbstractTree {
 
-	constructor() {
-		super();
+	constructor(private propertyService: PropertiesServices, eventHandler: PMKIEventHandler) {
+		super(eventHandler);
 	}
 
     initImpl() {
-        this.loading = true;
-		let getRootsImpl = TreeServices.getRootsImpl(RDFResourceRolesEnum.property);
-		getRootsImpl().subscribe(nodes => {
-			this.loading = false;
-			this.nodes = nodes;
-		});
+		this.loading = true;
+		this.propertyService.getTopProperties().subscribe(
+			properties => {
+				this.loading = false;
+				let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
+				ResourceUtils.sortResources(properties, orderAttribute);
+				this.nodes = properties;
+			}
+		);
     }
 
 }
