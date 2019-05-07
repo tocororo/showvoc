@@ -7,6 +7,9 @@
             <button class="btn btn-light btn-xs ml-1" title="Refresh" (click)="refresh()">
                 <span class="fa fa-refresh"></span>
             </button>
+            <button class="btn btn-light btn-xs ml-1" title="Settings" (click)="settings()">
+                <span class="fa fa-cog"></span>
+            </button>
         </div>
     </div>
     
@@ -25,7 +28,7 @@
             </select>
             <ng-container *ngIf="indexLenght>1">
                 <span class="mx-1" style="font-weight: bold;">&gt;</span>
-                <select class="form-control input-xs" [(ngModel)]="secondDigitIndex" (ngModelChange)="onDigitChange()" style="width: initial">
+                <select class="form-control form-control-sm" [(ngModel)]="secondDigitIndex" (ngModelChange)="onDigitChange()" style="width: initial">
                     <option value=" ">{{firstDigitIndex}}⎵</option>
                     <option *ngFor="let i of alphabet" [value]="i">{{firstDigitIndex}}{{i}}</option>
                 </select>

@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
-import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { ConceptTreeVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, ResAttribute } from 'src/app/models/Resources';
 import { ResourcesServices } from 'src/app/services/resources.service';
@@ -12,6 +13,7 @@ import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
 import { AbstractTreePanel } from '../abstract-tree-panel';
+import { ConceptTreeSettingsModal } from './concept-tree-settings-modal';
 import { ConceptTreeComponent } from './concept-tree.component';
 
 @Component({
@@ -42,7 +44,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     
 
 	constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties,
-		private skosService: SkosServices, private resourceService: ResourcesServices) {
+		private skosService: SkosServices, private resourceService: ResourcesServices, private modalService: NgbModal) {
 		super(basicModals, eventHandler, pmkiProp);
         this.eventSubscriptions.push(eventHandler.schemeChangedEvent.subscribe(
             (schemes: IRI[]) => this.onSchemeChanged(schemes)));
@@ -88,6 +90,21 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
             this.viewChildTree.setInitialStatus();
             this.searchBar.doSearchImpl();
         }
+    }
+
+    settings() {
+        const modalRef: NgbModalRef = this.modalService.open(ConceptTreeSettingsModal, new ModalOptions() );
+        modalRef.result.then(
+            () => {
+                this.visualizationMode = this.pmkiProp.getConceptTreePreferences().visualization;
+                if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
+                    this.viewChildTree.forceList([]);
+                } else {
+                    this.refresh();
+                }
+            },
+            () => {}
+        );
     }
 
     //scheme selection menu handlers
@@ -249,23 +266,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
         this.viewChildTree.openTreeAt(resource);
     }
 
-    // private settings() {
-    //     const builder = new BSModalContextBuilder<any>();
-    //     let overlayConfig: OverlayConfig = { context: builder.keyboard(27).toJSON() };
-    //     return this.modal.open(ConceptTreeSettingsModal, overlayConfig).result.then(
-    //         changesDone => {
-    //             this.visualizationMode = this.vbProp.getConceptTreePreferences().visualization;
-    //             if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
-    //                 this.viewChildTree.forceList([]);
-    //             } else {
-    //                 this.refresh();
-    //             }
-    //         },
-    //         () => {}
-    //     );
-    // }
-
-    // //EVENT LISTENERS
+    //EVENT LISTENERS
 
     private onSchemeChanged(schemes: IRI[]) {
         this.workingSchemes = schemes;

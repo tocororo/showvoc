@@ -46,6 +46,10 @@ app-root {
     display: flex;
     flex-flow: column;
 }
+/* restore the modal-body padding when scrollableContainer is applied to the same div */
+.modal-body.scrollableContainer {
+    padding: 1rem;
+}
 
 .expandCollapseBtnContainer > img {
     cursor: pointer;
@@ -185,6 +189,11 @@ rdf-resource > .rdfResourceText {
 .listItem.disabled {
     cursor: not-allowed;
     color: #999;
+}
+
+
+.table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
+    border: none;
 }
 
 /* ====================== */

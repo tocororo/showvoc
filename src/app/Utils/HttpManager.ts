@@ -1,13 +1,13 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError, Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Project } from '../models/Project';
-import { STResponseUtils } from './STServicesUtils';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
-import { IRI, BNode, Literal, Value, AnnotatedValue } from '../models/Resources';
+import { Project } from '../models/Project';
+import { Value } from '../models/Resources';
 import { PMKIContext } from './PMKIContext';
+import { STResponseUtils } from './STServicesUtils';
 
 @Injectable()
 export class HttpManager {

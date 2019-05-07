@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ChangeDetectorRef } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
@@ -42,7 +42,7 @@ export class SearchBarComponent {
     private eventSubscriptions: Subscription[] = [];
 
     constructor(private searchService: SearchServices, private pmkiProps: PMKIProperties, private eventHandler: PMKIEventHandler, 
-        private basicModals: BasicModalsServices, private modalService: NgbModal, private cdr: ChangeDetectorRef) {
+        private basicModals: BasicModalsServices, private modalService: NgbModal) {
 
         this.eventSubscriptions.push(eventHandler.searchPrefsUpdatedEvent.subscribe(
             () => this.updateSearchSettings()));
@@ -90,7 +90,6 @@ export class SearchBarComponent {
         }
 
         this.loading = true;
-        this.cdr.detectChanges();
         searchFn.subscribe(
             searchResult => {
                 this.loading = false;

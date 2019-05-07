@@ -1,13 +1,16 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { ModalOptions } from 'src/app/modal-dialogs/Modals';
+import { LexEntryVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
+import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
-import { AbstractListPanel } from '../abstract-list-panel';
-import { LexicalEntryListComponent } from './lexical-entry-list.component';
-import { LexEntryVisualizationMode } from 'src/app/models/Properties';
-import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
+import { AbstractListPanel } from '../abstract-list-panel';
+import { LexicalEntryListSettingsModal } from './lexical-entry-list-settings-modal';
+import { LexicalEntryListComponent } from './lexical-entry-list.component';
 
 @Component({
     selector: "lexical-entry-list-panel",
@@ -37,7 +40,8 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     index: string;
     private indexLenght: number;
 
-    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, vbProp: PMKIProperties, private ontolexService: OntoLexLemonServices) {
+    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, vbProp: PMKIProperties, private ontolexService: OntoLexLemonServices,
+        private modalService: NgbModal) {
         super(basicModals, eventHandler, vbProp);
         this.eventSubscriptions.push(eventHandler.lexiconChangedEvent.subscribe(
 			(lexicon: IRI) => this.onLexiconChanged(lexicon))
@@ -96,6 +100,23 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
 
     refresh() {
         this.viewChildList.init();
+    }
+
+    settings() {
+        const modalRef: NgbModalRef = this.modalService.open(LexicalEntryListSettingsModal, new ModalOptions() );
+        modalRef.result.then(
+            () => {
+                this.visualizationMode = this.pmkiProp.getLexicalEntryListPreferences().visualization;
+                if (this.visualizationMode == LexEntryVisualizationMode.searchBased) {
+                    this.viewChildList.forceList([]);
+                } else {
+                    this.indexLenght = this.pmkiProp.getLexicalEntryListPreferences().indexLength;
+                    this.onDigitChange();
+                    this.refresh();
+                }
+            },
+            () => {}
+        );
     }
 
 
