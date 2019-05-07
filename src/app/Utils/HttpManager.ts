@@ -17,6 +17,10 @@ export class HttpManager {
     private groupId: string = "it.uniroma2.art.semanticturkey";
     private artifactId: string = "st-core-services";
 
+    //default request options, to eventually override through options parameter in doGet, doPost, ...
+    private defaultRequestOptions: PMKIRequestOptions = new PMKIRequestOptions({
+        errorAlertOpt: { show: true, exceptionsToSkip: [] }
+    });
 
     constructor(private http: HttpClient, private basicModals: BasicModalsServices) {
 
@@ -32,7 +36,9 @@ export class HttpManager {
 
     }
 
-    doGet(service: string, request: string, params: RequestParameters) {
+    doGet(service: string, request: string, params: RequestParameters, options?: PMKIRequestOptions) {
+        options = this.defaultRequestOptions.merge(options);
+
         let url: string = this.getRequestBaseUrl(service, request);
 
         //add parameters
@@ -51,12 +57,14 @@ export class HttpManager {
                 return this.handleOkOrErrorResponse(resp);
             }),
             catchError(error => {
-                return this.handleError(error);
+                return this.handleError(error, options.errorAlertOpt);
             })
         );
     }
 
-    doPost(service: string, request: string, params: RequestParameters) {
+    doPost(service: string, request: string, params: RequestParameters, options?: PMKIRequestOptions) {
+        options = this.defaultRequestOptions.merge(options);
+        
         let url: string = this.getRequestBaseUrl(service, request);
 
         //add ctx parameters
@@ -79,13 +87,15 @@ export class HttpManager {
                 return this.handleOkOrErrorResponse(resp);
             }),
             catchError(error => {
-                return this.handleError(error);
+                return this.handleError(error, options.errorAlertOpt);
             })
         );
     }
 
 
-    uploadFile(service: string, request: string, params: any) {
+    uploadFile(service: string, request: string, params: any, options?: PMKIRequestOptions) {
+        options = this.defaultRequestOptions.merge(options);
+
         let url: string = this.getRequestBaseUrl(service, request);
 
         //add ctx parameters
@@ -110,7 +120,7 @@ export class HttpManager {
                 return this.handleOkOrErrorResponse(resp);
             }),
             catchError(error => {
-                return this.handleError(error);
+                return this.handleError(error, options.errorAlertOpt);
             })
         );
     }
@@ -128,7 +138,9 @@ export class HttpManager {
      * @param post tells if the download is done via post-request (e.g. Export.export() service)
      * @param options further options that overrides the default ones
      */
-    downloadFile(service: string, request: string, params: any, post?: boolean): Observable<Blob> {
+    downloadFile(service: string, request: string, params: any, post?: boolean, options?: PMKIRequestOptions): Observable<Blob> {
+        options = this.defaultRequestOptions.merge(options);
+        
         let url: string = this.getRequestBaseUrl(service, request);
 
         if (post) {
@@ -152,7 +164,7 @@ export class HttpManager {
                     return this.arrayBufferRespHandler(resp);
                 }),
                 catchError(error => {
-                    return this.handleError(error)
+                    return this.handleError(error, options.errorAlertOpt);
                 })
             );
         } else { //GET
@@ -173,7 +185,7 @@ export class HttpManager {
                     return this.arrayBufferRespHandler(resp);
                 }),
                 catchError(error => {
-                    return this.handleError(error)
+                    return this.handleError(error, options.errorAlertOpt);
                 })
             );
         }
@@ -284,10 +296,9 @@ export class HttpManager {
      * Analyze the err object in input, shows eventually the error modal and then forward an Error object.
      * @param err
      */
-    private handleError(err: HttpErrorResponse | Error) {
+    private handleError(err: HttpErrorResponse | Error, errorAlertOpt: ErrorAlertOptions) {
         let error: Error = new Error();
 
-        console.log("err", err);
         if (err instanceof HttpErrorResponse) { //error thrown by the angular HttpClient get() or post()
             if (err.error instanceof ErrorEvent) { //A client-side or network error occurred
                 let errorMsg = "An error occurred:" + err.error.message;
@@ -316,7 +327,8 @@ export class HttpManager {
                                     // HttpServiceContext.resetContext();
                                     // this.router.navigate(['/Home']);
                                 };
-                            }
+                            },
+                            () => {}
                         );
                     } else if (status == 500 || status == 404) { //server error (e.g. out of memory)
                         let errorMsg = (err.statusText != null ? err.statusText : "Unknown response from the server") + " (status: " + err.status + ")";
@@ -328,9 +340,15 @@ export class HttpManager {
             }
         } else if (err instanceof Error) { //error already parsed and thrown in handleOkOrErrorResponse or arrayBufferRespHandler
             error = err;
-            let errorMsg = error.message != null ? error.message : "Unknown response from the server";
-            let errorDetails = error.stack ? error.stack : error.name;
-            this.basicModals.alert("Error", errorMsg, ModalType.error, errorDetails);
+            if (
+                errorAlertOpt.show && 
+                (errorAlertOpt.exceptionsToSkip == null || errorAlertOpt.exceptionsToSkip.indexOf(error.name) == -1) &&
+                HttpServiceContext.isErrorInterceptionEnabled()
+            ) { //if the alert should be shown
+                let errorMsg = error.message != null ? error.message : "Unknown response from the server";
+                let errorDetails = error.stack ? error.stack : error.name;
+                this.basicModals.alert("Error", errorMsg, ModalType.error, errorDetails);
+            }
         }
         return throwError(error);
     }
@@ -372,6 +390,9 @@ export class HttpServiceContext {
     private static ctxProject: Project; //project temporarly used in some scenarios (e.g. exploring other projects)
     private static ctxConsumer: Project; //consumer project temporarly used in some scenarios (e.g. service invoked in group management)
 
+    //if true, the errors thrown by the service calls are intercepted and a modal is shown. Useful to set to false during bulk operations.
+    private static interceptError: boolean = true;
+
     /**
      * Methods for managing a contextual project (project temporarly used in some scenarios)
      */
@@ -398,6 +419,22 @@ export class HttpServiceContext {
         this.ctxConsumer = null;
     }
 
+    /**
+     * Disable/enable error interception. Is useful in some cases to disable temporarly the error interception,
+     * in order to avoid to show multiple error modals that report the errors when multiple services are invoked.
+     * It is better instead to collect all the error and show just a unique report.
+     * (This code is copied from the HttpManager of Vocbench, in that case it was useful for the multiple addition/edit. 
+     * Maybe here in PMKI portal it is not necessary. I keep it anyway)
+     */
+    static isErrorInterceptionEnabled(): boolean {
+        return this.interceptError;
+    }
+    static enableErrorInterception() {
+        this.interceptError = true;
+    }
+    static disableErrorInterception() {
+        this.interceptError = false;
+    }
 
     static resetContext() {
         this.ctxProject = null;
@@ -406,3 +443,38 @@ export class HttpServiceContext {
 }
 
 class RequestParameters { [key: string]: any }
+
+
+//inspired by angular RequestOptions
+export class PMKIRequestOptions {
+
+    errorAlertOpt: ErrorAlertOptions;
+    
+    constructor({ errorAlertOpt }: PMKIRequestOptionsArgs = {}) {
+        this.errorAlertOpt = errorAlertOpt != null ? errorAlertOpt : null;
+    }
+
+    /**
+     * Creates a copy of the `PMKIRequestOptions` instance, using the optional input as values to override existing values.
+     * This method will not change the values of the instance on which it is being  called.
+     * @param options 
+     */
+    merge(options?: PMKIRequestOptions): PMKIRequestOptions {
+        //if options is provided and its parameters is not null, override the value of the current instance
+        return new PMKIRequestOptions({
+            errorAlertOpt: options && options.errorAlertOpt != null ? options.errorAlertOpt : this.errorAlertOpt
+        });
+    }
+}
+//inspired by angular RequestOptionsArgs
+interface PMKIRequestOptionsArgs {
+    /**
+     * To prevent an alert dialog to show up in case of error during requests.
+     * Is useful to handle the error from the component that invokes the service.
+     */
+    errorAlertOpt?: ErrorAlertOptions;
+}
+class ErrorAlertOptions {
+    show: boolean; //if true HttpManager show the error alert in case of error response, skip the show alert otherwise
+    exceptionsToSkip?: string[]; //if provided, tells for which exceptions the alert should be skipped (useful only if show is true)
+}

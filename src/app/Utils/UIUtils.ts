@@ -103,7 +103,7 @@ export class UIUtils {
         var imgSrc: string;
         if (rdfResource.getValue() instanceof Resource) {
             var role: RDFResourceRolesEnum = rdfResource.getAttribute(ResAttribute.ROLE);
-            var deprecated: boolean = rdfResource.getAttribute(ResAttribute.DEPRECATED);
+            var deprecated: boolean = rdfResource.isDeprecated();
             var explicit: boolean = rdfResource.getAttribute(ResAttribute.EXPLICIT) || rdfResource.getAttribute(ResAttribute.EXPLICIT) == undefined;
             if (role == RDFResourceRolesEnum.annotationProperty) {
                 imgSrc = this.propAnnotationImgSrc;
@@ -365,4 +365,11 @@ export class UIUtils {
     }
 
 
+}
+
+/**
+ * Useful for trees and nodes to be aware of the context where they are
+ */
+export enum TreeListContext {
+    dataPanel = 'dataPanel' //context for trees and list inside the "multi-panel" (Class, Concept, Scheme,...) in Data page
 }

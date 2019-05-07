@@ -1,0 +1,114 @@
+<div class="modal-header">
+    <h5 class="modal-title">Search settings</h5>
+    <button class="close" (click)="close()">
+        <span>&times;</span>
+    </button>
+</div>
+<div class="modal-body scrollableContainer">
+
+
+        <div class="card">
+            <div class="card-header">
+                <label>String match mode</label>
+            </div>
+            <div class="card-body">
+                <div *ngFor="let mode of stringMatchModes" class="radio">
+                    <label>
+                        <input type="radio" name="searchMode" [value]="mode.value" [(ngModel)]="activeStringMatchMode" 
+                            (ngModelChange)="updateSettings()"> {{mode.show}}
+                    </label>
+                </div>
+            </div>
+        </div>
+    
+        <div class="card mt-1">
+            <div class="card-header">
+                <label>Search mode</label>
+                <i class="fa fa-info-circle float-right" title="Search always looks for the input string among the lexicalizations"></i>
+            </div>
+            <div class="card-body">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="useURI" (ngModelChange)="updateSettings()"> Search in URI
+                    </label>
+                </div>
+                <div class="checkbox" style="margin: 5px 0px 0px">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="useLocalName" (ngModelChange)="updateSettings()"> Search in local name
+                    </label>
+                </div>
+                <div class="checkbox" style="margin: 5px 0px 0px">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="useNotes" (ngModelChange)="updateSettings()"> Search in notes
+                    </label>
+                </div>
+            </div>
+        </div>
+    
+        <!-- <div class="card mt-1">
+            <div class="card-header">
+                <label>Lexicalizations search</label>
+            </div>
+            <div class="card-body">
+                <div class="hbox" style="align-items: center;">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" [(ngModel)]="restrictLang" (ngModelChange)="updateSettings()">
+                            Restrict search to languages
+                        </label>
+                    </div>
+                    <div class="hbox ml-1" style="align-items: center;">
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" [ngModel]="languages" [disabled]="!restrictLang" readonly>
+                            <span class="input-group-append">
+                                <button class="btn btn-outline-info" (click)="selectRestrictionLanguages()" placeholder="Select languages"
+                                    [disabled]="!restrictLang">
+                                    <span class="fa fa-pencil-square-o"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="includeLocales" [disabled]="!restrictLang" (ngModelChange)="updateSettings()">
+                        Include locales in search (e.g. en-GB, en-US)
+                    </label>
+                </div>
+            </div>
+        </div> -->
+    
+        <!-- <div class="card mt-1">
+            <div class="card-header">
+				<label>Autocompletion</label>
+				<i class="fa fa-info-circle float-right"
+					title="It is highly recommended to disable this feature in big project not hosted by a GraphDB server"></i>
+            </div>
+            <div class="card-body">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="useAutocompletion" (ngModelChange)="updateSettings()">
+                        Enable autocompletion support during typing
+                    </label>
+                </div>
+            </div>
+        </div> -->
+    
+        <div *ngIf="settingsForConceptPanel" class="card mt-1">
+            <div class="card-header">
+                <label>Concept search</label>
+            </div>
+            <div class="card-body">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="restrictConceptSchemes" (ngModelChange)="updateSettings()">
+                        Restrict the search to the active skos:ConceptScheme(s)
+                    </label>
+                </div>
+            </div>
+        </div>
+    
+</div>
+<div class="modal-footer">
+    <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
+</div>

@@ -200,6 +200,15 @@ export class AnnotatedValue<T extends Value> {
     }
 
     /**
+     * Returns the role of the described resource. If the annotated value is a literal, return null
+     */
+    getRole(): RDFResourceRolesEnum {
+        if (this.value instanceof Resource) {
+            return this.attributes[ResAttribute.ROLE];
+        }
+    }
+
+    /**
      * Returns the graph where the annotated resource is defined (collected from the nature).
      */
     getResourceGraphs(): IRI[] {
@@ -210,7 +219,7 @@ export class AnnotatedValue<T extends Value> {
                 //iterate over the natures and collect the graph without duplicates
                 nature.forEach(n => {
                     n.graphs.forEach(ng => {
-                        if (resGraphs.find(rg => rg.equals(ng)) == null) {
+                        if (!resGraphs.some(rg => rg.equals(ng))) {
                             resGraphs.push(ng);
                         }
                     });
@@ -248,6 +257,28 @@ export class AnnotatedValue<T extends Value> {
             this.attributes[ResAttribute.NATURE] = resNature;
         }
     }
+
+    isDeprecated(): boolean {
+        return this.attributes[ResAttribute.DEPRECATED];
+    }
+}
+
+export class PredicateObjects {
+    private predicate: AnnotatedValue<IRI>;
+    private objects: AnnotatedValue<Value>[];
+
+    constructor(predicate: AnnotatedValue<IRI>, objects: AnnotatedValue<Value>[]) {
+        this.predicate = predicate;
+        this.objects = objects;
+    }
+
+    getPredicate(): AnnotatedValue<IRI> {
+        return this.predicate;
+    };
+
+    getObjects(): AnnotatedValue<Value>[] {
+        return this.objects;
+    };
 }
 
 export class ResAttribute {
@@ -279,8 +310,6 @@ export class ResAttribute {
     //useful in ResourceView to render potentially reified resource as not reified
     public static NOT_REIFIED = "notReified";//
 }
-
-
 
 export enum RDFResourceRolesEnum {
     annotationProperty = "annotationProperty",
@@ -314,25 +343,6 @@ export enum RDFTypesEnum {
     undetermined = "undetermined",
     uri = "uri"
 }
-
-export class PredicateObjects {
-    private predicate: AnnotatedValue<IRI>;
-    private objects: AnnotatedValue<Value>[];
-
-    constructor(predicate: AnnotatedValue<IRI>, objects: AnnotatedValue<Value>[]) {
-        this.predicate = predicate;
-        this.objects = objects;
-    }
-
-    getPredicate(): AnnotatedValue<IRI> {
-        return this.predicate;
-    };
-
-    getObjects(): AnnotatedValue<Value>[] {
-        return this.objects;
-    };
-}
-
 
 export abstract class ResourcePosition {
     position: ResourcePositionEnum;

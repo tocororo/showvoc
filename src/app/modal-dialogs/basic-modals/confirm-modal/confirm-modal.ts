@@ -3,21 +3,18 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalType } from '../../Modals';
 
 @Component({
-	selector: 'app-alert-modal',
-	templateUrl: './alert-modal.component.html',
+	selector: 'confirm-modal',
+	templateUrl: './confirm-modal.html',
 	styleUrls: ['../../modals.css']
 })
-export class AlertModalComponent implements OnInit {
+export class ConfirmModal implements OnInit {
 
 	@Input() title: string;
 	@Input() message: string;
-	@Input() type: ModalType;
-	@Input() details: string;
+    @Input() type: ModalType;
 
 	titleClass: string;
-	alertClass: string;
-
-	detailsCollapsed: boolean = true;
+    alertClass: string;
 
 	constructor(public activeModal: NgbActiveModal) { }
 
@@ -35,7 +32,7 @@ export class AlertModalComponent implements OnInit {
 	}
 
 	ok() {
-		this.activeModal.close();
+		this.activeModal.close(true);
 	}
 
 	close() {

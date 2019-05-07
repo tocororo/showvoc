@@ -1,0 +1,33 @@
+<div class="hbox">
+
+    <input type="text" class="form-control form-control-sm" [(ngModel)]="searchStr" (keydown.enter)="doSearch()" placeholder="Search..." [disabled]="disabled">
+
+    <div class="btn-toolbar ml-1" style="flex-wrap: nowrap">
+        <button class="btn btn-info btn-sm" (click)="doSearch()" [disabled]="disabled || loading">
+            <i *ngIf="!loading" class="fa fa-search"></i>
+            <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+        </button>
+        <div class="btn-group btn-group-sm ml-1">
+            <div class="btn-group btn-group-sm dropup" ngbDropdown placement="top-right">
+                <button class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>
+                    <span *ngIf="searchSettings.stringMatchMode == 'startsWith'" style="font-weight: bold;">&#945;..</span>
+                    <span *ngIf="searchSettings.stringMatchMode == 'contains'" style="font-weight: bold;">.&#945;.</span>
+                    <span *ngIf="searchSettings.stringMatchMode == 'endsWith'" style="font-weight: bold;">..&#945;</span>
+                    <span *ngIf="searchSettings.stringMatchMode == 'exact'" style="font-weight: bold;">&#945;</span>
+                    <span *ngIf="searchSettings.stringMatchMode == 'fuzzy'" style="font-weight: bold; width: 16px">~&#945;</span>
+                </button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <button *ngFor="let mode of stringMatchModes" class="dropdown-item" style="padding: 3px 10px;" (click)="updateSearchMode(mode.value, $event)">
+                        <i *ngIf="searchSettings.stringMatchMode == mode.value" class="fa fa-check" style="float: right"></i>
+                        <span style="font-weight: bold; margin-right: 4px; display: inline-block; width: 24px;">{{mode.symbol}}</span>
+                        <span>{{mode.show}}</span>
+                    </button>
+                </div>
+            </div>
+            <button class="btn btn-outline-info" (click)="settings()">
+                <i class="fa fa-cog"></i>
+            </button>
+        </div>
+    </div>
+
+</div>

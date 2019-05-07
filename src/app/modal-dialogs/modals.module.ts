@@ -1,19 +1,28 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertModalComponent } from './basic-modals/alert-modal/alert-modal.component';
-import { BasicModalsServices } from './basic-modals/basic-modals.service';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { WidgetModule } from '../widget/widget.module';
+import { AlertModal } from './basic-modals/alert-modal/alert-modal';
+import { BasicModalsServices } from './basic-modals/basic-modals.service';
+import { ConfirmModal } from './basic-modals/confirm-modal/confirm-modal';
+import { ResourceSelectionModal } from './basic-modals/selection-modal/resource-selection-modal';
 
 @NgModule({
-	declarations: [AlertModalComponent],
+    declarations: [
+        AlertModal,
+        ConfirmModal,
+        ResourceSelectionModal
+    ],
 	imports: [
-		CommonModule, FormsModule
+		CommonModule, FormsModule, WidgetModule
 	],
 	providers: [
 		BasicModalsServices
 	],
 	entryComponents: [
-		AlertModalComponent
+        AlertModal,
+        ConfirmModal,
+        ResourceSelectionModal
 	]
 })
 export class ModalsModule { }

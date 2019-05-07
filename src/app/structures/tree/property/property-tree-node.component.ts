@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, QueryList, ViewChildren } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { PropertiesServices } from 'src/app/services/properties.service';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTreeNode } from '../abstract-tree-node';
@@ -10,8 +11,10 @@ import { AbstractTreeNode } from '../abstract-tree-node';
 })
 export class PropertyTreeNodeComponent extends AbstractTreeNode {
 
-	constructor(private propertiesService: PropertiesServices) {
-		super()
+    @ViewChildren(PropertyTreeNodeComponent) viewChildrenNode: QueryList<PropertyTreeNodeComponent>;
+
+	constructor(private propertiesService: PropertiesServices, basicModals: BasicModalsServices) {
+		super(basicModals)
 	}
 
     /**

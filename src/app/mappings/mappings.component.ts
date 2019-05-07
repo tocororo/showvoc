@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'app-mappings',
+	selector: 'mappings-component',
 	templateUrl: './mappings.component.html',
 	host: { class: "pageComponent" }
 })

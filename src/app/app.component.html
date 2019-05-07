@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand text-info" [routerLink]="['/home']" style="font-weight: bold">PMKI</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="navbarSupportedContent"
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#mainNavbar" aria-controls="navbarSupportedContent"
         aria-expanded="false" aria-label="Toggle navigation" (click)="navbarCollapsed = !navbarCollapsed">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -42,8 +42,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <div class="btn-group btn-group-sm btn-group-info dropup" ngbDropdown placement="top-rigth">
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>
+                <div class="btn-group btn-group-sm dropup" ngbDropdown placement="top-left">
+                    <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>
                         About PMKI
                     </button>
                     <div class="dropdown-menu" ngbDropdownMenu>

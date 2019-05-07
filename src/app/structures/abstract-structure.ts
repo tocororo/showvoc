@@ -1,22 +1,29 @@
-import { EventEmitter, Input, Output, OnInit } from "@angular/core";
-import { AnnotatedValue, IRI, ResAttribute, RDFResourceRolesEnum } from '../models/Resources';
+import { EventEmitter, Input, OnInit, Output, ElementRef, ViewChild } from "@angular/core";
 import { Subscription } from 'rxjs';
+import { AnnotatedValue, IRI, RDFResourceRolesEnum, ResAttribute } from '../models/Resources';
 import { PMKIEventHandler } from '../utils/PMKIEventHandler';
+import { TreeListContext } from '../utils/UIUtils';
 
 export abstract class AbstractStruct implements OnInit {
 
     @Input() rendering: boolean = true; //if true the nodes in the list should be rendered with the show, with the qname otherwise
+    @Input() showDeprecated: boolean = true;
     @Input() role: RDFResourceRolesEnum;
+    @Input() context: TreeListContext;
     @Output() nodeSelected = new EventEmitter<AnnotatedValue<IRI>>();
+
+    @ViewChild('scrollableContainer') scrollableElement: ElementRef;
 
     /**
      * ATTRIBUTES
      */
 
-    eventSubscriptions: Subscription[] = [];
-
+    nodes: AnnotatedValue<IRI>[];
     selectedNode: AnnotatedValue<IRI>;
+
     loading: boolean = false;
+
+    eventSubscriptions: Subscription[] = [];
 
     /**
      * CONSTRUCTOR
@@ -41,7 +48,12 @@ export abstract class AbstractStruct implements OnInit {
 
     abstract init(): void;
 
-    abstract setInitialStatus(): void
+    setInitialStatus() {
+        this.nodes = [];
+        this.selectedNode = null;
+        this.nodeSelected.emit(this.selectedNode);
+        this.nodesLimit = this.initialNodes;
+    }
 
     private onNodeSelected(node: AnnotatedValue<IRI>) {
         if (this.selectedNode != undefined) {
@@ -50,6 +62,20 @@ export abstract class AbstractStruct implements OnInit {
         this.selectedNode = node;
         this.selectedNode.setAttribute(ResAttribute.SELECTED, true);
         this.nodeSelected.emit(node);
+    }
+
+    //Root limitation management
+    initialNodes: number = 20;
+    nodesLimit: number = this.initialNodes;
+    increaseRate: number = this.nodesLimit/5;
+    onScroll() {
+        let scrollElement: HTMLElement = this.scrollableElement.nativeElement;
+        if (scrollElement.scrollTop === (scrollElement.scrollHeight - scrollElement.offsetHeight)) {
+            //bottom reached => increase max range if there are more roots to show
+            if (this.nodesLimit < this.nodes.length) { 
+                this.nodesLimit = this.nodesLimit + this.increaseRate;
+            }
+        } 
     }
 
 }

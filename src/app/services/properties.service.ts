@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AnnotatedValue, IRI } from '../models/Resources';
+import { AnnotatedValue, IRI, Resource } from '../models/Resources';
 import { HttpManager } from "../utils/HttpManager";
 import { ResourceDeserializer } from '../utils/ResourceUtils';
 
@@ -100,6 +100,39 @@ export class PropertiesServices {
             superProperty: property
         };
         return this.httpMgr.doGet(this.serviceName, "getSubProperties", params).pipe(
+            map(stResp => {
+                return ResourceDeserializer.createIRIArray(stResp);
+            })
+        );
+    }
+
+    /**
+     * takes a list of Properties and return their description as if they were roots for a tree
+	 * (so more, role, explicit etc...)
+     * @param properties
+     */
+    getPropertiesInfo(properties: IRI[]): Observable<AnnotatedValue<IRI>[]> {
+        var params: any = {
+            propList: properties
+        };
+        return this.httpMgr.doGet(this.serviceName, "getPropertiesInfo", params).pipe(
+            map(stResp => {
+                return ResourceDeserializer.createIRIArray(stResp);
+            })
+        );
+    }
+
+    /**
+     * Retrieves all types of res, then all properties having their domain on any of the types for res.
+	 * Note that it provides only root properties (e.g. if both rdfs:label and skos:prefLabel,
+	 * which is a subProperty of rdfs:label, have domain = one of the types of res, then only rdfs:label is returned)
+     * @param resource service returns properties that have as domain the type of this resource 
+     */
+    getRelevantPropertiesForResource(resource: Resource): Observable<AnnotatedValue<IRI>[]> {
+        var params: any = {
+            res: resource
+        };
+        return this.httpMgr.doGet(this.serviceName, "getRelevantPropertiesForResource", params).pipe(
             map(stResp => {
                 return ResourceDeserializer.createIRIArray(stResp);
             })

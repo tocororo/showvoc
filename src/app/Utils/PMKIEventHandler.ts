@@ -15,6 +15,10 @@ export class PMKIEventHandler {
     public lexiconChangedEvent: EventEmitter<IRI> = new PMKIEventEmitter("lexiconChangedEvent");
     public schemeChangedEvent: EventEmitter<IRI[]> = new PMKIEventEmitter("schemeChangedEvent");
 
+    //PREFERENCES
+    public showDeprecatedChangedEvent: EventEmitter<boolean> = new PMKIEventEmitter("showDeprecatedChangedEvent");
+    public searchPrefsUpdatedEvent: EventEmitter<any> = new PMKIEventEmitter("searchPrefsUpdatedEvent");
+
     constructor() { }
 
     /**

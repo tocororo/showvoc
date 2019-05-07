@@ -26,7 +26,6 @@ export class AuthServices {
             map(stResp => {
                 let loggedUser: User = User.createUser(stResp);
                 PMKIContext.setLoggedUser(loggedUser);
-                console.log("return", loggedUser);
                 return loggedUser;
             })
         );

@@ -3,9 +3,21 @@
         <div class="hbox">
             <rdf-resource [resource]="resource"></rdf-resource>
             <input class="form-control form-control-sm ml-2" [ngModel]="resource.getValue().stringValue()" readonly>
+
+            <div class="btn-toolbar" style="flex-wrap: nowrap">
+                <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: showInferred}" title="Show/hide inferred information" (click)="switchInferred()">
+                    <i *ngIf="showInferred" class="fa fa-eye"></i>
+                    <i *ngIf="!showInferred" class="fa fa-eye-slash"></i>
+                </button>
+                <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: rendering}" title="Rendering" (click)="switchRendering()">
+                    <i class="fa fa-font"></i>
+                </button>
+            </div>
         </div>
     </div>
-    <div class="card-body">
+    <div class="card-body scrollableContainer p-2">
+        <div *ngIf="loading" class="spinner-border text-info"></div>
+
         <table class="table table-sm">
             <colgroup>
                 <col style="width: 1%">

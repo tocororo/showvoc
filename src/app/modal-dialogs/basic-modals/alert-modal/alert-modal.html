@@ -1,11 +1,11 @@
 <div class="modal-header">
 	<h5 [class]="'modal-title ' + titleClass">{{title}}</h5>
-	<button type="button" class="close" (click)="close()">
+	<button class="close" (click)="close()">
 		<span>&times;</span>
 	</button>
 </div>
 <div class="modal-body">
-	<div *ngIf="alertClass" [class]="alertClass + ' vbox'" style="margin: 0;">
+	<div *ngIf="alertClass" [class]="alertClass + ' vbox'">
 		{{message}}
 
 		<div *ngIf="details" class="vbox mt-1">
@@ -26,5 +26,5 @@
 	<p *ngIf="!alertClass" style="margin: 0;">{{message}}</p>
 </div>
 <div class="modal-footer">
-	<button type="button" class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
+	<button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
 </div>

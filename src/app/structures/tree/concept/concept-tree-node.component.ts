@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, QueryList, ViewChildren } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { IRI } from 'src/app/models/Resources';
 import { SkosServices } from 'src/app/services/skos.service';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
@@ -11,10 +12,12 @@ import { AbstractTreeNode } from '../abstract-tree-node';
 })
 export class ConceptTreeNodeComponent extends AbstractTreeNode {
 
-	@Input() schemes: IRI[];
+    @Input() schemes: IRI[];
+    
+    @ViewChildren(ConceptTreeNodeComponent) viewChildrenNode: QueryList<ConceptTreeNodeComponent>;
 
-	constructor(private skosService: SkosServices) {
-		super()
+	constructor(private skosService: SkosServices, basicModals: BasicModalsServices) {
+		super(basicModals);
 	}
 
     /**

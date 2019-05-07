@@ -5,22 +5,22 @@ import { SemanticTurkey } from '../models/Vocabulary';
 export class ResourceUtils {
 
     /**
-     * Sort an Array of ARTResource by the given attribute.
+     * Sort an Array of annotated values by the given attribute.
      * @param list 
      * @param attribute
      */
-    static sortResources(list: AnnotatedValue<Resource>[], attribute: SortAttribute): void {
+    static sortResources(list: AnnotatedValue<Value>[], attribute: SortAttribute): void {
         //sort by show
         if (attribute == SortAttribute.show) {
             list.sort(
-                function (r1: AnnotatedValue<Resource>, r2: AnnotatedValue<Resource>) {
+                function (r1: AnnotatedValue<Value>, r2: AnnotatedValue<Value>) {
                     return r1.getShow().toLowerCase().localeCompare(r2.getShow().toLowerCase());
                 }
             );
         }
         if (attribute == SortAttribute.value) {
             list.sort(
-                function (r1: AnnotatedValue<Resource>, r2: AnnotatedValue<Resource>) {
+                function (r1: AnnotatedValue<Value>, r2: AnnotatedValue<Value>) {
                     return r1.getValue().stringValue().localeCompare(r2.getValue().stringValue());
                 }
             );

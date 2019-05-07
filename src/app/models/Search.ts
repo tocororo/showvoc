@@ -1,7 +1,7 @@
-import { AnnotatedValue, IRI, ResAttribute, RDFResourceRolesEnum } from './Resources';
-import { Dataset, DatasetService } from './Datasets';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { Dataset, DatasetService } from './Datasets';
+import { AnnotatedValue, IRI, RDFResourceRolesEnum } from './Resources';
 
 export class SearchResult {
     dataset: Dataset;
@@ -10,7 +10,7 @@ export class SearchResult {
 }
 
 //MOCK, to remove later
-export class SearchService {
+export class SearchServicesMock {
 
     static getSearchResults(search?: string): Observable<SearchResult[]> {
         let results: SearchResult[] = [];

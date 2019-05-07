@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h5 class="modal-title">{{title}}</h5>
+    <button class="close" (click)="close()">
+        <span>&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <div *ngIf="message" class="alert alert-info">
+        {{message}}
+    </div>
+
+    <div class="card vbox mt-1">
+        <div class="card-header">  
+            <div class="btn-toolbar float-right">
+                <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" title="Rendering" (click)="rendering = !rendering">
+                    <i class="fa fa-font"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body vbox">
+            <resource-list [resources]="resourceList" [rendering]="rendering" (nodeSelected)="resourceSelected = $event">
+            </resource-list>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="!resourceSelected">Ok</button>
+</div>

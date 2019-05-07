@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 
 @Component({
-	selector: 'app-dataset-view',
+	selector: 'dataset-view',
 	templateUrl: './dataset-view.component.html',
 	host: { class: "pageComponent" }
 })
@@ -27,11 +27,9 @@ export class DatasetViewComponent implements OnInit {
 		private basicModals: BasicModalsServices, private route: ActivatedRoute, private router: Router) { }
 
 	ngOnInit() {
-		console.log("on init")
 		this.initializeProjectInContext().subscribe(
 			() => {
 				this.project = PMKIContext.getProject();
-				console.log("project inizialized", this.project);
 				if (this.project != null) { //project initialized correctly
 					this.pmkiProp.initUserProjectPreferences().subscribe(
 						() => {
@@ -49,11 +47,9 @@ export class DatasetViewComponent implements OnInit {
 		 * so the Project in the ctx could be null and it needs to be retrieved from the server
 		 */
 		if (PMKIContext.getProject() != null) {
-			console.log("proj in context", PMKIContext.getProject().getName())
 			return of(null);
 		} else {
 			let projectId = this.route.snapshot.paramMap.get('id');
-			console.log("proj not in context, retrieving", projectId);
 			//retrieve project with a service invocation
 			return this.projectService.listProjects(null, true, true).pipe(
 				map(projects => {
@@ -61,10 +57,10 @@ export class DatasetViewComponent implements OnInit {
 					if (p != null) {
 						PMKIContext.setProject(p);
 					} else {
-						this.basicModals.alert("Dataset not found", "The requested dateset (id: '" + projectId + 
+						this.basicModals.alert("Dataset not found", "The requested dateset (id: '" + projectId +
 							"') does not exist. You will be redirect to the home page.", ModalType.warning).then(
-							confirm => { this.router.navigate(["/"]) }
-						);
+								confirm => { this.router.navigate(["/"]) }
+							);
 					}
 				})
 			);
@@ -72,7 +68,8 @@ export class DatasetViewComponent implements OnInit {
 	}
 
 	onNodeSelected(node: AnnotatedValue<IRI>) {
-        this.resource = node;
+		if (node == null) return;
+		this.resource = node;
 	}
-	
+
 }

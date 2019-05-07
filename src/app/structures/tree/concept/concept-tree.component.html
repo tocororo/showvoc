@@ -1,3 +1,12 @@
-<div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
-<concept-tree-node *ngFor="let n of nodes" [node]="n" [schemes]="schemes" [rendering]="rendering" (nodeSelected)="onNodeSelected($event)">
-</concept-tree-node> 
+<div class="card vbox">
+    <div class="card-body vbox">
+        <div #scrollableContainer class="scrollableContainer p-2" (scroll)="onScroll()">
+            <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
+            <ng-container *ngFor="let n of nodes; let idx = index">
+                <concept-tree-node *ngIf="idx < nodesLimit && (!n.isDeprecated() || showDeprecated && n.isDeprecated())"
+                    [node]="n" [schemes]="schemes" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
+                </concept-tree-node> 
+            </ng-container>
+        </div>
+    </div>
+</div>

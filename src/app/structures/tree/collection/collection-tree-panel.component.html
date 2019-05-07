@@ -1,0 +1,21 @@
+<div class="card vbox">
+	<div class="card-header">
+        <div class="btn-toolbar float-right">
+			<button class="btn btn-light btn-xs" [ngClass]="{active: rendering}" title="Rendering" (click)="rendering=!rendering">
+				<i class="fa fa-font"></i>
+			</button>
+			<button class="btn btn-light btn-xs ml-1" title="Refresh" (click)="refresh()">
+				<span class="fa fa-refresh"></span>
+			</button>
+        </div>
+	</div>
+	
+	<div class="card-body vbox">
+		<collection-tree [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
+        </collection-tree>
+	</div>
+
+	<div class="card-footer">
+        <search-bar (searchResults)="handleSearchResults($event)" [role]="panelRole"></search-bar>
+	</div>
+</div>

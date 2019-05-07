@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IRI } from 'src/app/models/Resources';
+import { IRI, AnnotatedValue } from 'src/app/models/Resources';
 import { SkosServices } from 'src/app/services/skos.service';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
@@ -8,13 +8,19 @@ import { AbstractList } from '../abstract-list';
 
 @Component({
 	selector: 'scheme-list',
-	templateUrl: './scheme-list.component.html',
+    templateUrl: './scheme-list.component.html',
+    host: { class: "structureComponent" }
 })
 export class SchemeListComponent extends AbstractList {
 
-
 	constructor(private skosService: SkosServices, private pmkiProp: PMKIProperties, eventHandler: PMKIEventHandler) {
-		super(eventHandler);
+        super(eventHandler);
+        //handler when active schemes is changed programmatically when a searched concept belong to a non active scheme
+        this.eventSubscriptions.push(eventHandler.schemeChangedEvent.subscribe(
+            (schemes: IRI[]) => {
+                this.nodes.forEach((s: AnnotatedValue<IRI>) => s['checked'] = schemes.some(sc => sc.equals(s.getValue())));
+            }
+        ));
 	}
 
 	initImpl() {
@@ -47,6 +53,16 @@ export class SchemeListComponent extends AbstractList {
 			}
 		});
         return activeSchemes;
+    }
+
+    public activateAllScheme() {
+        this.nodes.forEach(n => n['checked'] = true);
+        this.updateActiveSchemesPref();
+    }
+
+    public deactivateAllScheme() {
+        this.nodes.forEach(n => n['checked'] = false);
+        this.updateActiveSchemesPref();
     }
 
 }

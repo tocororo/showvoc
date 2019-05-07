@@ -5,7 +5,7 @@ import { Component, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/co
     templateUrl: './resizable-layout.component.html',
     styleUrls: ['./resizable-layout.component.css'],
     host: {
-        class: 'row',
+        class: 'hbox',
         '(mousemove)': 'onMousemove($event)',
         '(mouseup)': 'onMouseup()',
         '(mouseleave)': 'onMouseup()'

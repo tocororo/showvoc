@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, QueryList, ViewChildren } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { SkosServices } from 'src/app/services/skos.service';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTreeNode } from '../abstract-tree-node';
@@ -10,8 +11,10 @@ import { AbstractTreeNode } from '../abstract-tree-node';
 })
 export class CollectionTreeNodeComponent extends AbstractTreeNode {
 
-	constructor(private skosService: SkosServices) {
-		super()
+    @ViewChildren(CollectionTreeNodeComponent) viewChildrenNode: QueryList<CollectionTreeNodeComponent>;
+
+	constructor(private skosService: SkosServices, basicModals: BasicModalsServices) {
+		super(basicModals)
 	}
 
     /**

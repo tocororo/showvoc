@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-	selector: 'app-not-found',
+	selector: 'not-found-component',
 	template: `
 	<div class="container my-3"><h1>Page not found</h1></div>
 	`,

@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChildren, QueryList } from '@angular/core';
+import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
+import { SearchServices } from 'src/app/services/search.service';
 import { SkosServices } from 'src/app/services/skos.service';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTree } from '../abstract-tree';
+import { CollectionTreeNodeComponent } from './collection-tree-node.component';
 
 @Component({
 	selector: 'collection-tree',
@@ -11,8 +15,10 @@ import { AbstractTree } from '../abstract-tree';
 })
 export class CollectionTreeComponent extends AbstractTree {
 
-	constructor(private skosService: SkosServices, eventHandler: PMKIEventHandler) {
-		super(eventHandler);
+    @ViewChildren(CollectionTreeNodeComponent) viewChildrenNode: QueryList<CollectionTreeNodeComponent>;
+
+	constructor(private skosService: SkosServices, private searchService: SearchServices, basicModals: BasicModalsServices, eventHandler: PMKIEventHandler) {
+		super(eventHandler, basicModals);
 	}
 
     initImpl() {
@@ -25,6 +31,17 @@ export class CollectionTreeComponent extends AbstractTree {
 				this.nodes = collections;
 			}
 		);
+    }
+
+    openTreeAt(node: AnnotatedValue<IRI>) {
+        this.searchService.getPathFromRoot(node.getValue(), RDFResourceRolesEnum.skosCollection).subscribe(
+            path => {
+                if (path.length == 0) {
+                    this.onTreeNodeNotReachable(node);
+                };
+                this.expandPath(path);
+            }
+        );
     }
 
 }

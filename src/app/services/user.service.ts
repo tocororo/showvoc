@@ -22,7 +22,6 @@ export class UserServices {
         var params: any = {}
         return this.httpMgr.doGet(this.serviceName, "getUser", params).pipe(
             map((stResp: any) => {
-                console.log("stResp in getUser", stResp);
                 if (stResp.user != null) { //user object in respnse => serialize it (it could be empty, so no user logged)
                     let user: User = User.createUser(stResp.user);
                     if (user != null) {

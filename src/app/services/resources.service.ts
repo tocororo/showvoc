@@ -32,8 +32,9 @@ export class ResourcesServices {
      * @param resources 
      */
     getResourcesInfo(resources: IRI[]): Observable<AnnotatedValue<IRI>[]> {
+        let resourcesIri: string[] = resources.map(r => r.toNT());
         var params: any = {
-            resources: resources
+            resources: JSON.stringify(resourcesIri)
         };
         return this.httpMgr.doPost(this.serviceName, "getResourcesInfo", params).pipe(
             map(stResp => {

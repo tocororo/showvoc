@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { AlertModalComponent } from './alert-modal/alert-modal.component';
-import { ModalType, ModalOptions } from '../Modals';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { AnnotatedValue, Resource } from 'src/app/models/Resources';
+import { ModalOptions, ModalType } from '../Modals';
+import { AlertModal } from './alert-modal/alert-modal';
+import { ConfirmModal } from './confirm-modal/confirm-modal';
+import { ResourceSelectionModal } from './selection-modal/resource-selection-modal';
 
 @Injectable()
 export class BasicModalsServices {
@@ -17,11 +20,30 @@ export class BasicModalsServices {
 	 */
     alert(title: string, message: string, type?: ModalType, details?: string, options?: ModalOptions) {
 		let _options: ModalOptions = new ModalOptions().merge(options);
-		const modalRef: NgbModalRef = this.modalService.open(AlertModalComponent, _options );
+		const modalRef: NgbModalRef = this.modalService.open(AlertModal, _options );
         modalRef.componentInstance.title = title;
         modalRef.componentInstance.message = message;
 		modalRef.componentInstance.type = type;
 		modalRef.componentInstance.details = details;
+        return modalRef.result;
+    }
+
+    confirm(title: string, message: string, type?: ModalType, options?: ModalOptions) {
+		let _options: ModalOptions = new ModalOptions().merge(options);
+		const modalRef: NgbModalRef = this.modalService.open(ConfirmModal, _options );
+        modalRef.componentInstance.title = title;
+        modalRef.componentInstance.message = message;
+		modalRef.componentInstance.type = type;
+        return modalRef.result;
+    }
+
+    selectResource(title: string, message: string, resourceList: AnnotatedValue<Resource>[], rendering?: boolean, options?: ModalOptions) {
+        let _options: ModalOptions = new ModalOptions().merge(options);
+		const modalRef: NgbModalRef = this.modalService.open(ResourceSelectionModal, _options );
+        modalRef.componentInstance.title = title;
+        modalRef.componentInstance.message = message;
+		modalRef.componentInstance.resourceList = resourceList;
+		modalRef.componentInstance.rendering = rendering;
         return modalRef.result;
     }
 

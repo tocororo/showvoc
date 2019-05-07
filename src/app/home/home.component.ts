@@ -5,7 +5,7 @@ import { ResourcesServices } from '../services/resources.service';
 import { UserServices } from '../services/user.service';
 
 @Component({
-	selector: 'app-home',
+	selector: 'home-component',
 	templateUrl: './home.component.html',
 	host: { class: "pageComponent" }
 })
@@ -22,19 +22,11 @@ export class HomeComponent implements OnInit {
 		// 				console.log("getUser", user);
 		// 			}
 		// 		)
-
-		// 		PMKIContext.setDataset({id: "skosxl", title: "skosxl", model: Model.SKOS, lexicalizationModel: "skosxl", url: "url", description: ""})
-		// 		this.exportService.export().subscribe();
+		// 		// this.exportService.export().subscribe();
 		// 	}
 		// )
 
-		// PMKIContext.setDataset({id: "skosxl", title: "skosxl", model: Model.SKOS, lexicalizationModel: "skosxl", url: "url", description: ""})
 		// this.exportService.export().subscribe();
-
-		// this.resourceService.getResourceDescription(SKOS.collection).subscribe(
-		// 	resp => {},
-		// 	err => {}
-		// );
 	}
 
 }

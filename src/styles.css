@@ -1,17 +1,9 @@
-html {
-    position: relative;
-    min-height: 100%;
+html, body {
+    height: 100%;
 }
 
-body {
-    margin-bottom: 40px;
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 40px;
+app-root {
+    height: 100%;
 }
 
 .vbox {
@@ -28,15 +20,6 @@ body {
     flex: 1;
     min-height: 0;
     min-width: 0;
-}
-
-
-/* html, body {
-    height: 100%;
-}
-
- app-root {
-    height: 100%;
 }
 
 .pageComponent {
@@ -56,13 +39,13 @@ body {
 }
 
 .scrollableContainer {
+    padding: 4px;
     overflow: auto;
     flex: 1;
     min-height: 0;
     display: flex;
     flex-flow: column;
-} */
-
+}
 
 .expandCollapseBtnContainer > img {
     cursor: pointer;
@@ -77,10 +60,6 @@ body {
 }
 .arrow-right {
     transform: rotate(270deg);
-}
-
-.structureComponent rdf-resource:hover {
-    background-color: #e5f3ff;
 }
 
 rdf-resource {
@@ -128,6 +107,21 @@ rdf-resource > .rdfResourceText {
 	overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.structureComponent {
+    /* vbox + blockingDivHost */
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+}
+.structureComponent .card-body {
+    padding: 0px;
+}
+.structureComponent rdf-resource:hover {
+    background-color: #e5f3ff;
 }
 
 .treeNode {
@@ -219,8 +213,31 @@ rdf-resource > .rdfResourceText {
 
 /* Bootstrap override */
 
+label {
+    margin-bottom: 0px;
+}
+
+.alert {
+    margin-bottom: 0px;
+}
+
 .tab-content {
-    padding: 8px 6px;
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    min-height: 0px;
+    /* padding: 8px 6px; */
+    padding: 0px;
+}
+.tab-pane {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    min-height: 0px;
+    padding: 4px;
+}
+.tab-pane.active {
+    display: flex !important;
 }
 
 ul.nav-tabs {
@@ -235,6 +252,12 @@ ul.nav-tabs {
 
 .card-header {
     padding: 6px 8px;
+}
+.card-body {
+    padding: 6px;
+}
+.card-footer {
+    padding: 6px;
 }
 
 .dropdown-menu>a {

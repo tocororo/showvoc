@@ -6,7 +6,7 @@ import { ProjectsServices } from '../services/projects.service';
 import { PMKIContext } from '../utils/PMKIContext';
 
 @Component({
-	selector: 'app-datasets',
+	selector: 'datasets-component',
 	templateUrl: './datasets.component.html',
 	host: { class: "pageComponent" }
 })
@@ -67,7 +67,3 @@ export class DatasetsComponent implements OnInit {
 	}
 
 }
-
-
-
-

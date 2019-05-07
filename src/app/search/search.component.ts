@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Dataset, DatasetService } from '../models/Datasets';
-import { SearchResult, SearchService } from '../models/Search';
+import { Dataset } from '../models/Datasets';
+import { SearchResult, SearchServicesMock } from '../models/Search';
 import { PMKIContext } from '../utils/PMKIContext';
 
 @Component({
-	selector: 'app-search',
+	selector: 'search-component',
 	templateUrl: './search.component.html',
 	host: { class: "pageComponent" }
 })
 export class SearchComponent implements OnInit {
-	
+
 	searchString: string;
 	loading: boolean = false;
 
@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit {
 	search() {
 		this.loading = true;
 		this.searchResults = [];
-		SearchService.getSearchResults(this.searchString).subscribe(
+		SearchServicesMock.getSearchResults(this.searchString).subscribe(
 			results => {
 				this.searchResults = results;
 				this.loading = false;

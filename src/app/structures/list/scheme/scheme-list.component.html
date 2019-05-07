@@ -1,6 +1,14 @@
-<div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
-<div *ngFor="let n of nodes" class="listNodeItem">
-    <input type="checkbox" style="margin-right: 5px;" [(ngModel)]="n.checked" (ngModelChange)="updateActiveSchemesPref()">
-    <list-node [node]="n" [rendering]="rendering" (nodeSelected)="onNodeSelected($event)" style="flex: 1;">
-    </list-node>
+<div class="card vbox">
+    <div class="card-body vbox">
+        <div #scrollableContainer class="scrollableContainer p-2" (scroll)="onScroll()">
+            <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
+            <ng-container *ngFor="let n of nodes; let idx = index;">
+                <div *ngIf="idx < nodesLimit && (!n.isDeprecated() || showDeprecated && n.isDeprecated())" class="listNodeItem">
+                    <input type="checkbox" style="margin: 0 2px;" [(ngModel)]="n.checked" (ngModelChange)="updateActiveSchemesPref()">
+                    <list-node [node]="n" [rendering]="rendering" [context]="context" (nodeSelected)="onNodeSelected($event)" style="flex: 1;">
+                    </list-node>
+                </div>
+            </ng-container>
+        </div>
+    </div>
 </div>
