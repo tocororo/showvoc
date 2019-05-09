@@ -1,4 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import { AnnotatedValue, IRI, LocalResourcePosition, PredicateObjects, RemoteResourcePosition, ResAttribute, Resource, ResourcePosition, Value } from '../models/Resources';
 import { PropertyFacet, ResViewPartition } from '../models/ResourceView';
 import { SemanticTurkey } from '../models/Vocabulary';
@@ -85,12 +86,13 @@ export class ResourceViewComponent {
     
     private buildResourceView(res: Resource) {
         this.loading = true;
-        this.resViewService.getResourceView(res).subscribe(
+        this.resViewService.getResourceView(res).pipe(
+            finalize(() => this.loading = false)
+        ).subscribe(
             stResp => {
                 this.resViewResponse = stResp;
                 this.fillPartitions();
                 this.unknownHost = false;
-                this.loading = false;
             },
             (err: Error) => {
                 if (err.name.endsWith("UnknownHostException")) {

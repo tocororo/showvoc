@@ -1,41 +1,49 @@
 <div class="container my-3">
 
-	<h1>Search</h1>
+    <h1>Search</h1>
+    
+    <div class="input-group mb-2">
+        <input type="text" class="form-control" [(ngModel)]="searchString" (keydown.enter)="searchKeyHandler()" placeholder="Search">
+        <div class="input-group-append">
+            <button class="btn btn-info" (click)="search()" [disabled]="!searchString || loading">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </div>
 
-	<div class="row">
-		<div class="col">
-			<div class="input-group">
-				<input type="text" class="form-control" [(ngModel)]="searchString" (keydown.enter)="searchKeyHandler($event)" placeholder="Search">
-				<div class="input-group-append">
-					<button class="btn btn-info" (click)="search()" [disabled]="!searchString">
-						<i class="fa fa-search"></i>
-					</button>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div *ngIf="loading" class="spinner-border text-info"></div>
 
-	
+    <ng-container *ngIf="!loading && groupedSearchResults">
+        <!-- No results found -->
+        <h5 *ngIf="groupedSearchResultsRepoIds.length == 0" class="text-secondary">No dataset found for '{{lastSearch}}'</h5>
+        <!-- Results found -->
+        <ng-container *ngIf="groupedSearchResultsRepoIds.length != 0">
+            <h5 class="text-secondary">'{{lastSearch}}' matches in {{groupedSearchResultsRepoIds.length}} datasets.</h5>
 
-	<div class="row my-2">
-		<div class="col">
-			<!-- Spinner during search -->
-			<div *ngIf="loading" class="spinner-border text-info"></div>
-			<!-- # of results when searching is finished -->
-			<p *ngIf="!loading && searchResults" class="card-text text-secondary">Found in {{searchResults.length}} datasets</p>
+            <div class="card vbox mt-1">
+                <div class="card-body vbox scrollableContainer">
+                    <div *ngFor="let repoId of groupedSearchResultsRepoIds" class="card grouped-search-result">
+                        <div class="card-body">
+                            <h5 class="mb-2">
+                                <a [routerLink]="" (click)="goToDataset(repoId)">
+                                    {{repoId}}
+                                </a>
+                            </h5>
+                            <div *ngFor="let result of groupedSearchResults[repoId]" class="search-result">
+                                <div style="font-size: 1rem">
+                                    <a [routerLink]="" (click)="goToResource(result)" class="text-success">{{result.show}}</a>
+                                </div>
+                                <div style="font-size: .875rem">
+                                    <a [routerLink]="" (click)="goToResource(result)" class="text-secondary">{{result.resource}}</a>
+                                </div>
+                                <span class="mt-1">{{result.details[0].label.toNT()}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
 
-			<div *ngFor="let result of searchResults" class="mb-4">
-				<h5 class="card-title">
-					<a [routerLink]="" (click)="goToDataset(result.dataset)">{{result.dataset.title}}</a>
-				</h5>
-				<h6 class="card-subtitle mb-2">
-					<a [href]="result.dataset.url" target="_blank" class="text-success">{{result.dataset.url}}</a>
-				</h6>
-				<p>
-					<span [title]="result.resource.getValue().toNT()" style="font-weight: bold">{{result.resource.getShow()}}</span>
-					<span *ngIf="result.resourceDescription" class="text-secondary"> - {{result.resourceDescription}}</span>
-				</p>
-			</div>
-		</div>
-	</div>
+    
 </div>

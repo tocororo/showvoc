@@ -6,6 +6,7 @@ import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractList } from '../abstract-list';
+import { finalize } from 'rxjs/operators';
 
 @Component({
 	selector: 'lexical-entry-list',
@@ -32,9 +33,10 @@ export class LexicalEntryListComponent extends AbstractList {
             if (this.pmkiProp.getLexicalEntryListPreferences().visualization == LexEntryVisualizationMode.indexBased && this.index != undefined) {
                 this.nodes = [];
                 this.loading = true;
-                this.ontolexService.getLexicalEntriesByAlphabeticIndex(this.index, this.lexicon).subscribe(
+                this.ontolexService.getLexicalEntriesByAlphabeticIndex(this.index, this.lexicon).pipe(
+                    finalize(() => this.loading = false)
+                ).subscribe(
                     entries => {
-                        this.loading = false;
                         let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
                         ResourceUtils.sortResources(entries, orderAttribute);
                         this.nodes = entries;

@@ -9,6 +9,7 @@ import { SearchServices } from 'src/app/services/search.service';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { SearchSettingsModal } from './search-settings-modal';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: "search-bar",
@@ -90,9 +91,10 @@ export class SearchBarComponent {
         }
 
         this.loading = true;
-        searchFn.subscribe(
+        searchFn.pipe(
+            finalize(() => this.loading = false)
+        ).subscribe(
             searchResult => {
-                this.loading = false;
                 if (searchResult.length == 0) {
                     this.basicModals.alert("Search", "No results found for '" + this.lastSearch + "'", ModalType.warning);
                 } else {

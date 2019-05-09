@@ -65,7 +65,7 @@ export abstract class AbstractStruct implements OnInit {
     }
 
     //Root limitation management
-    initialNodes: number = 20;
+    initialNodes: number = 100;
     nodesLimit: number = this.initialNodes;
     increaseRate: number = this.nodesLimit/5;
     onScroll() {

@@ -2,37 +2,37 @@
     <div class="card-body vbox p-0">
 
         <ngb-tabset [destroyOnHide]="false" class="vbox">
-            <ngb-tab title="Concept">
+            <ngb-tab title="Concept" id="concept">
                 <ng-template ngbTabContent>
                     <concept-tree-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></concept-tree-panel>
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab *ngIf="model == 'SKOS'" title="Collection">
+            <ngb-tab *ngIf="model == 'SKOS'" title="Collection" id="skosCollection">
                 <ng-template ngbTabContent>
                     <collection-tree-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></collection-tree-panel>
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab *ngIf="model == 'SKOS'" title="Scheme">
+            <ngb-tab *ngIf="model == 'SKOS'" title="Scheme" id="conceptScheme">
                 <ng-template ngbTabContent>
                     <scheme-list-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></scheme-list-panel>
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab title="Property">
+            <ngb-tab title="Property" id="property">
                 <ng-template ngbTabContent>
                     <property-tree-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></property-tree-panel>
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab *ngIf="model == 'OntoLex'" title="Lexicon">
+            <ngb-tab *ngIf="model == 'OntoLex'" title="Lexicon" id="limeLexicon">
                 <ng-template ngbTabContent>
                     <lexicon-list-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></lexicon-list-panel>
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab *ngIf="model == 'OntoLex'" title="LexEntry">
+            <ngb-tab *ngIf="model == 'OntoLex'" title="LexEntry" id="ontolexLexicalEntry">
                 <ng-template ngbTabContent>
                     <lexical-entry-list-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></lexical-entry-list-panel>
                 </ng-template>

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpManager } from '../utils/HttpManager';
 import { AuthServices } from "./auth.service";
 import { ExportServices } from './export.service';
+import { GlobalSearchServices } from './global-search.service';
 import { OntoLexLemonServices } from './ontolex-lemon.service';
 import { PreferencesSettingsServices } from './preferences-settings.service';
 import { ProjectsServices } from './projects.service';
@@ -21,6 +22,7 @@ import { UserServices } from './user.service';
         HttpManager,
         AuthServices,
         ExportServices,
+        GlobalSearchServices,
         OntoLexLemonServices,
         PreferencesSettingsServices,
         ProjectsServices,

@@ -1,21 +1,9 @@
-import { Dataset } from '../models/Datasets';
 import { User } from '../models/User';
 import { Project } from '../models/Project';
 
 export class PMKIContext {
 
-    private static currentDataset: Dataset;
     private static currentProject: Project;
-
-    static setDataset(dataset: Dataset) {
-        this.currentDataset = dataset;
-    }
-    static getDataset(): Dataset {
-        return this.currentDataset;
-    }
-    static removeDataset() {
-        this.currentDataset = null;
-    }
 
     static setProject(project: Project) {
         this.currentProject = project;

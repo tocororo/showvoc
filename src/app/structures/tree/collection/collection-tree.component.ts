@@ -7,6 +7,7 @@ import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTree } from '../abstract-tree';
 import { CollectionTreeNodeComponent } from './collection-tree-node.component';
+import { finalize } from 'rxjs/operators';
 
 @Component({
 	selector: 'collection-tree',
@@ -23,9 +24,10 @@ export class CollectionTreeComponent extends AbstractTree {
 
     initImpl() {
 		this.loading = true;
-		this.skosService.getRootCollections().subscribe(
+        this.skosService.getRootCollections().pipe(
+            finalize(() => this.loading = false)
+        ).subscribe(
 			collections => {
-				this.loading = false;
 				let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
 				ResourceUtils.sortResources(collections, orderAttribute);
 				this.nodes = collections;

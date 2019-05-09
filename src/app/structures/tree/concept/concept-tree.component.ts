@@ -1,4 +1,5 @@
 import { Component, Input, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ConceptTreeVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
@@ -38,9 +39,10 @@ export class ConceptTreeComponent extends AbstractTree {
     initImpl() {
         if (this.pmkiProp.getConceptTreePreferences().visualization == ConceptTreeVisualizationMode.hierarchyBased) {
             this.loading = true;
-            this.skosService.getTopConcepts(this.schemes).subscribe(
+            this.skosService.getTopConcepts(this.schemes).pipe(
+                finalize(() => this.loading = false)
+            ).subscribe(
                 concepts => {
-                    this.loading = false;
                     let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
                     ResourceUtils.sortResources(concepts, orderAttribute);
                     this.nodes = concepts;

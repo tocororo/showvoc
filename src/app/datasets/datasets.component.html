@@ -42,8 +42,8 @@
         
 
         
-		<div class="vbox ml-1" style="flex: 4;">
-            <div class="input-group">
+		<div class="vbox ml-2" style="flex: 4;">
+            <div class="input-group mb-2">
                 <input type="text" class="form-control" [(ngModel)]="searchString" (keydown.enter)="searchDataset()" placeholder="Search">
                 <div class="input-group-append">
                     <button class="btn btn-info" (click)="searchDataset()">
@@ -52,35 +52,46 @@
                 </div>
             </div>
 
-			<div class="card mt-2 scrollableContainer">
-                <div class="card-body p-1">
-                    <!-- Spinner during search -->
-                    <div *ngIf="loading" class="spinner-border text-info"></div>
-                    <!-- When datasets is empty and search is finished -->
-                    <h3 *ngIf="!loading && projects.length == 0">No dataset found for '{{lastSearch}}'</h3>
-                    <!-- Results -->
-                    <div *ngFor="let p of projects" class="card mb-1">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <p *ngIf="!p.isOpen()" class="text-muted">{{p.getName()}}</p>
-                                <a *ngIf="p.isOpen()" [routerLink]="" (click)="goToProject(p)">{{p.getName()}}</a>
-                            </h5>
-                            <div class="p-1 border-left border-bottom" style="position: absolute; top: 0; right: 0; border-bottom-left-radius: 5px">
-                                <span class="mr-2">
-                                    <span class="mr-1">Model:</span><span class="badge badge-info">{{p.getModelType(true)}}</span>
-                                </span>
-                                <span>
-                                    <span class="mr-1">Lexicalization:</span><span class="badge badge-info">{{p.getLexicalizationModelType(true)}}</span>
-                                </span>
+            <div *ngIf="loading" class="spinner-border text-info"></div>
+
+            <ng-container *ngIf="!loading">
+                <h5 *ngIf="projects.length == 0" class="text-secondary">No dataset found for '{{lastSearch}}'</h5>
+
+                <div *ngIf="projects.length != 0" class="card">
+                    <div class="card-body scrollableContainer">
+                        <div *ngFor="let p of projects" class="card mb-1">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <p *ngIf="!p.isOpen()" class="text-muted">{{p.getName()}}</p>
+                                    <a *ngIf="p.isOpen()" [routerLink]="" (click)="goToProject(p)">{{p.getName()}}</a>
+                                </h5>
+                                <div class="p-1 border-left border-bottom" style="position: absolute; top: 0; right: 0; border-bottom-left-radius: 5px">
+                                    <span class="mr-2">
+                                        <span class="mr-1">Model:</span><span class="badge badge-info">{{p.getModelType(true)}}</span>
+                                    </span>
+                                    <span>
+                                        <span class="mr-1">Lexicalization:</span><span class="badge badge-info">{{p.getLexicalizationModelType(true)}}</span>
+                                    </span>
+                                </div>
+
+
+                                <div class="p-1 border-left border-top" style="position: absolute; bottom: 0; right: 0; border-top-left-radius: 5px; line-height: 1rem">
+                                    <button class="btn btn-outline-info btn-xs" (click)="createIndex(p)" title="Create index" [disabled]="!p.isOpen() || p.creatingIndex">
+                                        <i *ngIf="!p.creatingIndex" class="fa fa-list-alt"></i>
+                                        <div *ngIf="p.creatingIndex" class="spinner-border text-info" style="width: .75rem; height: .75rem;"></div>
+                                    </button>
+                                </div>
+
+                                <!-- <h6 class="card-subtitle mb-2">
+                                    <a [href]="p.getBaseURI()" target="_blank" class="text-success">{{p.getBaseURI()}}</a>
+                                </h6> -->
+                                <p class="card-text text-secondary">{{p.getBaseURI()}}</p>
                             </div>
-                            <!-- <h6 class="card-subtitle mb-2">
-                                <a [href]="p.getBaseURI()" target="_blank" class="text-success">{{p.getBaseURI()}}</a>
-                            </h6> -->
-                            <p class="card-text text-secondary">{{p.getBaseURI()}}</p>
                         </div>
                     </div>
                 </div>
-            </div>
+            </ng-container>
+
 		</div>
 	</div>
 </div>

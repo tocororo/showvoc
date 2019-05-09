@@ -1,13 +1,13 @@
-import { Component, Input, SimpleChanges, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { PropertiesServices } from 'src/app/services/properties.service';
+import { SearchServices } from 'src/app/services/search.service';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTree } from '../abstract-tree';
-import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
-import { RDFS } from 'src/app/models/Vocabulary';
-import { Observable } from 'rxjs';
-import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
-import { SearchServices } from 'src/app/services/search.service';
 import { PropertyTreeNodeComponent } from './property-tree-node.component';
 
 @Component({
@@ -48,11 +48,12 @@ export class PropertyTreeComponent extends AbstractTree {
          */
         if (this.rootProperties) {
             this.loading = true;
-            this.propertyService.getPropertiesInfo(this.rootProperties).subscribe(
+            this.propertyService.getPropertiesInfo(this.rootProperties).pipe(
+                finalize(() => this.loading = false)
+            ).subscribe(
                 props => {
                     ResourceUtils.sortResources(props, orderAttribute);
                     this.nodes = props;
-                    this.loading = false;
                 }
             )
         } else if (this.resource) {
@@ -73,11 +74,12 @@ export class PropertyTreeComponent extends AbstractTree {
                 getPropertiesFn = this.propertyService.getTopProperties();
             }
             this.loading = true;
-            getPropertiesFn.subscribe(
+            getPropertiesFn.pipe(
+                finalize(() => this.loading = false)
+            ).subscribe(
                 props => {
                     ResourceUtils.sortResources(props, orderAttribute);
                     this.nodes = props;
-                    this.loading = false;
                 }
             );
         } 

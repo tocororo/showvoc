@@ -25,6 +25,4 @@ export abstract class AbstractTreePanel extends AbstractPanel {
      * METHODS
      */
 
-    abstract openTreeAt(node: AnnotatedValue<IRI>): void;
-
 }

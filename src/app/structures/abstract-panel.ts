@@ -55,6 +55,8 @@ export abstract class AbstractPanel {
 
     abstract handleSearchResults(results: AnnotatedValue<IRI>[]): void;
 
+    abstract openAt(node: AnnotatedValue<IRI>): void;
+
     //actions
     abstract refresh(): void;
 

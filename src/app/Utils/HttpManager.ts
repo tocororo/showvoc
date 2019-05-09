@@ -258,13 +258,13 @@ export class HttpManager {
         let params: string = "";
         // give priority to ctx_project in HttpServiceContext over project in ctx
         if (HttpServiceContext.getContextProject() != undefined) { //are temporary project exploit in PMKI? is this check really needed?
-            // params += "ctx_project=" + encodeURIComponent(HttpServiceContext.getContextProject().getName()) + "&";
-            // //consumer (if not specified is the currently open project)
-            // if (HttpServiceContext.getConsumerProject() != undefined) {
-            //     params += "ctx_consumer=SYSTEM&";
-            // } else {
-            //     params += "ctx_consumer=" + encodeURIComponent(VBContext.getWorkingProject().getName()) + "&";
-            // }
+            params += "ctx_project=" + encodeURIComponent(HttpServiceContext.getContextProject().getName()) + "&";
+            //consumer (if not specified is the currently open project)
+            if (HttpServiceContext.getConsumerProject() != undefined) {
+                params += "ctx_consumer=SYSTEM&";
+            } else {
+                params += "ctx_consumer=" + encodeURIComponent(PMKIContext.getProject().getName()) + "&";
+            }
         } else if (PMKIContext.getProject() != undefined) { //use the working project otherwise
             params += "ctx_project=" + encodeURIComponent(PMKIContext.getProject().getName()) + "&";
         }

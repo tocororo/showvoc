@@ -2,7 +2,7 @@ import { AbstractNode } from '../abstract-node';
 import { AnnotatedValue, IRI, ResAttribute } from '../../models/Resources';
 import { Observable } from 'rxjs';
 import { ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { TreeListContext } from 'src/app/utils/UIUtils';
@@ -51,8 +51,8 @@ export abstract class AbstractTreeNode extends AbstractNode {
     expandNode(): Observable<any> {
         this.loading = true;
         return this.expandNodeImpl().pipe(
+            finalize(() => this.loading = false),
             map(children => {
-                this.loading = false;
                 this.children = children;
                 this.open = true;
             })

@@ -5,6 +5,7 @@ import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractList } from '../abstract-list';
+import { finalize } from 'rxjs/operators';
 
 @Component({
 	selector: 'lexicon-list',
@@ -21,9 +22,10 @@ export class LexiconListComponent extends AbstractList {
 
     initImpl() {
 		this.loading = true;
-		this.ontolexService.getLexicons().subscribe(
+        this.ontolexService.getLexicons().pipe(
+            finalize(() => this.loading = false)
+        ).subscribe(
 			lexicons => {
-				this.loading = false;
 				let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
 				ResourceUtils.sortResources(lexicons, orderAttribute);
 				for (let l of lexicons) {

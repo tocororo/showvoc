@@ -1,7 +1,7 @@
 <div class="card vbox">
     <div class="card-header">
         <div class="btn-toolbar float-right">
-            <div class="btn-group btn-group-xs">
+            <div class="btn-group btn-group-sm">
                 <button type="button" class="btn btn-outline-secondary" style="width: 28px;" (click)="activateAllScheme()" title="Select all schemes">
                     <span class="fa fa-check-square-o"></span>
                 </button>
@@ -9,10 +9,10 @@
                     <span class="fa fa-square-o"></span>
                 </button>
             </div>
-            <button class="btn btn-light btn-xs ml-1" [ngClass]="{active: rendering}" title="Rendering" (click)="rendering=!rendering">
+            <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: rendering}" title="Rendering" (click)="rendering=!rendering">
                 <i class="fa fa-font"></i>
             </button>
-            <button class="btn btn-light btn-xs ml-1" title="Refresh" (click)="refresh()">
+            <button class="btn btn-light btn-sm ml-1" title="Refresh" (click)="refresh()">
                 <span class="fa fa-refresh"></span>
             </button>
         </div>

@@ -1,6 +1,6 @@
 import { AnnotatedValue, IRI, ResAttribute, Resource, Value, BNode, Literal, RDFResourceRolesEnum, PredicateObjects } from '../models/Resources';
 import { PMKIContext } from './PMKIContext';
-import { SemanticTurkey } from '../models/Vocabulary';
+import { SemanticTurkey, OWL, RDFS, OntoLex, SKOS, Lime, RDF, SKOSXL } from '../models/Vocabulary';
 
 export class ResourceUtils {
 
@@ -115,6 +115,69 @@ export class ResourceUtils {
             if (graphs[i].getIRI().startsWith(SemanticTurkey.stagingRemoveGraph)) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    static convertRoleToClass(role: RDFResourceRolesEnum, modelType?: string): IRI {
+        let roleClass: IRI;
+        if (role == RDFResourceRolesEnum.annotationProperty) {
+            roleClass = OWL.annotationProperty;
+        } else if (role == RDFResourceRolesEnum.cls) {
+            roleClass = modelType == RDFS.uri ? RDFS.class : OWL.class;
+        } else if (role == RDFResourceRolesEnum.concept) {
+            roleClass = modelType == OntoLex.uri ? OntoLex.lexicalConcept : SKOS.concept;
+        } else if (role == RDFResourceRolesEnum.conceptScheme) {
+            roleClass = modelType == OntoLex.uri ? OntoLex.conceptSet : SKOS.conceptScheme;
+        } else if (role == RDFResourceRolesEnum.dataRange) {
+            roleClass = OWL.dataRange;
+        } else if (role == RDFResourceRolesEnum.datatypeProperty) {
+            roleClass = OWL.datatypeProperty;
+        } else if (role == RDFResourceRolesEnum.limeLexicon) {
+            roleClass = Lime.lexicon;
+        } else if (role == RDFResourceRolesEnum.objectProperty) {
+            roleClass = OWL.objectProperty;
+        } else if (role == RDFResourceRolesEnum.ontolexForm) {
+            roleClass = OntoLex.form;
+        } else if (role == RDFResourceRolesEnum.ontolexLexicalEntry) {
+            roleClass = OntoLex.lexicalEntry;
+        } else if (role == RDFResourceRolesEnum.ontolexLexicalSense) {
+            roleClass = OntoLex.lexicalSense;
+        } else if (role == RDFResourceRolesEnum.ontology) {
+            roleClass = OWL.ontology;
+        } else if (role == RDFResourceRolesEnum.ontologyProperty) {
+            roleClass = OWL.ontologyProperty;
+        } else if (role == RDFResourceRolesEnum.property) {
+            roleClass = RDF.property;
+        } else if (role == RDFResourceRolesEnum.skosCollection) {
+            roleClass = SKOS.collection;
+        } else if (role == RDFResourceRolesEnum.skosOrderedCollection) {
+            roleClass = SKOS.orderedCollection;
+        } else if (role == RDFResourceRolesEnum.xLabel) {
+            roleClass = SKOSXL.label;
+        }
+        return roleClass;
+    }
+
+    /**
+     * Taken from it.uniroma2.art.semanticturkey.data.role.RDFResourceRoles
+     * @param subsumer 
+     * @param subsumee 
+     * @param undeterminedSubsumeesAll 
+     */
+    static roleSubsumes(subsumer: RDFResourceRolesEnum, subsumee: RDFResourceRolesEnum, undeterminedSubsumeesAll?: boolean) {
+        if (subsumer == subsumee) {
+            return true;
+        }
+        if (subsumer == RDFResourceRolesEnum.undetermined && undeterminedSubsumeesAll) {
+            return true;
+        }
+        if (subsumer == RDFResourceRolesEnum.property) {
+            return subsumee == RDFResourceRolesEnum.objectProperty || subsumee == RDFResourceRolesEnum.datatypeProperty
+                || subsumee == RDFResourceRolesEnum.annotationProperty || subsumee == RDFResourceRolesEnum.ontologyProperty;
+        }
+        if (subsumer == RDFResourceRolesEnum.skosCollection && subsumee == RDFResourceRolesEnum.skosOrderedCollection) {
+            return true;
         }
         return false;
     }

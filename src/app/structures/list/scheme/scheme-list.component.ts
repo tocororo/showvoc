@@ -5,6 +5,7 @@ import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractList } from '../abstract-list';
+import { finalize } from 'rxjs/operators';
 
 @Component({
 	selector: 'scheme-list',
@@ -25,9 +26,10 @@ export class SchemeListComponent extends AbstractList {
 
 	initImpl() {
 		this.loading = true;
-		this.skosService.getAllSchemes().subscribe(
+        this.skosService.getAllSchemes().pipe(
+            finalize(() => this.loading = false)
+        ).subscribe(
 			schemes => {
-				this.loading = false;
 				let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
 				ResourceUtils.sortResources(schemes, orderAttribute);
 				schemes.forEach(s => {
