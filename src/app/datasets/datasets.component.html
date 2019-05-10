@@ -76,7 +76,7 @@
 
 
                                 <div class="p-1 border-left border-top" style="position: absolute; bottom: 0; right: 0; border-top-left-radius: 5px; line-height: 1rem">
-                                    <button class="btn btn-outline-info btn-xs" (click)="createIndex(p)" title="Create index" [disabled]="!p.isOpen() || p.creatingIndex">
+                                    <button class="btn btn-outline-info btn-xs" (click)="createIndex(p)" title="Create index" [disabled]="!p.isOpen() || p.creatingIndex || globalCreatingIndex">
                                         <i *ngIf="!p.creatingIndex" class="fa fa-list-alt"></i>
                                         <div *ngIf="p.creatingIndex" class="spinner-border text-info" style="width: .75rem; height: .75rem;"></div>
                                     </button>

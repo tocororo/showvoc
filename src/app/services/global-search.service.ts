@@ -8,13 +8,14 @@ export class GlobalSearchServices {
 
     constructor(private httpMgr: HttpManager) { }
 
-    /**
-     * Returns the resource view of the given resource
-     * @param resource
-     */
     createIndex() {
         var params: any = {};
-        return this.httpMgr.doGet(this.serviceName, "createIndex", params);
+        return this.httpMgr.doPost(this.serviceName, "createIndex", params);
+    }
+
+    clearSpecificIndex() {
+        var params: any = {};
+        return this.httpMgr.doPost(this.serviceName, "clearSpecificIndex", params);
     }
 
     search(searchString: string, langs?: string[], maxResults?: number, searchInLocalName?: boolean) {

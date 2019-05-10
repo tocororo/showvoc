@@ -23,6 +23,7 @@ export class DatasetsComponent implements OnInit {
 	searchString: string;
 	lastSearch: string;
 	loading: boolean = false;
+	globalCreatingIndex: boolean = false; //when it's true, all the other "create index" button should be disabled
 
     constructor(private route: ActivatedRoute, private router: Router, private projectService: ProjectsServices,
         private globalSearchService: GlobalSearchServices) { }
@@ -76,13 +77,19 @@ export class DatasetsComponent implements OnInit {
          */
         let activeProject: Project = PMKIContext.getProject();
         PMKIContext.setProject(project);
-        project['creatingIndex'] = true;
-        this.globalSearchService.createIndex().pipe(
-            finalize(() => {
-                project['creatingIndex'] = false;
-                PMKIContext.setProject(activeProject); //restore the project active
-            })
-        ).subscribe();
+		project['creatingIndex'] = true;
+		this.globalCreatingIndex = true;
+		this.globalSearchService.clearSpecificIndex().subscribe(
+			() => {
+				this.globalSearchService.createIndex().pipe(
+					finalize(() => {
+						project['creatingIndex'] = false;
+						this.globalCreatingIndex = false;
+						PMKIContext.setProject(activeProject); //restore the project active
+					})
+				).subscribe();
+			}
+		);
     }
 
 }

@@ -34,9 +34,9 @@
                                     <a [routerLink]="" (click)="goToResource(result)" class="text-success">{{result.show}}</a>
                                 </div>
                                 <div style="font-size: .875rem">
-                                    <a [routerLink]="" (click)="goToResource(result)" class="text-secondary">{{result.resource}}</a>
+                                    <a [routerLink]="" (click)="goToResource(result)" class="text-secondary">{{result.resource.getIRI()}}</a>
                                 </div>
-                                <span class="mt-1">{{result.details[0].label.toNT()}}</span>
+                                <span class="mt-1">{{result.details[0].matchedValue.toNT()}}</span>
                             </div>
                         </div>
                     </div>

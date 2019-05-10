@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { IRI, Literal } from '../models/Resources';
+import { IRI, Literal, RDFResourceRolesEnum } from '../models/Resources';
 import { GlobalSearchServices } from '../services/global-search.service';
 import { SKOSXL, SKOS, RDFS } from '../models/Vocabulary';
 import { ResourcesServices } from '../services/resources.service';
@@ -55,20 +55,22 @@ export class SearchComponent {
             results => {
                 //parse global search response
                 let parsedSearchResults: GlobalSearchResult[] = [];
-                results.results.forEach(element => {
+                results.forEach(element => {
                     let details: SearchResultDetails[] = []
                     element.details.forEach(detail => {
                         details.push({
-                            label: new Literal(detail.label, detail.lang),
-                            predicate: new IRI(detail.labelType)
+                            matchedValue: new Literal(detail.matchedValue, detail.lang),
+                            predicate: new IRI(detail.labelType),
+                            type: detail.type
                         });
                     });
                     let r: GlobalSearchResult = {
-                        details: details.sort(this.sortDetails(this.labelTypeOrder)),
-                        repId: element.repId,
                         resource: new IRI(element.resource),
                         resourceLocalName: element.resourceLocalName,
-                        resourceType: new IRI(element.resourceType)
+                        resourceType: new IRI(element.resourceType),
+                        role: element.role,
+                        repId: element.repId,
+                        details: details.sort(this.sortDetails(this.labelTypeOrder))
                     }
                     parsedSearchResults.push(r);
                 });
@@ -135,14 +137,16 @@ export class SearchComponent {
 }
 
 class GlobalSearchResult {
-    details: SearchResultDetails[];
-    repId: string;
     resource: IRI;
-    show?: string;
     resourceLocalName: string;
     resourceType: IRI;
+    role: RDFResourceRolesEnum;
+    repId: string;
+    details: SearchResultDetails[];
+    show?: string; //not in the response, computed later for each result
 }
 class SearchResultDetails {
-    label: Literal;
+    matchedValue: Literal;
     predicate: IRI;
+    type: "note" | "label";
 }
