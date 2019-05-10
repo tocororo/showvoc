@@ -14,7 +14,7 @@ interface RouteStorageObject {
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
 
-	private storingRoutes: string[] = ["datasets", "search"]; //routes to store
+	private storingRoutes: string[] = ["datasets", "data", "sparql", "search"]; //routes to store
 
 	/** 
      * Object which will store RouteStorageObjects indexed by keys
@@ -32,7 +32,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
      * @returns boolean indicating that we want to (true) or do not want to (false) store that route
      */
     shouldDetach(route: ActivatedRouteSnapshot): boolean {
-		// check to see if the route's path is in our storingRoutes array
+        // check to see if the route's path is in our storingRoutes array
 		if (this.storingRoutes.indexOf(route.routeConfig.path) != -1) {
 			return true;
 		} else {

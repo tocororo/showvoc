@@ -10,11 +10,13 @@ import { ResourceDeserializer, ResourceUtils, SortAttribute } from '../utils/Res
 
 @Component({
 	selector: 'resource-view',
-	templateUrl: './resource-view.component.html',
+    templateUrl: './resource-view.component.html',
+    host: { class: "hbox" }
 })
 export class ResourceViewComponent {
 
-    @Input() resource: AnnotatedValue<Resource>;
+    @Input() resource: Resource;
+    annotatedResource: AnnotatedValue<Resource>;
     
     loading: boolean = false;
 
@@ -75,12 +77,12 @@ export class ResourceViewComponent {
         if (changes['resource'] && changes['resource'].currentValue) {
             //if not the first change, avoid to refresh res view if resource is not changed
             if (!changes['resource'].firstChange) { 
-                let prevRes: AnnotatedValue<Resource> = changes['resource'].previousValue;
-                if (prevRes.getValue().equals(this.resource.getValue())) {
+                let prevRes: Resource = changes['resource'].previousValue;
+                if (prevRes.equals(this.resource)) {
                     return;
                 }
             }
-            this.buildResourceView(this.resource.getValue());//refresh resource view when Input resource changes
+            this.buildResourceView(this.resource);//refresh resource view when Input resource changes
         }
     }
     
@@ -139,9 +141,9 @@ export class ResourceViewComponent {
         this.typesColl = null;
 
         var resourcePartition: any = this.resViewResponse.resource;
-        this.resource = ResourceDeserializer.createResource(resourcePartition);
+        this.annotatedResource = ResourceDeserializer.createResource(resourcePartition);
 
-        this.resourcePosition = ResourcePosition.deserialize(this.resource.getAttribute(ResAttribute.RESOURCE_POSITION));
+        this.resourcePosition = ResourcePosition.deserialize(this.annotatedResource.getAttribute(ResAttribute.RESOURCE_POSITION));
 
         if (this.resourcePosition instanceof LocalResourcePosition) {
             this.resourcePositionLocalProj = this.resourcePosition.project == PMKIContext.getProject().getName();
@@ -490,7 +492,7 @@ export class ResourceViewComponent {
         this.showInferred = !this.showInferred;
         this.pmkiProp.setInferenceInResourceView(this.showInferred);
         if (!this.showInferredPristine) { //resource view has been initialized with showInferred to false, so repeat the request
-            this.buildResourceView(this.resource.getValue());
+            this.buildResourceView(this.resource);
         } else { //resource view has been initialized with showInferred to true, so there's no need to repeat the request
             this.loading = true;
             this.fillPartitions();

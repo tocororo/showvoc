@@ -1,0 +1,27 @@
+<div left class="card vbox">
+    <div class="card-body vbox p-0">
+
+        <ngb-tabset [destroyOnHide]="false" class="vbox" (tabChange)="onTabChange($event)">
+            
+            <ngb-tab *ngFor="let t of tabs" [id]="'tab'+t.id">
+                <ng-template ngbTabTitle>
+                    <span>Query {{t.id}}</span>
+                    <span *ngIf="tabs.length > 1" class="ml-2" (click)="closeTab(t, $event)">
+                        <i class="fa fa-close" style="cursor: pointer;"></i>
+                    </span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <sparql-tab></sparql-tab>
+                </ng-template>
+            </ngb-tab>
+
+            <ngb-tab id="addTab" [disabled]="tabs.length > 10">
+                <ng-template ngbTabTitle>
+                    <i class="fa fa-plus" style="cursor: pointer;"></i>
+                </ng-template>
+            </ngb-tab>
+
+        </ngb-tabset>
+
+    </div>
+</div>

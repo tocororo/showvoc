@@ -35,9 +35,9 @@
             </ng-container>
         </div>
 
-        <div *ngIf="visualizationMode == 'searchBased' && !alertClosed" class="alert alert-info alert-dismissible mb-1">
+        <div *ngIf="visualizationMode == 'searchBased' && showInfoAlert" class="alert alert-info alert-dismissible mb-1">
                 Please use the search field to retrieve lexical entries
-            <button class="close" (click)="alertClosed=true">
+            <button class="close" (click)="showInfoAlert=false">
                 <span>&times;</span>
             </button>
         </div>

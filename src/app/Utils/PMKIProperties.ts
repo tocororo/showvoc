@@ -51,19 +51,21 @@ export class PMKIProperties {
         ];
         return this.prefService.getPUSettings(properties).pipe(
             map(prefs => {
-                this.activeSchemes = [];
+                let activeSchemes = [];
                 let activeSchemesPref: string = prefs[Properties.pref_active_schemes];
                 if (activeSchemesPref != null) {
                     let skSplitted: string[] = activeSchemesPref.split(",");
                     for (var i = 0; i < skSplitted.length; i++) {
-                        this.activeSchemes.push(new IRI(skSplitted[i]));
+                        activeSchemes.push(new IRI(skSplitted[i]));
                     }
                 }
+                this.setActiveSchemes(activeSchemes);
 
-                this.activeLexicon = null;
+                let activeLexicon = null;
                 let activeLexiconPref: string = prefs[Properties.pref_active_lexicon];
                 if (activeLexiconPref != null) {
-                    this.activeLexicon = new IRI(activeLexiconPref);
+                    activeLexicon = new IRI(activeLexiconPref);
+                    this.setActiveLexicon(activeLexicon);
                 }
 
                 this.showFlags = prefs[Properties.pref_show_flags] == "true";

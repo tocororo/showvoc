@@ -1,0 +1,4 @@
+<resizable-layout>
+    <structure-tabset left (nodeSelected)="onNodeSelected($event)" class="vbox"></structure-tabset>
+    <resource-view right *ngIf="resource" [resource]="resource.getValue()" class="vbox"></resource-view>
+</resizable-layout>

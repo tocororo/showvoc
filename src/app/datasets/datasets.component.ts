@@ -18,7 +18,7 @@ export class DatasetsComponent implements OnInit {
 	kosCheck: boolean = true;
 	lexiconsCheck: boolean = true;
 
-	projects: Project[] = [];
+	projects: Project[];
 
 	searchString: string;
 	lastSearch: string;
@@ -66,7 +66,6 @@ export class DatasetsComponent implements OnInit {
     }
     
 	private goToProject(project: Project) {
-		PMKIContext.setProject(project);
 		this.router.navigate(["/datasets/" + project.getName()]);
     }
     

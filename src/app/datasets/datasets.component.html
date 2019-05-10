@@ -54,7 +54,7 @@
 
             <div *ngIf="loading" class="spinner-border text-info"></div>
 
-            <ng-container *ngIf="!loading">
+            <ng-container *ngIf="!loading && projects">
                 <h5 *ngIf="projects.length == 0" class="text-secondary">No dataset found for '{{lastSearch}}'</h5>
 
                 <div *ngIf="projects.length != 0" class="card">

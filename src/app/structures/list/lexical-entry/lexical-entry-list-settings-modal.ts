@@ -11,8 +11,8 @@ export class LexicalEntryListSettingsModal implements OnInit {
 
 	private pristineLexEntryPref: LexicalEntryListPreference;
 
-    private visualization: LexEntryVisualizationMode;
-    private visualizationModes: { label: string, value: LexEntryVisualizationMode }[] = [
+    visualization: LexEntryVisualizationMode;
+    visualizationModes: { label: string, value: LexEntryVisualizationMode }[] = [
         { label: "Index based", value: LexEntryVisualizationMode.indexBased },
         { label: "Search based", value: LexEntryVisualizationMode.searchBased }
     ]

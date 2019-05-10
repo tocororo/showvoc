@@ -1,8 +1,8 @@
-<div class="card">
+<div class="card" *ngIf="annotatedResource">
     <div class="card-header">
         <div class="hbox">
-            <rdf-resource [resource]="resource"></rdf-resource>
-            <input class="form-control form-control-sm ml-2" [ngModel]="resource.getValue().stringValue()" readonly>
+            <rdf-resource [resource]="annotatedResource"></rdf-resource>
+            <input class="form-control form-control-sm ml-2" [ngModel]="annotatedResource.getValue().stringValue()" readonly>
 
             <div class="btn-toolbar" style="flex-wrap: nowrap">
                 <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: showInferred}" title="Show/hide inferred information" (click)="switchInferred()">
@@ -25,12 +25,12 @@
             <tbody>
                 <tr>
                     <th scope="row">ID</th>
-                    <td>{{resource.getValue().stringValue()}}</td>
+                    <td>{{annotatedResource.getValue().stringValue()}}</td>
                 </tr>
 
                 <tr>
                     <th scope="row">Type</th>
-                    <td>{{resource.getAttribute('role')}}</td>
+                    <td>{{annotatedResource.getAttribute('role')}}</td>
                 </tr>
                 
                 <tr>

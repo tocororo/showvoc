@@ -1,22 +1,48 @@
 import { User } from '../models/User';
 import { Project } from '../models/Project';
+import { PrefixMapping } from '../models/Metadata';
+
+class ProjectContext {
+    private project: Project;
+    private prefixMappings: PrefixMapping[];
+
+    setProject(project: Project) { this.project = project; }
+    getProject(): Project { return this.project; }
+
+    setPrefixMappings(mappings: PrefixMapping[]) { this.prefixMappings = mappings; }
+    getPrefixMappings(): PrefixMapping[] { return this.prefixMappings; }
+
+    reset() {
+        this.project = null;
+        this.prefixMappings = null;
+    }
+}
 
 export class PMKIContext {
 
-    private static currentProject: Project;
+    private static workingProjectCtx: ProjectContext = new ProjectContext();
+    private static loggedUser: User;
+
 
     static setProject(project: Project) {
-        this.currentProject = project;
+        this.workingProjectCtx.reset();
+        this.workingProjectCtx.setProject(project);
     }
     static getProject(): Project {
-        return this.currentProject;
+        return this.workingProjectCtx.getProject();
     }
     static removeProject() {
-        this.currentProject = null;
+        this.workingProjectCtx.reset();
     }
 
 
-    private static loggedUser: User;
+    static setPrefixMappings(prefixMappings: PrefixMapping[]) {
+        this.workingProjectCtx.setPrefixMappings(prefixMappings);
+    }
+    static getPrefixMappings(): PrefixMapping[] {
+        return this.workingProjectCtx.getPrefixMappings();
+    }
+
 
     static setLoggedUser(user: User) {
         this.loggedUser = user;
@@ -27,11 +53,17 @@ export class PMKIContext {
     static removeLoggedUser() {
         this.loggedUser = null;
     }
-    /**
-     * Returns true if a user is logged in
-     */
     static isLoggedIn(): boolean {
         return this.loggedUser != null;
+    }
+
+
+    /**
+     * Reset to null all the variable of the context
+     */
+    static resetContext() {
+        this.workingProjectCtx.reset();
+        this.loggedUser = null;
     }
 
 }

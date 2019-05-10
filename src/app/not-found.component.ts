@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 	template: `
 	<div class="container my-3"><h1>Page not found</h1></div>
 	`,
-	styles: []
+	host: { class: "pageComponent" }
 })
 export class NotFoundComponent {
 

@@ -35,12 +35,13 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
 
     private schemeList: AnnotatedValue<IRI>[];
     private selectedSchemeUri: string; //needed for the <select> element where I cannot use ARTURIResource as <option> values
-    // //because I need also a <option> with null value for the no-scheme mode (and it's not possible)
+        //because I need also a <option> with null value for the no-scheme mode (and it's not possible)
     workingSchemes: IRI[];//keep track of the selected scheme: could be assigned throught @Input scheme or scheme selection
         //(useful expecially when schemeChangeable is true so the changes don't effect the scheme in context)
     schemesForSearchBar: IRI[];
 
     visualizationMode: ConceptTreeVisualizationMode;
+    showInfoAlert: boolean = true;
     
 
 	constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties,

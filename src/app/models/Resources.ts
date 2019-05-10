@@ -62,10 +62,6 @@ export class IRI extends Resource {
         return this.iriString;
     }
 
-    toString(): string {
-        return this.stringValue();
-    }
-
     toNT(): string {
         return "<" + this.iriString + ">";
     }
@@ -91,12 +87,8 @@ export class BNode extends Resource {
         return this.id;
     }
 
-    toString(): string {
-        return "_:" + this.id;
-    }
-
     toNT() {
-        return this.toString();
+        return this.stringValue();
     }
     
 }
@@ -144,7 +136,7 @@ export class Literal extends Value {
         return this.label;
     }
 
-    toString(): string {
+    toNT() {
         let str: string = '"' + this.label + '"';
         if (this.isLanguageLiteral()) {
             str += '@' + this.language;
@@ -152,10 +144,6 @@ export class Literal extends Value {
 			str += "^^<" + this.datatype.toString() + ">";
         }
         return str;
-    }
-
-    toNT() {
-        return this.toString();
     }
 }
 

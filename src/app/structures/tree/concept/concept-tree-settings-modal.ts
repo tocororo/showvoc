@@ -11,8 +11,8 @@ export class ConceptTreeSettingsModal implements OnInit {
 
 	private pristineConcPref: ConceptTreePreference;
 
-    private visualization: ConceptTreeVisualizationMode;
-    private visualizationModes: { label: string, value: ConceptTreeVisualizationMode }[] = [
+    visualization: ConceptTreeVisualizationMode;
+    visualizationModes: { label: string, value: ConceptTreeVisualizationMode }[] = [
         { label: "Hierarchy based", value: ConceptTreeVisualizationMode.hierarchyBased },
         { label: "Search based", value: ConceptTreeVisualizationMode.searchBased }
     ]

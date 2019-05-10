@@ -4,6 +4,7 @@ import { HttpManager } from '../utils/HttpManager';
 import { AuthServices } from "./auth.service";
 import { ExportServices } from './export.service';
 import { GlobalSearchServices } from './global-search.service';
+import { MetadataServices } from './metadata.service';
 import { OntoLexLemonServices } from './ontolex-lemon.service';
 import { PreferencesSettingsServices } from './preferences-settings.service';
 import { ProjectsServices } from './projects.service';
@@ -12,6 +13,7 @@ import { ResourceViewServices } from './resource-view.service';
 import { ResourcesServices } from './resources.service';
 import { SearchServices } from './search.service';
 import { SkosServices } from './skos.service';
+import { SparqlServices } from './sparql.service';
 import { UserServices } from './user.service';
 
 @NgModule({
@@ -23,6 +25,7 @@ import { UserServices } from './user.service';
         AuthServices,
         ExportServices,
         GlobalSearchServices,
+        MetadataServices,
         OntoLexLemonServices,
         PreferencesSettingsServices,
         ProjectsServices,
@@ -31,6 +34,7 @@ import { UserServices } from './user.service';
         ResourceViewServices,
         SearchServices,
         SkosServices,
+        SparqlServices,
         UserServices
     ]
 })

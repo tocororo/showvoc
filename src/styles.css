@@ -191,12 +191,20 @@ rdf-resource > .rdfResourceText {
     color: #999;
 }
 
-
-.table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
-    border: none;
+.clickable:hover {
+    cursor: pointer;
 }
 
 /* ====================== */
+
+/* YASQE extension */
+
+/* Limit height of codemirror in relation of the viewport */ 
+sparql-component .CodeMirror { height: 28vh !important }
+/* Reset height to auto when codemirror is fullscreen */
+.CodeMirror.CodeMirror-fullscreen { height: auto !important }
+/* To put codemirror in fullscreen in front of the menubar (default z-index 7 made the textarea behind the navbar) */
+.yasqe .CodeMirror-fullscreen { z-index: 999 !important; }
 
 /* Bootstrap extension */
 
@@ -220,7 +228,15 @@ rdf-resource > .rdfResourceText {
     border-radius: 3px;
 }
 
+.table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
+    border: none;
+}
+
 /* Bootstrap override */
+
+sparql-component .nav-tabs>li>a {
+    cursor: default;
+}
 
 label {
     margin-bottom: 0px;
@@ -273,9 +289,6 @@ ul.nav-tabs {
     padding: 3px 10px;
 }
 
-.modal-dialog {
-    max-width: 600px; /* Default in Bootstrap is 500px, in my opinion it's too small, I prefer 600px like in Bootstrap 3 */
-}
 /* Following modal classe overrides are in order to avoid that modals exceed window height */
 .modal-header {
     display: block; /* override the flex */
