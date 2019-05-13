@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
-import { ModalOptions } from 'src/app/modal-dialogs/Modals';
+import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { PrefixMapping } from 'src/app/models/Metadata';
 import { BNode, IRI, Resource } from 'src/app/models/Resources';
@@ -20,7 +20,7 @@ export class SparqlTabComponent implements OnInit {
 
     query: string;
     inferred: boolean = false;
-    private queryMode: QueryMode = QueryMode.query;
+    queryMode: QueryMode = QueryMode.query;
     private sampleQuery: string = "SELECT * WHERE {\n    ?s ?p ?o .\n} LIMIT 10";
     private queryCache: string; //contains the last query submitted (useful to invoke the export excel)
     private respSparqlJSON: any; //keep the "sparql" JSON object contained in the response
@@ -80,6 +80,12 @@ export class SparqlTabComponent implements OnInit {
     }
 
     doQuery() {
+
+        if (this.queryMode == QueryMode.update) {
+            this.basicModals.alert("SPARQL update", "Update query not allowed", ModalType.warning);
+            return;
+        }
+
         let initTime = new Date().getTime();
         this.queryResult = null;
         this.resultsPage = 0;

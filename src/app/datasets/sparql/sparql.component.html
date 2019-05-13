@@ -5,7 +5,7 @@
             
             <ngb-tab *ngFor="let t of tabs" [id]="'tab'+t.id">
                 <ng-template ngbTabTitle>
-                    <span>Query {{t.id}}</span>
+                    <span>Query </span>
                     <span *ngIf="tabs.length > 1" class="ml-2" (click)="closeTab(t, $event)">
                         <i class="fa fa-close" style="cursor: pointer;"></i>
                     </span>
