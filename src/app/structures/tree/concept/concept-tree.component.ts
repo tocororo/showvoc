@@ -1,6 +1,7 @@
 import { Component, Input, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { ConceptTreeVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { SearchServices } from 'src/app/services/search.service';
@@ -22,16 +23,22 @@ export class ConceptTreeComponent extends AbstractTree {
 
     @ViewChildren(ConceptTreeNodeComponent) viewChildrenNode: QueryList<ConceptTreeNodeComponent>;
 
+    structRole: RDFResourceRolesEnum.concept;
+
     constructor(private skosService: SkosServices, private searchService: SearchServices, private pmkiProp: PMKIProperties, 
-        eventHandler: PMKIEventHandler, basicModals: BasicModalsServices) {
-        super(eventHandler, basicModals);
+        eventHandler: PMKIEventHandler, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
+        super(eventHandler, basicModals, sharedModals);
     }
 
     /**
      * Listener on changes of @Input scheme. When it changes, update the tree
      */
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['schemes']) {
+        /**
+         * Initialized the tree only if not the first change. Avoid multiple initialization.
+         * The first initialization was already fired in ngOnInit of AbstractStructure
+         */
+        if (changes['schemes'] && !changes['schemes'].isFirstChange) { 
             this.init();
         }
     }

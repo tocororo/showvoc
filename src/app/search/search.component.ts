@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
-import { IRI, Literal, RDFResourceRolesEnum } from '../models/Resources';
+import { finalize, map } from 'rxjs/operators';
+import { Project } from '../models/Project';
+import { IRI } from '../models/Resources';
+import { GlobalSearchResult } from '../models/Search';
+import { RDFS, SKOS, SKOSXL } from '../models/Vocabulary';
 import { GlobalSearchServices } from '../services/global-search.service';
-import { SKOSXL, SKOS, RDFS } from '../models/Vocabulary';
 import { ResourcesServices } from '../services/resources.service';
 import { PMKIContext } from '../utils/PMKIContext';
-import { Project } from '../models/Project';
+import { Observable, concat, of } from 'rxjs';
 
 @Component({
 	selector: 'search-component',
@@ -31,6 +33,8 @@ export class SearchComponent {
     groupedSearchResults: { [repId: string ]: GlobalSearchResult[] };
     groupedSearchResultsRepoIds: string[];
 
+    private openRepoIds: string[];
+
     private labelTypeOrder: string[] = [
         SKOSXL.prefLabel.getIRI(), SKOS.prefLabel.getIRI(), RDFS.label.getIRI(),
         SKOSXL.altLabel.getIRI(), SKOS.altLabel.getIRI(),
@@ -52,101 +56,75 @@ export class SearchComponent {
         this.globalSearchService.search(this.searchString).pipe(
             finalize(() => this.loading = false)
         ).subscribe(
-            results => {
-                //parse global search response
-                let parsedSearchResults: GlobalSearchResult[] = [];
-                results.forEach(element => {
-                    let details: SearchResultDetails[] = []
-                    element.details.forEach(detail => {
-                        details.push({
-                            matchedValue: new Literal(detail.matchedValue, detail.lang),
-                            predicate: new IRI(detail.labelType),
-                            type: detail.type
-                        });
-                    });
-                    let r: GlobalSearchResult = {
-                        resource: new IRI(element.resource),
-                        resourceLocalName: element.resourceLocalName,
-                        resourceType: new IRI(element.resourceType),
-                        role: element.role,
-                        repId: element.repId,
-                        details: details.sort(this.sortDetails(this.labelTypeOrder))
-                    }
-                    parsedSearchResults.push(r);
-                });
-
-                //group by repository ID the results 
+            (results: GlobalSearchResult[]) => {
+                //group the results by repository ID 
                 this.groupedSearchResults = {};
-                parsedSearchResults.forEach(r => {
-                    let resultsInRepo: GlobalSearchResult[] = this.groupedSearchResults[r.repId];
+                results.forEach(r => {
+                    let resultsInRepo: GlobalSearchResult[] = this.groupedSearchResults[r.repository.id];
                     if (resultsInRepo != null) {
                         resultsInRepo.push(r);
                     } else {
-                        this.groupedSearchResults[r.repId] = [r];
+                        this.groupedSearchResults[r.repository.id] = [r];
                     }
                 });
+
                 //update the repository IDs list, useful to iterate over groupedSearchResults in the UI
                 this.groupedSearchResultsRepoIds = Object.keys(this.groupedSearchResults);
+                this.groupedSearchResultsRepoIds.sort();
+
+                //collects the open repositories
+                this.openRepoIds = [];
+                this.groupedSearchResultsRepoIds.forEach(repoId => {
+                    if (this.groupedSearchResults[repoId][0].repository.open) {
+                        this.openRepoIds.push(repoId);
+                    }
+                });
 
                 //compute show of results
-                let projectBackup = PMKIContext.getProject();
-                this.groupedSearchResultsRepoIds.forEach(repo => {
-                    let results: GlobalSearchResult[] = this.groupedSearchResults[repo];
-                    this.computeShowOfResults(results);
+                let computeResultsShowFunctions: Observable<void>[] = [];
+                this.groupedSearchResultsRepoIds.forEach(repoId => {
+                    let results: GlobalSearchResult[] = this.groupedSearchResults[repoId];
+                    computeResultsShowFunctions.push(this.getComputeResultsShowFn(results));
                 });
-                PMKIContext.setProject(projectBackup);
+                concat(...computeResultsShowFunctions).subscribe();
             }
         )
     }
 
-    private computeShowOfResults(results: GlobalSearchResult[]) {
-        let resources: IRI[] = []
-        results.forEach(r => {
-            resources.push(r.resource);
-        });
+    private getComputeResultsShowFn(results: GlobalSearchResult[]): Observable<void> {
+        if (results[0].repository.open) { //if the repository is open, compute the show with a service invokation
+            let resources: IRI[] = []
+            results.forEach(r => {
+                resources.push(r.resource);
+            });
 
-        PMKIContext.setProject(new Project(results[0].repId));
-        this.resourcesService.getResourcesInfo(resources).subscribe(
-            annotated => {
-                annotated.forEach(a => {
-                    results.find(r => r.resource.equals(a.getValue())).show = a.getShow();
+            let projectBackup = PMKIContext.getProject();
+            PMKIContext.setProject(new Project(results[0].repository.id));
+            return this.resourcesService.getResourcesInfo(resources).pipe(
+                finalize(() => PMKIContext.setProject(projectBackup)), //restore the previous project in the ctx
+                map(annotated => {
+                    annotated.forEach(a => {
+                        results.find(r => r.resource.equals(a.getValue())).show = a.getShow();
+                    });
                 })
-            }
-        );
+            );
+        } else { //if the repository is closed, the show is the same IRI
+            return of(
+                results.forEach(r => {
+                    r.show = r.resource.getIRI()
+                })
+            );
+        }
     }
 
     
     private goToResource(result: GlobalSearchResult) {
-        this.router.navigate(["/datasets/" + result.repId], { queryParams: { resId: result.resource.getIRI() } });
+        this.router.navigate(["/datasets/" + result.repository.id], { queryParams: { resId: result.resource.getIRI() } });
     }
 
     private goToDataset(repoId: string) {
         this.router.navigate(["/datasets/" + repoId]);
     }
     
-    private sortDetails(order: string[]) {
-        return function(a: SearchResultDetails, b: SearchResultDetails) {
-            let indexPredA = order.indexOf(a.predicate.getIRI());
-            let indexPredB = order.indexOf(b.predicate.getIRI());
-            if (indexPredA == -1) return 1;
-            else if (indexPredB == -1) return -1;
-            else return indexPredA - indexPredB;
-        }
-    }
-
 }
 
-class GlobalSearchResult {
-    resource: IRI;
-    resourceLocalName: string;
-    resourceType: IRI;
-    role: RDFResourceRolesEnum;
-    repId: string;
-    details: SearchResultDetails[];
-    show?: string; //not in the response, computed later for each result
-}
-class SearchResultDetails {
-    matchedValue: Literal;
-    predicate: IRI;
-    type: "note" | "label";
-}

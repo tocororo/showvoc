@@ -1,11 +1,12 @@
-import { AbstractNode } from '../abstract-node';
-import { AnnotatedValue, IRI, ResAttribute } from '../../models/Resources';
+import { ElementRef, QueryList, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
-import { map, finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { TreeListContext } from 'src/app/utils/UIUtils';
+import { AnnotatedValue, IRI, ResAttribute } from '../../models/Resources';
+import { AbstractNode } from '../abstract-node';
 
 export abstract class AbstractTreeNode extends AbstractNode {
 
@@ -28,10 +29,13 @@ export abstract class AbstractTreeNode extends AbstractNode {
     /**
      * CONSTRUCTOR
      */
-    private basicModals: BasicModalsServices
-    constructor(basicModals: BasicModalsServices) {
+    private basicModals: BasicModalsServices;
+    private sharedModals: SharedModalsServices;
+
+    constructor(basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
         super();
         this.basicModals = basicModals;
+        this.sharedModals = sharedModals;
     }
 
     /**
@@ -48,7 +52,7 @@ export abstract class AbstractTreeNode extends AbstractNode {
     /**
      * Implementation of the expansion. It calls the  service for getting the child of a node in the given tree
      */
-    expandNode(): Observable<any> {
+    expandNode(): Observable<void> {
         this.loading = true;
         return this.expandNodeImpl().pipe(
             finalize(() => this.loading = false),
@@ -77,8 +81,10 @@ export abstract class AbstractTreeNode extends AbstractNode {
      */
     public expandPath(path: AnnotatedValue<IRI>[]) {
         if (path.length == 0) { //this is the last node of the path. Focus it in the tree
-            this.treeNodeElement.nativeElement.scrollIntoView({block: 'end', behavior: 'smooth'});
             this.selectNode();
+            setTimeout(() => { //give time to update the view (after selectNode the res view could make reduce the size of the tree)
+                this.treeNodeElement.nativeElement.scrollIntoView({block: 'end', behavior: 'smooth'});
+            });
         } else {
             if (!this.open) { //if node is close, expand itself
                 this.expandNode().subscribe(
@@ -121,13 +127,13 @@ export abstract class AbstractTreeNode extends AbstractNode {
         }
         //if this line is reached it means that the first node of the path has not been found
         if (this.context == TreeListContext.dataPanel) {
-            // this.basicModals.confirm("Search", "Node " + path[path.length-1].getShow() + " is not reachable in the current tree. "
-            //     + "Do you want to open its ResourceView in a modal dialog?", ModalType.warning).then(
-            //     confirm => { 
-            //         this.sharedModals.openResourceView(path[path.length-1], false);
-            //     },
-            //     cancel => {}
-            // );
+            this.basicModals.confirm("Search", "Node " + path[path.length-1].getShow() + " is not reachable in the current tree. "
+                + "Do you want to open its ResourceView in a modal dialog?", ModalType.warning).then(
+                confirm => { 
+                    this.sharedModals.openResourceView(path[path.length-1].getValue());
+                },
+                cancel => {}
+            );
         } else {
             this.basicModals.alert("Search", "Node " + path[path.length-1].getShow() + " is not reachable in the current tree.", ModalType.warning);
         }

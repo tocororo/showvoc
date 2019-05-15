@@ -21,6 +21,7 @@ class ProjectContext {
 export class PMKIContext {
 
     private static workingProjectCtx: ProjectContext = new ProjectContext();
+    private static projectChanged: boolean;
     private static loggedUser: User;
 
 
@@ -33,6 +34,16 @@ export class PMKIContext {
     }
     static removeProject() {
         this.workingProjectCtx.reset();
+    }
+
+    /**
+     * When project changes set a flag in the context, so the CustomReuseStrategy knows if to reattach or reload a route
+     */
+    static setProjectChanged(changed: boolean) {
+        this.projectChanged = changed;
+    }
+    static isProjectChanged() {
+        return this.projectChanged;
     }
 
 

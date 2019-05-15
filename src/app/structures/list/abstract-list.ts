@@ -48,10 +48,12 @@ export abstract class AbstractList extends AbstractStruct {
                 var childrenNodeComponent = this.viewChildrenNode.toArray();
                 for (var i = 0; i < childrenNodeComponent.length; i++) {
                     if (childrenNodeComponent[i].node.getValue().equals(node.getValue())) {
-                        childrenNodeComponent[i].ensureVisible();
                         if (!childrenNodeComponent[i].node.getAttribute(ResAttribute.SELECTED)) {
                             childrenNodeComponent[i].selectNode();
                         }
+                        setTimeout(() => { //give time to update the view (after selectNode the res view could make reduce the size of the tree)
+                            childrenNodeComponent[i].ensureVisible();
+                        });
                         break;
                     }
                 }

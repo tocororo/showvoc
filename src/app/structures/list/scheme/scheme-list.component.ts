@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { IRI, AnnotatedValue } from 'src/app/models/Resources';
+import { finalize } from 'rxjs/operators';
+import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { SkosServices } from 'src/app/services/skos.service';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractList } from '../abstract-list';
-import { finalize } from 'rxjs/operators';
 
 @Component({
 	selector: 'scheme-list',
@@ -13,6 +13,8 @@ import { finalize } from 'rxjs/operators';
     host: { class: "structureComponent" }
 })
 export class SchemeListComponent extends AbstractList {
+
+	structRole: RDFResourceRolesEnum.conceptScheme;
 
 	constructor(private skosService: SkosServices, private pmkiProp: PMKIProperties, eventHandler: PMKIEventHandler) {
         super(eventHandler);

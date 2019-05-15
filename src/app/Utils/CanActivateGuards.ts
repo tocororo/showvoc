@@ -30,6 +30,10 @@ export class ProjectGuard implements CanActivate {
         if (ctxProject != null && ctxProject.getName() == paramProject) {
             return of(true);
         } else { //the context project was not initialized, or it was not the project passed via url param 
+
+            //the project was changed, so set the flag in the context, so the CustomReuseStrategy knows if to reattach or reload a route
+            PMKIContext.setProjectChanged(true);
+
             return this.projectService.listProjects(null, true, true).pipe( //retrieve project with a service invocation
                 flatMap(projects => {
                     let p: Project = projects.find(p => p.getName() == paramProject);
@@ -43,10 +47,6 @@ export class ProjectGuard implements CanActivate {
                         return forkJoin(projInitFunctions).pipe(
                             map(() => true)
                         )
-
-                        // return this.pmkiProp.initUserProjectPreferences().pipe( //initialize the preferences
-                        //     map(() => true)
-                        // )
                     } else { //project not found, redirect to home
                         this.basicModals.alert("Dataset not found", "The requested dateset (id: '" + paramProject +
                             "') does not exist or is not open. You will be redirect to the home page.", ModalType.warning).then(

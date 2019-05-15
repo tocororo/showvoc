@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { AnnotatedValue, IRI } from 'src/app/models/Resources';
+import { finalize } from 'rxjs/operators';
+import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractList } from '../abstract-list';
-import { finalize } from 'rxjs/operators';
 
 @Component({
 	selector: 'lexicon-list',
@@ -14,17 +14,19 @@ import { finalize } from 'rxjs/operators';
 })
 export class LexiconListComponent extends AbstractList {
 
+	structRole: RDFResourceRolesEnum.limeLexicon;
+
 	private activeLexicon: AnnotatedValue<IRI>;
 
-    constructor(private ontolexService: OntoLexLemonServices, private pmkiProp: PMKIProperties, eventHandler: PMKIEventHandler) {
+	constructor(private ontolexService: OntoLexLemonServices, private pmkiProp: PMKIProperties, eventHandler: PMKIEventHandler) {
 		super(eventHandler);
-    }
+	}
 
-    initImpl() {
+	initImpl() {
 		this.loading = true;
-        this.ontolexService.getLexicons().pipe(
-            finalize(() => this.loading = false)
-        ).subscribe(
+		this.ontolexService.getLexicons().pipe(
+			finalize(() => this.loading = false)
+		).subscribe(
 			lexicons => {
 				let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
 				ResourceUtils.sortResources(lexicons, orderAttribute);
@@ -38,7 +40,7 @@ export class LexiconListComponent extends AbstractList {
 			}
 		);
 	}
-	
+
 	updateActiveSchemesPref() {
 		this.pmkiProp.setActiveLexicon(this.activeLexicon.getValue());
 	}

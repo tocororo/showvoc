@@ -8,7 +8,6 @@ export abstract class AbstractStruct implements OnInit {
 
     @Input() rendering: boolean = true; //if true the nodes in the list should be rendered with the show, with the qname otherwise
     @Input() showDeprecated: boolean = true;
-    @Input() role: RDFResourceRolesEnum;
     @Input() context: TreeListContext;
     @Output() nodeSelected = new EventEmitter<AnnotatedValue<IRI>>();
 
@@ -17,6 +16,8 @@ export abstract class AbstractStruct implements OnInit {
     /**
      * ATTRIBUTES
      */
+
+    abstract structRole: RDFResourceRolesEnum; //declare the type of resources in the panel
 
     nodes: AnnotatedValue<IRI>[];
     selectedNode: AnnotatedValue<IRI>;

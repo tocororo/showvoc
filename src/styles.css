@@ -195,6 +195,12 @@ rdf-resource > .rdfResourceText {
     cursor: pointer;
 }
 
+/* Disable events when clicking on a disabled link */
+a.disabled {
+    pointer-events: none;
+    opacity: .7;
+}
+
 /* ====================== */
 
 /* YASQE extension */

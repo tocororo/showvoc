@@ -23,7 +23,7 @@ import { ConceptTreeComponent } from './concept-tree.component';
 })
 export class ConceptTreePanelComponent extends AbstractTreePanel {
     @Input() schemes: IRI[]; //if set the concept tree is initialized with this scheme, otherwise with the scheme from VB context
-	@Input() schemeChangeable: boolean = false; //if true, above the tree is shown a menu to select a scheme
+    @Input() schemeChangeable: boolean = false; //if true, above the tree is shown a menu to select a scheme
     @Output() schemeChanged = new EventEmitter<IRI>();//when dynamic scheme is changed
 
     @ViewChild(ConceptTreeComponent) viewChildTree: ConceptTreeComponent;
@@ -35,30 +35,29 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
 
     private schemeList: AnnotatedValue<IRI>[];
     private selectedSchemeUri: string; //needed for the <select> element where I cannot use ARTURIResource as <option> values
-        //because I need also a <option> with null value for the no-scheme mode (and it's not possible)
+    //because I need also a <option> with null value for the no-scheme mode (and it's not possible)
     workingSchemes: IRI[];//keep track of the selected scheme: could be assigned throught @Input scheme or scheme selection
-        //(useful expecially when schemeChangeable is true so the changes don't effect the scheme in context)
+    //(useful expecially when schemeChangeable is true so the changes don't effect the scheme in context)
     schemesForSearchBar: IRI[];
 
     visualizationMode: ConceptTreeVisualizationMode;
     showInfoAlert: boolean = true;
-    
 
-	constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties,
-		private skosService: SkosServices, private resourceService: ResourcesServices, private modalService: NgbModal) {
-		super(basicModals, eventHandler, pmkiProp);
+    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties,
+        private skosService: SkosServices, private resourceService: ResourcesServices, private modalService: NgbModal) {
+        super(basicModals, eventHandler, pmkiProp);
         this.eventSubscriptions.push(eventHandler.schemeChangedEvent.subscribe(
             (schemes: IRI[]) => this.onSchemeChanged(schemes)));
     }
 
     ngOnInit() {
-		super.ngOnInit();
-		
-		this.visualizationMode = this.pmkiProp.getConceptTreePreferences().visualization;
+        super.ngOnInit();
 
-		if (this.schemes === undefined) { //if @Input is not provided at all, get the scheme from the preferences
+        this.visualizationMode = this.pmkiProp.getConceptTreePreferences().visualization;
+
+        if (this.schemes === undefined) { //if @Input is not provided at all, get the scheme from the preferences
             this.workingSchemes = this.pmkiProp.getActiveSchemes();
-		} else { //if @Input schemes is provided (it could be null => no scheme-mode), initialize the tree with this scheme
+        } else { //if @Input schemes is provided (it could be null => no scheme-mode), initialize the tree with this scheme
             if (this.schemeChangeable) {
                 if (this.schemes.length > 0) {
                     this.selectedSchemeUri = this.schemes[0].getIRI();
@@ -67,11 +66,11 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                     this.selectedSchemeUri = "---"; //no scheme
                     this.workingSchemes = [];
                 }
-				//init the scheme list if the concept tree allows dynamic change of scheme
+                //init the scheme list if the concept tree allows dynamic change of scheme
                 this.skosService.getAllSchemes().subscribe(
                     schemes => {
                         ResourceUtils.sortResources(schemes, this.rendering ? SortAttribute.show : SortAttribute.value);
-						this.schemeList = schemes;
+                        this.schemeList = schemes;
                     }
                 );
             } else {
@@ -79,7 +78,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
             }
         }
     }
-    
+
     //top bar commands handlers
 
     refresh() {
@@ -94,7 +93,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     }
 
     settings() {
-        const modalRef: NgbModalRef = this.modalService.open(ConceptTreeSettingsModal, new ModalOptions() );
+        const modalRef: NgbModalRef = this.modalService.open(ConceptTreeSettingsModal, new ModalOptions());
         modalRef.result.then(
             () => {
                 this.visualizationMode = this.pmkiProp.getConceptTreePreferences().visualization;
@@ -104,7 +103,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                     this.refresh();
                 }
             },
-            () => {}
+            () => { }
         );
     }
 
@@ -131,10 +130,10 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
      * if the URI doesn't represent a scheme in the list.
      */
     private getSchemeResourceFromUri(schemeUri: string): IRI {
-		let s = this.schemeList.find(sc => sc.getValue().getIRI() == schemeUri);
+        let s = this.schemeList.find(sc => sc.getValue().getIRI() == schemeUri);
         if (s != null) {
-			return s.getValue();
-		}
+            return s.getValue();
+        }
         return null; //schemeUri was probably "---", so for no-scheme mode return a null object
     }
 
@@ -165,7 +164,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                     (selectedResource: AnnotatedValue<IRI>) => {
                         this.selectSearchedResource(selectedResource);
                     },
-                    () => {}
+                    () => { }
                 );
             }
         } else {
@@ -211,7 +210,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                                     this.openAt(resource); //then open the tree on the searched resource
                                 });
                             },
-                            () => {}
+                            () => { }
                         )
                     } else { //searched concept belongs to at least one scheme => ask to activate one of them
                         let message = "Searched concept '" + resource.getShow() + "' is not reachable in the tree since it belongs to the following";
@@ -236,7 +235,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                                             this.openAt(resource); //then open the tree on the searched resource
                                         });
                                     },
-                                    () => {}
+                                    () => { }
                                 );
                             }
                         );

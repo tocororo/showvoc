@@ -2,6 +2,7 @@ import { Component, Input, QueryList, SimpleChanges, ViewChildren } from '@angul
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { PropertiesServices } from 'src/app/services/properties.service';
 import { SearchServices } from 'src/app/services/search.service';
@@ -11,9 +12,9 @@ import { AbstractTree } from '../abstract-tree';
 import { PropertyTreeNodeComponent } from './property-tree-node.component';
 
 @Component({
-	selector: 'property-tree',
-	templateUrl: './property-tree.component.html',
-	host: { class: "structureComponent" }
+    selector: 'property-tree',
+    templateUrl: './property-tree.component.html',
+    host: { class: "structureComponent" }
 })
 export class PropertyTreeComponent extends AbstractTree {
 
@@ -23,10 +24,13 @@ export class PropertyTreeComponent extends AbstractTree {
 
     @ViewChildren(PropertyTreeNodeComponent) viewChildrenNode: QueryList<PropertyTreeNodeComponent>;
 
-	constructor(private propertyService: PropertiesServices, private searchService: SearchServices, eventHandler: PMKIEventHandler, basicModals: BasicModalsServices) {
-		super(eventHandler, basicModals);
+    structRole: RDFResourceRolesEnum.property;
+
+    constructor(private propertyService: PropertiesServices, private searchService: SearchServices, eventHandler: PMKIEventHandler,
+        basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
+        super(eventHandler, basicModals, sharedModals);
     }
-    
+
     /**
      * Called when @Input resource changes, reinitialize the tree
      */
@@ -82,7 +86,7 @@ export class PropertyTreeComponent extends AbstractTree {
                     this.nodes = props;
                 }
             );
-        } 
+        }
     }
 
     openTreeAt(node: AnnotatedValue<IRI>) {

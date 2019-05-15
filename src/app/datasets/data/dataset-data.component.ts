@@ -4,7 +4,7 @@ import { AnnotatedValue, IRI } from 'src/app/models/Resources';
 import { StructureTabsetComponent } from 'src/app/structures/structure-tabset/structure-tabset.component';
 
 @Component({
-	selector: 'dataset-data-component',
+    selector: 'dataset-data-component',
     templateUrl: './dataset-data.component.html',
     host: { class: "pageComponent" }
 })
@@ -12,11 +12,11 @@ export class DatasetDataComponent implements OnInit {
 
     @ViewChild(StructureTabsetComponent) viewChildStructureTabset: StructureTabsetComponent;
 
-	resource: AnnotatedValue<IRI> = null;
+    resource: AnnotatedValue<IRI> = null;
 
-	constructor(private route: ActivatedRoute) { }
+    constructor(private route: ActivatedRoute) { }
 
-	ngOnInit() {
+    ngOnInit() {
         this.route.queryParams.subscribe(
             params => {
                 let resId: string = params['resId'];
@@ -25,15 +25,15 @@ export class DatasetDataComponent implements OnInit {
                     setTimeout(() => {
                         this.viewChildStructureTabset.selectResource(new IRI(resId));
                     });
-                    
+
                 }
             }
         );
-	}
+    }
 
-	onNodeSelected(node: AnnotatedValue<IRI>) {
-		if (node == null) return;
-		this.resource = node;
-	}
+    onNodeSelected(node: AnnotatedValue<IRI>) {
+        if (node == null) return;
+        this.resource = node;
+    }
 
 }

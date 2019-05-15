@@ -1,6 +1,7 @@
 import { QueryList } from '@angular/core';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { TreeListContext } from 'src/app/utils/UIUtils';
 import { AnnotatedValue, IRI } from '../../models/Resources';
@@ -31,9 +32,11 @@ export abstract class AbstractTree extends AbstractStruct {
      * CONSTRUCTOR
      */
     protected basicModals: BasicModalsServices;
-    constructor(eventHandler: PMKIEventHandler, basicModals: BasicModalsServices) {
+    protected sharedModals: SharedModalsServices;
+    constructor(eventHandler: PMKIEventHandler, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
         super(eventHandler);
         this.basicModals = basicModals;
+        this.sharedModals = sharedModals;
     }
 
     /**
@@ -57,7 +60,7 @@ export abstract class AbstractTree extends AbstractStruct {
      */
     ensureRootVisibility(resource: AnnotatedValue<IRI>, path: AnnotatedValue<IRI>[]): boolean {
         for (var i = 0; i < this.nodes.length; i++) {
-            if (this.nodes[i].getValue().equals(resource.getValue())) {
+            if (this.nodes[i].getValue().equals(resource.getValue())) { //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 if (i >= this.nodesLimit) {
                     //update rootLimit so that node at index i is within the range
                     let scrollStep: number = ((i - this.nodesLimit)/this.increaseRate)+1;
@@ -97,7 +100,7 @@ export abstract class AbstractTree extends AbstractStruct {
             this.basicModals.confirm("Search", "Node " + node.getShow() + " is not reachable in the current tree. "
                 + "Do you want to open its ResourceView in a modal dialog?", ModalType.warning).then(
                 confirm => { 
-                    // this.sharedModals.openResourceView(node, false);
+                    this.sharedModals.openResourceView(node.getValue());
                 },
                 () => {}
             );

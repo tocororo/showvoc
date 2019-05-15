@@ -18,7 +18,7 @@ export class PMKIProperties {
     private lexEntryListPreferences: LexicalEntryListPreference;
 
     private searchSettings: SearchSettings = {
-        stringMatchMode: SearchMode.contains,
+        stringMatchMode: SearchMode.startsWith,
         useLocalName: true,
         useURI: false,
         useNotes: false,
