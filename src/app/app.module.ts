@@ -13,9 +13,10 @@ import { ModalsModule } from './modal-dialogs/modals.module';
 import { NotFoundComponent } from './not-found.component';
 import { SearchModule } from './search/search.module';
 import { STServicesModule } from './services/st-services.module';
+import { UserModule } from './user/user.module';
+import { ProjectGuard } from './utils/CanActivateGuards';
 import { PMKIEventHandler } from './utils/PMKIEventHandler';
 import { PMKIProperties } from './utils/PMKIProperties';
-import { ProjectGuard } from './utils/CanActivateGuards';
 
 
 @NgModule({
@@ -25,16 +26,15 @@ import { ProjectGuard } from './utils/CanActivateGuards';
 		NotFoundComponent
 	],
 	imports: [
-		BrowserModule,
 		AppRoutingModule,
-		NgbModule,
-
-		STServicesModule,
-
+		BrowserModule,
 		DatasetsModule,
-		SearchModule,
 		MappingsModule,
-		ModalsModule
+		ModalsModule,
+		NgbModule,
+		SearchModule,
+		STServicesModule,
+		UserModule
 	],
 	providers: [
 		PMKIProperties, PMKIEventHandler,

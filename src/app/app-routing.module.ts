@@ -8,11 +8,15 @@ import { HomeComponent } from './home/home.component';
 import { MappingsComponent } from './mappings/mappings.component';
 import { NotFoundComponent } from './not-found.component';
 import { SearchComponent } from './search/search.component';
+import { LoginComponent } from './user/login.component';
+import { RegistrationComponent } from './user/registration.component';
 import { ProjectGuard } from './utils/CanActivateGuards';
 
 const routes: Routes = [
     { path: '', redirectTo: "/home", pathMatch: 'full' },
     { path: "home", component: HomeComponent },
+    { path: "login", component: LoginComponent },
+    { path: "registration", component: RegistrationComponent },
     { path: 'datasets', component: DatasetsComponent },
     {
         path: 'datasets/:id', component: DatasetViewComponent, canActivate: [ProjectGuard],

@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
@@ -22,7 +23,7 @@ export class HttpManager {
         errorAlertOpt: { show: true, exceptionsToSkip: [] }
     });
 
-    constructor(private http: HttpClient, private basicModals: BasicModalsServices) {
+    constructor(private http: HttpClient, private router: Router, private basicModals: BasicModalsServices) {
 
 
         let st_protocol: string = window['st_protocol']; //protocol (http/https)
@@ -331,9 +332,9 @@ export class HttpManager {
                             confirm => {
                                 //in case user is not logged at all, reset context and redirect to home
                                 if (err.status == 401) {
-                                    // VBContext.resetContext();
-                                    // HttpServiceContext.resetContext();
-                                    // this.router.navigate(['/Home']);
+                                    PMKIContext.resetContext();
+                                    HttpServiceContext.resetContext();
+                                    this.router.navigate(['/home']);
                                 };
                             },
                             () => {}
