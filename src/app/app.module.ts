@@ -14,7 +14,7 @@ import { NotFoundComponent } from './not-found.component';
 import { SearchModule } from './search/search.module';
 import { STServicesModule } from './services/st-services.module';
 import { UserModule } from './user/user.module';
-import { ProjectGuard } from './utils/CanActivateGuards';
+import { GUARD_PROVIDERS } from './utils/CanActivateGuards';
 import { PMKIEventHandler } from './utils/PMKIEventHandler';
 import { PMKIProperties } from './utils/PMKIProperties';
 
@@ -38,7 +38,7 @@ import { PMKIProperties } from './utils/PMKIProperties';
 	],
 	providers: [
 		PMKIProperties, PMKIEventHandler,
-		ProjectGuard,
+		GUARD_PROVIDERS,
 		{ provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
 		/** Uses the HashLocationStrategy instead of the default "HTML 5 pushState" PathLocationStrategy.
 		 * This solves the 404 error problem when reloading a page in a production server

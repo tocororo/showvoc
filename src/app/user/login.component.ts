@@ -19,8 +19,8 @@ import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.
 })
 export class LoginComponent implements OnInit {
 
-    private email: string;
-    private password: string;
+    email: string;
+    password: string;
 
     constructor(private basicModals: BasicModalsServices) { }
 

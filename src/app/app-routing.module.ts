@@ -10,23 +10,23 @@ import { NotFoundComponent } from './not-found.component';
 import { SearchComponent } from './search/search.component';
 import { LoginComponent } from './user/login.component';
 import { RegistrationComponent } from './user/registration.component';
-import { ProjectGuard } from './utils/CanActivateGuards';
+import { ProjectGuard, LurkerAuthGuard } from './utils/CanActivateGuards';
 
 const routes: Routes = [
     { path: '', redirectTo: "/home", pathMatch: 'full' },
     { path: "home", component: HomeComponent },
     { path: "login", component: LoginComponent },
     { path: "registration", component: RegistrationComponent },
-    { path: 'datasets', component: DatasetsComponent },
+    { path: 'datasets', component: DatasetsComponent, canActivate: [LurkerAuthGuard] },
     {
-        path: 'datasets/:id', component: DatasetViewComponent, canActivate: [ProjectGuard],
+        path: 'datasets/:id', component: DatasetViewComponent, canActivate: [LurkerAuthGuard, ProjectGuard],
         children: [
             { path: '', redirectTo: "data", pathMatch: 'full' },
             { path: 'data', component: DatasetDataComponent },
             { path: 'sparql', component: SparqlComponent }
         ]
     },
-    { path: 'search', component: SearchComponent },
+    { path: 'search', component: SearchComponent, canActivate: [LurkerAuthGuard] },
     { path: 'mappings', component: MappingsComponent },
     { path: '**', component: NotFoundComponent },
 ];

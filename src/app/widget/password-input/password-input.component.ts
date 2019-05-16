@@ -2,7 +2,7 @@ import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-	selector: 'password-input',
+    selector: 'password-input',
     templateUrl: './password-input.component.html',
     providers: [{
         provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => PasswordInputComponent), multi: true,
@@ -15,12 +15,12 @@ export class PasswordInputComponent implements OnInit {
     @Input() btnClass: string;
 
     private value: string;
-    private show: boolean = false;
-    private inputClass: string;
+    show: boolean = false;
+    inputClass: string;
 
-	constructor() { }
+    constructor() { }
 
-	ngOnInit() {
+    ngOnInit() {
         this.inputClass = "input-group";
         if (this.size == "sm" || this.size == "lg") {
             this.inputClass += " input-group-" + this.size;
@@ -30,7 +30,7 @@ export class PasswordInputComponent implements OnInit {
             this.btnClass = "btn btn-outline-secondary";
         }
     }
-    
+
 
     private onModelChanged() {
         this.propagateChange(this.value);

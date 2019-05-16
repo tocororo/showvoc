@@ -23,6 +23,7 @@ export class PMKIContext {
     private static workingProjectCtx: ProjectContext = new ProjectContext();
     private static projectChanged: boolean;
     private static loggedUser: User;
+    private static lurkerUser: User;
 
 
     static setProject(project: Project) {
@@ -68,6 +69,12 @@ export class PMKIContext {
         return this.loggedUser != null;
     }
 
+    static setLurkerUser(user: User) {
+        this.lurkerUser = user;
+    }
+    static getLurkerUser(): User {
+        return this.lurkerUser;
+    }
 
     /**
      * Reset to null all the variable of the context

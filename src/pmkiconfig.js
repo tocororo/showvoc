@@ -31,3 +31,12 @@ var st_path;
  * container hosting the PMKI portal.
  */
 // var st_protocol = "http";
+
+/**
+ * By default, PMKI relies on a lurker user created in Semantic Turkey.
+ * This is necessary in order to allow PMKI to execute requests to ST that are secured.
+ * If no user is logged directly in PMKI, the default "lurker" user should be logged.
+ * The following parameters need to be set in order to provide the credentials for this lurker user.
+ */
+var lurker_user_email = "";
+var lurker_user_password = "";

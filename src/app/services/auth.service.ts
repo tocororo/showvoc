@@ -16,7 +16,7 @@ export class AuthServices {
     /**
      * Logs in and registers the logged user in the VBContext
      */
-    login(email: string, password: string, rememberMe: boolean): Observable<User> {
+    login(email: string, password: string, rememberMe?: boolean): Observable<User> {
         var params: any = {
             email: email,
             password: password,
@@ -25,7 +25,7 @@ export class AuthServices {
         return this.httpMgr.doPost(this.serviceName, "login", params).pipe(
             map(stResp => {
                 let loggedUser: User = User.createUser(stResp);
-                PMKIContext.setLoggedUser(loggedUser);
+                // PMKIContext.setLoggedUser(loggedUser);
                 return loggedUser;
             })
         );

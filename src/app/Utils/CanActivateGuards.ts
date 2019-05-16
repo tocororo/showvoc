@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable, of, forkJoin } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
 import { Project } from '../models/Project';
+import { AuthServices } from '../services/auth.service';
+import { MetadataServices } from '../services/metadata.service';
 import { ProjectsServices } from '../services/projects.service';
+import { UserServices } from '../services/user.service';
 import { PMKIContext } from './PMKIContext';
 import { PMKIProperties } from './PMKIProperties';
-import { MetadataServices } from '../services/metadata.service';
 
 /**
  * The datasets-view page and its children need a project to be selected/initialized. This guard ensures that.
@@ -50,8 +52,8 @@ export class ProjectGuard implements CanActivate {
                     } else { //project not found, redirect to home
                         this.basicModals.alert("Dataset not found", "The requested dateset (id: '" + paramProject +
                             "') does not exist or is not open. You will be redirect to the home page.", ModalType.warning).then(
-                            () => { this.router.navigate(["/"]) }
-                        );
+                                () => { this.router.navigate(["/"]) }
+                            );
                         return of(false);
                     }
                 })
@@ -60,3 +62,44 @@ export class ProjectGuard implements CanActivate {
     }
 
 }
+
+@Injectable()
+export class LurkerAuthGuard implements CanActivate {
+
+    constructor(private router: Router, private authService: AuthServices, private userService: UserServices) { }
+
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+        let lurkerUser = PMKIContext.getLurkerUser();
+        if (lurkerUser != null) {
+            return of(true);
+        } else { //lurker user not initialized => init
+            return this.userService.getUser().pipe(
+                flatMap(user => {
+                    if (user) {
+                        PMKIContext.setLurkerUser(user);
+                        return of(true);
+                    } else {
+                        return this.loginLurkerUser().pipe(
+                            map(() => {
+                                return true;
+                            })
+                        );
+                    }
+                })
+            );
+        }
+    }
+
+    private loginLurkerUser(): Observable<void> {
+        let lurker_email: string = window['lurker_user_email'];
+        let lurker_pwd: string = window['lurker_user_password'];
+        return this.authService.login(lurker_email, lurker_pwd).pipe(
+            map(user => {
+                PMKIContext.setLurkerUser(user);
+            })
+        );
+    }
+
+}
+
+export const GUARD_PROVIDERS = [LurkerAuthGuard, ProjectGuard];
