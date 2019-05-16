@@ -1,11 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ResourceViewComponent } from './resource-view.component';
-import { WidgetModule } from '../widget/widget.module';
 import { FormsModule } from '@angular/forms';
+import { WidgetModule } from '../widget/widget.module';
+import { BasicRendererComponent } from './renderer/basic-renderer.component';
+import { ResourceViewComponent } from './resource-view.component';
 
 @NgModule({
-	declarations: [ResourceViewComponent],
+	declarations: [
+		ResourceViewComponent,
+		BasicRendererComponent
+	],
 	imports: [
 		CommonModule, WidgetModule, FormsModule
 	],

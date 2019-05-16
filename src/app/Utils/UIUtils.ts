@@ -100,8 +100,9 @@ export class UIUtils {
 
 
     static getImageSrc(rdfResource: AnnotatedValue<Value>): string {
-        var imgSrc: string;
-        if (rdfResource.getValue() instanceof Resource) {
+        let imgSrc: string;
+        let value = rdfResource.getValue();
+        if (value instanceof Resource) {
             var role: RDFResourceRolesEnum = rdfResource.getAttribute(ResAttribute.ROLE);
             var deprecated: boolean = rdfResource.isDeprecated();
             var explicit: boolean = rdfResource.getAttribute(ResAttribute.EXPLICIT) || rdfResource.getAttribute(ResAttribute.EXPLICIT) == undefined;
@@ -287,13 +288,17 @@ export class UIUtils {
             } else { //unknown role (none of the previous roles)
                 imgSrc = this.individualImgSrc;
             }
-        } else if (rdfResource.getValue() instanceof Literal) {
-            let lang: string = (<Literal>rdfResource.getValue()).getLanguage();
-            let datatype: IRI = (<Literal>rdfResource.getValue()).getDatatype();
+        } else if (value instanceof Literal) {
+            let lang: string = value.getLanguage();
+            let datatype: IRI = value.getDatatype();
             if (lang != null) {
                 imgSrc = this.getFlagImgSrc(lang);
             } else if (datatype != null) {
-                imgSrc = this.getDatatypeImgSrc(datatype);
+                if (datatype.equals(XmlSchema.language)) {
+                    imgSrc = this.getFlagImgSrc(value.getLabel());
+                } else {
+                    imgSrc = this.getDatatypeImgSrc(datatype);
+                }
             }
         }
         return imgSrc;

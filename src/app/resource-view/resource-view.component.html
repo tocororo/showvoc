@@ -1,4 +1,4 @@
-<div class="card" *ngIf="annotatedResource">
+<div class="card vbox" *ngIf="annotatedResource">
     <div class="card-header">
         <div class="hbox">
             <rdf-resource [resource]="annotatedResource"></rdf-resource>
@@ -15,14 +15,65 @@
             </div>
         </div>
     </div>
+
     <div class="card-body scrollableContainer p-2">
         <div *ngIf="loading" class="spinner-border text-info"></div>
 
-        <table class="table table-sm">
+        <renderer *ngIf="typesColl?.length > 0" [poList]="typesColl"></renderer>
+        <renderer *ngIf="topconceptofColl?.length > 0" [poList]="topconceptofColl"></renderer>
+        <renderer *ngIf="schemesColl?.length > 0" [poList]="schemesColl"></renderer>
+
+        <!-- LEXICALIZATIONS -->
+        <renderer *ngIf="lexicalizationsColl?.length > 0" [poList]="lexicalizationsColl"></renderer>
+        <renderer *ngIf="lexicalFormsColl?.length > 0" [poList]="lexicalFormsColl"></renderer>
+
+        <!-- AXIOMS -->
+        <!-- classes -->
+        <renderer *ngIf="classAxiomColl?.length > 0" [poList]="classAxiomColl"></renderer>
+        <!-- concepts -->
+        <renderer *ngIf="broadersColl?.length > 0" [poList]="broadersColl"></renderer>
+        <!-- properties -->
+        <renderer *ngIf="superpropertiesColl?.length > 0" [poList]="superpropertiesColl"></renderer>
+        <renderer *ngIf="equivalentPropertiesColl?.length > 0" [poList]="equivalentPropertiesColl"></renderer>
+        <renderer *ngIf="disjointPropertiesColl?.length > 0" [poList]="disjointPropertiesColl"></renderer>
+        <renderer *ngIf="subPropertyChainsColl?.length > 0" [poList]="subPropertyChainsColl"></renderer>
+        <!-- lexical entries -->
+        <renderer *ngIf="subtermsColl?.length > 0" [poList]="subtermsColl"></renderer>
+        <!-- properties -->
+        <renderer *ngIf="domainsColl?.length > 0" [poList]="domainsColl"></renderer>
+        <renderer *ngIf="rangesColl?.length > 0" [poList]="rangesColl"></renderer>
+        <renderer *ngIf="inverseofColl?.length > 0" [poList]="inverseofColl"></renderer> <!-- propertyFacets ? -->
+        
+
+
+        <renderer *ngIf="notesColl?.length > 0" [poList]="notesColl"></renderer>
+
+        <!-- OTHER DETAILS -->
+        <!-- lexical entries -->
+        <renderer *ngIf="denotationsColl?.length > 0" [poList]="denotationsColl"></renderer>
+        <renderer *ngIf="evokedLexicalConceptsColl?.length > 0" [poList]="evokedLexicalConceptsColl"></renderer>
+        <renderer *ngIf="formBasedPreviewColl?.length > 0" [poList]="formBasedPreviewColl"></renderer>
+        <renderer *ngIf="constituentsColl?.length > 0" [poList]="constituentsColl"></renderer>
+        <renderer *ngIf="rdfsMembersColl?.length > 0" [poList]="rdfsMembersColl"></renderer>
+        <!-- collections details -->
+        <renderer *ngIf="membersColl?.length > 0" [poList]="membersColl"></renderer>
+        <renderer *ngIf="membersOrderedColl?.length > 0" [poList]="membersOrderedColl"></renderer>
+        <!-- xlabels -->
+        <renderer *ngIf="labelRelationsColl?.length > 0" [poList]="labelRelationsColl"></renderer>
+        <!-- ontolex forms -->
+        <renderer *ngIf="formRepresentationsColl?.length > 0" [poList]="formRepresentationsColl"></renderer>
+        <!-- ontologies -->
+        <renderer *ngIf="importsColl?.length > 0" [poList]="importsColl"></renderer>
+        
+        <!-- Commons -->
+        <renderer *ngIf="propertiesColl?.length > 0" [poList]="propertiesColl"></renderer>
+
+        <!-- <table class="table table-sm">
             <colgroup>
                 <col style="width: 1%">
             </colgroup>
             <tbody>
+
                 <tr>
                     <th scope="row">ID</th>
                     <td>{{annotatedResource.getValue().stringValue()}}</td>
@@ -74,6 +125,6 @@
                 </tr>
 
             </tbody>
-        </table>
+        </table> -->
     </div>
 </div>

@@ -13,8 +13,9 @@ import { ConceptTreePanelComponent } from '../tree/concept/concept-tree-panel.co
 import { PropertyTreePanelComponent } from '../tree/property/property-tree-panel.component';
 
 @Component({
-	selector: 'structure-tabset',
-	templateUrl: './structure-tabset.component.html',
+    selector: 'structure-tabset',
+    templateUrl: './structure-tabset.component.html',
+    host: { class: "vbox" }
 })
 export class StructureTabsetComponent implements OnInit {
     @Output() nodeSelected = new EventEmitter<AnnotatedValue<IRI>>();
@@ -32,12 +33,12 @@ export class StructureTabsetComponent implements OnInit {
     model: string;
     private selectedNode: AnnotatedValue<IRI>;
 
-	constructor(private resourcesService: ResourcesServices) { }
+    constructor(private resourcesService: ResourcesServices) { }
 
     ngOnInit() {
         this.model = PMKIContext.getProject().getModelType(true);
     }
-    
+
     onNodeSelected(node: AnnotatedValue<IRI>) {
         this.nodeSelected.emit(node);
     }
@@ -56,7 +57,7 @@ export class StructureTabsetComponent implements OnInit {
                 } else if (ResourceUtils.roleSubsumes(RDFResourceRolesEnum.skosCollection, role)) {
                     tabToActivate = RDFResourceRolesEnum.skosCollection;
                 } else if (
-                    role == RDFResourceRolesEnum.concept || role == RDFResourceRolesEnum.conceptScheme || 
+                    role == RDFResourceRolesEnum.concept || role == RDFResourceRolesEnum.conceptScheme ||
                     role == RDFResourceRolesEnum.limeLexicon || role == RDFResourceRolesEnum.ontolexLexicalEntry
                 ) {
                     tabToActivate = role;

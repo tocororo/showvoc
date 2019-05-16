@@ -2,19 +2,20 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { AnnotatedValue, Literal, RDFResourceRolesEnum, ResAttribute, Resource, Value, ResourceNature } from 'src/app/models/Resources';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 import { UIUtils } from 'src/app/utils/UIUtils';
+import { XmlSchema } from 'src/app/models/Vocabulary';
+import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 
 @Component({
 	selector: 'rdf-resource',
 	templateUrl: './rdf-resource.component.html'
 })
-export class RdfResourceComponent implements OnInit {
+export class RdfResourceComponent {
 
 	@Input() resource: AnnotatedValue<Value>;
 	@Input() rendering: boolean = true; //if true the resource should be rendered with the show, with the qname otherwise
 
 	renderingClass: string = "";
 
-	resourceWithLang: boolean = false; //true if resource is a literal (or a skosxl:Label) with language
 	langFlagAvailable: boolean = false; //true if the language has a flag icon available (used only if resourceWithLang is true)
 	lang: string; //language of the resource (used only if resourceWithLang is true)
 
@@ -24,19 +25,17 @@ export class RdfResourceComponent implements OnInit {
 	imgSrc: string; //src of the image icon
 	natureTooltip: string;
 
-	constructor() { }
-
-	ngOnInit() {
-	}
+	constructor(private pmkiProp: PMKIProperties) { }
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['resource'] && changes['resource'].currentValue) {
 			this.initImgSrc();
-			this.resourceWithLang = this.isResourceWithLang();
-			if (this.resourceWithLang) {
-				this.lang = this.getLang();
+
+			this.lang = this.initLang();
+			if (this.lang) {
 				this.langFlagAvailable = this.isLangFlagAvailable();
 			}
+			
 			this.initLiteralWithLink();
 			this.initRenderingClass();
 			this.initNatureTooltip();
@@ -126,30 +125,22 @@ export class RdfResourceComponent implements OnInit {
 	}
 
 	/**
-	 * returns true if the current resource has language: it could be a literal with language or
-	 * a skosxl:Label with language
-	 */
-	private isResourceWithLang(): boolean {
-		var lang: string;
-		if (this.resource.getValue() instanceof Literal) {
-			lang = (<Literal>this.resource.getValue()).getLanguage();
-		}
-		return (lang != undefined && lang != null && lang != "");
-	}
-
-	/**
 	 * Returns the language tag of the current resource in order to show it as title of resource icon (flag)
 	 * Note: this should be used in template only when isResourceWithLang returns true
 	 */
-	private getLang(): string {
+	private initLang(): string {
 		let lang: string = null;
-		if (this.resource.getValue() instanceof Resource) {
+		let value = this.resource.getValue();
+		if (value instanceof Resource) {
 			let role: RDFResourceRolesEnum = this.resource.getAttribute(ResAttribute.ROLE);
 			if (role == RDFResourceRolesEnum.xLabel) {
 				lang = this.resource.getAttribute(ResAttribute.LANG);
 			}
-		} else if (this.resource.getValue() instanceof Literal) {
-			lang = (<Literal>this.resource.getValue()).getLanguage();
+		} else if (value instanceof Literal) {
+			lang = value.getLanguage();
+			if (value.getDatatype().equals(XmlSchema.language)) {
+				lang = value.getLabel();
+			}
 		}
 		return lang;
 	}
@@ -159,7 +150,11 @@ export class RdfResourceComponent implements OnInit {
 	 * This method should be called only for resource with lang, so it should depend from isResourceWithLang
 	 */
 	private isLangFlagAvailable(): boolean {
-		return !this.imgSrc.includes("unknown");
+		if (this.pmkiProp.getShowFlags()) {
+			return !this.imgSrc.includes("unknown");
+		} else {
+			return false;
+		}
 	}
 
 	getRendering(): string {

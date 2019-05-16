@@ -9,15 +9,16 @@ import { PMKIProperties } from '../utils/PMKIProperties';
 import { ResourceDeserializer, ResourceUtils, SortAttribute } from '../utils/ResourceUtils';
 
 @Component({
-	selector: 'resource-view',
+    selector: 'resource-view',
     templateUrl: './resource-view.component.html',
-    host: { class: "hbox" }
+    styleUrls: ['./resource-view.css'],
+    host: { class: "vbox" }
 })
 export class ResourceViewComponent {
 
     @Input() resource: Resource;
     annotatedResource: AnnotatedValue<Resource>;
-    
+
     loading: boolean = false;
 
     private showInferredPristine: boolean = false; //useful to decide whether repeat the getResourceView request once the includeInferred changes
@@ -64,11 +65,8 @@ export class ResourceViewComponent {
     private topconceptofColl: PredicateObjects[] = null;
     private typesColl: PredicateObjects[] = null;
 
-	constructor(private resViewService: ResourceViewServices, private pmkiProp: PMKIProperties) { }
+    constructor(private resViewService: ResourceViewServices, private pmkiProp: PMKIProperties) { }
 
-	// ngOnInit() {
-    //     this.buildResourceView(this.resource.getValue())
-    // }
 
     ngOnChanges(changes: SimpleChanges) {
         this.showInferred = this.pmkiProp.getInferenceInResourceView();
@@ -76,7 +74,7 @@ export class ResourceViewComponent {
 
         if (changes['resource'] && changes['resource'].currentValue) {
             //if not the first change, avoid to refresh res view if resource is not changed
-            if (!changes['resource'].firstChange) { 
+            if (!changes['resource'].firstChange) {
                 let prevRes: Resource = changes['resource'].previousValue;
                 if (prevRes.equals(this.resource)) {
                     return;
@@ -85,9 +83,10 @@ export class ResourceViewComponent {
             this.buildResourceView(this.resource);//refresh resource view when Input resource changes
         }
     }
-    
+
     private buildResourceView(res: Resource) {
         this.loading = true;
+        this.resetPartitions();
         this.resViewService.getResourceView(res).pipe(
             finalize(() => this.loading = false)
         ).subscribe(
@@ -104,12 +103,7 @@ export class ResourceViewComponent {
         );
     }
 
-    /**
-     * Fill all the partitions of the RV. This not requires that the RV description is fetched again from server,
-     * in fact if the user switches on/off the inference, there's no need to perform a new request.
-     */
-    private fillPartitions() {
-        //reset all partitions
+    private resetPartitions() {
         this.broadersColl = null;
         this.classAxiomColl = null;
         this.constituentsColl = null;
@@ -139,7 +133,13 @@ export class ResourceViewComponent {
         this.superpropertiesColl = null;
         this.topconceptofColl = null;
         this.typesColl = null;
+    }
 
+    /**
+     * Fill all the partitions of the RV. This not requires that the RV description is fetched again from server,
+     * in fact if the user switches on/off the inference, there's no need to perform a new request.
+     */
+    private fillPartitions() {
         var resourcePartition: any = this.resViewResponse.resource;
         this.annotatedResource = ResourceDeserializer.createResource(resourcePartition);
 
@@ -381,7 +381,7 @@ export class ResourceViewComponent {
             this.equivalentPropertiesColl == null &&
             this.evokedLexicalConceptsColl == null &&
             this.formBasedPreviewColl == null &&
-            this.formRepresentationsColl == null && 
+            this.formRepresentationsColl == null &&
             this.importsColl == null &&
             this.inverseofColl == null &&
             this.labelRelationsColl == null &&

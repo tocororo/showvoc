@@ -1,0 +1,30 @@
+renderer {
+    border-top: 1px solid #dee2e6;
+    padding: 2px;
+}
+renderer:last-of-type {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.renderer-row {
+    padding: 2px;
+}
+.renderer-row:hover {
+    background-color: #e5f3ff;
+}
+
+.property-label {
+    min-width: 250px;
+    font-weight: bold;
+}
+
+.property-value-col {
+    flex: 1;
+}
+
+.property-value {
+    flex: 1;
+}
+.property-value:hover {
+    background-color: #d3ebff;
+}

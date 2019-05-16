@@ -1,0 +1,12 @@
+<div class="renderer-row hbox" *ngFor="let po of poList">
+    <div class="property-label">
+        <span [title]="po.getPredicate().getValue().toNT()">{{po.getPredicate().humanReadable}}</span>
+    </div>
+    <div class="property-value-col">
+        <div *ngFor="let obj of po.getObjects()" class="property-value">
+            <span [title]="obj.getValue().toNT()">{{obj.getShow()}}</span>
+            <span *ngIf="isResourceWithLang(obj)" class="ml-1">({{getLang(obj)}})</span>
+        </div>
+    </div>
+</div>
+
