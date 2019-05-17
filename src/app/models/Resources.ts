@@ -35,27 +35,27 @@ export class IRI extends Resource {
     }
 
     getNamespace(): string {
-		if (this.localNameIdx < 0) {
-			this.localNameIdx = this.getLocalNameIndex(this.iriString);
+        if (this.localNameIdx < 0) {
+            this.localNameIdx = this.getLocalNameIndex(this.iriString);
         }
-		return this.iriString.substring(0, this.localNameIdx);
+        return this.iriString.substring(0, this.localNameIdx);
     }
     getLocalName(): string {
         if (this.localNameIdx < 0) {
-			this.localNameIdx = this.getLocalNameIndex(this.iriString);
-		}
+            this.localNameIdx = this.getLocalNameIndex(this.iriString);
+        }
 
-		return this.iriString.substring(this.localNameIdx);
+        return this.iriString.substring(this.localNameIdx);
     }
     private getLocalNameIndex(iri: string): number {
         let separatorIdx = this.iriString.indexOf('#');
-		if (separatorIdx < 0) {
-			separatorIdx = this.iriString.lastIndexOf('/');
-		}
-		if (separatorIdx < 0) {
-			separatorIdx = this.iriString.lastIndexOf(':');
-		}
-		return separatorIdx + 1;
+        if (separatorIdx < 0) {
+            separatorIdx = this.iriString.lastIndexOf('/');
+        }
+        if (separatorIdx < 0) {
+            separatorIdx = this.iriString.lastIndexOf(':');
+        }
+        return separatorIdx + 1;
     }
 
     stringValue(): string {
@@ -90,14 +90,14 @@ export class BNode extends Resource {
     toNT() {
         return this.stringValue();
     }
-    
+
 }
 
 export class Literal extends Value {
     private label: string;
-	private language: string;
+    private language: string;
     private datatype: IRI;
-    
+
     constructor(label: string, language?: string, datatype?: IRI) {
         super();
         this.setLabel(label);
@@ -140,8 +140,8 @@ export class Literal extends Value {
         let str: string = '"' + this.label + '"';
         if (this.isLanguageLiteral()) {
             str += '@' + this.language;
-		} else if (this.isTypedLiteral()) {
-			str += "^^<" + this.datatype.toString() + ">";
+        } else if (this.isTypedLiteral()) {
+            str += "^^<" + this.datatype.toNT() + ">";
         }
         return str;
     }
@@ -162,18 +162,18 @@ export class AnnotatedValue<T extends Value> {
     }
 
     getAttributes(): { [key: string]: any } {
-		return this.attributes;
+        return this.attributes;
     }
     getAttribute(name: string): any {
         return this.attributes[name];
     }
-	setAttribute(name: string, value: any) {
-		this.attributes[name] = value;
+    setAttribute(name: string, value: any) {
+        this.attributes[name] = value;
     }
     deleteAttribute(name: string) {
-		delete this.attributes[name];
+        delete this.attributes[name];
     }
-    
+
     getShow(): string {
         let show: string;
         if (this.value instanceof Resource) {
@@ -244,6 +244,14 @@ export class AnnotatedValue<T extends Value> {
             }
             this.attributes[ResAttribute.NATURE] = resNature;
         }
+    }
+
+    getNature(): ResourceNature[] {
+        let nature: ResourceNature[] = this.attributes[ResAttribute.NATURE];
+        if (nature == null) {
+            nature = [];
+        }
+        return nature;
     }
 
     isDeprecated(): boolean {
@@ -334,7 +342,7 @@ export enum RDFTypesEnum {
 
 export abstract class ResourcePosition {
     position: ResourcePositionEnum;
-    
+
     isLocal(): boolean {
         return false;
     }
@@ -349,9 +357,9 @@ export abstract class ResourcePosition {
 
     static deserialize(resPositionJson: string): ResourcePosition {
         if (resPositionJson.startsWith(ResourcePositionEnum.local)) {
-            return new LocalResourcePosition(resPositionJson.substring(resPositionJson.indexOf(":")+1));
+            return new LocalResourcePosition(resPositionJson.substring(resPositionJson.indexOf(":") + 1));
         } else if (resPositionJson.startsWith(ResourcePositionEnum.remote)) {
-            return new RemoteResourcePosition(resPositionJson.substring(resPositionJson.indexOf(":")+1));
+            return new RemoteResourcePosition(resPositionJson.substring(resPositionJson.indexOf(":") + 1));
         } else { //if (resPositionJson.startsWith(ResourcePositionEnum.unknown)) {
             return new UnknownResourcePosition();
         }

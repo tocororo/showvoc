@@ -1,6 +1,9 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
-import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
+import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
+import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
 import { ResourcesServices } from 'src/app/services/resources.service';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
@@ -33,7 +36,7 @@ export class StructureTabsetComponent implements OnInit {
     model: string;
     private selectedNode: AnnotatedValue<IRI>;
 
-    constructor(private resourcesService: ResourcesServices) { }
+    constructor(private resourcesService: ResourcesServices, private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices) { }
 
     ngOnInit() {
         this.model = PMKIContext.getProject().getModelType(true);
@@ -45,12 +48,14 @@ export class StructureTabsetComponent implements OnInit {
 
     /**
      * Allows to force the selection of a resource from outside this component.
-     * This is useful when a search result is selected and it has to be show in the tree/list view
+     * This is useful when a search result is selected and it has to be show in the tree/list view or when an object is dblclicked from a RV
      */
-    selectResource(resource: IRI) {
-        this.resourcesService.getResourceDescription(resource).subscribe(
-            (annotatedRes: AnnotatedValue<IRI>) => {
-                let role: RDFResourceRolesEnum = annotatedRes.getRole();
+    selectResource(resource: AnnotatedValue<Resource>) {
+        if (resource.getValue() instanceof IRI) {
+            let annotatedIRI: AnnotatedValue<IRI> = <AnnotatedValue<IRI>>resource;
+            //check if the resource is local to the project
+            if (annotatedIRI.getResourceGraphs().find(g => g.getIRI() == PMKIContext.getProject().getBaseURI()) != null) { //locally defined
+                let role: RDFResourceRolesEnum = resource.getRole();
                 let tabToActivate: RDFResourceRolesEnum;
                 if (ResourceUtils.roleSubsumes(RDFResourceRolesEnum.property, role)) {
                     tabToActivate = RDFResourceRolesEnum.property;
@@ -62,24 +67,38 @@ export class StructureTabsetComponent implements OnInit {
                 ) {
                     tabToActivate = role;
                 }
-                this.viewChildTabset.select(tabToActivate);
-                setTimeout(() => { //wait for the tab to be activate
-                    if (tabToActivate == RDFResourceRolesEnum.concept) {
-                        this.viewChildConceptPanel.openAt(annotatedRes);
-                    } else if (tabToActivate == RDFResourceRolesEnum.conceptScheme) {
-                        this.viewChildSchemePanel.openAt(annotatedRes);
-                    } else if (tabToActivate == RDFResourceRolesEnum.limeLexicon) {
-                        this.viewChildLexiconPanel.openAt(annotatedRes);
-                    } else if (tabToActivate == RDFResourceRolesEnum.ontolexLexicalEntry) {
-                        this.viewChildLexialEntryPanel.openAt(annotatedRes);
-                    } else if (tabToActivate == RDFResourceRolesEnum.property) {
-                        this.viewChildPropertyPanel.openAt(annotatedRes);
-                    } else if (tabToActivate == RDFResourceRolesEnum.skosCollection) {
-                        this.viewChildCollectionPanel.openAt(annotatedRes);
-                    }
-                });
+                if (tabToActivate != null) {
+                    this.viewChildTabset.select(tabToActivate);
+                    setTimeout(() => { //wait for the tab to be activate
+                        if (tabToActivate == RDFResourceRolesEnum.concept) {
+                            this.viewChildConceptPanel.openAt(annotatedIRI);
+                        } else if (tabToActivate == RDFResourceRolesEnum.conceptScheme) {
+                            this.viewChildSchemePanel.openAt(annotatedIRI);
+                        } else if (tabToActivate == RDFResourceRolesEnum.limeLexicon) {
+                            this.viewChildLexiconPanel.openAt(annotatedIRI);
+                        } else if (tabToActivate == RDFResourceRolesEnum.ontolexLexicalEntry) {
+                            this.viewChildLexialEntryPanel.openAt(annotatedIRI);
+                        } else if (tabToActivate == RDFResourceRolesEnum.property) {
+                            this.viewChildPropertyPanel.openAt(annotatedIRI);
+                        } else if (tabToActivate == RDFResourceRolesEnum.skosCollection) {
+                            this.viewChildCollectionPanel.openAt(annotatedIRI);
+                        }
+                    });
+                } else { //tabToActivate null means that the resource doesn't belong to any kind handled by the tabset
+                    this.basicModals.alert("Resource not reachable", annotatedIRI.getValue().getIRI() + " is not reachable in any tree or list. " + 
+                        "It's ResourceView will be shown in a modal dialog", ModalType.warning).then(
+                        () => {
+                            this.sharedModals.openResourceView(resource.getValue());
+                        },
+                        () => {}
+                    );
+                }
+            } else { //non local IRI
+                this.sharedModals.openResourceView(resource.getValue());
             }
-        );
+        } else { //Bnode
+            this.sharedModals.openResourceView(resource.getValue());
+        }
     }
 
 }

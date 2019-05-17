@@ -16,6 +16,7 @@ renderer:last-of-type {
 .property-label {
     min-width: 250px;
     font-weight: bold;
+    padding: 2px;
 }
 
 .property-value-col {
@@ -24,6 +25,7 @@ renderer:last-of-type {
 
 .property-value {
     flex: 1;
+    padding: 2px;
 }
 .property-value:hover {
     background-color: #d3ebff;

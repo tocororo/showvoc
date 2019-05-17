@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { AnnotatedValue, IRI, LocalResourcePosition, PredicateObjects, RemoteResourcePosition, ResAttribute, Resource, ResourcePosition, Value } from '../models/Resources';
 import { PropertyFacet, ResViewPartition } from '../models/ResourceView';
@@ -17,6 +17,8 @@ import { ResourceDeserializer, ResourceUtils, SortAttribute } from '../utils/Res
 export class ResourceViewComponent {
 
     @Input() resource: Resource;
+    @Output() dblclickObj: EventEmitter<AnnotatedValue<Resource>> = new EventEmitter<AnnotatedValue<Resource>>();
+    
     annotatedResource: AnnotatedValue<Resource>;
 
     loading: boolean = false;
@@ -85,6 +87,7 @@ export class ResourceViewComponent {
     }
 
     private buildResourceView(res: Resource) {
+        this.showInferredPristine = this.showInferred;
         this.loading = true;
         this.resetPartitions();
         this.resViewService.getResourceView(res).pipe(
@@ -503,6 +506,15 @@ export class ResourceViewComponent {
     switchRendering() {
         this.rendering = !this.rendering;
         this.pmkiProp.setRenderingInResourceView(this.rendering);
+    }
+
+    /**
+     * EVENT HANDLER
+     */
+
+    private objectDblClick(object: AnnotatedValue<Resource>) {
+        console.log("res view emit", object);
+        this.dblclickObj.emit(object);
     }
 
 }

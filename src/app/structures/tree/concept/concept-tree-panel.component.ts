@@ -262,8 +262,15 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
         }
     }
 
-    openAt(resource: AnnotatedValue<IRI>) {
-        this.viewChildTree.openTreeAt(resource);
+    openAt(node: AnnotatedValue<IRI>) {
+        if (this.visualizationMode == ConceptTreeVisualizationMode.hierarchyBased) {
+            this.viewChildTree.openTreeAt(node);
+        } else { //search-based
+            this.viewChildTree.forceList([node]);
+            setTimeout(() => {
+                this.viewChildTree.expandPath([node]);
+            });
+        }
     }
 
     //EVENT LISTENERS

@@ -49,8 +49,8 @@ export class PropertyTreePanelComponent extends AbstractTreePanel {
         }
     }
 
-    openAt(resource: AnnotatedValue<IRI>) {
-        this.viewChildTree.openTreeAt(resource);
+    openAt(node: AnnotatedValue<IRI>) {
+        this.viewChildTree.openTreeAt(node);
     }
 
 }

@@ -3,8 +3,10 @@
         <span [title]="po.getPredicate().getValue().toNT()">{{po.getPredicate().humanReadable}}</span>
     </div>
     <div class="property-value-col">
-        <div *ngFor="let obj of po.getObjects()" class="property-value">
-            <span [title]="obj.getValue().toNT()">{{obj.getShow()}}</span>
+        <div *ngFor="let obj of po.getObjects()" class="property-value" [ngClass]="{ clickable: obj.clickable }" (dblclick)="objectDblClick(obj)">
+            <span [title]="obj.getValue().toNT()">
+                {{getRendering(obj)}}
+            </span>
             <span *ngIf="isResourceWithLang(obj)" class="ml-1">({{getLang(obj)}})</span>
         </div>
     </div>

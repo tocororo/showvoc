@@ -19,54 +19,54 @@
     <div class="card-body scrollableContainer p-2">
         <div *ngIf="loading" class="spinner-border text-info"></div>
 
-        <renderer *ngIf="typesColl?.length > 0" [poList]="typesColl"></renderer>
-        <renderer *ngIf="topconceptofColl?.length > 0" [poList]="topconceptofColl"></renderer>
-        <renderer *ngIf="schemesColl?.length > 0" [poList]="schemesColl"></renderer>
+        <renderer *ngIf="typesColl?.length > 0" [poList]="typesColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
+        <renderer *ngIf="topconceptofColl?.length > 0" [poList]="topconceptofColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
+        <renderer *ngIf="schemesColl?.length > 0" [poList]="schemesColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
 
         <!-- LEXICALIZATIONS -->
-        <renderer *ngIf="lexicalizationsColl?.length > 0" [poList]="lexicalizationsColl"></renderer>
-        <renderer *ngIf="lexicalFormsColl?.length > 0" [poList]="lexicalFormsColl"></renderer>
+        <renderer *ngIf="lexicalizationsColl?.length > 0" [poList]="lexicalizationsColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
+        <renderer *ngIf="lexicalFormsColl?.length > 0" [poList]="lexicalFormsColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
 
         <!-- AXIOMS -->
         <!-- classes -->
-        <renderer *ngIf="classAxiomColl?.length > 0" [poList]="classAxiomColl"></renderer>
+        <renderer *ngIf="classAxiomColl?.length > 0" [poList]="classAxiomColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
         <!-- concepts -->
-        <renderer *ngIf="broadersColl?.length > 0" [poList]="broadersColl"></renderer>
+        <renderer *ngIf="broadersColl?.length > 0" [poList]="broadersColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
         <!-- properties -->
-        <renderer *ngIf="superpropertiesColl?.length > 0" [poList]="superpropertiesColl"></renderer>
-        <renderer *ngIf="equivalentPropertiesColl?.length > 0" [poList]="equivalentPropertiesColl"></renderer>
-        <renderer *ngIf="disjointPropertiesColl?.length > 0" [poList]="disjointPropertiesColl"></renderer>
-        <renderer *ngIf="subPropertyChainsColl?.length > 0" [poList]="subPropertyChainsColl"></renderer>
+        <renderer *ngIf="superpropertiesColl?.length > 0" [poList]="superpropertiesColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
+        <renderer *ngIf="equivalentPropertiesColl?.length > 0" [poList]="equivalentPropertiesColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
+        <renderer *ngIf="disjointPropertiesColl?.length > 0" [poList]="disjointPropertiesColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
+        <renderer *ngIf="subPropertyChainsColl?.length > 0" [poList]="subPropertyChainsColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
         <!-- lexical entries -->
-        <renderer *ngIf="subtermsColl?.length > 0" [poList]="subtermsColl"></renderer>
+        <renderer *ngIf="subtermsColl?.length > 0" [poList]="subtermsColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
         <!-- properties -->
-        <renderer *ngIf="domainsColl?.length > 0" [poList]="domainsColl"></renderer>
-        <renderer *ngIf="rangesColl?.length > 0" [poList]="rangesColl"></renderer>
-        <renderer *ngIf="inverseofColl?.length > 0" [poList]="inverseofColl"></renderer> <!-- propertyFacets ? -->
+        <renderer *ngIf="domainsColl?.length > 0" [poList]="domainsColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
+        <renderer *ngIf="rangesColl?.length > 0" [poList]="rangesColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
+        <renderer *ngIf="inverseofColl?.length > 0" [poList]="inverseofColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer> <!-- propertyFacets ? -->
         
 
 
-        <renderer *ngIf="notesColl?.length > 0" [poList]="notesColl"></renderer>
+        <renderer *ngIf="notesColl?.length > 0" [poList]="notesColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
 
         <!-- OTHER DETAILS -->
         <!-- lexical entries -->
-        <renderer *ngIf="denotationsColl?.length > 0" [poList]="denotationsColl"></renderer>
-        <renderer *ngIf="evokedLexicalConceptsColl?.length > 0" [poList]="evokedLexicalConceptsColl"></renderer>
-        <renderer *ngIf="formBasedPreviewColl?.length > 0" [poList]="formBasedPreviewColl"></renderer>
-        <renderer *ngIf="constituentsColl?.length > 0" [poList]="constituentsColl"></renderer>
-        <renderer *ngIf="rdfsMembersColl?.length > 0" [poList]="rdfsMembersColl"></renderer>
+        <renderer *ngIf="denotationsColl?.length > 0" [poList]="denotationsColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
+        <renderer *ngIf="evokedLexicalConceptsColl?.length > 0" [poList]="evokedLexicalConceptsColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
+        <renderer *ngIf="formBasedPreviewColl?.length > 0" [poList]="formBasedPreviewColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
+        <renderer *ngIf="constituentsColl?.length > 0" [poList]="constituentsColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
+        <renderer *ngIf="rdfsMembersColl?.length > 0" [poList]="rdfsMembersColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
         <!-- collections details -->
-        <renderer *ngIf="membersColl?.length > 0" [poList]="membersColl"></renderer>
-        <renderer *ngIf="membersOrderedColl?.length > 0" [poList]="membersOrderedColl"></renderer>
+        <renderer *ngIf="membersColl?.length > 0" [poList]="membersColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
+        <renderer *ngIf="membersOrderedColl?.length > 0" [poList]="membersOrderedColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
         <!-- xlabels -->
-        <renderer *ngIf="labelRelationsColl?.length > 0" [poList]="labelRelationsColl"></renderer>
+        <renderer *ngIf="labelRelationsColl?.length > 0" [poList]="labelRelationsColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
         <!-- ontolex forms -->
-        <renderer *ngIf="formRepresentationsColl?.length > 0" [poList]="formRepresentationsColl"></renderer>
+        <renderer *ngIf="formRepresentationsColl?.length > 0" [poList]="formRepresentationsColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
         <!-- ontologies -->
-        <renderer *ngIf="importsColl?.length > 0" [poList]="importsColl"></renderer>
+        <renderer *ngIf="importsColl?.length > 0" [poList]="importsColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
         
         <!-- Commons -->
-        <renderer *ngIf="propertiesColl?.length > 0" [poList]="propertiesColl"></renderer>
+        <renderer *ngIf="propertiesColl?.length > 0" [poList]="propertiesColl" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></renderer>
 
         <!-- <table class="table table-sm">
             <colgroup>

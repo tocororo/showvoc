@@ -8,6 +8,7 @@ import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
+import { SearchBarComponent } from '../../search-bar/search-bar.component';
 import { AbstractListPanel } from '../abstract-list-panel';
 import { LexicalEntryListSettingsModal } from './lexical-entry-list-settings-modal';
 import { LexicalEntryListComponent } from './lexical-entry-list.component';
@@ -24,6 +25,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     @Output() indexChanged = new EventEmitter<string>();//when index changed
 
     @ViewChild(LexicalEntryListComponent) viewChildList: LexicalEntryListComponent;
+    @ViewChild(SearchBarComponent) searchBar: SearchBarComponent;
 
     panelRole: RDFResourceRolesEnum = RDFResourceRolesEnum.ontolexLexicalEntry;
 
@@ -96,11 +98,25 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     }
 
     public openAt(node: AnnotatedValue<IRI>) {
-        this.viewChildList.openListAt(node);
+        if (this.visualizationMode == LexEntryVisualizationMode.indexBased) {
+            this.viewChildList.openListAt(node);
+        } else { //search-based
+            this.viewChildList.forceList([node]);
+            setTimeout(() => {
+                this.viewChildList.openListAt(node);
+            });
+        }
     }
 
     refresh() {
-        this.viewChildList.init();
+        if (this.visualizationMode == LexEntryVisualizationMode.indexBased) {
+            // in index based visualization reinit the list
+            this.viewChildList.init();
+        } else if (this.visualizationMode == LexEntryVisualizationMode.searchBased) {
+            //in search based visualization repeat the search
+            this.viewChildList.setInitialStatus();
+            this.searchBar.doSearchImpl();
+        }
     }
 
     settings() {

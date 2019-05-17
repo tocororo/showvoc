@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AnnotatedValue, IRI } from 'src/app/models/Resources';
+import { AnnotatedValue, IRI, Resource } from 'src/app/models/Resources';
 import { StructureTabsetComponent } from 'src/app/structures/structure-tabset/structure-tabset.component';
+import { ResourcesServices } from 'src/app/services/resources.service';
 
 @Component({
     selector: 'dataset-data-component',
@@ -14,17 +15,18 @@ export class DatasetDataComponent implements OnInit {
 
     resource: AnnotatedValue<IRI> = null;
 
-    constructor(private route: ActivatedRoute) { }
+    constructor(private route: ActivatedRoute, private resourcesService: ResourcesServices) { }
 
     ngOnInit() {
         this.route.queryParams.subscribe(
             params => {
                 let resId: string = params['resId'];
                 if (resId != null) {
-                    //give the time to initialize the structure tabset after the change of this.ready
-                    setTimeout(() => {
-                        this.viewChildStructureTabset.selectResource(new IRI(resId));
-                    });
+                    this.resourcesService.getResourceDescription(new IRI(resId)).subscribe(
+                        (annotatedRes: AnnotatedValue<IRI>) => {
+                            this.viewChildStructureTabset.selectResource(annotatedRes);
+                        }
+                    )
 
                 }
             }
@@ -34,6 +36,11 @@ export class DatasetDataComponent implements OnInit {
     onNodeSelected(node: AnnotatedValue<IRI>) {
         if (node == null) return;
         this.resource = node;
+    }
+
+    private objectDblClick(object: AnnotatedValue<Resource>) {
+        console.log("dataset data dbl", object);
+        this.viewChildStructureTabset.selectResource(object);
     }
 
 }

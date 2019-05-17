@@ -44,8 +44,8 @@ export class CollectionTreePanelComponent extends AbstractTreePanel {
         }
     }
 
-    openAt(resource: AnnotatedValue<IRI>) {
-        this.viewChildTree.openTreeAt(resource);
+    openAt(node: AnnotatedValue<IRI>) {
+        this.viewChildTree.openTreeAt(node);
     }
 
 }

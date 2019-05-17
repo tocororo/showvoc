@@ -105,6 +105,25 @@ rdf-resource > .rdfResourceText {
     text-decoration: line-through;
 }
 
+.flagIcon {
+    position: relative;
+}
+.flagIcon > span{
+    position: absolute;
+    top: 1px;
+    left: 0px;
+    width: 16px;
+    margin: 0 auto;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 10px;
+    cursor: default;
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+}
+
 /* Ellipsis of the content of a rdf-resource in a card-header (heading of ResView) */
 .card-header rdf-resource > span {
 	max-width: 200px;

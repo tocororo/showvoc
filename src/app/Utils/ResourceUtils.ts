@@ -222,7 +222,7 @@ export class ResourceDeserializer {
         let value: Literal = new Literal(litValue);
         let datatype = valueJson['@type'];
         if (datatype != undefined) {
-            value.setDatatype(datatype);
+            value.setDatatype(new IRI(datatype));
         }
         let lang = valueJson[ResAttribute.LANG];
         if (lang == undefined) {
