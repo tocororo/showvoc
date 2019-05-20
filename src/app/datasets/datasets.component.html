@@ -21,7 +21,17 @@
 							Lexicons
 						</label>
 					</div>
-				</div>
+                </div>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item" style="padding: 6px;">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" [(ngModel)]="openCheck" (ngModelChange)="onFacetChange()">
+                                Only open projects
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
             
 			<div class="card mt-1">

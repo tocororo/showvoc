@@ -11,6 +11,22 @@
         </div>
     </div>
 
+    <div>
+        <span class="text-muted">Filters: </span>
+        <div class="btn-group btn-group-sm" ngbDropdown>
+            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>
+                Projects
+            </button>
+            <div class="dropdown-menu" ngbDropdownMenu>
+                <button class="dropdown-item d-flex align-items-center" (click)="updateProjectFilters()">
+                    <span style="flex: 1;">Only open</span>
+                    <i *ngIf="openProjectFilter" class="fa fa-check pull-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
     <div *ngIf="loading" class="spinner-border text-info"></div>
 
     <ng-container *ngIf="!loading && groupedSearchResults">
@@ -22,24 +38,29 @@
 
             <div class="card vbox mt-1">
                 <div class="card-body vbox scrollableContainer">
-                    <div *ngFor="let repoId of groupedSearchResultsRepoIds" class="card grouped-search-result">
-                        <div class="card-body">
-                            <h5 class="mb-2">
-                                <a [routerLink]="" (click)="goToDataset(repoId)" [ngClass]="{ disabled : !groupedSearchResults[repoId][0].repository.open }">
-                                    {{repoId}}
-                                </a>
-                            </h5>
-                            <div *ngFor="let result of groupedSearchResults[repoId]" class="search-result">
-                                <div style="font-size: 1rem">
-                                    <a [routerLink]="" (click)="goToResource(result)" class="text-success" [ngClass]="{ disabled: !result.repository.open }">{{result.show}}</a>
+                    <ng-container *ngFor="let repoId of groupedSearchResultsRepoIds">
+                        <div *ngIf="openProjectFilter && groupedSearchResults[repoId][0].repository.open || !openProjectFilter" class="card grouped-search-result">
+                            <div class="card-body">
+                                <h5 class="mb-2">
+                                    <a [routerLink]="" (click)="goToDataset(repoId)" [ngClass]="{ disabled : !groupedSearchResults[repoId][0].repository.open }">
+                                        {{repoId}}
+                                    </a>
+                                </h5>
+                                <div *ngFor="let result of groupedSearchResults[repoId]" class="search-result">
+                                    <div style="font-size: 1rem">
+                                        <a [routerLink]="" (click)="goToResource(result)" class="text-success" [ngClass]="{ disabled: !result.repository.open }">{{result.show}}</a>
+                                    </div>
+                                    <div style="font-size: .875rem">
+                                        <a [routerLink]="" (click)="goToResource(result)" class="text-secondary" [ngClass]="{ disabled: !result.repository.open }">{{result.resource.getIRI()}}</a>
+                                    </div>
+                                    <span class="mt-1">
+                                        {{result.details[0].matchedValue.getLabel()}}
+                                        ({{result.details[0].matchedValue.getLanguage()}})
+                                    </span>
                                 </div>
-                                <div style="font-size: .875rem">
-                                    <a [routerLink]="" (click)="goToResource(result)" class="text-secondary" [ngClass]="{ disabled: !result.repository.open }">{{result.resource.getIRI()}}</a>
-                                </div>
-                                <span class="mt-1">{{result.details[0].matchedValue.toNT()}}</span>
                             </div>
                         </div>
-                    </div>
+                    </ng-container>
                 </div>
             </div>
         </ng-container>

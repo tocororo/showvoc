@@ -17,7 +17,7 @@
                     <span *ngIf="searchSettings.stringMatchMode == 'fuzzy'" style="font-weight: bold; width: 16px">~&#945;</span>
                 </button>
                 <div class="dropdown-menu" ngbDropdownMenu>
-                    <button *ngFor="let mode of stringMatchModes" class="dropdown-item" style="padding: 3px 10px;" (click)="updateSearchMode(mode.value, $event)">
+                    <button *ngFor="let mode of stringMatchModes" class="dropdown-item" (click)="updateSearchMode(mode.value, $event)">
                         <i *ngIf="searchSettings.stringMatchMode == mode.value" class="fa fa-check" style="float: right"></i>
                         <span style="font-weight: bold; margin-right: 4px; display: inline-block; width: 24px;">{{mode.symbol}}</span>
                         <span>{{mode.show}}</span>

@@ -309,7 +309,7 @@ ul.nav-tabs {
     padding: 6px;
 }
 
-.dropdown-menu>a {
+.dropdown-item {
     padding: 3px 10px;
 }
 
@@ -332,4 +332,9 @@ ul.nav-tabs {
     max-height: 90vh;
     display: flex;
     flex-flow: column;
+}
+
+/* reduce font size of item in dropdown with size sm */
+.btn-group-sm .dropdown-item {
+    font-size: .875rem;
 }

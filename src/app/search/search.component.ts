@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { concat, Observable, of } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { Project } from '../models/Project';
 import { IRI } from '../models/Resources';
@@ -7,12 +8,12 @@ import { GlobalSearchResult } from '../models/Search';
 import { RDFS, SKOS, SKOSXL } from '../models/Vocabulary';
 import { GlobalSearchServices } from '../services/global-search.service';
 import { ResourcesServices } from '../services/resources.service';
+import { Cookie } from '../utils/Cookie';
 import { PMKIContext } from '../utils/PMKIContext';
-import { Observable, concat, of } from 'rxjs';
 
 @Component({
-	selector: 'search-component',
-	templateUrl: './search.component.html',
+    selector: 'search-component',
+    templateUrl: './search.component.html',
     host: { class: "pageComponent" },
     styles: [`
         .search-result + .search-result {
@@ -25,14 +26,15 @@ import { Observable, concat, of } from 'rxjs';
 })
 export class SearchComponent {
 
-	searchString: string;
+    searchString: string;
     lastSearch: string;
-    
-	loading: boolean = false;
 
-    groupedSearchResults: { [repId: string ]: GlobalSearchResult[] };
+    loading: boolean = false;
+
+    groupedSearchResults: { [repId: string]: GlobalSearchResult[] };
     groupedSearchResultsRepoIds: string[];
 
+    private openProjectFilter: boolean = true;
     private openRepoIds: string[];
 
     private labelTypeOrder: string[] = [
@@ -41,17 +43,21 @@ export class SearchComponent {
         SKOSXL.hiddenLabel.getIRI(), SKOS.hiddenLabel.getIRI(),
     ];
 
-	constructor(private globalSearchService: GlobalSearchServices, private resourcesService: ResourcesServices, private router: Router) { }
+    constructor(private globalSearchService: GlobalSearchServices, private resourcesService: ResourcesServices, private router: Router) { }
 
-	searchKeyHandler() {
-		if (this.searchString != null && this.searchString.trim() != "") {
-			this.search();
-		}
-	}
+    ngOnInit() {
+        this.initCookies();
+    }
 
-	search() {
+    searchKeyHandler() {
+        if (this.searchString != null && this.searchString.trim() != "") {
+            this.search();
+        }
+    }
+
+    search() {
         this.lastSearch = this.searchString;
-        
+
         this.loading = true;
         this.globalSearchService.search(this.searchString).pipe(
             finalize(() => this.loading = false)
@@ -117,7 +123,7 @@ export class SearchComponent {
         }
     }
 
-    
+
     private goToResource(result: GlobalSearchResult) {
         this.router.navigate(["/datasets/" + result.repository.id], { queryParams: { resId: result.resource.getIRI() } });
     }
@@ -125,6 +131,18 @@ export class SearchComponent {
     private goToDataset(repoId: string) {
         this.router.navigate(["/datasets/" + repoId]);
     }
-    
+
+
+    private updateProjectFilters() {
+        this.openProjectFilter = !this.openProjectFilter;
+        this.updateCookies();
+    }
+
+    private initCookies() {
+        this.openProjectFilter = Cookie.getCookie(Cookie.SEARCH_FILTERS_ONLY_OPEN_PROJECTS) != "false";
+    }
+    private updateCookies() {
+        Cookie.setCookie(Cookie.SEARCH_FILTERS_ONLY_OPEN_PROJECTS, this.openProjectFilter + "");
+    }
 }
 

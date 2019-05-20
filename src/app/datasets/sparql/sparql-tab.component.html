@@ -69,12 +69,12 @@
                     Save results as...
                 </button>
                 <div class="dropdown-menu" ngbDropdownMenu>
-                    <button class="dropdown-item" style="padding: 3px 10px;" (click)="exportAsJSON()">Json</button>
-                    <button class="dropdown-item" style="padding: 3px 10px;" (click)="exportAsCSV()">CSV</button>
-                    <button class="dropdown-item" style="padding: 3px 10px;" (click)="exportAsTSV()">TSV</button>
-                    <button class="dropdown-item" style="padding: 3px 10px;" (click)="exportAsSpradsheet('xlsx')">XLSX (Microsoft spreadsheet)</button>
-                    <button class="dropdown-item" style="padding: 3px 10px;" (click)="exportAsSpradsheet('ods')">ODS (OpenDocument spreadsheet)</button>
-                    <button *ngIf="resultType=='graph'" class="dropdown-item" style="padding: 3px 10px;" (click)="exportAsRdf()">RDF format...</button>
+                    <button class="dropdown-item" (click)="exportAsJSON()">Json</button>
+                    <button class="dropdown-item" (click)="exportAsCSV()">CSV</button>
+                    <button class="dropdown-item" (click)="exportAsTSV()">TSV</button>
+                    <button class="dropdown-item" (click)="exportAsSpradsheet('xlsx')">XLSX (Microsoft spreadsheet)</button>
+                    <button class="dropdown-item" (click)="exportAsSpradsheet('ods')">ODS (OpenDocument spreadsheet)</button>
+                    <button *ngIf="resultType=='graph'" class="dropdown-item" (click)="exportAsRdf()">RDF format...</button>
                 </div>
             </div>
             <div style="width: 25px; height: 25px; display: inline-block;">
