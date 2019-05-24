@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h5 class="modal-title">Graph</h5>
+    <button class="close" (click)="close()">
+        <span>&times;</span>
+    </button>
+</div>
+<div class="modal-body" style="min-height: 70vh;">
+    <data-graph-panel *ngIf="mode=='dataOriented'" class="vbox" [graph]="graph" [rendering]="rendering" [role]="role"></data-graph-panel>
+    <!-- <model-graph-panel *ngIf="mode=='modelOriented'" class="vbox" [graph]="graph" [rendering]="rendering"></model-graph-panel> -->
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary btn-sm" (click)="ok()">Ok</button>
+</div>

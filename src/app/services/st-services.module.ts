@@ -4,6 +4,7 @@ import { HttpManager } from '../utils/HttpManager';
 import { AuthServices } from "./auth.service";
 import { ExportServices } from './export.service';
 import { GlobalSearchServices } from './global-search.service';
+import { GraphServices } from './graph.service';
 import { MetadataServices } from './metadata.service';
 import { OntoLexLemonServices } from './ontolex-lemon.service';
 import { PreferencesSettingsServices } from './preferences-settings.service';
@@ -25,6 +26,7 @@ import { UserServices } from './user.service';
         AuthServices,
         ExportServices,
         GlobalSearchServices,
+        GraphServices,
         MetadataServices,
         OntoLexLemonServices,
         PreferencesSettingsServices,

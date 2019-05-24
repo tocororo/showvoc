@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <h5 class="modal-title">Expand node</h5>
+    <button class="close" (click)="close()">
+        <span>&times;</span>
+    </button>
+</div>
+<div class="modal-body vbox">
+
+    <div class="alert alert-warning">
+        The resource you are expanding has a big amount of relations, thus it would generate a lot of links and nodes that could
+        confuse the graph visualization. It is highly recommended to filter out some relations in order to limit the graph size.
+    </div>
+
+    <div class="card mt-1">
+        <div class="card-body scrollableContainer">
+            <div *ngFor="let filter of filters" class="card mb-1">
+                <div class="card-header">
+                    <label>{{filter.partition.show}} ({{getPartitionCount(filter)}})</label>
+
+                    <div class="btn-toolbar pull-right">
+                        <div class="btn-group btn-group-xs">
+                            <button class="btn btn-outline-secondary" title="Select all" (click)="checkAll(filter, true)">
+                                <span class="fa fa-check-square" style="width: 16px;"></span>
+                            </button>
+                            <button class="btn btn-outline-secondary" title="Deselect all" (click)="checkAll(filter, false)">
+                                <span class="fa fa-square-o" style="width: 16px;"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div *ngFor="let pred of filter.predicates" class="listItem">
+                        <input type="checkbox" [(ngModel)]="pred.checked">
+                        <div class="hbox mh-1 align-items-center">
+                            <rdf-resource [resource]="pred.res" style="flex: initial"></rdf-resource>
+                            <span style="font-size: 12px; font-weight: bold;">({{pred.count}})</span>
+                        </div>
+                        <span *ngIf="pred.checked" class="fa fa-eye"></span>
+                        <span *ngIf="!pred.checked" class="fa fa-eye-slash"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <span class="pull-right" style="font-weight: bold">Visible {{getVisibleCount()}} out of {{totalObjCount}}</span>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary btn-sm" (click)="ok()" [disabled]="getVisibleCount() == 0">Ok</button>
+    <button class="btn btn-sm btn-secondary" (click)="close()">Cancel</button>
+</div>

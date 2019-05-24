@@ -1,0 +1,41 @@
+<div class="table-responsive">
+    <table class="table table-sm table-borderless small">
+        <colgroup>
+            <col style="width: 1%">
+            <col>
+        </colgroup>
+        <tbody>
+            <tr>
+                <td><label>Resource:</label></td>
+                <td><rdf-resource *ngIf="resource" [resource]="resource"></rdf-resource></td>
+            </tr>
+            <tr *ngIf="resource.getValue().isIRI()">
+                <td><label>IRI:</label></td>
+                <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{resource.getValue().getIRI()}}</td>
+            </tr>
+            <tr *ngIf="resource.getValue().isBNode()">
+                <td><label>ID:</label></td>
+                <td>{{resource.getValue().getId()}}</td>
+            </tr>
+            <tr>
+                <td><label>Label:</label></td>
+                <td>{{resource.getShow()}}</td>
+            </tr>
+            <tr *ngIf="resource.getValue().isResource()">
+                <td><label>Role:</label></td>
+                <td>{{resource.getRole()}}</td>
+            </tr>
+            <tr *ngIf="resource.getValue().isResource()">
+                <td><label>Deprecated:</label></td>
+                <td>{{resource.isDeprecated()}}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr *ngIf="resource.getValue().isResource()">
+                <td colspan="2" class="border-top">
+                    Show the complete <a href="javascript:void(0)" (click)="showResourceView()">ResourceView</a>
+                </td>
+            </tr>   
+        </tfoot>
+    </table>
+</div>

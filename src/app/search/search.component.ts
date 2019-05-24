@@ -34,7 +34,7 @@ export class SearchComponent {
     groupedSearchResults: { [repId: string]: GlobalSearchResult[] };
     groupedSearchResultsRepoIds: string[];
 
-    private openProjectFilter: boolean = true;
+    openProjectFilter: boolean = true;
     private openRepoIds: string[];
 
     private labelTypeOrder: string[] = [
@@ -133,7 +133,7 @@ export class SearchComponent {
     }
 
 
-    private updateProjectFilters() {
+    updateProjectFilters() {
         this.openProjectFilter = !this.openProjectFilter;
         this.updateCookies();
     }

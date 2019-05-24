@@ -1,14 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Properties, ConceptTreePreference, ConceptTreeVisualizationMode, LexicalEntryListPreference, LexEntryVisualizationMode, SearchSettings, SearchMode } from '../models/Properties';
+import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
+import { ModalType } from '../modal-dialogs/Modals';
+import { Language, Languages } from '../models/LanguagesCountries';
+import { ConceptTreePreference, ConceptTreeVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, ValueFilterLanguages } from '../models/Properties';
 import { IRI } from '../models/Resources';
 import { PreferencesSettingsServices } from '../services/preferences-settings.service';
-import { PMKIEventHandler } from './PMKIEventHandler';
 import { Cookie } from './Cookie';
+import { PMKIEventHandler } from './PMKIEventHandler';
 
 @Injectable()
 export class PMKIProperties {
+
+    private projectLanguagesSetting: Language[] = []; //all available languages in a project (settings)
+
+    private filterValueLang: ValueFilterLanguages; //languages visible in resource description (e.g. in ResourceView, Graph,...)
 
     private activeSchemes: IRI[] = [];
     private activeLexicon: IRI;
@@ -16,6 +23,10 @@ export class PMKIProperties {
 
     private conceptTreePreferences: ConceptTreePreference;
     private lexEntryListPreferences: LexicalEntryListPreference;
+
+    //graph preferences
+    private resViewPartitionFilter: ResViewPartitionFilterPreference;
+    private hideLiteralGraphNodes: boolean = false;
 
     private searchSettings: SearchSettings = {
         stringMatchMode: SearchMode.startsWith,
@@ -30,7 +41,7 @@ export class PMKIProperties {
     };
 
 
-    constructor(private prefService: PreferencesSettingsServices, private eventHandler: PMKIEventHandler) {
+    constructor(private prefService: PreferencesSettingsServices, private basicModals: BasicModalsServices, private eventHandler: PMKIEventHandler) {
     }
 
     /* =============================
@@ -45,9 +56,9 @@ export class PMKIProperties {
             Properties.pref_active_schemes, Properties.pref_active_lexicon, Properties.pref_show_flags,
             Properties.pref_concept_tree_visualization,
             Properties.pref_lex_entry_list_visualization, Properties.pref_lex_entry_list_index_lenght,
-
-            Properties.pref_search_languages, Properties.pref_search_restrict_lang, 
-            Properties.pref_search_include_locales, Properties.pref_search_use_autocomplete, 
+            Properties.pref_search_languages, Properties.pref_search_restrict_lang,
+            Properties.pref_search_include_locales, Properties.pref_search_use_autocomplete,
+            Properties.pref_filter_value_languages, Properties.pref_res_view_partition_filter, Properties.pref_hide_literal_graph_nodes
         ];
         return this.prefService.getPUSettings(properties).pipe(
             map(prefs => {
@@ -69,6 +80,23 @@ export class PMKIProperties {
                 }
 
                 this.showFlags = prefs[Properties.pref_show_flags] == "true";
+
+                let filterValueLangPref = prefs[Properties.pref_filter_value_languages];
+                if (filterValueLangPref == null) {
+                    this.filterValueLang = { languages: [], enabled: false }; //default
+                } else {
+                    this.filterValueLang = JSON.parse(filterValueLangPref);
+                }
+
+                //graph preferences
+                let rvPartitionFilterPref = prefs[Properties.pref_res_view_partition_filter];
+                if (rvPartitionFilterPref != null) {
+                    this.resViewPartitionFilter = JSON.parse(rvPartitionFilterPref);
+                } else {
+                    this.resViewPartitionFilter = {};
+                }
+
+                this.hideLiteralGraphNodes = prefs[Properties.pref_hide_literal_graph_nodes] == "true";
 
                 //concept tree preferences
                 this.conceptTreePreferences = {
@@ -110,6 +138,26 @@ export class PMKIProperties {
                 let lexEntryListIndexLenghtPref: string = prefs[Properties.pref_lex_entry_list_index_lenght];
                 if (lexEntryListIndexLenghtPref == "2") {
                     this.lexEntryListPreferences.indexLength = 2;
+                }
+            })
+        );
+    }
+
+    initProjectSettings(): Observable<void> {
+        var properties: string[] = [Properties.setting_languages];
+        return this.prefService.getProjectSettings(properties).pipe(
+            map(settings => {
+                var langsValue: string = settings[Properties.setting_languages];
+                try {
+                    this.projectLanguagesSetting = <Language[]>JSON.parse(langsValue);
+                    Languages.sortLanguages(this.projectLanguagesSetting);
+                } catch (err) {
+                    this.basicModals.alert("Error", "Project setting initialization has encountered a problem during parsing " +
+                        "languages settings. Default languages will be set for this project.", ModalType.error);
+                    this.projectLanguagesSetting = [
+                        { name: "German", tag: "de" }, { name: "English", tag: "en" }, { name: "Spanish", tag: "es" },
+                        { name: "French", tag: "fr" }, { name: "Italian", tag: "it" }
+                    ];
                 }
             })
         );
@@ -157,6 +205,13 @@ export class PMKIProperties {
         this.prefService.setShowFlags(show).subscribe();
     }
 
+    getValueFilterLanguages(): ValueFilterLanguages {
+        return this.filterValueLang;
+    }
+    setValueFilterLanguages(filter: ValueFilterLanguages) {
+        this.prefService.setPUSetting(Properties.pref_filter_value_languages, JSON.stringify(filter)).subscribe();
+        this.filterValueLang = filter;
+    }
 
     //concept tree settings
     getConceptTreePreferences(): ConceptTreePreference {
@@ -204,8 +259,35 @@ export class PMKIProperties {
         this.lexEntryListPreferences.visualization = mode;
     }
     setLexicalEntryListIndexLenght(lenght: number) {
-        this.prefService.setPUSetting(Properties.pref_lex_entry_list_index_lenght, lenght+"").subscribe();
+        this.prefService.setPUSetting(Properties.pref_lex_entry_list_index_lenght, lenght + "").subscribe();
         this.lexEntryListPreferences.indexLength = lenght;
+    }
+
+    //Graph settings
+    getResourceViewPartitionsFilter(): ResViewPartitionFilterPreference {
+        return this.resViewPartitionFilter;
+    }
+    setResourceViewPartitionFilter(pref: ResViewPartitionFilterPreference) {
+        this.prefService.setPUSetting(Properties.pref_res_view_partition_filter, JSON.stringify(pref)).subscribe();
+        this.resViewPartitionFilter = pref;
+    }
+
+    getHideLiteralGraphNodes(): boolean {
+        return this.hideLiteralGraphNodes;
+    }
+    setHideLiteralGraphNodes(show: boolean) {
+        this.hideLiteralGraphNodes = show;
+        this.prefService.setPUSetting(Properties.pref_hide_literal_graph_nodes, show + "").subscribe();
+    }
+
+    /**
+     * Returns the language available in the project
+     */
+    getProjectLanguages(): Language[] {
+        return this.projectLanguagesSetting;
+    }
+    setProjectLanguages(languages: Language[]) {
+        this.projectLanguagesSetting = languages;
     }
 
 
@@ -217,7 +299,7 @@ export class PMKIProperties {
      * Sets the preference to show or hide the inferred information in resource view
      */
     setInferenceInResourceView(showInferred: boolean) {
-        Cookie.setCookie(Cookie.RES_VIEW_INCLUDE_INFERENCE, showInferred + "", 365*10);
+        Cookie.setCookie(Cookie.RES_VIEW_INCLUDE_INFERENCE, showInferred + "", 365 * 10);
     }
     /**
      * Gets the preference to show or hide the inferred information in resource view
@@ -230,7 +312,7 @@ export class PMKIProperties {
      * Sets the preference to show the URI or the rendering of resources in resource view
      */
     setRenderingInResourceView(rendering: boolean) {
-        Cookie.setCookie(Cookie.RES_VIEW_RENDERING, rendering + "", 365*10);
+        Cookie.setCookie(Cookie.RES_VIEW_RENDERING, rendering + "", 365 * 10);
     }
     /**
      * Gets the preference to show the URI or the rendering of resources in resource view
@@ -245,7 +327,7 @@ export class PMKIProperties {
      * @param showDeprecated 
      */
     setShowDeprecated(showDeprecated: boolean) {
-        Cookie.setCookie(Cookie.SHOW_DEPRECATED, showDeprecated + "", 365*10);
+        Cookie.setCookie(Cookie.SHOW_DEPRECATED, showDeprecated + "", 365 * 10);
     }
     /**
      * Gets the preference to show the deprecated resources in the trees/lists
@@ -282,22 +364,22 @@ export class PMKIProperties {
         return this.searchSettings;
     }
     setSearchSettings(settings: SearchSettings) {
-        Cookie.setCookie(Cookie.SEARCH_STRING_MATCH_MODE, settings.stringMatchMode, 365*10);
-        Cookie.setCookie(Cookie.SEARCH_USE_URI, settings.useURI+"", 365*10);
-        Cookie.setCookie(Cookie.SEARCH_USE_LOCAL_NAME, settings.useLocalName+"", 365*10);
-        Cookie.setCookie(Cookie.SEARCH_USE_NOTES, settings.useNotes+"", 365*10);
-        Cookie.setCookie(Cookie.SEARCH_CONCEPT_SCHEME_RESTRICTION, settings.restrictActiveScheme+"", 365*10);
+        Cookie.setCookie(Cookie.SEARCH_STRING_MATCH_MODE, settings.stringMatchMode, 365 * 10);
+        Cookie.setCookie(Cookie.SEARCH_USE_URI, settings.useURI + "", 365 * 10);
+        Cookie.setCookie(Cookie.SEARCH_USE_LOCAL_NAME, settings.useLocalName + "", 365 * 10);
+        Cookie.setCookie(Cookie.SEARCH_USE_NOTES, settings.useNotes + "", 365 * 10);
+        Cookie.setCookie(Cookie.SEARCH_CONCEPT_SCHEME_RESTRICTION, settings.restrictActiveScheme + "", 365 * 10);
         if (this.searchSettings.languages != settings.languages) {
             this.prefService.setPUSetting(Properties.pref_search_languages, JSON.stringify(settings.languages)).subscribe();
         }
         if (this.searchSettings.restrictLang != settings.restrictLang) {
-            this.prefService.setPUSetting(Properties.pref_search_restrict_lang, settings.restrictLang+"").subscribe();
+            this.prefService.setPUSetting(Properties.pref_search_restrict_lang, settings.restrictLang + "").subscribe();
         }
         if (this.searchSettings.includeLocales != settings.includeLocales) {
-            this.prefService.setPUSetting(Properties.pref_search_include_locales, settings.includeLocales+"").subscribe();
+            this.prefService.setPUSetting(Properties.pref_search_include_locales, settings.includeLocales + "").subscribe();
         }
         if (this.searchSettings.useAutocompletion != settings.useAutocompletion) {
-            this.prefService.setPUSetting(Properties.pref_search_use_autocomplete, settings.useAutocompletion+"").subscribe();
+            this.prefService.setPUSetting(Properties.pref_search_use_autocomplete, settings.useAutocompletion + "").subscribe();
         }
         this.searchSettings = settings;
         this.eventHandler.searchPrefsUpdatedEvent.emit();

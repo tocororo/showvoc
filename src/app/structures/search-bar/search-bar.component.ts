@@ -13,8 +13,7 @@ import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: "search-bar",
-    templateUrl: "./search-bar.component.html",
-    styles: [".dropdown-toggle::after { display:none; }"]
+    templateUrl: "./search-bar.component.html"
 })
 export class SearchBarComponent {
 

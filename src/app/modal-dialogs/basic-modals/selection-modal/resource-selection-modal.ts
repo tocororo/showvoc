@@ -4,8 +4,7 @@ import { AnnotatedValue, Value } from 'src/app/models/Resources';
 
 @Component({
 	selector: 'resource-selection-modal',
-	templateUrl: './resource-selection-modal.html',
-	styleUrls: ['../../modals.css']
+	templateUrl: './resource-selection-modal.html'
 })
 export class ResourceSelectionModal {
 

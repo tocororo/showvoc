@@ -1,12 +1,14 @@
-import { Component, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { finalize } from 'rxjs/operators';
+import { GraphModalServices } from '../graph/modals/graph-modal.service';
 import { AnnotatedValue, IRI, LocalResourcePosition, PredicateObjects, RemoteResourcePosition, ResAttribute, Resource, ResourcePosition, Value } from '../models/Resources';
-import { PropertyFacet, ResViewPartition } from '../models/ResourceView';
+import { PropertyFacet, ResourceViewCtx, ResViewPartition } from '../models/ResourceView';
 import { SemanticTurkey } from '../models/Vocabulary';
 import { ResourceViewServices } from '../services/resource-view.service';
 import { PMKIContext } from '../utils/PMKIContext';
 import { PMKIProperties } from '../utils/PMKIProperties';
 import { ResourceDeserializer, ResourceUtils, SortAttribute } from '../utils/ResourceUtils';
+import { ResViewModalsServices } from './modals/resource-view-modal.service';
 
 @Component({
     selector: 'resource-view',
@@ -17,8 +19,9 @@ import { ResourceDeserializer, ResourceUtils, SortAttribute } from '../utils/Res
 export class ResourceViewComponent {
 
     @Input() resource: Resource;
+    @Input() context: ResourceViewCtx;
     @Output() dblclickObj: EventEmitter<AnnotatedValue<Resource>> = new EventEmitter<AnnotatedValue<Resource>>();
-    
+
     annotatedResource: AnnotatedValue<Resource>;
 
     loading: boolean = false;
@@ -27,6 +30,8 @@ export class ResourceViewComponent {
     showInferred: boolean = false;
 
     rendering: boolean = true; //tells if the resource shown inside the partitions should be rendered
+
+    private valueFilterLangEnabled: boolean;
 
     private unknownHost: boolean = false; //tells if the resource view of the current resource failed to be fetched due to a UnknownHostException
     private unexistingResource: boolean = false; //tells if the requested resource does not exist (empty description)
@@ -67,12 +72,15 @@ export class ResourceViewComponent {
     private topconceptofColl: PredicateObjects[] = null;
     private typesColl: PredicateObjects[] = null;
 
-    constructor(private resViewService: ResourceViewServices, private pmkiProp: PMKIProperties) { }
+    constructor(private resViewService: ResourceViewServices, private pmkiProp: PMKIProperties,
+        private resViewModals: ResViewModalsServices, private graphModals: GraphModalServices
+    ) { }
 
 
     ngOnChanges(changes: SimpleChanges) {
         this.showInferred = this.pmkiProp.getInferenceInResourceView();
         this.rendering = this.pmkiProp.getRenderingInResourceView();
+        this.annotatedResource = new AnnotatedValue(this.resource);
 
         if (changes['resource'] && changes['resource'].currentValue) {
             //if not the first change, avoid to refresh res view if resource is not changed
@@ -456,26 +464,26 @@ export class ResourceViewComponent {
 
     private filterValueLanguageFromPrefObjList(predObjList: PredicateObjects[]) {
         //even if already initialized, get each time the value of valueFilterLangEnabled in order to detect eventual changes of the pref
-        // this.valueFilterLangEnabled = this.vbProp.getValueFilterLanguages().enabled;
-        // if (this.valueFilterLangEnabled) {
-        //     let valueFilterLanguages = this.vbProp.getValueFilterLanguages().languages;
-        //     for (var i = 0; i < predObjList.length; i++) {
-        //         var objList: ARTNode[] = predObjList[i].getObjects();
-        //         for (var j = 0; j < objList.length; j++) {
-        //             let lang = objList[j].getAdditionalProperty(ResAttribute.LANG);
-        //             //remove the object if it has a language not in the languages list of the filter
-        //             if (lang != null && valueFilterLanguages.indexOf(lang) == -1) {
-        //                 objList.splice(j, 1);
-        //                 j--;
-        //             }
-        //         }
-        //         //after filtering the objects list, if the predicate has no more objects, remove it from predObjList
-        //         if (objList.length == 0) {
-        //             predObjList.splice(i, 1);
-        //             i--;
-        //         }
-        //     }
-        // }
+        this.valueFilterLangEnabled = this.pmkiProp.getValueFilterLanguages().enabled;
+        if (this.valueFilterLangEnabled) {
+            let valueFilterLanguages = this.pmkiProp.getValueFilterLanguages().languages;
+            for (var i = 0; i < predObjList.length; i++) {
+                var objList: AnnotatedValue<Value>[] = predObjList[i].getObjects();
+                for (var j = 0; j < objList.length; j++) {
+                    let lang = objList[j].getAttribute(ResAttribute.LANG);
+                    //remove the object if it has a language not in the languages list of the filter
+                    if (lang != null && valueFilterLanguages.indexOf(lang) == -1) {
+                        objList.splice(j, 1);
+                        j--;
+                    }
+                }
+                //after filtering the objects list, if the predicate has no more objects, remove it from predObjList
+                if (objList.length == 0) {
+                    predObjList.splice(i, 1);
+                    i--;
+                }
+            }
+        }
     }
 
     private sortObjects(predObjList: PredicateObjects[]) {
@@ -506,6 +514,18 @@ export class ResourceViewComponent {
     switchRendering() {
         this.rendering = !this.rendering;
         this.pmkiProp.setRenderingInResourceView(this.rendering);
+    }
+
+    settings() {
+        this.resViewModals.openSettings()
+    }
+
+    openDataGraph() {
+        this.graphModals.openDataGraph(this.annotatedResource, this.rendering);
+    }
+
+    isShowGraphAvailable(): boolean {
+        return this.context != ResourceViewCtx.modal; //graph not available in modal
     }
 
     /**

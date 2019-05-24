@@ -44,7 +44,8 @@ export class ProjectGuard implements CanActivate {
 
                         let projInitFunctions: Observable<any>[] = [
                             this.metadataService.getNamespaceMappings(),
-                            this.pmkiProp.initUserProjectPreferences()
+                            this.pmkiProp.initUserProjectPreferences(),
+                            this.pmkiProp.initProjectSettings()
                         ]
                         return forkJoin(projInitFunctions).pipe(
                             map(() => true)

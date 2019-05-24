@@ -11,10 +11,25 @@ export abstract class Value {
     equals(value: Value): boolean {
         return this.toNT() == value.toNT();
     }
+
+    isResource(): boolean {
+        return false;
+    }
+    isIRI(): boolean {
+        return false;
+    }
+    isBNode(): boolean {
+        return false;
+    }
+    isLiteral(): boolean {
+        return false;
+    }
 }
 
 export abstract class Resource extends Value {
-    isResource(): boolean { return true; }
+    isResource(): boolean {
+        return true;
+    }
 }
 
 export class IRI extends Resource {
@@ -65,6 +80,10 @@ export class IRI extends Resource {
     toNT(): string {
         return "<" + this.iriString + ">";
     }
+
+    isIRI(): boolean {
+        return true;
+    }
 }
 
 
@@ -89,6 +108,10 @@ export class BNode extends Resource {
 
     toNT() {
         return this.stringValue();
+    }
+
+    isBNode(): boolean {
+        return true;
     }
 
 }
@@ -141,9 +164,13 @@ export class Literal extends Value {
         if (this.isLanguageLiteral()) {
             str += '@' + this.language;
         } else if (this.isTypedLiteral()) {
-            str += "^^<" + this.datatype.toNT() + ">";
+            str += "^^" + this.datatype.toNT();
         }
         return str;
+    }
+
+    isLiteral(): boolean {
+        return true;
     }
 }
 

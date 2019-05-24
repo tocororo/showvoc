@@ -1,5 +1,6 @@
 html, body {
     height: 100%;
+    font-size: 15px;
 }
 
 app-root {
@@ -110,7 +111,7 @@ rdf-resource > .rdfResourceText {
 }
 .flagIcon > span{
     position: absolute;
-    top: 1px;
+    top: 6px;
     left: 0px;
     width: 16px;
     margin: 0 auto;
@@ -232,13 +233,8 @@ sparql-component .CodeMirror { height: 28vh !important }
 
 /* Bootstrap extension */
 
-.modal-full.modal-dialog {
-    width: 95% !important;
-    max-width: 95%;
-}
-
 .btn-group-xs > .btn, .btn-xs {
-    padding  : .125rem .2rem;
+    padding  : .2rem .2rem;
     font-size  : .75rem;
     line-height  : .5;
     border-radius : .2rem;
@@ -254,6 +250,9 @@ sparql-component .CodeMirror { height: 28vh !important }
 
 .table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
     border: none;
+}
+.table {
+    margin-bottom: 0px;
 }
 
 /* Bootstrap override */
@@ -275,7 +274,6 @@ label {
     display: flex;
     flex-flow: column;
     min-height: 0px;
-    /* padding: 8px 6px; */
     padding: 0px;
 }
 .tab-pane {
@@ -290,8 +288,8 @@ label {
 }
 
 ul.nav-tabs {
-    padding-left: 5px;
-    padding-top: 5px;
+    padding-left: 3px;
+    padding-top: 3px;
 }
 
 .nav-tabs>li>a {
@@ -308,9 +306,34 @@ ul.nav-tabs {
 .card-footer {
     padding: 6px;
 }
+/*
+    When a card header contains a button or a toolbar with size sm, its height grow at 41.5px
+    This style forces the height of a header that doesn't contain buttons and it's useful when it needs to be aligned 
+    to another card which its header contains buttons (otherwise the headers height would be different causing an ugly effect).
+ */
+.card-header-btn-sm {
+    min-height: 41px;
+    display: flex;
+    align-items: center;
+}
 
 .dropdown-item {
     padding: 3px 10px;
+}
+
+.modal-dialog {
+    width: 500px;
+}
+.modal-full.modal-dialog {
+    width: 95% !important;
+    max-width: 95%;
+}
+.modal-lg {
+    width: 900px;
+    max-width: initial;
+}
+.modal-xl {
+    width: 1140px;
 }
 
 /* Following modal classe overrides are in order to avoid that modals exceed window height */
@@ -328,13 +351,47 @@ ul.nav-tabs {
     display: block;
     text-align: right;
 }
-.modal-content>* { /* any modal */
-    max-height: 90vh;
+
+/* 
+The following rules ensure that the dialogs fill (at max) up to 95% of the video height (95vh).
+In order to let the content of the modal fill the available space (independently from its content), invoke UIUtils.setFullSizeModal()
+*/
+ngb-modal-window.modal { 
+    /* .modal selector is added in order to increse the specifity of the rule 
+        and override the display: block of the d-block class applied to ngb-modal-window */
+    display: flex !important;
+    flex-flow: column;
+    min-height: 0;
+    min-width: 0;
+}
+.modal-content {
+    display: flex !important;
+    flex-flow: column;
+    min-height: 0;
+    min-width: 0;
+}
+.modal-content > * {
     display: flex;
     flex-flow: column;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+}
+.modal-dialog {
+    margin: 15px auto;
+    display: flex !important;
+    flex-flow: column;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
 }
 
 /* reduce font size of item in dropdown with size sm */
 .btn-group-sm .dropdown-item {
     font-size: .875rem;
+}
+
+/* Removes arrow in dropdown button */
+.dropdown-toggle.no-arrow::after {
+    display:none;
 }

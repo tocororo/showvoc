@@ -115,3 +115,7 @@ export enum PropertyFacetsEnum {
     irreflexive = "irreflexive",
     transitive = "transitive"
 }
+
+export enum ResourceViewCtx {
+    modal = "modal"
+}

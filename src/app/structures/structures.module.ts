@@ -55,9 +55,8 @@ import { PropertyTreeComponent } from './tree/property/property-tree.component';
 	],
 	exports: [
 		StructureTabsetComponent,
-		// CollectionTreeComponent, ConceptTreeComponent, PropertyTreeComponent,
-		// SchemeListComponent, LexiconListComponent, LexicalEntryListComponent
-		
+		CollectionTreePanelComponent, ConceptTreePanelComponent, PropertyTreePanelComponent,
+		SchemeListPanelComponent, LexiconListPanelComponent, LexicalEntryListPanelComponent
     ],
     entryComponents: [
         ConceptTreeSettingsModal,

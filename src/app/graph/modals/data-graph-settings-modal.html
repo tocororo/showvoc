@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h5 class="modal-title">Data-Oriented Graph settings</h5>
+    <button class="close" (click)="close()">
+        <span>&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <div class="hbox">
+        <lang-value-filter-pref class="vbox"></lang-value-filter-pref>
+        <rv-partition-filter class="vbox ml-1"></rv-partition-filter>
+    </div>
+    
+    <div class="card mt-1">
+        <div class="card-body">
+
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="hideLiteralNodes" (ngModelChange)="onHideLiteralChange()">
+                    Hide literal nodes
+                    <span class="fa fa-info-circle" title="If checked, all the literal nodes will be hidden in the graph"></span>
+                </label>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary btn-sm" (click)="ok()">Ok</button>
+</div>

@@ -1,4 +1,8 @@
+import { ResViewPartition } from './ResourceView';
+
 export class Properties {
+
+    static pref_filter_value_languages: string = "filter_value_languages";
 
     static pref_active_schemes: string = "active_schemes";
     static pref_active_lexicon: string = "active_lexicon";
@@ -13,6 +17,11 @@ export class Properties {
     static pref_search_restrict_lang: string = "search_restrict_lang";
     static pref_search_include_locales: string = "search_include_locales";
     static pref_search_use_autocomplete: string = "search_use_autocomplete";
+
+    static pref_res_view_partition_filter: string = "res_view_partition_filter";
+    static pref_hide_literal_graph_nodes: string = "hide_literal_graph_nodes";
+
+    static setting_languages: string = "languages";
 }
 
 export class SearchSettings {
@@ -57,4 +66,13 @@ export class LexicalEntryListPreference {
 export enum LexEntryVisualizationMode {
     searchBased = "searchBased",
     indexBased = "indexBased"
+}
+
+export class ValueFilterLanguages {
+    languages: string[];
+    enabled: boolean;
+}
+
+export class ResViewPartitionFilterPreference {
+    [role: string]: ResViewPartition[]; //role is a RDFResourceRoleEnum, values are only the hidden partitions
 }

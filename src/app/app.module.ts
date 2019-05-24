@@ -7,10 +7,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CustomReuseStrategy } from './CustomReuseStrategy';
 import { DatasetsModule } from './datasets/datasets.module';
+import { GraphModule } from './graph/graph.module';
 import { HomeComponent } from './home/home.component';
 import { MappingsModule } from './mappings/mappings.module';
 import { ModalsModule } from './modal-dialogs/modals.module';
 import { NotFoundComponent } from './not-found.component';
+import { PreferencesModule } from './preferences/preferences.module';
 import { SearchModule } from './search/search.module';
 import { STServicesModule } from './services/st-services.module';
 import { UserModule } from './user/user.module';
@@ -20,31 +22,33 @@ import { PMKIProperties } from './utils/PMKIProperties';
 
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		HomeComponent,
-		NotFoundComponent
-	],
-	imports: [
-		AppRoutingModule,
-		BrowserModule,
-		DatasetsModule,
-		MappingsModule,
-		ModalsModule,
-		NgbModule,
-		SearchModule,
-		STServicesModule,
-		UserModule
-	],
-	providers: [
-		PMKIProperties, PMKIEventHandler,
-		GUARD_PROVIDERS,
-		{ provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        NotFoundComponent
+    ],
+    imports: [
+        AppRoutingModule,
+        BrowserModule,
+        DatasetsModule,
+        GraphModule,
+        MappingsModule,
+        ModalsModule,
+        NgbModule,
+        PreferencesModule,
+        SearchModule,
+        STServicesModule,
+        UserModule
+    ],
+    providers: [
+        PMKIProperties, PMKIEventHandler,
+        GUARD_PROVIDERS,
+        { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
 		/** Uses the HashLocationStrategy instead of the default "HTML 5 pushState" PathLocationStrategy.
 		 * This solves the 404 error problem when reloading a page in a production server
 		 */
-		{ provide: LocationStrategy, useClass: HashLocationStrategy }
-	],
-	bootstrap: [AppComponent]
+        { provide: LocationStrategy, useClass: HashLocationStrategy }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

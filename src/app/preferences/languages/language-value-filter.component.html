@@ -1,0 +1,70 @@
+<div class="card vbox">
+    <div class="card-header">
+        <div class="hbox align-items-center">
+            <label style="flex: 1; white-space: nowrap;">Value-filter Languages:</label>
+            <span *ngIf="getActiveLanguageItems().length == 0" class="mr-2 fa fa-warning" title="No language selected implicitly means all languages"></span>
+            <div class="btn-toolbar">
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-outline-secondary" (click)="changeAllLangStatus(true)" title="Check all">
+                        <span class="fa fa-check-square-o"></span>
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="changeAllLangStatus(false)" title="Unchecl all">
+                        <span class="fa fa-square-o"></span>
+                    </button>
+                </div>
+                <button class="btn btn-sm btn-light ml-1" (click)="toggleFilter()" title="Enable filter" [ngClass]="{ active: filterEnabled }">
+                    <span class="fa fa-filter"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body vbox">
+
+        <div class="alert alert-info" role="alert" style="margin-bottom: 5px;">
+            Select the languages that will be shown when filtering literal values in resource descriptions.
+            Toggle the filter in order to hide the values with the unselected languages.
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-sm table-hover">
+                <colgroup>
+                    <col style="width: 1%">
+                    <col style="width: 1%">
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="text-center" style="padding: 0px 8px;">Active</th>
+                        <th class="text-center" style="padding: 0px 8px;" nowrap>
+                            ISO code
+                            <button class="btn btn-xs btn-light" [ngSwitch]="sortOrder" (click)="changeIsocodeOrder()">
+                                <span *ngSwitchCase="'isocode_ascending'" class="fa fa-sort-alpha-asc"></span>
+                                <span *ngSwitchCase="'isocode_descending'" class="fa fa-sort-alpha-desc"></span>
+                                <span *ngSwitchDefault class="fa fa-sort"></span>
+                            </button>
+                        </th>
+                        <th class="text-center" style="padding: 0px 8px;" nowrap>
+                            Language
+                            <button class="btn btn-xs btn-light" [ngSwitch]="sortOrder" (click)="changeLanguageOrder()">
+                                <span *ngSwitchCase="'language_ascending'" class="fa fa-sort-alpha-asc"></span>
+                                <span *ngSwitchCase="'language_descending'" class="fa fa-sort-alpha-desc"></span>
+                                <span *ngSwitchDefault class="fa fa-sort"></span>
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let l of filterLanguages">
+                        <td class="text-center">
+                            <input type="checkbox" style="vertical-align: middle" [(ngModel)]="l.active" (ngModelChange)="onActiveChange(l)">
+                        </td>
+                        <td class="text-center" nowrap>{{l.lang.tag}}</td>
+                        <td class="text-center">
+                            <lang-item [language]="l.lang"></lang-item>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

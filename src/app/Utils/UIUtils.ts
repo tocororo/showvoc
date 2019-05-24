@@ -1,5 +1,6 @@
-import { RDFResourceRolesEnum, AnnotatedValue, Value, ResAttribute, Literal, IRI, Resource } from '../models/Resources';
-import { XmlSchema, OWL, RDF } from '../models/Vocabulary';
+import { ElementRef } from '@angular/core';
+import { AnnotatedValue, IRI, Literal, RDFResourceRolesEnum, ResAttribute, Resource, Value } from '../models/Resources';
+import { OWL, RDF, XmlSchema } from '../models/Vocabulary';
 
 export class UIUtils {
 
@@ -369,6 +370,15 @@ export class UIUtils {
         return imgSrc;
     }
 
+    /**
+     * This method is needed in order to face cross-browser compatibility with full size modals (modals that stretch to fill up to 95vh).
+     * Note: This method must be called only after the view is initialized, so preferrable in ngAfterViewInit()
+     * @param elementRef 
+     */
+    public static setFullSizeModal(elementRef: ElementRef) {
+        let modalContentElement: HTMLElement = elementRef.nativeElement.parentElement;
+        modalContentElement.style.setProperty("flex", "1");
+    }
 
 }
 

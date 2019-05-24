@@ -1,0 +1,79 @@
+<div class="card vbox">
+    <div class="card-header card-header-btn-sm">
+        <label>Resource View partition filter</label>
+    </div>
+    <div class="card-body vbox">
+
+        <div class="alert alert-info mb-1">
+            Select the partition of the resource description that will be shown when expanding a node.
+        </div>
+
+        <div class="hbox">
+
+            <div class="card vbox mr-1">
+                <div class="card-header">
+                    <label>Roles</label>
+                </div>
+                <div class="card-body scrollableContainer">
+                    <div *ngFor="let rps of rolePartitionsStructs">
+                        <div class="listItem" (click)="selectRolePartitionsStruct(rps)"
+                            [ngClass]="{ active: rps == selectedRolePartitionsStruct }">
+                            {{rps.role.show}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card vbox">
+                <div class="card-header">
+                    <div class="hbox align-items-center">
+                        <label style="flex: 1;">Partitions</label>
+                        <span *ngIf="areAllUnchecked(selectedRolePartitionsStruct)" class="fa fa-warning"
+                            title="If all the partitions are hidden the expansion of a node will not produce any effect">
+                        </span>
+                        <div class="btn-toolbar ml-1">
+                            <div class="btn-group btn-group-xs">
+                                <div class="btn-group btn-group-xs" ngbDropdown placement="bottom-right">
+                                    <button class="btn btn-outline-secondary dropdown-toggle no-arrow" data-toggle="dropdown" title="Check" ngbDropdownToggle>
+                                        <span class="fa fa-check-square-o"></span>
+                                    </button>
+                                    <div class="dropdown-menu" ngbDropdownMenu>
+                                        <button class="dropdown-item" (click)="checkAll(selectedRolePartitionsStruct, true)">Check all</button>
+                                        <button class="dropdown-item" [ngClass]="{ disabled: !selectedPartition }" (click)="checkInAllRoles(true)">Check selected partition in all roles</button>
+                                    </div>
+                                </div>
+                                <div class="btn-group btn-group-xs" ngbDropdown placement="bottom-right">
+                                    <button class="btn btn-outline-secondary dropdown-toggle no-arrow" data-toggle="dropdown" title="Uncheck" ngbDropdownToggle>
+                                        <span class="fa fa-square-o"></span>
+                                    </button>
+                                    <div class="dropdown-menu" ngbDropdownMenu>
+                                        <button class="dropdown-item" (click)="checkAll(selectedRolePartitionsStruct, false)">Uncheck all</button>
+                                        <button class="dropdown-item" [ngClass]="{ disabled: !selectedPartition }" (click)="checkInAllRoles(false)">Uncheck selected partition in all roles</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body scrollableContainer">
+                    <div *ngFor="let partition of selectedRolePartitionsStruct.partitions">
+                        <div class="listItem" (click)="selectPartition(partition)"
+                            [ngClass]="{ active: partition == selectedPartition }">
+                            <input type="checkbox" [(ngModel)]="partition.checked" (ngModelChange)="updatePref()">
+                            <span style="flex: 1;" class="ml-1">{{partition.show}}</span>
+                            <span *ngIf="partition.checked" class="fa fa-eye"></span>
+                            <span *ngIf="!partition.checked" class="fa fa-eye-slash"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card-footer">
+        <button class="btn btn-sm btn-light pull-right" (click)="reset()">Reset</button>
+    </div>
+
+</div>
