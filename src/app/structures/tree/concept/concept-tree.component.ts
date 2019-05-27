@@ -38,7 +38,7 @@ export class ConceptTreeComponent extends AbstractTree {
          * Initialized the tree only if not the first change. Avoid multiple initialization.
          * The first initialization was already fired in ngOnInit of AbstractStructure
          */
-        if (changes['schemes'] && !changes['schemes'].isFirstChange) { 
+        if (changes['schemes'] && !changes['schemes'].isFirstChange()) { 
             this.init();
         }
     }

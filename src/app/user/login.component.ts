@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
     ngOnInit() { }
 
     login() {
-        console.log("login", this.email, this.password);
         this.basicModals.alert("Loggin in...", "TODO");
     }
 

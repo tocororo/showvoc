@@ -84,16 +84,21 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
 
 
     handleSearchResults(results: AnnotatedValue<IRI>[]) {
-        if (results.length == 1) {
-            this.openAt(results[0]);
-        } else { //multiple results, ask the user which one select
+        if (this.visualizationMode == LexEntryVisualizationMode.indexBased) {
+            if (results.length == 1) {
+                this.openAt(results[0]);
+            } else { //multiple results, ask the user which one select
+                ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
+                this.basicModals.selectResource("Search results", results.length + " results found.", results, this.rendering).then(
+                    (selectedResource: AnnotatedValue<IRI>) => {
+                        this.openAt(selectedResource);
+                    },
+                    () => {}
+                );
+            }
+        } else {
             ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
-            this.basicModals.selectResource("Search results", results.length + " results found.", results, this.rendering).then(
-                (selectedResource: AnnotatedValue<IRI>) => {
-                    this.openAt(selectedResource);
-                },
-                () => {}
-            );
+            this.viewChildList.forceList(results);
         }
     }
 

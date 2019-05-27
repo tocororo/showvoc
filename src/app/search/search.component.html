@@ -31,36 +31,34 @@
 
     <ng-container *ngIf="!loading && groupedSearchResults">
         <!-- No results found -->
-        <h5 *ngIf="groupedSearchResultsRepoIds.length == 0" class="text-secondary">No resource found for '{{lastSearch}}'</h5>
+        <h5 *ngIf="filteredRepoIds.length == 0" class="text-secondary">No resource found for '{{lastSearch}}'</h5>
         <!-- Results found -->
-        <ng-container *ngIf="groupedSearchResultsRepoIds.length != 0">
-            <h5 class="text-secondary">'{{lastSearch}}' matches in {{groupedSearchResultsRepoIds.length}} datasets.</h5>
+        <ng-container *ngIf="filteredRepoIds.length != 0">
+            <h5 class="text-secondary">'{{lastSearch}}' matches in {{filteredRepoIds.length}} datasets.</h5>
 
             <div class="card vbox mt-1">
                 <div class="card-body vbox scrollableContainer">
-                    <ng-container *ngFor="let repoId of groupedSearchResultsRepoIds">
-                        <div *ngIf="openProjectFilter && groupedSearchResults[repoId][0].repository.open || !openProjectFilter" class="card grouped-search-result">
-                            <div class="card-body">
-                                <h5 class="mb-2">
-                                    <a [routerLink]="" (click)="goToDataset(repoId)" [ngClass]="{ disabled : !groupedSearchResults[repoId][0].repository.open }">
-                                        {{repoId}}
-                                    </a>
-                                </h5>
-                                <div *ngFor="let result of groupedSearchResults[repoId]" class="search-result">
-                                    <div style="font-size: 1rem">
-                                        <a [routerLink]="" (click)="goToResource(result)" class="text-success" [ngClass]="{ disabled: !result.repository.open }">{{result.show}}</a>
-                                    </div>
-                                    <div style="font-size: .875rem">
-                                        <a [routerLink]="" (click)="goToResource(result)" class="text-secondary" [ngClass]="{ disabled: !result.repository.open }">{{result.resource.getIRI()}}</a>
-                                    </div>
-                                    <span class="mt-1">
-                                        {{result.details[0].matchedValue.getLabel()}}
-                                        ({{result.details[0].matchedValue.getLanguage()}})
-                                    </span>
+                    <div *ngFor="let repoId of filteredRepoIds" class="card grouped-search-result">
+                        <div class="card-body">
+                            <h5 class="mb-2">
+                                <a [routerLink]="" (click)="goToDataset(repoId)" [ngClass]="{ disabled : !groupedSearchResults[repoId][0].repository.open }">
+                                    {{repoId}}
+                                </a>
+                            </h5>
+                            <div *ngFor="let result of groupedSearchResults[repoId]" class="search-result">
+                                <div style="font-size: 1rem">
+                                    <a [routerLink]="" (click)="goToResource(result)" class="text-success" [ngClass]="{ disabled: !result.repository.open }">{{result.show}}</a>
                                 </div>
+                                <div style="font-size: .875rem">
+                                    <a [routerLink]="" (click)="goToResource(result)" class="text-secondary" [ngClass]="{ disabled: !result.repository.open }">{{result.resource.getIRI()}}</a>
+                                </div>
+                                <span class="mt-1">
+                                    {{result.details[0].matchedValue.getLabel()}}
+                                    ({{result.details[0].matchedValue.getLanguage()}})
+                                </span>
                             </div>
                         </div>
-                    </ng-container>
+                    </div>
                 </div>
             </div>
         </ng-container>

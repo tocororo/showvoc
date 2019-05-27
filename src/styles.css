@@ -346,6 +346,7 @@ ul.nav-tabs {
 .modal-body {
     display: flex;
     flex-flow: column;
+    min-height: 0;
 }
 .modal-footer {
     display: block;

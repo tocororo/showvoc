@@ -32,16 +32,9 @@ export class SearchComponent {
     loading: boolean = false;
 
     groupedSearchResults: { [repId: string]: GlobalSearchResult[] };
-    groupedSearchResultsRepoIds: string[];
-
+    
     openProjectFilter: boolean = true;
-    private openRepoIds: string[];
-
-    private labelTypeOrder: string[] = [
-        SKOSXL.prefLabel.getIRI(), SKOS.prefLabel.getIRI(), RDFS.label.getIRI(),
-        SKOSXL.altLabel.getIRI(), SKOS.altLabel.getIRI(),
-        SKOSXL.hiddenLabel.getIRI(), SKOS.hiddenLabel.getIRI(),
-    ];
+    filteredRepoIds: string[]; //id (eventually filtered) of the repositories of the results, useful to iterate over them in the view
 
     constructor(private globalSearchService: GlobalSearchServices, private resourcesService: ResourcesServices, private router: Router) { }
 
@@ -74,27 +67,38 @@ export class SearchComponent {
                     }
                 });
 
-                //update the repository IDs list, useful to iterate over groupedSearchResults in the UI
-                this.groupedSearchResultsRepoIds = Object.keys(this.groupedSearchResults);
-                this.groupedSearchResultsRepoIds.sort();
-
-                //collects the open repositories
-                this.openRepoIds = [];
-                this.groupedSearchResultsRepoIds.forEach(repoId => {
-                    if (this.groupedSearchResults[repoId][0].repository.open) {
-                        this.openRepoIds.push(repoId);
-                    }
-                });
-
                 //compute show of results
+                let projectBackup = PMKIContext.getProject();
                 let computeResultsShowFunctions: Observable<void>[] = [];
-                this.groupedSearchResultsRepoIds.forEach(repoId => {
+                Object.keys(this.groupedSearchResults).forEach(repoId => {
                     let results: GlobalSearchResult[] = this.groupedSearchResults[repoId];
                     computeResultsShowFunctions.push(this.getComputeResultsShowFn(results));
                 });
-                concat(...computeResultsShowFunctions).subscribe();
+                concat(...computeResultsShowFunctions).pipe(
+                    finalize(() => PMKIContext.setProject(projectBackup)) //restore the previous project in the ctx
+                ).subscribe();
+
+
+                this.filterSearchResults();
             }
         )
+    }
+
+    private filterSearchResults() {
+        //collect the repositories ID according the filter
+        this.filteredRepoIds = [];
+        Object.keys(this.groupedSearchResults).forEach(repoId => {
+            if (this.openProjectFilter && this.groupedSearchResults[repoId][0].repository.open || !this.openProjectFilter) {
+                this.filteredRepoIds.push(repoId);
+            }
+        });
+        this.filteredRepoIds.sort();
+    }
+
+    updateProjectFilters() {
+        this.openProjectFilter = !this.openProjectFilter;
+        this.updateCookies();
+        this.filterSearchResults();
     }
 
     private getComputeResultsShowFn(results: GlobalSearchResult[]): Observable<void> {
@@ -104,10 +108,8 @@ export class SearchComponent {
                 resources.push(r.resource);
             });
 
-            let projectBackup = PMKIContext.getProject();
             PMKIContext.setProject(new Project(results[0].repository.id));
             return this.resourcesService.getResourcesInfo(resources).pipe(
-                finalize(() => PMKIContext.setProject(projectBackup)), //restore the previous project in the ctx
                 map(annotated => {
                     annotated.forEach(a => {
                         results.find(r => r.resource.equals(a.getValue())).show = a.getShow();
@@ -130,12 +132,6 @@ export class SearchComponent {
 
     private goToDataset(repoId: string) {
         this.router.navigate(["/datasets/" + repoId]);
-    }
-
-
-    updateProjectFilters() {
-        this.openProjectFilter = !this.openProjectFilter;
-        this.updateCookies();
     }
 
     private initCookies() {

@@ -533,7 +533,6 @@ export class ResourceViewComponent {
      */
 
     private objectDblClick(object: AnnotatedValue<Resource>) {
-        console.log("res view emit", object);
         this.dblclickObj.emit(object);
     }
 

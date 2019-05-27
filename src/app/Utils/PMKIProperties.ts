@@ -5,7 +5,8 @@ import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.
 import { ModalType } from '../modal-dialogs/Modals';
 import { Language, Languages } from '../models/LanguagesCountries';
 import { ConceptTreePreference, ConceptTreeVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, ValueFilterLanguages } from '../models/Properties';
-import { IRI } from '../models/Resources';
+import { IRI, RDFResourceRolesEnum } from '../models/Resources';
+import { ResViewPartition } from '../models/ResourceView';
 import { PreferencesSettingsServices } from '../services/preferences-settings.service';
 import { Cookie } from './Cookie';
 import { PMKIEventHandler } from './PMKIEventHandler';
@@ -26,7 +27,7 @@ export class PMKIProperties {
 
     //graph preferences
     private resViewPartitionFilter: ResViewPartitionFilterPreference;
-    private hideLiteralGraphNodes: boolean = false;
+    private hideLiteralGraphNodes: boolean = true;
 
     private searchSettings: SearchSettings = {
         stringMatchMode: SearchMode.startsWith,
@@ -94,9 +95,12 @@ export class PMKIProperties {
                     this.resViewPartitionFilter = JSON.parse(rvPartitionFilterPref);
                 } else {
                     this.resViewPartitionFilter = {};
+                    for (let role in RDFResourceRolesEnum) {
+                        this.resViewPartitionFilter[role] = [ResViewPartition.lexicalizations];
+                    }
                 }
 
-                this.hideLiteralGraphNodes = prefs[Properties.pref_hide_literal_graph_nodes] == "true";
+                this.hideLiteralGraphNodes = prefs[Properties.pref_hide_literal_graph_nodes] != "false";
 
                 //concept tree preferences
                 this.conceptTreePreferences = {
@@ -139,6 +143,8 @@ export class PMKIProperties {
                 if (lexEntryListIndexLenghtPref == "2") {
                     this.lexEntryListPreferences.indexLength = 2;
                 }
+
+                this.initSearchSettingsCookie();
             })
         );
     }

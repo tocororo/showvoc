@@ -39,7 +39,6 @@ export class DatasetDataComponent implements OnInit {
     }
 
     private objectDblClick(object: AnnotatedValue<Resource>) {
-        console.log("dataset data dbl", object);
         this.viewChildStructureTabset.selectResource(object);
     }
 

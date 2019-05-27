@@ -29,10 +29,10 @@ export class UserServices {
                     }
                     return user;
                 } else { //no user object in the response => there is no user registered
-                    this.router.navigate(["/Registration/1"]);
+                    this.router.navigate(["/registration"]);
                 }
-			})
-		);
-	}
+            })
+        );
+    }
 
 }
