@@ -1,11 +1,11 @@
-import { Component, Input, ViewChild } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractListPanel } from '../abstract-list-panel';
 import { LexiconListComponent } from './lexicon-list.component';
-import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 
 @Component({
     selector: "lexicon-list-panel",
@@ -17,8 +17,8 @@ export class LexiconListPanelComponent extends AbstractListPanel {
 
     panelRole: RDFResourceRolesEnum = RDFResourceRolesEnum.limeLexicon;
 
-    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, vbProp: PMKIProperties) {
-        super(basicModals, eventHandler, vbProp);
+    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties) {
+        super(basicModals, eventHandler, pmkiProp);
     }
 
     handleSearchResults(results: AnnotatedValue<IRI>[]) {

@@ -3,6 +3,7 @@ import { finalize } from 'rxjs/operators';
 import { LexEntryVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
+import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
@@ -32,7 +33,8 @@ export class LexicalEntryListComponent extends AbstractList {
 
     initImpl() {
         if (this.lexicon != undefined) {
-            if (this.pmkiProp.getLexicalEntryListPreferences().visualization == LexEntryVisualizationMode.indexBased && this.index != undefined) {
+            let visualization: LexEntryVisualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
+            if (visualization == LexEntryVisualizationMode.indexBased && this.index != undefined) {
                 this.nodes = [];
                 this.loading = true;
                 this.ontolexService.getLexicalEntriesByAlphabeticIndex(this.index, this.lexicon).pipe(
@@ -44,7 +46,7 @@ export class LexicalEntryListComponent extends AbstractList {
                         this.nodes = entries;
                     }
                 );
-            } else if (this.pmkiProp.getLexicalEntryListPreferences().visualization == LexEntryVisualizationMode.searchBased) {
+            } else if (visualization == LexEntryVisualizationMode.searchBased) {
                 //don't do nothing
             }
         }

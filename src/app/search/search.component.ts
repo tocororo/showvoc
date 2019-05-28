@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { concat, Observable, of } from 'rxjs';
+import { concat, Observable, of, forkJoin } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { Project } from '../models/Project';
 import { IRI } from '../models/Resources';
@@ -74,9 +74,16 @@ export class SearchComponent {
                     let results: GlobalSearchResult[] = this.groupedSearchResults[repoId];
                     computeResultsShowFunctions.push(this.getComputeResultsShowFn(results));
                 });
-                concat(...computeResultsShowFunctions).pipe(
+                forkJoin(...computeResultsShowFunctions).pipe(
                     finalize(() => PMKIContext.setProject(projectBackup)) //restore the previous project in the ctx
-                ).subscribe();
+                ).subscribe(() => {
+                    //order results
+                    Object.keys(this.groupedSearchResults).forEach(repoId => {
+                        this.groupedSearchResults[repoId].sort((r1: GlobalSearchResult, r2: GlobalSearchResult) => {
+                            return r1.show.localeCompare(r2.show);
+                        })
+                    });
+                });
 
 
                 this.filterSearchResults();

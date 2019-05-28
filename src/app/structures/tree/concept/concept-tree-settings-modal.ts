@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConceptTreePreference, ConceptTreeVisualizationMode } from 'src/app/models/Properties';
+import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 
 @Component({
@@ -21,7 +22,7 @@ export class ConceptTreeSettingsModal implements OnInit {
     }
 
     ngOnInit() {
-        let conceptTreePref: ConceptTreePreference = this.pmkiProp.getConceptTreePreferences();
+        let conceptTreePref: ConceptTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
         this.pristineConcPref = JSON.parse(JSON.stringify(conceptTreePref));
         
         this.visualization = conceptTreePref.visualization;

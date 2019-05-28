@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { PMKIContext } from 'src/app/utils/PMKIContext';
 
 @Component({
     selector: "data-graph-settings-modal",
@@ -13,7 +14,7 @@ export class DataGraphSettingsModal {
     constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties) { }
 
     ngOnInit() {
-        this.hideLiteralNodes = this.pmkiProp.getHideLiteralGraphNodes();
+        this.hideLiteralNodes = PMKIContext.getProjectCtx().getProjectPreferences().hideLiteralGraphNodes;
     }
 
     onHideLiteralChange() {
@@ -21,11 +22,11 @@ export class DataGraphSettingsModal {
     }
 
     ok() {
-		this.activeModal.close();
+        this.activeModal.close();
     }
-    
+
     close() {
-		this.activeModal.dismiss();
-	}
+        this.activeModal.dismiss();
+    }
 
 }

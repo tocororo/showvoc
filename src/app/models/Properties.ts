@@ -1,3 +1,5 @@
+import { Language } from './LanguagesCountries';
+import { IRI } from './Resources';
 import { ResViewPartition } from './ResourceView';
 
 export class Properties {
@@ -25,15 +27,15 @@ export class Properties {
 }
 
 export class SearchSettings {
-    public stringMatchMode: SearchMode;
-    public useURI: boolean;
-    public useLocalName: boolean;
-    public useNotes: boolean;
-    public restrictLang: boolean;
-    public languages: string[];
-    public includeLocales: boolean;
-    public useAutocompletion: boolean;
-    public restrictActiveScheme: boolean;
+    public stringMatchMode: SearchMode = SearchMode.startsWith;
+    public useURI: boolean = false;
+    public useLocalName: boolean = true;
+    public useNotes: boolean = false;
+    public restrictLang: boolean = false;
+    public languages: string[] = [];
+    public includeLocales: boolean = false;
+    public useAutocompletion: boolean = false;
+    public restrictActiveScheme: boolean = true;
 }
 
 export enum SearchMode {
@@ -50,7 +52,7 @@ export class ConceptTreePreference {
     // narrowerProps: string[];
     // includeSubProps: boolean; //tells if the hierarchy should consider
     // syncInverse: boolean; //tells if the narrower/broader properties should be synced with their inverse
-    visualization: ConceptTreeVisualizationMode;
+    visualization: ConceptTreeVisualizationMode = ConceptTreeVisualizationMode.hierarchyBased;
 }
 
 export enum ConceptTreeVisualizationMode {
@@ -59,8 +61,8 @@ export enum ConceptTreeVisualizationMode {
 }
 
 export class LexicalEntryListPreference {
-    visualization: LexEntryVisualizationMode;
-    indexLength: number;
+    visualization: LexEntryVisualizationMode = LexEntryVisualizationMode.indexBased;
+    indexLength: number = 1;
 }
 
 export enum LexEntryVisualizationMode {
@@ -75,4 +77,41 @@ export class ValueFilterLanguages {
 
 export class ResViewPartitionFilterPreference {
     [role: string]: ResViewPartition[]; //role is a RDFResourceRoleEnum, values are only the hidden partitions
+}
+
+/**
+ * Class that represents the user settings (preferences) of a Project 
+ */
+export class ProjectPreferences {
+    filterValueLang: ValueFilterLanguages; //languages visible in resource description (e.g. in ResourceView, Graph,...)
+
+    activeSchemes: IRI[] = [];
+    activeLexicon: IRI;
+    showFlags: boolean = true;
+    showInstancesNumber: boolean = true;
+    projectThemeId: number = null;
+
+    conceptTreePreferences: ConceptTreePreference;
+    lexEntryListPreferences: LexicalEntryListPreference;
+
+    //graph preferences
+    resViewPartitionFilter: ResViewPartitionFilterPreference;
+    hideLiteralGraphNodes: boolean = true;
+
+    searchSettings: SearchSettings;
+
+}
+
+/**
+ * Class that represents the settings of a project (user indipendent)
+ */
+export class ProjectSettings {
+    projectLanguagesSetting: Language[] = []; //all available languages in a project (settings)
+}
+
+/**
+ * Class that represents the global application settings
+ */
+export class SystemSettings {
+    showFlags: boolean;
 }

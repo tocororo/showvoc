@@ -5,6 +5,7 @@ import { ModalOptions } from 'src/app/modal-dialogs/Modals';
 import { LexEntryVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
+import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
@@ -37,18 +38,18 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     showInfoAlert: boolean = true;
 
     //for visualization indexBased
-    private alphabet: string[] = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+    private alphabet: string[] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
     private firstDigitIndex: string = this.alphabet[0];
     private secondDigitIndex: string = this.alphabet[0];
     index: string;
     private indexLenght: number;
 
-    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, vbProp: PMKIProperties, private ontolexService: OntoLexLemonServices,
+    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties, private ontolexService: OntoLexLemonServices,
         private modalService: NgbModal) {
-        super(basicModals, eventHandler, vbProp);
+        super(basicModals, eventHandler, pmkiProp);
         this.eventSubscriptions.push(eventHandler.lexiconChangedEvent.subscribe(
-			(lexicon: IRI) => this.onLexiconChanged(lexicon))
-		);
+            (lexicon: IRI) => this.onLexiconChanged(lexicon))
+        );
     }
 
     ngOnInit() {
@@ -59,9 +60,9 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
          * store it in a temp variable and then set to the workingLexicon (in case of lexiconChangeable, the workingLexicon would be
          * subscribed from the active lexicon in the lexicon list)
          */
-        let activeLexicon: IRI; 
+        let activeLexicon: IRI;
         if (this.lexicon == undefined) { //if @Input is not provided, get the lexicon from the preferences
-            activeLexicon = this.pmkiProp.getActiveLexicon();
+            activeLexicon = PMKIContext.getProjectCtx().getProjectPreferences().activeLexicon;
         } else { //if @Input lexicon is provided, initialize the tree with this lexicon
             activeLexicon = this.lexicon;
         }
@@ -77,8 +78,8 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
             this.workingLexicon = activeLexicon;
         }
 
-        this.visualizationMode = this.pmkiProp.getLexicalEntryListPreferences().visualization;
-        this.indexLenght = this.pmkiProp.getLexicalEntryListPreferences().indexLength;
+        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
+        this.indexLenght = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength;
         this.onDigitChange();
     }
 
@@ -93,7 +94,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
                     (selectedResource: AnnotatedValue<IRI>) => {
                         this.openAt(selectedResource);
                     },
-                    () => {}
+                    () => { }
                 );
             }
         } else {
@@ -125,19 +126,19 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     }
 
     settings() {
-        const modalRef: NgbModalRef = this.modalService.open(LexicalEntryListSettingsModal, new ModalOptions() );
+        const modalRef: NgbModalRef = this.modalService.open(LexicalEntryListSettingsModal, new ModalOptions());
         modalRef.result.then(
             () => {
-                this.visualizationMode = this.pmkiProp.getLexicalEntryListPreferences().visualization;
+                this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
                 if (this.visualizationMode == LexEntryVisualizationMode.searchBased) {
                     this.viewChildList.forceList([]);
                 } else {
-                    this.indexLenght = this.pmkiProp.getLexicalEntryListPreferences().indexLength;
+                    this.indexLenght = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength;
                     this.onDigitChange();
                     this.refresh();
                 }
             },
-            () => {}
+            () => { }
         );
     }
 

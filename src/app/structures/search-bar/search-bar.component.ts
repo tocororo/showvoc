@@ -10,6 +10,7 @@ import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { SearchSettingsModal } from './search-settings-modal';
 import { finalize } from 'rxjs/operators';
+import { PMKIContext } from 'src/app/utils/PMKIContext';
 
 @Component({
     selector: "search-bar",
@@ -49,7 +50,7 @@ export class SearchBarComponent {
     }
 
     ngOnInit() {
-        this.searchSettings = this.pmkiProps.getSearchSettings();
+        this.searchSettings = PMKIContext.getProjectCtx().getProjectPreferences().searchSettings;
     }
 
     ngOnDestroy() {
@@ -119,7 +120,7 @@ export class SearchBarComponent {
      * When the search settings is updated, updates the setting of the bar and the settings for the autocompleter
      */
     private updateSearchSettings() {
-        this.searchSettings = this.pmkiProps.getSearchSettings();
+        this.searchSettings = PMKIContext.getProjectCtx().getProjectPreferences().searchSettings;
     }
 
 }

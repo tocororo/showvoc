@@ -8,6 +8,7 @@ import { ConceptTreeVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, ResAttribute } from 'src/app/models/Resources';
 import { ResourcesServices } from 'src/app/services/resources.service';
 import { SkosServices } from 'src/app/services/skos.service';
+import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
@@ -53,10 +54,10 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     ngOnInit() {
         super.ngOnInit();
 
-        this.visualizationMode = this.pmkiProp.getConceptTreePreferences().visualization;
+        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
 
         if (this.schemes === undefined) { //if @Input is not provided at all, get the scheme from the preferences
-            this.workingSchemes = this.pmkiProp.getActiveSchemes();
+            this.workingSchemes = PMKIContext.getProjectCtx().getProjectPreferences().activeSchemes;
         } else { //if @Input schemes is provided (it could be null => no scheme-mode), initialize the tree with this scheme
             if (this.schemeChangeable) {
                 if (this.schemes.length > 0) {
@@ -96,7 +97,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
         const modalRef: NgbModalRef = this.modalService.open(ConceptTreeSettingsModal, new ModalOptions());
         modalRef.result.then(
             () => {
-                this.visualizationMode = this.pmkiProp.getConceptTreePreferences().visualization;
+                this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
                 if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
                     this.viewChildTree.forceList([]);
                 } else {

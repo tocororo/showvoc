@@ -464,9 +464,9 @@ export class ResourceViewComponent {
 
     private filterValueLanguageFromPrefObjList(predObjList: PredicateObjects[]) {
         //even if already initialized, get each time the value of valueFilterLangEnabled in order to detect eventual changes of the pref
-        this.valueFilterLangEnabled = this.pmkiProp.getValueFilterLanguages().enabled;
+        this.valueFilterLangEnabled = PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang.enabled;
         if (this.valueFilterLangEnabled) {
-            let valueFilterLanguages = this.pmkiProp.getValueFilterLanguages().languages;
+            let valueFilterLanguages = PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang.languages;
             for (var i = 0; i < predObjList.length; i++) {
                 var objList: AnnotatedValue<Value>[] = predObjList[i].getObjects();
                 for (var j = 0; j < objList.length; j++) {

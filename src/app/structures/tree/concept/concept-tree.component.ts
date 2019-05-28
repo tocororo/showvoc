@@ -2,12 +2,12 @@ import { Component, Input, QueryList, SimpleChanges, ViewChildren } from '@angul
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
-import { ConceptTreeVisualizationMode } from 'src/app/models/Properties';
+import { ConceptTreePreference, ConceptTreeVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { SearchServices } from 'src/app/services/search.service';
 import { SkosServices } from 'src/app/services/skos.service';
+import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTree } from '../abstract-tree';
 import { ConceptTreeNodeComponent } from './concept-tree-node.component';
@@ -25,7 +25,7 @@ export class ConceptTreeComponent extends AbstractTree {
 
     structRole: RDFResourceRolesEnum.concept;
 
-    constructor(private skosService: SkosServices, private searchService: SearchServices, private pmkiProp: PMKIProperties, 
+    constructor(private skosService: SkosServices, private searchService: SearchServices,
         eventHandler: PMKIEventHandler, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
         super(eventHandler, basicModals, sharedModals);
     }
@@ -44,7 +44,8 @@ export class ConceptTreeComponent extends AbstractTree {
     }
 
     initImpl() {
-        if (this.pmkiProp.getConceptTreePreferences().visualization == ConceptTreeVisualizationMode.hierarchyBased) {
+        let conceptTreePref: ConceptTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
+        if (conceptTreePref.visualization == ConceptTreeVisualizationMode.hierarchyBased) {
             this.loading = true;
             this.skosService.getTopConcepts(this.schemes).pipe(
                 finalize(() => this.loading = false)
@@ -59,7 +60,7 @@ export class ConceptTreeComponent extends AbstractTree {
                     }
                 }
             );
-        } else if (this.pmkiProp.getConceptTreePreferences().visualization == ConceptTreeVisualizationMode.searchBased) {
+        } else if (conceptTreePref.visualization == ConceptTreeVisualizationMode.searchBased) {
             //don't do nothing
         }
     }

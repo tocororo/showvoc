@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { Language } from 'src/app/models/LanguagesCountries';
+import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 
 
 @Component({
@@ -17,9 +18,9 @@ export class LanguageValueFilterComponent {
     constructor(private pmkiProp: PMKIProperties) { }
 
     ngOnInit() {
-        let projectLanguages: Language[] = this.pmkiProp.getProjectLanguages();
+        let projectLanguages: Language[] = PMKIContext.getProjectCtx().getProjectSettings().projectLanguagesSetting;
 
-        let preferenceLangs: string[] = this.pmkiProp.getValueFilterLanguages().languages;
+        let preferenceLangs: string[] = PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang.languages;
 
         if (preferenceLangs.length == 1 && preferenceLangs[0] == "*") { //"*" stands for all languages
             //set as active all the available langs
@@ -39,7 +40,7 @@ export class LanguageValueFilterComponent {
             }
         }
 
-        this.filterEnabled = this.pmkiProp.getValueFilterLanguages().enabled;
+        this.filterEnabled = PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang.enabled;
     }
 
     toggleFilter() {

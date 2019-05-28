@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef } fro
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { GraphModelRecord } from 'src/app/models/Graphs';
+import { ValueFilterLanguages } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, Literal, PredicateObjects, ResAttribute, Resource, Value } from 'src/app/models/Resources';
 import { ResViewPartition, ResViewUtils } from 'src/app/models/ResourceView';
 import { GraphServices } from 'src/app/services/graph.service';
 import { ResourceViewServices } from 'src/app/services/resource-view.service';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { ResourceDeserializer } from 'src/app/utils/ResourceUtils';
 import { AbstractGraph, GraphMode } from '../abstract-graph';
 import { D3Service } from '../d3/d3.service';
@@ -30,7 +31,7 @@ export class DataGraphComponent extends AbstractGraph {
     private rvPartitions: ResViewPartition[] = ResViewUtils.orderedResourceViewPartitions;
 
     constructor(protected d3Service: D3Service, protected elementRef: ElementRef, protected ref: ChangeDetectorRef, protected basicModals: BasicModalsServices,
-        private resViewService: ResourceViewServices, private graphService: GraphServices,  private graphModals: GraphModalServices, private pmkiProp: PMKIProperties) {
+        private resViewService: ResourceViewServices, private graphService: GraphServices,  private graphModals: GraphModalServices) {
         super(d3Service, elementRef, ref, basicModals);
     }
 
@@ -73,7 +74,7 @@ export class DataGraphComponent extends AbstractGraph {
         if (value instanceof Resource) {
             this.resViewService.getResourceView(value).subscribe(
                 rv => {
-                    let filteredPartitions: ResViewPartition[] = this.pmkiProp.getResourceViewPartitionsFilter()[(node.res).getRole()];
+                    let filteredPartitions: ResViewPartition[] = PMKIContext.getProjectCtx().getProjectPreferences().resViewPartitionFilter[(node.res).getRole()];
                     //create the predicate-object lists for each partition (skip the filtered partition)
                     let predObjListMap: { [partition: string]: PredicateObjects[] } = {};
                     this.rvPartitions.forEach(partition => {
@@ -200,7 +201,7 @@ export class DataGraphComponent extends AbstractGraph {
      * @param predicatesToHide 
      */
     private convertPredObjListMapToLinks(sourceNode: Node, predObjListMap: { [partition: string]: PredicateObjects[] }, predicatesToHide: IRI[]): Link[] {
-        let hideLiteralNodes: boolean = this.pmkiProp.getHideLiteralGraphNodes();
+        let hideLiteralNodes: boolean = PMKIContext.getProjectCtx().getProjectPreferences().hideLiteralGraphNodes;
         let links: Link[] = [];
         for (let partition in predObjListMap) {
             predObjListMap[partition].forEach(pol => { //for each pol of a partition
@@ -238,9 +239,9 @@ export class DataGraphComponent extends AbstractGraph {
      * @param predObjList 
      */
     private filterValueLanguageFromPrefObjList(predObjList: PredicateObjects[]) {
-        let valueFilterLangEnabled = this.pmkiProp.getValueFilterLanguages().enabled;
-        if (valueFilterLangEnabled) {
-            let valueFilterLanguages = this.pmkiProp.getValueFilterLanguages().languages;
+        let valueFilterLanguage: ValueFilterLanguages = PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang;
+        if (valueFilterLanguage.enabled) {
+            let valueFilterLanguages = valueFilterLanguage.languages;
             for (var i = 0; i < predObjList.length; i++) {
                 var objList: AnnotatedValue<Value>[] = predObjList[i].getObjects();
                 for (var j = 0; j < objList.length; j++) {

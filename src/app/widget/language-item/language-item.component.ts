@@ -2,6 +2,8 @@ import { Component, Input } from "@angular/core";
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { Language } from "../../models/LanguagesCountries";
 import { UIUtils } from "../../utils/UIUtils";
+import { Subscriber, Subscription } from 'rxjs';
+import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 
 @Component({
     selector: "lang-item",
@@ -12,15 +14,31 @@ export class LanguageItemComponent {
     @Input() showTag: boolean;
     @Input() disabled: boolean;
 
-    constructor(private pmkiProp: PMKIProperties) { }
+    flagImgSrc: string;
 
-    getFlagImgSrc(langTag: string): string {
+    eventSubscriptions: Subscription[] = [];
+
+    constructor(private pmkiProp: PMKIProperties, private eventHandler: PMKIEventHandler) {
+        this.eventSubscriptions.push(eventHandler.showFlagChangedEvent.subscribe(
+            (showFlag: boolean) => this.initFlagImgSrc()));
+    }
+
+    ngOnInit() {
+        this.initFlagImgSrc();
+    }
+
+    ngOnDestroy() {
+        this.eventHandler.unsubscribeAll(this.eventSubscriptions);
+    }
+
+    private initFlagImgSrc() {
         if (this.pmkiProp.getShowFlags()) {
-            return UIUtils.getFlagImgSrc(langTag);
+            this.flagImgSrc = UIUtils.getFlagImgSrc(this.language.tag);
         } else {
-            return UIUtils.getFlagImgSrc(null); //null makes return unknown flag => do not show flag
+            this.flagImgSrc = UIUtils.getFlagImgSrc(null); //null makes return unknown flag => do not show flag
         }
     }
+
 }
 
 

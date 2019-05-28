@@ -1,6 +1,6 @@
 import { EventEmitter, Input, Output } from '@angular/core';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
-import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from '../models/Resources';
+import { AnnotatedValue, IRI, RDFResourceRolesEnum } from '../models/Resources';
 import { PMKIEventHandler } from '../utils/PMKIEventHandler';
 import { PMKIProperties } from '../utils/PMKIProperties';
 import { TreeListContext } from '../utils/UIUtils';
@@ -32,10 +32,10 @@ export abstract class AbstractPanel {
     protected basicModals: BasicModalsServices;
     protected eventHandler: PMKIEventHandler;
     protected pmkiProp: PMKIProperties;
-    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, vbProp: PMKIProperties) {
+    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties) {
         this.basicModals = basicModals;
         this.eventHandler = eventHandler;
-        this.pmkiProp = vbProp;
+        this.pmkiProp = pmkiProp;
 
         this.eventSubscriptions.push(eventHandler.showDeprecatedChangedEvent.subscribe(
             (showDeprecated: boolean) => this.showDeprecated = showDeprecated));

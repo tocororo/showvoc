@@ -18,6 +18,7 @@ export class PMKIEventHandler {
     //PREFERENCES
     public showDeprecatedChangedEvent: EventEmitter<boolean> = new PMKIEventEmitter("showDeprecatedChangedEvent");
     public searchPrefsUpdatedEvent: EventEmitter<any> = new PMKIEventEmitter("searchPrefsUpdatedEvent");
+    public showFlagChangedEvent: EventEmitter<boolean> = new PMKIEventEmitter("showFlagChangedEvent");
 
     constructor() { }
 

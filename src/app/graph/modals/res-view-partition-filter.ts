@@ -1,11 +1,12 @@
 import { Component } from "@angular/core";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { RDFResourceRolesEnum } from 'src/app/models/Resources';
+import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { ResViewPartitionFilterPreference } from "../../models/Properties";
 import { ResViewPartition, ResViewUtils } from "../../models/ResourceView";
 import { ResourceUtils } from "../../utils/ResourceUtils";
-import { ModalType } from 'src/app/modal-dialogs/Modals';
 
 @Component({
     selector: "rv-partition-filter",
@@ -92,7 +93,7 @@ export class ResViewPartitionFilter {
             }
         }
 
-        this.convertPrefToRolePartitionsStruct(this.pmkiProp.getResourceViewPartitionsFilter());
+        this.convertPrefToRolePartitionsStruct(PMKIContext.getProjectCtx().getProjectPreferences().resViewPartitionFilter);
         this.selectedRolePartitionsStruct = this.rolePartitionsStructs[0];
     }
 
