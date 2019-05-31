@@ -284,26 +284,26 @@ export class PMKIProperties {
 
 
     initSearchSettingsCookie() {
-        let projectSettings: ProjectPreferences = PMKIContext.getProjectCtx().getProjectPreferences();
+        let searchSettings: SearchSettings = PMKIContext.getProjectCtx().getProjectPreferences().searchSettings;
         let searchModeCookie: string = Cookie.getCookie(Cookie.SEARCH_STRING_MATCH_MODE);
         if (searchModeCookie != null) {
-            projectSettings.searchSettings.stringMatchMode = <SearchMode>searchModeCookie;
+            searchSettings.stringMatchMode = <SearchMode>searchModeCookie;
         }
         let useUriCookie: string = Cookie.getCookie(Cookie.SEARCH_USE_URI);
         if (useUriCookie != null) {
-            projectSettings.searchSettings.useURI = useUriCookie == "true";
+            searchSettings.useURI = useUriCookie == "true";
         }
         let useLocalNameCookie: string = Cookie.getCookie(Cookie.SEARCH_USE_LOCAL_NAME);
         if (useLocalNameCookie != null) {
-            projectSettings.searchSettings.useLocalName = useLocalNameCookie == "true";
+            searchSettings.useLocalName = useLocalNameCookie == "true";
         }
         let useNotesCookie: string = Cookie.getCookie(Cookie.SEARCH_USE_NOTES);
         if (useNotesCookie != null) {
-            projectSettings.searchSettings.useNotes = useNotesCookie == "true";
+            searchSettings.useNotes = useNotesCookie == "true";
         }
         let restrictSchemesCookie: string = Cookie.getCookie(Cookie.SEARCH_CONCEPT_SCHEME_RESTRICTION);
         if (restrictSchemesCookie != null) {
-            projectSettings.searchSettings.restrictActiveScheme = restrictSchemesCookie == "true";
+            searchSettings.restrictActiveScheme = restrictSchemesCookie == "true";
         }
     }
     setSearchSettings(settings: SearchSettings) {
