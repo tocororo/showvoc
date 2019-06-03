@@ -157,7 +157,7 @@ export class ResourceViewComponent {
         this.resourcePosition = ResourcePosition.deserialize(this.annotatedResource.getAttribute(ResAttribute.RESOURCE_POSITION));
 
         if (this.resourcePosition instanceof LocalResourcePosition) {
-            this.resourcePositionLocalProj = this.resourcePosition.project == PMKIContext.getProject().getName();
+            this.resourcePositionLocalProj = this.resourcePosition.project == PMKIContext.getWorkingProject().getName();
             this.resourcePositionDetails = this.resourcePosition.project;
         } else if (this.resourcePosition instanceof RemoteResourcePosition) {
             // this.metadataRegistryService.getDatasetMetadata(this.resourcePosition.datasetMetadata).subscribe(

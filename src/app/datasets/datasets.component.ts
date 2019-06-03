@@ -79,21 +79,16 @@ export class DatasetsComponent implements OnInit {
     }
 
     private createIndex(project: Project) {
-        /**
-         * create index requires project set as ctx_project.
-         * Here store in a temp variable the currently open project in order to restore it once the index is created
-         */
-        let activeProject: Project = PMKIContext.getProject();
-        PMKIContext.setProject(project);
+        PMKIContext.setTempProject(project);
         project['creatingIndex'] = true;
         this.globalCreatingIndex = true;
         this.globalSearchService.clearSpecificIndex().subscribe(
             () => {
                 this.globalSearchService.createIndex().pipe(
                     finalize(() => {
+                        PMKIContext.removeTempProject();
                         project['creatingIndex'] = false;
                         this.globalCreatingIndex = false;
-                        PMKIContext.setProject(activeProject); //restore the project active
                     })
                 ).subscribe();
             }

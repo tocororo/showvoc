@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AnnotatedValue, IRI, Resource } from 'src/app/models/Resources';
-import { StructureTabsetComponent } from 'src/app/structures/structure-tabset/structure-tabset.component';
 import { ResourcesServices } from 'src/app/services/resources.service';
+import { StructureTabsetComponent } from 'src/app/structures/structure-tabset/structure-tabset.component';
 
 @Component({
     selector: 'dataset-data-component',

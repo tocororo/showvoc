@@ -39,7 +39,7 @@ export class StructureTabsetComponent implements OnInit {
     constructor(private resourcesService: ResourcesServices, private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices) { }
 
     ngOnInit() {
-        this.model = PMKIContext.getProject().getModelType(true);
+        this.model = PMKIContext.getWorkingProject().getModelType(true);
     }
 
     onNodeSelected(node: AnnotatedValue<IRI>) {
@@ -54,7 +54,7 @@ export class StructureTabsetComponent implements OnInit {
         if (resource.getValue() instanceof IRI) {
             let annotatedIRI: AnnotatedValue<IRI> = <AnnotatedValue<IRI>>resource;
             //check if the resource is local to the project
-            if (annotatedIRI.getResourceGraphs().find(g => g.getIRI() == PMKIContext.getProject().getBaseURI()) != null) { //locally defined
+            if (annotatedIRI.getResourceGraphs().find(g => g.getIRI() == PMKIContext.getWorkingProject().getBaseURI()) != null) { //locally defined
                 let role: RDFResourceRolesEnum = resource.getRole();
                 let tabToActivate: RDFResourceRolesEnum;
                 if (ResourceUtils.roleSubsumes(RDFResourceRolesEnum.property, role)) {

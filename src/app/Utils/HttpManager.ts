@@ -265,18 +265,37 @@ export class HttpManager {
      */
     private getContextParametersForUrl(): string {
         let params: string = "";
-        // give priority to ctx_project in HttpServiceContext over project in ctx
-        if (HttpServiceContext.getContextProject() != undefined) { //are temporary project exploit in PMKI? is this check really needed?
-            params += "ctx_project=" + encodeURIComponent(HttpServiceContext.getContextProject().getName()) + "&";
-            //consumer (if not specified is the currently open project)
-            if (HttpServiceContext.getConsumerProject() != undefined) {
-                params += "ctx_consumer=SYSTEM&";
+
+        /**
+         * give priority to ctx_project in the following order:
+         * - PMKIContext.tempProject
+         * - HttpServiceContext.ctxProject (in this case the working project is set as consumer)
+         * - PMKIContext.workingProject
+         */
+        let ctxProject: Project;
+        let ctxConsumer: Project;
+
+        if (PMKIContext.getTempProject() != null) { //if provided get ctxProject from PMKIContext.tempProject
+            ctxProject = PMKIContext.getTempProject();
+        } else if (HttpServiceContext.getContextProject() != null) { //otherwise get ctxProject from HttpServiceContext
+            ctxProject = HttpServiceContext.getContextProject();
+            //project provided in HttpServiceContext => set also the consumer
+            if (HttpServiceContext.getConsumerProject() != null) {
+                ctxConsumer = HttpServiceContext.getConsumerProject();
             } else {
-                params += "ctx_consumer=" + encodeURIComponent(PMKIContext.getProject().getName()) + "&";
+                ctxConsumer = PMKIContext.getWorkingProject();
             }
-        } else if (PMKIContext.getProject() != undefined) { //use the working project otherwise
-            params += "ctx_project=" + encodeURIComponent(PMKIContext.getProject().getName()) + "&";
+        } else { //project not provided in PMKIContext.tempProject or HttpServiceContext => get it from PMKIContext
+            ctxProject = PMKIContext.getWorkingProject();
         }
+        //concat the url parameter
+        if (ctxProject != null) {
+            params += "ctx_project=" + encodeURIComponent(ctxProject.getName()) + "&";
+        }
+        if (ctxConsumer != null) {
+            params += "ctx_consumer=" + encodeURIComponent(ctxConsumer.getName()) + "&";
+        }
+
         return params;
     }
 

@@ -7,27 +7,38 @@ export class PMKIContext {
 
     private static workingProjectCtx: ProjectContext;
     private static projectChanged: boolean;
+    private static tempProject: Project; //project that could be temporarly set in order to execute request within its context 
+        //(and there is no need to init preferences and to set a consumer)
+
     private static systemSettings: SystemSettings = new SystemSettings();
+
     private static loggedUser: User;
     private static lurkerUser: User;
 
+    static initProjectCtx(project: Project) {
+        this.workingProjectCtx = new ProjectContext();
+        this.workingProjectCtx.setProject(project);
+    }
     static getProjectCtx(): ProjectContext {
         return this.workingProjectCtx;
     }
 
-    static setProject(project: Project) {
-        this.workingProjectCtx = new ProjectContext();
-        this.workingProjectCtx.setProject(project);
-    }
-    static getProject(): Project {
+    static getWorkingProject(): Project {
         if (this.workingProjectCtx != null) {
             return this.workingProjectCtx.getProject();
         } else {
             return null;
         }
     }
-    static removeProject() {
-        this.workingProjectCtx = null;
+
+    static setTempProject(project: Project) {
+        this.tempProject = project;
+    }
+    static getTempProject(): Project {
+        return this.tempProject;
+    }
+    static removeTempProject() {
+        this.tempProject = null;
     }
 
     /**
@@ -82,7 +93,7 @@ export class PMKIContext {
 
 }
 
-class ProjectContext {
+export class ProjectContext {
     private project: Project;
     private prefixMappings: PrefixMapping[];
     private preferences: ProjectPreferences;
@@ -103,8 +114,4 @@ class ProjectContext {
 
     getProjectSettings(): ProjectSettings { return this.settings; }
 
-    // reset() {
-    //     this.project = null;
-    //     this.prefixMappings = null;
-    // }
 }

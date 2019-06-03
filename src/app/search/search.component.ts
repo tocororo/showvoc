@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { concat, Observable, of, forkJoin } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { Project } from '../models/Project';
 import { IRI } from '../models/Resources';
 import { GlobalSearchResult } from '../models/Search';
-import { RDFS, SKOS, SKOSXL } from '../models/Vocabulary';
 import { GlobalSearchServices } from '../services/global-search.service';
 import { ResourcesServices } from '../services/resources.service';
 import { Cookie } from '../utils/Cookie';
@@ -68,14 +67,13 @@ export class SearchComponent {
                 });
 
                 //compute show of results
-                let projectBackup = PMKIContext.getProject();
                 let computeResultsShowFunctions: Observable<void>[] = [];
                 Object.keys(this.groupedSearchResults).forEach(repoId => {
                     let results: GlobalSearchResult[] = this.groupedSearchResults[repoId];
                     computeResultsShowFunctions.push(this.getComputeResultsShowFn(results));
                 });
                 forkJoin(...computeResultsShowFunctions).pipe(
-                    finalize(() => PMKIContext.setProject(projectBackup)) //restore the previous project in the ctx
+                    finalize(() => PMKIContext.removeTempProject())
                 ).subscribe(() => {
                     //order results
                     Object.keys(this.groupedSearchResults).forEach(repoId => {
@@ -115,7 +113,7 @@ export class SearchComponent {
                 resources.push(r.resource);
             });
 
-            PMKIContext.setProject(new Project(results[0].repository.id));
+            PMKIContext.setTempProject(new Project(results[0].repository.id));
             return this.resourcesService.getResourcesInfo(resources).pipe(
                 map(annotated => {
                     annotated.forEach(a => {
