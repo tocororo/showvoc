@@ -145,21 +145,15 @@ export class PMKIProperties {
         } else {
             projPref.activeSchemes = schemes;
         }
-        this.prefService.setActiveSchemes(projPref.activeSchemes).subscribe(
-            stResp => {
-                this.eventHandler.schemeChangedEvent.emit(projPref.activeSchemes);
-            }
-        );
+        this.eventHandler.schemeChangedEvent.emit(projPref.activeSchemes);
+        this.prefService.setActiveSchemes(projPref.activeSchemes).subscribe();
     }
 
     setActiveLexicon(lexicon: IRI) {
         let projPref: ProjectPreferences = PMKIContext.getProjectCtx().getProjectPreferences();
         projPref.activeLexicon = lexicon;
-        this.prefService.setPUSetting(Properties.pref_active_lexicon, projPref.activeLexicon.getIRI()).subscribe(
-            stResp => {
-                this.eventHandler.lexiconChangedEvent.emit(projPref.activeLexicon);
-            }
-        );
+        this.eventHandler.lexiconChangedEvent.emit(projPref.activeLexicon);
+        this.prefService.setPUSetting(Properties.pref_active_lexicon, projPref.activeLexicon.getIRI()).subscribe();
     }
 
     getShowFlags(): boolean {

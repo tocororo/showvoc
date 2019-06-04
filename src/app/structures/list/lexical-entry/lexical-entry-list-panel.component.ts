@@ -3,7 +3,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions } from 'src/app/modal-dialogs/Modals';
 import { LexEntryVisualizationMode } from 'src/app/models/Properties';
-import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
+import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
 import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
@@ -101,6 +101,34 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
             ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
             this.viewChildList.forceList(results);
         }
+    }
+
+    public selectSearchedResource(resource: AnnotatedValue<IRI>) {
+        this.ontolexService.getLexicalEntryLexicons(resource.getValue()).subscribe(
+            lexicons => {
+                let isInActiveLexicon: boolean = ResourceUtils.containsNode(lexicons, this.workingLexicon);
+                if (isInActiveLexicon) {
+                    this.openAt(resource);
+                } else {
+                    let message = "Searched LexicalEntry '" + resource.getShow() + "' is not reachable in the list since it belongs to the following";
+                    if (lexicons.length > 1) {
+                        message += " lexicon. If you want to activate one of these lexicons and continue the search, "
+                            + "please select the lexicon you want to activate and press OK.";
+                    } else {
+                        message += " lexicon. If you want to activate the lexicon and continue the search, please select it and press OK.";
+                    }
+                    this.basicModals.selectResource("Search", message, lexicons, this.rendering).then(
+                        (lexicon: AnnotatedValue<Resource>) => {
+                            this.pmkiProp.setActiveLexicon(<IRI>lexicon.getValue()); //update the active lexicon
+                            setTimeout(() => { //wait for a change detection round, since after the setActiveLexicon, the lex entry list is reset
+                                this.openAt(resource);
+                            });
+                        },
+                        () => {}
+                    );
+                }
+            }
+        )
     }
 
     public openAt(node: AnnotatedValue<IRI>) {

@@ -351,9 +351,10 @@ export class HttpManager {
                             confirm => {
                                 //in case user is not logged at all, reset context and redirect to home
                                 if (err.status == 401) {
-                                    PMKIContext.resetContext();
-                                    HttpServiceContext.resetContext();
-                                    this.router.navigate(['/home']);
+                                    location.reload();
+                                    // PMKIContext.resetContext();
+                                    // HttpServiceContext.resetContext();
+                                    // this.router.navigate(['/home']);
                                 };
                             },
                             () => {}

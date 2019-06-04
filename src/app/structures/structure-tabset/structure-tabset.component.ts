@@ -71,13 +71,13 @@ export class StructureTabsetComponent implements OnInit {
                     this.viewChildTabset.select(tabToActivate);
                     setTimeout(() => { //wait for the tab to be activate
                         if (tabToActivate == RDFResourceRolesEnum.concept) {
-                            this.viewChildConceptPanel.openAt(annotatedIRI);
+                            this.viewChildConceptPanel.selectSearchedResource(annotatedIRI);
                         } else if (tabToActivate == RDFResourceRolesEnum.conceptScheme) {
                             this.viewChildSchemePanel.openAt(annotatedIRI);
                         } else if (tabToActivate == RDFResourceRolesEnum.limeLexicon) {
                             this.viewChildLexiconPanel.openAt(annotatedIRI);
                         } else if (tabToActivate == RDFResourceRolesEnum.ontolexLexicalEntry) {
-                            this.viewChildLexialEntryPanel.openAt(annotatedIRI);
+                            this.viewChildLexialEntryPanel.selectSearchedResource(annotatedIRI);
                         } else if (tabToActivate == RDFResourceRolesEnum.property) {
                             this.viewChildPropertyPanel.openAt(annotatedIRI);
                         } else if (tabToActivate == RDFResourceRolesEnum.skosCollection) {

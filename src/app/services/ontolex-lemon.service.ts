@@ -42,4 +42,19 @@ export class OntoLexLemonServices {
         );
     }
 
+    /**
+     * Returns the lexicon which the lexicalEntry belongs to
+     * @param lexicalEntry 
+     */
+    getLexicalEntryLexicons(lexicalEntry: IRI): Observable<AnnotatedValue<IRI>[]> {
+        var params: any = {
+            lexicalEntry: lexicalEntry
+        };
+        return this.httpMgr.doGet(this.serviceName, "getLexicalEntryLexicons", params).pipe(
+            map(stResp => {
+                return ResourceDeserializer.createIRIArray(stResp);
+            })
+        );
+    }
+
 }

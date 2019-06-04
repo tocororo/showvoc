@@ -55,7 +55,7 @@ export class BasicModalsServices {
      * @param rendering in case of array of resources, it tells whether the resources should be rendered
      * @return if the modal closes with ok returns a promise containing the selected resource
      */
-    selectResource(title: string, message: string, resourceList: AnnotatedValue<Resource>[], rendering?: boolean, options?: ModalOptions) {
+    selectResource(title: string, message: string, resourceList: AnnotatedValue<Resource>[], rendering?: boolean, options?: ModalOptions): Promise<AnnotatedValue<Resource>> {
         let _options: ModalOptions = new ModalOptions().merge(options);
 		const modalRef: NgbModalRef = this.modalService.open(ResourceSelectionModal, _options );
         modalRef.componentInstance.title = title;

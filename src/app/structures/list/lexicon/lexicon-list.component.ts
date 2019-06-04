@@ -21,6 +21,9 @@ export class LexiconListComponent extends AbstractList {
 
     constructor(private ontolexService: OntoLexLemonServices, private pmkiProp: PMKIProperties, eventHandler: PMKIEventHandler) {
         super(eventHandler);
+        //handler when active lexicon is changed programmatically when a searched entry belong to a non active lexicon
+        this.eventSubscriptions.push(eventHandler.lexiconChangedEvent.subscribe(
+            (node: IRI) => this.activeLexicon = this.nodes[ResourceUtils.indexOfNode(this.nodes, node)]));
     }
 
     initImpl() {
@@ -43,7 +46,7 @@ export class LexiconListComponent extends AbstractList {
         );
     }
 
-    updateActiveSchemesPref() {
+    updateActiveLexiconPref() {
         this.pmkiProp.setActiveLexicon(this.activeLexicon.getValue());
     }
 
