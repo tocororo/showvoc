@@ -12,20 +12,22 @@ export class BasicModalsServices {
 
     constructor(private modalService: NgbModal) { }
 
-	/**
-	 * 
-	 * @param title 
-	 * @param message 
-	 * @param type if provided, the message will be put in an proper-styled alert
-	 * @param options 
-	 */
-    alert(title: string, message: string, type?: ModalType, details?: string, options?: ModalOptions) {
-		let _options: ModalOptions = new ModalOptions().merge(options);
-		const modalRef: NgbModalRef = this.modalService.open(AlertModal, _options );
+    /**
+     * @param title 
+     * @param message 
+     * @param type if provided, the message will be put in an proper-styled alert
+     * @param details if provided, the alert will contain an expandable section with further details
+     * @param checkboxLabel if provided, the alert will contain a checkbox with the given label
+     * @param options 
+     */
+    alert(title: string, message: string, type?: ModalType, details?: string, checkboxLabel?: string, options?: ModalOptions): Promise<boolean> {
+        let _options: ModalOptions = new ModalOptions().merge(options);
+        const modalRef: NgbModalRef = this.modalService.open(AlertModal, _options);
         modalRef.componentInstance.title = title;
         modalRef.componentInstance.message = message;
-		modalRef.componentInstance.type = type;
-		modalRef.componentInstance.details = details;
+        modalRef.componentInstance.type = type;
+        modalRef.componentInstance.details = details;
+        modalRef.componentInstance.checkboxLabel = checkboxLabel;
         return modalRef.result;
     }
 
@@ -39,11 +41,11 @@ export class BasicModalsServices {
      * @return if the modal closes with ok returns a promise containing a boolean true
      */
     confirm(title: string, message: string, type?: ModalType, options?: ModalOptions) {
-		let _options: ModalOptions = new ModalOptions().merge(options);
-		const modalRef: NgbModalRef = this.modalService.open(ConfirmModal, _options );
+        let _options: ModalOptions = new ModalOptions().merge(options);
+        const modalRef: NgbModalRef = this.modalService.open(ConfirmModal, _options);
         modalRef.componentInstance.title = title;
         modalRef.componentInstance.message = message;
-		modalRef.componentInstance.type = type;
+        modalRef.componentInstance.type = type;
         return modalRef.result;
     }
 
@@ -57,11 +59,11 @@ export class BasicModalsServices {
      */
     selectResource(title: string, message: string, resourceList: AnnotatedValue<Resource>[], rendering?: boolean, options?: ModalOptions): Promise<AnnotatedValue<Resource>> {
         let _options: ModalOptions = new ModalOptions().merge(options);
-		const modalRef: NgbModalRef = this.modalService.open(ResourceSelectionModal, _options );
+        const modalRef: NgbModalRef = this.modalService.open(ResourceSelectionModal, _options);
         modalRef.componentInstance.title = title;
         modalRef.componentInstance.message = message;
-		modalRef.componentInstance.resourceList = resourceList;
-		modalRef.componentInstance.rendering = rendering;
+        modalRef.componentInstance.resourceList = resourceList;
+        modalRef.componentInstance.rendering = rendering;
         return modalRef.result;
     }
 
@@ -73,22 +75,22 @@ export class BasicModalsServices {
      * @param fileName name of the file to download
      */
     downloadLink(title: string, message: string, downloadLink: string, fileName: string, options?: ModalOptions) {
-		let _options: ModalOptions = new ModalOptions().merge(options);
-		const modalRef: NgbModalRef = this.modalService.open(DownloadModal, _options );
+        let _options: ModalOptions = new ModalOptions().merge(options);
+        const modalRef: NgbModalRef = this.modalService.open(DownloadModal, _options);
         modalRef.componentInstance.title = title;
         modalRef.componentInstance.message = message;
-		modalRef.componentInstance.downloadLink = downloadLink;
-		modalRef.componentInstance.fileName = fileName;
+        modalRef.componentInstance.downloadLink = downloadLink;
+        modalRef.componentInstance.fileName = fileName;
         return modalRef.result;
     }
 
     // openSmallModal() {
-	// 	const modalRef: NgbModalRef = this.modalService.open(AlertModalComponent, { backdrop: "static" , size: "sm" } );
-	// 	modalRef.componentInstance.name = 'Tiziano';
-	// 	modalRef.result.then(
-	// 		result => { console.log("close", result); }, 
-	// 		cancel => { console.log("dismiss", cancel); }
-	// 	)
+    // 	const modalRef: NgbModalRef = this.modalService.open(AlertModalComponent, { backdrop: "static" , size: "sm" } );
+    // 	modalRef.componentInstance.name = 'Tiziano';
+    // 	modalRef.result.then(
+    // 		result => { console.log("close", result); }, 
+    // 		cancel => { console.log("dismiss", cancel); }
+    // 	)
     // }
 
 

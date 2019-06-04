@@ -13,11 +13,14 @@ export class AlertModal implements OnInit {
 	@Input() message: string;
 	@Input() type: ModalType;
 	@Input() details: string;
+	@Input() checkboxLabel: string;
 
 	titleClass: string;
 	alertClass: string;
 
 	detailsCollapsed: boolean = true;
+
+	checkbox: boolean = false;
 
 	constructor(public activeModal: NgbActiveModal) { }
 
@@ -35,7 +38,7 @@ export class AlertModal implements OnInit {
 	}
 
 	ok() {
-		this.activeModal.close();
+		this.activeModal.close(this.checkbox);
 	}
 
 	close() {

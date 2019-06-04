@@ -5,6 +5,7 @@ import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
 import { ResourcesServices } from 'src/app/services/resources.service';
+import { Cookie } from 'src/app/utils/Cookie';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 import { TreeListContext } from 'src/app/utils/UIUtils';
@@ -85,13 +86,21 @@ export class StructureTabsetComponent implements OnInit {
                         }
                     });
                 } else { //tabToActivate null means that the resource doesn't belong to any kind handled by the tabset
-                    this.basicModals.alert("Resource not reachable", annotatedIRI.getValue().getIRI() + " is not reachable in any tree or list. " + 
-                        "It's ResourceView will be shown in a modal dialog", ModalType.warning).then(
-                        () => {
-                            this.sharedModals.openResourceView(resource.getValue());
-                        },
-                        () => {}
-                    );
+                    let hideWarning: boolean = Cookie.getCookie(Cookie.EXPLORE_HIDE_WARNING_MODAL_RES_VIEW) == "true";
+                    if (hideWarning) {
+                        this.sharedModals.openResourceView(resource.getValue());
+                    } else {
+                        this.basicModals.alert("Resource not reachable", annotatedIRI.getValue().getIRI() + " is not reachable in any tree or list. " + 
+                            "It's ResourceView will be shown in a modal dialog", ModalType.warning, null, "Don't show again").then(
+                            (dontShowAgain: boolean) => {
+                                if (dontShowAgain) {
+                                    Cookie.setCookie(Cookie.EXPLORE_HIDE_WARNING_MODAL_RES_VIEW, "true");
+                                }
+                                this.sharedModals.openResourceView(resource.getValue());
+                            },
+                            () => {}
+                        );
+                    }
                 }
             } else { //non local IRI
                 this.sharedModals.openResourceView(resource.getValue());

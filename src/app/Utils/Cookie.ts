@@ -20,6 +20,8 @@ export class Cookie {
 
     public static SEARCH_FILTERS_ONLY_OPEN_PROJECTS = "search.filters.only_open_projects";
 
+    public static EXPLORE_HIDE_WARNING_MODAL_RES_VIEW = "explore.hide_warning_open_modal_res_view";
+
 	/**
 	 * Retrieves a single cookie by it's name
 	 * @param  {string} name Identification of the Cookie
