@@ -36,10 +36,6 @@ export class ResourceViewComponent {
     private unknownHost: boolean = false; //tells if the resource view of the current resource failed to be fetched due to a UnknownHostException
     private unexistingResource: boolean = false; //tells if the requested resource does not exist (empty description)
 
-    private resourcePosition: ResourcePosition;
-    private resourcePositionDetails: string; //details about the resource position
-    private resourcePositionLocalProj: boolean = false;
-
     //partitions
     private resViewResponse: any = null; //to store the getResourceView response and avoid to repeat the request when user switches on/off inference
     private broadersColl: PredicateObjects[] = null;
@@ -153,23 +149,6 @@ export class ResourceViewComponent {
     private fillPartitions() {
         var resourcePartition: any = this.resViewResponse.resource;
         this.annotatedResource = ResourceDeserializer.createResource(resourcePartition);
-
-        this.resourcePosition = ResourcePosition.deserialize(this.annotatedResource.getAttribute(ResAttribute.RESOURCE_POSITION));
-
-        if (this.resourcePosition instanceof LocalResourcePosition) {
-            this.resourcePositionLocalProj = this.resourcePosition.project == PMKIContext.getWorkingProject().getName();
-            this.resourcePositionDetails = this.resourcePosition.project;
-        } else if (this.resourcePosition instanceof RemoteResourcePosition) {
-            // this.metadataRegistryService.getDatasetMetadata(this.resourcePosition.datasetMetadata).subscribe(
-            //     metadata => {
-            //         if (metadata.title != null) {
-            //             this.resourcePositionDetails = metadata.title + ", " + metadata.uriSpace;
-            //         } else {
-            //             this.resourcePositionDetails = metadata.uriSpace;
-            //         }
-            //     }
-            // );
-        } //else is unknown => the UI gives the possibility to discover the dataset
 
         var broadersPartition: any = this.resViewResponse[ResViewPartition.broaders];
         if (broadersPartition != null) {
