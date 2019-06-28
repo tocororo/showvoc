@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AlignmentsModule } from './alignments/alignments.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CustomReuseStrategy } from './CustomReuseStrategy';
 import { DatasetsModule } from './datasets/datasets.module';
 import { GraphModule } from './graph/graph.module';
 import { HomeComponent } from './home/home.component';
-import { MappingsModule } from './mappings/mappings.module';
 import { ModalsModule } from './modal-dialogs/modals.module';
 import { NotFoundComponent } from './not-found.component';
 import { PreferencesModule } from './preferences/preferences.module';
@@ -28,11 +28,11 @@ import { PMKIProperties } from './utils/PMKIProperties';
         NotFoundComponent
     ],
     imports: [
+        AlignmentsModule,
         AppRoutingModule,
         BrowserModule,
         DatasetsModule,
         GraphModule,
-        MappingsModule,
         ModalsModule,
         NgbModule,
         PreferencesModule,

@@ -1,0 +1,34 @@
+<div class="container my-3">
+    <h1>Alignments</h1>
+
+    <div class="my-2">
+        <div class="hbox">
+            <label style="white-space: nowrap">Source dataset:</label>
+            <select class="form-control form-control-sm ml-2" [(ngModel)]="selectedSourceProject" (ngModelChange)="onSourceProjectChannge()">
+                <option *ngFor="let p of sourceProjects" [ngValue]="p">{{p.getName()}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div *ngIf="loading" class="spinner-border text-info"></div>
+
+    <div *ngIf="alignments" class="card vbox">
+        <div class="card-body table-responsive">
+            <table class="table table-striped table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th>Dataset</th>
+                        <th>Alignments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let a of alignments" (click)="showAlignments(a)"  style="cursor: pointer">
+                        <td>{{a.project.getName()}}</td>
+                        <td>{{a.size}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

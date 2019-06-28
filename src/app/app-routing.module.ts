@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AlignmentsComponent } from './alignments/alignments.component';
 import { DatasetDataComponent } from './datasets/data/dataset-data.component';
 import { DatasetViewComponent } from './datasets/dataset-view/dataset-view.component';
 import { DatasetsComponent } from './datasets/datasets.component';
 import { SparqlComponent } from './datasets/sparql/sparql.component';
 import { HomeComponent } from './home/home.component';
-import { MappingsComponent } from './mappings/mappings.component';
 import { NotFoundComponent } from './not-found.component';
 import { SearchComponent } from './search/search.component';
 import { LoginComponent } from './user/login.component';
 import { RegistrationComponent } from './user/registration.component';
-import { ProjectGuard, LurkerAuthGuard } from './utils/CanActivateGuards';
+import { LurkerAuthGuard, ProjectGuard } from './utils/CanActivateGuards';
 
 const routes: Routes = [
     { path: '', redirectTo: "/home", pathMatch: 'full' },
@@ -27,7 +27,7 @@ const routes: Routes = [
         ]
     },
     { path: 'search', component: SearchComponent, canActivate: [LurkerAuthGuard] },
-    { path: 'mappings', component: MappingsComponent },
+    { path: 'alignments', component: AlignmentsComponent },
     { path: '**', component: NotFoundComponent },
 ];
 
