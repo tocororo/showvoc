@@ -24,9 +24,10 @@ import { ConceptTreeComponent } from './tree/concept/concept-tree.component';
 import { PropertyTreeNodeComponent } from './tree/property/property-tree-node.component';
 import { PropertyTreePanelComponent } from './tree/property/property-tree-panel.component';
 import { PropertyTreeComponent } from './tree/property/property-tree.component';
+import { AlignmentsModule } from '../alignments/alignments.module';
 
 @NgModule({
-	declarations: [
+    declarations: [
         CollectionTreeComponent,
         CollectionTreeNodeComponent,
         CollectionTreePanelComponent,
@@ -49,14 +50,19 @@ import { PropertyTreeComponent } from './tree/property/property-tree.component';
 
         SearchBarComponent,
         SearchSettingsModal
-	],
-	imports: [
-		CommonModule, FormsModule, WidgetModule, NgbTabsetModule, NgbDropdownModule
-	],
-	exports: [
-		StructureTabsetComponent,
-		CollectionTreePanelComponent, ConceptTreePanelComponent, PropertyTreePanelComponent,
-		SchemeListPanelComponent, LexiconListPanelComponent, LexicalEntryListPanelComponent
+    ],
+    imports: [
+        AlignmentsModule,
+        CommonModule,
+        FormsModule,
+        NgbDropdownModule,
+        NgbTabsetModule,
+        WidgetModule
+    ],
+    exports: [
+        StructureTabsetComponent,
+        CollectionTreePanelComponent, ConceptTreePanelComponent, PropertyTreePanelComponent,
+        SchemeListPanelComponent, LexiconListPanelComponent, LexicalEntryListPanelComponent
     ],
     entryComponents: [
         ConceptTreeSettingsModal,

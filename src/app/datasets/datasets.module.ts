@@ -14,6 +14,7 @@ import { ExportResultRdfModal } from './sparql/export-result-rdf-modal';
 import { SparqlTabComponent } from './sparql/sparql-tab.component';
 import { SparqlComponent } from './sparql/sparql.component';
 import { YasguiComponent } from './sparql/yasgui.component';
+import { AlignmentsModule } from '../alignments/alignments.module';
 
 @NgModule({
 	declarations: [
@@ -26,14 +27,15 @@ import { YasguiComponent } from './sparql/yasgui.component';
 		ExportResultRdfModal
 	],
 	imports: [
+		AlignmentsModule,
 		CommonModule,
 		FormsModule,
-		RouterModule,
-		WidgetModule,
-		StructuresModule,
-		ResourceViewModule,
 		NgbDropdownModule,
 		NgbTabsetModule,
+		ResourceViewModule,
+		RouterModule,
+		StructuresModule,
+		WidgetModule,
 	],
 	providers: [
 		BasicModalsServices

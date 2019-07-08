@@ -1,6 +1,7 @@
 <div class="card vbox">
-    <div class="card-header">
-        <div class="btn-toolbar float-right">
+    <div class="card-header d-flex">
+
+        <div class="btn-toolbar" style="flex: 1;">
             <div class="btn-group btn-group-sm">
                 <button type="button" class="btn btn-outline-secondary" style="width: 28px;" (click)="activateAllScheme()" title="Select all schemes">
                     <span class="fa fa-check-square-o"></span>
@@ -9,6 +10,18 @@
                     <span class="fa fa-square-o"></span>
                 </button>
             </div>
+        </div>
+
+
+        <div class="btn-toolbar float-right">
+            <!-- <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-outline-secondary" style="width: 28px;" (click)="activateAllScheme()" title="Select all schemes">
+                    <span class="fa fa-check-square-o"></span>
+                </button>
+                <button type="button" class="btn btn-outline-secondary" style="width: 28px;" (click)="deactivateAllScheme()" title="Deselect all schemes">
+                    <span class="fa fa-square-o"></span>
+                </button>
+            </div> -->
             <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: rendering}" title="Rendering" (click)="rendering=!rendering">
                 <i class="fa fa-font"></i>
             </button>

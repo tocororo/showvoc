@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalOptions } from 'src/app/modal-dialogs/Modals';
 import { AlignmentsModal } from './alignments-modal';
-import { Project } from '../models/Project';
+import { Project } from '../../models/Project';
 
 @Injectable()
 export class AlignmentsModalsServices {

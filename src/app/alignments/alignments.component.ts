@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { finalize } from 'rxjs/operators';
+import { AlignmentOverview } from '../models/Alignments';
 import { Project } from '../models/Project';
 import { ProjectsServices } from '../services/projects.service';
-import { finalize } from 'rxjs/operators';
-import { AlignmentsModalsServices } from './alignments-modal.service';
+import { AlignmentsModalsServices } from './modals/alignments-modal.service';
 
 @Component({
 	selector: 'alignments-component',
@@ -16,6 +17,11 @@ export class AlignmentsComponent implements OnInit {
 	
 	loading: boolean = false;
 	alignments: AlignmentOverview[];
+
+	private readonly aspectTable: string = "Table";
+	private readonly aspectGraph: string = "Graph";
+	private aspects: string[] = [this.aspectTable, this.aspectGraph];
+	private activeAspect: string = this.aspects[0];
 
 
 	constructor(private projectService: ProjectsServices, private alignmentsModals: AlignmentsModalsServices) { }
@@ -50,10 +56,4 @@ export class AlignmentsComponent implements OnInit {
 		this.alignmentsModals.openAlignments(this.selectedSourceProject, alignment.project);
 	}
 
-}
-
-
-class AlignmentOverview {
-	project: Project;
-	size: number;
 }

@@ -37,6 +37,14 @@
                     <lexical-entry-list-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></lexical-entry-list-panel>
                 </ng-template>
             </ngb-tab>
+
+
+            <ngb-tab title="Alignments" id="alignments">
+                <ng-template ngbTabContent>
+                    <alignments-list-panel (alignmentSelected)="onAlignmentSelected($event)"></alignments-list-panel>
+                </ng-template>
+            </ngb-tab>
+
         </ngb-tabset>
 
     </div>

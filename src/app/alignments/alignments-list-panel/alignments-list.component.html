@@ -1,0 +1,11 @@
+<div class="card vbox">
+    <div class="card-body vbox">
+        <div #scrollableContainer class="scrollableContainer p-2">
+            <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
+            <div *ngFor="let a of alignments" class="listItem" [ngClass]="{selectedResource : a == selectedAlignment }" style="cursor: pointer;" (click)="selectAlignment(a)">
+                <span class="badge badge-info mr-1">{{a.size}}</span>
+                {{a.project.getName()}}
+            </div>
+        </div>
+    </div>
+</div>

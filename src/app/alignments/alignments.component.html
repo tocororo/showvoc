@@ -1,12 +1,19 @@
 <div class="container my-3">
     <h1>Alignments</h1>
 
-    <div class="my-2">
+    <div class="mb-2">
         <div class="hbox">
             <label style="white-space: nowrap">Source dataset:</label>
             <select class="form-control form-control-sm ml-2" [(ngModel)]="selectedSourceProject" (ngModelChange)="onSourceProjectChannge()">
                 <option *ngFor="let p of sourceProjects" [ngValue]="p">{{p.getName()}}</option>
             </select>
+        </div>
+    </div>
+
+    <div class="mb-2">
+        <div *ngFor="let a of aspects" class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="aspectRadio" [(ngModel)]="activeAspect" [value]="a">
+            <label class="form-check-label">{{a}}</label>
         </div>
     </div>
 

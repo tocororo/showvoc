@@ -27,7 +27,7 @@ const routes: Routes = [
         ]
     },
     { path: 'search', component: SearchComponent, canActivate: [LurkerAuthGuard] },
-    { path: 'alignments', component: AlignmentsComponent },
+    { path: 'alignments', component: AlignmentsComponent, canActivate: [LurkerAuthGuard] },
     { path: '**', component: NotFoundComponent },
 ];
 

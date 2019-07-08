@@ -3,8 +3,8 @@ import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
+import { AlignmentOverview } from 'src/app/models/Alignments';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
-import { ResourcesServices } from 'src/app/services/resources.service';
 import { Cookie } from 'src/app/utils/Cookie';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
@@ -23,6 +23,7 @@ import { PropertyTreePanelComponent } from '../tree/property/property-tree-panel
 })
 export class StructureTabsetComponent implements OnInit {
     @Output() nodeSelected = new EventEmitter<AnnotatedValue<IRI>>();
+    @Output() alignmentSelected = new EventEmitter<AlignmentOverview>();
 
     @ViewChild(NgbTabset) viewChildTabset: NgbTabset;
     @ViewChild(ConceptTreePanelComponent) viewChildConceptPanel: ConceptTreePanelComponent;
@@ -35,9 +36,8 @@ export class StructureTabsetComponent implements OnInit {
     private context: TreeListContext = TreeListContext.dataPanel;
 
     model: string;
-    private selectedNode: AnnotatedValue<IRI>;
 
-    constructor(private resourcesService: ResourcesServices, private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices) { }
+    constructor(private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices) { }
 
     ngOnInit() {
         this.model = PMKIContext.getWorkingProject().getModelType(true);
@@ -109,5 +109,9 @@ export class StructureTabsetComponent implements OnInit {
             this.sharedModals.openResourceView(resource.getValue());
         }
     }
+
+    onAlignmentSelected(alignment: AlignmentOverview) {
+        this.alignmentSelected.emit(alignment);
+	}
 
 }
