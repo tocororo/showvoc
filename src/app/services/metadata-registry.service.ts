@@ -39,7 +39,6 @@ export class MetadataRegistryServices {
                     }
                     linksets.push(l);
                 }
-                console.log("returning linksets", linksets);
                 return linksets;
             })
         );

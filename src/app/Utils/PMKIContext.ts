@@ -19,8 +19,12 @@ export class PMKIContext {
         this.workingProjectCtx = new ProjectContext();
         this.workingProjectCtx.setProject(project);
     }
-    static getProjectCtx(): ProjectContext {
-        return this.workingProjectCtx;
+    static getProjectCtx(projectCtx?: ProjectContext): ProjectContext {
+        if (projectCtx != null) {
+            return projectCtx;
+        } else {
+            return this.workingProjectCtx;
+        }
     }
 
     static getWorkingProject(): Project {
@@ -99,7 +103,8 @@ export class ProjectContext {
     private preferences: ProjectPreferences;
     private settings: ProjectSettings;
 
-    constructor() {
+    constructor(project?: Project) {
+        this.project = project;
         this.preferences = new ProjectPreferences();
         this.settings = new ProjectSettings();
     }

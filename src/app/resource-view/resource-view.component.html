@@ -12,13 +12,13 @@
                 <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: rendering}" title="Rendering" (click)="switchRendering()">
                     <i class="fa fa-font"></i>
                 </button>
-                <button class="btn btn-light btn-sm ml-1" title="Settings" (click)="settings()">
+                <button *ngIf="btnSettingsAvailable" class="btn btn-light btn-sm ml-1" title="Settings" (click)="settings()">
                     <i class="fa fa-cog"></i>
                 </button>
-                <div *ngIf="isShowGraphAvailable()" class="btn-group btn-group-sm dropup ml-1" ngbDropdown placement="bottom-right">
+                <div *ngIf="btnGraphAvailable" class="btn-group btn-group-sm dropup ml-1" ngbDropdown placement="bottom-right">
                     <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle></button>
                     <div class="dropdown-menu" ngbDropdownMenu>
-                        <button *ngIf="isShowGraphAvailable()" class="dropdown-item" (click)="openDataGraph()">Open graph representation</button>
+                        <button *ngIf="btnGraphAvailable" class="dropdown-item" (click)="openDataGraph()">Open graph representation</button>
                     </div>
                 </div>
             </div>

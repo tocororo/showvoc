@@ -5,7 +5,7 @@ import { AnnotatedValue, IRI, LocalResourcePosition, PredicateObjects, RemoteRes
 import { PropertyFacet, ResourceViewCtx, ResViewPartition } from '../models/ResourceView';
 import { SemanticTurkey } from '../models/Vocabulary';
 import { ResourceViewServices } from '../services/resource-view.service';
-import { PMKIContext } from '../utils/PMKIContext';
+import { PMKIContext, ProjectContext } from '../utils/PMKIContext';
 import { PMKIProperties } from '../utils/PMKIProperties';
 import { ResourceDeserializer, ResourceUtils, SortAttribute } from '../utils/ResourceUtils';
 import { ResViewModalsServices } from './modals/resource-view-modal.service';
@@ -20,6 +20,7 @@ export class ResourceViewComponent {
 
     @Input() resource: Resource;
     @Input() context: ResourceViewCtx;
+    @Input() projectCtx: ProjectContext;
     @Output() dblclickObj: EventEmitter<AnnotatedValue<Resource>> = new EventEmitter<AnnotatedValue<Resource>>();
 
     annotatedResource: AnnotatedValue<Resource>;
@@ -35,6 +36,9 @@ export class ResourceViewComponent {
 
     private unknownHost: boolean = false; //tells if the resource view of the current resource failed to be fetched due to a UnknownHostException
     private unexistingResource: boolean = false; //tells if the requested resource does not exist (empty description)
+
+    private btnGraphAvailable: boolean = true;
+    private btnSettingsAvailable: boolean = true
 
     //partitions
     private resViewResponse: any = null; //to store the getResourceView response and avoid to repeat the request when user switches on/off inference
@@ -87,6 +91,9 @@ export class ResourceViewComponent {
                 }
             }
             this.buildResourceView(this.resource);//refresh resource view when Input resource changes
+
+            this.btnGraphAvailable = this.projectCtx != null && this.context != ResourceViewCtx.modal;
+            this.btnSettingsAvailable = this.projectCtx == null; //settings available only if there is no context overriding the default
         }
     }
 
@@ -246,6 +253,7 @@ export class ResourceViewComponent {
             this.lexicalizationsColl = ResourceDeserializer.createPredicateObjectsList(lexicalizationsPartition);
             this.filterPredObjList(this.lexicalizationsColl);
             //do not sort (the sort is performed in the partition according the language)
+            this.sortLexicalizations(this.lexicalizationsColl);
         }
 
         var lexicalFormsPartition: any = this.resViewResponse[ResViewPartition.lexicalForms];
@@ -443,9 +451,9 @@ export class ResourceViewComponent {
 
     private filterValueLanguageFromPrefObjList(predObjList: PredicateObjects[]) {
         //even if already initialized, get each time the value of valueFilterLangEnabled in order to detect eventual changes of the pref
-        this.valueFilterLangEnabled = PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang.enabled;
+        this.valueFilterLangEnabled = PMKIContext.getProjectCtx(this.projectCtx).getProjectPreferences().filterValueLang.enabled;
         if (this.valueFilterLangEnabled) {
-            let valueFilterLanguages = PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang.languages;
+            let valueFilterLanguages = PMKIContext.getProjectCtx(this.projectCtx).getProjectPreferences().filterValueLang.languages;
             for (var i = 0; i < predObjList.length; i++) {
                 var objList: AnnotatedValue<Value>[] = predObjList[i].getObjects();
                 for (var j = 0; j < objList.length; j++) {
@@ -471,6 +479,22 @@ export class ResourceViewComponent {
         for (var i = 0; i < predObjList.length; i++) {
             let objList: AnnotatedValue<Value>[] = predObjList[i].getObjects();
             ResourceUtils.sortResources(objList, orderAttribute);
+        }
+    }
+
+    private sortLexicalizations(predObjList: PredicateObjects[]) {
+        let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
+        for (var i = 0; i < predObjList.length; i++) {
+            let objList: AnnotatedValue<Value>[] = predObjList[i].getObjects();
+            if (this.rendering) {
+                objList.sort((o1: AnnotatedValue<Value>, o2: AnnotatedValue<Value>) => {
+                    if (o1.getAttribute(ResAttribute.LANG) < o2.getAttribute(ResAttribute.LANG)) return -1;
+                    if (o1.getAttribute(ResAttribute.LANG) > o2.getAttribute(ResAttribute.LANG)) return 1;
+                    return 0;
+                });
+            } else { //in case the rendering is off, sort according the value
+                ResourceUtils.sortResources(objList, SortAttribute.value);
+            }
         }
     }
 

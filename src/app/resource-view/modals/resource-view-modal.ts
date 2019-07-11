@@ -1,8 +1,9 @@
 import { Component, ElementRef, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Resource } from 'src/app/models/Resources';
-import { UIUtils } from 'src/app/utils/UIUtils';
 import { ResourceViewCtx } from 'src/app/models/ResourceView';
+import { ProjectContext } from 'src/app/utils/PMKIContext';
+import { UIUtils } from 'src/app/utils/UIUtils';
 
 @Component({
 	selector: 'resource-view-modal',
@@ -11,6 +12,7 @@ import { ResourceViewCtx } from 'src/app/models/ResourceView';
 export class ResourceViewModal {
 
 	@Input() resource: Resource;
+	@Input() projectCtx: ProjectContext;
 
 	context: ResourceViewCtx = ResourceViewCtx.modal;
     

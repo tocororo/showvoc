@@ -3,13 +3,13 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
+import { SharedModalsServices } from '../modal-dialogs/shared-modals/shared-modal.service';
 import { AlignmentContext } from '../models/Alignments';
 import { LinksetMetadata } from '../models/Metadata';
 import { Project } from '../models/Project';
 import { IRI, Triple } from '../models/Resources';
 import { AlignmentServices } from '../services/alignment.service';
-import { MetadataRegistryServices } from '../services/metadata-registry.service';
-import { PMKIContext } from '../utils/PMKIContext';
+import { PMKIContext, ProjectContext } from '../utils/PMKIContext';
 
 @Component({
     selector: 'alignments-view',
@@ -20,7 +20,6 @@ export class AlignmentsView {
 
     @Input() context: AlignmentContext;
     @Input() sourceProject: Project;
-    @Input() targetProject: Project;
     @Input() linkset: LinksetMetadata;
 
     //used if this view is in global context, so after the navigation the modal (contining this view) should be closed
@@ -29,8 +28,8 @@ export class AlignmentsView {
     loading: boolean = false;
     mappings: Triple<IRI>[];
 
-    constructor(private metadataRegistryService: MetadataRegistryServices, private alignmentService: AlignmentServices,
-        private basicModals: BasicModalsServices, private router: Router) { }
+    constructor(private alignmentService: AlignmentServices, private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices,
+        private router: Router) { }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['linkset']) {
@@ -64,33 +63,42 @@ export class AlignmentsView {
         if (this.context == AlignmentContext.global) {
             this.basicModals.confirm("Alignments", "Attention, you're going to leave this page. Do you want to continue?", ModalType.warning).then(
                 confirm => {
-                    this.navigateToResource(this.sourceProject, resource);
+                    this.navigateToResource(this.sourceProject.getName(), resource);
                 },
                 cancel => { }
             );
         } else {
-            this.navigateToResource(this.sourceProject, resource);
+            this.navigateToResource(this.sourceProject.getName(), resource);
         }
     }
 
     openTargetResource(resource: IRI) {
-        let msg: string;
-        if (this.context == AlignmentContext.global) {
-            msg = "Attention, you're going to leave this page. Do you want to continue?";
-        } else { //local
-            msg = "Attention, the resource you selected belongs to a project different from the currently open, " +
-                "so you're going to change the working project. Do you want to continue?"
+        if (this.linkset.targetDataset.projectName != null) { //allow to leave the page and go to the data page only if the target project is recognize
+            let msg: string;
+            if (this.context == AlignmentContext.global) {
+                msg = "Attention, you're going to leave this page. Do you want to continue?";
+            } else { //local
+                msg = "Attention, the resource you selected belongs to a project different from the currently open, " +
+                    "so you're going to change the working project. Do you want to continue?"
+            }
+            this.basicModals.confirm("Alignments", msg, ModalType.warning).then(
+                confirm => {
+                    this.navigateToResource(this.linkset.targetDataset.projectName, resource);
+                },
+                cancel => { }
+            );
+        } else { //otherwise open the resource view as modal with the source project as ctx_project
+            PMKIContext.setTempProject(this.sourceProject);
+            this.sharedModals.openResourceView(resource, new ProjectContext(this.sourceProject)).then(
+                () => {
+                    PMKIContext.removeTempProject();
+                }
+            );
         }
-        this.basicModals.confirm("Alignments", msg, ModalType.warning).then(
-            confirm => {
-                this.navigateToResource(this.targetProject, resource);
-            },
-            cancel => { }
-        );
     }
 
-    private navigateToResource(project: Project, resource: IRI) {
-        this.router.navigate(["/datasets/" + project.getName()], { queryParams: { resId: resource.getIRI() } });
+    private navigateToResource(projectName: string, resource: IRI) {
+        this.router.navigate(["/datasets/" + projectName], { queryParams: { resId: resource.getIRI() } });
         if (this.context == AlignmentContext.global) {
             this.navigate.emit();
         }

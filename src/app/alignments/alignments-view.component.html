@@ -9,19 +9,22 @@
                     <tr>
                         <th>{{sourceProject.getName()}}</th>
                         <th>Predicate</th>
-                        <th>????</th>
+                        <th>
+                            <span *ngIf="linkset.targetDataset.projectName">{{linkset.targetDataset.projectName}}</span>
+                            <span *ngIf="!linkset.targetDataset.projectName">{{linkset.targetDataset.uriSpace}}</span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let m of mappings">
                         <td>
-                            <span (click)="openSourceResource(m[0])" style="cursor: pointer">{{m.getLeft().getIRI()}}</span>
+                            <span (click)="openSourceResource(m.getLeft())" style="cursor: pointer">{{m.getLeft().getIRI()}}</span>
                         </td>
                         <td>
                             <span>{{m.getMiddle().getIRI()}}</span>
                         </td>
                         <td>
-                            <span (click)="openSourceResource(m[2])" style="cursor: pointer">{{m.getRight().getIRI()}}</span>
+                            <span (click)="openTargetResource(m.getRight())" style="cursor: pointer">{{m.getRight().getIRI()}}</span>
                         </td>
                     </tr>
                 </tbody>

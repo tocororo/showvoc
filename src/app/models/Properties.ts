@@ -71,8 +71,8 @@ export enum LexEntryVisualizationMode {
 }
 
 export class ValueFilterLanguages {
-    languages: string[];
-    enabled: boolean;
+    languages: string[] = [];
+    enabled: boolean = false;
 }
 
 export class ResViewPartitionFilterPreference {
@@ -83,7 +83,7 @@ export class ResViewPartitionFilterPreference {
  * Class that represents the user settings (preferences) of a Project 
  */
 export class ProjectPreferences {
-    filterValueLang: ValueFilterLanguages; //languages visible in resource description (e.g. in ResourceView, Graph,...)
+    filterValueLang: ValueFilterLanguages = new ValueFilterLanguages(); //languages visible in resource description (e.g. in ResourceView, Graph,...)
 
     activeSchemes: IRI[] = [];
     activeLexicon: IRI;
