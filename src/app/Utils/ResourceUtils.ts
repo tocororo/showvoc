@@ -194,6 +194,122 @@ export class ResourceUtils {
         }
     }
 
+    /**
+     * 
+     * @param nTripleValue 
+     */
+    static parseValue(nTripleValue: string): Value {
+        let value: Value;
+        try {
+            value = ResourceUtils.parseIRI(nTripleValue);
+        } catch (err) {}
+        if (value == null) {
+            try {
+                value = ResourceUtils.parseLiteral(nTripleValue);
+            } catch (err) {}
+        }
+        if (value == null) {
+            try {
+                value = ResourceUtils.parseBNode(nTripleValue);
+            } catch (err) {}
+        }
+        if (value == null) {
+            throw new Error("Not a legal N-Triples representation: " + nTripleValue);
+        }
+        return value;
+    }
+
+    /**
+     * Given an NT serialization of a URI, creates and returns an ARTURIResource object.
+     * Code inspired by org.eclipse.rdf4j.rio.ntriples.NTripleUtils#parseURI()
+     * @param nTriplesURI 
+     */
+    static parseIRI(nTriplesURI: string): IRI {
+        if (nTriplesURI.startsWith("<") && nTriplesURI.endsWith(">")) {
+            let iri: string = nTriplesURI.substring(1, nTriplesURI.length - 1);
+            iri = decodeURI(iri);
+            return new IRI(iri);
+        }
+        else {
+            throw new Error("Not a legal N-Triples URI: " + nTriplesURI);
+        }
+    }
+
+    /**
+     * Given an NT serialization of a literal, creates and returns an ARTLiteral object.
+     * Code inspired by org.eclipse.rdf4j.rio.ntriples.NTripleUtils#parseLiteral()
+     * @param nTriplesLiteral
+     */
+    static parseLiteral(nTriplesLiteral: string): Literal {
+        if (nTriplesLiteral.startsWith("\"")) {
+            // Find string separation points
+            let endLabelIdx: number = this.findEndOfLabel(nTriplesLiteral);
+
+            if (endLabelIdx != -1) {
+                let startLangIdx: number = nTriplesLiteral.indexOf("@", endLabelIdx);
+                let startDtIdx: number = nTriplesLiteral.indexOf("^^", endLabelIdx);
+
+                if (startLangIdx != -1 && startDtIdx != -1) {
+                    throw new Error("Literals can not have both a language and a datatype");
+                }
+
+                // Get label
+                let label: string = nTriplesLiteral.substring(1, endLabelIdx);
+                label = label.replace(/\\"/g, '"');
+
+                if (startLangIdx != -1) {
+                    // Get language
+                    let language: string = nTriplesLiteral.substring(startLangIdx + 1);
+                    return new Literal(label, language);
+                }
+                else if (startDtIdx != -1) {
+                    // Get datatype
+                    let datatype: string = nTriplesLiteral.substring(startDtIdx + 2);
+                    let dtURI: IRI = this.parseIRI(datatype);
+                    return new Literal(label, null, dtURI);
+                }
+                else {
+                    return new Literal(label);
+                }
+            }
+        }
+        throw new Error("Not a legal N-Triples literal: " + nTriplesLiteral);
+    }
+
+    /**
+	 * Finds the end of the label in a literal string. This method takes into account that characters can be
+	 * escaped using backslashes.
+     * Code inspired by org.eclipse.rdf4j.rio.ntriples.NTripleUtils#parseLiteral()
+     * 
+	 * @return The index of the double quote ending the label, or <tt>-1</tt> if it could not be found.
+	 */
+    private static findEndOfLabel(nTriplesLiteral: string): number {
+        // First character of literal is guaranteed to be a double
+        // quote, start search at second character.
+        let previousWasBackslash: boolean = false;
+        for (var i = 1; i < nTriplesLiteral.length; i++) {
+            let c: string = nTriplesLiteral.charAt(i);
+            if (c == '"' && !previousWasBackslash) {
+                return i;
+            }
+            else if (c == '\\' && !previousWasBackslash) {
+                previousWasBackslash = true; // start of escape
+            }
+            else if (previousWasBackslash) {
+                previousWasBackslash = false; // c was escaped
+            }
+        }
+        return -1;
+    }
+
+    static parseBNode(nTriplesBNode: string): BNode {
+        if (nTriplesBNode.startsWith("_:")) {
+            return new BNode(nTriplesBNode);
+        } else {
+            throw new Error("Not a legal N-Triples Blank Node: " + nTriplesBNode);
+        }
+    }
+
 }
 
 export enum SortAttribute {

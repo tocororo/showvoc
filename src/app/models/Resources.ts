@@ -84,6 +84,7 @@ export class IRI extends Resource {
     isIRI(): boolean {
         return true;
     }
+
 }
 
 
@@ -448,4 +449,27 @@ export enum TripleScopes {
 export class ResourceNature {
     role: RDFResourceRolesEnum;
     graphs: IRI[];
+}
+
+export class Triple<T extends Value> {
+    private left: T;
+    private middle: T;
+    private right: T;
+
+    constructor(left: T, middle: T, right: T) {
+        this.left = left;
+        this.middle = middle;
+        this.right = right;
+    }
+
+    getLeft(): T {
+        return this.left;
+    }
+    getMiddle(): T {
+        return this.middle;
+    }
+    getRight(): T {
+        return this.right;
+    }
+
 }

@@ -1,32 +1,32 @@
-import { Component, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { LinksetMetadata } from 'src/app/models/Metadata';
 import { AlignmentsListComponent } from './alignments-list.component';
-import { AlignmentOverview } from 'src/app/models/Alignments';
 
 @Component({
-	selector: 'alignments-list-panel',
+    selector: 'alignments-list-panel',
     templateUrl: './alignments-list-panel.component.html',
     host: { class: "vbox" }
 })
 export class AlignmentsListPanelComponent {
 
-	@ViewChild(AlignmentsListComponent) viewChildList: AlignmentsListComponent;
-	@Output() alignmentSelected = new EventEmitter<AlignmentOverview>();
+    @ViewChild(AlignmentsListComponent) viewChildList: AlignmentsListComponent;
+    @Output() linksetSelected = new EventEmitter<LinksetMetadata>();
 
-	selectedAlignment: AlignmentOverview;
+    selectedLinkset: LinksetMetadata;
 
-	constructor() { }
+    constructor() { }
 
-	refresh() {
-		this.viewChildList.init();
-	}
+    refresh() {
+        this.viewChildList.init();
+    }
 
-	settings() {
-		//TODO
-	}
+    settings() {
+        //TODO
+    }
 
-	onAlignmentSelected(alignment: AlignmentOverview) {
-		this.selectedAlignment = alignment;
-        this.alignmentSelected.emit(alignment);
-	}
+    onLinksetSelected(linkset: LinksetMetadata) {
+        this.selectedLinkset = linkset;
+        this.linksetSelected.emit(linkset);
+    }
 
 }

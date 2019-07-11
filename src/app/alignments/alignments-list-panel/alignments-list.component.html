@@ -2,9 +2,11 @@
     <div class="card-body vbox">
         <div #scrollableContainer class="scrollableContainer p-2">
             <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
-            <div *ngFor="let a of alignments" class="listItem" [ngClass]="{selectedResource : a == selectedAlignment }" style="cursor: pointer;" (click)="selectAlignment(a)">
-                <span class="badge badge-info mr-1">{{a.size}}</span>
-                {{a.project.getName()}}
+            <div *ngFor="let l of linksets" class="listItem" [ngClass]="{ selectedLinkset : l == selectedLinkset }"
+                style="cursor: pointer;" (click)="selectLinkset(l)">
+                <span class="badge badge-info mr-1">{{l.linkCount}}</span>
+                <span *ngIf="l.targetDataset.projectName" [title]="l.targetDataset.uriSpace">{{l.targetDataset.projectName}}</span>
+                <span *ngIf="!l.targetDataset.projectName" [title]="l.targetDataset.uriSpace">{{l.targetDataset.dataset.toNT()}}</span>
             </div>
         </div>
     </div>

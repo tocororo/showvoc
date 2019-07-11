@@ -1,9 +1,9 @@
 <resizable-layout>
-    <structure-tabset left (nodeSelected)="onNodeSelected($event)" (alignmentSelected)="onAlignmentSelected($event)"></structure-tabset>
+    <structure-tabset left (nodeSelected)="onNodeSelected($event)" (linksetSelected)="onLinksetSelected($event)"></structure-tabset>
 
     <ng-container right>
         <resource-view *ngIf="selectedResource" [resource]="selectedResource.getValue()" (dblclickObj)="objectDblClick($event)"></resource-view>
-        <alignments-view *ngIf="selectedAlignment" [context]="alignmentCtx" [targetProject]="selectedAlignment.project"></alignments-view>
+        <alignments-view *ngIf="selectedLinkset" [context]="alignmentCtx" [linkset]="selectedLinkset"></alignments-view>
     </ng-container>
     
 </resizable-layout>

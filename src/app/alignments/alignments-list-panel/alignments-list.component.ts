@@ -1,49 +1,107 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { finalize } from 'rxjs/operators';
-import { AlignmentOverview } from 'src/app/models/Alignments';
+import { finalize, map } from 'rxjs/operators';
 import { ProjectsServices } from '../../services/projects.service';
 import { PMKIContext } from '../../utils/PMKIContext';
+import { LinksetMetadata } from 'src/app/models/Metadata';
+import { Project } from 'src/app/models/Project';
+import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { Observable } from 'rxjs';
+import { IRI, AnnotatedValue } from 'src/app/models/Resources';
+import { MetadataRegistryServices } from 'src/app/services/metadata-registry.service';
+import { MapleServices } from 'src/app/services/maple.service';
 
 @Component({
-	selector: 'alignments-list',
+    selector: 'alignments-list',
     templateUrl: './alignments-list.component.html',
     host: { class: "structureComponent" }
 })
 export class AlignmentsListComponent {
 
-	@Output() alignmentSelected = new EventEmitter<AlignmentOverview>();
+    @Output() linksetSelected = new EventEmitter<LinksetMetadata>();
 
-	loading: boolean = false;
-	alignments: AlignmentOverview[];
-	selectedAlignment: AlignmentOverview;
+    private workingProject: Project;
 
-	constructor(private projectService: ProjectsServices) { }
+    loading: boolean = false;
 
-	ngOnInit() {
-    	this.init();
-	}
+    linksets: LinksetMetadata[];
+    selectedLinkset: LinksetMetadata;
 
-	init() {
-		this.loading = true;
-		this.alignments = null;
-		//MOCK-UP
-		this.projectService.listProjects(null, false, true).pipe( //TODO the target dataset should be: project dependant? user dependant?
-			finalize(() => this.loading = false)
-		).subscribe(
-            projects => {
-				this.alignments = [];
-				projects.forEach(p => {
-					if (p.getName() != PMKIContext.getProjectCtx().getProject().getName()) {
-						this.alignments.push({ size: Math.floor(Math.random() * 100), project: p});
-					}
-				});
+    constructor(private projectService: ProjectsServices, private metadataRegistryService: MetadataRegistryServices, private mapleService: MapleServices,
+        private basicModals: BasicModalsServices) { }
+
+    ngOnInit() {
+        this.workingProject = PMKIContext.getWorkingProject();
+        this.init();
+    }
+
+    init() {
+        this.loading = true;
+        this.linksets = null;
+
+        this.getDatasetIRI(this.workingProject).subscribe(
+            datasetIRI => {
+                if (datasetIRI != null) {
+                    this.initLinksets(datasetIRI);
+                } else { //missing IRI for project => initialize it
+                    this.basicModals.confirm("Missing profile", "Unable to find metadata about the project '" + this.workingProject +
+                        "' in the MetadataRegistry. Do you want to profile the project? (required for the aglignment feature)", ModalType.warning).then(
+                            () => { //confirmed
+                                this.profileProject(this.workingProject).subscribe(
+                                    () => {
+                                        this.getDatasetIRI(this.workingProject).subscribe(
+                                            datasetIRI => {
+                                                this.initLinksets(datasetIRI);
+                                            }
+                                        );
+                                    }
+                                );
+                            },
+                            () => { //canceled
+                                this.loading = false;
+                            }
+                        )
+                }
             }
-		);
-	}
+        );
+    }
 
-	selectAlignment(alignment: AlignmentOverview) {
-        this.selectedAlignment = alignment;
-		this.alignmentSelected.emit(alignment);
-	}
+    private getDatasetIRI(project: Project): Observable<AnnotatedValue<IRI>> {
+        this.loading = true;
+        return this.metadataRegistryService.findDatasetForProjects([project]).pipe(
+            finalize(() => this.loading = false),
+            map(mappings => {
+                return mappings[this.workingProject.getName()];
+            })
+        );
+    }
+
+    private profileProject(project: Project): Observable<void> {
+        this.loading = true;
+        PMKIContext.setTempProject(project);
+        return this.mapleService.profileProject().pipe(
+            finalize(() => {
+                PMKIContext.removeTempProject();
+                this.loading = false;
+            })
+        );
+    }
+
+    private initLinksets(datasetIRI: AnnotatedValue<IRI>) {
+        this.loading = true;
+        this.metadataRegistryService.getEmbeddedLinksets(datasetIRI.getValue()).pipe(
+            finalize(() => this.loading = false)
+        ).subscribe(
+            linksets => {
+                this.linksets = linksets;
+            }
+        )
+    }
+
+
+    selectLinkset(linkset: LinksetMetadata) {
+        this.selectedLinkset = linkset;
+        this.linksetSelected.emit(linkset);
+    }
 
 }

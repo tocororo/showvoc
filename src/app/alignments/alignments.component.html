@@ -4,7 +4,7 @@
     <div class="mb-2">
         <div class="hbox">
             <label style="white-space: nowrap">Source dataset:</label>
-            <select class="form-control form-control-sm ml-2" [(ngModel)]="selectedSourceProject" (ngModelChange)="onSourceProjectChannge()">
+            <select class="form-control form-control-sm ml-2" [(ngModel)]="selectedSourceProject" (ngModelChange)="onSourceProjectChange()" [disabled]="loading">
                 <option *ngFor="let p of sourceProjects" [ngValue]="p">{{p.getName()}}</option>
             </select>
         </div>
@@ -19,7 +19,7 @@
 
     <div *ngIf="loading" class="spinner-border text-info"></div>
 
-    <div *ngIf="alignments" class="card vbox">
+    <div *ngIf="linksets" class="card vbox">
         <div class="card-body table-responsive">
             <table class="table table-striped table-sm table-hover">
                 <thead>
@@ -29,9 +29,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let a of alignments" (click)="showAlignments(a)"  style="cursor: pointer">
-                        <td>{{a.project.getName()}}</td>
-                        <td>{{a.size}}</td>
+                    <tr *ngFor="let l of linksets" (click)="showMappings(l)"  style="cursor: pointer">
+                        <td>
+                            <span *ngIf="l.targetDataset.projectName" [title]="l.targetDataset.uriSpace">{{l.targetDataset.projectName}}</span>
+                            <span *ngIf="!l.targetDataset.projectName" [title]="l.targetDataset.uriSpace">{{l.targetDataset.dataset.toNT()}}</span>
+                        </td>
+                        <td>{{l.linkCount}}</td>
                     </tr>
                 </tbody>
             </table>

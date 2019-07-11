@@ -1,10 +1,13 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { HttpManager } from '../utils/HttpManager';
+import { AlignmentServices } from './alignment.service';
 import { AuthServices } from "./auth.service";
 import { ExportServices } from './export.service';
 import { GlobalSearchServices } from './global-search.service';
 import { GraphServices } from './graph.service';
+import { MapleServices } from './maple.service';
+import { MetadataRegistryServices } from './metadata-registry.service';
 import { MetadataServices } from './metadata.service';
 import { OntoLexLemonServices } from './ontolex-lemon.service';
 import { PreferencesSettingsServices } from './preferences-settings.service';
@@ -22,12 +25,15 @@ import { UserServices } from './user.service';
     declarations: [],
     exports: [],
     providers: [
-        HttpManager,
+        AlignmentServices,
         AuthServices,
         ExportServices,
         GlobalSearchServices,
         GraphServices,
+        HttpManager,
+        MapleServices,
         MetadataServices,
+        MetadataRegistryServices,
         OntoLexLemonServices,
         PreferencesSettingsServices,
         ProjectsServices,

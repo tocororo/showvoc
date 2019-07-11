@@ -1,74 +1,63 @@
-import { Component, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { delay, finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
 import { AlignmentContext } from '../models/Alignments';
+import { LinksetMetadata } from '../models/Metadata';
 import { Project } from '../models/Project';
-import { IRI } from '../models/Resources';
+import { IRI, Triple } from '../models/Resources';
+import { AlignmentServices } from '../services/alignment.service';
+import { MetadataRegistryServices } from '../services/metadata-registry.service';
 import { PMKIContext } from '../utils/PMKIContext';
 
 @Component({
-	selector: 'alignments-view',
+    selector: 'alignments-view',
     templateUrl: './alignments-view.component.html',
     host: { class: "vbox" }
 })
 export class AlignmentsView {
 
     @Input() context: AlignmentContext;
-	@Input() sourceProject: Project;
+    @Input() sourceProject: Project;
     @Input() targetProject: Project;
+    @Input() linkset: LinksetMetadata;
 
     //used if this view is in global context, so after the navigation the modal (contining this view) should be closed
-    @Output() navigate: EventEmitter<any> = new EventEmitter(); 
+    @Output() navigate: EventEmitter<any> = new EventEmitter();
 
     loading: boolean = false;
-    alignments: Alignment[];
+    mappings: Triple<IRI>[];
 
-    constructor(private basicModals: BasicModalsServices, private router: Router) { }
+    constructor(private metadataRegistryService: MetadataRegistryServices, private alignmentService: AlignmentServices,
+        private basicModals: BasicModalsServices, private router: Router) { }
 
-	ngOnChanges(changes: SimpleChanges) {
-        if (changes['sourceProject'] || changes['targetProject']) {
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['linkset']) {
             this.initAlignments();
         }
     }
 
     initAlignments() {
         this.loading = true;
-        this.alignments = null;
-
-        this.getAlignmentListMockup().pipe(
-            finalize(() => this.loading = false)
-        ).subscribe(
-            alignments => {
-                this.alignments = alignments;
-            }
-        );
-    }
-
-    private getAlignmentListMockup(): Observable<Alignment[]> {
+        this.mappings = null;
 
         if (this.context == AlignmentContext.local) {
             this.sourceProject = PMKIContext.getProjectCtx().getProject();
         }
 
-        let alignmentsMockup: Alignment[] = [];
-        let maxAlignments: number = Math.random() * 50;
-        for (let i = 0; i < maxAlignments; i++) {
-            let sourceNs: string = this.sourceProject.getBaseURI();
-            if (!sourceNs.endsWith("#") && !sourceNs.endsWith("/")) {
-                sourceNs += "#";
+        PMKIContext.setTempProject(this.sourceProject);
+        this.alignmentService.getMappings(this.linkset.targetDataset.uriSpace).pipe(
+            finalize(() => {
+                this.loading = false;
+                PMKIContext.removeTempProject();
+            })
+        ).subscribe(
+            mappings => {
+                this.mappings = mappings;
             }
+        );
 
-            let targetNs: string = this.targetProject.getBaseURI();
-            if (!targetNs.endsWith("#") && !targetNs.endsWith("/")) {
-                targetNs += "#";
-            }
-
-            alignmentsMockup.push({ sourceResource: new IRI(sourceNs + "c_" + i), targetResource: new IRI(targetNs + "c_" + i) });
-        }
-        return of(alignmentsMockup).pipe(delay(500));
     }
 
     openSourceResource(resource: IRI) {
@@ -77,7 +66,7 @@ export class AlignmentsView {
                 confirm => {
                     this.navigateToResource(this.sourceProject, resource);
                 },
-                cancel => {}
+                cancel => { }
             );
         } else {
             this.navigateToResource(this.sourceProject, resource);
@@ -89,14 +78,14 @@ export class AlignmentsView {
         if (this.context == AlignmentContext.global) {
             msg = "Attention, you're going to leave this page. Do you want to continue?";
         } else { //local
-            msg = "Attention, the resource you selected belongs to a project different from the currently open, " + 
+            msg = "Attention, the resource you selected belongs to a project different from the currently open, " +
                 "so you're going to change the working project. Do you want to continue?"
         }
         this.basicModals.confirm("Alignments", msg, ModalType.warning).then(
             confirm => {
                 this.navigateToResource(this.targetProject, resource);
             },
-            cancel => {}
+            cancel => { }
         );
     }
 
@@ -107,10 +96,4 @@ export class AlignmentsView {
         }
     }
 
-}
-
-
-class Alignment { 
-    sourceResource: IRI;
-    targetResource: IRI;
 }
