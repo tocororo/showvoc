@@ -105,9 +105,9 @@ export class AlignmentsComponent implements OnInit {
                             }
                         );
                     }
-                )
+                );
             }
-        )
+        );
     }
 
 }
