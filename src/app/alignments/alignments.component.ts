@@ -25,10 +25,10 @@ export class AlignmentsComponent implements OnInit {
     loading: boolean = false;
     linksets: LinksetMetadata[];
 
-    private readonly aspectTable: string = "Table";
-    private readonly aspectGraph: string = "Graph";
-    private aspects: string[] = [this.aspectTable, this.aspectGraph];
-    private activeAspect: string = this.aspects[0];
+    readonly aspectTable: string = "Table";
+    readonly aspectGraph: string = "Graph";
+    aspects: string[] = [this.aspectTable, this.aspectGraph];
+    activeAspect: string = this.aspects[0];
 
 
     constructor(private projectService: ProjectsServices, private metadataRegistryService: MetadataRegistryServices, private mapleService: MapleServices,
