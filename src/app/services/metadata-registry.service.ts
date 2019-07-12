@@ -5,7 +5,7 @@ import { Project } from '../models/Project';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ResourceDeserializer, ResourceUtils } from '../utils/ResourceUtils';
-import { LinksetMetadata, Target } from '../models/Metadata';
+import { LinksetMetadata, Target, DatasetMetadata } from '../models/Metadata';
 
 @Injectable()
 export class MetadataRegistryServices {
@@ -72,6 +72,21 @@ export class MetadataRegistryServices {
                     mappings[key] = ResourceDeserializer.createIRI(stResp[key]);
                 }
                 return mappings;
+            })
+        );
+    }
+
+    /**
+     * 
+     * @param dataset 
+     */
+    getDatasetMetadata(dataset: IRI): Observable<DatasetMetadata> {
+        var params: any = {
+            dataset: dataset
+        }
+        return this.httpMgr.doGet(this.serviceName, "getDatasetMetadata", params).pipe(
+            map(stResp => {
+                return DatasetMetadata.deserialize(stResp);
             })
         );
     }

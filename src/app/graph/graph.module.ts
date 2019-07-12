@@ -7,9 +7,13 @@ import { WidgetModule } from '../widget/widget.module';
 import { D3Service } from './d3/d3.service';
 import { DraggableDirective } from './d3/draggable.directive';
 import { ZoomableDirective } from './d3/zoomable.directive';
-import { DataGraphPanel } from './impl/data-graph-panel';
-import { DataGraphComponent } from './impl/data-graph.component';
-import { DataNodeComponent } from './impl/data-node.component';
+import { AlignmentGraphPanelComponent } from './impl/alignment-graph/alignment-graph-panel.component';
+import { AlignmentGraphComponent } from './impl/alignment-graph/alignment-graph.component';
+import { AlignmentNodeComponent } from './impl/alignment-graph/alignment-node.component';
+import { DatasetDetailsPanel } from './impl/alignment-graph/dataset-details-panel';
+import { DataGraphPanel } from './impl/data-graph/data-graph-panel';
+import { DataGraphComponent } from './impl/data-graph/data-graph.component';
+import { DataNodeComponent } from './impl/data-graph/data-node.component';
 import { LinkComponent } from './impl/link.component';
 import { DataGraphSettingsModal } from './modals/data-graph-settings-modal';
 import { GraphModal } from './modals/graph-modal';
@@ -25,6 +29,12 @@ import { ResourceDetailsPanel } from './widget/resource-details-panel';
         ZoomableDirective,
 
         LinkComponent, 
+
+        AlignmentNodeComponent,
+        AlignmentGraphComponent,
+        AlignmentGraphPanelComponent,
+        DatasetDetailsPanel,
+
         DataNodeComponent, 
         DataGraphComponent,
         DataGraphPanel, 
@@ -45,6 +55,9 @@ import { ResourceDetailsPanel } from './widget/resource-details-panel';
         NgbDropdownModule,
         PreferencesModule,
         WidgetModule
+    ],
+    exports: [
+        AlignmentGraphPanelComponent
     ],
     providers: [ D3Service, GraphModalServices ],
     entryComponents: [

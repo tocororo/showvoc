@@ -84,14 +84,4 @@ export class BasicModalsServices {
         return modalRef.result;
     }
 
-    // openSmallModal() {
-    // 	const modalRef: NgbModalRef = this.modalService.open(AlertModalComponent, { backdrop: "static" , size: "sm" } );
-    // 	modalRef.componentInstance.name = 'Tiziano';
-    // 	modalRef.result.then(
-    // 		result => { console.log("close", result); }, 
-    // 		cancel => { console.log("dismiss", cancel); }
-    // 	)
-    // }
-
-
 }

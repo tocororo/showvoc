@@ -9,18 +9,18 @@ import { GraphServices } from 'src/app/services/graph.service';
 import { ResourceViewServices } from 'src/app/services/resource-view.service';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { ResourceDeserializer } from 'src/app/utils/ResourceUtils';
-import { AbstractGraph, GraphMode } from '../abstract-graph';
-import { D3Service } from '../d3/d3.service';
-import { GraphModalServices } from '../modals/graph-modal.service';
-import { DataNode } from '../model/DataNode';
-import { Link } from "../model/Link";
-import { Node } from "../model/Node";
+import { AbstractGraph, GraphMode } from '../../abstract-graph';
+import { D3Service } from '../../d3/d3.service';
+import { GraphModalServices } from '../../modals/graph-modal.service';
+import { DataNode } from '../../model/DataNode';
+import { Link } from "../../model/Link";
+import { Node } from "../../model/Node";
 
 @Component({
     selector: 'data-graph',
     templateUrl: "./data-graph.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    styleUrls: ['../graph.css']
+    styleUrls: ['../../graph.css']
 })
 export class DataGraphComponent extends AbstractGraph {
 

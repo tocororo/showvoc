@@ -1,8 +1,9 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { Constants } from '../model/GraphConstants';
 import { GraphUtils } from '../model/GraphUtils';
 import { Link } from '../model/Link';
+import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 
 @Component({
     selector: '[link]',
@@ -12,6 +13,7 @@ import { Link } from '../model/Link';
 export class LinkComponent {
     @Output() linkClicked: EventEmitter<Link> = new EventEmitter<Link>();
     @Input('link') link: Link;
+    @Input() rendering: boolean = true;
     @Input() selected: boolean = false;
 
     @ViewChild('textEl') textElement: ElementRef;
@@ -19,8 +21,22 @@ export class LinkComponent {
     linkClass: string = "link";
     arrowClass: string = "";
 
+    show: string;
+
+    constructor(private changeDetectorRef: ChangeDetectorRef) {}
+
     ngOnInit() {
         this.initLinkStyle();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['rendering'] && !changes['rendering'].firstChange) {
+            this.updateShow();
+        }
+    }
+
+    ngAfterViewInit() {
+        this.updateShow();
     }
 
     private initLinkStyle() {
@@ -57,6 +73,11 @@ export class LinkComponent {
             path = path + " " + endpoint.x + " " + endpoint.y; //path end
         }
         return path;
+    }
+
+    private updateShow() {
+        this.show = ResourceUtils.getRendering(this.link.res, this.rendering);
+        this.changeDetectorRef.detectChanges(); //fire change detection in order to update the textEl that contains "show"
     }
 
 

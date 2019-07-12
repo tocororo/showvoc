@@ -82,6 +82,11 @@ export class ResourceViewComponent {
         this.rendering = this.pmkiProp.getRenderingInResourceView();
         this.annotatedResource = new AnnotatedValue(this.resource);
 
+        //graph available if RV is not in modal and has no projectCtx overriding the default
+        this.btnGraphAvailable = this.projectCtx == null && this.context != ResourceViewCtx.modal;
+        //settings available only if there is no context overriding the default
+        this.btnSettingsAvailable = this.projectCtx == null; 
+
         if (changes['resource'] && changes['resource'].currentValue) {
             //if not the first change, avoid to refresh res view if resource is not changed
             if (!changes['resource'].firstChange) {
@@ -91,9 +96,6 @@ export class ResourceViewComponent {
                 }
             }
             this.buildResourceView(this.resource);//refresh resource view when Input resource changes
-
-            this.btnGraphAvailable = this.projectCtx != null && this.context != ResourceViewCtx.modal;
-            this.btnSettingsAvailable = this.projectCtx == null; //settings available only if there is no context overriding the default
         }
     }
 

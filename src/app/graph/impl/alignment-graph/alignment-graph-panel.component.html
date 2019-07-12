@@ -1,0 +1,45 @@
+<div class="card vbox">
+    <div class="card-header">
+        <div class="hbox">
+            <div class="btn-toolbar" style="flex: 1;">
+                <!-- <button class="btn btn-sm btn-light" (click)="addNode()" title="Add a new node">
+                    <span class="fa fa-plus"></span>
+                </button> -->
+            </div>
+            <div class="btn-toolbar pull-right">
+                <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" (click)="rendering=!rendering" title="Rendering">
+                    <i class="fa fa-font"></i>
+                </button>
+                <button class="btn btn-light btn-sm ml-1" (click)="snapshot()" title="Export a snapshot of the graph (.svg)">
+                    <i class="fa fa-camera"></i>
+                </button>
+                <!-- <button class="btn btn-light btn-sm ml-1" (click)="openSettings()" title="Settings">
+                    <span class="fa fa-cog"></span>
+                </button> -->
+            </div>
+        </div>
+    </div>
+    <div class="card-body hbox">
+        <alignment-graph class="vbox" [graph]="graph" [rendering]="rendering" (elementSelected)="onElementSelected($event)"></alignment-graph>
+
+        <div class="vbox ml-1" style="flex: initial; width: 300px;">
+            <div class="card vbox">
+                <div class="card-header" style="min-height: 41px;">
+                    <div *ngIf="isSelectedElementNode()" class="btn-toolbar pull-right">
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-light" [ngClass]="{ active: selectedElement?.fixed }" title="Fix node position" (click)="fixNode()" [disabled]="!selectedElement">
+                                <span class="fa fa-lock"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body vbox">
+                    <dataset-details-panel *ngIf="isSelectedElementNode()" [dataset]="selectedElement.res.getValue()"></dataset-details-panel>
+                </div>
+            </div>
+
+            <force-control-panel [(ngModel)]="forces" (ngModelChange)="onForceChange()" class="mt-1"></force-control-panel>
+
+        </div>
+    </div>
+</div>

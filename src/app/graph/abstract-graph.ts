@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ElementRef, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, ElementRef, EventEmitter, Input, Output, ViewChild, SimpleChanges } from "@angular/core";
 import { AnnotatedValue, IRI } from '../models/Resources';
 import { ForceDirectedGraph, GraphForces, GraphOptions } from "./model/ForceDirectedGraph";
 import { Link } from "./model/Link";
@@ -26,6 +26,10 @@ export abstract class AbstractGraph {
 
     //In ngAfterViewInit instead of ngOnInit since I need offsetWidth and offsetHeight that are fixed only once the view is initialized
     ngAfterViewInit() {
+        this.initSimulation();
+    }
+
+    private initSimulation() {
         this.options.width = this.elementRef.nativeElement.offsetWidth;
         this.options.height = this.elementRef.nativeElement.offsetHeight;
 
@@ -34,6 +38,13 @@ export abstract class AbstractGraph {
         });
         this.graph.initSimulation(this.options);
         this.initialized = true;
+    }
+
+    /**
+     * Useful to re-init the simulation of the graph when the Input ForceDirectedGraph changes
+     */
+    public forceInitSimulation() {
+        this.initSimulation(); 
     }
 
     protected onNodeClicked(node: Node) {

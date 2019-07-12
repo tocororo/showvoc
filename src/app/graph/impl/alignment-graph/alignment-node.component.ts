@@ -1,16 +1,16 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
-import { GraphMode } from '../abstract-graph';
-import { AbstractGraphNode } from '../abstract-graph-node';
-import { Node } from '../model/Node';
+import { GraphMode } from '../../abstract-graph';
+import { AbstractGraphNode } from '../../abstract-graph-node';
+import { Node } from '../../model/Node';
 
 @Component({
-    selector: '[dataNode]',
-    templateUrl: "./data-node.component.html",
-    styleUrls: ['../graph.css']
+    selector: '[alignmentNode]',
+    templateUrl: "./alignment-node.component.html",
+    styleUrls: ['../../graph.css']
 })
-export class DataNodeComponent extends AbstractGraphNode {
+export class AlignmentNodeComponent extends AbstractGraphNode {
 
-    @Input('dataNode') node: Node;
+    @Input('alignmentNode') node: Node;
 
     graphMode = GraphMode.dataOriented;
 

@@ -28,6 +28,11 @@ export class AlignmentsView {
     loading: boolean = false;
     mappings: Triple<IRI>[];
 
+    //pagination
+    private page: number = 0;
+    private totPage: number;
+    private pageSize: number = 50;
+
     constructor(private alignmentService: AlignmentServices, private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices,
         private router: Router) { }
 
@@ -38,15 +43,27 @@ export class AlignmentsView {
     }
 
     initAlignments() {
-        this.loading = true;
-        this.mappings = null;
-
         if (this.context == AlignmentContext.local) {
             this.sourceProject = PMKIContext.getProjectCtx().getProject();
         }
 
         PMKIContext.setTempProject(this.sourceProject);
-        this.alignmentService.getMappings(this.linkset.targetDataset.uriSpace).pipe(
+        this.alignmentService.getMappingCount(this.linkset.targetDataset.uriSpace, null, null, this.pageSize).subscribe(
+            count => {
+                PMKIContext.removeTempProject();
+                this.totPage = Math.floor(count/this.pageSize);
+                if (count % this.pageSize > 0){
+                    this.totPage++;
+                }
+                this.listMappings();
+            }
+        );
+    }
+
+    private listMappings() {
+        this.loading = true;
+        PMKIContext.setTempProject(this.sourceProject);
+        this.alignmentService.getMappings(this.linkset.targetDataset.uriSpace, this.page, this.pageSize).pipe(
             finalize(() => {
                 this.loading = false;
                 PMKIContext.removeTempProject();
@@ -56,7 +73,6 @@ export class AlignmentsView {
                 this.mappings = mappings;
             }
         );
-
     }
 
     openSourceResource(resource: IRI) {
@@ -102,6 +118,20 @@ export class AlignmentsView {
         if (this.context == AlignmentContext.global) {
             this.navigate.emit();
         }
+    }
+
+    /**
+     * Paging
+     */
+
+    private prevPage() {
+        this.page--;
+        this.listMappings();
+    }
+
+    private nextPage() {
+        this.page++;
+        this.listMappings();
     }
 
 }

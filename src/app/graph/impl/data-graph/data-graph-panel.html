@@ -28,19 +28,12 @@
 
         <div class="vbox ml-1" style="flex: initial; width: 300px;">
             <div class="card vbox">
-                <div class="card-header">
+                <div class="card-header" style="min-height: 41px;">
                     <div *ngIf="isSelectedElementNode()" class="btn-toolbar pull-right">
                         <div class="btn-group btn-group-sm">
                             <button type="button" class="btn btn-light" [ngClass]="{ active: selectedElement?.fixed }" title="Fix node position" (click)="fixNode()" [disabled]="!selectedElement">
                                 <span class="fa fa-lock"></span>
                             </button>
-                            <!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding: 3px; line-height: 1;">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu pull-right">
-                                <li><a (click)="fixAll()">Fix all nodes</a></li>
-                                <li><a (click)="unfixAll()">Unfix all nodes</a></li>
-                            </ul> -->
                         </div>
                     </div>
                 </div>

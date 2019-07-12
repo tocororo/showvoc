@@ -1,15 +1,16 @@
 import { Component, Input, ViewChild } from "@angular/core";
-import { AbstractGraphPanel } from '../abstract-graph-panel';
-import { RDFResourceRolesEnum, AnnotatedValue, IRI } from 'src/app/models/Resources';
-import { DataGraphComponent } from './data-graph.component';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { BrowsingModalsServices } from 'src/app/modal-dialogs/browsing-modals/browsing-modal.service';
+import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
-import { GraphModalServices } from '../modals/graph-modal.service';
+import { AbstractGraphPanel } from '../../abstract-graph-panel';
+import { GraphModalServices } from '../../modals/graph-modal.service';
+import { DataGraphComponent } from './data-graph.component';
 
 @Component({
     selector: 'data-graph-panel',
-    templateUrl: "./data-graph-panel.html"
+    templateUrl: "./data-graph-panel.html",
+    host: { class: "vbox" }
 })
 export class DataGraphPanel extends AbstractGraphPanel {
 

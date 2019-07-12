@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
-import { LinksetMetadata } from '../models/Metadata';
 import { Project } from '../models/Project';
 import { AnnotatedValue, IRI } from '../models/Resources';
 import { MapleServices } from '../services/maple.service';
@@ -23,7 +22,7 @@ export class AlignmentsComponent implements OnInit {
     selectedSourceProject: Project;
 
     loading: boolean = false;
-    linksets: LinksetMetadata[];
+    datasetIRI: AnnotatedValue<IRI>;
 
     readonly aspectTable: string = "Table";
     readonly aspectGraph: string = "Graph";
@@ -39,35 +38,34 @@ export class AlignmentsComponent implements OnInit {
             projects => {
                 this.sourceProjects = projects;
             }
-        )
+        );
     }
 
     onSourceProjectChange() {
-        this.linksets = null;
+        this.loading = true;
 
         this.getDatasetIRI(this.selectedSourceProject).subscribe(
             datasetIRI => {
-                if (datasetIRI != null) {
-                    this.initLinksets(datasetIRI);
-                } else { //missing IRI for project => initialize it
+                this.datasetIRI = datasetIRI;
+                if (this.datasetIRI == null) { //missing IRI for project => initialize it
                     this.basicModals.confirm("Missing profile", "Unable to find metadata about the project '" + this.selectedSourceProject.getName() +
                         "' in the MetadataRegistry. Do you want to profile the project? (required for the aglignment feature)", ModalType.warning).then(
-                            () => { //confirmed
-                                this.profileProject(this.selectedSourceProject).subscribe(
-                                    () => {
-                                        this.getDatasetIRI(this.selectedSourceProject).subscribe(
-                                            datasetIRI => {
-                                                this.initLinksets(datasetIRI);
-                                            }
-                                        );
-                                    }
-                                );
-                            },
-                            () => { //canceled
-                                this.selectedSourceProject = null;
-                                this.loading = false;
-                            }
-                        )
+                        () => { //confirmed
+                            this.profileProject(this.selectedSourceProject).subscribe(
+                                () => {
+                                    this.getDatasetIRI(this.selectedSourceProject).subscribe(
+                                        datasetIRI => {
+                                            this.datasetIRI = datasetIRI;
+                                        }
+                                    );
+                                }
+                            );
+                        },
+                        () => { //canceled
+                            this.selectedSourceProject = null;
+                            this.loading = false;
+                        }
+                    );
                 }
             }
         );
@@ -94,19 +92,22 @@ export class AlignmentsComponent implements OnInit {
         );
     }
 
-    private initLinksets(datasetIRI: AnnotatedValue<IRI>) {
-        this.loading = true;
-        this.metadataRegistryService.getEmbeddedLinksets(datasetIRI.getValue()).pipe(
-            finalize(() => this.loading = false)
-        ).subscribe(
-            linksets => {
-                this.linksets = linksets;
+    refreshProfile() {
+        this.basicModals.confirm("Profile dataset", "You're going to refresh the metadata about the project '" + this.selectedSourceProject.getName() + 
+            "'. Are you sure?", ModalType.info).then(
+            () => {
+                this.datasetIRI = null;
+                this.profileProject(this.selectedSourceProject).subscribe(
+                    () => {
+                        this.getDatasetIRI(this.selectedSourceProject).subscribe(
+                            datasetIRI => {
+                                this.datasetIRI = datasetIRI;
+                            }
+                        );
+                    }
+                )
             }
         )
-    }
-
-    showMappings(linkset: LinksetMetadata) {
-        this.alignmentsModals.openAlignments(this.selectedSourceProject, linkset);
     }
 
 }

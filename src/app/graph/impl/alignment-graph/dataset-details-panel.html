@@ -1,0 +1,30 @@
+<div class="table-responsive">
+    <table *ngIf="datasetMetadata" class="table table-sm table-borderless small">
+        <colgroup>
+            <col style="width: 1%">
+            <col>
+        </colgroup>
+        <tbody>
+            <tr>
+                <td><label>Title:</label></td>
+                <td>{{datasetMetadata.title}}</td>
+            </tr>
+            <tr>
+                <td><label>Identity:</label></td>
+                <td>{{datasetMetadata.identity}}</td>
+            </tr>
+            <tr>
+                <td><label>Dereferenciation System:</label></td>
+                <td>{{datasetMetadata.dereferenciationSystem}}</td>
+            </tr>
+            <tr>
+                <td><label>SPARQL Endpoint:</label></td>
+                <td>{{datasetMetadata.sparqlEndpointMetadata?.id}}</td>
+            </tr>
+            <tr>
+                <td><label>Uri space:</label></td>
+                <td>{{datasetMetadata.uriSpace}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

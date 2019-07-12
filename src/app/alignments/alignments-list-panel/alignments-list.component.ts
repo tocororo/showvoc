@@ -89,7 +89,7 @@ export class AlignmentsListComponent {
 
     private initLinksets(datasetIRI: AnnotatedValue<IRI>) {
         this.loading = true;
-        this.metadataRegistryService.getEmbeddedLinksets(datasetIRI.getValue()).pipe(
+        this.metadataRegistryService.getEmbeddedLinksets(datasetIRI.getValue(), null, true).pipe(
             finalize(() => this.loading = false)
         ).subscribe(
             linksets => {

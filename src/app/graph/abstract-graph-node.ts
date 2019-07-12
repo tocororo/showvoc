@@ -16,14 +16,13 @@ export abstract class AbstractGraphNode {
     protected abstract graphMode: GraphMode;
 
     abstract node: Node; //in the implementations this should be a @Input() which differs only for the bindingPropertyName
-    protected measures: NodeMeasure;
+    measures: NodeMeasure;
 
-    private nodeClass: string;
+    nodeClass: string;
     deprecated: boolean = false;
 
-    private normalizedShow: string;
-    private show: string;
-
+    normalizedShow: string;
+    show: string;
 
     /**
      * Graph implementations use the ChangeDetectionStrategy.OnPush,

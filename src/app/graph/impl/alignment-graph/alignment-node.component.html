@@ -1,0 +1,16 @@
+<svg:g [attr.transform]="'translate(' + node.x + ',' + node.y + ')'">
+    <svg:g (click)="onClick()" (dblclick)="onDblClick()" style="cursor: pointer;">
+
+        <svg:circle [attr.class]="'graphNode '+nodeClass" [ngClass]="{ graphNodeSelected: selected }" cx="0" cy="0" [attr.r]="measures.radius">
+        </svg:circle> 
+
+        <svg:text #textEl style="visibility: hidden">{{show}}</svg:text>
+        <svg:text text-anchor="middle" dominant-baseline="central">
+            {{normalizedShow}}
+            <svg:title>{{show}}</svg:title>
+        </svg:text>
+        
+        <svg:title>{{show}}</svg:title>
+
+    </svg:g>
+</svg:g>

@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { GraphModule } from '../graph/graph.module';
+import { AlignmentsListPanelComponent } from './alignments-list-panel/alignments-list-panel.component';
+import { AlignmentsListComponent } from './alignments-list-panel/alignments-list.component';
+import { AlignmentsTableComponent } from './alignments-table/alignments-table.component';
+import { AlignmentsView } from './alignments-view.component';
 import { AlignmentsComponent } from './alignments.component';
 import { AlignmentsModal } from './modals/alignments-modal';
 import { AlignmentsModalsServices } from './modals/alignments-modal.service';
-import { AlignmentsListPanelComponent } from './alignments-list-panel/alignments-list-panel.component';
-import { AlignmentsListComponent } from './alignments-list-panel/alignments-list.component';
-import { AlignmentsView } from './alignments-view.component';
 
 @NgModule({
     declarations: [
@@ -14,11 +16,13 @@ import { AlignmentsView } from './alignments-view.component';
         AlignmentsListComponent,
         AlignmentsModal,
         AlignmentsListPanelComponent,
+        AlignmentsTableComponent,
         AlignmentsView
     ],
     imports: [
         CommonModule,
         FormsModule,
+        GraphModule
     ],
     exports: [
         AlignmentsListPanelComponent,
