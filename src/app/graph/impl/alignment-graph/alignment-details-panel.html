@@ -11,14 +11,7 @@
             </tr>
             <tr>
                 <td nowrap><label>Target dataset:</label></td>
-                <td>
-                    <ng-container *ngIf="alignmentLink.linkset.targetDataset.projectName">
-                        {{alignmentLink.linkset.targetDataset.projectName}}
-                    </ng-container>
-                    <ng-container *ngIf="!alignmentLink.linkset.targetDataset.projectName">
-                        {{alignmentLink.linkset.targetDataset.dataset.toNT()}}
-                    </ng-container>
-                </td>
+                <td>{{alignmentLink.linkset.getTargetDatasetShow()}}</td>
             </tr>
             <tr>
                 <td nowrap><label>Mapping count:</label></td>

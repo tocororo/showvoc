@@ -1,5 +1,6 @@
-import { IRI, Literal } from './Resources';
+import { IRI, Literal, AnnotatedValue } from './Resources';
 import { ResourceUtils } from '../utils/ResourceUtils';
+import { Project } from './Project';
 
 export class PrefixMapping {
     public prefix: string;
@@ -13,6 +14,52 @@ export class LinksetMetadata {
     registeredTargets: Target[];
     linkCount?: number;
     linkPredicate?: IRI;
+
+    /**
+     * Returns in order (with fallback):
+     * - the first registeredTargets with project name
+     * - the first registeredTargets with uri space
+     * - the targetDataset 
+     */
+    getRelevantTargetDataset(): Target {
+        for (let i = 0; i < this.registeredTargets.length; i++) {
+            if (this.registeredTargets[i].projectName != null) {
+                return this.registeredTargets[i];
+            }
+        }
+        //no project name found => returns uri space of registered targets
+        for (let i = 0; i < this.registeredTargets.length; i++) {
+            if (this.registeredTargets[i].uriSpace != null) {
+                return this.registeredTargets[i];
+            }
+        }
+        return this.targetDataset;
+    }
+
+    /**
+     * If specified in the registered targets, returns the first target with the projectName, otherwise returns null.
+     */
+    getTargetProject(): Project {
+        for (let i = 0; i < this.registeredTargets.length; i++) {
+            if (this.registeredTargets[i].projectName != null) {
+                return new Project(this.registeredTargets[i].projectName);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns the show of the relevant target dataset
+     */
+    getTargetDatasetShow(): string {
+        let target = this.getRelevantTargetDataset();
+        if (target.projectName != null) {
+            return target.projectName;
+        } else {
+            return target.uriSpace;
+        }
+    }
+
 }
 
 export class Target {

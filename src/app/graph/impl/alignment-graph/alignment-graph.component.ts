@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, SimpleChanges } from "@angular/core";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { LinksetMetadata } from 'src/app/models/Metadata';
 import { AnnotatedValue, IRI, ResAttribute } from 'src/app/models/Resources';
 import { MetadataRegistryServices } from 'src/app/services/metadata-registry.service';
 import { AbstractGraph, GraphMode } from '../../abstract-graph';
@@ -43,19 +44,13 @@ export class AlignmentGraphComponent extends AbstractGraph {
         this.metadataRegistryService.getEmbeddedLinksets(<IRI>node.res.getValue(), null, true).subscribe(
             linksets => {
                 linksets.forEach(l => {
-                    let targetNodeValue: AnnotatedValue<IRI> = new AnnotatedValue(l.targetDataset.dataset);
-                    if (l.registeredTargets.length > 0 && l.registeredTargets[0].projectName != null) { //try to get the project name of the first registeredTargets
-                        targetNodeValue.setAttribute(ResAttribute.SHOW, l.registeredTargets[0].projectName);
-                    } else {
-                        targetNodeValue.setAttribute(ResAttribute.SHOW, l.targetDataset.uriSpace);
-                    }
-                    
+                    let targetNodeValue: AnnotatedValue<IRI> = this.getTargetDatasetAnnotatedIRI(l);
                     let targetNode: Node = new AlignmentNode(targetNodeValue);
                     let linkRes: AnnotatedValue<IRI>
                     if (l.linkPredicate != null) {
                         linkRes = new AnnotatedValue(l.linkPredicate);
                     } else {
-                        linkRes = new AnnotatedValue(new IRI(l.linkCount+""));
+                        linkRes = new AnnotatedValue(new IRI(l.linkCount + ""));
                     }
                     linkRes.setAttribute(ResAttribute.SHOW, l.linkCount);
                     let link: AlignmentLink = new AlignmentLink(node, targetNode, linkRes);
@@ -72,9 +67,20 @@ export class AlignmentGraphComponent extends AbstractGraph {
         );
     }
 
+    /**
+    * Returns an annotated IRI representing the target dataset
+    */
+    private getTargetDatasetAnnotatedIRI(linkset: LinksetMetadata): AnnotatedValue<IRI> {
+        let annotatedValue: AnnotatedValue<IRI>;
+        let targetDataset = linkset.getRelevantTargetDataset();
+        annotatedValue = new AnnotatedValue(targetDataset.dataset);
+        annotatedValue.setAttribute(ResAttribute.SHOW, linkset.getTargetDatasetShow());
+        return annotatedValue;
+    }
+
     protected closeNode(node: Node) {
         this.deleteSubtree(node);
-        
+
         let sourceNode = <AlignmentNode>node;
         if (sourceNode.isPending()) {
             this.graph.removeNode(sourceNode); //remove the node from the graph
@@ -84,7 +90,7 @@ export class AlignmentGraphComponent extends AbstractGraph {
         node.open = false;
     }
 
-    
+
     private appendLinks(expandedNode: Node, links: Link[]) {
         links.forEach(l => {
             if (this.graph.getLink(l.source.res.getValue(), l.res.getValue(), l.target.res.getValue()) != null) {

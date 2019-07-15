@@ -9,10 +9,7 @@
                     <tr>
                         <th>{{sourceProject.getName()}}</th>
                         <th>Predicate</th>
-                        <th>
-                            <span *ngIf="linkset.targetDataset.projectName">{{linkset.targetDataset.projectName}}</span>
-                            <span *ngIf="!linkset.targetDataset.projectName">{{linkset.targetDataset.uriSpace}}</span>
-                        </th>
+                        <th>{{linkset.getTargetDatasetShow()}}</th>
                     </tr>
                 </thead>
                 <tbody>

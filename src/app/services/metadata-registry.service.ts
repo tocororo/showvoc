@@ -30,13 +30,12 @@ export class MetadataRegistryServices {
             map(stResp => {
                 let linksets: LinksetMetadata[] = [];
                 for (let lsJson of stResp) {
-                    let l: LinksetMetadata = {
-                        sourceDataset: ResourceUtils.parseIRI(lsJson.sourceDataset),
-                        targetDataset: this.parseTarget(lsJson.targetDataset),
-                        registeredTargets: lsJson.registeredTargets.map(rt => this.parseTarget(rt)),
-                        linkCount: lsJson.linkCount,
-                        linkPredicate: lsJson.linkPredicate ? ResourceUtils.parseIRI(lsJson.linkPredicate) : null
-                    }
+                    let l: LinksetMetadata = new LinksetMetadata();
+                    l.sourceDataset = ResourceUtils.parseIRI(lsJson.sourceDataset),
+                    l.targetDataset = this.parseTarget(lsJson.targetDataset),
+                    l.registeredTargets = lsJson.registeredTargets.map(rt => this.parseTarget(rt)),
+                    l.linkCount = lsJson.linkCount,
+                    l.linkPredicate = lsJson.linkPredicate ? ResourceUtils.parseIRI(lsJson.linkPredicate) : null
                     linksets.push(l);
                 }
                 return linksets;

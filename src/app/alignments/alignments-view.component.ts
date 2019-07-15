@@ -47,7 +47,7 @@ export class AlignmentsView {
             count => {
                 PMKIContext.removeTempProject();
                 this.totPage = Math.floor(count/this.pageSize);
-                if (count % this.pageSize > 0){
+                if (count % this.pageSize > 0) {
                     this.totPage++;
                 }
                 this.listMappings();
@@ -101,8 +101,9 @@ export class AlignmentsView {
             );
             annotateFunctions.push(annotateLeft);
         }
-        if (rightEntities.length > 0 && this.linkset.targetDataset.projectName != null) {
-            let ctxProject: Project = new Project(this.linkset.targetDataset.projectName);
+
+        if (rightEntities.length > 0 && this.linkset.getTargetProject() != null) {
+            let ctxProject: Project = this.linkset.getTargetProject();
             PMKIContext.setTempProject(ctxProject);
             let annotateRight: Observable<void> = this.resourcesService.getResourcesInfo(rightEntities).pipe(
                 finalize(() => {
