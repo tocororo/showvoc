@@ -1,8 +1,8 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AnnotatedValue, RDFResourceRolesEnum, ResAttribute, Resource, Value } from '../models/Resources';
 import { ResourceUtils } from '../utils/ResourceUtils';
-import { Node, NodeMeasure } from './model/Node';
 import { GraphMode } from './abstract-graph';
-import { RDFResourceRolesEnum, ResAttribute, AnnotatedValue, Value, Resource } from '../models/Resources';
+import { Node, NodeMeasure } from './model/Node';
 
 export abstract class AbstractGraphNode {
 
@@ -136,7 +136,7 @@ export abstract class AbstractGraphNode {
             if (this.isSingleClick) {
                 this.nodeClicked.emit(this.node);
             }
-        }, 150)
+        }, 250);
     }
 
     onDblClick() {
