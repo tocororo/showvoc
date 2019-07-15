@@ -451,7 +451,7 @@ export class ResourceNature {
     graphs: IRI[];
 }
 
-export class Triple<T extends Value> {
+export class Triple<T> {
     private left: T;
     private middle: T;
     private right: T;
@@ -465,11 +465,20 @@ export class Triple<T extends Value> {
     getLeft(): T {
         return this.left;
     }
+    setLeft(left: T) {
+        this.left = left;
+    }
     getMiddle(): T {
         return this.middle;
     }
+    setMiddle(middle: T) {
+        this.middle = middle;
+    }
     getRight(): T {
         return this.right;
+    }
+    setRight(right: T) {
+        this.right = right;
     }
 
 }

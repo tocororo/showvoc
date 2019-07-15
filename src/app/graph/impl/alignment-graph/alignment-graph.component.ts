@@ -4,6 +4,7 @@ import { AnnotatedValue, IRI, ResAttribute } from 'src/app/models/Resources';
 import { MetadataRegistryServices } from 'src/app/services/metadata-registry.service';
 import { AbstractGraph, GraphMode } from '../../abstract-graph';
 import { D3Service } from '../../d3/d3.service';
+import { AlignmentLink } from '../../model/AlignmentLink';
 import { AlignmentNode } from '../../model/AlignmentNode';
 import { Link } from "../../model/Link";
 import { Node } from "../../model/Node";
@@ -38,15 +39,13 @@ export class AlignmentGraphComponent extends AbstractGraph {
 
 
     protected expandNode(node: Node, selectOnComplete?: boolean) {
-        let links: Link[] = []; //links to open when double clicking on the given node
+        let links: AlignmentLink[] = []; //links to open when double clicking on the given node
         this.metadataRegistryService.getEmbeddedLinksets(<IRI>node.res.getValue(), null, true).subscribe(
             linksets => {
                 linksets.forEach(l => {
                     let targetNodeValue: AnnotatedValue<IRI> = new AnnotatedValue(l.targetDataset.dataset);
                     if (l.registeredTargets.length > 0 && l.registeredTargets[0].projectName != null) { //try to get the project name of the first registeredTargets
                         targetNodeValue.setAttribute(ResAttribute.SHOW, l.registeredTargets[0].projectName);
-                    // if (l.targetDataset.projectName != null) {
-                        // targetNodeValue.setAttribute(ResAttribute.SHOW, l.targetDataset.projectName);
                     } else {
                         targetNodeValue.setAttribute(ResAttribute.SHOW, l.targetDataset.uriSpace);
                     }
@@ -59,7 +58,9 @@ export class AlignmentGraphComponent extends AbstractGraph {
                         linkRes = new AnnotatedValue(new IRI(l.linkCount+""));
                     }
                     linkRes.setAttribute(ResAttribute.SHOW, l.linkCount);
-                    links.push(new Link(node, targetNode, linkRes));
+                    let link: AlignmentLink = new AlignmentLink(node, targetNode, linkRes);
+                    link.linkset = l;
+                    links.push(link);
                 });
 
                 this.appendLinks(node, links);

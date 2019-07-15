@@ -7,6 +7,7 @@ import { WidgetModule } from '../widget/widget.module';
 import { D3Service } from './d3/d3.service';
 import { DraggableDirective } from './d3/draggable.directive';
 import { ZoomableDirective } from './d3/zoomable.directive';
+import { AlignmentDetailsPanel } from './impl/alignment-graph/alignment-details-panel';
 import { AlignmentGraphPanelComponent } from './impl/alignment-graph/alignment-graph-panel.component';
 import { AlignmentGraphComponent } from './impl/alignment-graph/alignment-graph.component';
 import { AlignmentNodeComponent } from './impl/alignment-graph/alignment-node.component';
@@ -33,14 +34,13 @@ import { ResourceDetailsPanel } from './widget/resource-details-panel';
         AlignmentNodeComponent,
         AlignmentGraphComponent,
         AlignmentGraphPanelComponent,
+        AlignmentDetailsPanel,
         DatasetDetailsPanel,
 
         DataNodeComponent, 
         DataGraphComponent,
         DataGraphPanel, 
-        // NodeModelComponent, 
-        // ModelGraphPanel,
-        // ModelGraphComponent, 
+        
         ForceControlPanel, 
         ResourceDetailsPanel, 
         ResViewPartitionFilter,

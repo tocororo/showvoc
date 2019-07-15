@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, SimpleChanges } from "@angular/core";
+import { Component, Input, SimpleChanges, ViewChild } from "@angular/core";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { BrowsingModalsServices } from 'src/app/modal-dialogs/browsing-modals/browsing-modal.service';
 import { Project } from 'src/app/models/Project';
@@ -40,6 +40,10 @@ export class AlignmentGraphPanelComponent extends AbstractGraphPanel {
             //reinit the graph
             this.graph = new ForceDirectedGraph(nodes, links, true);
         }
+    }
+
+    isSelectedElementEdge() {
+        return (this.selectedElement != null && this.selectedElement instanceof Link);
     }
 
     //Required by the extended class but not implemented in this kind of graph

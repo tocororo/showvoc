@@ -1,15 +1,14 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
-import { ProjectsServices } from '../../services/projects.service';
-import { PMKIContext } from '../../utils/PMKIContext';
-import { LinksetMetadata } from 'src/app/models/Metadata';
-import { Project } from 'src/app/models/Project';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
-import { Observable } from 'rxjs';
-import { IRI, AnnotatedValue } from 'src/app/models/Resources';
-import { MetadataRegistryServices } from 'src/app/services/metadata-registry.service';
+import { LinksetMetadata } from 'src/app/models/Metadata';
+import { Project } from 'src/app/models/Project';
+import { AnnotatedValue, IRI } from 'src/app/models/Resources';
 import { MapleServices } from 'src/app/services/maple.service';
+import { MetadataRegistryServices } from 'src/app/services/metadata-registry.service';
+import { PMKIContext } from '../../utils/PMKIContext';
 
 @Component({
     selector: 'alignments-list',
@@ -27,8 +26,7 @@ export class AlignmentsListComponent {
     linksets: LinksetMetadata[];
     selectedLinkset: LinksetMetadata;
 
-    constructor(private projectService: ProjectsServices, private metadataRegistryService: MetadataRegistryServices, private mapleService: MapleServices,
-        private basicModals: BasicModalsServices) { }
+    constructor(private metadataRegistryService: MetadataRegistryServices, private mapleService: MapleServices, private basicModals: BasicModalsServices) { }
 
     ngOnInit() {
         this.workingProject = PMKIContext.getWorkingProject();
@@ -44,7 +42,7 @@ export class AlignmentsListComponent {
                 if (datasetIRI != null) {
                     this.initLinksets(datasetIRI);
                 } else { //missing IRI for project => initialize it
-                    this.basicModals.confirm("Missing profile", "Unable to find metadata about the project '" + this.workingProject +
+                    this.basicModals.confirm("Missing profile", "Unable to find metadata about the project '" + this.workingProject.getName() +
                         "' in the MetadataRegistry. Do you want to profile the project? (required for the aglignment feature)", ModalType.warning).then(
                             () => { //confirmed
                                 this.profileProject(this.workingProject).subscribe(

@@ -1,6 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { DatasetMetadata } from 'src/app/models/Metadata';
-import { AnnotatedValue, IRI } from 'src/app/models/Resources';
+import { IRI } from 'src/app/models/Resources';
 import { MetadataRegistryServices } from 'src/app/services/metadata-registry.service';
 
 @Component({

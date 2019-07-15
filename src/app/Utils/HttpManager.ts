@@ -113,7 +113,9 @@ export class HttpManager {
         //prepare form data
         let formData = new FormData();
         for (let paramName in params) {
-            formData.append(paramName, params[paramName]);
+            if (params[paramName] != null) {
+                formData.append(paramName, params[paramName]);
+            }
         }
 
         let httpOptions = {

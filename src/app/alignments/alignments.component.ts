@@ -5,6 +5,7 @@ import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.
 import { ModalType } from '../modal-dialogs/Modals';
 import { Project } from '../models/Project';
 import { AnnotatedValue, IRI } from '../models/Resources';
+import { OntoLex, SKOS } from '../models/Vocabulary';
 import { MapleServices } from '../services/maple.service';
 import { MetadataRegistryServices } from '../services/metadata-registry.service';
 import { ProjectsServices } from '../services/projects.service';
@@ -34,9 +35,14 @@ export class AlignmentsComponent implements OnInit {
         private alignmentsModals: AlignmentsModalsServices, private basicModals: BasicModalsServices) { }
 
     ngOnInit() {
+        this.sourceProjects = [];
         this.projectService.listProjects(null, false, true).subscribe(
             projects => {
-                this.sourceProjects = projects;
+                projects.forEach(p => {
+                    if (p.getModelType() == SKOS.uri || p.getModelType() == OntoLex.uri) {
+                        this.sourceProjects.push(p);
+                    }
+                })
             }
         );
     }

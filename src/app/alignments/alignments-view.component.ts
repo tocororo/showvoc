@@ -1,14 +1,13 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
-import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
-import { ModalType } from '../modal-dialogs/Modals';
+import { Component, Input, SimpleChanges } from '@angular/core';
+import { forkJoin, Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
 import { SharedModalsServices } from '../modal-dialogs/shared-modals/shared-modal.service';
 import { AlignmentContext } from '../models/Alignments';
 import { LinksetMetadata } from '../models/Metadata';
 import { Project } from '../models/Project';
-import { IRI, Triple } from '../models/Resources';
+import { AnnotatedValue, IRI, Triple } from '../models/Resources';
 import { AlignmentServices } from '../services/alignment.service';
+import { ResourcesServices } from '../services/resources.service';
 import { PMKIContext, ProjectContext } from '../utils/PMKIContext';
 
 @Component({
@@ -22,19 +21,15 @@ export class AlignmentsView {
     @Input() sourceProject: Project;
     @Input() linkset: LinksetMetadata;
 
-    //used if this view is in global context, so after the navigation the modal (contining this view) should be closed
-    @Output() navigate: EventEmitter<any> = new EventEmitter();
-
     loading: boolean = false;
-    mappings: Triple<IRI>[];
+    annotatedMappings: Triple<AnnotatedValue<IRI>>[];
 
     //pagination
     private page: number = 0;
     private totPage: number;
     private pageSize: number = 50;
 
-    constructor(private alignmentService: AlignmentServices, private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices,
-        private router: Router) { }
+    constructor(private alignmentService: AlignmentServices, private resourcesService: ResourcesServices, private sharedModals: SharedModalsServices) { }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['linkset']) {
@@ -70,42 +65,71 @@ export class AlignmentsView {
             })
         ).subscribe(
             mappings => {
-                this.mappings = mappings;
+                this.annotatedMappings = [];
+                mappings.forEach(m => {
+                    this.annotatedMappings.push(new Triple(new AnnotatedValue(m.getLeft()), new AnnotatedValue(m.getMiddle()), new AnnotatedValue(m.getRight())));
+                });
+                this.annotateMappingResources();
             }
         );
     }
 
-    openSourceResource(resource: IRI) {
-        if (this.context == AlignmentContext.global) {
-            this.basicModals.confirm("Alignments", "Attention, you're going to leave this page. Do you want to continue?", ModalType.warning).then(
-                confirm => {
-                    this.navigateToResource(this.sourceProject.getName(), resource);
-                },
-                cancel => { }
+    private annotateMappingResources() {
+        let leftEntities: IRI[] = [];
+        let rightEntities: IRI[] = [];
+        this.annotatedMappings.forEach(m => {
+            leftEntities.push(m.getLeft().getValue());
+            rightEntities.push(m.getRight().getValue());
+        });
+        let annotateFunctions: Observable<void>[] = [];
+        if (leftEntities.length > 0) {
+            PMKIContext.setTempProject(this.sourceProject);
+            let annotateLeft: Observable<void> = this.resourcesService.getResourcesInfo(leftEntities).pipe(
+                finalize(() => {
+                    PMKIContext.removeTempProject();
+                }),
+                map(annotated => {
+                    annotated.forEach(a => {
+                        this.annotatedMappings.forEach(mapping => {
+                            if (mapping.getLeft().getValue().equals(a.getValue())) {
+                                mapping.setLeft(a);
+                            }
+                        })
+                        a.getValue().equals
+                    })
+                })
             );
-        } else {
-            this.navigateToResource(this.sourceProject.getName(), resource);
+            annotateFunctions.push(annotateLeft);
         }
+        if (rightEntities.length > 0 && this.linkset.targetDataset.projectName != null) {
+            let ctxProject: Project = new Project(this.linkset.targetDataset.projectName);
+            PMKIContext.setTempProject(ctxProject);
+            let annotateRight: Observable<void> = this.resourcesService.getResourcesInfo(rightEntities).pipe(
+                finalize(() => {
+                    PMKIContext.removeTempProject();
+                }),
+                map(annotated => {
+                    annotated.forEach(a => {
+                        this.annotatedMappings.forEach(mapping => {
+                            if (mapping.getRight().getValue().equals(a.getValue())) {
+                                mapping.setRight(a);
+                            }
+                        })
+                        a.getValue().equals
+                    })
+                })
+            );
+            annotateFunctions.push(annotateRight);
+        }
+        forkJoin(...annotateFunctions).subscribe();
     }
 
-    openTargetResource(resource: IRI) {
-        if (this.linkset.targetDataset.projectName != null) { //allow to leave the page and go to the data page only if the target project is recognize
-            let msg: string;
-            if (this.context == AlignmentContext.global) {
-                msg = "Attention, you're going to leave this page. Do you want to continue?";
-            } else { //local
-                msg = "Attention, the resource you selected belongs to a project different from the currently open, " +
-                    "so you're going to change the working project. Do you want to continue?"
-            }
-            this.basicModals.confirm("Alignments", msg, ModalType.warning).then(
-                confirm => {
-                    this.navigateToResource(this.linkset.targetDataset.projectName, resource);
-                },
-                cancel => { }
-            );
-        } else { //otherwise open the resource view as modal with the source project as ctx_project
+    openSourceResource(resource: AnnotatedValue<IRI>) {
+        if (this.context == AlignmentContext.local) {
+            this.sharedModals.openResourceView(resource.getValue());
+        } else { //global
             PMKIContext.setTempProject(this.sourceProject);
-            this.sharedModals.openResourceView(resource, new ProjectContext(this.sourceProject)).then(
+            this.sharedModals.openResourceView(resource.getValue(), new ProjectContext(this.sourceProject)).then(
                 () => {
                     PMKIContext.removeTempProject();
                 }
@@ -113,11 +137,17 @@ export class AlignmentsView {
         }
     }
 
-    private navigateToResource(projectName: string, resource: IRI) {
-        this.router.navigate(["/datasets/" + projectName], { queryParams: { resId: resource.getIRI() } });
-        if (this.context == AlignmentContext.global) {
-            this.navigate.emit();
+    openTargetResource(resource: AnnotatedValue<IRI>) {
+        let ctxProject: Project = this.sourceProject; //by default use the source project as ctx project
+        if (this.linkset.targetDataset.projectName != null) { //if target project is known, set it as context project
+            ctxProject = new Project(this.linkset.targetDataset.projectName);
         }
+        PMKIContext.setTempProject(ctxProject);
+        this.sharedModals.openResourceView(resource.getValue(), new ProjectContext(ctxProject)).then(
+            () => {
+                PMKIContext.removeTempProject();
+            }
+        );
     }
 
     /**

@@ -22,10 +22,6 @@ export class AlignmentsModal {
         UIUtils.setFullSizeModal(this.elementRef);
     }
 
-    onNavigate() {
-        this.close();
-    }
-
     ok() {
         this.activeModal.close();
     }

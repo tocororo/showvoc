@@ -1,0 +1,36 @@
+<div class="table-responsive">
+    <table class="table table-sm table-borderless small">
+        <colgroup>
+            <col style="width: 1%">
+            <col>
+        </colgroup>
+        <tbody>
+            <tr>
+                <td nowrap><label>Source dataset:</label></td>
+                <td>{{alignmentLink.source.getShow()}}</td>
+            </tr>
+            <tr>
+                <td nowrap><label>Target dataset:</label></td>
+                <td>
+                    <ng-container *ngIf="alignmentLink.linkset.targetDataset.projectName">
+                        {{alignmentLink.linkset.targetDataset.projectName}}
+                    </ng-container>
+                    <ng-container *ngIf="!alignmentLink.linkset.targetDataset.projectName">
+                        {{alignmentLink.linkset.targetDataset.dataset.toNT()}}
+                    </ng-container>
+                </td>
+            </tr>
+            <tr>
+                <td nowrap><label>Mapping count:</label></td>
+                <td>{{alignmentLink.linkset.linkCount}}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" class="border-top">
+                    Show the <a href="javascript:void(0)" (click)="showMappings()">mappings list</a>
+                </td>
+            </tr>   
+        </tfoot>
+    </table>
+</div>
