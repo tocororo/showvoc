@@ -67,7 +67,7 @@
             <ng-container *ngIf="!loading && projects">
                 <h5 *ngIf="projects.length == 0" class="text-secondary">No dataset found for '{{lastSearch}}'</h5>
 
-                <div *ngIf="projects.length != 0" class="card">
+                <div *ngIf="projects.length != 0" class="card vbox">
                     <div class="card-body scrollableContainer">
                         <div *ngFor="let p of projects" class="card mb-1">
                             <div class="card-body">
