@@ -43,7 +43,7 @@ export class AlignmentsListComponent {
                     this.initLinksets(datasetIRI);
                 } else { //missing IRI for project => initialize it
                     this.basicModals.confirm("Missing profile", "Unable to find metadata about the project '" + this.workingProject.getName() +
-                        "' in the MetadataRegistry. Do you want to profile the project? (required for the aglignment feature)", ModalType.warning).then(
+                        "' in the MetadataRegistry. Do you want to profile the project? (required for the alignment feature)", ModalType.warning).then(
                             () => { //confirmed
                                 this.profileProject(this.workingProject).subscribe(
                                     () => {
