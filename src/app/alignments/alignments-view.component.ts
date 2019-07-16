@@ -140,8 +140,8 @@ export class AlignmentsView {
 
     openTargetResource(resource: AnnotatedValue<IRI>) {
         let ctxProject: Project = this.sourceProject; //by default use the source project as ctx project
-        if (this.linkset.targetDataset.projectName != null) { //if target project is known, set it as context project
-            ctxProject = new Project(this.linkset.targetDataset.projectName);
+        if (this.linkset.getTargetProject() != null) { //if target project is known, set it as context project
+            ctxProject = this.linkset.getTargetProject();
         }
         PMKIContext.setTempProject(ctxProject);
         this.sharedModals.openResourceView(resource.getValue(), new ProjectContext(ctxProject)).then(

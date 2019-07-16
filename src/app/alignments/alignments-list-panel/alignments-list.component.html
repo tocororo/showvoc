@@ -5,9 +5,7 @@
             <div *ngFor="let l of linksets" class="listItem" [ngClass]="{ selectedLinkset : l == selectedLinkset }"
                 style="cursor: pointer;" (click)="selectLinkset(l)">
                 <span class="badge badge-info mr-1">{{l.linkCount}}</span>
-
-                <span *ngIf="l.targetDataset.projectName">{{l.targetDataset.projectName}}</span>
-                <span *ngIf="!l.targetDataset.projectName">{{l.targetDataset.uriSpace}}</span>
+                <span>{{l.getTargetDatasetShow()}}</span>
             </div>
         </div>
     </div>

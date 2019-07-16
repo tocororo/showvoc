@@ -270,7 +270,7 @@ export class HttpManager {
 
         /**
          * give priority to ctx_project in the following order:
-         * - PMKIContext.tempProject
+         * - PMKIContext.tempProject (in this case the consumer is omitted => consumer is SYSTEM by default)
          * - HttpServiceContext.ctxProject (in this case the working project is set as consumer)
          * - PMKIContext.workingProject
          */

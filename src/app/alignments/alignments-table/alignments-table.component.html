@@ -11,10 +11,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let l of linksets" (click)="showMappings(l)"  style="cursor: pointer">
-                    <td>
-                        <span *ngIf="l.targetDataset.projectName">{{l.targetDataset.projectName}}</span>
-                        <span *ngIf="!l.targetDataset.projectName">{{l.targetDataset.uriSpace}}</span>
-                    </td>
+                    <td>{{l.getTargetDatasetShow()}}</td>
                     <td>{{l.linkCount}}</td>
                 </tr>
             </tbody>
