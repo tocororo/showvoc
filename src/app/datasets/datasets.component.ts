@@ -15,7 +15,7 @@ import { PMKIContext } from '../utils/PMKIContext';
 })
 export class DatasetsComponent implements OnInit {
 
-    languages: string[] = ["de", "fr", "en", "es", "it"];
+    // languages: string[] = ["de", "fr", "en", "es", "it"];
     kosCheck: boolean = true;
     lexiconsCheck: boolean = true;
     openCheck: boolean = true;
