@@ -54,56 +54,51 @@ export class StructureTabsetComponent implements OnInit {
     selectResource(resource: AnnotatedValue<Resource>) {
         if (resource.getValue() instanceof IRI) {
             let annotatedIRI: AnnotatedValue<IRI> = <AnnotatedValue<IRI>>resource;
-            //check if the resource is local to the project
-            if (annotatedIRI.getResourceGraphs().find(g => g.getIRI() == PMKIContext.getWorkingProject().getBaseURI()) != null) { //locally defined
-                let role: RDFResourceRolesEnum = resource.getRole();
-                let tabToActivate: RDFResourceRolesEnum;
-                if (ResourceUtils.roleSubsumes(RDFResourceRolesEnum.property, role)) {
-                    tabToActivate = RDFResourceRolesEnum.property;
-                } else if (ResourceUtils.roleSubsumes(RDFResourceRolesEnum.skosCollection, role)) {
-                    tabToActivate = RDFResourceRolesEnum.skosCollection;
-                } else if (
-                    role == RDFResourceRolesEnum.concept || role == RDFResourceRolesEnum.conceptScheme ||
-                    role == RDFResourceRolesEnum.limeLexicon || role == RDFResourceRolesEnum.ontolexLexicalEntry
-                ) {
-                    tabToActivate = role;
-                }
-                if (tabToActivate != null) {
-                    this.viewChildTabset.select(tabToActivate);
-                    setTimeout(() => { //wait for the tab to be activate
-                        if (tabToActivate == RDFResourceRolesEnum.concept) {
-                            this.viewChildConceptPanel.selectSearchedResource(annotatedIRI);
-                        } else if (tabToActivate == RDFResourceRolesEnum.conceptScheme) {
-                            this.viewChildSchemePanel.openAt(annotatedIRI);
-                        } else if (tabToActivate == RDFResourceRolesEnum.limeLexicon) {
-                            this.viewChildLexiconPanel.openAt(annotatedIRI);
-                        } else if (tabToActivate == RDFResourceRolesEnum.ontolexLexicalEntry) {
-                            this.viewChildLexialEntryPanel.selectSearchedResource(annotatedIRI);
-                        } else if (tabToActivate == RDFResourceRolesEnum.property) {
-                            this.viewChildPropertyPanel.openAt(annotatedIRI);
-                        } else if (tabToActivate == RDFResourceRolesEnum.skosCollection) {
-                            this.viewChildCollectionPanel.openAt(annotatedIRI);
-                        }
-                    });
-                } else { //tabToActivate null means that the resource doesn't belong to any kind handled by the tabset
-                    let hideWarning: boolean = Cookie.getCookie(Cookie.EXPLORE_HIDE_WARNING_MODAL_RES_VIEW) == "true";
-                    if (hideWarning) {
-                        this.sharedModals.openResourceView(resource.getValue());
-                    } else {
-                        this.basicModals.alert("Resource not reachable", annotatedIRI.getValue().getIRI() + " is not reachable in any tree or list. " +
-                            "It's ResourceView will be shown in a modal dialog", ModalType.warning, null, "Don't show again").then(
-                                (dontShowAgain: boolean) => {
-                                    if (dontShowAgain) {
-                                        Cookie.setCookie(Cookie.EXPLORE_HIDE_WARNING_MODAL_RES_VIEW, "true");
-                                    }
-                                    this.sharedModals.openResourceView(resource.getValue());
-                                },
-                                () => { }
-                            );
+            let role: RDFResourceRolesEnum = resource.getRole();
+            let tabToActivate: RDFResourceRolesEnum;
+            if (ResourceUtils.roleSubsumes(RDFResourceRolesEnum.property, role)) {
+                tabToActivate = RDFResourceRolesEnum.property;
+            } else if (ResourceUtils.roleSubsumes(RDFResourceRolesEnum.skosCollection, role)) {
+                tabToActivate = RDFResourceRolesEnum.skosCollection;
+            } else if (
+                role == RDFResourceRolesEnum.concept || role == RDFResourceRolesEnum.conceptScheme ||
+                role == RDFResourceRolesEnum.limeLexicon || role == RDFResourceRolesEnum.ontolexLexicalEntry
+            ) {
+                tabToActivate = role;
+            }
+            if (tabToActivate != null) {
+                this.viewChildTabset.select(tabToActivate);
+                setTimeout(() => { //wait for the tab to be activate
+                    if (tabToActivate == RDFResourceRolesEnum.concept) {
+                        this.viewChildConceptPanel.selectSearchedResource(annotatedIRI);
+                    } else if (tabToActivate == RDFResourceRolesEnum.conceptScheme) {
+                        this.viewChildSchemePanel.openAt(annotatedIRI);
+                    } else if (tabToActivate == RDFResourceRolesEnum.limeLexicon) {
+                        this.viewChildLexiconPanel.openAt(annotatedIRI);
+                    } else if (tabToActivate == RDFResourceRolesEnum.ontolexLexicalEntry) {
+                        this.viewChildLexialEntryPanel.selectSearchedResource(annotatedIRI);
+                    } else if (tabToActivate == RDFResourceRolesEnum.property) {
+                        this.viewChildPropertyPanel.openAt(annotatedIRI);
+                    } else if (tabToActivate == RDFResourceRolesEnum.skosCollection) {
+                        this.viewChildCollectionPanel.openAt(annotatedIRI);
                     }
+                });
+            } else { //tabToActivate null means that the resource doesn't belong to any kind handled by the tabset
+                let hideWarning: boolean = Cookie.getCookie(Cookie.EXPLORE_HIDE_WARNING_MODAL_RES_VIEW) == "true";
+                if (hideWarning) {
+                    this.sharedModals.openResourceView(resource.getValue());
+                } else {
+                    this.basicModals.alert("Resource not reachable", annotatedIRI.getValue().getIRI() + " is not reachable in any tree or list. " +
+                        "It's ResourceView will be shown in a modal dialog", ModalType.warning, null, "Don't show again").then(
+                            (dontShowAgain: boolean) => {
+                                if (dontShowAgain) {
+                                    Cookie.setCookie(Cookie.EXPLORE_HIDE_WARNING_MODAL_RES_VIEW, "true");
+                                }
+                                this.sharedModals.openResourceView(resource.getValue());
+                            },
+                            () => { }
+                        );
                 }
-            } else { //non local IRI
-                this.sharedModals.openResourceView(resource.getValue());
             }
         } else { //Bnode
             this.sharedModals.openResourceView(resource.getValue());

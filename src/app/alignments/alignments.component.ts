@@ -10,7 +10,6 @@ import { MapleServices } from '../services/maple.service';
 import { MetadataRegistryServices } from '../services/metadata-registry.service';
 import { ProjectsServices } from '../services/projects.service';
 import { PMKIContext } from '../utils/PMKIContext';
-import { AlignmentsModalsServices } from './modals/alignments-modal.service';
 
 @Component({
     selector: 'alignments-component',
@@ -32,7 +31,7 @@ export class AlignmentsComponent implements OnInit {
 
 
     constructor(private projectService: ProjectsServices, private metadataRegistryService: MetadataRegistryServices, private mapleService: MapleServices,
-        private alignmentsModals: AlignmentsModalsServices, private basicModals: BasicModalsServices) { }
+        private basicModals: BasicModalsServices) { }
 
     ngOnInit() {
         this.sourceProjects = [];

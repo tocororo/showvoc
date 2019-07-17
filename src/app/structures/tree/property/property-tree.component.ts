@@ -90,7 +90,7 @@ export class PropertyTreeComponent extends AbstractTree {
     }
 
     openTreeAt(node: AnnotatedValue<IRI>) {
-        this.searchService.getPathFromRoot(node.getValue(), RDFResourceRolesEnum.skosCollection).subscribe(
+        this.searchService.getPathFromRoot(node.getValue(), RDFResourceRolesEnum.property).subscribe(
             path => {
                 if (path.length == 0) {
                     this.onTreeNodeNotReachable(node);

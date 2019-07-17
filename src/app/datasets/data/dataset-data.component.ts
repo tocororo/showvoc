@@ -22,19 +22,14 @@ export class DatasetDataComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute, private router: Router, private resourcesService: ResourcesServices) { }
 
     ngOnInit() {
-        this.activatedRoute.queryParams.subscribe(
-            params => {
-                let resId: string = params['resId'];
-                if (resId != null) {
-                    this.resourcesService.getResourceDescription(new IRI(resId)).subscribe(
-                        (annotatedRes: AnnotatedValue<IRI>) => {
-                            this.viewChildStructureTabset.selectResource(annotatedRes);
-                        }
-                    )
-
+        let resId: string = this.activatedRoute.snapshot.queryParamMap.get("resId");
+        if (resId != null) {
+            this.resourcesService.getResourceDescription(new IRI(resId)).subscribe(
+                (annotatedRes: AnnotatedValue<IRI>) => {
+                    this.viewChildStructureTabset.selectResource(annotatedRes);
                 }
-            }
-        );
+            );
+        }
     }
 
     onNodeSelected(node: AnnotatedValue<IRI>) {
