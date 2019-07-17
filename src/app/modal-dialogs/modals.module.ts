@@ -17,6 +17,7 @@ import { LexiconListModal } from './browsing-modals/lexicon-list-modal/lexicon-l
 import { PropertyTreeModal } from './browsing-modals/property-tree-modal/property-tree-modal';
 import { SchemeListModal } from './browsing-modals/scheme-list-modal/scheme-list-modal';
 import { SharedModalsServices } from './shared-modals/shared-modal.service';
+import { PromptNumberModal } from './basic-modals/prompt-modal/prompt-number-modal';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         DownloadModal,
         LexicalEntryListModal,
         LexiconListModal,
+        PromptNumberModal,
         PropertyTreeModal,
         ResourceSelectionModal,
         SchemeListModal
@@ -45,6 +47,7 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         DownloadModal,
         LexicalEntryListModal,
         LexiconListModal,
+        PromptNumberModal,
         PropertyTreeModal,
         ResourceSelectionModal,
         SchemeListModal

@@ -4,8 +4,9 @@ import { AnnotatedValue, Resource } from 'src/app/models/Resources';
 import { ModalOptions, ModalType } from '../Modals';
 import { AlertModal } from './alert-modal/alert-modal';
 import { ConfirmModal } from './confirm-modal/confirm-modal';
-import { ResourceSelectionModal } from './selection-modal/resource-selection-modal';
 import { DownloadModal } from './download-modal/download-modal';
+import { PromptNumberModal } from './prompt-modal/prompt-number-modal';
+import { ResourceSelectionModal } from './selection-modal/resource-selection-modal';
 
 @Injectable()
 export class BasicModalsServices {
@@ -45,6 +46,30 @@ export class BasicModalsServices {
         const modalRef: NgbModalRef = this.modalService.open(ConfirmModal, _options);
         modalRef.componentInstance.title = title;
         modalRef.componentInstance.message = message;
+        modalRef.componentInstance.type = type;
+        return modalRef.result;
+    }
+
+    /**
+     * 
+     * @param title 
+     * @param message 
+     * @param value 
+     * @param min 
+     * @param max 
+     * @param step 
+     * @param type 
+     * @param options 
+     */
+    promptNumber(title: string, message: string, value?: number, min?: number, max?: number, step?: number, type?: ModalType, options?: ModalOptions): Promise<number> {
+        let _options: ModalOptions = new ModalOptions().merge(options);
+        const modalRef: NgbModalRef = this.modalService.open(PromptNumberModal, _options);
+        modalRef.componentInstance.title = title;
+        modalRef.componentInstance.message = message;
+        modalRef.componentInstance.value = value;
+        modalRef.componentInstance.min = min;
+        modalRef.componentInstance.max = max;
+        modalRef.componentInstance.step = step;
         modalRef.componentInstance.type = type;
         return modalRef.result;
     }

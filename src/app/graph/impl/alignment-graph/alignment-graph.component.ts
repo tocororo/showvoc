@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, SimpleChanges } from "@angular/core";
+import { from, Observable, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { LinksetMetadata } from 'src/app/models/Metadata';
 import { AnnotatedValue, IRI, ResAttribute } from 'src/app/models/Resources';
 import { MetadataRegistryServices } from 'src/app/services/metadata-registry.service';
@@ -19,6 +22,8 @@ import { Node } from "../../model/Node";
 export class AlignmentGraphComponent extends AbstractGraph {
 
     protected mode = GraphMode.dataOriented;
+
+    private linkLimit: number = 50;
 
     constructor(protected d3Service: D3Service, protected elementRef: ElementRef, protected ref: ChangeDetectorRef, protected basicModals: BasicModalsServices,
         private metadataRegistryService: MetadataRegistryServices) {
@@ -40,31 +45,54 @@ export class AlignmentGraphComponent extends AbstractGraph {
 
 
     protected expandNode(node: Node, selectOnComplete?: boolean) {
-        let links: AlignmentLink[] = []; //links to open when double clicking on the given node
-        this.metadataRegistryService.getEmbeddedLinksets(<IRI>node.res.getValue(), null, true).subscribe(
+        this.getLinksets(node, null).subscribe(
             linksets => {
-                linksets.forEach(l => {
-                    let targetNodeValue: AnnotatedValue<IRI> = this.getTargetDatasetAnnotatedIRI(l);
-                    let targetNode: Node = new AlignmentNode(targetNodeValue);
-                    let linkRes: AnnotatedValue<IRI>
-                    if (l.linkPredicate != null) {
-                        linkRes = new AnnotatedValue(l.linkPredicate);
-                    } else {
-                        linkRes = new AnnotatedValue(new IRI(l.linkCount + ""));
-                    }
-                    linkRes.setAttribute(ResAttribute.SHOW, l.linkCount);
-                    let link: AlignmentLink = new AlignmentLink(node, targetNode, linkRes);
-                    link.linkset = l;
-                    links.push(link);
-                });
-
-                this.appendLinks(node, links);
+                this.addtLinksetToGraph(node, linksets);
                 if (selectOnComplete) {
                     this.onNodeClicked(node);
                 }
                 node.open = true;
             }
+        )
+    }
+
+    private getLinksets(node: Node, treshold?: number): Observable<LinksetMetadata[]> {
+        return this.metadataRegistryService.getEmbeddedLinksets(<IRI>node.res.getValue(), treshold, true).pipe(
+            flatMap(linksets => {
+                if (linksets.length > this.linkLimit) {
+                    return from(
+                        this.basicModals.promptNumber("Expand linkset", "The expanded dataset has an high number of linksets (" + linksets.length + "). " +
+                            "A performance decrease could be experienced with a growing amount of visual elements in the graph. " +
+                            "You can filter only those linksets containing at least a given amount of links", treshold, 0, null, 1, ModalType.warning)
+                    ).pipe(
+                        flatMap(treshold => {
+                            return this.getLinksets(node, treshold);
+                        })
+                    )
+                } else {
+                    return of(linksets);
+                }
+            })
         );
+    }
+
+    private addtLinksetToGraph(node: Node, linksets: LinksetMetadata[]) {
+        let links: AlignmentLink[] = []; //links to open when double clicking on the given node
+        linksets.forEach(l => {
+            let targetNodeValue: AnnotatedValue<IRI> = this.getTargetDatasetAnnotatedIRI(l);
+            let targetNode: Node = new AlignmentNode(targetNodeValue);
+            let linkRes: AnnotatedValue<IRI>
+            if (l.linkPredicate != null) {
+                linkRes = new AnnotatedValue(l.linkPredicate);
+            } else {
+                linkRes = new AnnotatedValue(new IRI(l.linkCount + ""));
+            }
+            linkRes.setAttribute(ResAttribute.SHOW, l.linkCount);
+            let link: AlignmentLink = new AlignmentLink(node, targetNode, linkRes);
+            link.linkset = l;
+            links.push(link);
+        });
+        this.appendLinks(node, links);
     }
 
     /**
