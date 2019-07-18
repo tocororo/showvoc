@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { Project } from '../models/Project';
 import { OntoLex, SKOS } from '../models/Vocabulary';
@@ -27,16 +27,11 @@ export class DatasetsComponent implements OnInit {
     loading: boolean = false;
     globalCreatingIndex: boolean = false; //when it's true, all the other "create index" button should be disabled
 
-    constructor(private route: ActivatedRoute, private router: Router, private projectService: ProjectsServices,
-        private globalSearchService: GlobalSearchServices) { }
+    constructor(private router: Router, private projectService: ProjectsServices, private globalSearchService: GlobalSearchServices) { }
 
     ngOnInit() {
         this.initCookies();
-        this.route.queryParams.subscribe(params => {
-            let search = params['search'];
-            this.searchString = search;
-            this.searchDataset();
-        });
+        this.searchDataset();
     }
 
     searchDataset() {

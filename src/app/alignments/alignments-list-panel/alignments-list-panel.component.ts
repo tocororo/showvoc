@@ -43,10 +43,6 @@ export class AlignmentsListPanelComponent {
         );
     }
 
-    settings() {
-        //TODO
-    }
-
     onLinksetSelected(linkset: LinksetMetadata) {
         this.selectedLinkset = linkset;
         this.linksetSelected.emit(linkset);

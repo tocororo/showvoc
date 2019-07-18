@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
-import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
-import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { LinksetMetadata } from 'src/app/models/Metadata';
 import { Project } from 'src/app/models/Project';
 import { AnnotatedValue, IRI } from 'src/app/models/Resources';
@@ -22,11 +20,12 @@ export class AlignmentsListComponent {
     private workingProject: Project;
 
     loading: boolean = false;
+    missingProfile: boolean = false;
 
     linksets: LinksetMetadata[];
     selectedLinkset: LinksetMetadata;
 
-    constructor(private metadataRegistryService: MetadataRegistryServices, private mapleService: MapleServices, private basicModals: BasicModalsServices) { }
+    constructor(private metadataRegistryService: MetadataRegistryServices, private mapleService: MapleServices) { }
 
     ngOnInit() {
         this.workingProject = PMKIContext.getWorkingProject();
@@ -35,30 +34,15 @@ export class AlignmentsListComponent {
 
     init() {
         this.loading = true;
+        this.missingProfile = false;
         this.linksets = null;
 
         this.getDatasetIRI(this.workingProject).subscribe(
             datasetIRI => {
                 if (datasetIRI != null) {
                     this.initLinksets(datasetIRI);
-                } else { //missing IRI for project => initialize it
-                    this.basicModals.confirm("Missing profile", "Unable to find metadata about the project '" + this.workingProject.getName() +
-                        "' in the MetadataRegistry. Do you want to profile the project? (required for the alignment feature)", ModalType.warning).then(
-                            () => { //confirmed
-                                this.profileProject(this.workingProject).subscribe(
-                                    () => {
-                                        this.getDatasetIRI(this.workingProject).subscribe(
-                                            datasetIRI => {
-                                                this.initLinksets(datasetIRI);
-                                            }
-                                        );
-                                    }
-                                );
-                            },
-                            () => { //canceled
-                                this.loading = false;
-                            }
-                        )
+                } else { //missing IRI for project
+                    this.missingProfile = true;
                 }
             }
         );

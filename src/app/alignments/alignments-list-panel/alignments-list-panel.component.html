@@ -4,11 +4,8 @@
             <button class="btn btn-light btn-sm" title="Refresh" (click)="refresh()" [disabled]="loadingProfile">
                 <span class="fa fa-refresh"></span>
             </button>
-            <!-- <button class="btn btn-light btn-sm ml-1" title="Settings" (click)="settings()">
-                <span class="fa fa-cog"></span>
-            </button> -->
 
-            <button class="btn btn-sm btn-light" (click)="refreshProfile()" title="Refresh dataset profile" [disabled]="loadingProfile">
+            <button class="btn btn-sm btn-light ml-1" (click)="refreshProfile()" title="Refresh dataset profile" [disabled]="loadingProfile">
                 <i *ngIf="!loadingProfile" class="fa fa-bar-chart"></i>
                 <div *ngIf="loadingProfile" class="spinner-border spinner-border-sm text-info"></div>
             </button>
