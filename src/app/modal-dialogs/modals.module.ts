@@ -8,6 +8,8 @@ import { AlertModal } from './basic-modals/alert-modal/alert-modal';
 import { BasicModalsServices } from './basic-modals/basic-modals.service';
 import { ConfirmModal } from './basic-modals/confirm-modal/confirm-modal';
 import { DownloadModal } from './basic-modals/download-modal/download-modal';
+import { PromptModal } from './basic-modals/prompt-modal/prompt-modal';
+import { PromptNumberModal } from './basic-modals/prompt-modal/prompt-number-modal';
 import { ResourceSelectionModal } from './basic-modals/selection-modal/resource-selection-modal';
 import { BrowsingModalsServices } from './browsing-modals/browsing-modal.service';
 import { CollectionTreeModal } from './browsing-modals/collection-tree-modal/collection-tree-modal';
@@ -17,7 +19,6 @@ import { LexiconListModal } from './browsing-modals/lexicon-list-modal/lexicon-l
 import { PropertyTreeModal } from './browsing-modals/property-tree-modal/property-tree-modal';
 import { SchemeListModal } from './browsing-modals/scheme-list-modal/scheme-list-modal';
 import { SharedModalsServices } from './shared-modals/shared-modal.service';
-import { PromptNumberModal } from './basic-modals/prompt-modal/prompt-number-modal';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { PromptNumberModal } from './basic-modals/prompt-modal/prompt-number-mod
         DownloadModal,
         LexicalEntryListModal,
         LexiconListModal,
+        PromptModal,
         PromptNumberModal,
         PropertyTreeModal,
         ResourceSelectionModal,
@@ -47,6 +49,7 @@ import { PromptNumberModal } from './basic-modals/prompt-modal/prompt-number-mod
         DownloadModal,
         LexicalEntryListModal,
         LexiconListModal,
+        PromptModal,
         PromptNumberModal,
         PropertyTreeModal,
         ResourceSelectionModal,

@@ -153,7 +153,9 @@ export class User {
 
 
 
-
+    /*
+     * ===== Deserializer =====
+     */
 
      /**
      * @param resp json response containing {"user"" : [{givenName: string, familyName: string, ...}, {...}]}
@@ -219,60 +221,33 @@ export enum UserStatusEnum {
     ACTIVE = "ACTIVE"
 }
 
-// export class UserDeserializer {
-    
-//     /**
-//      * @param resp json response containing {"user"" : [{givenName: string, familyName: string, ...}, {...}]}
-//      */
-//     static createUsersArray(resp: any): User[] {
-//         var users: User[] = [];
-//         for (var i = 0; i < resp.length; i++) {
-//             users.push(this.createUser(resp[i]));
-//         }
-//         return users;
-//     }
+export class UserForm {
 
-//     /**
-//      * Parses a json response, creates and returns a User. Returns null if no user is present in input param
-//      * @param resp could be a "data" element of a response (containing a "user" element)
-//      * or directly a "user" element
-//      */
-//     static createUser(userJson: any): User {
-//         if (userJson.email == null) { //user object is empty (scenario: getUser with no logged user)
-//             return null;
-//         }
-//         var user = new User(userJson.email, userJson.givenName, userJson.familyName, userJson.iri);
-//         user.setRegistrationDate(userJson.registrationDate);
-//         user.setStatus(userJson.status);
-//         user.setAdmin(userJson.admin);
-//         user.setOnline(userJson.online);
-//         if (userJson.birthday != undefined) {
-//             user.setBirthday(userJson.birthday);
-//         }
-//         if (userJson.phone != undefined) {
-//             user.setPhone(userJson.phone);
-//         }
-//         if (userJson.gender != undefined) {
-//             user.setGender(userJson.gender)
-//         }
-//         if (userJson.country != undefined) {
-//             user.setCountry(userJson.country);
-//         }
-//         if (userJson.address != undefined) {
-//             user.setAddress(userJson.address);
-//         }
-//         if (userJson.affiliation != undefined) {
-//             user.setAffiliation(userJson.affiliation);
-//         }
-//         if (userJson.url != undefined) {
-//             user.setUrl(userJson.url);
-//         }
-//         if (userJson.avatarUrl != undefined) {
-//             user.setAvatarUrl(userJson.avatarUrl);
-//         }
-//         if (userJson.languageProficiencies != undefined) {
-//             user.setLanguageProficiencies(userJson.languageProficiencies);
-//         }
-//         return user;
-//     }
-// }
+    email: string;
+    username: string;
+    password: string;
+    confirmedPassword: string;
+    givenName: string;
+    familyName: string;
+    address: string;
+    phone: string;
+    affiliation: string;
+    url: string;
+    avatarUrl: string;
+    iri: string;
+    urlAsIri: boolean;
+    languageProficiencies: string[];
+
+    static emailRegexp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    static iriRegexp = new RegExp("\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]");
+
+    constructor() { }
+
+    static isValidEmail(email: string) {
+        return UserForm.emailRegexp.test(email);
+    }
+
+    static isIriValid(iri: string) {
+        return UserForm.iriRegexp.test(iri);
+    }
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
+import { UserServices } from '../services/user.service';
 
 @Component({
     selector: 'login-component',
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
     email: string;
     password: string;
 
-    constructor(private basicModals: BasicModalsServices) { }
+    constructor(private userService: UserServices, private basicModals: BasicModalsServices) { }
 
     ngOnInit() { }
 
@@ -31,7 +32,17 @@ export class LoginComponent implements OnInit {
     }
 
     forgotPassword() {
-        this.basicModals.alert("Forgot Password", "TODO");
+        this.basicModals.prompt("Forgot password", { value: "E-mail" }, "Insert the e-mail address of your account. " + 
+            "You will receive an e-mail with the instructions for resetting the password").then(
+            (email: string) => {
+                this.userService.forgotPassword(email).subscribe(
+                    stResp => {
+                        this.basicModals.alert("Forgot password", "An e-mail with the instructions for resetting password has been sent to the provided address.");
+                    }
+                );
+            },
+            () => {}
+        );
     }
 
 

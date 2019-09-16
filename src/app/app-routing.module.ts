@@ -10,6 +10,7 @@ import { NotFoundComponent } from './not-found.component';
 import { SearchComponent } from './search/search.component';
 import { LoginComponent } from './user/login.component';
 import { RegistrationComponent } from './user/registration.component';
+import { ResetPasswordComponent } from './user/reset-password.component';
 import { LurkerAuthGuard, ProjectGuard } from './utils/CanActivateGuards';
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: "home", component: HomeComponent },
     { path: "login", component: LoginComponent },
     { path: "registration", component: RegistrationComponent },
+    { path: "ResetPassword/:token", component: ResetPasswordComponent },
     { path: 'datasets', component: DatasetsComponent, canActivate: [LurkerAuthGuard] },
     {
         path: 'datasets/:id', component: DatasetViewComponent, canActivate: [LurkerAuthGuard, ProjectGuard],

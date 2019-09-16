@@ -5,6 +5,7 @@ import { ModalOptions, ModalType } from '../Modals';
 import { AlertModal } from './alert-modal/alert-modal';
 import { ConfirmModal } from './confirm-modal/confirm-modal';
 import { DownloadModal } from './download-modal/download-modal';
+import { PromptModal } from './prompt-modal/prompt-modal';
 import { PromptNumberModal } from './prompt-modal/prompt-number-modal';
 import { ResourceSelectionModal } from './selection-modal/resource-selection-modal';
 
@@ -49,6 +50,29 @@ export class BasicModalsServices {
         modalRef.componentInstance.type = type;
         return modalRef.result;
     }
+
+    /**
+     * 
+     * @param title 
+     * @param label 
+     * @param message 
+     * @param value 
+     * @param hideClose 
+     * @param inputOptional 
+     * @param options 
+     */
+    prompt(title: string, label?: { value: string, tooltip?: string }, message?: string, value?: string, hideClose?: boolean, inputOptional?: boolean, options?: ModalOptions): Promise<string> {
+        let _options: ModalOptions = new ModalOptions().merge(options);
+        const modalRef: NgbModalRef = this.modalService.open(PromptModal, _options);
+        modalRef.componentInstance.title = title;
+        modalRef.componentInstance.label = label;
+        modalRef.componentInstance.message = message;
+        modalRef.componentInstance.value = value;
+        modalRef.componentInstance.hideClose = hideClose;
+        modalRef.componentInstance.inputOptional = inputOptional;
+        return modalRef.result;
+    }
+    ;
 
     /**
      * 

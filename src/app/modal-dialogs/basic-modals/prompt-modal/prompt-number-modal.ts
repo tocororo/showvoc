@@ -23,6 +23,9 @@ export class PromptNumberModal implements OnInit {
 	constructor(public activeModal: NgbActiveModal) { }
 
 	ngOnInit() {
+		if (this.type == null) {
+			this.type = ModalType.info
+		}
 		if (this.type == ModalType.info) {
 			this.titleClass = "text-info";
 			this.alertClass = "alert alert-info";

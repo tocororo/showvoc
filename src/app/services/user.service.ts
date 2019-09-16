@@ -35,4 +35,28 @@ export class UserServices {
         );
     }
 
+    /**
+     * 
+     * @param email 
+     */
+    forgotPassword(email: string) {
+        var params: any = {
+            email: email,
+            vbHostAddress: location.protocol+"//"+location.hostname+((location.port !="") ? ":"+location.port : "")+location.pathname
+        }
+        return this.httpMgr.doPost(this.serviceName, "forgotPassword", params);
+    }
+
+    /**
+     * @param email 
+     * @param token 
+     */
+    resetPassword(email: string, token: string) {
+        var params: any = {
+            email: email,
+            token: token
+        }
+        return this.httpMgr.doPost(this.serviceName, "resetPassword", params);
+    }
+
 }
