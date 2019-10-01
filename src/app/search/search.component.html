@@ -1,7 +1,7 @@
 <div class="container my-3">
 
     <h1>Search</h1>
-    
+
     <div class="input-group mb-2">
         <input type="text" class="form-control" [(ngModel)]="searchString" (keydown.enter)="searchKeyHandler()" placeholder="Search">
         <div class="input-group-append">
@@ -11,21 +11,37 @@
         </div>
     </div>
 
-    <div>
+    <div class="mb-2">
         <span class="text-muted">Filters: </span>
-        <div class="btn-group btn-group-sm" ngbDropdown>
-            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>
-                Projects
-            </button>
+        <div class="btn-group btn-group-sm" ngbDropdown autoClose="outside">
+            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>Projects</button>
             <div class="dropdown-menu" ngbDropdownMenu>
-                <button class="dropdown-item d-flex align-items-center" (click)="updateProjectFilters()">
+                <button class="dropdown-item d-flex align-items-center" (click)="updateProjectFilter()">
                     <span style="flex: 1;">Only open</span>
                     <i *ngIf="openProjectFilter" class="fa fa-check pull-right"></i>
                 </button>
             </div>
         </div>
+        <div class="btn-group btn-group-sm ml-1" ngbDropdown autoClose="outside">
+            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>Languages</button>
+            <div class="dropdown-menu" ngbDropdownMenu>
+                <button class="dropdown-item d-flex align-items-center" (click)="setAllLanguagesFilter()">
+                    <span style="flex: 1;">Any language</span>
+                    <i *ngIf="anyLangFilter" class="fa fa-check pull-right"></i>
+                </button>
+                <div class="dropdown-divider"></div>
+                <button *ngFor="let l of languagesFilter" class="dropdown-item d-flex align-items-center" (click)="activateLanguageFilter(l)">
+                    <span style="flex: 1;">{{l.lang}}</span>
+                    <i *ngIf="l.active" class="fa fa-check pull-right"></i>
+                </button>
+
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item d-flex align-items-center" (click)="editLangList()">Edit language list</button>
+            </div>
+        </div>
+
     </div>
-    
+
 
     <div *ngIf="loading" class="spinner-border text-info"></div>
 
@@ -64,5 +80,5 @@
         </ng-container>
     </ng-container>
 
-    
+
 </div>

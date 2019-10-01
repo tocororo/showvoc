@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { forkJoin, Observable, of } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
+import { ModalOptions } from '../modal-dialogs/Modals';
 import { Project } from '../models/Project';
 import { IRI } from '../models/Resources';
 import { GlobalSearchResult } from '../models/Search';
@@ -9,6 +11,7 @@ import { GlobalSearchServices } from '../services/global-search.service';
 import { ResourcesServices } from '../services/resources.service';
 import { Cookie } from '../utils/Cookie';
 import { PMKIContext } from '../utils/PMKIContext';
+import { EditLanguageModal } from './edit-language-modal.component';
 
 @Component({
     selector: 'search-component',
@@ -35,7 +38,10 @@ export class SearchComponent {
     openProjectFilter: boolean = true;
     filteredRepoIds: string[]; //id (eventually filtered) of the repositories of the results, useful to iterate over them in the view
 
-    constructor(private globalSearchService: GlobalSearchServices, private resourcesService: ResourcesServices, private router: Router) { }
+    anyLangFilter: boolean;
+    languagesFilter: LanguageFilter[];
+
+    constructor(private globalSearchService: GlobalSearchServices, private resourcesService: ResourcesServices, private modalService: NgbModal, private router: Router) { }
 
     ngOnInit() {
         this.initCookies();
@@ -49,9 +55,17 @@ export class SearchComponent {
 
     search() {
         this.lastSearch = this.searchString;
+        let langPar: string[] = [];
+        if (!this.anyLangFilter) {
+            this.languagesFilter.forEach(l => {
+                if (l.active) {
+                    langPar.push(l.lang);
+                }
+            });
+        }
 
         this.loading = true;
-        this.globalSearchService.search(this.searchString).pipe(
+        this.globalSearchService.search(this.searchString, langPar).pipe(
             finalize(() => this.loading = false)
         ).subscribe(
             (results: GlobalSearchResult[]) => {
@@ -100,12 +114,6 @@ export class SearchComponent {
         this.filteredRepoIds.sort();
     }
 
-    updateProjectFilters() {
-        this.openProjectFilter = !this.openProjectFilter;
-        this.updateCookies();
-        this.filterSearchResults();
-    }
-
     private getComputeResultsShowFn(results: GlobalSearchResult[]): Observable<void> {
         if (results[0].repository.open) { //if the repository is open, compute the show with a service invokation
             let resources: IRI[] = []
@@ -139,11 +147,79 @@ export class SearchComponent {
         this.router.navigate(["/datasets/" + repoId]);
     }
 
+    /**======================
+     * Filters
+     * ======================*/
+
+    //Projects
+
+    updateProjectFilter() {
+        this.openProjectFilter = !this.openProjectFilter;
+        this.updateCookies();
+        this.filterSearchResults();
+    }
+
+    //Languages
+
+    setAllLanguagesFilter() {
+        this.anyLangFilter = true;
+        this.languagesFilter.forEach(l => l.active = false);
+        this.updateCookies();
+    }
+
+    activateLanguageFilter(lf: LanguageFilter) {
+        lf.active = !lf.active;
+        this.anyLangFilter = !this.languagesFilter.some(l => l.active); //if no language is enabled, set the "all languages" to true
+        this.updateCookies();
+    }
+
+    editLangList() {
+        const modalRef: NgbModalRef = this.modalService.open(EditLanguageModal, new ModalOptions());
+        modalRef.componentInstance.languages = this.languagesFilter.map(l => l.lang);
+        modalRef.result.then(
+            (languages: string[]) => {
+                let newFilter: LanguageFilter[] = []; //use a temp list in order to keep the "active" status
+                languages.forEach(l => {
+                    let oldLangFilter = this.languagesFilter.find(lf => lf.lang == l);
+                    newFilter.push({ lang: l, active: oldLangFilter ? oldLangFilter.active : false });
+                })
+                this.languagesFilter = newFilter;
+                this.updateCookies();
+            },
+            () => {}
+        );
+    }
+
     private initCookies() {
+        //Projects: only open
         this.openProjectFilter = Cookie.getCookie(Cookie.SEARCH_FILTERS_ONLY_OPEN_PROJECTS) != "false";
+        //Languages
+        let langFilterCookie = Cookie.getCookie(Cookie.SEARCH_FILTERS_LANGUAGES);
+        if (langFilterCookie != null) {
+            this.languagesFilter = JSON.parse(langFilterCookie);
+            this.languagesFilter.sort((l1: LanguageFilter, l2: LanguageFilter) => {
+                return l1.lang.localeCompare(l2.lang);
+            })
+            this.anyLangFilter = !this.languagesFilter.some(l => l.active); //if no language is enabled, set the "all languages" to true
+        } else {
+            this.languagesFilter = [
+                { lang: "de", active: false },
+                { lang: "en", active: false },
+                { lang: "es", active: false },
+                { lang: "fr", active: false },
+                { lang: "it", active: false },
+            ];
+            this.anyLangFilter = true;
+        }
     }
     private updateCookies() {
         Cookie.setCookie(Cookie.SEARCH_FILTERS_ONLY_OPEN_PROJECTS, this.openProjectFilter + "");
+        Cookie.setCookie(Cookie.SEARCH_FILTERS_LANGUAGES, JSON.stringify(this.languagesFilter));
+
     }
 }
 
+class LanguageFilter {
+    lang: string;
+    active: boolean;
+}
