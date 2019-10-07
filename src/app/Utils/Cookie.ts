@@ -19,6 +19,7 @@ export class Cookie {
     public static DATASETS_FACETS_ONLY_OPEN_PROJECTS = "datasets.facets.only_open_projects";
 
     public static SEARCH_FILTERS_ONLY_OPEN_PROJECTS = "search.filters.only_open_projects";
+    public static SEARCH_FILTERS_LANGUAGES = "search.filters.languages";
 
     public static EXPLORE_HIDE_WARNING_MODAL_RES_VIEW = "explore.hide_warning_open_modal_res_view";
 
@@ -43,7 +44,7 @@ export class Cookie {
 	 * Save the Cookie
 	 * @param  {string} name Cookie's identification
 	 * @param  {string} value Cookie's value
-	 * @param  {number} expires Cookie's expiration date in days from now. If it's undefined the cookie is a session Cookie
+	 * @param  {number} expires Cookie's expiration date in days from now. If it's undefined the cookie has a duration of 10 years
 	 * @param  {string} userIri IRI of the user useful to contextualize the cookie
 	 */
     public static setCookie(name: string, value: string, expires?: number, userIri?: string) {
@@ -53,10 +54,11 @@ export class Cookie {
         let myWindow: any = window;
         let cookieStr = myWindow.escape(name) + '=' + myWindow.escape(value) + ';';
 
-        if (expires) {
-            let dtExpires = new Date(new Date().getTime() + expires * 1000 * 60 * 60 * 24);
-            cookieStr += 'expires=' + dtExpires.toUTCString() + ';';
+        if (!expires) {
+            expires = 365*10;
         }
+        let dtExpires = new Date(new Date().getTime() + expires * 1000 * 60 * 60 * 24);
+        cookieStr += 'expires=' + dtExpires.toUTCString() + ';';
         document.cookie = cookieStr;
     }
 

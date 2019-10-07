@@ -1,0 +1,49 @@
+<div class="hbox">
+
+    <div class="card vbox">
+        <div class="card-body table-responsive">
+            <table class="table table-sm table-bordered" style="font-size: .9rem;">
+                <thead class="thead-light">
+                    <tr>
+                        <th colspan="3" class="text-center">Contributor</th>
+                        <th colspan="2" class="text-center">Dataset</th>
+                        <th rowspan="2" class="text-center align-middle">Contribution type</th>
+                        <th rowspan="2" class="text-center align-middle">Details</th>
+                        <th rowspan="2" class="text-center align-middle">Approve</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Last Name</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Base URI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let c of contributions" style="cursor: pointer">
+                        <td class="text-center">{{c.contributorName}}</td>
+                        <td class="text-center">{{c.contributorLastName}}</td>
+                        <td class="text-center">{{c.contributorEmail}}</td>
+                        <td class="text-center">{{c.resourceName}}</td>
+                        <td class="text-center">{{c.baseURI.toNT()}}</td>
+                        <td class="text-center">{{c.type}}</td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-outline-info" (click)="showDetails(c)">
+                                <span class="fa fa-ellipsis-h"></span>
+                            </button>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-success" style="width: 30px;" (click)="approveContribution(c)" title="Approve contribution">
+                                <span class="fa fa-check"></span>
+                            </button>
+                            <button class="btn btn-sm btn-danger ml-1" style="width: 30px;" (click)="rejectContribution(c)" title="Reject contribution">
+                                <span class="fa fa-times"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

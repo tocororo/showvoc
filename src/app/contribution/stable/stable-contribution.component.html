@@ -1,0 +1,52 @@
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label col-form-label-sm">Resource name</label>
+    <div class="col-sm-10">
+        <input class="form-control form-control-sm" [(ngModel)]="resourceName" placeholder="Resource name">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label col-form-label-sm">Home page <span>*</span></label>
+    <div class="col-sm-10">
+        <input class="form-control form-control-sm" [(ngModel)]="homepage" placeholder="Home page">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label col-form-label-sm">Description</label>
+    <div class="col-sm-10">
+        <textarea class="form-control form-control-sm" [(ngModel)]="description" placeholder="Description"></textarea>
+    </div>
+</div>
+<div class="form-check">
+    <label class="form-check-label form-check-label-sm">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="owner">
+        I'm the owner of the resource
+    </label>
+</div>
+
+<hr class="separator">
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label col-form-label-sm">Base URI</label>
+    <div class="col-sm-10">
+        <div class="input-group input-group-sm">
+            <input class="form-control" [(ngModel)]="baseURI" placeholder="Base URI">
+            <div class="input-group-append">
+                <button class="btn btn-info" (click)="discover()" [disabled]="!baseURI">Discover</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label col-form-label-sm">Model</label>
+    <div class="col-sm-4">
+        <select class="form-control form-control-sm" [(ngModel)]="selectedSemModel">
+            <option *ngFor="let m of semanticModels" [ngValue]="m.uri">{{m.show}}</option>
+        </select>
+    </div>
+    <label class="col-sm-2 col-form-label col-form-label-sm">Lexicalization model</label>
+    <div class="col-sm-4">
+        <select class="form-control form-control-sm" [(ngModel)]="selectedLexModel">
+            <option *ngFor="let m of lexicalizationModels" [ngValue]="m.uri">{{m.show}}</option>
+        </select>
+    </div>
+</div>

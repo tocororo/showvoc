@@ -2,7 +2,7 @@
 
 ## INTRODUCTION
 
-There are two alternative procedures for building VocBench3: with Maven and with Npm.
+There are two alternative procedures for building the PMKI portal: with Maven and with Npm.
 We suggest to follow the one with Maven since it does not require npm to be installed (it is downloaded as a plugin dependency and run by Maven during the building process) and requires less interaction steps.
 
 ##	BUILDING WITH MAVEN
@@ -71,8 +71,8 @@ In case you have installed the portal in a different container or in a dedicated
 /**
  * IP address/logical host name of the machine hosting Semantic Turkey.
  * By default (variable left unspecified) the host is resolved dynamically by using the same address of the 
- * machine hosting VocBench.
- * Thus if VocBench3 and Semantic Turkey are running on the same machine this variable can be left commented,
+ * machine hosting PMKI.
+ * Thus if PMKI and Semantic Turkey are running on the same machine this variable can be left commented,
  * otherwise uncomment the line and edit the value.
  */
 // var st_host = "127.0.0.1";
@@ -80,8 +80,8 @@ In case you have installed the portal in a different container or in a dedicated
 /**
  * Port of the container hosting Semantic Turkey.
  * By default (variable left unspecified) the port is resolved dynamically by using the same port of the 
- * container hosting VocBench.
- * Thus if VocBench3 and Semantic Turkey are running on the same container this variable can be left commented,
+ * container hosting PMKI.
+ * Thus if PMKI and Semantic Turkey are running on the same container this variable can be left commented,
  * otherwise uncomment the line and edit the value.
  */
 // var st_port = "1979";
@@ -100,7 +100,7 @@ var st_path;
 /**
  * Protocol - either http or https.
  * By default (variable left unspecified) the protocol is resolved dynamically by using the same one of the
- * container hosting VocBench.
+ * container hosting PMKI.
  */
 // var st_protocol = "http";
 ```

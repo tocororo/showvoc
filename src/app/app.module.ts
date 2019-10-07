@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdministrationModule } from './administration/administration.module';
 import { AlignmentsModule } from './alignments/alignments.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ContributionModule } from './contribution/contribution.module';
 import { CustomReuseStrategy } from './CustomReuseStrategy';
 import { DatasetsModule } from './datasets/datasets.module';
 import { GraphModule } from './graph/graph.module';
@@ -28,9 +30,11 @@ import { PMKIProperties } from './utils/PMKIProperties';
         NotFoundComponent
     ],
     imports: [
+        AdministrationModule,
         AlignmentsModule,
         AppRoutingModule,
         BrowserModule,
+        ContributionModule,
         DatasetsModule,
         GraphModule,
         ModalsModule,

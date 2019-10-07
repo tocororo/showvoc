@@ -34,8 +34,9 @@ export abstract class Resource extends Value {
 
 export class IRI extends Resource {
     private iriString: string;
-
     private localNameIdx: number = -1;
+
+    public static regexp = new RegExp("\\b(https?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]");
 
     constructor(iriString: string) {
         super();

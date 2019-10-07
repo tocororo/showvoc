@@ -1,0 +1,55 @@
+<div class="vbox my-3">
+    <div class="container vbox">
+        <div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label col-form-label-sm">Name</label>
+                <div class="col-sm-4">
+                    <input class="form-control form-control-sm" [(ngModel)]="name" placeholder="Name">
+                </div>
+                <label class="col-sm-2 col-form-label col-form-label-sm">Last name</label>
+                <div class="col-sm-4">
+                    <input class="form-control form-control-sm" [(ngModel)]="lastName" placeholder="Last name">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label col-form-label-sm">
+                    Email
+                    <span class="fa fa-info-circle" title="This will be used to send you an email with the response of the contribution evaluation"></span>
+                </label>
+                <div class="col-sm-4">
+                    <input type="email" class="form-control form-control-sm" [(ngModel)]="email" placeholder="Email">
+                </div>
+                <label class="col-sm-2 col-form-label col-form-label-sm">Organization <span>*</span></label>
+                <div class="col-sm-4">
+                    <input class="form-control form-control-sm" [(ngModel)]="organization" placeholder="Organization">
+                </div>
+            </div>
+            <hr class="separator">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label col-form-label-sm">Contribution</label>
+                <div class="form-group col-sm-10">
+                    <select class="form-control form-control-sm" [(ngModel)]="selectedContribution">
+                        <option *ngFor="let o of contributionOpts" [ngValue]="o.type">{{o.show}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="card vbox">
+            <div class="card-body p-3 scrollableContainer">
+                <stable-contribution *ngIf="selectedContribution == 'stable'"></stable-contribution>
+                <metadata-contribution *ngIf="selectedContribution == 'metadata'"></metadata-contribution>
+                <development-contribution *ngIf="selectedContribution == 'development'"></development-contribution>
+            </div>
+        </div>
+
+        <div class="d-flex mt-2" style="vertical-align: middle;">
+            <small class="form-text text-muted" style="flex: 1;">(*) Optional field</small>
+            <button class="btn btn-info" (click)="submit()" title="Submit contribution request" [disabled]="!selectedContribution || loading">
+                Submit request
+                <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+            </button>
+        </div>
+
+    </div>
+</div>

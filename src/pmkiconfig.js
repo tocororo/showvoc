@@ -33,10 +33,10 @@ var st_path;
 // var st_protocol = "http";
 
 /**
- * By default, PMKI relies on a lurker user created in Semantic Turkey.
+ * By default, PMKI relies on a visitor user created in Semantic Turkey (with just lurker capabilities).
  * This is necessary in order to allow PMKI to execute requests to ST that are secured.
- * If no user is logged directly in PMKI, the default "lurker" user should be logged.
- * The following parameters need to be set in order to provide the credentials for this lurker user.
+ * If no user is logged directly in PMKI, the default "visitor" user should be logged.
+ * The following parameters need to be set in order to provide the credentials for this visitor user.
  */
-var lurker_user_email = "";
-var lurker_user_password = "";
+var visitor_user_email = "";
+var visitor_user_password = "";

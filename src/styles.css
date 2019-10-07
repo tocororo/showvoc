@@ -255,6 +255,11 @@ sparql-component .CodeMirror { height: 28vh !important }
     margin-bottom: 0px;
 }
 
+.form-check-label-sm {
+    font-size: .875rem;
+    line-height: 1.5;
+}
+
 /* Bootstrap override */
 
 sparql-component .nav-tabs>li>a {
@@ -322,7 +327,7 @@ ul.nav-tabs {
 }
 
 .modal-dialog {
-    width: 500px;
+    max-width: 600px;
 }
 .modal-full.modal-dialog {
     width: 95% !important;
@@ -334,6 +339,7 @@ ul.nav-tabs {
 }
 .modal-xl {
     width: 1140px;
+    max-width: initial;
 }
 
 /* Following modal classe overrides are in order to avoid that modals exceed window height */

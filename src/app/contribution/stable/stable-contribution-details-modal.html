@@ -1,0 +1,87 @@
+<div class="modal-header">
+    <h5 class="modal-title">Details</h5>
+    <button class="close" (click)="close()">
+        <span>&times;</span>
+    </button>
+</div>
+<div class="modal-body scrollableContainer">
+
+    <div class="card mb-3">
+        <div class="card-header">Contributor</div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label col-form-label-sm">Name</label>
+                <div class="col-sm-4">
+                    <input class="form-control form-control-sm" [ngModel]="contribution.contributorName" readonly>
+                </div>
+                <label class="col-sm-2 col-form-label col-form-label-sm">Last name</label>
+                <div class="col-sm-4">
+                    <input class="form-control form-control-sm" [ngModel]="contribution.contributorLastName" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label col-form-label-sm">Email</label>
+                <div class="col-sm-4">
+                    <input type="email" class="form-control form-control-sm" [ngModel]="contribution.contributorEmail" readonly>
+                </div>
+                <label class="col-sm-2 col-form-label col-form-label-sm">Organization</label>
+                <div class="col-sm-4">
+                    <input class="form-control form-control-sm" [ngModel]="contribution.contributorOrganization" readonly>
+                </div>
+            </div>
+            <div>
+                <small>
+                    <span class="mr-1">The Contributor is the owner of the resource?</span>
+                    <span *ngIf="contribution.isOwner">YES</span>
+                    <span *ngIf="!contribution.isOwner">NO</span>
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">Contribution</div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label col-form-label-sm">Resource name</label>
+                <div class="col-sm-10">
+                    <input class="form-control form-control-sm" [ngModel]="contribution.resourceName" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label col-form-label-sm">Home page</label>
+                <div class="col-sm-10">
+                    <input class="form-control form-control-sm" [ngModel]="contribution.homepage" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label col-form-label-sm">Description</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control form-control-sm" [ngModel]="contribution.description" readonly></textarea>
+                </div>
+            </div>
+            <hr class="separator">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label col-form-label-sm">Base URI</label>
+                <div class="col-sm-10">
+                    <input class="form-control form-control-sm" [ngModel]="contribution.baseURI.toNT()" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label col-form-label-sm">Model</label>
+                <div class="col-sm-4">
+                    <input class="form-control form-control-sm" [ngModel]="modelsLabelMap[contribution.model.getIRI()]" readonly>
+                </div>
+                <label class="col-sm-2 col-form-label col-form-label-sm">Lex. model</label>
+                <div class="col-sm-4">
+                    <input class="form-control form-control-sm" [ngModel]="modelsLabelMap[contribution.lexicalizationModel.getIRI()]" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <!-- <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button> -->
+    <button class="btn btn-sm btn-secondary" (click)="close()">Close</button>
+</div>

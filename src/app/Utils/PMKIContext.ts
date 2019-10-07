@@ -13,7 +13,7 @@ export class PMKIContext {
     private static systemSettings: SystemSettings = new SystemSettings();
 
     private static loggedUser: User;
-    private static lurkerUser: User;
+    private static visitorUser: User;
 
     static initProjectCtx(project: Project) {
         this.workingProjectCtx = new ProjectContext();
@@ -76,15 +76,12 @@ export class PMKIContext {
     static removeLoggedUser() {
         this.loggedUser = null;
     }
-    static isLoggedIn(): boolean {
-        return this.loggedUser != null;
-    }
 
-    static setLurkerUser(user: User) {
-        this.lurkerUser = user;
+    static setVisitorUser(user: User) {
+        this.visitorUser = user;
     }
-    static getLurkerUser(): User {
-        return this.lurkerUser;
+    static getVisitorUser(): User {
+        return this.visitorUser;
     }
 
     /**

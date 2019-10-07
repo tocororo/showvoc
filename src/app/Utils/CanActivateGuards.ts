@@ -65,22 +65,22 @@ export class ProjectGuard implements CanActivate {
 }
 
 @Injectable()
-export class LurkerAuthGuard implements CanActivate {
+export class VisitorAuthGuard implements CanActivate {
 
     constructor(private router: Router, private authService: AuthServices, private userService: UserServices) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        let lurkerUser = PMKIContext.getLurkerUser();
-        if (lurkerUser != null) {
+        let visitorUser = PMKIContext.getVisitorUser();
+        if (visitorUser != null) {
             return of(true);
-        } else { //lurker user not initialized => init
+        } else { //visitor user not initialized => init
             return this.userService.getUser().pipe(
                 flatMap(user => {
                     if (user) {
-                        PMKIContext.setLurkerUser(user);
+                        PMKIContext.setVisitorUser(user);
                         return of(true);
                     } else {
-                        return this.loginLurkerUser().pipe(
+                        return this.loginVisitorUser().pipe(
                             map(() => {
                                 return true;
                             })
@@ -91,16 +91,16 @@ export class LurkerAuthGuard implements CanActivate {
         }
     }
 
-    private loginLurkerUser(): Observable<void> {
-        let lurker_email: string = window['lurker_user_email'];
-        let lurker_pwd: string = window['lurker_user_password'];
-        return this.authService.login(lurker_email, lurker_pwd).pipe(
+    private loginVisitorUser(): Observable<void> {
+        let visitor_email: string = window['visitor_user_email'];
+        let visitor_pwd: string = window['visitor_user_password'];
+        return this.authService.login(visitor_email, visitor_pwd).pipe(
             map(user => {
-                PMKIContext.setLurkerUser(user);
+                PMKIContext.setVisitorUser(user);
             })
         );
     }
 
 }
 
-export const GUARD_PROVIDERS = [LurkerAuthGuard, ProjectGuard];
+export const GUARD_PROVIDERS = [VisitorAuthGuard, ProjectGuard];

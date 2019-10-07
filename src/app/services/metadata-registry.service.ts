@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IRI, AnnotatedValue, Literal } from '../models/Resources';
-import { HttpManager } from '../utils/HttpManager';
+import { IRI, AnnotatedValue, Literal, ResourcePosition } from '../models/Resources';
+import { HttpManager, PMKIRequestOptions } from '../utils/HttpManager';
 import { Project } from '../models/Project';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -76,6 +76,21 @@ export class MetadataRegistryServices {
     }
 
     /**
+     * Find a dataset matching the given IRI.
+     * @param iri 
+     */
+    findDataset(iri: IRI): Observable<ResourcePosition> {
+        var params: any = {
+            iri: iri,
+        }
+        return this.httpMgr.doGet(this.serviceName, "findDataset", params).pipe(
+            map(resp => {
+                return ResourcePosition.deserialize(resp);
+            })
+        );
+    }
+
+    /**
      * 
      * @param dataset 
      */
@@ -86,6 +101,28 @@ export class MetadataRegistryServices {
         return this.httpMgr.doGet(this.serviceName, "getDatasetMetadata", params).pipe(
             map(stResp => {
                 return DatasetMetadata.deserialize(stResp);
+            })
+        );
+    }
+
+    /**
+     * Discover the metadata for a dataset given an IRI. If discovery is unsuccessful, an exception is thrown.
+     * Returns the id of the metadataDataset found.
+     * @param iri 
+     */
+    discoverDataset(iri: IRI): Observable<AnnotatedValue<IRI>> {
+        var params: any = {
+            iri: iri,
+        }
+        let options: PMKIRequestOptions = new PMKIRequestOptions({
+            errorAlertOpt: { 
+                show: true,
+                exceptionsToSkip: ['it.uniroma2.art.semanticturkey.exceptions.DeniedOperationException'] 
+            } 
+        });
+        return this.httpMgr.doPost(this.serviceName, "discoverDataset", params, options).pipe(
+            map(stResp => {
+                return ResourceDeserializer.createIRI(stResp);
             })
         );
     }

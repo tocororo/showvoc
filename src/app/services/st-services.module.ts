@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpManager } from '../utils/HttpManager';
 import { AlignmentServices } from './alignment.service';
 import { AuthServices } from "./auth.service";
+import { ConfigurationsServices } from './configuration.service';
 import { ExportServices } from './export.service';
 import { GlobalSearchServices } from './global-search.service';
 import { GraphServices } from './graph.service';
@@ -10,6 +11,7 @@ import { MapleServices } from './maple.service';
 import { MetadataRegistryServices } from './metadata-registry.service';
 import { MetadataServices } from './metadata.service';
 import { OntoLexLemonServices } from './ontolex-lemon.service';
+import { PmkiServices } from './pmki.service';
 import { PreferencesSettingsServices } from './preferences-settings.service';
 import { ProjectsServices } from './projects.service';
 import { PropertiesServices } from './properties.service';
@@ -27,6 +29,7 @@ import { UserServices } from './user.service';
     providers: [
         AlignmentServices,
         AuthServices,
+        ConfigurationsServices,
         ExportServices,
         GlobalSearchServices,
         GraphServices,
@@ -35,6 +38,7 @@ import { UserServices } from './user.service';
         MetadataServices,
         MetadataRegistryServices,
         OntoLexLemonServices,
+        PmkiServices,
         PreferencesSettingsServices,
         ProjectsServices,
         PropertiesServices,

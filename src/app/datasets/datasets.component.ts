@@ -42,7 +42,7 @@ export class DatasetsComponent implements OnInit {
         if (this.lexiconsCheck) modelFacets.push(OntoLex.uri);
 
         this.loading = true;
-        this.projectService.listProjects(null, false, false).pipe(
+        this.projectService.listProjects(null, false, this.openCheck).pipe(
             finalize(() => this.loading = false)
         ).subscribe(
             projects => {
@@ -54,9 +54,8 @@ export class DatasetsComponent implements OnInit {
                             p.getName().toUpperCase().includes(this.searchString.toUpperCase()) || //check search string matches project name
                             p.getBaseURI().toUpperCase().includes(this.searchString.toUpperCase()) //check search string matches project baseuri
                         ) &&
-                        ((this.openCheck && p.isOpen()) || !this.openCheck) && //check on open/close
-                        (modelFacets == null || modelFacets.includes(p.getModelType()))) //check on facets
-                    {
+                        (modelFacets == null || modelFacets.includes(p.getModelType())) //check on model facets
+                    ) {
                         this.projects.push(p);
                     }
                 });

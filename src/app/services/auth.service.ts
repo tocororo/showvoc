@@ -14,7 +14,7 @@ export class AuthServices {
     constructor(private httpMgr: HttpManager, private router: Router) { }
 
     /**
-     * Logs in and registers the logged user in the VBContext
+     * Logs in and registers the logged user in the Context
      */
     login(email: string, password: string, rememberMe?: boolean): Observable<User> {
         var params: any = {
@@ -24,9 +24,10 @@ export class AuthServices {
         }
         return this.httpMgr.doPost(this.serviceName, "login", params).pipe(
             map(stResp => {
-                let loggedUser: User = User.createUser(stResp);
-                // PMKIContext.setLoggedUser(loggedUser);
-                return loggedUser;
+                let user: User = User.createUser(stResp);
+                //PMKIContext.setLoggedUser(user);
+                //PMKIContext.setVisitorUser(user);
+                return user;
             })
         );
 
