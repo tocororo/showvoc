@@ -18,6 +18,7 @@ import { LexicalEntryListModal } from './browsing-modals/lexical-entry-list-moda
 import { LexiconListModal } from './browsing-modals/lexicon-list-modal/lexicon-list-modal';
 import { PropertyTreeModal } from './browsing-modals/property-tree-modal/property-tree-modal';
 import { SchemeListModal } from './browsing-modals/scheme-list-modal/scheme-list-modal';
+import { PluginConfigurationModal } from './shared-modals/plugin-configuration/plugin-configuration-modal';
 import { SharedModalsServices } from './shared-modals/shared-modal.service';
 
 @NgModule({
@@ -29,19 +30,20 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         DownloadModal,
         LexicalEntryListModal,
         LexiconListModal,
+        PluginConfigurationModal,
         PromptModal,
         PromptNumberModal,
         PropertyTreeModal,
         ResourceSelectionModal,
         SchemeListModal
     ],
-	imports: [
-		CommonModule, FormsModule, WidgetModule, ResourceViewModule, StructuresModule
-	],
-	providers: [
-		BasicModalsServices, BrowsingModalsServices, SharedModalsServices
-	],
-	entryComponents: [
+    imports: [
+        CommonModule, FormsModule, WidgetModule, ResourceViewModule, StructuresModule
+    ],
+    providers: [
+        BasicModalsServices, BrowsingModalsServices, SharedModalsServices
+    ],
+    entryComponents: [
         AlertModal,
         CollectionTreeModal,
         ConceptTreeModal,
@@ -49,11 +51,12 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         DownloadModal,
         LexicalEntryListModal,
         LexiconListModal,
+        PluginConfigurationModal,
         PromptModal,
         PromptNumberModal,
         PropertyTreeModal,
         ResourceSelectionModal,
         SchemeListModal
-	]
+    ]
 })
 export class ModalsModule { }

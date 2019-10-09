@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { forkJoin, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
+import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { Configuration, ConfigurationComponents, ConfigurationProperty } from 'src/app/models/Configuration';
 import { DevResourceStoredContribution, MetadataStoredContribution, StableResourceStoredContribution, StoredContribution } from 'src/app/models/Contribution';
 import { ConfigurationsServices } from 'src/app/services/configuration.service';
 import { PmkiServices } from 'src/app/services/pmki.service';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
-import { ContributionProjectCreationModal } from '../contribution-project-creation-modal';
 import { DevelopmentContributionDetailsModal } from '../development/development-contribution-details-modal';
+import { MetadataContributionDetailsModal } from '../metadata/metadata-contribution-details-modal';
 import { StableContributionDetailsModal } from '../stable/stable-contribution-details-modal';
-import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { StableProjectCreationModal } from '../stable/stable-project-creation-modal';
 
 @Component({
     selector: 'contributions-manager',
@@ -32,7 +33,7 @@ export class ContributionsManagerComponent {
     }
 
     private initContributions() {
-        this.contributions = [];
+        this.loading = true;
         this.pmkiServices.getContributionReferences().subscribe(
             references => {
                 let getConfigFn: Observable<void>[] = [];
@@ -44,16 +45,22 @@ export class ContributionsManagerComponent {
                                 /**
                                  * add further attributes to the contribution:
                                  * - timestamp: the identifier of the configuration reference, useful for the sorting
+                                 * - date: useful info to show
                                  * - relativeReference: reference of the configuration, useful in case of rejection of the contribution
                                  */
-                                contribution['relativeReference'] = parseInt(ref.relativeReference);
-                                contribution['timestamp'] = parseInt(ref.identifier);
+                                contribution['relativeReference'] = ref.relativeReference;
+                                let timestampMillis: number = parseInt(ref.identifier);
+                                contribution['timestamp'] = timestampMillis;
+                                contribution['date'] = new Date(timestampMillis).toLocaleString();
                                 this.contributions.push(contribution);
                             })
                         )
                     )
                 });
-                forkJoin(getConfigFn).subscribe(
+                this.contributions = [];
+                forkJoin(getConfigFn).pipe(
+                    finalize(() => this.loading = false)
+                ).subscribe(
                     () => {
                         this.contributions.sort((c1: StoredContribution, c2: StoredContribution) => {
                             return c1['timestamp']-c2['timestamp'];
@@ -70,6 +77,21 @@ export class ContributionsManagerComponent {
         //parse specific contribution impl properties
         if (configuration.type == ConfigurationComponents.CONTRIBUTION_STORE.CONFIG_IMPL.METADATA) {
             contribution = new MetadataStoredContribution();
+            (<MetadataStoredContribution>contribution).resourceName = properties.find(p => p.name == "resourceName").value;
+            (<MetadataStoredContribution>contribution).uriSpace = properties.find(p => p.name == "uriSpace").value;
+            (<MetadataStoredContribution>contribution).identity = ResourceUtils.parseIRI(properties.find(p => p.name == "identity").value);
+            (<MetadataStoredContribution>contribution).dereferenciationSystem = ResourceUtils.parseIRI(properties.find(p => p.name == "dereferenciationSystem").value);
+            let sparqlEndpointValue = properties.find(p => p.name == "sparqlEndpoint").value;
+            if (sparqlEndpointValue != null) {
+                (<MetadataStoredContribution>contribution).sparqlEndpoint = ResourceUtils.parseIRI(sparqlEndpointValue);
+            }
+            (<MetadataStoredContribution>contribution).sparqlLimitations = [];
+            let sparqlLimitationValue: string[] = properties.find(p => p.name == "sparqlLimitations").value;
+            if (sparqlLimitationValue != null) {
+                sparqlLimitationValue.forEach(l => {
+                    (<MetadataStoredContribution>contribution).sparqlLimitations.push(ResourceUtils.parseIRI(l));
+                });
+            }
         } else if (configuration.type == ConfigurationComponents.CONTRIBUTION_STORE.CONFIG_IMPL.STABLE) {
             contribution = new StableResourceStoredContribution();
             (<StableResourceStoredContribution>contribution).resourceName = properties.find(p => p.name == "resourceName").value;
@@ -102,6 +124,7 @@ export class ContributionsManagerComponent {
         if (contribution instanceof DevResourceStoredContribution) {
             modalRef = this.modalService.open(DevelopmentContributionDetailsModal, _options);
         } else if (contribution instanceof MetadataStoredContribution) {
+            modalRef = this.modalService.open(MetadataContributionDetailsModal, _options);
         } else if (contribution instanceof StableResourceStoredContribution) {
             modalRef = this.modalService.open(StableContributionDetailsModal, _options);
         }
@@ -109,21 +132,30 @@ export class ContributionsManagerComponent {
     }
 
     approveContribution(contribution: StoredContribution) {
-        let _options: ModalOptions = new ModalOptions("lg");
-        let modalRef: NgbModalRef;
-        if (contribution instanceof DevResourceStoredContribution || contribution instanceof StableResourceStoredContribution) {
-            modalRef = this.modalService.open(ContributionProjectCreationModal, _options);
-        } else if (contribution instanceof MetadataStoredContribution) {
-            //TODO just invoke a service for writing the proposed metadata to the registry
-        }
-        modalRef.componentInstance.contribution = contribution;
+        if (contribution instanceof StableResourceStoredContribution) {
+            let _options: ModalOptions = new ModalOptions("lg");
+            let modalRef: NgbModalRef;
+            modalRef = this.modalService.open(StableProjectCreationModal, _options);
+            modalRef.componentInstance.contribution = contribution;
+            modalRef.result.then(
+                () => { //modal closed via "OK" button => contribution approved and removed => remove the contribution
+                    this.contributions.splice(this.contributions.indexOf(contribution), 1);
+                },
+                () => {}
+            );
+        } else if (contribution instanceof DevResourceStoredContribution) {
 
-        modalRef.result.then(
-            () => {
-                //modal closed via "OK" button => contribution removed => re-init the contributions
-                this.initContributions();
-            }
-        )        
+        } else if (contribution instanceof MetadataStoredContribution) {
+            this.basicModals.confirm("Approve contribution", "You are going to submit the proposed metadata into the Metadata Registry. Are you sure?", ModalType.warning).then(
+                confirm => {
+                    //TODO just invoke a service for writing the proposed metadata to the registry
+                    //then...
+                    // this.contributions.splice(this.contributions.indexOf(contribution), 1);
+                },
+                () => {}
+            );
+        }
+        
     }
 
     rejectContribution(contribution: StoredContribution) {
@@ -131,7 +163,7 @@ export class ContributionsManagerComponent {
             () => {
                 this.pmkiServices.deleteContribution(contribution['relativeReference']).subscribe(
                     () => {
-                        this.initContributions();
+                        this.contributions.splice(this.contributions.indexOf(contribution), 1);
                     }
                 );
             },

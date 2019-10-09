@@ -1,0 +1,33 @@
+<div class="hbox">
+
+    <!--
+        Extension selector visible if: 
+        * there are multiple extensions;
+        * there is one extension (immediately selected) and it has 0 or 1 configuration
+        Configuration selector visible if the selected extension has multiple configurations.
+    -->
+    <select *ngIf="extensions.length > 1 || !selectedExtension.configurations || selectedExtension.configurations.length == 1"
+        class="form-control form-control-sm mr-1" [(ngModel)]="selectedExtension" (ngModelChange)="onChangeExtension()"
+        [title]="selectedExtension.description" [disabled]="disabled">
+        <option *ngFor="let ext of extensions" [ngValue]="ext" [title]="ext.description">
+            {{ext.name}} 
+        </option>
+    </select>
+    <select *ngIf="selectedExtension.configurations?.length > 1" class="form-control form-control-sm ml-1"
+        [(ngModel)]="selectedConfiguration" (ngModelChange)="onChangeConfig()" [disabled]="disabled">
+        <option *ngFor="let cfg of selectedExtension.configurations" [ngValue]="cfg">{{cfg.shortName}}</option>
+    </select>
+
+    <span *ngIf="selectedExtension.configurations" class="btn-group btn-group-sm ml-1" style="display: flex">
+        <button class="btn btn-light" (click)="configure()" [disabled]="disabled">Configure</button>
+        <ng-container *ngIf="storeable">
+            <button class="btn btn-light" title="Save configuration" (click)="saveConfig()" [disabled]="disabled">
+                <span class="fa fa-floppy-o"></span>
+            </button>
+            <button class="btn btn-light" title="Load configuration" (click)="loadConfig()" [disabled]="disabled">
+                <span class="fa fa-floppy-o"></span>
+            </button>
+        </ng-container>
+    </span>
+
+</div>

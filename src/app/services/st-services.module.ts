@@ -5,6 +5,7 @@ import { AlignmentServices } from './alignment.service';
 import { AuthServices } from "./auth.service";
 import { ConfigurationsServices } from './configuration.service';
 import { ExportServices } from './export.service';
+import { ExtensionsServices } from './extensions.service';
 import { GlobalSearchServices } from './global-search.service';
 import { GraphServices } from './graph.service';
 import { MapleServices } from './maple.service';
@@ -31,6 +32,7 @@ import { UserServices } from './user.service';
         AuthServices,
         ConfigurationsServices,
         ExportServices,
+        ExtensionsServices,
         GlobalSearchServices,
         GraphServices,
         HttpManager,

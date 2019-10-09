@@ -126,3 +126,41 @@ export class Project {
     }
 
 }
+
+export class RepositoryAccess {
+    private type: RepositoryAccessType;
+    private configuration: RemoteRepositoryAccessConfig;
+
+    constructor(type: RepositoryAccessType) {
+        this.type = type;
+    }
+
+    public setConfiguration(configuration: RemoteRepositoryAccessConfig) {
+        this.configuration = configuration;
+    }
+
+    public stringify(): string {
+        let repoAccess: any = {
+            "@type": this.type,
+        }
+        //if the repository access is remote, add the configuration
+        if (this.type == RepositoryAccessType.CreateRemote || this.type == RepositoryAccessType.AccessExistingRemote) {
+            repoAccess.serverURL = this.configuration.serverURL;
+            repoAccess.username = this.configuration.username;
+            repoAccess.password = this.configuration.password;
+        }
+        return JSON.stringify(repoAccess);
+    }
+}
+
+export class RemoteRepositoryAccessConfig {
+    public serverURL: string;
+    public username: string;
+    public password: string;
+}
+
+export enum RepositoryAccessType {
+    CreateLocal = "CreateLocal",
+    CreateRemote = "CreateRemote",
+    AccessExistingRemote = "AccessExistingRemote",
+}

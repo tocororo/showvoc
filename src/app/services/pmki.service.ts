@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigurationObject, Reference } from '../models/Configuration';
+import { PluginSpecification } from '../models/Plugins';
+import { RepositoryAccess } from '../models/Project';
+import { IRI } from '../models/Resources';
 import { HttpManager } from "../utils/HttpManager";
 
 @Injectable()
@@ -38,4 +41,19 @@ export class PmkiServices {
         return this.httpMgr.doPost(this.serviceName, "deleteContribution", params);
     }
 
+
+    approveResourceContribution(projectName: string, model: IRI, lexicalizationModel: IRI, baseURI: string,
+        repositoryAccess: RepositoryAccess, coreRepoSailConfigurerSpecification: PluginSpecification,
+        configurationReference: string) {
+        var params = {
+            projectName: projectName,
+            model: model,
+            lexicalizationModel: lexicalizationModel,
+            baseURI: baseURI,
+            repositoryAccess: repositoryAccess.stringify(),
+            coreRepoSailConfigurerSpecification: JSON.stringify(coreRepoSailConfigurerSpecification),
+            configurationReference: configurationReference
+        };
+        return this.httpMgr.doPost(this.serviceName, "approveResourceContribution", params);
+    }
 }

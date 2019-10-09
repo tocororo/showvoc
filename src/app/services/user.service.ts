@@ -25,9 +25,7 @@ export class UserServices {
                 if (stResp.user != null) { //user object in respnse => serialize it (it could be empty, so no user logged)
                     let user: User = User.createUser(stResp.user);
                     if (user != null) {
-                        //here I should determine if the returned user is the visitor or an admin/contributor
                         PMKIContext.setLoggedUser(user);
-                        // PMKIContext.setVisitorUser(user);
                     }
                     return user;
                 } else { //no user object in the response => there is no user registered

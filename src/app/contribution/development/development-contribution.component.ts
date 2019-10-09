@@ -44,7 +44,7 @@ export class DevelopmentContributionComponent extends AbstractContributionCompon
         super();
     }
 
-    getConfiguration(): ConfigurationObject {
+    getConfigurationImpl(): ConfigurationObject {
         //check mandatory fields
         let missingField: string;
         if (this.resourceName == null) {

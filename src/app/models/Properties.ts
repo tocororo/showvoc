@@ -24,6 +24,7 @@ export class Properties {
     static pref_hide_literal_graph_nodes: string = "hide_literal_graph_nodes";
 
     static setting_languages: string = "languages";
+    static setting_remote_configs = "remote_configs";
 }
 
 export class SearchSettings {

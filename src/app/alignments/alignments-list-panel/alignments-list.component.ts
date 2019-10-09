@@ -76,6 +76,9 @@ export class AlignmentsListComponent {
         ).subscribe(
             linksets => {
                 this.linksets = linksets;
+                this.linksets.sort((l1: LinksetMetadata, l2: LinksetMetadata) => {
+                    return l1.getTargetDatasetShow().localeCompare(l2.getTargetDatasetShow());
+                });
             }
         )
     }

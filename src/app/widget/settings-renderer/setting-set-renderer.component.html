@@ -1,0 +1,53 @@
+<table class="table table-condensed table-borderless">
+    <colgroup>
+        <col>
+        <col style="width: 1%">
+        <col style="width: 1%">
+    </colgroup>
+    <tbody>
+        <!-- Why index and track by? https://stackoverflow.com/q/40314732/5805661 -->
+        <tr *ngFor="let v of value; let index = index; let last = last; trackBy: trackByIndex;">
+            <td style="padding: 2px 0px;">
+                <div [ngSwitch]="types[0].name">
+                    <!-- <resource-picker *ngSwitchCase="'IRI'" [resource]="value[index]" [roles]="getIRIRoleConstraints()" [editable]="true"
+                        (resourceChanged)="updateValue(index, $event)">
+                    </resource-picker>
+
+                    <resource-picker *ngSwitchCase="'Resource'" [resource]="value[index]" [roles]="getIRIRoleConstraints(p)" [editable]="true"
+                        (resourceChanged)="updateValue(index, $event)">
+                    </resource-picker>
+
+                    <value-picker *ngSwitchCase="'RDFValue'" [value]="value[index]" [editable]="true" (valueChanged)="updateValue(index, $event)">
+                    </value-picker>
+
+                    <literal-picker *ngSwitchCase="'Literal'" [literal]="value[index]" (literalChanged)="updateValue(index, $event)">
+                    </literal-picker> -->
+
+                    <textarea *ngSwitchCase="'java.lang.String'" type="text" rows="1" class="form-control form-control-sm" style="resize: vertical" [(ngModel)]="value[index]" (ngModelChange)="onModelChange()">
+                    </textarea>
+
+                    <input *ngSwitchCase="'int'" type="number" class="form-control form-control-sm" step="1" [(ngModel)]="p.value">
+
+                    <div *ngSwitchDefault class="hbox" style="align-items: center; position: relative;">
+                        <textarea *ngSwitchDefault type="text" rows="1" class="form-control form-control-sm" 
+                            style="resize: vertical;" [(ngModel)]="value[index]" (ngModelChange)="onModelChange()">
+                        </textarea>
+                        <span class="fa fa-exclamation-triangle" style="position: absolute; top: 8px; right: 8px;"
+                            [title]="'This parameter has an unknown type (' + types[0].name + '). The entered value will be interpreted as a low-level JSON value.'">
+                        </span>
+                    </div>
+                </div>
+            </td>
+            <td style="padding: 0px;">
+                <button *ngIf="value.length > 1" class="btn btn-sm btn-light ml-1" (click)="delete(index)">
+                    <span class="fa fa-trash-o"></span>
+                </button>
+            </td>
+            <td style="padding: 0px;">
+                <button *ngIf="last" class="btn btn-sm btn-light ml-1" (click)="add(index)">
+                    <span class="fa fa-plus"></span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

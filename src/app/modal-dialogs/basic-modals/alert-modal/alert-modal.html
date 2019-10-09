@@ -1,8 +1,8 @@
 <div class="modal-header">
 	<h5 [class]="'modal-title ' + titleClass">{{title}}</h5>
-	<button class="close" (click)="close()">
+	<!-- <button class="close" (click)="close()">
 		<span>&times;</span>
-	</button>
+	</button> -->
 </div>
 <div class="modal-body">
 	<div *ngIf="alertClass" [class]="alertClass + ' vbox'">
@@ -16,7 +16,7 @@
                 <label>Details:</label>
             </div>
             <div *ngIf="!detailsCollapsed" class="card vbox">
-                <div class="card-body overflow-auto">
+                <div class="card-body overflow-auto" style="font-size: .8rem;">
                     {{details}}
                 </div>
             </div>

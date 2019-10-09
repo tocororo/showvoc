@@ -10,7 +10,7 @@ import { UserForm } from '../models/User';
 })
 export class RegistrationComponent implements OnInit {
 
-	private userForm: UserForm = new UserForm();
+	userForm: UserForm = new UserForm();
 
 	constructor(private basicModals: BasicModalsServices) { }
 

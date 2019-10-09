@@ -13,15 +13,15 @@ import { SearchComponent } from './search/search.component';
 import { LoginComponent } from './user/login.component';
 import { RegistrationComponent } from './user/registration.component';
 import { ResetPasswordComponent } from './user/reset-password.component';
-import { VisitorAuthGuard, ProjectGuard } from './utils/CanActivateGuards';
+import { VisitorAuthGuard, ProjectGuard, AdminAuthGuard } from './utils/CanActivateGuards';
 
 const routes: Routes = [
     { path: '', redirectTo: "/home", pathMatch: 'full' },
-    { path: "home", component: HomeComponent },
+    { path: "home", component: HomeComponent, canActivate: [VisitorAuthGuard] },
     { path: "login", component: LoginComponent },
     { path: "registration", component: RegistrationComponent },
-    { path: "admin", component: AdminDashboardComponent }, //TODO guard for administrator
-    { path: "contribution", component: ContributionComponent },
+    { path: "admin", component: AdminDashboardComponent, canActivate: [AdminAuthGuard] },
+    { path: "contribution", component: ContributionComponent, canActivate: [VisitorAuthGuard] },
     { path: "ResetPassword/:token", component: ResetPasswordComponent },
     { path: 'datasets', component: DatasetsComponent, canActivate: [VisitorAuthGuard] },
     {

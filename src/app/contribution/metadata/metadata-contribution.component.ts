@@ -6,6 +6,7 @@ import { IRI } from 'src/app/models/Resources';
 import { MetadataRegistryServices } from 'src/app/services/metadata-registry.service';
 import { AbstractContributionComponent } from '../abstract-contribution.component';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { SemanticTurkey } from 'src/app/models/Vocabulary';
 
 @Component({
     selector: 'metadata-contribution',
@@ -19,48 +20,76 @@ export class MetadataContributionComponent extends AbstractContributionComponent
 
     baseURI: string;
 
+    discovered: boolean = false;
+    resourceName: string;
+    identity: string;
+    dereferenciationSystem: string;
+    sparqlEndpoint: string;
+    sparqlNoAggregation: boolean;
+    uriSpace: string;
+
+    dereferenciationOpts: { uri: string, show: string }[] = [
+        { uri: null, show: "Unknown" },
+        { uri: SemanticTurkey.standardDereferenciation, show: "Yes" },
+        { uri: SemanticTurkey.noDereferenciation, show: "No" },
+    ]
+
     constructor(private metadataRegistryService: MetadataRegistryServices, private basicModals: BasicModalsServices) {
         super();
     }
 
-    ngOnInit() {}
-
     discover() {
         this.loading = true;
 
-        let baseUriIRI: IRI = new IRI(this.baseURI);
-        // this.metadataRegistryService.findDataset(baseUriIRI).subscribe(
-        //     resPosition => {
-        //     }
-        // )
-        this.metadataRegistryService.discoverDataset(baseUriIRI).pipe(
-            finalize(() => this.loading = false)
-        ).subscribe(
-            datasetCatalogIri => {
-                this.metadataRegistryService.getDatasetMetadata(datasetCatalogIri.getValue()).subscribe(
-                    dataset => {
-                    }
-                )
-            },
-            (err: Error) => {
-                //in case discoverDataset throws an exception prevent to contribute metadata
-                if (err.name.endsWith("DeniedOperationException")) {
-                    this.basicModals.alert("Already existing dataset", "A dataset for the provided IRI " + baseUriIRI.toNT() + " is already in the metadata registry", ModalType.warning);
-                }
+        /**
+         * just for temporary test
+         */
+        this.metadataRegistryService.getDatasetMetadata(new IRI("http://aims.fao.org/aos/agrovoc/void.ttl#Agrovoc")).subscribe(
+            dataset => {
+                this.discovered = true;
+                this.resourceName = dataset.title;
+                this.identity = dataset.identity;
+                this.dereferenciationSystem = dataset.dereferenciationSystem;
+                this.sparqlEndpoint = dataset.sparqlEndpointMetadata.id;
+                this.sparqlNoAggregation = dataset.sparqlEndpointMetadata.limitations ?
+                    dataset.sparqlEndpointMetadata.limitations.some(l => l == "<" + SemanticTurkey.noAggregation + ">") :
+                    false;
+                this.uriSpace = dataset.uriSpace;
             }
-        );
+        )
+
+        // let baseUriIRI: IRI = new IRI(this.baseURI);
+        // this.metadataRegistryService.discoverDataset(baseUriIRI).pipe(
+        //     finalize(() => this.loading = false)
+        // ).subscribe(
+        //     datasetCatalogIri => {
+        //         this.metadataRegistryService.getDatasetMetadata(datasetCatalogIri.getValue()).subscribe(
+        //             dataset => {
+        //             }
+        //         )
+        //     },
+        //     (err: Error) => {
+        //         //in case discoverDataset throws an exception prevent to contribute metadata
+        //         if (err.name.endsWith("DeniedOperationException")) {
+        //             this.basicModals.alert("Already existing dataset", "A dataset for the provided IRI " + baseUriIRI.toNT() + " is already in the metadata registry", ModalType.warning);
+        //         }
+        //     }
+        // );
     }
 
-    getConfiguration(): ConfigurationObject {
-        //TODO checks
+    getConfigurationImpl(): ConfigurationObject {
+        if (!this.discovered) {
+            this.basicModals.alert("Incomplete form", "You first need to discover metadata about the dataset. Please provide a Base URI and then click on the 'Discover' button.", ModalType.warning);
+            return;
+        }
         let config: ConfigurationObject = {
-            // resourceName: this.name,
-            // homepage: this.homepage,
-            // description: this.description,
-            // isOwner: this.owner,
-            // baseURI: this.baseURI,
-            // model: new IRI(this.selectedSemModel),
-            // lexicalizationModel: new IRI(this.selectedLexModel)
+            baseURI: new IRI(this.baseURI).toNT(),
+            resourceName: this.resourceName,
+            identity: new IRI(this.identity).toNT(),
+            dereferenciationSystem: this.dereferenciationSystem ? new IRI(this.dereferenciationSystem).toNT() : null,
+            sparqlEndpoint: new IRI(this.sparqlEndpoint).toNT(),
+            sparqlLimitations: this.sparqlNoAggregation ? [new IRI(SemanticTurkey.noAggregation).toNT()] : null,
+            uriSpace: this.uriSpace ? new IRI(this.uriSpace).toNT() : null
         }
         return config;
     }

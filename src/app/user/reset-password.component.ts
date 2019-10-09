@@ -11,10 +11,10 @@ import { finalize } from 'rxjs/operators';
 })
 export class ResetPasswordComponent implements OnInit {
 
-    private email: string;
-    private token: string;
+    email: string;
+    token: string;
 
-    private loading: boolean;
+    loading: boolean;
 
     constructor(private userService: UserServices, private basicModals: BasicModalsServices, private router: Router, private activeRoute: ActivatedRoute) { }
 
@@ -26,7 +26,7 @@ export class ResetPasswordComponent implements OnInit {
         return (this.email != null && this.email.trim() != "");
     }
 
-    private reset() {
+    reset() {
         this.loading = true;
         this.userService.resetPassword(this.email, this.token).pipe(
             finalize(() => this.loading = false)

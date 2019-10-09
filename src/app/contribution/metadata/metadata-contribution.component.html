@@ -1,6 +1,6 @@
 <div class="form-group row">
     <label class="col-sm-2 col-form-label col-form-label-sm">Base URI</label>
-    <div class="form-group col-sm-10">
+    <div class="col-sm-10">
         <div class="input-group input-group-sm">
             <input class="form-control" [(ngModel)]="baseURI" placeholder="Base URI">
             <div class="input-group-append">
@@ -9,3 +9,44 @@
         </div>
     </div>
 </div>
+
+<hr class="separator">
+
+<fieldset [disabled]="!discovered">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label col-form-label-sm">Resource name</label>
+        <div class="col-sm-10">
+            <input class="form-control form-control-sm" [(ngModel)]="resourceName" placeholder="Resource name">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label col-form-label-sm">Identity</label>
+        <div class="col-sm-10">
+            <input class="form-control form-control-sm" [(ngModel)]="identity" placeholder="Identity IRI" readonly>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label col-form-label-sm">Dereferenciation system</label>
+        <div class="col-sm-10">
+            <select class="form-control form-control-sm" [(ngModel)]="dereferenciationSystem">
+                <option *ngFor="let opt of dereferenciationOpts" [ngValue]="opt.uri">{{opt.show}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label col-form-label-sm">Sparql endpoint <span>*</span></label>
+        <div class="col-sm-10 d-flex">
+            <input class="form-control form-control-sm" [(ngModel)]="sparqlEndpoint" placeholder="SPARQL endpoint URL">
+            <div class="form-check form-check-inline ml-2">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="sparqlNoAggregation" [disabled]="!sparqlEndpoint">
+                <label class="form-check-label text-nowrap">No aggregation</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label col-form-label-sm">URI space <span>*</span></label>
+        <div class="col-sm-10">
+            <input class="form-control form-control-sm" [(ngModel)]="uriSpace" placeholder="URI space">
+        </div>
+    </div>
+</fieldset>

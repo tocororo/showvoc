@@ -35,6 +35,11 @@ export class StableResourceStoredContribution extends StoredContribution {
 export class MetadataStoredContribution extends StoredContribution {
     type = "Metadata";
     resourceName: string;
+    identity: IRI;
+    uriSpace: string;
+    dereferenciationSystem: IRI;
+    sparqlEndpoint: IRI;
+    sparqlLimitations: IRI[];
 }
 export class DevResourceStoredContribution extends StoredContribution {
     type = "Development";

@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { WidgetModule } from '../widget/widget.module';
 import { ContributionsManagerComponent } from './administration/contributions-manager.component';
-import { ContributionProjectCreationModal } from './contribution-project-creation-modal';
+import { StableProjectCreationModal } from './stable/stable-project-creation-modal';
 import { ContributionComponent } from './contribution.component';
 import { DevelopmentContributionDetailsModal } from './development/development-contribution-details-modal';
 import { DevelopmentContributionComponent } from './development/development-contribution.component';
@@ -15,7 +16,7 @@ import { StableContributionComponent } from './stable/stable-contribution.compon
     declarations: [
         ContributionComponent,
         ContributionsManagerComponent,
-        ContributionProjectCreationModal,
+        StableProjectCreationModal,
         DevelopmentContributionComponent,
         DevelopmentContributionDetailsModal,
         MetadataContributionComponent,
@@ -26,13 +27,14 @@ import { StableContributionComponent } from './stable/stable-contribution.compon
     imports: [
         CommonModule,
         FormsModule,
+        WidgetModule,
     ],
     exports: [
         ContributionsManagerComponent
     ],
     providers: [],
     entryComponents: [
-        ContributionProjectCreationModal,
+        StableProjectCreationModal,
         DevelopmentContributionDetailsModal,
         MetadataContributionDetailsModal,
         StableContributionDetailsModal,

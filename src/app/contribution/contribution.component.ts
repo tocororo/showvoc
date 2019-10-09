@@ -56,10 +56,10 @@ export class ContributionComponent {
             return;
         }
         let config: {[key: string]: any} = {};
-        config['name'] = this.name;
-        config['lastName'] = this.lastName;
-        config['email'] = this.email;
-        config['organization'] = this.organization;
+        config['contributorName'] = this.name;
+        config['contributorLastName'] = this.lastName;
+        config['contributorEmail'] = this.email;
+        config['contributorOrganization'] = this.organization;
 
         if (this.selectedContribution == ContributionType.metadata) {
             this.activeContribComponentImpl = this.metadataContributionComponentImpl;

@@ -59,7 +59,7 @@ export class StableContributionComponent extends AbstractContributionComponent {
         return IRI.regexp.test(this.baseURI);
     }
 
-    getConfiguration(): ConfigurationObject {
+    getConfigurationImpl(): ConfigurationObject {
         //check mandatory fields
         let missingField: string;
         if (this.resourceName == null) {

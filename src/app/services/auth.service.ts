@@ -25,8 +25,7 @@ export class AuthServices {
         return this.httpMgr.doPost(this.serviceName, "login", params).pipe(
             map(stResp => {
                 let user: User = User.createUser(stResp);
-                //PMKIContext.setLoggedUser(user);
-                //PMKIContext.setVisitorUser(user);
+                PMKIContext.setLoggedUser(user);
                 return user;
             })
         );
@@ -40,7 +39,7 @@ export class AuthServices {
         var params: any = {}
         return this.httpMgr.doGet(this.serviceName, "logout", params).pipe(
             map(stResp => {
-                this.router.navigate(["/Home"]);
+                this.router.navigate(["/home"]);
                 PMKIContext.removeLoggedUser();
                 return stResp;
             })

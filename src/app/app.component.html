@@ -19,19 +19,17 @@
         </ul>
 
         <ul class="navbar-nav">
-            <!-- <li *ngIf="isUserLogged()" class="nav-item dropdown" ngbDropdown display="dynamic"> -->
-            <li class="nav-item dropdown" ngbDropdown display="dynamic">                
+            <li *ngIf="isAdminLogged()" class="nav-item dropdown" ngbDropdown display="dynamic">
                 <a class="nav-link dropdown-toggle dropdown-no-arrow" style="padding: .5rem;" [routerLink]="" data-toggle="dropdown" ngbDropdownToggle>
                     <span class="fa fa-bars"></span>
                 </a>
                 <div class="dropdown-menu" ngbDropdownMenu>
-                    <a *ngIf="isAdmin()" class="dropdown-item" [routerLink]="['/admin']">Admin dashboard</a>
+                    <a class="dropdown-item" [routerLink]="['/admin']">Admin dashboard</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" [routerLink]="" (click)="logout()">Logout</a>
                 </div>
             </li>
-            <!-- <button *ngIf="!isUserLogged()" class="btn btn-outline-info" routerLink="/login">Login</button> -->
-            <button class="btn btn-outline-info" routerLink="/login">Login</button>
+            <button *ngIf="!isAdminLogged()" class="btn btn-outline-info" routerLink="/login">Login</button>
         </ul>
     </div>
 </nav>

@@ -274,6 +274,16 @@ label {
     margin-bottom: 0px;
 }
 
+/* class for positioning the close "x" in a multiline dismissible alert at the top right corner */
+.alert-multiline.alert-dismissible {
+    position: relative
+}
+.alert-multiline.alert-dismissible > .close {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+}
+
 .tab-content {
     flex: 1;
     display: flex;
@@ -327,18 +337,19 @@ ul.nav-tabs {
 }
 
 .modal-dialog {
+    width: 600px;
     max-width: 600px;
 }
 .modal-full.modal-dialog {
     width: 95% !important;
-    max-width: 95%;
+    max-width: 95% !important;
 }
 .modal-lg {
-    width: 900px;
+    width: 900px !important;
     max-width: initial;
 }
 .modal-xl {
-    width: 1140px;
+    width: 1140px !important;
     max-width: initial;
 }
 

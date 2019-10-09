@@ -23,29 +23,18 @@ export class AppComponent {
 	constructor(private authServices: AuthServices) { }
 
 	/**
-	 * Determines if the login button and the user menu should be visible:
-	 * The login button should be visible only if no user is logged.
-	 * The user menu should be visible only if there is a logged user.
-	 * Note that a PMKI "visitor" is not considered as logged user. As logged user are considered the PMKI admin or a contributor.
+	 * Determines if the login button and the link for the admin dashboard are available
+	 * - the login button should be visible if the only visitor is logged (returns false)
+	 * - the links for the admin dashboard should be visible only if the admin is logged (returns true)
 	 */
-	isUserLogged(): boolean {
-		return PMKIContext.getLoggedUser() != null;
-	}
-
-	/**
-	 * Determines if the link for the admin dashboard is available in the user menu
-	 * TODO at the moment returns always true, to update once the PMKI roles aspect is properly handled
-	 */
-	isAdmin(): boolean {
+	isAdminLogged(): boolean {
 		let loggedUser = PMKIContext.getLoggedUser();
-		return true;
+		return loggedUser != null && loggedUser.isAdmin();
 	}
 
 	logout() {
-		/**
-		 * TODO should logout ad admin/contributor and login again as visitor
-		 */
-		// this.authServices.logout().subscribe();
+		//login again as visitor? or let the auth guard do the job?
+		this.authServices.logout().subscribe();
 	}
 
 
