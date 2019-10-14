@@ -14,7 +14,7 @@
  * Thus if PMKI and Semantic Turkey are running on the same container this variable can be left commented,
  * otherwise uncomment the line and edit the value.
  */
-//var st_port = "1979";
+var st_port = "1979";
 
 /**   
  * Path where SemanticTurkey server is listening. If omitted, the sole host is considered.
@@ -31,12 +31,3 @@ var st_path;
  * container hosting the PMKI portal.
  */
 // var st_protocol = "http";
-
-/**
- * By default, PMKI relies on a visitor user created in Semantic Turkey (with just lurker capabilities).
- * This is necessary in order to allow PMKI to execute requests to ST that are secured.
- * If no user is logged directly in PMKI, the default "visitor" user should be logged.
- * The following parameters need to be set in order to provide the credentials for this visitor user.
- */
-var visitor_user_email = "";
-var visitor_user_password = "";

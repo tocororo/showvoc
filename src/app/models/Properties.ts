@@ -25,6 +25,8 @@ export class Properties {
 
     static setting_languages: string = "languages";
     static setting_remote_configs = "remote_configs";
+
+    static setting_vb_connection = "pmki.vb_connection_config";
 }
 
 export class SearchSettings {

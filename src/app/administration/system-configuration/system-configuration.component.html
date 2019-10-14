@@ -1,0 +1,260 @@
+<div class="vbox my-3">
+    <div class="container vbox">
+
+        <div class="alert alert-info mb-2">
+            In this section you can setup some core aspects of the system.
+            This panel can be accessed also later from the <i>Administration</i> menu
+        </div>
+
+        <div class="card vbox">
+            <div class="card-body vbox scrollableContainer">
+
+                <!-- Email -->
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <label>Email Configuration:</label>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info alert-dismissible mb-1" role="alert">
+                            Configuration of the PMKI e-mail service. This service will be used to send notifications to the contributors<br>
+                            <strong>Note</strong>: if this is not properly configured, it will be impossible to send email to contributors,
+                            so they will be not able to complete a contribution.
+                            <button class="close" data-dismiss="alert"><span>&times;</span></button>
+                        </div>
+                        <table class="table table-sm table-borderless">
+                            <colgroup>
+                                <col style="width: 1%;">
+                                <col style="width: 1%;">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-info-circle" title="SMTP Mail Server IP/URL"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>Mail SMTP host:</label>
+                                    </td>
+                                    <td><input class="form-control form-control-sm" [(ngModel)]="emailConfig.mailSmtpHost"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-info-circle" title="Mail Server Port"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>Mail SMTP port:</label>
+                                    </td>
+                                    <td><input class="form-control form-control-sm" [(ngModel)]="emailConfig.mailSmtpPort"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-info-circle" title="Cryptographic protocol"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>Cryptographic protocol:</label>
+                                    </td>
+                                    <td>
+                                        <select class="form-control form-control-sm" [(ngModel)]="cryptoProtocol" (ngModelChange)="updateProtocol()">
+                                            <option>SSL</option>
+                                            <option>TLS</option>
+                                            <option>None</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-info-circle" title="True if SMTP server requires authentication"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>Authentication:</label>
+                                    </td>
+                                    <td>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="authRadio" value="true" [(ngModel)]="emailConfig.mailSmtpAuth">
+                                            <label class="form-check-label">yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="authRadio" value="false" [(ngModel)]="emailConfig.mailSmtpAuth">
+                                            <label class="form-check-label">no</label>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-info-circle" title="Email address used to send administration emails"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>Mail from address:</label>
+                                    </td>
+                                    <td><input class="form-control form-control-sm" type="email" [(ngModel)]="emailConfig.mailFromAddress"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-info-circle" title="Password of the above email address"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>Mail from password:</label>
+                                    </td>
+                                    <td>
+                                        <input *ngIf="emailConfig.mailSmtpAuth=='false'; else authBlock" class="form-control form-control-sm" disabled>
+                                        <ng-template #authBlock>
+                                            <div class="hbox" style="align-items: center;">
+                                                <password-input [(ngModel)]="emailConfig.mailFromPassword" size="sm" style="flex: 1;"></password-input>
+                                                <span class="fa fa-exclamation-triangle ml-2" title="Password is stored wihtout encryption on the server."></span>
+                                            </div>
+                                        </ng-template>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-info-circle" title="Alias name shown in the administration emails"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>Mail from alias:</label>
+                                    </td>
+                                    <td><input class="form-control form-control-sm" [(ngModel)]="emailConfig.mailFromAlias"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer" style="text-align: right;">
+                        <button class="btn btn-outline-info btn-sm" (click)="testEmailConfig()" [disabled]="testEmailConfigLoading">
+                            Test
+                            <div *ngIf="testEmailConfigLoading" class="spinner-border spinner-border-sm"></div>
+                        </button>
+                        <button type="submit" class="btn btn-info btn-sm ml-1" (click)="updateEmailConfig()" [disabled]="!isEmailConfigChanged()">Submit</button>
+                    </div>
+                </div>
+
+                <!-- Remote access -->
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <label>Remote access configuration:</label>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info alert-dismissible mb-1" role="alert">
+                            Configuration of the remote triple store that hosts the projects in PMKI.<br>
+                            <strong>Note</strong>: if this is not properly configured, the PMKI portal will not be able to create remote
+                            projects for hosting stable resources.
+                            <button class="close" data-dismiss="alert"><span>&times;</span></button>
+                        </div>
+                        <table class="table table-sm table-borderless">
+                            <colgroup>
+                                <col style="width: 1%;">
+                                <col style="width: 1%;">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-info-circle" title="URL of the remote triple store"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>Server URL:</label>
+                                    </td>
+                                    <td><input class="form-control form-control-sm" [(ngModel)]="remoteAccessConfig.serverURL"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-info-circle" title="Username of the remote triple store (if authentication is required)"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>Username:</label>
+                                    </td>
+                                    <td><input class="form-control form-control-sm" [(ngModel)]="remoteAccessConfig.username"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-info-circle" title="Password of the remote triple store (if authentication is required)"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>Password:</label>
+                                    </td>
+                                    <td>
+                                        <div class="hbox" style="align-items: center;">
+                                            <password-input [(ngModel)]="remoteAccessConfig.password" size="sm" style="flex: 1;"></password-input>
+                                            <span class="fa fa-exclamation-triangle ml-2" title="Password is stored wihtout encryption on the server."></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer" style="text-align: right;">
+                        <!-- <button class="btn btn-outline-info btn-sm" (click)="testVbConnection()" [disabled]="testVbConfigLoading">
+                            Test
+                            <div *ngIf="testVbConfigLoading" class="spinner-border spinner-border-sm"></div>
+                        </button> -->
+                        <button type="submit" class="btn btn-info btn-sm ml-1" (click)="updateRemoteConfig()" [disabled]="!isRemoteConfigChanged()">Submit</button>
+                    </div>
+                </div>
+
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <label>VocBench configuration:</label>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info alert-dismissible mb-1" role="alert">
+                            Configuration of the VocBench/SemanticTurkey instance dedicated to the development of unstable resources.<br>
+                            <strong>Note</strong>: if this is not properly configured, the PMKI portal will not be able to connect
+                            with VocBench, so it will be impossible to accept contribution of under-development resources.<br>
+                            <button class="close" data-dismiss="alert"><span>&times;</span></button>
+                        </div>
+                        <table class="table table-sm table-borderless">
+                            <colgroup>
+                                <col style="width: 1%;">
+                                <col style="width: 1%;">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-info-circle" title="Complete URL (protocol+hostname+port) of the SemanticTurkey host"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>SemanticTurkey Host:</label>
+                                    </td>
+                                    <td><input class="form-control form-control-sm" [(ngModel)]="vbConnectionConfig.stHost"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-info-circle" title="Email of the administrator of VocBench"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>Administrator email:</label>
+                                    </td>
+                                    <td><input class="form-control form-control-sm" [(ngModel)]="vbConnectionConfig.adminEmail"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fa fa-info-circle" title="Password of the administrator of VocBench"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>Administrator password:</label>
+                                    </td>
+                                    <td>
+                                        <div class="hbox" style="align-items: center;">
+                                            <password-input [(ngModel)]="vbConnectionConfig.adminPassword" size="sm" style="flex: 1;"></password-input>
+                                            <span class="fa fa-exclamation-triangle ml-2" title="Password is stored wihtout encryption on the server."></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer" style="text-align: right;">
+                        <button class="btn btn-outline-info btn-sm" (click)="testVbConnection()" [disabled]="testVbConfigLoading">
+                            Test
+                            <div *ngIf="testVbConfigLoading" class="spinner-border spinner-border-sm"></div>
+                        </button>
+                        <button type="submit" class="btn btn-info btn-sm ml-1" (click)="updateVbConfig()" [disabled]="!isVbConfigChanged()">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -124,4 +124,17 @@ export class PreferencesSettingsServices {
         return this.httpMgr.doGet(this.serviceName, "getSystemSettings", params);
     }
 
+    /**
+     * 
+     * @param property 
+     * @param value 
+     */
+    setSystemSetting(property: string, value?: string) {
+        var params: any = {
+            property: property,
+            value: value
+        };
+        return this.httpMgr.doPost(this.serviceName, "setSystemSetting", params);
+    }
+
 }

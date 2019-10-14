@@ -11,8 +11,9 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 export class PasswordInputComponent implements OnInit {
 
     @Input() size: string;
-    @Input() placeholder: string;
+    @Input() placeholder: string = "";
     @Input() btnClass: string;
+    @Input() readonly: boolean = false;
 
     private value: string;
     show: boolean = false;

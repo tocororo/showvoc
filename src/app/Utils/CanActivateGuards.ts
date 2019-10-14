@@ -4,6 +4,7 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
+import { PmkiConstants } from '../models/Pmki';
 import { Project } from '../models/Project';
 import { AuthServices } from '../services/auth.service';
 import { MetadataServices } from '../services/metadata.service';
@@ -61,7 +62,6 @@ export class ProjectGuard implements CanActivate {
             );
         }
     }
-
 }
 
 /**
@@ -80,7 +80,7 @@ export class ProjectGuard implements CanActivate {
 @Injectable()
 export class VisitorAuthGuard implements CanActivate {
 
-    constructor(private router: Router, private authService: AuthServices, private userService: UserServices) { }
+    constructor(private authService: AuthServices, private userService: UserServices) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
         let loggedUser = PMKIContext.getLoggedUser();
@@ -105,16 +105,14 @@ export class VisitorAuthGuard implements CanActivate {
     }
 
     private loginVisitorUser(): Observable<any> {
-        let visitor_email: string = window['visitor_user_email'];
-        let visitor_pwd: string = window['visitor_user_password'];
-        return this.authService.login(visitor_email, visitor_pwd);
+        return this.authService.login(PmkiConstants.visitorEmail, PmkiConstants.visitorPassword);
     }
 }
 
 @Injectable()
 export class AdminAuthGuard implements CanActivate {
 
-    constructor(private router: Router, private authService: AuthServices, private userService: UserServices) { }
+    constructor(private router: Router, private userService: UserServices) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
         let loggedUser = PMKIContext.getLoggedUser();
@@ -133,7 +131,6 @@ export class AdminAuthGuard implements CanActivate {
             );
         }
     }
-
 }
 
 export const GUARD_PROVIDERS = [VisitorAuthGuard, AdminAuthGuard, ProjectGuard];

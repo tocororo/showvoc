@@ -232,7 +232,6 @@ export class HttpManager {
             if (Array.isArray(paramValue)) {
                 let stringArray: string[] = [];
                 for (let i = 0; i < paramValue.length; i++) {
-                    // if (paramValue[i] instanceof IRI || paramValue[i] instanceof BNode || paramValue[i] instanceof Literal) {
                     if (paramValue[i] instanceof Value) {
                         stringArray.push((paramValue[i]).toNT());
                     } else {
@@ -252,8 +251,6 @@ export class HttpManager {
                 strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(JSON.stringify(stringMap)));
             } else if (paramValue instanceof Value) {
                 strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(paramValue.toNT()));
-                // } else if (paramValue instanceof CustomFormValue) {
-                //     strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(JSON.stringify(paramValue)));
             } else {
                 strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(paramValue));
             }
@@ -339,6 +336,9 @@ export class HttpManager {
                 let errorMsg: string;
                 if (!err.ok && err.status == 0 && err.statusText == "Unknown Error") { //attribute of error response in case of no backend response
                     errorMsg = "Connection with ST server (" + this.serverhost + ") has failed; please check your internet connection";
+                    this.basicModals.alert("Error", errorMsg, ModalType.error);
+                    error.name = "ConnectionError";
+                    error.message = errorMsg;
                 } else { //backend error response
                     let status: number = err.status;
                     if (status == 401 || status == 403) { //user did a not authorized requests or is not logged in
@@ -348,15 +348,25 @@ export class HttpManager {
                             errorMsg = err.error;
                         }
                         error.name = "UnauthorizedRequestError";
-                        error.message = err.message
+                        error.message = err.message;
+                        /**
+                         * TODO here I should:
+                         * if error is 401
+                         *  - in the login page => just reset context (so when user goes away from that page, the guard re-do the login)
+                         *  - in other pages => session timed out, repeat the login (and re-do the old request? how?)
+                         * if error is 403
+                         *  - show the alert as before
+                         */
                         this.basicModals.alert("Error", errorMsg, ModalType.error).then(
                             confirm => {
-                                //in case user is not logged at all, reset context and redirect to home
-                                if (err.status == 401) {
-                                    location.reload();
-                                    // PMKIContext.resetContext();
-                                    // HttpServiceContext.resetContext();
-                                    // this.router.navigate(['/home']);
+                                //in case user is not logged at all (probably session timedout), reset context and redirect to home
+                                if (err.status == 401) { 
+                                    PMKIContext.resetContext();
+                                    HttpServiceContext.resetContext();
+                                    if (this.router.url != "/login") {
+                                        //redirect to home only if not in login page, since 401 is returned even at login failed
+                                        this.router.navigate(['/home']);
+                                    }
                                 };
                             },
                             () => {}

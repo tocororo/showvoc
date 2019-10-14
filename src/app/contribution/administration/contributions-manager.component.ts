@@ -48,7 +48,7 @@ export class ContributionsManagerComponent {
                                  * - date: useful info to show
                                  * - relativeReference: reference of the configuration, useful in case of rejection of the contribution
                                  */
-                                contribution['relativeReference'] = ref.relativeReference;
+                                contribution[StoredContribution.RELATIVE_REFERENCE] = ref.relativeReference;
                                 let timestampMillis: number = parseInt(ref.identifier);
                                 contribution['timestamp'] = timestampMillis;
                                 contribution['date'] = new Date(timestampMillis).toLocaleString();
@@ -148,9 +148,11 @@ export class ContributionsManagerComponent {
         } else if (contribution instanceof MetadataStoredContribution) {
             this.basicModals.confirm("Approve contribution", "You are going to submit the proposed metadata into the Metadata Registry. Are you sure?", ModalType.warning).then(
                 confirm => {
-                    //TODO just invoke a service for writing the proposed metadata to the registry
-                    //then...
-                    // this.contributions.splice(this.contributions.indexOf(contribution), 1);
+                    this.pmkiServices.approveMetadataContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).subscribe(
+                        () => {
+                            this.contributions.splice(this.contributions.indexOf(contribution), 1);
+                        }
+                    )
                 },
                 () => {}
             );
@@ -161,7 +163,7 @@ export class ContributionsManagerComponent {
     rejectContribution(contribution: StoredContribution) {
         this.basicModals.confirm("Reject contribution", "Are you sure to reject the contribution?", ModalType.warning).then(
             () => {
-                this.pmkiServices.deleteContribution(contribution['relativeReference']).subscribe(
+                this.pmkiServices.deleteContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).subscribe(
                     () => {
                         this.contributions.splice(this.contributions.indexOf(contribution), 1);
                     }

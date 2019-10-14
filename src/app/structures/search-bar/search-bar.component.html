@@ -19,7 +19,7 @@
                 <div class="dropdown-menu" ngbDropdownMenu>
                     <button *ngFor="let mode of stringMatchModes" class="dropdown-item" (click)="updateSearchMode(mode.value, $event)">
                         <i *ngIf="searchSettings.stringMatchMode == mode.value" class="fa fa-check" style="float: right"></i>
-                        <span style="font-weight: bold; margin-right: 4px; display: inline-block; width: 24px;">{{mode.symbol}}</span>
+                        <span class="mr-2" style="font-weight: bold; display: inline-block; width: 24px;">{{mode.symbol}}</span>
                         <span>{{mode.show}}</span>
                     </button>
                 </div>

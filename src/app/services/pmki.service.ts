@@ -5,7 +5,7 @@ import { ConfigurationObject, Reference } from '../models/Configuration';
 import { PluginSpecification } from '../models/Plugins';
 import { RepositoryAccess } from '../models/Project';
 import { IRI } from '../models/Resources';
-import { HttpManager } from "../utils/HttpManager";
+import { HttpManager, PMKIRequestOptions } from "../utils/HttpManager";
 
 @Injectable()
 export class PmkiServices {
@@ -14,6 +14,30 @@ export class PmkiServices {
 
     constructor(private httpMgr: HttpManager) { }
 
+    /**
+     * 
+     */
+    initPMKI(): Observable<void> {
+        var params = {};
+        return this.httpMgr.doPost(this.serviceName, "initPmki", params);
+    }
+
+    /**
+     * 
+     */
+    testVocbenchConfiguration(): Observable<void> {
+        var params = {};
+        let options: PMKIRequestOptions = new PMKIRequestOptions({
+            errorAlertOpt: { 
+                show: false, //don't automatically show alert in case of error
+            } 
+        });
+        return this.httpMgr.doGet(this.serviceName, "testVocbenchConfiguration", params, options);
+    }
+
+    /**
+     * 
+     */
     getContributionReferences(): Observable<Reference[]> {
         var params = {};
         return this.httpMgr.doGet(this.serviceName, "getContributionReferences", params).pipe(
@@ -27,6 +51,10 @@ export class PmkiServices {
         );
     }
 
+    /**
+     * 
+     * @param configuration 
+     */
     submitContribution(configuration: ConfigurationObject) {
         var params = {
             configuration: JSON.stringify(configuration)
@@ -34,6 +62,10 @@ export class PmkiServices {
         return this.httpMgr.doPost(this.serviceName, "submitContribution", params);
     }
 
+    /**
+     * 
+     * @param relativeReference 
+     */
     deleteContribution(relativeReference: string) {
         var params = {
             relativeReference: relativeReference
@@ -41,8 +73,17 @@ export class PmkiServices {
         return this.httpMgr.doPost(this.serviceName, "deleteContribution", params);
     }
 
-
-    approveResourceContribution(projectName: string, model: IRI, lexicalizationModel: IRI, baseURI: string,
+    /**
+     * 
+     * @param projectName 
+     * @param model 
+     * @param lexicalizationModel 
+     * @param baseURI 
+     * @param repositoryAccess 
+     * @param coreRepoSailConfigurerSpecification 
+     * @param configurationReference 
+     */
+    approveStableContribution(projectName: string, model: IRI, lexicalizationModel: IRI, baseURI: string,
         repositoryAccess: RepositoryAccess, coreRepoSailConfigurerSpecification: PluginSpecification,
         configurationReference: string) {
         var params = {
@@ -52,8 +93,20 @@ export class PmkiServices {
             baseURI: baseURI,
             repositoryAccess: repositoryAccess.stringify(),
             coreRepoSailConfigurerSpecification: JSON.stringify(coreRepoSailConfigurerSpecification),
-            configurationReference: configurationReference
+            configurationReference: configurationReference,
+            pmkiHostAddress: location.protocol+"//"+location.hostname+((location.port !="") ? ":"+location.port : "")+location.pathname
         };
-        return this.httpMgr.doPost(this.serviceName, "approveResourceContribution", params);
+        return this.httpMgr.doPost(this.serviceName, "approveStableContribution", params);
+    }
+
+    /**
+     * 
+     * @param configurationReference 
+     */
+    approveMetadataContribution(configurationReference: string) {
+        var params = {
+            configurationReference: configurationReference,
+        };
+        return this.httpMgr.doPost(this.serviceName, "approveMetadataContribution", params);
     }
 }

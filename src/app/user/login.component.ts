@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
-import { UserServices } from '../services/user.service';
 import { AuthServices } from '../services/auth.service';
+import { UserServices } from '../services/user.service';
 
 @Component({
     selector: 'login-component',
@@ -19,18 +20,19 @@ import { AuthServices } from '../services/auth.service';
     }
     `]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
     email: string;
     password: string;
 
-    constructor(private authService: AuthServices, private userService: UserServices, private basicModals: BasicModalsServices) { }
-
-    ngOnInit() { }
+    constructor(private authService: AuthServices, private userService: UserServices, private basicModals: BasicModalsServices, private router: Router) { }
 
     login() {
-        this.basicModals.alert("Loggin in...", "TODO");
-        // this.authService.login(this.email, this.password).subscribe()
+        this.authService.login(this.email, this.password).subscribe(
+            () => {
+                this.router.navigate(["/home"]);
+            }
+        );
     }
 
     forgotPassword() {

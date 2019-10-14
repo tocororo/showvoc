@@ -73,7 +73,7 @@ export class StableProjectCreationModal {
             stResp => {
                 if (stResp[Properties.setting_remote_configs] != null) {
                     let remoteAccessConfigurations = <RemoteRepositoryAccessConfig[]>JSON.parse(stResp[Properties.setting_remote_configs]);
-                    if (remoteAccessConfigurations.length > 0) {
+                    if (remoteAccessConfigurations != null && remoteAccessConfigurations.length > 0) {
                         this.remoteAccessConfig = remoteAccessConfigurations[0];
                     }
                 }
@@ -97,7 +97,7 @@ export class StableProjectCreationModal {
         if (this.selectedRepositoryAccess == RepositoryAccessType.CreateRemote) {
             if (this.remoteAccessConfig == null || !this.remoteAccessConfig.serverURL == null || this.remoteAccessConfig.serverURL.trim() == "") {
                 this.basicModals.alert("Missing configuration", "The system has not been configured in order to create a remote repository. " +
-                    "Please provide a configuration to a remote triple store in the administration page.", ModalType.warning);
+                    "Please provide a configuration to a remote triple store in the 'System configuration' page.", ModalType.warning);
                 return;
             }
             repositoryAccess.setConfiguration(this.remoteAccessConfig);
@@ -115,7 +115,7 @@ export class StableProjectCreationModal {
         }
 
         this.loading = true;
-        this.pmkiService.approveResourceContribution(this.projectName, new IRI(this.selectedSemModel), new IRI(this.selectedLexModel),
+        this.pmkiService.approveStableContribution(this.projectName, new IRI(this.selectedSemModel), new IRI(this.selectedLexModel),
             this.baseURI, repositoryAccess, coreRepoSailConfigurerSpecification, this.contribution['relativeReference']).pipe(
                 finalize(() => this.loading = false)
             ).subscribe(

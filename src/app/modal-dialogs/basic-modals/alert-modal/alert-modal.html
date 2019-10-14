@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body">
 	<div *ngIf="alertClass" [class]="alertClass + ' vbox'">
-		{{message}}
+        <span style="white-space: pre-line">{{message}}</span>
 
 		<div *ngIf="details" class="vbox mt-1">
             <div (click)="detailsCollapsed = !detailsCollapsed">

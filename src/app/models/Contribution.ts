@@ -16,6 +16,7 @@ export class ContributionTypeUtils {
 }
 
 export abstract class StoredContribution {
+    public static RELATIVE_REFERENCE: string = "relativeReference";
     protected abstract type: string; //not in the contribution configuration, just to be shown in the UI as "Type"
     contributorName: string;
     contributorLastName: string;

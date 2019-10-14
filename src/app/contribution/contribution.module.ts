@@ -3,26 +3,28 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WidgetModule } from '../widget/widget.module';
 import { ContributionsManagerComponent } from './administration/contributions-manager.component';
-import { StableProjectCreationModal } from './stable/stable-project-creation-modal';
 import { ContributionComponent } from './contribution.component';
 import { DevelopmentContributionDetailsModal } from './development/development-contribution-details-modal';
 import { DevelopmentContributionComponent } from './development/development-contribution.component';
+import { LoadDataComponent } from './load-data/load-data.component';
 import { MetadataContributionDetailsModal } from './metadata/metadata-contribution-details-modal';
 import { MetadataContributionComponent } from './metadata/metadata-contribution.component';
 import { StableContributionDetailsModal } from './stable/stable-contribution-details-modal';
 import { StableContributionComponent } from './stable/stable-contribution.component';
+import { StableProjectCreationModal } from './stable/stable-project-creation-modal';
 
 @NgModule({
     declarations: [
         ContributionComponent,
         ContributionsManagerComponent,
-        StableProjectCreationModal,
         DevelopmentContributionComponent,
         DevelopmentContributionDetailsModal,
+        LoadDataComponent,
         MetadataContributionComponent,
         MetadataContributionDetailsModal,
         StableContributionComponent,
-        StableContributionDetailsModal
+        StableContributionDetailsModal,
+        StableProjectCreationModal,
     ],
     imports: [
         CommonModule,
@@ -34,10 +36,10 @@ import { StableContributionComponent } from './stable/stable-contribution.compon
     ],
     providers: [],
     entryComponents: [
-        StableProjectCreationModal,
         DevelopmentContributionDetailsModal,
         MetadataContributionDetailsModal,
         StableContributionDetailsModal,
+        StableProjectCreationModal,
     ]
 })
 export class ContributionModule { }

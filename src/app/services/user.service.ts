@@ -14,6 +14,23 @@ export class UserServices {
     constructor(private httpMgr: HttpManager, private router: Router) { }
 
     /**
+     * 
+     * @param email 
+     * @param password 
+     * @param givenName 
+     * @param familyName 
+     */
+    registerUser(email: string, password: string, givenName: string, familyName: string) {
+        var params: any = {
+            email: email,
+            password: password,
+            givenName: givenName,
+            familyName: familyName,
+        }
+        return this.httpMgr.doPost(this.serviceName, "registerUser", params);
+    }
+
+    /**
      * Returns the user corrently logged (response contains user object).
      * Returns null if no user is logged (response contains empty user object).
      * Throw exception if no user is register at all (in this case the response of getUser() is empty).
