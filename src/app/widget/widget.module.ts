@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ExtensionConfiguratorComponent } from './extensionConfigurator/extension-configurator.component';
 import { LanguageItemComponent } from './language-item/language-item.component';
 import { PasswordInputComponent } from './password-input/password-input.component';
+import { FilePickerComponent } from './pickers/file-picker/file-picker.component';
 import { RdfResourceComponent } from './rdf-resource/rdf-resource.component';
 import { ResourceListComponent } from './rdf-resource/resource-list.component';
 import { ResizableLayoutComponent } from './resizable-layout/resizable-layout.component';
@@ -15,6 +16,7 @@ import { SettingsRendererComponent } from './settings-renderer/settings-renderer
 @NgModule({
 	declarations: [
 		ExtensionConfiguratorComponent,
+		FilePickerComponent,
 		LanguageItemComponent,
 		PasswordInputComponent,
 		RdfResourceComponent,
@@ -31,6 +33,7 @@ import { SettingsRendererComponent } from './settings-renderer/settings-renderer
 	],
 	exports: [
 		ExtensionConfiguratorComponent,
+		FilePickerComponent,
 		LanguageItemComponent,
 		PasswordInputComponent,
 		RdfResourceComponent,

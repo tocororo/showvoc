@@ -98,7 +98,7 @@
                                         <label>Mail from password:</label>
                                     </td>
                                     <td>
-                                        <input *ngIf="emailConfig.mailSmtpAuth=='false'; else authBlock" class="form-control form-control-sm" disabled>
+                                        <input *ngIf="!emailConfig.mailSmtpAuth; else authBlock" class="form-control form-control-sm" disabled>
                                         <ng-template #authBlock>
                                             <div class="hbox" style="align-items: center;">
                                                 <password-input [(ngModel)]="emailConfig.mailFromPassword" size="sm" style="flex: 1;"></password-input>

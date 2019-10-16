@@ -10,6 +10,7 @@ import { ConfigurationsServices } from 'src/app/services/configuration.service';
 import { PmkiServices } from 'src/app/services/pmki.service';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 import { DevelopmentContributionDetailsModal } from '../development/development-contribution-details-modal';
+import { DevProjectCreationModal } from '../development/development-project-creation-modal';
 import { MetadataContributionDetailsModal } from '../metadata/metadata-contribution-details-modal';
 import { StableContributionDetailsModal } from '../stable/stable-contribution-details-modal';
 import { StableProjectCreationModal } from '../stable/stable-project-creation-modal';
@@ -144,7 +145,16 @@ export class ContributionsManagerComponent {
                 () => {}
             );
         } else if (contribution instanceof DevResourceStoredContribution) {
-
+            let _options: ModalOptions = new ModalOptions("lg");
+            let modalRef: NgbModalRef;
+            modalRef = this.modalService.open(DevProjectCreationModal, _options);
+            modalRef.componentInstance.contribution = contribution;
+            modalRef.result.then(
+                () => { //modal closed via "OK" button => contribution approved and removed => remove the contribution
+                    this.contributions.splice(this.contributions.indexOf(contribution), 1);
+                },
+                () => {}
+            );
         } else if (contribution instanceof MetadataStoredContribution) {
             this.basicModals.confirm("Approve contribution", "You are going to submit the proposed metadata into the Metadata Registry. Are you sure?", ModalType.warning).then(
                 confirm => {
@@ -163,7 +173,7 @@ export class ContributionsManagerComponent {
     rejectContribution(contribution: StoredContribution) {
         this.basicModals.confirm("Reject contribution", "Are you sure to reject the contribution?", ModalType.warning).then(
             () => {
-                this.pmkiServices.deleteContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).subscribe(
+                this.pmkiServices.rejectContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).subscribe(
                     () => {
                         this.contributions.splice(this.contributions.indexOf(contribution), 1);
                     }

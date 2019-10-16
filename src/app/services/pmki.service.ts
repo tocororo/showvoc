@@ -66,11 +66,11 @@ export class PmkiServices {
      * 
      * @param relativeReference 
      */
-    deleteContribution(relativeReference: string) {
+    rejectContribution(relativeReference: string) {
         var params = {
             relativeReference: relativeReference
         };
-        return this.httpMgr.doPost(this.serviceName, "deleteContribution", params);
+        return this.httpMgr.doPost(this.serviceName, "rejectContribution", params);
     }
 
     /**
@@ -101,6 +101,29 @@ export class PmkiServices {
 
     /**
      * 
+     * @param projectName 
+     * @param model 
+     * @param lexicalizationModel 
+     * @param baseURI 
+     * @param coreRepoSailConfigurerSpecification 
+     * @param configurationReference 
+     */
+    approveDevelopmentContribution(projectName: string, model: IRI, lexicalizationModel: IRI, baseURI: string, 
+        coreRepoSailConfigurerSpecification: PluginSpecification, configurationReference: string) {
+        var params = {
+            projectName: projectName,
+            model: model,
+            lexicalizationModel: lexicalizationModel,
+            baseURI: baseURI,
+            coreRepoSailConfigurerSpecification: JSON.stringify(coreRepoSailConfigurerSpecification),
+            configurationReference: configurationReference,
+            pmkiHostAddress: location.protocol+"//"+location.hostname+((location.port !="") ? ":"+location.port : "")+location.pathname
+        };
+        return this.httpMgr.doPost(this.serviceName, "approveDevelopmentContribution", params);
+    }
+
+    /**
+     * 
      * @param configurationReference 
      */
     approveMetadataContribution(configurationReference: string) {
@@ -108,5 +131,21 @@ export class PmkiServices {
             configurationReference: configurationReference,
         };
         return this.httpMgr.doPost(this.serviceName, "approveMetadataContribution", params);
+    }
+
+    /**
+     * 
+     * @param token 
+     * @param projectName 
+     * @param file 
+     */
+    loadStableContributionData(token: string, projectName: string, file: File, format: string) {
+        var params = {
+            token: token,
+            projectName: projectName,
+            file: file,
+            format: format
+        };
+        return this.httpMgr.uploadFile(this.serviceName, "loadStableContributionData", params);
     }
 }

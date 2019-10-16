@@ -10,8 +10,6 @@ export class ProjectsServices {
 
     constructor(private httpMgr: HttpManager) { }
 
-    //====== Concept services ====== 
-
     /**
      * Gets the current available projects in ST
      * @param consumer

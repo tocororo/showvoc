@@ -9,6 +9,7 @@ import { ExportServices } from './export.service';
 import { ExtensionsServices } from './extensions.service';
 import { GlobalSearchServices } from './global-search.service';
 import { GraphServices } from './graph.service';
+import { InputOutputServices } from './input-output.service';
 import { MapleServices } from './maple.service';
 import { MetadataRegistryServices } from './metadata-registry.service';
 import { MetadataServices } from './metadata.service';
@@ -38,6 +39,7 @@ import { UserServices } from './user.service';
         GlobalSearchServices,
         GraphServices,
         HttpManager,
+        InputOutputServices,
         MapleServices,
         MetadataServices,
         MetadataRegistryServices,
