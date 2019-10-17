@@ -7,9 +7,10 @@ import { ContributionComponent } from './contribution.component';
 import { DevelopmentContributionDetailsModal } from './development/development-contribution-details-modal';
 import { DevelopmentContributionComponent } from './development/development-contribution.component';
 import { DevProjectCreationModal } from './development/development-project-creation-modal';
-import { LoadDataComponent } from './load-data/load-data.component';
+import { LoadDevResourceComponent } from './development/load-dev.component';
 import { MetadataContributionDetailsModal } from './metadata/metadata-contribution-details-modal';
 import { MetadataContributionComponent } from './metadata/metadata-contribution.component';
+import { LoadStableResourceComponent } from './stable/load-stable.component';
 import { StableContributionDetailsModal } from './stable/stable-contribution-details-modal';
 import { StableContributionComponent } from './stable/stable-contribution.component';
 import { StableProjectCreationModal } from './stable/stable-project-creation-modal';
@@ -21,7 +22,8 @@ import { StableProjectCreationModal } from './stable/stable-project-creation-mod
         DevelopmentContributionComponent,
         DevelopmentContributionDetailsModal,
         DevProjectCreationModal,
-        LoadDataComponent,
+        LoadDevResourceComponent,
+        LoadStableResourceComponent,
         MetadataContributionComponent,
         MetadataContributionDetailsModal,
         StableContributionComponent,

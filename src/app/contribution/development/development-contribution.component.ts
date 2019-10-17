@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { ConfigurationComponents, ConfigurationObject } from 'src/app/models/Configuration';
-import { AbstractContributionComponent } from '../abstract-contribution.component';
-import { SKOS, OntoLex, RDFS, SKOSXL } from 'src/app/models/Vocabulary';
-import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { ConfigurationComponents, ConfigurationObject } from 'src/app/models/Configuration';
+import { PmkiConversionFormat } from 'src/app/models/Pmki';
 import { IRI } from 'src/app/models/Resources';
+import { OntoLex, RDFS, SKOS, SKOSXL } from 'src/app/models/Vocabulary';
+import { AbstractContributionComponent } from '../abstract-contribution.component';
 
 @Component({
     selector: 'development-contribution',
@@ -15,8 +16,8 @@ export class DevelopmentContributionComponent extends AbstractContributionCompon
     storedConfigurationTypeId: string = ConfigurationComponents.CONTRIBUTION_STORE.CONFIG_IMPL.DEVELOPMENT;
 
     conversionRequired: boolean = false;
-    inputFormats: string[] = [
-        "Excel", "TBX", "zThes"
+    inputFormats: PmkiConversionFormat[] = [
+        PmkiConversionFormat.EXCEL, PmkiConversionFormat.TBX, PmkiConversionFormat.ZTHES
     ]
     selectedFormat: string;
 

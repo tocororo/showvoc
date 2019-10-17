@@ -211,6 +211,17 @@
                             <tbody>
                                 <tr>
                                     <td>
+                                        <span class="fa fa-info-circle" title="URL of the VocBench istance accessible by the contributors"></span>
+                                    </td>
+                                    <td nowrap>
+                                        <label>VocBench URL:</label>
+                                    </td>
+                                    <td>
+                                        <input class="form-control form-control-sm" [(ngModel)]="vbConnectionConfig.vbUrl">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         <span class="fa fa-info-circle" title="Complete URL (protocol+hostname+port) of the SemanticTurkey host"></span>
                                     </td>
                                     <td nowrap>
@@ -220,19 +231,19 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span class="fa fa-info-circle" title="Email of the administrator of VocBench"></span>
+                                        <span class="fa fa-info-circle" title="Email of the administrator of VocBench/SemanticTurkey"></span>
                                     </td>
                                     <td nowrap>
-                                        <label>Administrator email:</label>
+                                        <label>VocBench/SemanticTurkey admin email:</label>
                                     </td>
                                     <td><input class="form-control form-control-sm" [(ngModel)]="vbConnectionConfig.adminEmail"></td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span class="fa fa-info-circle" title="Password of the administrator of VocBench"></span>
+                                        <span class="fa fa-info-circle" title="Password of the administrator of VocBench/SemanticTurkey"></span>
                                     </td>
                                     <td nowrap>
-                                        <label>Administrator password:</label>
+                                        <label>VocBench/SemanticTurkey admin password:</label>
                                     </td>
                                     <td>
                                         <div class="hbox" style="align-items: center;">

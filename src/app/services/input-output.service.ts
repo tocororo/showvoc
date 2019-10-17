@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { RDFFormat } from '../models/RDFFormat';
+import { RDFFormat, DataFormat } from '../models/RDFFormat';
 import { HttpManager } from "../utils/HttpManager";
 
 @Injectable()
@@ -30,6 +30,29 @@ export class InputOutputServices {
                 //sort by name
                 formats.sort(
                     function(a: RDFFormat, b: RDFFormat) {
+                        if (a.name < b.name) return -1;
+                        if (a.name > b.name) return 1;
+                        return 0;
+                    }
+                );
+                return formats;
+            })
+        );
+    }
+
+    getSupportedFormats(extensionID: string): Observable<DataFormat[]> {
+        var params = {
+            extensionID: extensionID
+        };
+        return this.httpMgr.doGet(this.serviceName, "getSupportedFormats", params).pipe(
+            map(stResp => {
+                let formats: DataFormat[] = [];
+                for (var i = 0; i < stResp.length; i++) {
+                    formats.push(new DataFormat(stResp[i].name, stResp[i].defaultMimeType, stResp[i].defaultFileExtension));
+                }
+                //sort by name
+                formats.sort(
+                    function(a: DataFormat, b: DataFormat) {
                         if (a.name < b.name) return -1;
                         if (a.name > b.name) return 1;
                         return 0;

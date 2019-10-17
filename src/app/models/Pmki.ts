@@ -5,3 +5,9 @@ export class PmkiConstants {
     static roleStaging: string = "pmki_staging";
     static rolePublic: string = "pmki_public";
 }
+
+export enum PmkiConversionFormat {
+    EXCEL = "EXCEL",
+    TBX = "TBX",
+    ZTHES = "ZTHES"
+}

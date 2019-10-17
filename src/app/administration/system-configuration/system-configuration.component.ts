@@ -18,6 +18,7 @@ export class SystemConfigurationComponent implements OnInit {
 
     /* ST+VB configuration */
     vbConnectionConfig: VbConnectionConfig = {
+        vbUrl: null,
         stHost: null,
         adminEmail: null,
         adminPassword: ""
@@ -125,7 +126,7 @@ export class SystemConfigurationComponent implements OnInit {
             + "check the e-mail configuration", PMKIContext.getLoggedUser().getEmail()).then(
             mailTo => {
                 this.testEmailConfigLoading = true;
-                this.adminService.testEmailConfig(mailTo).pipe(
+                this.pmkiService.testEmailConfig(mailTo).pipe(
                     finalize(() => this.testEmailConfigLoading = false)
                 ).subscribe(
                     () => {
@@ -227,7 +228,7 @@ export class SystemConfigurationComponent implements OnInit {
                 this.basicModals.alert("VocBench configuration test", "The configuration has been tested successfully");
             },
             (error: Error) => {
-                console.log("error",error);
+                console.log("error", error);
                 this.basicModals.alert("VocBench configuration test", "Test failed, the configuration provided is not correct.", ModalType.error, error.message);
             }
         )
@@ -256,6 +257,7 @@ class EmailConfig {
 }
 
 class VbConnectionConfig {
+    vbUrl: string;
     stHost: string;
     adminEmail: string;
     adminPassword: string;

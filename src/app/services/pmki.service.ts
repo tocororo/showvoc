@@ -33,6 +33,18 @@ export class PmkiServices {
             } 
         });
         return this.httpMgr.doGet(this.serviceName, "testVocbenchConfiguration", params, options);
+        // return this.httpMgr.doGet(this.serviceName, "testVocbenchConfiguration", params);
+    }
+
+    /**
+     * 
+     * @param mailTo 
+     */
+    testEmailConfig(mailTo: string) {
+        var params = {
+            mailTo: mailTo
+        };
+        return this.httpMgr.doGet(this.serviceName, "testEmailConfig", params);
     }
 
     /**

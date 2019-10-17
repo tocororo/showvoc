@@ -4,7 +4,8 @@ import { AdminDashboardComponent } from './administration/admin-dashboard.compon
 import { SystemConfigurationComponent } from './administration/system-configuration/system-configuration.component';
 import { AlignmentsComponent } from './alignments/alignments.component';
 import { ContributionComponent } from './contribution/contribution.component';
-import { LoadDataComponent } from './contribution/load-data/load-data.component';
+import { LoadDevResourceComponent } from './contribution/development/load-dev.component';
+import { LoadStableResourceComponent } from './contribution/stable/load-stable.component';
 import { DatasetDataComponent } from './datasets/data/dataset-data.component';
 import { DatasetViewComponent } from './datasets/dataset-view/dataset-view.component';
 import { DatasetsComponent } from './datasets/datasets.component';
@@ -25,7 +26,8 @@ const routes: Routes = [
     { path: "admin", component: AdminDashboardComponent, canActivate: [AdminAuthGuard] },
     { path: "sysconfig", component: SystemConfigurationComponent, canActivate: [AdminAuthGuard] },
     { path: "contribution", component: ContributionComponent, canActivate: [VisitorAuthGuard] },
-    { path: "load/:token", component: LoadDataComponent, canActivate: [VisitorAuthGuard] },
+    { path: "load/stable/:token", component: LoadStableResourceComponent, canActivate: [VisitorAuthGuard] },
+    { path: "load/dev/:format/:token", component: LoadDevResourceComponent, canActivate: [VisitorAuthGuard] },
     { path: "ResetPassword/:token", component: ResetPasswordComponent },
     { path: 'datasets', component: DatasetsComponent, canActivate: [VisitorAuthGuard] },
     {

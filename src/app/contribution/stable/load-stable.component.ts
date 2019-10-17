@@ -8,11 +8,11 @@ import { PmkiServices } from 'src/app/services/pmki.service';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
 
 @Component({
-    selector: 'load-data',
-    templateUrl: './load-data.component.html',
+    selector: 'load-stable',
+    templateUrl: './load-stable.component.html',
     host: { class: "pageComponent" }
 })
-export class LoadDataComponent {
+export class LoadStableResourceComponent {
 
     private token: string;
 
