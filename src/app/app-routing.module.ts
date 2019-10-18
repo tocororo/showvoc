@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminDashboardComponent } from './administration/admin-dashboard.component';
+import { ProjectsManagerComponent } from './administration/projects-manager/projects-manager.component';
 import { SystemConfigurationComponent } from './administration/system-configuration/system-configuration.component';
 import { AlignmentsComponent } from './alignments/alignments.component';
+import { ContributionsManagerComponent } from './contribution/administration/contributions-manager.component';
 import { ContributionComponent } from './contribution/contribution.component';
 import { LoadDevResourceComponent } from './contribution/development/load-dev.component';
 import { LoadStableResourceComponent } from './contribution/stable/load-stable.component';
@@ -23,7 +25,14 @@ const routes: Routes = [
     { path: "home", component: HomeComponent, canActivate: [VisitorAuthGuard] }, //guard needed in order to redirect to the registration  page if no user is registered
     { path: "login", component: LoginComponent },
     { path: "registration", component: RegistrationComponent },
-    { path: "admin", component: AdminDashboardComponent, canActivate: [AdminAuthGuard] },
+    {
+        path: 'admin', component: AdminDashboardComponent, canActivate: [AdminAuthGuard],
+        children: [
+            { path: '', redirectTo: "projects", pathMatch: 'full' },
+            { path: 'projects', component: ProjectsManagerComponent },
+            { path: 'contributions', component: ContributionsManagerComponent }
+        ]
+    },
     { path: "sysconfig", component: SystemConfigurationComponent, canActivate: [AdminAuthGuard] },
     { path: "contribution", component: ContributionComponent, canActivate: [VisitorAuthGuard] },
     { path: "load/stable/:token", component: LoadStableResourceComponent, canActivate: [VisitorAuthGuard] },

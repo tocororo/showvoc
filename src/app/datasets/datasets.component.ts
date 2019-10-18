@@ -7,6 +7,7 @@ import { GlobalSearchServices } from '../services/global-search.service';
 import { ProjectsServices } from '../services/projects.service';
 import { Cookie } from '../utils/Cookie';
 import { PMKIContext } from '../utils/PMKIContext';
+import { PmkiConstants } from '../models/Pmki';
 
 @Component({
     selector: 'datasets-component',
@@ -42,7 +43,7 @@ export class DatasetsComponent implements OnInit {
         if (this.lexiconsCheck) modelFacets.push(OntoLex.uri);
 
         this.loading = true;
-        this.projectService.listProjects(null, false, this.openCheck).pipe(
+        this.projectService.listProjectsPerRole(PmkiConstants.rolePublic, null, this.openCheck).pipe(
             finalize(() => this.loading = false)
         ).subscribe(
             projects => {

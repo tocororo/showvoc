@@ -8,11 +8,6 @@ import { PMKIContext } from './utils/PMKIContext';
     host: {
         class: 'd-flex flex-column',
     },
-    styles: [`
-		.dropdown-toggle.dropdown-no-arrow::after {
-			display:none;
-		}
-		`]
 })
 export class AppComponent {
 

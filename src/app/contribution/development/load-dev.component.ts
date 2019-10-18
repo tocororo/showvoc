@@ -5,6 +5,10 @@ import { PmkiConversionFormat } from 'src/app/models/Pmki';
 import { DataFormat } from 'src/app/models/RDFFormat';
 import { InputOutputServices } from 'src/app/services/input-output.service';
 import { PmkiServices } from 'src/app/services/pmki.service';
+import { TransitiveImportMethodAllowance } from 'src/app/models/Metadata';
+import { ExtensionFactory, Settings, ExtensionPointID, PluginSpecification } from 'src/app/models/Plugins';
+import { ExtensionsServices } from 'src/app/services/extensions.service';
+import { ModalType } from 'src/app/modal-dialogs/Modals';
 
 @Component({
     selector: 'load-dev',
@@ -14,63 +18,127 @@ import { PmkiServices } from 'src/app/services/pmki.service';
 export class LoadDevResourceComponent {
 
     private token: string;
+    private conversionFormat: string;
 
-    dataFormats: DataFormat[];
-    selectedFormat: DataFormat;
-
-    private readonly zThesExtensionId: string = "it.uniroma2.art.semanticturkey.extension.impl.rdflifter.zthesdeserializer.ZthesDeserializingLifter"
+    private readonly zThesExtensionId: string = "it.uniroma2.art.semanticturkey.extension.impl.rdflifter.zthesdeserializer.ZthesDeserializingLifter";
+    private readonly rdfExtensionId: string = "it.uniroma2.art.semanticturkey.extension.impl.rdflifter.rdfdeserializer.RDFDeserializingLifter";
 
     projectName: string;
     file: File;
-
     filePickerAccept: string;
 
-    constructor(private pmkiService: PmkiServices, private inputOutputService: InputOutputServices,
+    inputFormats: DataFormat[];
+    selectedInputFormat: DataFormat;
+
+    importAllowances: { allowance: TransitiveImportMethodAllowance, show: string }[] = [
+        { allowance: TransitiveImportMethodAllowance.nowhere, show: "Do not resolve" },
+        { allowance: TransitiveImportMethodAllowance.web, show: "From Web" },
+        { allowance: TransitiveImportMethodAllowance.webFallbackToMirror, show: "From Web with fallback to Ontology Mirror" },
+        { allowance: TransitiveImportMethodAllowance.mirror, show: "From Ontology Mirror" },
+        { allowance: TransitiveImportMethodAllowance.mirrorFallbackToWeb, show: "From Ontology Mirror with fallback to Web" }
+    ];
+    selectedImportAllowance: TransitiveImportMethodAllowance = this.importAllowances[1].allowance;
+
+    //lifters
+    lifters: ExtensionFactory[];
+    selectedLifterExtension: ExtensionFactory;
+    selectedLifterConfig: Settings;
+
+    constructor(private pmkiService: PmkiServices, private inputOutputService: InputOutputServices, private extensionService: ExtensionsServices,
         private basicModals: BasicModalsServices, private activeRoute: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
         this.token = this.activeRoute.snapshot.params['token'];
-        let conversionFormat = this.activeRoute.snapshot.params['format'];
-        if (conversionFormat == PmkiConversionFormat.TBX) { //temporarly... to replace with a call to getSupportedFormats when available for tbx
-            this.dataFormats = [new DataFormat("TBX", "application/x-tbx", "tbx")];
-            this.selectedFormat = this.dataFormats[0];
-            this.filePickerAccept = ".tbx";
-        } else if (conversionFormat == PmkiConversionFormat.ZTHES) {
-            this.dataFormats = [new DataFormat("XML", "application/xml", "xml")];
-            this.selectedFormat = this.dataFormats[0];
-            this.filePickerAccept = ".xml";
+        this.conversionFormat = this.activeRoute.snapshot.params['format'];
 
-            //WHY THIS WANTS PROJECT CONTEXT?
-            // this.inputOutputService.getSupportedFormats(this.zThesExtensionId).subscribe(
-            //     formats => {
-            //         this.dataFormats = formats;
-            //         this.selectedFormat = this.dataFormats[0];
+        this.extensionService.getExtensions(ExtensionPointID.RDF_LIFTER_ID).subscribe(
+            extensions => {
+                //allow only the lifter compliant with the conversionFormat
+                this.lifters = [];
+                let extensionToSelect: string;
+                if (this.conversionFormat == PmkiConversionFormat.RDF) {
+                    extensionToSelect = this.rdfExtensionId;
+                } else if (this.conversionFormat == PmkiConversionFormat.TBX) {
+                } else if (this.conversionFormat == PmkiConversionFormat.ZTHES) {
+                    extensionToSelect = this.zThesExtensionId;
+                }
+                this.lifters = [extensions.find(e => e.id == extensionToSelect)];
+            }
+        );
+    }
 
-            //         let extList: string[] = []; //collects the extensions of the formats in order to provide them to the file picker
-            //         this.dataFormats.forEach(f => {
-            //             extList.push("." + f.defaultFileExtension);
-            //         });
-            //         //remove duplicated extensions
-            //         extList = extList.filter((item: string, pos: number) => {
-            //             return extList.indexOf(item) == pos;
-            //         });
-            //         this.filePickerAccept = extList.join(",");
-            //     }
-            // )
-        }
+    onLifterExtensionUpdated(ext: ExtensionFactory) {
+        this.selectedLifterExtension = ext;
+        this.inputOutputService.getSupportedFormats(this.selectedLifterExtension.id).subscribe(
+            formats => {
+                this.inputFormats = formats;
+                /*
+                 * Iterate over the input format for:
+                 * - collecting the extensions of the formats, in order to provide them to the file picker
+                 * - select a default input format (rdf for the rdf lifter)
+                 */
+                let extList: string[] = []; 
+                let defaultInputFormatIdx: number = 0;
+                for (var i = 0; i < this.inputFormats.length; i++) {
+                    extList.push("."+this.inputFormats[i].defaultFileExtension);
+                    if (this.selectedLifterExtension.id == this.rdfExtensionId && this.inputFormats[i].name == "RDF/XML") {
+                        defaultInputFormatIdx = i;
+                    }
+                }
+                this.selectedInputFormat = this.inputFormats[defaultInputFormatIdx];
+                //remove duplicated extensions
+                extList = extList.filter((item: string, pos: number) => {
+                    return extList.indexOf(item) == pos;
+                });
+                this.filePickerAccept = extList.join(",");
+            }
+        )
     }
 
     fileChangeEvent(file: File) {
         this.file = file;
+        if (this.conversionFormat == PmkiConversionFormat.RDF) {
+            this.inputOutputService.getParserFormatForFileName(file.name).subscribe(
+                format => {
+                    if (format != null) {
+                        for (var i = 0; i < this.inputFormats.length; i++) {
+                            if (this.inputFormats[i].name == format) {
+                                this.selectedInputFormat = this.inputFormats[i];
+                                return;
+                            }
+                        }
+                    }
+                }
+            );
+        }
+    }
+
+    allowImportAllowanceSelection(): boolean {
+        return this.conversionFormat == PmkiConversionFormat.RDF;
     }
 
     load() {
-        alert("TODO");
-        // this.basicModals.alert("Load data", "Data loaded successfully").then(
-        //     () => {
-        //         this.router.navigate(["/home"]);
-        //     }
-        // )
+        let rdfLifterSpec: PluginSpecification = {
+            factoryId: this.selectedLifterExtension.id,
+        }
+        if (this.selectedLifterConfig != null) {
+            if (this.selectedLifterConfig.requireConfiguration()) {
+                this.basicModals.alert("Missing configuration", "The Lifter needs to be configured", ModalType.warning);
+                return;
+            }
+            rdfLifterSpec.configType = this.selectedLifterConfig.type;
+            rdfLifterSpec.configuration = this.selectedLifterConfig.getPropertiesAsMap();
+        }
+
+        this.pmkiService.loadDevContributionData(this.token, this.projectName, this.file, this.selectedInputFormat.name, rdfLifterSpec, this.selectedImportAllowance).subscribe(
+            () => {
+                this.basicModals.alert("Load data", "Data loaded successfully").then(
+                    () => {
+                        this.router.navigate(["/home"]);
+                    }
+                )
+            }
+        )
     }
 
 

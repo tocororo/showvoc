@@ -1,8 +1,12 @@
-<div class="vbox my-3">
-    <div class="container vbox">
-        <h1>Dashboard</h1>
+<div class="container my-3">
 
-        <contributions-manager></contributions-manager>
-
+    <div>
+        <div class="btn-group btn-group-sm mb-2">
+            <button type="button" class="btn btn-outline-info" [routerLink]="['projects']" routerLinkActive="active">Projects</button>
+            <button type="button" class="btn btn-outline-info" [routerLink]="['contributions']" routerLinkActive="active">Contributions</button>
+        </div>
     </div>
+
+    <router-outlet></router-outlet>
+
 </div>

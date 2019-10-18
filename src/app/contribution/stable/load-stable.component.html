@@ -12,7 +12,7 @@
                 <input class="form-control form-control-sm" [(ngModel)]="projectName" placeholder="Project name">
             </div>
         </div>
-        <div class="form-group row">
+        <!-- <div class="form-group row">
             <label class="col-sm-2 col-form-label col-form-label-sm">File</label>
             <div class="col-sm-6">
                 <file-picker (fileChanged)="fileChangeEvent($event)" size="sm" [accept]="filePickerAccept"></file-picker>    
@@ -23,7 +23,38 @@
                     <option *ngFor="let f of rdfFormats" [ngValue]="f">{{f.name}}</option>
                 </select>
             </div>
+        </div> -->
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label col-form-label-sm">File</label>
+            <div class="col-sm-10">
+                <file-picker (fileChanged)="fileChangeEvent($event)" size="sm" [accept]="filePickerAccept"></file-picker>
+            </div>
         </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label col-form-label-sm">Lifter</label>
+            <div class="col-sm-6">
+                <extension-configurator *ngIf="lifters" [extensions]="lifters"
+                    (extensionUpdated)="onLifterExtensionUpdated($event)"
+                    (configurationUpdated)="selectedLifterConfig = $event" disabled="true">
+                </extension-configurator>
+            </div>
+            <label class="col-sm-1 col-form-label col-form-label-sm">Format</label>
+            <div class="col-sm-3">
+                <select class="form-control form-control-sm" [(ngModel)]="selectedInputFormat">
+                    <option *ngFor="let f of inputFormats" [ngValue]="f">{{f.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label col-form-label-sm">Resolve imports</label>
+            <div class="col-sm-10">
+                <select class="form-control form-control-sm" [(ngModel)]="selectedImportAllowance">
+                    <option *ngFor="let ia of importAllowances" [ngValue]="ia.allowance">{{ia.show}}</option>
+                </select>
+            </div>
+        </div>
+
     </div>
 
     <div class="text-right">

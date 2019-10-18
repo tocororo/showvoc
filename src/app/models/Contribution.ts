@@ -22,11 +22,11 @@ export abstract class StoredContribution {
     contributorLastName: string;
     contributorEmail: string;
     contributorOrganization: string;
+    resourceName: string;
     baseURI: IRI;
 }
 export class StableResourceStoredContribution extends StoredContribution {
     type = "Stable";
-    resourceName: string;
     homepage: string;
     description: string;
     isOwner: boolean;
@@ -35,7 +35,6 @@ export class StableResourceStoredContribution extends StoredContribution {
 }
 export class MetadataStoredContribution extends StoredContribution {
     type = "Metadata";
-    resourceName: string;
     identity: IRI;
     uriSpace: string;
     dereferenciationSystem: IRI;
@@ -45,7 +44,6 @@ export class MetadataStoredContribution extends StoredContribution {
 export class DevResourceStoredContribution extends StoredContribution {
     type = "Development";
     format: string;
-	resourceName: string;
 	homepage: string;
 	description: string;
 	model: IRI;

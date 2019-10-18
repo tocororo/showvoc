@@ -31,19 +31,7 @@ export class ProjectsServices {
                 var projCollJson: any[] = stResp;
                 var projectList: Project[] = [];
                 projCollJson.forEach(pJson => {
-                    let proj = new Project();
-                    proj.setName(pJson.name);
-                    proj.setBaseURI(pJson.baseURI);
-                    proj.setDefaultNamespace(pJson.defaultNamespace);
-                    proj.setAccessible(pJson.accessible);
-                    proj.setHistoryEnabled(pJson.historyEnabled);
-                    proj.setValidationEnabled(pJson.validationEnabled);
-                    proj.setModelType(pJson.model);
-                    proj.setLexicalizationModelType(pJson.lexicalizationModel);
-                    proj.setOpen(pJson.open);
-                    proj.setRepositoryLocation(pJson.repositoryLocation);
-                    proj.setStatus(pJson.status);
-                    projectList.push(proj);
+                    projectList.push(this.parseProject(pJson));
                 });
                 //sort by name
                 projectList.sort(
@@ -54,6 +42,52 @@ export class ProjectsServices {
                 return projectList;
             })
         );
+    }
+
+    /**
+     * 
+     * @param role 
+     * @param consumer 
+     * @param onlyOpen 
+     */
+    listProjectsPerRole(role: string, consumer?: Project, onlyOpen?: boolean) {
+        var params: any = {
+            role: role,
+            consumer: consumer != null ? consumer.getName() : "SYSTEM",
+            onlyOpen: onlyOpen
+        };
+        return this.httpMgr.doGet(this.serviceName, "listProjectsPerRole", params).pipe(
+            map(stResp => {
+                var projCollJson: any[] = stResp;
+                var projectList: Project[] = [];
+                projCollJson.forEach(pJson => {
+                    projectList.push(this.parseProject(pJson));
+                });
+                //sort by name
+                projectList.sort(
+                    function (p1: Project, p2: Project) {
+                        return p1.getName().toLowerCase().localeCompare(p2.getName().toLowerCase());
+                    }
+                )
+                return projectList;
+            })
+        );
+    }
+
+    private parseProject(projJson: any): Project {
+        let proj = new Project();
+        proj.setName(projJson.name);
+        proj.setBaseURI(projJson.baseURI);
+        proj.setDefaultNamespace(projJson.defaultNamespace);
+        proj.setAccessible(projJson.accessible);
+        proj.setHistoryEnabled(projJson.historyEnabled);
+        proj.setValidationEnabled(projJson.validationEnabled);
+        proj.setModelType(projJson.model);
+        proj.setLexicalizationModelType(projJson.lexicalizationModel);
+        proj.setOpen(projJson.open);
+        proj.setRepositoryLocation(projJson.repositoryLocation);
+        proj.setStatus(projJson.status);
+        return proj;
     }
 
 }

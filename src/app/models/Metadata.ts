@@ -1,6 +1,6 @@
-import { IRI, Literal, AnnotatedValue } from './Resources';
 import { ResourceUtils } from '../utils/ResourceUtils';
 import { Project } from './Project';
+import { IRI, Literal } from './Resources';
 
 export class PrefixMapping {
     public prefix: string;
@@ -104,4 +104,12 @@ export class SparqlEndpointMetadata {
         }
         
     }
+}
+
+export enum TransitiveImportMethodAllowance {
+    web = "web",
+    webFallbackToMirror = "webFallbackToMirror",
+    mirrorFallbackToWeb = "mirrorFallbackToWeb",
+    mirror = "mirror",
+    nowhere = "nowhere"
 }

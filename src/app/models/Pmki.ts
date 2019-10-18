@@ -8,6 +8,7 @@ export class PmkiConstants {
 
 export enum PmkiConversionFormat {
     EXCEL = "EXCEL",
+    RDF = "RDF",
     TBX = "TBX",
     ZTHES = "ZTHES"
 }

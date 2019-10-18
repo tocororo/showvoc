@@ -6,6 +6,7 @@ import { PluginSpecification } from '../models/Plugins';
 import { RepositoryAccess } from '../models/Project';
 import { IRI } from '../models/Resources';
 import { HttpManager, PMKIRequestOptions } from "../utils/HttpManager";
+import { TransitiveImportMethodAllowance } from '../models/Metadata';
 
 @Injectable()
 export class PmkiServices {
@@ -149,15 +150,53 @@ export class PmkiServices {
      * 
      * @param token 
      * @param projectName 
-     * @param file 
+     * @param inputFile 
      */
-    loadStableContributionData(token: string, projectName: string, file: File, format: string) {
+    loadStableContributionData(token: string, projectName: string, inputFile: File, format: string,
+        rdfLifterSpec: PluginSpecification, transitiveImportAllowance: TransitiveImportMethodAllowance) {
         var params = {
             token: token,
             projectName: projectName,
-            file: file,
-            format: format
+            inputFile: inputFile,
+            format: format,
+            rdfLifterSpec: JSON.stringify(rdfLifterSpec),
+            transitiveImportAllowance: transitiveImportAllowance
         };
         return this.httpMgr.uploadFile(this.serviceName, "loadStableContributionData", params);
+    }
+
+    /**
+     * 
+     * @param token 
+     * @param projectName 
+     * @param inputFile 
+     * @param format 
+     * @param rdfLifterSpec 
+     * @param transitiveImportAllowance 
+     */
+    loadDevContributionData(token: string, projectName: string, inputFile: File, format: string,
+        rdfLifterSpec: PluginSpecification, transitiveImportAllowance: TransitiveImportMethodAllowance) {
+        var params = {
+            token: token,
+            projectName: projectName,
+            inputFile: inputFile,
+            format: format,
+            rdfLifterSpec: JSON.stringify(rdfLifterSpec),
+            transitiveImportAllowance: transitiveImportAllowance
+        };
+        return this.httpMgr.uploadFile(this.serviceName, "loadDevContributionData", params);
+    }
+
+    /**
+     * 
+     * @param projectName 
+     * @param status 
+     */
+    setProjectStatus(projectName: string, status: string) {
+        var params = {
+            projectName: projectName,
+            status: status
+        };
+        return this.httpMgr.doPost(this.serviceName, "setProjectStatus", params);
     }
 }

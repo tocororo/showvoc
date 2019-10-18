@@ -1,0 +1,58 @@
+<div class="card vbox">
+
+    <div class="card-header">
+        <label>Projects manager</label>
+
+        <div class="btn-toolbar float-right">
+            <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right">
+                <button class="btn btn-light dropdown-toggle dropdown-no-arrow" data-toggle="dropdown" ngbDropdownToggle [disabled]="!selectedProject">
+                    <span class="fa fa-pencil"></span>
+                </button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <button class="dropdown-item" (click)="changeProjectStatus(rolePublic)" [disabled]="selectedProject?.role == rolePublic">Make public</button>
+                    <button class="dropdown-item" (click)="changeProjectStatus(roleStaging)" [disabled]="selectedProject?.role == roleStaging">Make staging</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body table-responsive">
+
+        <table class="table table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center">Project Name</th>
+                    <th class="text-center">Open/Close</th>
+                    <th class="text-center">Model</th>
+                    <th class="text-center">Lexicalization Model</th>
+                    <th class="text-center">Location</th>
+                    <th class="text-center">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of projectList" (click)="selectProject(p)" class="clickable" [ngClass]="{'table-info': p == selectedProject}">
+                    <td class="text-center">{{p.getName()}}</td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-light" [ngClass]="{ active: p.isOpen() }">
+                            <span *ngIf="p.isOpen()" class="fa fa-folder-open"></span>
+                            <span *ngIf="!p.isOpen()" class="fa fa-folder"></span>
+                        </button>
+                    </td>
+                    <td class="text-center">{{p.getModelType(true)}}</td>
+                    <td class="text-center">{{p.getLexicalizationModelType(true)}}</td>
+                    <td class="text-center">
+                        {{p.getRepositoryLocation().location}}
+                        <span *ngIf="p.isRepositoryRemote()" class="fa fa-info-circle" [title]="p.getRepositoryLocation().serverURL"></span>
+                    </td>
+                    <td class="text-center">
+                        <h5 class="m-0">
+                            <span class="badge" [ngClass]="{'badge-success': p.role==rolePublic, 'badge-warning': p.role==roleStaging, 'badge-light': p.role==rolePristine}">
+                                {{roleStatusMap[p.role]}}
+                            </span>
+                        </h5>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

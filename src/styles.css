@@ -336,6 +336,10 @@ ul.nav-tabs {
     padding: 3px 10px;
 }
 
+.dropdown-toggle.dropdown-no-arrow::after {
+    display:none;
+}
+
 .modal-dialog {
     width: 600px;
     max-width: 600px;
