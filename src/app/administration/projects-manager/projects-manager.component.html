@@ -2,18 +2,6 @@
 
     <div class="card-header">
         <label>Projects manager</label>
-
-        <div class="btn-toolbar float-right">
-            <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right">
-                <button class="btn btn-light dropdown-toggle dropdown-no-arrow" data-toggle="dropdown" ngbDropdownToggle [disabled]="!selectedProject">
-                    <span class="fa fa-pencil"></span>
-                </button>
-                <div class="dropdown-menu" ngbDropdownMenu>
-                    <button class="dropdown-item" (click)="changeProjectStatus(rolePublic)" [disabled]="selectedProject?.role != roleStaging">Make public</button>
-                    <button class="dropdown-item" (click)="changeProjectStatus(roleStaging)" [disabled]="selectedProject?.role != rolePublic">Make staging</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="card-body table-responsive">
@@ -30,12 +18,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let p of projectList" (click)="selectProject(p)" class="clickable" [ngClass]="{'table-info': p == selectedProject}">
-                    <td class="text-center">{{p.getName()}}</td>
+                <tr *ngFor="let p of projectList">
                     <td class="text-center">
-                        <button class="btn btn-sm btn-light" [ngClass]="{ active: p.isOpen() }">
-                            <span *ngIf="p.isOpen()" class="fa fa-folder-open"></span>
-                            <span *ngIf="!p.isOpen()" class="fa fa-folder"></span>
+                        <a [routerLink]="" (click)="goToProject(p)" [ngClass]="{ disabled: !p.isOpen() || p.role == rolePristine}">{{p.getName()}}</a>
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-light" style="width: 32px;" (click)="openCloseProject(p)" [ngClass]="{ active: p.isOpen() }">
+                            <span *ngIf="p.loading;" class="spinner-border spinner-border-sm"></span>
+                            <ng-container *ngIf="!p.loading;">
+                                <span *ngIf="p.isOpen()" class="fa fa-folder-open"></span>
+                                <span *ngIf="!p.isOpen()" class="fa fa-folder"></span>
+                            </ng-container>
                         </button>
                     </td>
                     <td class="text-center">{{p.getModelType(true)}}</td>
@@ -45,11 +38,17 @@
                         <span *ngIf="p.isRepositoryRemote()" class="fa fa-info-circle" [title]="p.getRepositoryLocation().serverURL"></span>
                     </td>
                     <td class="text-center">
-                        <h5 class="m-0">
-                            <span class="badge" [ngClass]="{'badge-success': p.role==rolePublic, 'badge-warning': p.role==roleStaging, 'badge-light': p.role==rolePristine}">
+                        <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right">
+                            <button class="btn dropdown-toggle dropdown-no-arrow" data-toggle="dropdown" ngbDropdownToggle [disabled]="p.role==rolePristine"
+                                [ngClass]="{'btn-success': p.role==rolePublic, 'btn-warning': p.role==roleStaging, 'btn-light': p.role==rolePristine}"
+                                style="font-weight: 500;">
                                 {{roleStatusMap[p.role]}}
-                            </span>
-                        </h5>
+                            </button>
+                            <div class="dropdown-menu" ngbDropdownMenu>
+                                <button class="dropdown-item" (click)="changeProjectStatus(p, rolePublic)" [disabled]="p.role != roleStaging">Make public</button>
+                                <button class="dropdown-item" (click)="changeProjectStatus(p, roleStaging)" [disabled]="p.role != rolePublic">Make staging</button>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>

@@ -22,6 +22,7 @@ export class LoadDevResourceComponent {
 
     private readonly zThesExtensionId: string = "it.uniroma2.art.semanticturkey.extension.impl.rdflifter.zthesdeserializer.ZthesDeserializingLifter";
     private readonly rdfExtensionId: string = "it.uniroma2.art.semanticturkey.extension.impl.rdflifter.rdfdeserializer.RDFDeserializingLifter";
+    private readonly tbxExtensionId: string = "it.uniroma2.art.pmki.tbx.TBXRDFLifter";
 
     projectName: string;
     contributorEmail: string;
@@ -60,6 +61,7 @@ export class LoadDevResourceComponent {
                 if (this.conversionFormat == PmkiConversionFormat.RDF) {
                     extensionToSelect = this.rdfExtensionId;
                 } else if (this.conversionFormat == PmkiConversionFormat.TBX) {
+                    extensionToSelect = this.tbxExtensionId;
                 } else if (this.conversionFormat == PmkiConversionFormat.ZTHES) {
                     extensionToSelect = this.zThesExtensionId;
                 }

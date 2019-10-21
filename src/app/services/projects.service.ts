@@ -90,4 +90,30 @@ export class ProjectsServices {
         return proj;
     }
 
+    /**
+     * 
+     * @param project 
+     */
+    disconnectFromProject(project: Project) {
+        var params = {
+            consumer: "SYSTEM",
+            projectName: project.getName()
+        };
+        return this.httpMgr.doPost(this.serviceName, "disconnectFromProject", params);
+    }
+
+    /**
+     * 
+     * @param project 
+     */
+    accessProject(project: Project) {
+        var params = {
+            consumer: "SYSTEM",
+            projectName: project.getName(),
+            requestedAccessLevel: "RW",
+            requestedLockLevel: "NO"
+        };
+        return this.httpMgr.doPost(this.serviceName, "accessProject", params);
+    }
+
 }

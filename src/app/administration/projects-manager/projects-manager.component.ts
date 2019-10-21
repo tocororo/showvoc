@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { Project } from 'src/app/models/Project';
-import { ProjectsServices } from 'src/app/services/projects.service';
-import { PmkiServices } from 'src/app/services/pmki.service';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
+import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { PmkiConstants } from 'src/app/models/Pmki';
+import { Project } from 'src/app/models/Project';
+import { PmkiServices } from 'src/app/services/pmki.service';
+import { ProjectsServices } from 'src/app/services/projects.service';
 
 @Component({
     selector: 'projects-manager',
@@ -24,9 +27,9 @@ export class ProjectsManagerComponent {
     private readonly roleAttr: string = "role";
 
     projectList: Project[];
-    selectedProject: Project;
 
-    constructor(private projectService: ProjectsServices, private pmkiService: PmkiServices) {}
+    constructor(private projectService: ProjectsServices, private pmkiService: PmkiServices, 
+        private basicModals: BasicModalsServices, private router: Router) {}
 
     ngOnInit() {
         this.projectList = [];
@@ -44,20 +47,31 @@ export class ProjectsManagerComponent {
         });
     }
 
-    selectProject(project: Project) {
-        if (this.selectedProject == project) {
-            this.selectedProject = null;
+    changeProjectStatus(project: Project, role: string) {
+        this.pmkiService.setProjectStatus(project.getName(), role).subscribe(
+            () => {
+                project[this.roleAttr] = role;
+            }
+        )
+    }
+
+    openCloseProject(project: Project) {
+        project['loading'] = true;
+        if (project.isOpen()) {
+            this.projectService.disconnectFromProject(project).pipe(
+                finalize(() => project['loading'] = false)
+            )
+            .subscribe(() => project.setOpen(false));
         } else {
-            this.selectedProject = project;
+            this.projectService.accessProject(project).pipe(
+                finalize(() => project['loading'] = false)
+            )
+            .subscribe(() => project.setOpen(true));
         }
     }
 
-    changeProjectStatus(role: string) {
-        this.pmkiService.setProjectStatus(this.selectedProject.getName(), role).subscribe(
-            () => {
-                this.selectedProject[this.roleAttr] = role;
-            }
-        )
+    goToProject(project: Project) {
+        this.router.navigate(["/datasets/" + project.getName()]);
     }
 
 }
