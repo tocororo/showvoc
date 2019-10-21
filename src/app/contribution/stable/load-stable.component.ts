@@ -23,6 +23,7 @@ export class LoadStableResourceComponent {
     private readonly rdfExtensionId: string = "it.uniroma2.art.semanticturkey.extension.impl.rdflifter.rdfdeserializer.RDFDeserializingLifter";
 
     projectName: string;
+    contributorEmail: string;
     file: File;
     filePickerAccept: string;
 
@@ -117,10 +118,11 @@ export class LoadStableResourceComponent {
         }
 
         PMKIContext.setTempProject(new Project(this.projectName));
-        this.pmkiService.loadStableContributionData(this.token, this.projectName, this.file, this.selectedInputFormat.name, rdfLifterSpec, this.selectedImportAllowance).subscribe(
+        this.pmkiService.loadStableContributionData(this.token, this.projectName, this.contributorEmail, this.file, 
+            this.selectedInputFormat.name, rdfLifterSpec, this.selectedImportAllowance).subscribe(
             () => {
                 PMKIContext.removeTempProject();
-                this.basicModals.alert("Load data", "Data loaded successfully").then(
+                this.basicModals.alert("Load data", "Data loaded successfully.").then(
                     () => {
                         this.router.navigate(["/home"]);
                     }

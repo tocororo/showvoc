@@ -152,11 +152,12 @@ export class PmkiServices {
      * @param projectName 
      * @param inputFile 
      */
-    loadStableContributionData(token: string, projectName: string, inputFile: File, format: string,
+    loadStableContributionData(token: string, projectName: string, contributorEmail: string, inputFile: File, format: string,
         rdfLifterSpec: PluginSpecification, transitiveImportAllowance: TransitiveImportMethodAllowance) {
         var params = {
             token: token,
             projectName: projectName,
+            contributorEmail: contributorEmail,
             inputFile: inputFile,
             format: format,
             rdfLifterSpec: JSON.stringify(rdfLifterSpec),
@@ -174,11 +175,12 @@ export class PmkiServices {
      * @param rdfLifterSpec 
      * @param transitiveImportAllowance 
      */
-    loadDevContributionData(token: string, projectName: string, inputFile: File, format: string,
+    loadDevContributionData(token: string, projectName: string, contributorEmail: string, inputFile: File, format: string,
         rdfLifterSpec: PluginSpecification, transitiveImportAllowance: TransitiveImportMethodAllowance) {
         var params = {
             token: token,
             projectName: projectName,
+            contributorEmail: contributorEmail,
             inputFile: inputFile,
             format: format,
             rdfLifterSpec: JSON.stringify(rdfLifterSpec),

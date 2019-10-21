@@ -31,9 +31,9 @@
             </div>
             <div>
                 <small>
-                    <span class="mr-1">The Contributor is the owner of the resource?</span>
-                    <span *ngIf="contribution.isOwner">YES</span>
-                    <span *ngIf="!contribution.isOwner">NO</span>
+                    <span class="mr-1">The contributor is the owner of the resource?</span>
+                    <strong *ngIf="contribution.isOwner">YES</strong>
+                    <strong *ngIf="!contribution.isOwner">NO</strong>
                 </small>
             </div>
         </div>

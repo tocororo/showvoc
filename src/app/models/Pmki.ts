@@ -1,5 +1,5 @@
 export class PmkiConstants {
-    static visitorEmail: string = "pmki@pmki.eu";
+    static visitorEmail: string = "public@pmki.eu";
     static visitorPassword: string = "pmki";
     static rolePristine: string = "pmki_pristine";
     static roleStaging: string = "pmki_staging";

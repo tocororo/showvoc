@@ -9,8 +9,8 @@
                     <span class="fa fa-pencil"></span>
                 </button>
                 <div class="dropdown-menu" ngbDropdownMenu>
-                    <button class="dropdown-item" (click)="changeProjectStatus(rolePublic)" [disabled]="selectedProject?.role == rolePublic">Make public</button>
-                    <button class="dropdown-item" (click)="changeProjectStatus(roleStaging)" [disabled]="selectedProject?.role == roleStaging">Make staging</button>
+                    <button class="dropdown-item" (click)="changeProjectStatus(rolePublic)" [disabled]="selectedProject?.role != roleStaging">Make public</button>
+                    <button class="dropdown-item" (click)="changeProjectStatus(roleStaging)" [disabled]="selectedProject?.role != rolePublic">Make staging</button>
                 </div>
             </div>
         </div>

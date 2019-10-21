@@ -24,6 +24,7 @@ export class LoadDevResourceComponent {
     private readonly rdfExtensionId: string = "it.uniroma2.art.semanticturkey.extension.impl.rdflifter.rdfdeserializer.RDFDeserializingLifter";
 
     projectName: string;
+    contributorEmail: string;
     file: File;
     filePickerAccept: string;
 
@@ -130,8 +131,13 @@ export class LoadDevResourceComponent {
             rdfLifterSpec.configuration = this.selectedLifterConfig.getPropertiesAsMap();
         }
 
-        this.pmkiService.loadDevContributionData(this.token, this.projectName, this.file, this.selectedInputFormat.name, rdfLifterSpec, this.selectedImportAllowance).subscribe(
+        this.pmkiService.loadDevContributionData(this.token, this.projectName, this.contributorEmail, this.file, 
+            this.selectedInputFormat.name, rdfLifterSpec, this.selectedImportAllowance).subscribe(
             () => {
+                let message: string = "Data loaded successfully";
+                if (this.conversionFormat != PmkiConversionFormat.EXCEL) {
+                    message += ". You will soon recieve an email containing details for connecting to the VocBench"
+                }
                 this.basicModals.alert("Load data", "Data loaded successfully").then(
                     () => {
                         this.router.navigate(["/home"]);
