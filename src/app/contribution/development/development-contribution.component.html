@@ -6,7 +6,7 @@
         <div class="input-group input-group-sm">
             <div class="input-group-prepend">
                 <div class="input-group-text">
-                    <input type="checkbox" [(ngModel)]="conversionRequired">
+                    <input type="checkbox" [(ngModel)]="conversionRequired" title="The data requires conversion from a non-RDF format">
                 </div>
             </div>
             <select class="form-control" [(ngModel)]="selectedFormat" [disabled]="!conversionRequired">

@@ -45,15 +45,16 @@ export class StableContributionComponent extends AbstractContributionComponent {
 
     ngOnInit() {}
 
-    discover() {
-        this.loading = true;
-        this.metadataRegistryService.discoverDataset(new IRI(this.baseURI)).pipe(
-            finalize(() => this.loading = false)
-        ).subscribe(
-            stResp => {
-            }
-        );
-    }
+    // discover() {
+    //     this.loading = true;
+    //     this.metadataRegistryService.discoverDatasetMetadata(new IRI(this.baseURI)).pipe(
+    //         finalize(() => this.loading = false)
+    //     ).subscribe(
+    //         stResp => {
+
+    //         }
+    //     );
+    // }
 
     isBaseUriValid(): boolean {
         return IRI.regexp.test(this.baseURI);

@@ -114,13 +114,7 @@ export class MetadataRegistryServices {
         var params: any = {
             iri: iri,
         }
-        let options: PMKIRequestOptions = new PMKIRequestOptions({
-            errorAlertOpt: { 
-                show: true,
-                exceptionsToSkip: ['it.uniroma2.art.semanticturkey.exceptions.DeniedOperationException'] 
-            } 
-        });
-        return this.httpMgr.doPost(this.serviceName, "discoverDataset", params, options).pipe(
+        return this.httpMgr.doPost(this.serviceName, "discoverDataset", params).pipe(
             map(stResp => {
                 return ResourceDeserializer.createIRI(stResp);
             })
@@ -135,7 +129,13 @@ export class MetadataRegistryServices {
         var params: any = {
             iri: iri
         }
-        return this.httpMgr.doGet(this.serviceName, "discoverDatasetMetadata", params).pipe(
+        let options: PMKIRequestOptions = new PMKIRequestOptions({
+            errorAlertOpt: { 
+                show: true,
+                exceptionsToSkip: ['it.uniroma2.art.semanticturkey.exceptions.DeniedOperationException'] 
+            } 
+        });
+        return this.httpMgr.doGet(this.serviceName, "discoverDatasetMetadata", params, options).pipe(
             map(stResp => {
                 return DatasetMetadata.deserialize(stResp);
             })

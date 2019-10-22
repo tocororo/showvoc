@@ -77,7 +77,7 @@ export class MetadataContributionComponent extends AbstractContributionComponent
             dereferenciationSystem: this.dereferenciationSystem ? new IRI(this.dereferenciationSystem).toNT() : null,
             sparqlEndpoint: new IRI(this.sparqlEndpoint).toNT(),
             sparqlLimitations: this.sparqlNoAggregation ? [new IRI(SemanticTurkey.noAggregation).toNT()] : null,
-            uriSpace: this.uriSpace ? new IRI(this.uriSpace).toNT() : null
+            uriSpace: this.uriSpace
         }
         return config;
     }
