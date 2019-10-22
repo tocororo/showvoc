@@ -158,7 +158,10 @@ export class ContributionsManagerComponent {
         } else if (contribution instanceof MetadataStoredContribution) {
             this.basicModals.confirm("Approve contribution", "You are going to submit the proposed metadata into the Metadata Registry. Are you sure?", ModalType.warning).then(
                 confirm => {
-                    this.pmkiServices.approveMetadataContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).subscribe(
+                    contribution['loading'] = true;
+                    this.pmkiServices.approveMetadataContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).pipe(
+                        finalize(() => contribution['loading'] = false)
+                    ).subscribe(
                         () => {
                             this.contributions.splice(this.contributions.indexOf(contribution), 1);
                         }

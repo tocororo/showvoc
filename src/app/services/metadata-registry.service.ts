@@ -127,4 +127,19 @@ export class MetadataRegistryServices {
         );
     }
 
+    /**
+     * 
+     * @param iri 
+     */
+    discoverDatasetMetadata(iri: IRI): Observable<DatasetMetadata> {
+        var params: any = {
+            iri: iri
+        }
+        return this.httpMgr.doGet(this.serviceName, "discoverDatasetMetadata", params).pipe(
+            map(stResp => {
+                return DatasetMetadata.deserialize(stResp);
+            })
+        );
+    }
+
 }

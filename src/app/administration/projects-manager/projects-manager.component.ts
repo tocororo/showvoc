@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { PmkiConstants } from 'src/app/models/Pmki';
 import { Project } from 'src/app/models/Project';
 import { PmkiServices } from 'src/app/services/pmki.service';
@@ -28,8 +27,7 @@ export class ProjectsManagerComponent {
 
     projectList: Project[];
 
-    constructor(private projectService: ProjectsServices, private pmkiService: PmkiServices, 
-        private basicModals: BasicModalsServices, private router: Router) {}
+    constructor(private projectService: ProjectsServices, private pmkiService: PmkiServices, private router: Router) {}
 
     ngOnInit() {
         this.projectList = [];
@@ -38,7 +36,6 @@ export class ProjectsManagerComponent {
             this.projectService.listProjectsPerRole(r).subscribe(
                 projects => {
                     projects.forEach(p => {
-
                         p[this.roleAttr] = r;
                         this.projectList.push(p);
                     })
@@ -52,7 +49,7 @@ export class ProjectsManagerComponent {
             () => {
                 project[this.roleAttr] = role;
             }
-        )
+        );
     }
 
     openCloseProject(project: Project) {

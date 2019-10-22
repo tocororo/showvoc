@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { TransitiveImportMethodAllowance } from 'src/app/models/Metadata';
+import { ExtensionFactory, ExtensionPointID, PluginSpecification, Settings } from 'src/app/models/Plugins';
 import { PmkiConversionFormat } from 'src/app/models/Pmki';
 import { DataFormat } from 'src/app/models/RDFFormat';
+import { ExtensionsServices } from 'src/app/services/extensions.service';
 import { InputOutputServices } from 'src/app/services/input-output.service';
 import { PmkiServices } from 'src/app/services/pmki.service';
-import { TransitiveImportMethodAllowance } from 'src/app/models/Metadata';
-import { ExtensionFactory, Settings, ExtensionPointID, PluginSpecification } from 'src/app/models/Plugins';
-import { ExtensionsServices } from 'src/app/services/extensions.service';
-import { ModalType } from 'src/app/modal-dialogs/Modals';
 
 @Component({
     selector: 'load-dev',
@@ -23,6 +24,8 @@ export class LoadDevResourceComponent {
     private readonly zThesExtensionId: string = "it.uniroma2.art.semanticturkey.extension.impl.rdflifter.zthesdeserializer.ZthesDeserializingLifter";
     private readonly rdfExtensionId: string = "it.uniroma2.art.semanticturkey.extension.impl.rdflifter.rdfdeserializer.RDFDeserializingLifter";
     private readonly tbxExtensionId: string = "it.uniroma2.art.pmki.tbx.TBXRDFLifter";
+
+    loading: boolean = false;
 
     projectName: string;
     contributorEmail: string;
@@ -133,14 +136,17 @@ export class LoadDevResourceComponent {
             rdfLifterSpec.configuration = this.selectedLifterConfig.getPropertiesAsMap();
         }
 
+        this.loading = true;
         this.pmkiService.loadDevContributionData(this.token, this.projectName, this.contributorEmail, this.file, 
-            this.selectedInputFormat.name, rdfLifterSpec, this.selectedImportAllowance).subscribe(
+            this.selectedInputFormat.name, rdfLifterSpec, this.selectedImportAllowance).pipe(
+            finalize(() => this.loading = false)
+        ).subscribe(
             () => {
                 let message: string = "Data loaded successfully";
                 if (this.conversionFormat != PmkiConversionFormat.EXCEL) {
                     message += ". You will soon recieve an email containing details for connecting to the VocBench"
                 }
-                this.basicModals.alert("Load data", "Data loaded successfully").then(
+                this.basicModals.alert("Load data", message).then(
                     () => {
                         this.router.navigate(["/home"]);
                     }

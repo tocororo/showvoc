@@ -41,10 +41,10 @@ export class MetadataContributionComponent extends AbstractContributionComponent
     discover() {
         this.loading = true;
 
-        /**
-         * just for temporary test
-         */
-        this.metadataRegistryService.getDatasetMetadata(new IRI("http://aims.fao.org/aos/agrovoc/void.ttl#Agrovoc")).subscribe(
+        let baseUriIRI: IRI = new IRI(this.baseURI);
+        this.metadataRegistryService.discoverDatasetMetadata(baseUriIRI).pipe(
+            finalize(() => this.loading = false)
+        ).subscribe(
             dataset => {
                 this.discovered = true;
                 this.resourceName = dataset.title;
@@ -55,26 +55,14 @@ export class MetadataContributionComponent extends AbstractContributionComponent
                     dataset.sparqlEndpointMetadata.limitations.some(l => l == "<" + SemanticTurkey.noAggregation + ">") :
                     false;
                 this.uriSpace = dataset.uriSpace;
+            },
+            (err: Error) => {
+                //in case discoverDataset throws an exception prevent to contribute metadata
+                if (err.name.endsWith("DeniedOperationException")) {
+                    this.basicModals.alert("Already existing dataset", "A dataset for the provided IRI " + baseUriIRI.toNT() + " is already in the metadata registry", ModalType.warning);
+                }
             }
-        )
-
-        // let baseUriIRI: IRI = new IRI(this.baseURI);
-        // this.metadataRegistryService.discoverDataset(baseUriIRI).pipe(
-        //     finalize(() => this.loading = false)
-        // ).subscribe(
-        //     datasetCatalogIri => {
-        //         this.metadataRegistryService.getDatasetMetadata(datasetCatalogIri.getValue()).subscribe(
-        //             dataset => {
-        //             }
-        //         )
-        //     },
-        //     (err: Error) => {
-        //         //in case discoverDataset throws an exception prevent to contribute metadata
-        //         if (err.name.endsWith("DeniedOperationException")) {
-        //             this.basicModals.alert("Already existing dataset", "A dataset for the provided IRI " + baseUriIRI.toNT() + " is already in the metadata registry", ModalType.warning);
-        //         }
-        //     }
-        // );
+        );
     }
 
     getConfigurationImpl(): ConfigurationObject {
