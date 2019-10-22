@@ -12,7 +12,7 @@ import { PMKIContext } from 'src/app/utils/PMKIContext';
 @Component({
     selector: 'system-config',
     templateUrl: './system-configuration.component.html',
-    host: { class: "pageComponent" }
+    host: { class: "vbox" }
 })
 export class SystemConfigurationComponent implements OnInit {
 

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminDashboardComponent } from './administration/admin-dashboard.component';
 import { ProjectsManagerComponent } from './administration/projects-manager/projects-manager.component';
+import { InitialConfigurationComponent } from './administration/system-configuration/initial-configuration.component';
 import { SystemConfigurationComponent } from './administration/system-configuration/system-configuration.component';
 import { AlignmentsComponent } from './alignments/alignments.component';
 import { ContributionsManagerComponent } from './contribution/administration/contributions-manager.component';
@@ -30,10 +31,11 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: "projects", pathMatch: 'full' },
             { path: 'projects', component: ProjectsManagerComponent },
-            { path: 'contributions', component: ContributionsManagerComponent }
+            { path: 'contributions', component: ContributionsManagerComponent },
+            { path: 'config', component: SystemConfigurationComponent }
         ]
     },
-    { path: "sysconfig", component: SystemConfigurationComponent, canActivate: [AdminAuthGuard] },
+    { path: "sysconfig", component: InitialConfigurationComponent, canActivate: [AdminAuthGuard] },
     { path: "contribution", component: ContributionComponent, canActivate: [VisitorAuthGuard] },
     { path: "load/stable/:token", component: LoadStableResourceComponent, canActivate: [VisitorAuthGuard] },
     { path: "load/dev/:format/:token", component: LoadDevResourceComponent, canActivate: [VisitorAuthGuard] },
