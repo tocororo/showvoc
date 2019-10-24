@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
 import { ContributionType } from '../models/Contribution';
+import { UserForm } from '../models/User';
 import { ConfigurationsServices } from '../services/configuration.service';
 import { PmkiServices } from '../services/pmki.service';
 import { AbstractContributionComponent } from './abstract-contribution.component';
@@ -55,6 +56,11 @@ export class ContributionComponent {
             this.basicModals.alert("Incomplete form", "Missing mandatory field '" + missingField + "'", ModalType.warning);
             return;
         }
+        if (!UserForm.isValidEmail(this.email)) {
+            this.basicModals.alert("Invalid email", this.email + " is not a valid email address.", ModalType.warning);
+            return;
+        }
+
         let config: {[key: string]: any} = {};
         config['contributorName'] = this.name;
         config['contributorLastName'] = this.lastName;

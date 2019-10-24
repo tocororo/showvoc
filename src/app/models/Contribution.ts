@@ -31,7 +31,13 @@ export class StableResourceStoredContribution extends StoredContribution {
     description: string;
     isOwner: boolean;
     model: IRI;
-    lexicalizationModel: IRI
+    lexicalizationModel: IRI;
+    //metadata
+    identity: IRI;
+    uriSpace: string;
+    dereferenciationSystem: IRI;
+    sparqlEndpoint: IRI;
+    sparqlLimitations: IRI[];
 }
 export class MetadataStoredContribution extends StoredContribution {
     type = "Metadata";

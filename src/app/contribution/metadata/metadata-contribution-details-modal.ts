@@ -31,10 +31,6 @@ export class MetadataContributionDetailsModal {
         this.sparqlNoAggregation = this.contribution.sparqlLimitations.some(l => l.getIRI() == "<" + SemanticTurkey.noAggregation + ">");
     }
 
-    // ok() {
-    // 	this.activeModal.close();
-    // }
-
     close() {
         this.activeModal.dismiss();
     }

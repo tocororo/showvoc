@@ -236,7 +236,7 @@ sparql-component .CodeMirror { height: 28vh !important }
 .btn-group-xs > .btn, .btn-xs {
     padding  : .2rem .2rem;
     font-size  : .75rem;
-    line-height  : .5;
+    line-height  : 1;
     border-radius : .2rem;
 }
 

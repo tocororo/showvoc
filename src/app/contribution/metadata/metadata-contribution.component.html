@@ -25,11 +25,11 @@
     <div class="form-group row">
         <label class="col-sm-2 col-form-label col-form-label-sm">Identity <span>*</span></label>
         <div class="col-sm-10">
-            <input class="form-control form-control-sm" [(ngModel)]="identity" placeholder="Identity IRI" readonly>
+            <input class="form-control form-control-sm" [(ngModel)]="identity" placeholder="Identity IRI">
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label col-form-label-sm">Dereferenciation system</label>
+        <label class="col-sm-2 col-form-label col-form-label-sm">Dereferenciation system <span>*</span></label>
         <div class="col-sm-10">
             <select class="form-control form-control-sm" [(ngModel)]="dereferenciationSystem">
                 <option *ngFor="let opt of dereferenciationOpts" [ngValue]="opt.uri">{{opt.show}}</option>

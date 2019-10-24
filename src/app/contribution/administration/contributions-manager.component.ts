@@ -78,10 +78,15 @@ export class ContributionsManagerComponent {
         //parse specific contribution impl properties
         if (configuration.type == ConfigurationComponents.CONTRIBUTION_STORE.CONFIG_IMPL.METADATA) {
             contribution = new MetadataStoredContribution();
-            (<MetadataStoredContribution>contribution).resourceName = properties.find(p => p.name == "resourceName").value;
             (<MetadataStoredContribution>contribution).uriSpace = properties.find(p => p.name == "uriSpace").value;
-            (<MetadataStoredContribution>contribution).identity = ResourceUtils.parseIRI(properties.find(p => p.name == "identity").value);
-            (<MetadataStoredContribution>contribution).dereferenciationSystem = ResourceUtils.parseIRI(properties.find(p => p.name == "dereferenciationSystem").value);
+            let identityValue: string = properties.find(p => p.name == "identity").value;
+            if (identityValue != null) {
+                (<MetadataStoredContribution>contribution).identity = ResourceUtils.parseIRI(identityValue);
+            }
+            let dereferenciationSystemValue: string = properties.find(p => p.name == "dereferenciationSystem").value;
+            if (dereferenciationSystemValue != null) {
+                (<MetadataStoredContribution>contribution).dereferenciationSystem = ResourceUtils.parseIRI(dereferenciationSystemValue);
+            }
             let sparqlEndpointValue = properties.find(p => p.name == "sparqlEndpoint").value;
             if (sparqlEndpointValue != null) {
                 (<MetadataStoredContribution>contribution).sparqlEndpoint = ResourceUtils.parseIRI(sparqlEndpointValue);
@@ -95,15 +100,34 @@ export class ContributionsManagerComponent {
             }
         } else if (configuration.type == ConfigurationComponents.CONTRIBUTION_STORE.CONFIG_IMPL.STABLE) {
             contribution = new StableResourceStoredContribution();
-            (<StableResourceStoredContribution>contribution).resourceName = properties.find(p => p.name == "resourceName").value;
             (<StableResourceStoredContribution>contribution).homepage = properties.find(p => p.name == "homepage").value;
             (<StableResourceStoredContribution>contribution).description = properties.find(p => p.name == "description").value;
             (<StableResourceStoredContribution>contribution).isOwner = properties.find(p => p.name == "isOwner").value;
             (<StableResourceStoredContribution>contribution).model = ResourceUtils.parseIRI(properties.find(p => p.name == "model").value);
             (<StableResourceStoredContribution>contribution).lexicalizationModel = ResourceUtils.parseIRI(properties.find(p => p.name == "lexicalizationModel").value);
+            //metadata
+            (<StableResourceStoredContribution>contribution).uriSpace = properties.find(p => p.name == "uriSpace").value;
+            let identityValue: string = properties.find(p => p.name == "identity").value;
+            if (identityValue != null) {
+                (<StableResourceStoredContribution>contribution).identity = ResourceUtils.parseIRI(identityValue);
+            }
+            let dereferenciationSystemValue: string = properties.find(p => p.name == "dereferenciationSystem").value;
+            if (dereferenciationSystemValue != null) {
+                (<StableResourceStoredContribution>contribution).dereferenciationSystem = ResourceUtils.parseIRI(dereferenciationSystemValue);
+            }
+            let sparqlEndpointValue = properties.find(p => p.name == "sparqlEndpoint").value;
+            if (sparqlEndpointValue != null) {
+                (<StableResourceStoredContribution>contribution).sparqlEndpoint = ResourceUtils.parseIRI(sparqlEndpointValue);
+            }
+            (<StableResourceStoredContribution>contribution).sparqlLimitations = [];
+            let sparqlLimitationValue: string[] = properties.find(p => p.name == "sparqlLimitations").value;
+            if (sparqlLimitationValue != null) {
+                sparqlLimitationValue.forEach(l => {
+                    (<StableResourceStoredContribution>contribution).sparqlLimitations.push(ResourceUtils.parseIRI(l));
+                });
+            }
         } else if (configuration.type == ConfigurationComponents.CONTRIBUTION_STORE.CONFIG_IMPL.DEVELOPMENT) {
             contribution = new DevResourceStoredContribution();
-            (<DevResourceStoredContribution>contribution).resourceName = properties.find(p => p.name == "resourceName").value;
             (<DevResourceStoredContribution>contribution).format = properties.find(p => p.name == "format").value;
             (<DevResourceStoredContribution>contribution).homepage = properties.find(p => p.name == "homepage").value;
             (<DevResourceStoredContribution>contribution).description = properties.find(p => p.name == "description").value;
@@ -111,6 +135,7 @@ export class ContributionsManagerComponent {
             (<DevResourceStoredContribution>contribution).lexicalizationModel = ResourceUtils.parseIRI(properties.find(p => p.name == "lexicalizationModel").value);
         }
         //parse common contribution properties
+        contribution.resourceName = properties.find(p => p.name == "resourceName").value;
         contribution.contributorName = properties.find(p => p.name == "contributorName").value;
         contribution.contributorLastName = properties.find(p => p.name == "contributorLastName").value;
         contribution.contributorEmail = properties.find(p => p.name == "contributorEmail").value;
@@ -157,7 +182,7 @@ export class ContributionsManagerComponent {
             );
         } else if (contribution instanceof MetadataStoredContribution) {
             this.basicModals.confirm("Approve contribution", "You are going to submit the proposed metadata into the Metadata Registry. Are you sure?", ModalType.warning).then(
-                confirm => {
+                () => {
                     contribution['loading'] = true;
                     this.pmkiServices.approveMetadataContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).pipe(
                         finalize(() => contribution['loading'] = false)
@@ -176,7 +201,10 @@ export class ContributionsManagerComponent {
     rejectContribution(contribution: StoredContribution) {
         this.basicModals.confirm("Reject contribution", "Are you sure to reject the contribution?", ModalType.warning).then(
             () => {
-                this.pmkiServices.rejectContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).subscribe(
+                contribution['loading'] = true;
+                this.pmkiServices.rejectContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).pipe(
+                    finalize(() => contribution['loading'] = false)
+                ).subscribe(
                     () => {
                         this.contributions.splice(this.contributions.indexOf(contribution), 1);
                     }

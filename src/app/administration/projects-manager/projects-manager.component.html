@@ -39,8 +39,8 @@
                     </td>
                     <td class="text-center">
                         <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right">
-                            <button class="btn dropdown-toggle dropdown-no-arrow" data-toggle="dropdown" ngbDropdownToggle [disabled]="p.role==rolePristine"
-                                [ngClass]="{'btn-success': p.role==rolePublic, 'btn-warning': p.role==roleStaging, 'btn-light': p.role==rolePristine}"
+                            <button class="btn dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle [disabled]="p.role==rolePristine"
+                                [ngClass]="{'btn-success': p.role==rolePublic, 'btn-warning': p.role==roleStaging, 'btn-light dropdown-no-arrow': p.role==rolePristine}"
                                 style="font-weight: 500;">
                                 {{roleStatusMap[p.role]}}
                             </button>

@@ -10,6 +10,7 @@ import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { ExtensionFactory, Settings, ExtensionPointID, PluginSpecification } from 'src/app/models/Plugins';
 import { ExtensionsServices } from 'src/app/services/extensions.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'load-stable',
@@ -21,6 +22,8 @@ export class LoadStableResourceComponent {
     private token: string;
 
     private readonly rdfExtensionId: string = "it.uniroma2.art.semanticturkey.extension.impl.rdflifter.rdfdeserializer.RDFDeserializingLifter";
+
+    loading: boolean = false;
 
     projectName: string;
     contributorEmail: string;
@@ -70,10 +73,10 @@ export class LoadStableResourceComponent {
                  * - collecting the extensions of the formats, in order to provide them to the file picker
                  * - select a default input format (rdf for the rdf lifter)
                  */
-                let extList: string[] = []; 
+                let extList: string[] = [];
                 let defaultInputFormatIdx: number = 0;
                 for (var i = 0; i < this.inputFormats.length; i++) {
-                    extList.push("."+this.inputFormats[i].defaultFileExtension);
+                    extList.push("." + this.inputFormats[i].defaultFileExtension);
                     if (this.selectedLifterExtension.id == this.rdfExtensionId && this.inputFormats[i].name == "RDF/XML") {
                         defaultInputFormatIdx = i;
                     }
@@ -117,18 +120,21 @@ export class LoadStableResourceComponent {
             rdfLifterSpec.configuration = this.selectedLifterConfig.getPropertiesAsMap();
         }
 
+        this.loading = true;
         PMKIContext.setTempProject(new Project(this.projectName));
-        this.pmkiService.loadStableContributionData(this.token, this.projectName, this.contributorEmail, this.file, 
-            this.selectedInputFormat.name, rdfLifterSpec, this.selectedImportAllowance).subscribe(
-            () => {
-                PMKIContext.removeTempProject();
-                this.basicModals.alert("Load data", "Data loaded successfully.").then(
-                    () => {
-                        this.router.navigate(["/home"]);
-                    }
-                )
-            }
-        )
+        this.pmkiService.loadStableContributionData(this.token, this.projectName, this.contributorEmail, this.file,
+            this.selectedInputFormat.name, rdfLifterSpec, this.selectedImportAllowance).pipe(
+                finalize(() => this.loading = false)
+            ).subscribe(
+                () => {
+                    PMKIContext.removeTempProject();
+                    this.basicModals.alert("Load data", "Data loaded successfully.").then(
+                        () => {
+                            this.router.navigate(["/home"]);
+                        }
+                    )
+                }
+            )
     }
 
 

@@ -54,7 +54,10 @@
     </div>
 
     <div class="text-right">
-        <button class="btn btn-info" (click)="load()" [disabled]="!projectName || !contributorEmail || !file">Load</button>
+        <button class="btn btn-info" (click)="load()" [disabled]="!projectName || !contributorEmail || !file || loading">
+            Load
+            <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
+        </button>
     </div>
 
 </div>

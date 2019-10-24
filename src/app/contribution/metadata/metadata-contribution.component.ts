@@ -73,9 +73,9 @@ export class MetadataContributionComponent extends AbstractContributionComponent
         let config: ConfigurationObject = {
             baseURI: new IRI(this.baseURI).toNT(),
             resourceName: this.resourceName,
-            identity: new IRI(this.identity).toNT(),
+            identity: this.identity ? new IRI(this.identity).toNT() : null,
             dereferenciationSystem: this.dereferenciationSystem ? new IRI(this.dereferenciationSystem).toNT() : null,
-            sparqlEndpoint: new IRI(this.sparqlEndpoint).toNT(),
+            sparqlEndpoint: this.sparqlEndpoint ? new IRI(this.sparqlEndpoint).toNT() : null,
             sparqlLimitations: this.sparqlNoAggregation ? [new IRI(SemanticTurkey.noAggregation).toNT()] : null,
             uriSpace: this.uriSpace
         }
