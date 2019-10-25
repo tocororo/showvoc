@@ -20,7 +20,6 @@ export class MetadataContributionComponent extends AbstractContributionComponent
 
     baseURI: string;
 
-    discovered: boolean = false;
     resourceName: string;
     identity: string;
     dereferenciationSystem: string;
@@ -46,7 +45,6 @@ export class MetadataContributionComponent extends AbstractContributionComponent
             finalize(() => this.loading = false)
         ).subscribe(
             dataset => {
-                this.discovered = true;
                 this.resourceName = dataset.title;
                 this.identity = dataset.identity;
                 this.dereferenciationSystem = dataset.dereferenciationSystem;
@@ -66,8 +64,8 @@ export class MetadataContributionComponent extends AbstractContributionComponent
     }
 
     getConfigurationImpl(): ConfigurationObject {
-        if (!this.discovered) {
-            this.basicModals.alert("Incomplete form", "You first need to discover metadata about the dataset. Please provide a Base URI and then click on the 'Discover' button.", ModalType.warning);
+        if (this.resourceName == null) {
+            this.basicModals.alert("Incomplete form", "Missing mandatory field 'Resource name'", ModalType.warning);
             return;
         }
         let config: ConfigurationObject = {
@@ -78,6 +76,17 @@ export class MetadataContributionComponent extends AbstractContributionComponent
             sparqlEndpoint: this.sparqlEndpoint ? new IRI(this.sparqlEndpoint).toNT() : null,
             sparqlLimitations: this.sparqlNoAggregation ? [new IRI(SemanticTurkey.noAggregation).toNT()] : null,
             uriSpace: this.uriSpace
+        }
+        let emptyMetadata: boolean = true;
+        for (let key in config) {
+            if (key != "resourceName" && config[key] != null) {
+                emptyMetadata = false;
+                break;
+            }
+        }
+        if (emptyMetadata) {
+            this.basicModals.alert("Incomplete form", "No metadata has been provided", ModalType.warning);
+            return;
         }
         return config;
     }
