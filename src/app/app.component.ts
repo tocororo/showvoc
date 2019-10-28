@@ -18,6 +18,13 @@ export class AppComponent {
     constructor(private authServices: AuthServices) { }
 
     /**
+     * Determines if the items in the navbar are available: they are available only if the admin or the visitor user is logged
+     */
+    isLogged(): boolean {
+        return PMKIContext.getLoggedUser() != null;
+    }
+
+    /**
      * Determines if the login button and the link for the admin dashboard are available
      * - the login button should be visible if the only visitor is logged (returns false)
      * - the links for the admin dashboard should be visible only if the admin is logged (returns true)

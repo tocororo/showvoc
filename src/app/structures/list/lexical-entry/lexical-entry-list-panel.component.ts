@@ -35,7 +35,6 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     //(useful expecially when lexiconChangeable is true so the changes don't effect the lexicon in context)
 
     visualizationMode: LexEntryVisualizationMode;
-    showInfoAlert: boolean = true;
 
     //for visualization indexBased
     private alphabet: string[] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];

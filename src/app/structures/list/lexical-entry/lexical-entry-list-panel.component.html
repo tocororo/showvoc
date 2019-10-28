@@ -35,12 +35,9 @@
             </ng-container>
         </div>
 
-        <div *ngIf="visualizationMode == 'searchBased' && showInfoAlert" class="alert alert-info alert-dismissible mb-1">
-                Please use the search field to retrieve lexical entries
-            <button class="close" (click)="showInfoAlert=false">
-                <span>&times;</span>
-            </button>
-        </div>
+        <ngb-alert *ngIf="!closedAlert && visualizationMode == 'searchBased'" (close)="closedAlert=true" type="info" class="mb-1">
+            Please use the search field to retrieve lexical entries
+        </ngb-alert>
 
         <lexical-entry-list [lexicon]="workingLexicon" [index]="index" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
         </lexical-entry-list>

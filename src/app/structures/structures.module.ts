@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbDropdownModule, NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule, NgbDropdownModule, NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { AlignmentsModule } from '../alignments/alignments.module';
 import { WidgetModule } from '../widget/widget.module';
 import { LexicalEntryListPanelComponent } from './list/lexical-entry/lexical-entry-list-panel.component';
 import { LexicalEntryListSettingsModal } from './list/lexical-entry/lexical-entry-list-settings-modal';
@@ -24,7 +25,6 @@ import { ConceptTreeComponent } from './tree/concept/concept-tree.component';
 import { PropertyTreeNodeComponent } from './tree/property/property-tree-node.component';
 import { PropertyTreePanelComponent } from './tree/property/property-tree-panel.component';
 import { PropertyTreeComponent } from './tree/property/property-tree.component';
-import { AlignmentsModule } from '../alignments/alignments.module';
 
 @NgModule({
     declarations: [
@@ -55,6 +55,7 @@ import { AlignmentsModule } from '../alignments/alignments.module';
         AlignmentsModule,
         CommonModule,
         FormsModule,
+        NgbAlertModule,
         NgbDropdownModule,
         NgbTabsetModule,
         WidgetModule

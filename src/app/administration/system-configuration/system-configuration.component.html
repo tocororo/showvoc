@@ -8,12 +8,13 @@
                 <label>Email Configuration:</label>
             </div>
             <div class="card-body">
-                <div class="alert alert-info alert-dismissible mb-1" role="alert">
+
+                <ngb-alert *ngIf="!closedAlert1" (close)="closedAlert1=true" type="info" class="mb-1">
                     Configuration of the PMKI e-mail service. This service will be used to send notifications to the contributors<br>
                     <strong>Note</strong>: if this is not properly configured, it will be impossible to send email to contributors,
                     so they will be not able to complete a contribution.
-                    <button class="close" data-dismiss="alert"><span>&times;</span></button>
-                </div>
+                </ngb-alert>
+
                 <table class="table table-sm table-borderless">
                     <colgroup>
                         <col style="width: 1%;">
@@ -127,12 +128,11 @@
                 <label>Remote access configuration:</label>
             </div>
             <div class="card-body">
-                <div class="alert alert-info alert-dismissible mb-1" role="alert">
+                <ngb-alert *ngIf="!closedAlert2" (close)="closedAlert2=true" type="info" class="mb-1">
                     Configuration of the remote triple store that hosts the projects in PMKI.<br>
                     <strong>Note</strong>: if this is not properly configured, the PMKI portal will not be able to create remote
                     projects for hosting stable resources.
-                    <button class="close" data-dismiss="alert"><span>&times;</span></button>
-                </div>
+                </ngb-alert>
                 <table class="table table-sm table-borderless">
                     <colgroup>
                         <col style="width: 1%;">
@@ -185,12 +185,11 @@
                 <label>VocBench configuration:</label>
             </div>
             <div class="card-body">
-                <div class="alert alert-info alert-dismissible mb-1" role="alert">
+                <ngb-alert *ngIf="!closedAlert3" (close)="closedAlert3=true" type="info" class="mb-1">
                     Configuration of the VocBench/SemanticTurkey instance dedicated to the development of unstable resources.<br>
                     <strong>Note</strong>: if this is not properly configured, the PMKI portal will not be able to connect
                     with VocBench, so it will be impossible to accept contribution of under-development resources.<br>
-                    <button class="close" data-dismiss="alert"><span>&times;</span></button>
-                </div>
+                </ngb-alert>
                 <table class="table table-sm table-borderless">
                     <colgroup>
                         <col style="width: 1%;">
