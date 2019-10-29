@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { forkJoin, Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
 import { PmkiConstants } from 'src/app/models/Pmki';
 import { Project } from 'src/app/models/Project';
 import { PmkiServices } from 'src/app/services/pmki.service';
@@ -31,17 +32,29 @@ export class ProjectsManagerComponent {
 
     ngOnInit() {
         this.projectList = [];
+
+        let listProjectFn: Observable<any>[] = [];
         let roles: string[] = [this.rolePristine, this.roleStaging, this.rolePublic];
+
         roles.forEach(r => {
-            this.projectService.listProjectsPerRole(r).subscribe(
-                projects => {
-                    projects.forEach(p => {
-                        p[this.roleAttr] = r;
-                        this.projectList.push(p);
+            listProjectFn.push(
+                this.projectService.listProjectsPerRole(r).pipe(
+                    map(projects => {
+                        projects.forEach(p => {
+                            p[this.roleAttr] = r;
+                            this.projectList.push(p);
+                        })
                     })
-                }
+                )
             );
         });
+        forkJoin(listProjectFn).subscribe(
+            () => {
+                this.projectList.sort((p1: Project, p2: Project) => {
+                    return p1.getName().toLocaleLowerCase().localeCompare(p2.getName().toLocaleLowerCase());
+                });
+            }
+        );
     }
 
     changeProjectStatus(project: Project, role: string) {
