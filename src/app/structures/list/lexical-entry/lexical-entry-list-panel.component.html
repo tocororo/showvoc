@@ -12,7 +12,7 @@
             </button>
         </div>
     </div>
-    
+
     <div class="card-body vbox">
 
         <div *ngIf="lexiconChangeable" class="pb-1" style="display: flex; align-items: center">
@@ -35,9 +35,12 @@
             </ng-container>
         </div>
 
-        <ngb-alert *ngIf="!closedAlert && visualizationMode == 'searchBased'" (close)="closedAlert=true" type="info" class="mb-1">
+        <div *ngIf="visualizationMode == 'searchBased' && !closedAlert" class="alert alert-info alert-dismissible mb-1">
             Please use the search field to retrieve lexical entries
-        </ngb-alert>
+            <button class="close" (click)="closedAlert=true">
+                <span>&times;</span>
+            </button>
+        </div>
 
         <lexical-entry-list [lexicon]="workingLexicon" [index]="index" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
         </lexical-entry-list>

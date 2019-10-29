@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { ExtensionConfiguratorComponent } from './extensionConfigurator/extension-configurator.component';
 import { LanguageItemComponent } from './language-item/language-item.component';
 import { PasswordInputComponent } from './password-input/password-input.component';
@@ -31,7 +30,6 @@ import { SettingsRendererComponent } from './settings-renderer/settings-renderer
 	imports: [
 		CommonModule,
 		FormsModule,
-		NgbAlertModule,
 	],
 	exports: [
 		ExtensionConfiguratorComponent,

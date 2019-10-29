@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbAlertModule, NgbDropdownModule, NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 import { AlignmentsModule } from '../alignments/alignments.module';
 import { WidgetModule } from '../widget/widget.module';
 import { LexicalEntryListPanelComponent } from './list/lexical-entry/lexical-entry-list-panel.component';
@@ -55,7 +55,6 @@ import { PropertyTreeComponent } from './tree/property/property-tree.component';
         AlignmentsModule,
         CommonModule,
         FormsModule,
-        NgbAlertModule,
         NgbDropdownModule,
         NgbTabsetModule,
         WidgetModule

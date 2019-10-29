@@ -6,10 +6,10 @@
 			</button>
 			<button class="btn btn-light btn-sm ml-1" title="Refresh" (click)="refresh()">
 				<span class="fa fa-refresh"></span>
-            </button>
-            <button class="btn btn-light btn-sm ml-1" title="Settings" (click)="settings()">
-                <span class="fa fa-cog"></span>
-            </button>
+			</button>
+			<button class="btn btn-light btn-sm ml-1" title="Settings" (click)="settings()">
+				<span class="fa fa-cog"></span>
+			</button>
 		</div>
 	</div>
 
@@ -23,17 +23,20 @@
 			</select>
 		</div>
 
-		<ngb-alert *ngIf="!closedAlert && visualizationMode == 'searchBased'" (close)="closedAlert=true" type="info" class="mb-1">
+		<div *ngIf="visualizationMode == 'searchBased' && !closedAlert" class="alert alert-info alert-dismissible mb-1">
 			Please use the search field to retrieve concepts
-		</ngb-alert>
-        
+			<button class="close" (click)="closedAlert=true">
+				<span>&times;</span>
+			</button>
+		</div>
+
 		<concept-tree [schemes]="workingSchemes" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
-        </concept-tree>
+		</concept-tree>
 
 	</div>
 
 	<div class="card-footer">
-        <search-bar (searchResults)="handleSearchResults($event)" [role]="panelRole" [schemes]="schemesForSearchBar"></search-bar>
+		<search-bar (searchResults)="handleSearchResults($event)" [role]="panelRole" [schemes]="schemesForSearchBar"></search-bar>
 	</div>
 
 </div>

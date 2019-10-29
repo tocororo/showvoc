@@ -8,20 +8,22 @@
     </div>
     <div class="card-body" class="scrollableContainer">
 
-        <ngb-alert *ngIf="settings?.htmlDescription && !closedAlert1" (close)="closedAlert1=true" type="info" class="mb-1">
+        <div *ngIf="settings?.htmlDescription && !closedAlert1" class="alert alert-info alert-dismissible alert-multiline mb-1">
             <div class="hbox" style="align-items: center;">
                 <span class="fa fa-info-circle mr-1"></span>
                 <span style="flex: 1;" [innerHTML]="safeDescription"></span>
             </div>
-        </ngb-alert>
+            <button class="close" (click)="closedAlert1=true"><span>&times;</span></button>
+        </div>
 
-
-        <ngb-alert *ngIf="settings?.htmlWarning && !closedAlert2" (close)="closedAlert2=true" type="info" class="mb-1">
+        <div *ngIf="settings?.htmlWarning && !closedAlert2" class="alert alert-warning alert-dismissible alert-multiline mb-1">
             <div class="hbox" style="align-items: center;">
                 <span class="fa fa-exclamation-triangle mr-1"></span>
                 <span style="flex: 1;" [innerHTML]="safeWarning"></span>
             </div>
-        </ngb-alert>
+            <button class="close" (click)="closedAlert2=true"><span>&times;</span></button>
+        </div>
+
 
         <settings-renderer [(ngModel)]="settings" (ngModelChange)="onModelChanged()"></settings-renderer>
         
