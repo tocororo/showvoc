@@ -28,14 +28,14 @@
                 <div class="card-header">
                     <div class="hbox align-items-center">
                         <label style="flex: 1;">Partitions</label>
-                        <span *ngIf="areAllUnchecked(selectedRolePartitionsStruct)" class="fa fa-warning"
+                        <span *ngIf="areAllUnchecked(selectedRolePartitionsStruct)" class="fas fa-exclamation-triangle"
                             title="If all the partitions are hidden the expansion of a node will not produce any effect">
                         </span>
                         <div class="btn-toolbar ml-1">
                             <div class="btn-group btn-group-xs">
                                 <div class="btn-group btn-group-xs" ngbDropdown placement="bottom-right">
                                     <button class="btn btn-outline-secondary dropdown-toggle no-arrow" data-toggle="dropdown" title="Check" ngbDropdownToggle>
-                                        <span class="fa fa-check-square-o"></span>
+                                        <span class="far fa-check-square"></span>
                                     </button>
                                     <div class="dropdown-menu" ngbDropdownMenu>
                                         <button class="dropdown-item" (click)="checkAll(selectedRolePartitionsStruct, true)">Check all</button>
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="btn-group btn-group-xs" ngbDropdown placement="bottom-right">
                                     <button class="btn btn-outline-secondary dropdown-toggle no-arrow" data-toggle="dropdown" title="Uncheck" ngbDropdownToggle>
-                                        <span class="fa fa-square-o"></span>
+                                        <span class="far fa-square"></span>
                                     </button>
                                     <div class="dropdown-menu" ngbDropdownMenu>
                                         <button class="dropdown-item" (click)="checkAll(selectedRolePartitionsStruct, false)">Uncheck all</button>
@@ -61,8 +61,8 @@
                             [ngClass]="{ active: partition == selectedPartition }">
                             <input type="checkbox" [(ngModel)]="partition.checked" (ngModelChange)="updatePref()">
                             <span style="flex: 1;" class="ml-1">{{partition.show}}</span>
-                            <span *ngIf="partition.checked" class="fa fa-eye"></span>
-                            <span *ngIf="!partition.checked" class="fa fa-eye-slash"></span>
+                            <span *ngIf="partition.checked" class="fas fa-eye"></span>
+                            <span *ngIf="!partition.checked" class="fas fa-eye-slash"></span>
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
     </div>
 
     <div class="card-footer">
-        <button class="btn btn-sm btn-light pull-right" (click)="reset()">Reset</button>
+        <button class="btn btn-sm btn-light float-right" (click)="reset()">Reset</button>
     </div>
 
 </div>

@@ -32,7 +32,7 @@
                         <textarea *ngSwitchDefault type="text" rows="1" class="form-control form-control-sm" 
                             style="resize: vertical;" [(ngModel)]="value[index]" (ngModelChange)="onModelChange()">
                         </textarea>
-                        <span class="fa fa-exclamation-triangle" style="position: absolute; top: 8px; right: 8px;"
+                        <span class="fas fa-exclamation-triangle" style="position: absolute; top: 8px; right: 8px;"
                             [title]="'This parameter has an unknown type (' + types[0].name + '). The entered value will be interpreted as a low-level JSON value.'">
                         </span>
                     </div>
@@ -40,12 +40,12 @@
             </td>
             <td style="padding: 0px;">
                 <button *ngIf="value.length > 1" class="btn btn-sm btn-light ml-1" (click)="delete(index)">
-                    <span class="fa fa-trash-o"></span>
+                    <span class="fas fa-trash"></span>
                 </button>
             </td>
             <td style="padding: 0px;">
                 <button *ngIf="last" class="btn btn-sm btn-light ml-1" (click)="add(index)">
-                    <span class="fa fa-plus"></span>
+                    <span class="fas fa-plus"></span>
                 </button>
             </td>
         </tr>

@@ -26,8 +26,8 @@
                         <button class="btn btn-sm btn-light" style="width: 32px;" (click)="openCloseProject(p)" [ngClass]="{ active: p.isOpen() }">
                             <span *ngIf="p.loading" class="spinner-border spinner-border-sm"></span>
                             <ng-container *ngIf="!p.loading">
-                                <span *ngIf="p.isOpen()" class="fa fa-folder-open"></span>
-                                <span *ngIf="!p.isOpen()" class="fa fa-folder"></span>
+                                <span *ngIf="p.isOpen()" class="fas fa-folder-open"></span>
+                                <span *ngIf="!p.isOpen()" class="fas fa-folder"></span>
                             </ng-container>
                         </button>
                     </td>
@@ -35,7 +35,7 @@
                     <td class="text-center">{{p.getLexicalizationModelType(true)}}</td>
                     <td class="text-center">
                         {{p.getRepositoryLocation().location}}
-                        <span *ngIf="p.isRepositoryRemote()" class="fa fa-info-circle" [title]="p.getRepositoryLocation().serverURL"></span>
+                        <span *ngIf="p.isRepositoryRemote()" class="fas fa-info-circle" [title]="p.getRepositoryLocation().serverURL"></span>
                     </td>
                     <td class="text-center">
                         <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right">

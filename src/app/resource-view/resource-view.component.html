@@ -6,14 +6,14 @@
 
             <div class="btn-toolbar" style="flex-wrap: nowrap">
                 <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: showInferred}" title="Show/hide inferred information" (click)="switchInferred()">
-                    <i *ngIf="showInferred" class="fa fa-eye"></i>
-                    <i *ngIf="!showInferred" class="fa fa-eye-slash"></i>
+                    <i *ngIf="showInferred" class="fas fa-eye"></i>
+                    <i *ngIf="!showInferred" class="fas fa-eye-slash"></i>
                 </button>
                 <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: rendering}" title="Rendering" (click)="switchRendering()">
-                    <i class="fa fa-font"></i>
+                    <i class="fas fa-font"></i>
                 </button>
                 <button *ngIf="btnSettingsAvailable" class="btn btn-light btn-sm ml-1" title="Settings" (click)="settings()">
-                    <i class="fa fa-cog"></i>
+                    <i class="fas fa-cog"></i>
                 </button>
                 <div *ngIf="btnGraphAvailable" class="btn-group btn-group-sm dropup ml-1" ngbDropdown placement="bottom-right">
                     <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle></button>

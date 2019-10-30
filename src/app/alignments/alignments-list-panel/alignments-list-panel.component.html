@@ -2,11 +2,11 @@
     <div class="card-header">
         <div class="btn-toolbar float-right">
             <button class="btn btn-light btn-sm" title="Refresh" (click)="refresh()" [disabled]="loadingProfile">
-                <span class="fa fa-refresh"></span>
+                <span class="fas fa-sync"></span>
             </button>
 
             <button class="btn btn-sm btn-light ml-1" (click)="refreshProfile()" title="Refresh dataset profile" [disabled]="loadingProfile">
-                <i *ngIf="!loadingProfile" class="fa fa-bar-chart"></i>
+                <i *ngIf="!loadingProfile" class="fas fa-chart-bar"></i>
                 <div *ngIf="loadingProfile" class="spinner-border spinner-border-sm text-info"></div>
             </button>
         </div>

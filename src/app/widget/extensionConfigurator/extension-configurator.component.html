@@ -22,10 +22,10 @@
         <button class="btn btn-light" (click)="configure()" [disabled]="disabled">Configure</button>
         <ng-container *ngIf="storeable">
             <button class="btn btn-light" title="Save configuration" (click)="saveConfig()" [disabled]="disabled">
-                <span class="fa fa-floppy-o"></span>
+                <span class="fas fa-save"></span>
             </button>
             <button class="btn btn-light" title="Load configuration" (click)="loadConfig()" [disabled]="disabled">
-                <span class="fa fa-floppy-o"></span>
+                <span class="fas fa-save"></span>
             </button>
         </ng-container>
     </span>

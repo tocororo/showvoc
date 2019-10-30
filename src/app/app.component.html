@@ -21,7 +21,7 @@
         <ul class="navbar-nav">
             <li *ngIf="isAdminLogged()" class="nav-item dropdown" ngbDropdown display="dynamic">
                 <a class="nav-link dropdown-toggle dropdown-no-arrow" style="padding: .5rem;" [routerLink]="" data-toggle="dropdown" ngbDropdownToggle>
-                    <span class="fa fa-bars"></span>
+                    <span class="fas fa-bars"></span>
                 </a>
                 <div class="dropdown-menu" ngbDropdownMenu>
                     <a class="dropdown-item" [routerLink]="['/admin']">Administration dashboard</a>
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="col">
-                <a class="btn btn-sm btn-info pull-right" href="http://art.uniroma2.it/" target="_blank">© ART Group</a>
+                <a class="btn btn-sm btn-info float-right" href="http://art.uniroma2.it/" target="_blank">© ART Group</a>
             </div>
         </div>
     </div>

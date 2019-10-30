@@ -49,7 +49,7 @@
 <div class="card">
     <div class="card-header">
         Metadata
-        <button class="btn btn-xs btn-info pull-right" (click)="discoverMetadata()" [disabled]="!baseURI || loadingMetadata">
+        <button class="btn btn-xs btn-info float-right" (click)="discoverMetadata()" [disabled]="!baseURI || loadingMetadata">
             Discover
             <span *ngIf="loadingMetadata" class="spinner-border spinner-border-sm"></span>
         </button>

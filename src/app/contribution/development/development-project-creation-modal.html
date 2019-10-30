@@ -11,8 +11,8 @@
             <div class="custom-control custom-switch text-right mb-1" (click)="formLocked = !formLocked" [title]="lockTooltip">
                 <input type="checkbox" class="custom-control-input" [ngModel]="formLocked">
                 <label class="custom-control-label">
-                    <span *ngIf="formLocked" class="fa fa-lock"></span>
-                    <span *ngIf="!formLocked" class="fa fa-unlock-alt"></span>
+                    <span *ngIf="formLocked" class="fas fa-lock"></span>
+                    <span *ngIf="!formLocked" class="fas fa-unlock-alt"></span>
                 </label>
             </div>
             <fieldset [disabled]="formLocked">

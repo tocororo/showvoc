@@ -25,6 +25,8 @@ export class ConceptTreeComponent extends AbstractTree {
 
     structRole: RDFResourceRolesEnum.concept;
 
+    private lastTimeInit: number;
+
     constructor(private skosService: SkosServices, private searchService: SearchServices,
         eventHandler: PMKIEventHandler, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
         super(eventHandler, basicModals, sharedModals);
@@ -47,13 +49,16 @@ export class ConceptTreeComponent extends AbstractTree {
         let conceptTreePref: ConceptTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
         if (conceptTreePref.visualization == ConceptTreeVisualizationMode.hierarchyBased) {
             this.loading = true;
-            this.skosService.getTopConcepts(this.schemes).pipe(
+            this.lastTimeInit = new Date().getTime();
+            this.skosService.getTopConcepts(this.lastTimeInit, this.schemes).pipe(
                 finalize(() => this.loading = false)
             ).subscribe(
-                concepts => {
+                data => {
+                    if (data.timestamp != this.lastTimeInit) return;
+                    let topConcepts = data.concepts;
                     let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
-                    ResourceUtils.sortResources(concepts, orderAttribute);
-                    this.nodes = concepts;
+                    ResourceUtils.sortResources(topConcepts, orderAttribute);
+                    this.nodes = topConcepts;
 
                     if (this.pendingSearchPath) {
                         this.expandPath(this.pendingSearchPath);

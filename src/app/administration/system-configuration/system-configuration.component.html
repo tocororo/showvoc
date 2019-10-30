@@ -23,7 +23,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="SMTP Mail Server IP/URL"></span>
+                                <span class="fas fa-info-circle" title="SMTP Mail Server IP/URL"></span>
                             </td>
                             <td nowrap>
                                 <label>Mail SMTP host:</label>
@@ -32,7 +32,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="Mail Server Port"></span>
+                                <span class="fas fa-info-circle" title="Mail Server Port"></span>
                             </td>
                             <td nowrap>
                                 <label>Mail SMTP port:</label>
@@ -42,7 +42,7 @@
 
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="Cryptographic protocol"></span>
+                                <span class="fas fa-info-circle" title="Cryptographic protocol"></span>
                             </td>
                             <td nowrap>
                                 <label>Cryptographic protocol:</label>
@@ -57,7 +57,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="True if SMTP server requires authentication"></span>
+                                <span class="fas fa-info-circle" title="True if SMTP server requires authentication"></span>
                             </td>
                             <td nowrap>
                                 <label>Authentication:</label>
@@ -76,7 +76,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="Email address used to send administration emails"></span>
+                                <span class="fas fa-info-circle" title="Email address used to send administration emails"></span>
                             </td>
                             <td nowrap>
                                 <label>Mail from address:</label>
@@ -85,7 +85,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="Password of the above email address"></span>
+                                <span class="fas fa-info-circle" title="Password of the above email address"></span>
                             </td>
                             <td nowrap>
                                 <label>Mail from password:</label>
@@ -95,14 +95,14 @@
                                 <ng-template #authBlock>
                                     <div class="hbox" style="align-items: center;">
                                         <password-input [(ngModel)]="emailConfig.mailFromPassword" size="sm" style="flex: 1;"></password-input>
-                                        <span class="fa fa-exclamation-triangle ml-2" title="Password is stored wihtout encryption on the server."></span>
+                                        <span class="fas fa-exclamation-triangle ml-2" title="Password is stored wihtout encryption on the server."></span>
                                     </div>
                                 </ng-template>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="Alias name shown in the administration emails"></span>
+                                <span class="fas fa-info-circle" title="Alias name shown in the administration emails"></span>
                             </td>
                             <td nowrap>
                                 <label>Mail from alias:</label>
@@ -142,7 +142,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="URL of the remote triple store"></span>
+                                <span class="fas fa-info-circle" title="URL of the remote triple store"></span>
                             </td>
                             <td nowrap>
                                 <label>Server URL:</label>
@@ -151,7 +151,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="Username of the remote triple store (if authentication is required)"></span>
+                                <span class="fas fa-info-circle" title="Username of the remote triple store (if authentication is required)"></span>
                             </td>
                             <td nowrap>
                                 <label>Username:</label>
@@ -160,7 +160,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="Password of the remote triple store (if authentication is required)"></span>
+                                <span class="fas fa-info-circle" title="Password of the remote triple store (if authentication is required)"></span>
                             </td>
                             <td nowrap>
                                 <label>Password:</label>
@@ -168,7 +168,7 @@
                             <td>
                                 <div class="hbox" style="align-items: center;">
                                     <password-input [(ngModel)]="remoteAccessConfig.password" size="sm" style="flex: 1;"></password-input>
-                                    <span class="fa fa-exclamation-triangle ml-2" title="Password is stored wihtout encryption on the server."></span>
+                                    <span class="fas fa-exclamation-triangle ml-2" title="Password is stored wihtout encryption on the server."></span>
                                 </div>
                             </td>
                         </tr>
@@ -200,7 +200,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="URL of the VocBench istance accessible by the contributors"></span>
+                                <span class="fas fa-info-circle" title="URL of the VocBench istance accessible by the contributors"></span>
                             </td>
                             <td nowrap>
                                 <label>VocBench URL:</label>
@@ -211,7 +211,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="Complete URL (protocol+hostname+port) of the SemanticTurkey host"></span>
+                                <span class="fas fa-info-circle" title="Complete URL (protocol+hostname+port) of the SemanticTurkey host"></span>
                             </td>
                             <td nowrap>
                                 <label>SemanticTurkey Host:</label>
@@ -220,7 +220,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="Email of the administrator of VocBench/SemanticTurkey"></span>
+                                <span class="fas fa-info-circle" title="Email of the administrator of VocBench/SemanticTurkey"></span>
                             </td>
                             <td nowrap>
                                 <label>VocBench/SemanticTurkey admin email:</label>
@@ -229,7 +229,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="fa fa-info-circle" title="Password of the administrator of VocBench/SemanticTurkey"></span>
+                                <span class="fas fa-info-circle" title="Password of the administrator of VocBench/SemanticTurkey"></span>
                             </td>
                             <td nowrap>
                                 <label>VocBench/SemanticTurkey admin password:</label>
@@ -237,7 +237,7 @@
                             <td>
                                 <div class="hbox" style="align-items: center;">
                                     <password-input [(ngModel)]="vbConnectionConfig.adminPassword" size="sm" style="flex: 1;"></password-input>
-                                    <span class="fa fa-exclamation-triangle ml-2" title="Password is stored wihtout encryption on the server."></span>
+                                    <span class="fas fa-exclamation-triangle ml-2" title="Password is stored wihtout encryption on the server."></span>
                                 </div>
                             </td>
                         </tr>

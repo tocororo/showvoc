@@ -30,16 +30,16 @@
     </div>
     <div *ngIf="annotatedMappings?.length > 0" class="card-footer">
         <span>Mappings: {{linkset.linkCount}}</span>
-        <div class="btn-group btn-group-sm pull-right">
+        <div class="btn-group btn-group-sm float-right">
             <div class="btn-group btn-group-sm mx-2">
                 <button class="btn btn-light" title="Previous page" (click)="prevPage()" [disabled]="page==0 || loading">
-                    <span class="fa fa-caret-left"></span>
+                    <span class="fas fa-caret-left"></span>
                 </button>
                 <button class="btn btn-light" style="cursor: auto" disabled>
                     <span>{{page+1}} of {{totPage}}</span>
                 </button>
                 <button class="btn btn-light" title="Next page" (click)="nextPage()" [disabled]="page>=totPage-1 || loading">
-                    <span class="fa fa-caret-right"></span>
+                    <span class="fas fa-caret-right"></span>
                 </button>
             </div>
         </div>

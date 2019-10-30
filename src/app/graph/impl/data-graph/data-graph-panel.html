@@ -3,22 +3,22 @@
         <div class="hbox">
             <div class="btn-toolbar" style="flex: 1;">
                 <button class="btn btn-sm btn-light" (click)="addNode()" title="Add a new node">
-                    <span class="fa fa-plus"></span>
+                    <span class="fas fa-plus"></span>
                 </button>
                 <!-- <div *ngIf="isExpandEnabled()" class="btn-group btn-group-xs">
                     <button class="btn btn-default" (click)="expandSubResources()" title="Expand sub-resources">Sub</button>
                     <button class="btn btn-default" (click)="expandSuperResources()" title="Expand super-resources">Super</button>
                 </div> -->
             </div>
-            <div class="btn-toolbar pull-right">
+            <div class="btn-toolbar float-right">
                 <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" (click)="rendering=!rendering" title="Rendering">
-                    <i class="fa fa-font"></i>
+                    <i class="fas fa-font"></i>
                 </button>
                 <button class="btn btn-light btn-sm ml-1" (click)="snapshot()" title="Export a snapshot of the graph (.svg)">
-                    <i class="fa fa-camera"></i>
+                    <i class="fas fa-camera"></i>
                 </button>
                 <button class="btn btn-light btn-sm ml-1" (click)="openSettings()" title="Settings">
-                    <span class="fa fa-cog"></span>
+                    <span class="fas fa-cog"></span>
                 </button>
             </div>
         </div>
@@ -29,10 +29,10 @@
         <div class="vbox ml-1" style="flex: initial; width: 300px;">
             <div class="card vbox">
                 <div class="card-header" style="min-height: 41px;">
-                    <div *ngIf="isSelectedElementNode()" class="btn-toolbar pull-right">
+                    <div *ngIf="isSelectedElementNode()" class="btn-toolbar float-right">
                         <div class="btn-group btn-group-sm">
                             <button type="button" class="btn btn-light" [ngClass]="{ active: selectedElement?.fixed }" title="Fix node position" (click)="fixNode()" [disabled]="!selectedElement">
-                                <span class="fa fa-lock"></span>
+                                <span class="fas fa-lock"></span>
                             </button>
                         </div>
                     </div>

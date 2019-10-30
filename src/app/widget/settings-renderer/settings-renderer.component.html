@@ -55,7 +55,7 @@
                         <div *ngSwitchDefault class="hbox" style="align-items: center; position: relative;">
                             <textarea *ngSwitchDefault type="text" rows="1" class="form-control form-control-sm" style="resize: vertical;" [(ngModel)]="p.value">
                             </textarea>
-                            <span class="fa fa-exclamantion-triangle" style="position: absolute; top: 8px; right: 8px;"
+                            <span class="fas fa-exclamantion-triangle" style="position: absolute; top: 8px; right: 8px;"
                                 [title]="'This parameter has an unknown type (' + p.type.name + '). The entered value will be interpreted as a low-level JSON value.'">
                             </span>
                         </div>
@@ -64,7 +64,7 @@
 
             </td>
             <td>
-                <span class="fa fa-info-circle ml-1" [title]="p.description"></span>
+                <span class="fas fa-info-circle ml-1" [title]="p.description"></span>
             </td>
         </tr>
     </tbody>

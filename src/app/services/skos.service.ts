@@ -19,17 +19,20 @@ export class SkosServices {
      * @param schemes
      * @return an array of top concepts
      */
-    getTopConcepts(schemes?: IRI[], broaderProps?: IRI[], narrowerProps?: IRI[], includeSubProperties?: boolean): Observable<AnnotatedValue<IRI>[]> {
+    getTopConcepts(timestamp: number, schemes?: IRI[], broaderProps?: IRI[], narrowerProps?: IRI[], includeSubProperties?: boolean): 
+            Observable<{ concepts: AnnotatedValue<IRI>[], timestamp: number }> {
         var params: any = {
             schemes: schemes,
             broaderProps: broaderProps,
             narrowerProps: narrowerProps,
             includeSubProperties: includeSubProperties,
         };
-            
         return this.httpMgr.doGet(this.serviceName, "getTopConcepts", params).pipe(
             map(stResp => {
-                return ResourceDeserializer.createIRIArray(stResp);
+                return {
+                    concepts: ResourceDeserializer.createIRIArray(stResp),
+                    timestamp: timestamp
+                }
             })
         );
     }

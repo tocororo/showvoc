@@ -7,7 +7,7 @@
                 <ng-template ngbTabTitle>
                     <span>Query </span>
                     <span *ngIf="tabs.length > 1" class="ml-2" (click)="closeTab(t, $event)">
-                        <i class="fa fa-close clickable"></i>
+                        <i class="fas fa-times-circle clickable"></i>
                     </span>
                 </ng-template>
                 <ng-template ngbTabContent>
@@ -17,7 +17,7 @@
 
             <ngb-tab id="addTab" [disabled]="tabs.length > 10">
                 <ng-template ngbTabTitle>
-                    <i class="fa fa-plus clickable"></i>
+                    <i class="fas fa-plus clickable"></i>
                 </ng-template>
             </ngb-tab>
 

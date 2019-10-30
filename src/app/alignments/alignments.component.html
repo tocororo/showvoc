@@ -9,7 +9,7 @@
                     <option *ngFor="let p of sourceProjects" [ngValue]="p">{{p.getName()}}</option>
                 </select>
                 <button class="btn btn-sm btn-light" (click)="refreshProfile()" title="Refresh dataset profile" [disabled]="!selectedSourceProject">
-                    <i class="fa fa-bar-chart"></i>
+                    <i class="fas fa-chart-bar"></i>
                 </button>
             </div>
         </div>

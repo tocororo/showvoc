@@ -11,7 +11,7 @@
 	<div class="hbox" style="align-items: center;">
         <div *ngIf="label" class="mr-1">
             <label>{{label.value}}:</label>
-            <span *ngIf="label.tooltip" class="fa fa-info-circle" [title]="label.tooltip"></span>
+            <span *ngIf="label.tooltip" class="fas fa-info-circle" [title]="label.tooltip"></span>
         </div>
         <input type="text" class="form-control" style="flex: 1;" [(ngModel)]="value" (keydown.enter)="ok()">
     </div>

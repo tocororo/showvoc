@@ -32,15 +32,15 @@
                     <td class="text-center">{{c.type}}</td>
                     <td class="text-center">
                         <button class="btn btn-sm btn-outline-info" (click)="showDetails(c)">
-                            <span class="fa fa-ellipsis-h"></span>
+                            <span class="fas fa-ellipsis-h"></span>
                         </button>
                     </td>
                     <td class="text-center">
                         <button class="btn btn-sm btn-success" style="width: 30px;" (click)="approveContribution(c)" title="Approve contribution" [disabled]="c.loading">
-                            <span class="fa fa-check"></span>
+                            <span class="fas fa-check"></span>
                         </button>
                         <button class="btn btn-sm btn-danger ml-1" style="width: 30px;" (click)="rejectContribution(c)" title="Reject contribution" [disabled]="c.loading">
-                            <span class="fa fa-times"></span>
+                            <span class="fas fa-times"></span>
                         </button>
                     </td>
                 </tr>

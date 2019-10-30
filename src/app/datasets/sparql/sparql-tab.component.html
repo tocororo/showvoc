@@ -24,9 +24,9 @@
                     <th *ngFor="let h of headers" style="white-space: nowrap">
                         {{h}}
                         <button *ngIf="resultType != 'boolean'" class="btn btn-xs btn-light" [ngSwitch]="sortOrder" (click)="sortResult(h)">
-                            <span *ngSwitchCase="h+asc_Order" class="fa fa-sort-alpha-asc"></span>
-                            <span *ngSwitchCase="h+desc_Order" class="fa fa-sort-alpha-desc"></span>
-                            <span *ngSwitchDefault class="fa fa-sort"></span>
+                            <span *ngSwitchCase="h+asc_Order" class="fas fa-sort-alpha-down"></span>
+                            <span *ngSwitchCase="h+desc_Order" class="fas fa-sort-alpha-up"></span>
+                            <span *ngSwitchDefault class="fas fa-sort"></span>
                         </button>
                     </th>
                 </tr>
@@ -84,13 +84,13 @@
 
         <div class="btn-group btn-group-sm mx-2">
             <button class="btn btn-light" title="Previous page" (click)="resultsPage=resultsPage-1" [disabled]="resultsPage==0">
-                <span class="fa fa-caret-left"></span>
+                <span class="fas fa-caret-left"></span>
             </button>
             <button class="btn btn-light" style="cursor: auto" disabled>
                 <span>{{resultsPage+1}} of {{resultsTotPage}}</span>
             </button>
             <button class="btn btn-light" title="Next page" (click)="resultsPage=resultsPage+1" [disabled]="resultsPage>=resultsTotPage-1">
-                <span class="fa fa-caret-right"></span>
+                <span class="fas fa-caret-right"></span>
             </button>
         </div>
     </div>

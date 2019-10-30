@@ -10,7 +10,7 @@
 
         <div *ngIf="settings?.htmlDescription && !closedAlert1" class="alert alert-info alert-dismissible alert-multiline mb-1">
             <div class="hbox" style="align-items: center;">
-                <span class="fa fa-info-circle mr-1"></span>
+                <span class="fas fa-info-circle mr-1"></span>
                 <span style="flex: 1;" [innerHTML]="safeDescription"></span>
             </div>
             <button class="close" (click)="closedAlert1=true"><span>&times;</span></button>
@@ -18,7 +18,7 @@
 
         <div *ngIf="settings?.htmlWarning && !closedAlert2" class="alert alert-warning alert-dismissible alert-multiline mb-1">
             <div class="hbox" style="align-items: center;">
-                <span class="fa fa-exclamation-triangle mr-1"></span>
+                <span class="fas fa-exclamation-triangle mr-1"></span>
                 <span style="flex: 1;" [innerHTML]="safeWarning"></span>
             </div>
             <button class="close" (click)="closedAlert2=true"><span>&times;</span></button>
