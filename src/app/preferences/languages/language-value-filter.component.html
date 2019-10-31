@@ -12,9 +12,12 @@
                         <span class="far fa-square"></span>
                     </button>
                 </div>
-                <button class="btn btn-sm btn-light ml-1" (click)="toggleFilter()" title="Enable filter" [ngClass]="{ active: filterEnabled }">
+            </div>
+            <div class="custom-control custom-switch text-right ml-2" (click)="toggleFilter()" title="Enable filter">
+                <input type="checkbox" class="custom-control-input" [ngModel]="filterEnabled">
+                <label class="custom-control-label">
                     <span class="fas fa-filter"></span>
-                </button>
+                </label>
             </div>
         </div>
     </div>

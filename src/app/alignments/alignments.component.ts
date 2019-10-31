@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
+import { PmkiConstants } from '../models/Pmki';
 import { Project } from '../models/Project';
 import { AnnotatedValue, IRI } from '../models/Resources';
 import { OntoLex, SKOS } from '../models/Vocabulary';
@@ -35,7 +36,7 @@ export class AlignmentsComponent implements OnInit {
 
     ngOnInit() {
         this.sourceProjects = [];
-        this.projectService.listProjects(null, false, true).subscribe(
+        this.projectService.listProjectsPerRole(PmkiConstants.rolePublic, null, true).subscribe(
             projects => {
                 projects.forEach(p => {
                     if (p.getModelType() == SKOS.uri || p.getModelType() == OntoLex.uri) {
