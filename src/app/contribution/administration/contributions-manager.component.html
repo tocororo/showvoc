@@ -3,7 +3,7 @@
         <label>Contributions manager</label>
     </div>
     <div class="card-body table-responsive">
-        <table class="table table-sm table-bordered" style="font-size: .9rem;">
+        <table class="table table-sm table-bordered" style="font-size: .85rem;">
             <thead class="thead-light">
                 <tr>
                     <th rowspan="2" class="text-center align-middle">Submitted</th>
@@ -15,7 +15,7 @@
                 </tr>
                 <tr>
                     <th class="text-center">Name</th>
-                    <th class="text-center">Last Name</th>
+                    <th class="text-center" nowrap>Last Name</th>
                     <th class="text-center">Email</th>
                     <th class="text-center">Name</th>
                     <th class="text-center">Base URI</th>
@@ -23,19 +23,19 @@
             </thead>
             <tbody>
                 <tr *ngFor="let c of contributions" style="cursor: pointer">
-                    <td class="text-center">{{c.date}}</td>
-                    <td class="text-center">{{c.contributorName}}</td>
-                    <td class="text-center">{{c.contributorLastName}}</td>
-                    <td class="text-center">{{c.contributorEmail}}</td>
-                    <td class="text-center">{{c.resourceName}}</td>
-                    <td class="text-center">{{c.baseURI.toNT()}}</td>
-                    <td class="text-center">{{c.type}}</td>
-                    <td class="text-center">
+                    <td class="text-center align-middle">{{c.date}}</td>
+                    <td class="text-center align-middle">{{c.contributorName}}</td>
+                    <td class="text-center align-middle">{{c.contributorLastName}}</td>
+                    <td class="text-center align-middle">{{c.contributorEmail}}</td>
+                    <td class="text-center align-middle">{{c.resourceName}}</td>
+                    <td class="text-center align-middle">{{c.baseURI.toNT()}}</td>
+                    <td class="text-center align-middle">{{c.type}}</td>
+                    <td class="text-center align-middle">
                         <button class="btn btn-sm btn-outline-info" (click)="showDetails(c)">
                             <span class="fas fa-ellipsis-h"></span>
                         </button>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center align-middle" style="white-space: nowrap;">
                         <button class="btn btn-sm btn-success" style="width: 30px;" (click)="approveContribution(c)" title="Approve contribution" [disabled]="c.loading">
                             <span class="fas fa-check"></span>
                         </button>

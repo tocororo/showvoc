@@ -49,6 +49,10 @@ export class SystemConfigurationComponent implements OnInit {
 
     testEmailConfigLoading: boolean;
 
+    closedAlert1: boolean;
+    closedAlert2: boolean;
+    closedAlert3: boolean;
+
     
     constructor(private adminService: AdministrationServices, private pmkiService: PmkiServices, private preferenceService: PreferencesSettingsServices,
         private basicModals: BasicModalsServices) { }

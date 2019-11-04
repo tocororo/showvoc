@@ -43,6 +43,8 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     index: string;
     private indexLenght: number;
 
+    closedAlert: boolean;
+
     constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties, private ontolexService: OntoLexLemonServices,
         private modalService: NgbModal) {
         super(basicModals, eventHandler, pmkiProp);

@@ -18,6 +18,9 @@ export class SettingsRendererPanelComponent {
     private safeDescription: SafeHtml;
     private safeWarning: SafeHtml;
 
+    closedAlert1: boolean;
+    closedAlert2: boolean;
+
     constructor(public sanitizer: DomSanitizer) { }
 
     private sanitizeHtml() {

@@ -44,6 +44,8 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     visualizationMode: ConceptTreeVisualizationMode;
     showInfoAlert: boolean = true;
 
+    closedAlert: boolean;
+
     constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties,
         private skosService: SkosServices, private resourceService: ResourcesServices, private modalService: NgbModal) {
         super(basicModals, eventHandler, pmkiProp);
