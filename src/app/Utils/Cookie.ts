@@ -37,7 +37,8 @@ export class Cookie {
         name = myWindow.escape(name);
         let regexp = new RegExp('(?:^' + name + '|;\\s*' + name + ')=(.*?)(?:;|$)', 'g');
         let result = regexp.exec(document.cookie);
-        return (result === null) ? null : myWindow.unescape(result[1]);
+        let value = (result === null) ? null : myWindow.unescape(result[1]);
+        return value;
     }
 
 	/**
@@ -48,6 +49,10 @@ export class Cookie {
 	 * @param  {string} userIri IRI of the user useful to contextualize the cookie
 	 */
     public static setCookie(name: string, value: string, expires?: number, userIri?: string) {
+        if (value == null) {
+            this.deleteCookie(name, userIri);
+            return;
+        }
         if (userIri) {
             name += ":" + userIri;
         }

@@ -15,6 +15,7 @@
                     <th class="text-center">Lexicalization Model</th>
                     <th class="text-center">Location</th>
                     <th class="text-center">Status</th>
+                    <th class="text-center"></th>
                 </tr>
             </thead>
             <tbody>
@@ -49,6 +50,11 @@
                                 <button class="dropdown-item" (click)="changeProjectStatus(p, roleStaging)" [disabled]="p.role != rolePublic">Make staging</button>
                             </div>
                         </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-light" (click)="deleteProject(p)">
+                            <span class="fas fa-trash"></span>
+                        </button>
                     </td>
                 </tr>
             </tbody>

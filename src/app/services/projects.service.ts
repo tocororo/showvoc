@@ -116,4 +116,16 @@ export class ProjectsServices {
         return this.httpMgr.doPost(this.serviceName, "accessProject", params);
     }
 
+    /**
+     * 
+     * @param project 
+     */
+    deleteProject(project: Project) {
+        var params = {
+            consumer: "SYSTEM",
+            projectName: project.getName(),
+        };
+        return this.httpMgr.doPost(this.serviceName, "deleteProject", params);
+    }
+
 }

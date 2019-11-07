@@ -43,9 +43,9 @@ export class ProjectGuard implements CanActivate {
                     if (p != null) { //project fount
                         PMKIContext.initProjectCtx(p);
 
+                        this.pmkiProp.initUserProjectPreferences(); //stored as cookies, not async
                         let projInitFunctions: Observable<any>[] = [
                             this.metadataService.getNamespaceMappings(),
-                            this.pmkiProp.initUserProjectPreferences(),
                             this.pmkiProp.initProjectSettings()
                         ]
                         return forkJoin(projInitFunctions).pipe(

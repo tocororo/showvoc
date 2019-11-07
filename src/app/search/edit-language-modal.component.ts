@@ -4,8 +4,8 @@ import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.
 import { ModalType } from '../modal-dialogs/Modals';
 
 @Component({
-	selector: 'edit-lang-modal',
-	templateUrl: './edit-language-modal.component.html'
+    selector: 'edit-lang-modal',
+    templateUrl: './edit-language-modal.component.html'
 })
 export class EditLanguageModal implements OnInit {
 
@@ -14,9 +14,9 @@ export class EditLanguageModal implements OnInit {
     newLang: string;
     private langRegexp = new RegExp("^[a-z]{2,3}(?:-[A-Z]{2,3}(?:-[a-zA-Z]{4})?)?$");
 
-	constructor(private activeModal: NgbActiveModal, private basicModals: BasicModalsServices) { }
+    constructor(private activeModal: NgbActiveModal, private basicModals: BasicModalsServices) { }
 
-	ngOnInit() {
+    ngOnInit() {
     }
 
     addLang() {
@@ -32,12 +32,12 @@ export class EditLanguageModal implements OnInit {
         this.languages.sort((l1, l2) => l1.localeCompare(l2));
         this.newLang = null;
     }
-    
+
     deleteLang(index: number) {
         this.languages.splice(index, 1);
     }
 
-	ok() {
+    ok() {
         //check for duplicated languages
         for (let i = 0; i < this.languages.length; i++) {
             let lang = this.languages[i];
@@ -53,12 +53,11 @@ export class EditLanguageModal implements OnInit {
                 return;
             }
         }
-        console.log("returning languages", this.languages)
-		this.activeModal.close(this.languages);
-	}
+        this.activeModal.close(this.languages);
+    }
 
-	close() {
-		this.activeModal.dismiss();
-	}
+    close() {
+        this.activeModal.dismiss();
+    }
 
 }

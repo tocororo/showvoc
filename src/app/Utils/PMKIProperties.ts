@@ -4,13 +4,15 @@ import { map } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
 import { Language, Languages } from '../models/LanguagesCountries';
-import { ConceptTreePreference, ConceptTreeVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, ValueFilterLanguages, ProjectPreferences, ProjectSettings } from '../models/Properties';
-import { IRI, RDFResourceRolesEnum } from '../models/Resources';
+import { Project } from '../models/Project';
+import { ConceptTreePreference, ConceptTreeVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, ProjectPreferences, ProjectSettings, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, ValueFilterLanguages } from '../models/Properties';
+import { IRI, RDFResourceRolesEnum, Value } from '../models/Resources';
 import { ResViewPartition } from '../models/ResourceView';
 import { PreferencesSettingsServices } from '../services/preferences-settings.service';
 import { Cookie } from './Cookie';
-import { PMKIEventHandler } from './PMKIEventHandler';
 import { PMKIContext } from './PMKIContext';
+import { PMKIEventHandler } from './PMKIEventHandler';
+import { ResourceUtils } from './ResourceUtils';
 
 @Injectable()
 export class PMKIProperties {
@@ -24,96 +26,82 @@ export class PMKIProperties {
 
     /**
      * To call each time the user change project
+     * 
+     * Note: since the default user not-authenticated user is the same for every visitor, the user-project preferences are stored as cookie
+     * (and not on ST as in VocBench). In this way we prevent that a visitor changes the preferences for all the other visitors
      */
-    initUserProjectPreferences(): Observable<void> {
-        var properties: string[] = [
-            Properties.pref_active_schemes, Properties.pref_active_lexicon, Properties.pref_show_flags,
-            Properties.pref_concept_tree_visualization,
-            Properties.pref_lex_entry_list_visualization, Properties.pref_lex_entry_list_index_lenght,
-            Properties.pref_search_languages, Properties.pref_search_restrict_lang,
-            Properties.pref_search_include_locales, Properties.pref_search_use_autocomplete,
-            Properties.pref_filter_value_languages, Properties.pref_res_view_partition_filter, Properties.pref_hide_literal_graph_nodes
-        ];
-        return this.prefService.getPUSettings(properties).pipe(
-            map(prefs => {
-                let projectPreferences: ProjectPreferences = PMKIContext.getProjectCtx().getProjectPreferences();
+    initUserProjectPreferences() {
+        let projectPreferences: ProjectPreferences = PMKIContext.getProjectCtx().getProjectPreferences();
+        let project: Project = PMKIContext.getProjectCtx().getProject();
 
-                let activeSchemes = [];
-                let activeSchemesPref: string = prefs[Properties.pref_active_schemes];
-                if (activeSchemesPref != null) {
-                    let skSplitted: string[] = activeSchemesPref.split(",");
-                    for (var i = 0; i < skSplitted.length; i++) {
-                        activeSchemes.push(new IRI(skSplitted[i]));
-                    }
-                }
-                this.setActiveSchemes(activeSchemes);
+        //active scheme
+        let activeSchemes = [];
+        let activeSchemesPref: string = this.getUserProjectCookiePref(Properties.pref_active_schemes, project);
+        if (activeSchemesPref != null) {
+            let skSplitted: string[] = activeSchemesPref.split(",");
+            for (var i = 0; i < skSplitted.length; i++) {
+                activeSchemes.push(ResourceUtils.parseIRI(skSplitted[i]));
+            }
+        }
+        this.setActiveSchemes(activeSchemes);
 
-                let activeLexicon = null;
-                let activeLexiconPref: string = prefs[Properties.pref_active_lexicon];
-                if (activeLexiconPref != null) {
-                    activeLexicon = new IRI(activeLexiconPref);
-                    this.setActiveLexicon(activeLexicon);
-                }
+        //active lexicon
+        let activeLexicon = null;
+        let activeLexiconPref: string = this.getUserProjectCookiePref(Properties.pref_active_lexicon, project);
+        if (activeLexiconPref != null) {
+            activeLexicon = ResourceUtils.parseIRI(activeLexiconPref);
+            this.setActiveLexicon(activeLexicon);
+        }
 
-                projectPreferences.showFlags = prefs[Properties.pref_show_flags] == "true";
+        //show flag
+        projectPreferences.showFlags = this.getUserProjectCookiePref(Properties.pref_show_flags, project) != "false";
+        
+        //graph & resView pref: filter value lang
+        let filterValueLangPref = this.getUserProjectCookiePref(Properties.pref_filter_value_languages, project);
+        if (filterValueLangPref == null) {
+            projectPreferences.filterValueLang = { languages: [], enabled: false }; //default
+        } else {
+            projectPreferences.filterValueLang = JSON.parse(filterValueLangPref);
+        }
 
-                let filterValueLangPref = prefs[Properties.pref_filter_value_languages];
-                if (filterValueLangPref == null) {
-                    projectPreferences.filterValueLang = { languages: [], enabled: false }; //default
-                } else {
-                    projectPreferences.filterValueLang = JSON.parse(filterValueLangPref);
-                }
+        //graph preferences
+        let rvPartitionFilterPref = this.getUserProjectCookiePref(Properties.pref_res_view_partition_filter, project);
+        if (rvPartitionFilterPref != null) {
+            projectPreferences.resViewPartitionFilter = JSON.parse(rvPartitionFilterPref);
+        } else {
+            let resViewPartitionFilter: ResViewPartitionFilterPreference = {};
+            for (let role in RDFResourceRolesEnum) {
+                resViewPartitionFilter[role] = [ResViewPartition.lexicalizations];
+            }
+            projectPreferences.resViewPartitionFilter = resViewPartitionFilter;
+        }
+        projectPreferences.hideLiteralGraphNodes = this.getUserProjectCookiePref(Properties.pref_hide_literal_graph_nodes, project) != "false";
 
-                //graph preferences
-                let rvPartitionFilterPref = prefs[Properties.pref_res_view_partition_filter];
-                if (rvPartitionFilterPref != null) {
-                    projectPreferences.resViewPartitionFilter = JSON.parse(rvPartitionFilterPref);
-                } else {
-                    projectPreferences.resViewPartitionFilter = {};
-                    for (let role in RDFResourceRolesEnum) {
-                        projectPreferences.resViewPartitionFilter[role] = [ResViewPartition.lexicalizations];
-                    }
-                }
+        //concept tree preferences
+        let conceptTreePref: ConceptTreePreference = new ConceptTreePreference();
+        let conceptTreeVisualizationPref: string = this.getUserProjectCookiePref(Properties.pref_concept_tree_visualization, project);
+        if (conceptTreeVisualizationPref != null && conceptTreeVisualizationPref == ConceptTreeVisualizationMode.searchBased) {
+            conceptTreePref.visualization = conceptTreeVisualizationPref;
+        }
+        projectPreferences.conceptTreePreferences = conceptTreePref
 
-                projectPreferences.hideLiteralGraphNodes = prefs[Properties.pref_hide_literal_graph_nodes] != "false";
-
-                //concept tree preferences
-                let conceptTreePref: ConceptTreePreference = new ConceptTreePreference();
-                let conceptTreeVisualizationPref: string = prefs[Properties.pref_concept_tree_visualization];
-                if (conceptTreeVisualizationPref != null && conceptTreeVisualizationPref == ConceptTreeVisualizationMode.searchBased) {
-                    conceptTreePref.visualization = conceptTreeVisualizationPref;
-                }
-                projectPreferences.conceptTreePreferences = conceptTreePref
-
-                //lexical entry list preferences
-                let lexEntryListPref = new LexicalEntryListPreference();
-                let lexEntryListVisualizationPref: string = prefs[Properties.pref_lex_entry_list_visualization];
-                if (lexEntryListVisualizationPref != null && lexEntryListVisualizationPref == LexEntryVisualizationMode.searchBased) {
-                    lexEntryListPref.visualization = lexEntryListVisualizationPref;
-                }
-                let lexEntryListIndexLenghtPref: string = prefs[Properties.pref_lex_entry_list_index_lenght];
-                if (lexEntryListIndexLenghtPref == "2") {
-                    lexEntryListPref.indexLength = 2;
-                }
-                projectPreferences.lexEntryListPreferences = lexEntryListPref;
+        //lexical entry list preferences
+        let lexEntryListPref = new LexicalEntryListPreference();
+        let lexEntryListVisualizationPref: string = this.getUserProjectCookiePref(Properties.pref_lex_entry_list_visualization, project);
+        if (lexEntryListVisualizationPref != null && lexEntryListVisualizationPref == LexEntryVisualizationMode.searchBased) {
+            lexEntryListPref.visualization = lexEntryListVisualizationPref;
+        }
+        let lexEntryListIndexLenghtPref: string = this.getUserProjectCookiePref(Properties.pref_lex_entry_list_index_lenght, project);
+        if (lexEntryListIndexLenghtPref == "2") {
+            lexEntryListPref.indexLength = 2;
+        }
+        projectPreferences.lexEntryListPreferences = lexEntryListPref;
 
 
-                //search settings
-                let searchSettings: SearchSettings = new SearchSettings();
-                // let searchLangsPref = prefs[Properties.pref_search_languages];
-                // if (searchLangsPref == null) {
-                //     searchSettings.languages = [];
-                // } else {
-                //     searchSettings.languages = JSON.parse(searchLangsPref);
-                // }
-                // searchSettings.restrictLang = prefs[Properties.pref_search_restrict_lang] == "true";
-                // searchSettings.includeLocales = prefs[Properties.pref_search_include_locales] == "true";
-                // searchSettings.useAutocompletion = prefs[Properties.pref_search_use_autocomplete] == "true";
-                projectPreferences.searchSettings = searchSettings;
-
-                this.initSearchSettingsCookie();
-            })
-        );
+        //search settings
+        let searchSettings: SearchSettings = new SearchSettings();
+        projectPreferences.searchSettings = searchSettings;
+        this.initSearchSettingsCookie();
     }
 
     initProjectSettings(): Observable<void> {
@@ -146,14 +134,14 @@ export class PMKIProperties {
             projPref.activeSchemes = schemes;
         }
         this.eventHandler.schemeChangedEvent.emit(projPref.activeSchemes);
-        this.prefService.setActiveSchemes(projPref.activeSchemes).subscribe();
+        this.setUserProjectCookiePref(Properties.pref_active_schemes, PMKIContext.getProjectCtx().getProject(), projPref.activeSchemes);
     }
 
     setActiveLexicon(lexicon: IRI) {
         let projPref: ProjectPreferences = PMKIContext.getProjectCtx().getProjectPreferences();
         projPref.activeLexicon = lexicon;
         this.eventHandler.lexiconChangedEvent.emit(projPref.activeLexicon);
-        this.prefService.setPUSetting(Properties.pref_active_lexicon, projPref.activeLexicon.getIRI()).subscribe();
+        this.setUserProjectCookiePref(Properties.pref_active_lexicon, PMKIContext.getProjectCtx().getProject(), projPref.activeLexicon);
     }
 
     getShowFlags(): boolean {
@@ -166,67 +154,39 @@ export class PMKIProperties {
     setShowFlags(show: boolean) {
         PMKIContext.getProjectCtx().getProjectPreferences().showFlags = show;
         this.eventHandler.showFlagChangedEvent.emit(show);
-        this.prefService.setShowFlags(show).subscribe();
+        this.setUserProjectCookiePref(Properties.pref_show_flags, PMKIContext.getProjectCtx().getProject(), show);
     }
 
     setValueFilterLanguages(filter: ValueFilterLanguages) {
-        this.prefService.setPUSetting(Properties.pref_filter_value_languages, JSON.stringify(filter)).subscribe();
+        this.setUserProjectCookiePref(Properties.pref_filter_value_languages, PMKIContext.getProjectCtx().getProject(), JSON.stringify(filter));
         PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang = filter;
     }
 
     //concept tree settings
-    // setConceptTreeBaseBroaderProp(propUri: string) {
-    //     this.prefService.setPUSetting(Properties.pref_concept_tree_base_broader_prop, propUri).subscribe();
-    //     this.conceptTreePreferences.baseBroaderUri = propUri;
-    // }
-    // setConceptTreeBroaderProps(props: string[]) {
-    //     let prefValue: string;
-    //     if (props.length > 0) {
-    //         prefValue = props.join(",")
-    //     }
-    //     this.prefService.setPUSetting(Properties.pref_concept_tree_broader_props, prefValue).subscribe();
-    //     this.conceptTreePreferences.broaderProps = props;
-    // }
-    // setConceptTreeNarrowerProps(props: string[]) {
-    //     let prefValue: string;
-    //     if (props.length > 0) {
-    //         prefValue = props.join(",")
-    //     }
-    //     this.prefService.setPUSetting(Properties.pref_concept_tree_narrower_props, prefValue).subscribe();
-    //     this.conceptTreePreferences.narrowerProps = props;
-    // }
-    // setConceptTreeIncludeSubProps(include: boolean) {
-    //     this.prefService.setPUSetting(Properties.pref_concept_tree_include_subprops, include+"").subscribe();
-    //     this.conceptTreePreferences.includeSubProps = include;
-    // }
-    // setConceptTreeSyncInverse(sync: boolean) {
-    //     this.prefService.setPUSetting(Properties.pref_concept_tree_sync_inverse, sync+"").subscribe();
-    //     this.conceptTreePreferences.syncInverse = sync;
-    // }
     setConceptTreeVisualization(mode: ConceptTreeVisualizationMode) {
-        this.prefService.setPUSetting(Properties.pref_concept_tree_visualization, mode).subscribe();
+        this.setUserProjectCookiePref(Properties.pref_concept_tree_visualization, PMKIContext.getProjectCtx().getProject(), mode);
         PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization = mode;
     }
 
     //lex entry list settings
     setLexicalEntryListVisualization(mode: LexEntryVisualizationMode) {
-        this.prefService.setPUSetting(Properties.pref_lex_entry_list_visualization, mode).subscribe();
+        this.setUserProjectCookiePref(Properties.pref_lex_entry_list_visualization, PMKIContext.getProjectCtx().getProject(), mode);
         PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization = mode;
     }
     setLexicalEntryListIndexLenght(lenght: number) {
-        this.prefService.setPUSetting(Properties.pref_lex_entry_list_index_lenght, lenght + "").subscribe();
+        this.setUserProjectCookiePref(Properties.pref_lex_entry_list_index_lenght, PMKIContext.getProjectCtx().getProject(), lenght);
         PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength = lenght;
     }
 
     //Graph settings
     setResourceViewPartitionFilter(pref: ResViewPartitionFilterPreference) {
-        this.prefService.setPUSetting(Properties.pref_res_view_partition_filter, JSON.stringify(pref)).subscribe();
+        this.setUserProjectCookiePref(Properties.pref_res_view_partition_filter, PMKIContext.getProjectCtx().getProject(), JSON.stringify(pref));
         PMKIContext.getProjectCtx().getProjectPreferences().resViewPartitionFilter = pref;
     }
 
     setHideLiteralGraphNodes(show: boolean) {
         PMKIContext.getProjectCtx().getProjectPreferences().hideLiteralGraphNodes = show;
-        this.prefService.setPUSetting(Properties.pref_hide_literal_graph_nodes, show + "").subscribe();
+        this.setUserProjectCookiePref(Properties.pref_filter_value_languages, PMKIContext.getProjectCtx().getProject(), show);
     }
 
 
@@ -322,6 +282,48 @@ export class PMKIProperties {
         }
         projectSettings.searchSettings = settings;
         this.eventHandler.searchPrefsUpdatedEvent.emit();
+    }
+
+
+    getUserProjectCookiePref(pref: string, project: Project): string {
+        let value = Cookie.getCookie(pref + "." + project.getName());
+        if (value != null || value != "") {
+            return value;
+        }
+        return null;
+    }
+    setUserProjectCookiePref(pref: string, project: Project, value: any) {
+        let valueAsString: string;
+        if (Array.isArray(value)) {
+            if (value.length > 0) {
+                let stringArray: string[] = [];
+                value.forEach((v: any) => {
+                    if (v instanceof Value) {
+                        stringArray.push((<Value>v).toNT());
+                    } else {
+                        stringArray.push(v);
+                    }
+                })
+                valueAsString = stringArray.join(",");
+            }
+        } else if (value instanceof Map) {
+            if (value.size > 0) {
+                let stringMap: { [key: string]: string } = {};
+                value.forEach((v: any, key: string) => {
+                    if (v instanceof Value) {
+                        stringMap[key] = (<Value>v).toNT();
+                    } else {
+                        stringMap[key] = v;
+                    }
+                })
+                valueAsString = JSON.stringify(stringMap);
+            }
+        } else if (value instanceof Value) {
+            valueAsString = (<Value>value).toNT();
+        } else if (value != null) {
+            valueAsString = value;
+        }
+        Cookie.setCookie(pref + "." + project.getName(), valueAsString);
     }
 
 }
