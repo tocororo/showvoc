@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { forkJoin, Observable, of } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
-import { ModalOptions } from '../modal-dialogs/Modals';
+import { ModalOptions, ModalType } from '../modal-dialogs/Modals';
 import { Project } from '../models/Project';
 import { IRI } from '../models/Resources';
 import { GlobalSearchResult } from '../models/Search';
@@ -12,6 +12,7 @@ import { ResourcesServices } from '../services/resources.service';
 import { Cookie } from '../utils/Cookie';
 import { PMKIContext } from '../utils/PMKIContext';
 import { EditLanguageModal } from './edit-language-modal.component';
+import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 
 @Component({
     selector: 'search-component',
@@ -34,14 +35,15 @@ export class SearchComponent {
     loading: boolean = false;
 
     groupedSearchResults: { [repId: string]: GlobalSearchResult[] };
-    
+
     openProjectFilter: boolean = true;
     filteredRepoIds: string[]; //id (eventually filtered) of the repositories of the results, useful to iterate over them in the view
 
     anyLangFilter: boolean;
     languagesFilter: LanguageFilter[];
 
-    constructor(private globalSearchService: GlobalSearchServices, private resourcesService: ResourcesServices, private modalService: NgbModal, private router: Router) { }
+    constructor(private globalSearchService: GlobalSearchServices, private resourcesService: ResourcesServices,
+        private basicModals: BasicModalsServices, private modalService: NgbModal, private router: Router) { }
 
     ngOnInit() {
         this.initCookies();
@@ -96,9 +98,12 @@ export class SearchComponent {
                         })
                     });
                 });
-
-
                 this.filterSearchResults();
+            },
+            (err: Error) => {
+                if (err.name.endsWith("IndexNotFoundException")) {
+                    this.basicModals.alert("Index not found", "Cannot find any index. Please create the index for at least one project, then retry.", ModalType.warning);
+                }
             }
         )
     }
@@ -186,7 +191,7 @@ export class SearchComponent {
                 this.languagesFilter = newFilter;
                 this.updateCookies();
             },
-            () => {}
+            () => { }
         );
     }
 

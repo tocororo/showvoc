@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IRI, Literal } from '../models/Resources';
 import { GlobalSearchResult, SearchResultDetails } from '../models/Search';
-import { HttpManager } from "../utils/HttpManager";
+import { HttpManager, PMKIRequestOptions } from "../utils/HttpManager";
 
 @Injectable()
 export class GlobalSearchServices {
@@ -29,7 +29,13 @@ export class GlobalSearchServices {
             maxResults: maxResults,
             searchInLocalName: searchInLocalName
         };
-        return this.httpMgr.doGet(this.serviceName, "search", params).pipe(
+        let options: PMKIRequestOptions = new PMKIRequestOptions({
+            errorAlertOpt: { 
+                show: true,
+                exceptionsToSkip: ['org.apache.lucene.index.IndexNotFoundException'] 
+            } 
+        });
+        return this.httpMgr.doGet(this.serviceName, "search", params, options).pipe(
             map(results => {
                 let parsedSearchResults: GlobalSearchResult[] = [];
                 results.forEach(element => {
