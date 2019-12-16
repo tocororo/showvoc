@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { Project } from '../models/Project';
-import { HttpManager } from '../utils/HttpManager';
+import { TransitiveImportMethodAllowance } from '../models/Metadata';
+import { PluginSpecification } from '../models/Plugins';
+import { BackendTypesEnum, Project, RepositoryAccess } from '../models/Project';
+import { IRI } from '../models/Resources';
+import { HttpManager, PMKIRequestOptions } from '../utils/HttpManager';
+import { PMKIContext } from '../utils/PMKIContext';
 
 @Injectable()
 export class ProjectsServices {
@@ -9,6 +13,63 @@ export class ProjectsServices {
     private serviceName = "Projects";
 
     constructor(private httpMgr: HttpManager) { }
+
+
+    /**
+     * @param projectName
+     * @param modelType
+     * @param baseURI
+     * @param historyEnabled
+     * @param validationEnabled
+     * @param uriGeneratorSpecification
+     * @param renderingEngineSpecification
+     */
+    createProject(projectName: string, baseURI: string, model: IRI, lexicalizationModel: IRI,
+        historyEnabled: boolean, validationEnabled: boolean, blacklistingEnabled: boolean, repositoryAccess: RepositoryAccess,
+        coreRepoID: string, supportRepoID: string,
+        coreRepoSailConfigurerSpecification?: PluginSpecification, coreBackendType?: BackendTypesEnum,
+        supportRepoSailConfigurerSpecification?: PluginSpecification, supportBackendType?: BackendTypesEnum,
+        leftDataset?: string, rightDataset?: string,
+        uriGeneratorSpecification?: PluginSpecification, renderingEngineSpecification?: PluginSpecification,
+        creationDateProperty?: IRI, modificationDateProperty?: IRI, enableSHACL?: boolean,
+        preloadedDataFileName?: string, preloadedDataFormat?: string, transitiveImportAllowance?: TransitiveImportMethodAllowance) {
+        
+        var params: any = {
+            consumer: "SYSTEM",
+            projectName: projectName,
+            baseURI: baseURI,
+            model: model,
+            lexicalizationModel: lexicalizationModel,
+            historyEnabled: historyEnabled,
+            validationEnabled: validationEnabled,
+            blacklistingEnabled: blacklistingEnabled,
+            repositoryAccess: repositoryAccess.stringify(),
+            coreRepoID: coreRepoID,
+            supportRepoID: supportRepoID,
+            coreRepoSailConfigurerSpecification: (coreRepoSailConfigurerSpecification) ? JSON.stringify(coreRepoSailConfigurerSpecification) : null,
+            coreBackendType: coreBackendType,
+            supportRepoSailConfigurerSpecification: (supportRepoSailConfigurerSpecification) ? JSON.stringify(supportRepoSailConfigurerSpecification) : null,
+            supportBackendType: supportBackendType,
+            leftDataset: leftDataset, 
+            rightDataset: rightDataset,
+            uriGeneratorSpecification: (uriGeneratorSpecification) ? JSON.stringify(uriGeneratorSpecification) : null,
+            renderingEngineSpecification: (renderingEngineSpecification) ? JSON.stringify(renderingEngineSpecification) : null,
+            creationDateProperty: creationDateProperty,
+            modificationDateProperty: modificationDateProperty,
+            enableSHACL: enableSHACL,
+            preloadedDataFileName: preloadedDataFileName,
+            preloadedDataFormat: preloadedDataFormat,
+            transitiveImportAllowance: transitiveImportAllowance
+        };
+        var options: PMKIRequestOptions = new PMKIRequestOptions({
+            errorAlertOpt: { 
+                show: true, 
+                exceptionsToSkip: ['it.uniroma2.art.semanticturkey.exceptions.ProjectAccessException', 'org.eclipse.rdf4j.repository.RepositoryException'] 
+            } 
+        });
+        return this.httpMgr.doPost(this.serviceName, "createProject", params, options);
+    }
+
 
     /**
      * Gets the current available projects in ST
@@ -95,6 +156,11 @@ export class ProjectsServices {
      * @param project 
      */
     disconnectFromProject(project: Project) {
+        //if the closing project is the working, remove it from context
+        //but is not a "perfect" solution, since it remove the working project from the ctx before it is effectively closed
+        if (PMKIContext.getWorkingProject() != undefined && PMKIContext.getWorkingProject().getName() == project.getName()) {
+            PMKIContext.removeWorkingProject();
+        }
         var params = {
             consumer: "SYSTEM",
             projectName: project.getName()

@@ -342,12 +342,6 @@ export class SparqlTabComponent implements OnInit {
         modalRef.componentInstance.query = this.queryCache;
         modalRef.componentInstance.inferred = this.inferred;
         return modalRef.result;
-        // var modalData = new ExportResultAsRdfModalData(this.queryCache, this.inferred);
-        // const builder = new BSModalContextBuilder<ExportResultAsRdfModalData>(
-        //     modalData, undefined, ExportResultAsRdfModalData
-        // );
-        // let overlayConfig: OverlayConfig = { context: builder.keyboard(27).toJSON() };
-        // return this.modal.open(ExportResultAsRdfModal, overlayConfig).result;
     }
 
     /**

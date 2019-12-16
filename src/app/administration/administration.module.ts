@@ -6,15 +6,23 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContributionModule } from '../contribution/contribution.module';
 import { WidgetModule } from '../widget/widget.module';
 import { AdminDashboardComponent } from './admin-dashboard.component';
+import { CreateProjectModal } from './projects-manager/create-project-modal';
+import { LoadDataModal } from './projects-manager/load-data-modal';
 import { ProjectsManagerComponent } from './projects-manager/projects-manager.component';
+import { RemoteAccessConfigModal } from './projects-manager/remote-access-config-modal';
+import { RemoteRepoSelectionModal } from './projects-manager/remote-repo-selection-modal';
 import { InitialConfigurationComponent } from './system-configuration/initial-configuration.component';
 import { SystemConfigurationComponent } from './system-configuration/system-configuration.component';
 
 @NgModule({
     declarations: [
         AdminDashboardComponent,
+        CreateProjectModal,
+        LoadDataModal,
         InitialConfigurationComponent,
         ProjectsManagerComponent,
+        RemoteAccessConfigModal,
+        RemoteRepoSelectionModal,
         SystemConfigurationComponent,
     ],
     imports: [
@@ -27,6 +35,11 @@ import { SystemConfigurationComponent } from './system-configuration/system-conf
     ],
     exports: [],
     providers: [],
-    entryComponents: []
+    entryComponents: [
+        CreateProjectModal,
+        LoadDataModal,
+        RemoteAccessConfigModal,
+        RemoteRepoSelectionModal
+    ]
 })
 export class AdministrationModule { }

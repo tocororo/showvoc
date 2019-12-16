@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h5 class="modal-title">Remote access configuration</h5>
+    <button class="close" (click)="close()">
+        <span>&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+                <th>Server URL</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="savedConfigs.length == 0">
+                <td colspan="4">No Remote Access Configuration found. Please, create a new one.</td>
+            </tr>
+            <tr *ngFor="let conf of savedConfigs" (click)="selectConfig(conf)" [ngClass]="{ 'table-info': selectedConfig == conf }" style="cursor: pointer">
+                <td>
+                    <input-editable [value]="conf.serverURL" (valueEdited)="updateConfServerURL(conf, $event)"></input-editable>
+                </td>
+                <td>
+                    <input-editable [value]="conf.username" allowEmpty="true" (valueEdited)="updateConfUsername(conf, $event)"></input-editable>
+                </td>
+                <td>
+                    <input-editable [value]="conf.password" allowEmpty="true" (valueEdited)="updateConfPassword(conf, $event)"></input-editable>
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-light" (click)="deleteConfig(conf)">
+                        <span class="fas fa-trash"></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.serverURL" placeholder="http://serverurl"></td>
+                <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.username" placeholder="username"></td>
+                <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.password" placeholder="password"></td>
+                <td>
+                    <button class="btn btn-sm btn-light" (click)="createConfiguration()" [disabled]="!newConfig.serverURL">
+                        <span class="fas fa-plus"></span>
+                    </button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="!selectedConfig">Ok</button>
+    <button class="btn btn-sm btn-secondary" (click)="close()">Close</button>
+</div>

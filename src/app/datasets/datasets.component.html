@@ -84,17 +84,6 @@
                                     </span>
                                 </div>
 
-
-                                <div class="p-1 border-left border-top" style="position: absolute; bottom: 0; right: 0; border-top-left-radius: 5px; line-height: 1rem">
-                                    <button class="btn btn-outline-info btn-xs" (click)="createIndex(p)" title="Create index" [disabled]="!p.isOpen() || p.creatingIndex || globalCreatingIndex">
-                                        <i *ngIf="!p.creatingIndex" class="fas fa-list-alt"></i>
-                                        <div *ngIf="p.creatingIndex" class="spinner-border text-info" style="width: .75rem; height: .75rem;"></div>
-                                    </button>
-                                </div>
-
-                                <!-- <h6 class="card-subtitle mb-2">
-                                    <a [href]="p.getBaseURI()" target="_blank" class="text-success">{{p.getBaseURI()}}</a>
-                                </h6> -->
                                 <p class="card-text text-secondary">{{p.getBaseURI()}}</p>
                             </div>
                         </div>

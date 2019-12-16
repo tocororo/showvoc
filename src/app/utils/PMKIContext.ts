@@ -33,6 +33,9 @@ export class PMKIContext {
             return null;
         }
     }
+    static removeWorkingProject() {
+        this.workingProjectCtx = null;
+    }
 
     static setTempProject(project: Project) {
         this.tempProject = project;

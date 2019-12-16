@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { RDFFormat, DataFormat } from '../models/RDFFormat';
+import { TransitiveImportMethodAllowance } from '../models/Metadata';
+import { PluginSpecification } from '../models/Plugins';
+import { DataFormat, RDFFormat } from '../models/RDFFormat';
 import { HttpManager } from "../utils/HttpManager";
 
 @Injectable()
@@ -10,6 +12,44 @@ export class InputOutputServices {
     private serviceName = "InputOutput";
 
     constructor(private httpMgr: HttpManager) { }
+
+    /**
+     * 
+     * @param baseURI 
+     * @param transitiveImportAllowance 
+     * @param inputFile 
+     * @param format 
+     * @param loaderSpec 
+     * @param rdfLifterSpec 
+     * @param transformationPipeline a JSON string representing an array of TransformationStep.
+     * @param validateImplicitly 
+     */
+    loadRDF(baseURI: string, transitiveImportAllowance: TransitiveImportMethodAllowance, inputFile?: File, format?: string, 
+        loaderSpec?: PluginSpecification, rdfLifterSpec?: PluginSpecification, transformationPipeline?: string, validateImplicitly?: boolean) {
+        var data: any = {
+            baseURI: baseURI,
+            transitiveImportAllowance: transitiveImportAllowance,
+        }
+        if (inputFile != null) {
+            data.inputFile = inputFile;
+        }
+        if (format != null) {
+            data.format = format;
+        }
+        if (loaderSpec != null) {
+            data.loaderSpec = JSON.stringify(loaderSpec);
+        }
+        if (rdfLifterSpec != null) {
+            data.rdfLifterSpec = JSON.stringify(rdfLifterSpec);
+        }
+        if (transformationPipeline != null) {
+            data.transformationPipeline = transformationPipeline;
+        }
+        if (validateImplicitly != null) {
+            data.validateImplicitly = validateImplicitly;
+        }
+        return this.httpMgr.uploadFile(this.serviceName, "loadRDF", data);
+    }
 
 
     getInputRDFFormats(): Observable<RDFFormat[]> {

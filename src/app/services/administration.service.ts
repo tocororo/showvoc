@@ -77,5 +77,20 @@ export class AdministrationServices {
         return this.httpMgr.doGet(this.serviceName, "testEmailConfig", params);
     }
 
+    /**
+     * Assigns roles to a user in a project
+     * @param projectName
+     * @param email
+     * @param roles
+     */
+    addRolesToUser(projectName: string, email: string, roles: string[]) {
+        var params: any = {
+            projectName: projectName,
+            email: email,
+            roles: roles
+        };
+        return this.httpMgr.doPost(this.serviceName, "addRolesToUser", params);
+    }
+
 
 }

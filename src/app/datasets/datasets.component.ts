@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { PmkiConstants } from '../models/Pmki';
 import { Project } from '../models/Project';
 import { OntoLex, SKOS } from '../models/Vocabulary';
 import { GlobalSearchServices } from '../services/global-search.service';
 import { ProjectsServices } from '../services/projects.service';
 import { Cookie } from '../utils/Cookie';
-import { PMKIContext } from '../utils/PMKIContext';
-import { PmkiConstants } from '../models/Pmki';
 
 @Component({
     selector: 'datasets-component',
@@ -26,7 +25,6 @@ export class DatasetsComponent implements OnInit {
     searchString: string;
     lastSearch: string;
     loading: boolean = false;
-    globalCreatingIndex: boolean = false; //when it's true, all the other "create index" button should be disabled
 
     constructor(private router: Router, private projectService: ProjectsServices, private globalSearchService: GlobalSearchServices) { }
 
@@ -71,23 +69,6 @@ export class DatasetsComponent implements OnInit {
 
     private goToProject(project: Project) {
         this.router.navigate(["/datasets/" + project.getName()]);
-    }
-
-    private createIndex(project: Project) {
-        PMKIContext.setTempProject(project);
-        project['creatingIndex'] = true;
-        this.globalCreatingIndex = true;
-        this.globalSearchService.clearSpecificIndex().subscribe(
-            () => {
-                this.globalSearchService.createIndex().pipe(
-                    finalize(() => {
-                        PMKIContext.removeTempProject();
-                        project['creatingIndex'] = false;
-                        this.globalCreatingIndex = false;
-                    })
-                ).subscribe();
-            }
-        );
     }
 
     private initCookies() {

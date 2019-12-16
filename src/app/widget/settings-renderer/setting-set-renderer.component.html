@@ -7,7 +7,7 @@
     <tbody>
         <!-- Why index and track by? https://stackoverflow.com/q/40314732/5805661 -->
         <tr *ngFor="let v of value; let index = index; let last = last; trackBy: trackByIndex;">
-            <td style="padding: 2px 0px;">
+            <td class="px-0 py-1">
                 <div [ngSwitch]="types[0].name">
                     <!-- <resource-picker *ngSwitchCase="'IRI'" [resource]="value[index]" [roles]="getIRIRoleConstraints()" [editable]="true"
                         (resourceChanged)="updateValue(index, $event)">
@@ -38,12 +38,12 @@
                     </div>
                 </div>
             </td>
-            <td style="padding: 0px;">
+            <td class="p-0">
                 <button *ngIf="value.length > 1" class="btn btn-sm btn-light ml-1" (click)="delete(index)">
                     <span class="fas fa-trash"></span>
                 </button>
             </td>
-            <td style="padding: 0px;">
+            <td class="p-0">
                 <button *ngIf="last" class="btn btn-sm btn-light ml-1" (click)="add(index)">
                     <span class="fas fa-plus"></span>
                 </button>

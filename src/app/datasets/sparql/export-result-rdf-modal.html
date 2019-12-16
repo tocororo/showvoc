@@ -5,7 +5,7 @@
     </button>
 </div>
 <div class="modal-body">
-    <select class="form-control form-control-sm" [(ngModel)]="selectedExportFormat" name="format">
+    <select class="form-control form-control-sm" [(ngModel)]="selectedExportFormat">
         <option *ngFor="let f of exportFormats" [ngValue]="f">{{f.name}}</option>
     </select>
 </div>

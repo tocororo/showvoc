@@ -2,6 +2,13 @@
 
     <div class="card-header">
         <label>Projects manager</label>
+        <div class="btn-toolbar float-right">
+            <div class="btn-group">
+                <button class="btn btn-light btn-sm" title="Create" (click)="createProject()">
+                    <span class="fas fa-plus"></span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <div class="card-body table-responsive">
@@ -15,7 +22,7 @@
                     <th class="text-center">Lexicalization Model</th>
                     <th class="text-center">Location</th>
                     <th class="text-center">Status</th>
-                    <th class="text-center"></th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,8 +32,8 @@
                     </td>
                     <td class="text-center">
                         <button class="btn btn-sm btn-light" style="width: 32px;" (click)="openCloseProject(p)" [ngClass]="{ active: p.isOpen() }">
-                            <span *ngIf="p.loading" class="spinner-border spinner-border-sm"></span>
-                            <ng-container *ngIf="!p.loading">
+                            <span *ngIf="p.opening" class="spinner-border spinner-border-sm"></span>
+                            <ng-container *ngIf="!p.opening">
                                 <span *ngIf="p.isOpen()" class="fas fa-folder-open"></span>
                                 <span *ngIf="!p.isOpen()" class="fas fa-folder"></span>
                             </ng-container>
@@ -36,13 +43,13 @@
                     <td class="text-center">{{p.getLexicalizationModelType(true)}}</td>
                     <td class="text-center">
                         {{p.getRepositoryLocation().location}}
-                        <span *ngIf="p.isRepositoryRemote()" class="fas fa-info-circle" [title]="p.getRepositoryLocation().serverURL"></span>
+                        <span *ngIf="p.isRepositoryRemote()" class="fas fa-map-marker-alt" [title]="p.getRepositoryLocation().serverURL"></span>
                     </td>
                     <td class="text-center">
                         <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right">
-                            <button class="btn dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle [disabled]="p.role==rolePristine"
+                            <button data-toggle="dropdown" ngbDropdownToggle class="btn dropdown-toggle" 
                                 [ngClass]="{'btn-success': p.role==rolePublic, 'btn-warning': p.role==roleStaging, 'btn-light dropdown-no-arrow': p.role==rolePristine}"
-                                style="font-weight: 500;">
+                                style="font-weight: 500;" [disabled]="p.role==rolePristine || p.createIndex">
                                 {{roleStatusMap[p.role]}}
                             </button>
                             <div class="dropdown-menu" ngbDropdownMenu>
@@ -51,8 +58,27 @@
                             </div>
                         </div>
                     </td>
-                    <td>
-                        <button class="btn btn-sm btn-light" (click)="deleteProject(p)">
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-light" (click)="loadData(p)" title="Load data" [disabled]="!p.isOpen() || p.creatingIndex || p.opening">
+                            <span class="fas fa-file-upload"></span>
+                        </button>
+
+                        <div class="btn-group btn-group-sm ml-1" ngbDropdown placement="bottom-right">
+                            <button data-toggle="dropdown" ngbDropdownToggle class="btn btn-light dropdown-toggle dropdown-no-arrow"
+                                [disabled]="globalCreatingIndex || p.creatingIndex || p.opening">
+                                <i *ngIf="!p.creatingIndex" class="far fa-list-alt"></i>
+                                <div *ngIf="p.creatingIndex" class="spinner-border spinner-border-sm"></div>
+                            </button>
+                            <div class="dropdown-menu" ngbDropdownMenu>
+                                <button class="dropdown-item" (click)="createIndex(p)" [disabled]="!p.isOpen()">Create/refresh index</button>
+                                <button class="dropdown-item" (click)="deleteIndex(p)">Delete index</button>
+                            </div>
+                        </div>
+                        <!-- <button class="btn btn-sm btn-light ml-1" (click)="createIndex(p)" title="Create index" [disabled]="!p.isOpen() || globalCreatingIndex || p.creatingIndex || p.opening">
+                            <i *ngIf="!p.creatingIndex" class="far fa-list-alt"></i>
+                            <div *ngIf="p.creatingIndex" class="spinner-border spinner-border-sm"></div>
+                        </button> -->
+                        <button class="btn btn-sm btn-light ml-1" (click)="deleteProject(p)" [disabled]="p.isOpen() || p.opening">
                             <span class="fas fa-trash"></span>
                         </button>
                     </td>

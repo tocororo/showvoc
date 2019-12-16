@@ -93,7 +93,7 @@ export class StableProjectCreationModal {
 
     ok() {
         let repositoryAccess: RepositoryAccess = new RepositoryAccess(this.selectedRepositoryAccess);
-        //in case of remote repository access, set the configuration (retrieved from settings during the initlizzation)
+        //in case of remote repository access, set the configuration (retrieved from settings during the initlization)
         if (this.selectedRepositoryAccess == RepositoryAccessType.CreateRemote) {
             if (this.remoteAccessConfig == null || !this.remoteAccessConfig.serverURL == null || this.remoteAccessConfig.serverURL.trim() == "") {
                 this.basicModals.alert("Missing configuration", "The system has not been configured in order to create a remote repository. " +

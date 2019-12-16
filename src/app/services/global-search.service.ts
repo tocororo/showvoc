@@ -17,8 +17,10 @@ export class GlobalSearchServices {
         return this.httpMgr.doPost(this.serviceName, "createIndex", params);
     }
 
-    clearSpecificIndex() {
-        var params: any = {};
+    clearSpecificIndex(projectName: string) {
+        var params: any = {
+            projectName: projectName
+        };
         return this.httpMgr.doPost(this.serviceName, "clearSpecificIndex", params);
     }
 

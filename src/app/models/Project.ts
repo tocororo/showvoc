@@ -127,6 +127,14 @@ export class Project {
 
 }
 
+export class Repository {
+    public id: string;
+    public location: string;
+    public description: string;
+    public readable: boolean;
+    public writable: boolean;
+}
+
 export class RepositoryAccess {
     private type: RepositoryAccessType;
     private configuration: RemoteRepositoryAccessConfig;
@@ -163,4 +171,10 @@ export enum RepositoryAccessType {
     CreateLocal = "CreateLocal",
     CreateRemote = "CreateRemote",
     AccessExistingRemote = "AccessExistingRemote",
+}
+
+export enum BackendTypesEnum {
+    graphdb_FreeSail = "graphdb:FreeSail",
+    openrdf_NativeStore = "openrdf:NativeStore",
+    openrdf_MemoryStore = "openrdf:MemoryStore"
 }

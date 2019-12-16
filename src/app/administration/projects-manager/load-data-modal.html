@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <h5 class="modal-title">Load data</h5>
+    <button class="close" (click)="close()">
+        <span>&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label col-form-label-sm">Project</label>
+        <div class="col-sm-11">
+            <input class="form-control form-control-sm" [ngModel]="project.getName()" disabled>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label col-form-label-sm">File</label>
+        <div class="col-sm-11">
+            <file-picker (fileChanged)="fileChangeEvent($event)" size="sm" [accept]="filePickerAccept"></file-picker>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label col-form-label-sm">Lifter</label>
+        <div class="col-sm-5">
+            <extension-configurator *ngIf="lifters" [extensions]="lifters" (extensionUpdated)="onLifterExtensionUpdated($event)" 
+                (configurationUpdated)="selectedLifterConfig = $event">
+            </extension-configurator>
+        </div>
+        <label class="col-sm-2 col-form-label col-form-label-sm">Format</label>
+        <div class="col-sm-4">
+            <select class="form-control form-control-sm" [(ngModel)]="selectedInputFormat">
+                <option *ngFor="let f of inputFormats" [ngValue]="f">{{f.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label col-form-label-sm">BaseURI</label>
+        <div class="col-sm-5">
+            <div class="input-group input-group-sm">
+                <input class="form-control" [(ngModel)]="baseURI" placeholder="Base URI" [disabled]="useProjectBaseURI">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" (click)="changeUseProjectBaseUri()" [ngClass]="{ active: useProjectBaseURI }" title="Use the baseURI of the project">
+                        <span *ngIf="useProjectBaseURI" class="fas fa-lock"></span>
+                        <span *ngIf="!useProjectBaseURI" class="fas fa-unlock-alt"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <label class="col-sm-2 col-form-label col-form-label-sm">Resolve imports</label>
+        <div class="col-sm-4">
+            <select class="form-control form-control-sm" [(ngModel)]="selectedImportAllowance">
+                <option *ngFor="let ia of importAllowances" [ngValue]="ia.allowance">{{ia.show}}</option>
+            </select>
+        </div>
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-sm btn-primary" (click)="ok()">
+        Ok <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+    </button>
+    <button class="btn btn-sm btn-secondary" (click)="close()">Close</button>
+</div>

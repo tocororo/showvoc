@@ -6,6 +6,7 @@ import { StructuresModule } from '../structures/structures.module';
 import { WidgetModule } from '../widget/widget.module';
 import { AlertModal } from './basic-modals/alert-modal/alert-modal';
 import { BasicModalsServices } from './basic-modals/basic-modals.service';
+import { ConfirmCheckModal } from './basic-modals/confirm-modal/confirm-check-modal';
 import { ConfirmModal } from './basic-modals/confirm-modal/confirm-modal';
 import { DownloadModal } from './basic-modals/download-modal/download-modal';
 import { PromptModal } from './basic-modals/prompt-modal/prompt-modal';
@@ -26,6 +27,7 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         AlertModal,
         CollectionTreeModal,
         ConceptTreeModal,
+        ConfirmCheckModal,
         ConfirmModal,
         DownloadModal,
         LexicalEntryListModal,
@@ -47,6 +49,7 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         AlertModal,
         CollectionTreeModal,
         ConceptTreeModal,
+        ConfirmCheckModal,
         ConfirmModal,
         DownloadModal,
         LexicalEntryListModal,

@@ -18,6 +18,7 @@ import { PmkiServices } from './pmki.service';
 import { PreferencesSettingsServices } from './preferences-settings.service';
 import { ProjectsServices } from './projects.service';
 import { PropertiesServices } from './properties.service';
+import { RepositoriesServices } from './repositories.service';
 import { ResourceViewServices } from './resource-view.service';
 import { ResourcesServices } from './resources.service';
 import { SearchServices } from './search.service';
@@ -48,6 +49,7 @@ import { UserServices } from './user.service';
         PreferencesSettingsServices,
         ProjectsServices,
         PropertiesServices,
+        RepositoriesServices,
         ResourcesServices,
         ResourceViewServices,
         SearchServices,

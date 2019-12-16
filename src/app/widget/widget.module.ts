@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { SanitizerDirective } from './directives/sanitizer.directive';
 import { ExtensionConfiguratorComponent } from './extensionConfigurator/extension-configurator.component';
+import { InputEditableComponent } from './input-editable/input-editable.component';
 import { LanguageItemComponent } from './language-item/language-item.component';
 import { PasswordInputComponent } from './password-input/password-input.component';
 import { FilePickerComponent } from './pickers/file-picker/file-picker.component';
@@ -17,11 +19,13 @@ import { SettingsRendererComponent } from './settings-renderer/settings-renderer
 	declarations: [
 		ExtensionConfiguratorComponent,
 		FilePickerComponent,
+		InputEditableComponent,
 		LanguageItemComponent,
 		PasswordInputComponent,
 		RdfResourceComponent,
 		ResourceListComponent,
 		ResizableLayoutComponent,
+		SanitizerDirective,
 		SettingMapRendererComponent,
 		SettingSetRendererComponent,
 		SettingsRendererPanelComponent,
@@ -34,11 +38,13 @@ import { SettingsRendererComponent } from './settings-renderer/settings-renderer
 	exports: [
 		ExtensionConfiguratorComponent,
 		FilePickerComponent,
+		InputEditableComponent,
 		LanguageItemComponent,
 		PasswordInputComponent,
 		RdfResourceComponent,
 		ResourceListComponent,
 		ResizableLayoutComponent,
+		SanitizerDirective,
 		SettingMapRendererComponent,
 		SettingSetRendererComponent,
 		SettingsRendererPanelComponent,

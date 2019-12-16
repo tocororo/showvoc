@@ -3,6 +3,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AnnotatedValue, Resource } from 'src/app/models/Resources';
 import { ModalOptions, ModalType } from '../Modals';
 import { AlertModal } from './alert-modal/alert-modal';
+import { ConfirmCheckModal, ConfirmCheckOptions } from './confirm-modal/confirm-check-modal';
 import { ConfirmModal } from './confirm-modal/confirm-modal';
 import { DownloadModal } from './download-modal/download-modal';
 import { PromptModal } from './prompt-modal/prompt-modal';
@@ -47,6 +48,26 @@ export class BasicModalsServices {
         const modalRef: NgbModalRef = this.modalService.open(ConfirmModal, _options);
         modalRef.componentInstance.title = title;
         modalRef.componentInstance.message = message;
+        modalRef.componentInstance.type = type;
+        return modalRef.result;
+    }
+
+    /**
+     * Opens a modal with two buttons (Yes and No) with a checkbox and the given title and content message.
+     * Returns a Promise with the checkbox status
+     * @param title the title of the modal dialog
+     * @param message the message to show in the modal dialog body
+     * @param checkOpt options for customizing the checkbox
+     * @param type tells the type of the dialog. Determines the style of the message in the dialog.
+     * Available values: info (default), error, warning
+     * @return if the modal closes with ok returns a promise containing a boolean true
+     */
+    confirmCheck(title: string, message: string, checkOpt: ConfirmCheckOptions, type?: ModalType, options?: ModalOptions) {
+        let _options: ModalOptions = new ModalOptions().merge(options);
+        const modalRef: NgbModalRef = this.modalService.open(ConfirmCheckModal, _options);
+        modalRef.componentInstance.title = title;
+        modalRef.componentInstance.message = message;
+        modalRef.componentInstance.checkOpt = checkOpt;
         modalRef.componentInstance.type = type;
         return modalRef.result;
     }
