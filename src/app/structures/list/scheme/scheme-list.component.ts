@@ -47,7 +47,7 @@ export class SchemeListComponent extends AbstractList {
     }
 
     updateActiveSchemesPref() {
-        this.pmkiProp.setActiveSchemes(this.collectCheckedSchemes())
+        this.pmkiProp.setActiveSchemes(PMKIContext.getProjectCtx(), this.collectCheckedSchemes())
     }
 
     private collectCheckedSchemes(): IRI[] {

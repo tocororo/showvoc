@@ -120,7 +120,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
                     }
                     this.basicModals.selectResource("Search", message, lexicons, this.rendering).then(
                         (lexicon: AnnotatedValue<Resource>) => {
-                            this.pmkiProp.setActiveLexicon(<IRI>lexicon.getValue()); //update the active lexicon
+                            this.pmkiProp.setActiveLexicon(PMKIContext.getProjectCtx(), <IRI>lexicon.getValue()); //update the active lexicon
                             setTimeout(() => { //wait for a change detection round, since after the setActiveLexicon, the lex entry list is reset
                                 this.openAt(resource);
                             });

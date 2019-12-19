@@ -8,6 +8,7 @@ import { WidgetModule } from '../widget/widget.module';
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { CreateProjectModal } from './projects-manager/create-project-modal';
 import { LoadDataModal } from './projects-manager/load-data-modal';
+import { ProjectSettingsModal } from './projects-manager/project-settings-modal';
 import { ProjectsManagerComponent } from './projects-manager/projects-manager.component';
 import { RemoteAccessConfigModal } from './projects-manager/remote-access-config-modal';
 import { RemoteRepoSelectionModal } from './projects-manager/remote-repo-selection-modal';
@@ -21,6 +22,7 @@ import { SystemConfigurationComponent } from './system-configuration/system-conf
         LoadDataModal,
         InitialConfigurationComponent,
         ProjectsManagerComponent,
+        ProjectSettingsModal,
         RemoteAccessConfigModal,
         RemoteRepoSelectionModal,
         SystemConfigurationComponent,
@@ -38,6 +40,7 @@ import { SystemConfigurationComponent } from './system-configuration/system-conf
     entryComponents: [
         CreateProjectModal,
         LoadDataModal,
+        ProjectSettingsModal,
         RemoteAccessConfigModal,
         RemoteRepoSelectionModal
     ]

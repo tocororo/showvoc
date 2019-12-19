@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Project } from "../models/Project";
-import { HttpManager } from "../utils/HttpManager";
-import { IRI, AnnotatedValue } from '../models/Resources';
 import { Observable } from 'rxjs';
-import { ResourceDeserializer } from '../utils/ResourceUtils';
 import { map } from 'rxjs/operators';
+import { Project } from "../models/Project";
+import { AnnotatedValue, IRI } from '../models/Resources';
+import { HttpManager } from "../utils/HttpManager";
+import { ResourceDeserializer } from '../utils/ResourceUtils';
 
 @Injectable()
 export class PreferencesSettingsServices {
@@ -12,17 +12,6 @@ export class PreferencesSettingsServices {
     private serviceName = "PreferencesSettings";
 
     constructor(private httpMgr: HttpManager) { }
-
-    /**
-     * Sets the show_flag preference
-     * @param show 
-     */
-    setShowFlags(show: boolean) {
-        var params = {
-            show: show
-        };
-        return this.httpMgr.doPost(this.serviceName, "setShowFlags", params);
-    }
 
     /**
      * Sets the default active skos concept schemes
@@ -58,14 +47,19 @@ export class PreferencesSettingsServices {
     }
 
     /**
-     * Gets the preferences of the currently logged user for the currently open project
+     * Gets the preferences of the currently logged user for a project
+     * @param properties 
+     * @param project if not specified, it is considered the open project (passed via ctx_project)
+     * @param pluginID 
      */
-    getPUSettings(properties: string[], pluginID?: string) {
+    getPUSettings(properties: string[], project?: Project, pluginID?: string) {
         var params: any = {
             properties: properties,
-            pluginID: pluginID
-
+            pluginID: pluginID,
         };
+        if (project != null) {
+            params.projectName = project.getName();
+        }
         return this.httpMgr.doGet(this.serviceName, "getPUSettings", params);
     }
 
@@ -88,9 +82,10 @@ export class PreferencesSettingsServices {
      * @param properties 
      * @param project 
      */
-    getProjectSettings(properties: string[], project?: Project) {
+    getProjectSettings(properties: string[], project?: Project, pluginID?: string) {
         var params: any = {
             properties: properties,
+            pluginID: pluginID
         };
         if (project != null) {
             params.projectName = project.getName();
@@ -102,10 +97,11 @@ export class PreferencesSettingsServices {
      * @param property 
      * @param project 
      */
-    setProjectSetting(property: string, value?: string, project?: Project) {
+    setProjectSetting(property: string, value?: string, project?: Project, pluginID?: string) {
         var params: any = {
             property: property,
-            value: value
+            value: value,
+            pluginID: pluginID
         };
         if (project != null) {
             params.projectName = project.getName();
@@ -135,6 +131,39 @@ export class PreferencesSettingsServices {
             value: value
         };
         return this.httpMgr.doPost(this.serviceName, "setSystemSetting", params);
+    }
+
+    /**
+     * 
+     * @param properties 
+     * @param project 
+     * @param pluginID 
+     */
+    getPUSettingsProjectDefault(properties: string[], project?: Project, pluginID?: string) {
+        var params: any = {
+            properties: properties,
+            pluginID: pluginID
+        };
+        if (project != null) {
+            params.projectName = project.getName();
+        }
+        return this.httpMgr.doGet(this.serviceName, "getPUSettingsProjectDefault", params);
+    }
+
+    /**
+     * @param property 
+     * @param project 
+     */
+    setPUSettingProjectDefault(property: string, value?: string, project?: Project, pluginID?: string) {
+        var params: any = {
+            property: property,
+            value: value,
+            pluginID: pluginID
+        };
+        if (project != null) {
+            params.projectName = project.getName();
+        }
+        return this.httpMgr.doPost(this.serviceName, "setPUSettingProjectDefault", params);
     }
 
 }

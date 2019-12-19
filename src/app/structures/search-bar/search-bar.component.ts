@@ -113,7 +113,7 @@ export class SearchBarComponent {
     private updateSearchMode(mode: SearchMode, event: Event) {
         event.stopPropagation();
         this.searchSettings.stringMatchMode = mode;
-        this.pmkiProps.setSearchSettings(this.searchSettings);
+        this.pmkiProps.setSearchSettings(PMKIContext.getProjectCtx(), this.searchSettings);
     }
 
     /**

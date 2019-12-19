@@ -69,18 +69,21 @@ export class SearchSettingsModal implements OnInit {
     // }
 
     updateSettings() {
-        this.pmkiProp.setSearchSettings({
-            stringMatchMode: this.activeStringMatchMode,
-            useURI: this.useURI,
-            useLocalName: this.useLocalName,
-            useNotes: this.useNotes,
-            restrictLang: this.restrictLang,
-            includeLocales: this.includeLocales,
-            languages: this.languages,
-            useAutocompletion: this.useAutocompletion,
-            restrictActiveScheme: this.restrictConceptSchemes,
-            // classIndividualSearchMode: this.activeClsIndSearchMode
-        });
+        this.pmkiProp.setSearchSettings(
+            PMKIContext.getProjectCtx(),
+            {
+                stringMatchMode: this.activeStringMatchMode,
+                useURI: this.useURI,
+                useLocalName: this.useLocalName,
+                useNotes: this.useNotes,
+                restrictLang: this.restrictLang,
+                includeLocales: this.includeLocales,
+                languages: this.languages,
+                useAutocompletion: this.useAutocompletion,
+                restrictActiveScheme: this.restrictConceptSchemes,
+                // classIndividualSearchMode: this.activeClsIndSearchMode
+            }
+        );
     }
 
     ok() {

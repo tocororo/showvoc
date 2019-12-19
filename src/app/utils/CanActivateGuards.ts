@@ -26,7 +26,7 @@ export class ProjectGuard implements CanActivate {
      * This canActivate return Observable<boolean> since I need to asynchronously retrieve the project and the related preferences
      */
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        let ctxProject = PMKIContext.getWorkingProject(); //project set in the context, eventually from the dataset page
+        let ctxProject: Project = PMKIContext.getWorkingProject(); //project set in the context, eventually from the dataset page
         let paramProject = route.paramMap.get('id'); //project ID set as parameter url (e.g. /#/dataset/MyDataset/...)
 
         //project available in the context check if it is the same passed as url param
@@ -42,11 +42,10 @@ export class ProjectGuard implements CanActivate {
                     let p: Project = projects.find(p => p.getName() == paramProject);
                     if (p != null) { //project fount
                         PMKIContext.initProjectCtx(p);
-
-                        this.pmkiProp.initUserProjectPreferences(); //stored as cookies, not async
                         let projInitFunctions: Observable<any>[] = [
                             this.metadataService.getNamespaceMappings(),
-                            this.pmkiProp.initProjectSettings()
+                            this.pmkiProp.initProjectSettings(PMKIContext.getProjectCtx()),
+                            this.pmkiProp.initUserProjectPreferences(PMKIContext.getProjectCtx())
                         ]
                         return forkJoin(projInitFunctions).pipe(
                             map(() => true)

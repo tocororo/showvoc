@@ -4,6 +4,8 @@ import { ResViewPartition } from './ResourceView';
 
 export class Properties {
 
+    static pref_languages: string = "languages";
+
     static pref_filter_value_languages: string = "filter_value_languages";
 
     static pref_active_schemes: string = "active_schemes";
@@ -86,6 +88,8 @@ export class ResViewPartitionFilterPreference {
  * Class that represents the user settings (preferences) of a Project 
  */
 export class ProjectPreferences {
+    projectLanguagesPreference: string[] = []; //languages that user has assigned for project (and ordered according his preferences)
+
     filterValueLang: ValueFilterLanguages = new ValueFilterLanguages(); //languages visible in resource description (e.g. in ResourceView, Graph,...)
 
     activeSchemes: IRI[] = [];
@@ -116,5 +120,5 @@ export class ProjectSettings {
  * Class that represents the global application settings
  */
 export class SystemSettings {
-    showFlags: boolean;
+    showFlags: boolean = true;
 }

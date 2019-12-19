@@ -32,7 +32,7 @@
                     </td>
                     <td class="text-center">
                         <button class="btn btn-sm btn-light" style="width: 32px;" (click)="openCloseProject(p)" [ngClass]="{ active: p.isOpen() }">
-                            <span *ngIf="p.opening" class="spinner-border spinner-border-sm"></span>
+                            <i *ngIf="p.opening" class="spinner-border spinner-border-sm"></i>
                             <ng-container *ngIf="!p.opening">
                                 <span *ngIf="p.isOpen()" class="fas fa-folder-open"></span>
                                 <span *ngIf="!p.isOpen()" class="fas fa-folder"></span>
@@ -65,19 +65,21 @@
 
                         <div class="btn-group btn-group-sm ml-1" ngbDropdown placement="bottom-right">
                             <button data-toggle="dropdown" ngbDropdownToggle class="btn btn-light dropdown-toggle dropdown-no-arrow"
-                                [disabled]="globalCreatingIndex || p.creatingIndex || p.opening">
-                                <i *ngIf="!p.creatingIndex" class="far fa-list-alt"></i>
-                                <div *ngIf="p.creatingIndex" class="spinner-border spinner-border-sm"></div>
+                                [disabled]="globalCreatingIndex || p.creatingIndex || p.opening" title="Indexing">
+                                <i *ngIf="!p.creatingIndex" class="fas fa-th-list"></i>
+                                <i *ngIf="p.creatingIndex" class="spinner-border spinner-border-sm"></i>
                             </button>
                             <div class="dropdown-menu" ngbDropdownMenu>
-                                <button class="dropdown-item" (click)="createIndex(p)" [disabled]="!p.isOpen()">Create/refresh index</button>
+                                <button class="dropdown-item" (click)="createIndex(p)">Create/refresh index</button>
                                 <button class="dropdown-item" (click)="deleteIndex(p)">Delete index</button>
                             </div>
                         </div>
-                        <!-- <button class="btn btn-sm btn-light ml-1" (click)="createIndex(p)" title="Create index" [disabled]="!p.isOpen() || globalCreatingIndex || p.creatingIndex || p.opening">
-                            <i *ngIf="!p.creatingIndex" class="far fa-list-alt"></i>
-                            <div *ngIf="p.creatingIndex" class="spinner-border spinner-border-sm"></div>
-                        </button> -->
+                        
+                        <!-- <button class="btn btn-sm btn-light ml-1" (click)="editSettings(p)" title="Edit settings" [disabled]="!p.isOpen() || p.opening"> -->
+                        <button class="btn btn-sm btn-light ml-1" (click)="editSettings(p)" title="Edit settings">
+                            <span class="fas fa-user-cog"></span>
+                        </button>
+
                         <button class="btn btn-sm btn-light ml-1" (click)="deleteProject(p)" [disabled]="p.isOpen() || p.opening">
                             <span class="fas fa-trash"></span>
                         </button>

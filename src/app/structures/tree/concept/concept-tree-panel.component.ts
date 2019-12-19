@@ -202,7 +202,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                     if (schemes.length == 0) { //searched concept doesn't belong to any scheme => ask switch to no-scheme mode
                         this.basicModals.confirm("Search", "Searched concept '" + resource.getShow() + "' does not belong to any scheme. Do you want to switch to no-scheme mode?", ModalType.warning).then(
                             confirm => {
-                                this.pmkiProp.setActiveSchemes([]); //update the active schemes
+                                this.pmkiProp.setActiveSchemes(PMKIContext.getProjectCtx(), []); //update the active schemes
                                 setTimeout(() => {
                                     this.openAt(resource); //then open the tree on the searched resource
                                 });
@@ -221,7 +221,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                             schemes => {
                                 this.basicModals.selectResource("Search", message, schemes, this.rendering).then(
                                     (scheme: AnnotatedValue<IRI>) => {
-                                        this.pmkiProp.setActiveSchemes(this.workingSchemes.concat(scheme.getValue())); //update the active schemes
+                                        this.pmkiProp.setActiveSchemes(PMKIContext.getProjectCtx(), this.workingSchemes.concat(scheme.getValue())); //update the active schemes
                                         setTimeout(() => {
                                             this.openAt(resource); //then open the tree on the searched resource
                                         });

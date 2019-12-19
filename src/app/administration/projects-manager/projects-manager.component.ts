@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { forkJoin, Observable, of, Observer } from 'rxjs';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { forkJoin, Observable, Observer } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
-import { ModalType, ModalOptions } from 'src/app/modal-dialogs/Modals';
+import { ConfirmCheckOptions } from 'src/app/modal-dialogs/basic-modals/confirm-modal/confirm-check-modal';
+import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { PmkiConstants } from 'src/app/models/Pmki';
 import { Project } from 'src/app/models/Project';
+import { GlobalSearchServices } from 'src/app/services/global-search.service';
 import { PmkiServices } from 'src/app/services/pmki.service';
 import { ProjectsServices } from 'src/app/services/projects.service';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { CreateProjectModal } from './create-project-modal';
 import { LoadDataModal } from './load-data-modal';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { GlobalSearchServices } from 'src/app/services/global-search.service';
-import { ConfirmCheckOptions } from 'src/app/modal-dialogs/basic-modals/confirm-modal/confirm-check-modal';
+import { ProjectSettingsModal } from './project-settings-modal';
 
 @Component({
     selector: 'projects-manager',
@@ -219,6 +220,11 @@ export class ProjectsManagerComponent {
                 finalize(() => project[this.openingAttr] = false)
             ).subscribe(() => project.setOpen(true));
         }
+    }
+
+    editSettings(project: Project) {
+        const modalRef: NgbModalRef = this.modalService.open(ProjectSettingsModal, new ModalOptions());
+        modalRef.componentInstance.project = project;
     }
 
     /* ============================== */

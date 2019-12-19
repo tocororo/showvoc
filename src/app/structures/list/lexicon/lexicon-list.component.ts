@@ -47,7 +47,7 @@ export class LexiconListComponent extends AbstractList {
     }
 
     updateActiveLexiconPref() {
-        this.pmkiProp.setActiveLexicon(this.activeLexicon.getValue());
+        this.pmkiProp.setActiveLexicon(PMKIContext.getProjectCtx(), this.activeLexicon.getValue());
     }
 
 }

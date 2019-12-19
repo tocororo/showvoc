@@ -54,12 +54,6 @@ export class LoadDataModal {
         );
     }
 
-    // onBaseUriCheckboxChange() {
-    //     if (this.useProjectBaseURI) {
-    //         this.baseURI = this.project.getBaseURI();
-    //     }
-    // }
-
     changeUseProjectBaseUri() {
         this.useProjectBaseURI = !this.useProjectBaseURI;
         if (this.useProjectBaseURI) {
