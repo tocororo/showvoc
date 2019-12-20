@@ -91,7 +91,7 @@ export class ProjectSettingsModal {
      * languages handlers
      * ================= */
 
-    private changeAllLangStatus(checked: boolean) {
+    changeAllLangStatus(checked: boolean) {
         if (checked) {
             //if it's activating all the languages, position the new activated langs after the already active
             let lastPosition: number = this.countActiveLangs();
@@ -133,7 +133,7 @@ export class ProjectSettingsModal {
         this.prefService.setPUSettingProjectDefault(Properties.pref_languages, preferenceLangs.join(","), this.project, ExtensionPointID.RENDERING_ENGINE_ID).subscribe();
     }
     
-    private changePositionOrder() {
+    changePositionOrder() {
         if (this.sortOrder == SortOrder.POSITION_ASCENDING) {
             this.sortOrder = SortOrder.POSITION_DESCENDING;
             this.renderingLanguages.sort((l1: LanguageItem, l2: LanguageItem) => {
@@ -164,7 +164,7 @@ export class ProjectSettingsModal {
             });
         }
     }
-    private changeIsocodeOrder() {
+    changeIsocodeOrder() {
         if (this.sortOrder == SortOrder.ISO_CODE_ASCENDING) {
             this.sortOrder = SortOrder.ISO_CODE_DESCENDING;
             this.renderingLanguages.sort((l1: LanguageItem, l2: LanguageItem) => {
@@ -177,7 +177,7 @@ export class ProjectSettingsModal {
             });
         }
     }
-    private changeLanguageOrder() {
+    changeLanguageOrder() {
         if (this.sortOrder == SortOrder.LANGUAGE_ASCENDING) {
             this.sortOrder = SortOrder.LANGUAGE_DESCENDING;
             this.renderingLanguages.sort((l1: LanguageItem, l2: LanguageItem) => {
@@ -225,7 +225,7 @@ export class ProjectSettingsModal {
 
     //Utils 
 
-    private getActiveLanguageItems(): LanguageItem[] {
+    getActiveLanguageItems(): LanguageItem[] {
         let activeLangs: LanguageItem[] = [];
         if (this.renderingLanguages != null) {
             activeLangs = this.renderingLanguages.filter(l => l.active);
