@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SearchMode } from "../models/Properties";
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from '../models/Resources';
-import { HttpManager } from "../utils/HttpManager";
+import { HttpManager, PMKIRequestOptions } from "../utils/HttpManager";
 import { ResourceDeserializer } from '../utils/ResourceUtils';
 
 @Injectable()
@@ -71,6 +71,40 @@ export class SearchServices {
         return this.httpMgr.doGet(this.serviceName, "searchLexicalEntry", params).pipe(
             map(stResp => {
                 return ResourceDeserializer.createIRIArray(stResp, ["index"]);
+            })
+        );
+    }
+
+    /**
+     * Searches a resource in the model
+     * @param cls class to which the searched instance should belong
+     * @param searchString the string to search
+     * @param useLocalName tells if the searched string should be searched in the local name (as well as in labels)
+     * @param useURI tells if the searched string should be searched in the entire URI (as well as in labels)
+     * @param useNotes tells if the searched string should be searched in the notes
+     * @param searchMode available searchMode values: "contain", "start", "end", "exact"
+     * @param langs List of langTags, restricts the lexicalization search to only a set of languages
+     * @return an array of resources
+     */
+    searchInstancesOfClass(cls: IRI, searchString: string, useLocalName: boolean, useURI: boolean, useNotes: boolean,
+        searchMode: SearchMode, langs?: string[], includeLocales?: boolean, options?: PMKIRequestOptions): Observable<AnnotatedValue<IRI>[]> {
+        var params: any = {
+            cls: cls,
+            searchString: searchString,
+            useLocalName: useLocalName,
+            useURI: useURI,
+            useNotes: useNotes,
+            searchMode: searchMode,
+        };
+        if (langs != null) {
+            params.langs = langs;
+        }
+        if (includeLocales != null) {
+            params.includeLocales = includeLocales;
+        }
+        return this.httpMgr.doGet(this.serviceName, "searchInstancesOfClass", params, options).pipe(
+            map(stResp => {
+                return ResourceDeserializer.createIRIArray(stResp);
             })
         );
     }

@@ -9,13 +9,13 @@
             </button>
         </div>
     </div>
-    
+
     <div class="card-body vbox">
-        <lexicon-list [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
-        </lexicon-list>
+        <instance-list [cls]="cls" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
+        </instance-list>
     </div>
 
     <div *ngIf="!hideSearch" class="card-footer">
-        <search-bar (searchResults)="handleSearchResults($event)" [roles]="[panelRole]"></search-bar>
+        <search-bar (searchResults)="handleSearchResults($event)" [roles]="[panelRole]" [cls]="cls?.getValue()"></search-bar>
     </div>
 </div>

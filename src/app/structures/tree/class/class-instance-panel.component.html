@@ -1,0 +1,5 @@
+<resizable-layout orientation="V" mainFlex="8">
+    <class-tree-panel main [hideSearch]="true" [context]="context" (nodeSelected)="onClassSelected($event)"></class-tree-panel>
+    <instance-list-panel secondary [cls]="selectedClass" [hideSearch]="true" [context]="context" (nodeSelected)="onInstanceSelected($event)"></instance-list-panel>
+</resizable-layout>
+<search-bar class="mt-2" (searchResults)="handleSearchResults($event)" [roles]="panelRole"></search-bar>

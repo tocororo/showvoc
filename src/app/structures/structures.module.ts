@@ -15,6 +15,9 @@ import { SchemeListComponent } from './list/scheme/scheme-list.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SearchSettingsModal } from './search-bar/search-settings-modal';
 import { StructureTabsetComponent } from './structure-tabset/structure-tabset.component';
+import { ClassTreeNodeComponent } from './tree/class/class-tree-node.component';
+import { ClassTreePanelComponent } from './tree/class/class-tree-panel.component';
+import { ClassTreeComponent } from './tree/class/class-tree.component';
 import { CollectionTreeNodeComponent } from './tree/collection/collection-tree-node.component';
 import { CollectionTreePanelComponent } from './tree/collection/collection-tree-panel.component';
 import { CollectionTreeComponent } from './tree/collection/collection-tree.component';
@@ -25,9 +28,18 @@ import { ConceptTreeComponent } from './tree/concept/concept-tree.component';
 import { PropertyTreeNodeComponent } from './tree/property/property-tree-node.component';
 import { PropertyTreePanelComponent } from './tree/property/property-tree-panel.component';
 import { PropertyTreeComponent } from './tree/property/property-tree.component';
+import { InstanceListComponent } from './list/instance/instance-list.component';
+import { InstanceListPanelComponent } from './list/instance/instance-list-panel.component';
+import { ClassInstancePanelComponent } from './tree/class/class-instance-panel.component';
+import { ClassTreeSettingsModal } from './tree/class/class-tree-settings-modal';
 
 @NgModule({
     declarations: [
+        ClassInstancePanelComponent,
+        ClassTreeComponent,
+        ClassTreeNodeComponent,
+        ClassTreePanelComponent,
+        ClassTreeSettingsModal,
         CollectionTreeComponent,
         CollectionTreeNodeComponent,
         CollectionTreePanelComponent,
@@ -35,6 +47,8 @@ import { PropertyTreeComponent } from './tree/property/property-tree.component';
         ConceptTreeNodeComponent,
         ConceptTreePanelComponent,
         ConceptTreeSettingsModal,
+        InstanceListComponent,
+        InstanceListPanelComponent,
         LexiconListComponent,
         LexiconListPanelComponent,
         LexicalEntryListComponent,
@@ -61,10 +75,16 @@ import { PropertyTreeComponent } from './tree/property/property-tree.component';
     ],
     exports: [
         StructureTabsetComponent,
-        CollectionTreePanelComponent, ConceptTreePanelComponent, PropertyTreePanelComponent,
-        SchemeListPanelComponent, LexiconListPanelComponent, LexicalEntryListPanelComponent
+        ClassInstancePanelComponent,
+        CollectionTreePanelComponent,
+        ConceptTreePanelComponent,
+        LexicalEntryListPanelComponent,
+        LexiconListPanelComponent,
+        PropertyTreePanelComponent,
+        SchemeListPanelComponent,
     ],
     entryComponents: [
+        ClassTreeSettingsModal,
         ConceptTreeSettingsModal,
         LexicalEntryListSettingsModal,
         SearchSettingsModal

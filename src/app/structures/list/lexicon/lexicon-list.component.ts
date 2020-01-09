@@ -15,7 +15,7 @@ import { AbstractList } from '../abstract-list';
 })
 export class LexiconListComponent extends AbstractList {
 
-    structRole: RDFResourceRolesEnum.limeLexicon;
+    structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.limeLexicon;
 
     private activeLexicon: AnnotatedValue<IRI>;
 

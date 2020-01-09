@@ -1,33 +1,28 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, Input } from "@angular/core";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
-import { AbstractTreePanel } from '../abstract-tree-panel';
-import { CollectionTreeComponent } from './collection-tree.component';
+import { AbstractListPanel } from '../abstract-list-panel';
+import { InstanceListComponent } from './instance-list.component';
 
 @Component({
-    selector: "collection-tree-panel",
-    templateUrl: "./collection-tree-panel.component.html",
+    selector: "instance-list-panel",
+    templateUrl: "./instance-list-panel.component.html",
     host: { class: "vbox" }
 })
-export class CollectionTreePanelComponent extends AbstractTreePanel {
-    @ViewChild(CollectionTreeComponent) viewChildTree: CollectionTreeComponent;
+export class InstanceListPanelComponent extends AbstractListPanel {
+    @Input() cls: AnnotatedValue<IRI>; //class of the instances
 
-    panelRole: RDFResourceRolesEnum = RDFResourceRolesEnum.skosCollection;
+    @ViewChild(InstanceListComponent) viewChildList: InstanceListComponent;
+
+    panelRole: RDFResourceRolesEnum = RDFResourceRolesEnum.individual;
+    rendering: boolean = false; //override the value in AbstractPanel
 
     constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties) {
         super(basicModals, eventHandler, pmkiProp);
     }
-
-    //top bar commands handlers
-
-    refresh() {
-        this.viewChildTree.init();
-    }
-
-    //search handlers
 
     handleSearchResults(results: AnnotatedValue<IRI>[]) {
         if (results.length == 1) {
@@ -38,13 +33,17 @@ export class CollectionTreePanelComponent extends AbstractTreePanel {
                 (selectedResource: AnnotatedValue<IRI>) => {
                     this.openAt(selectedResource);
                 },
-                () => { }
+                () => {}
             );
         }
     }
 
-    openAt(node: AnnotatedValue<IRI>) {
-        this.viewChildTree.openTreeAt(node);
+    public openAt(node: AnnotatedValue<IRI>) {
+        this.viewChildList.openListAt(node);
+    }
+
+    refresh() {
+        this.viewChildList.init();
     }
 
 }

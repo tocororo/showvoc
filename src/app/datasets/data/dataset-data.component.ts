@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlignmentContext } from 'src/app/models/Alignments';
@@ -19,20 +20,12 @@ export class DatasetDataComponent implements OnInit {
     selectedLinkset: LinksetMetadata;
     alignmentCtx: AlignmentContext = AlignmentContext.local;
 
-    constructor(private activatedRoute: ActivatedRoute, private router: Router, private resourcesService: ResourcesServices) { }
+    constructor(private activatedRoute: ActivatedRoute, private router: Router, private location: Location, private resourcesService: ResourcesServices) { }
 
     ngOnInit() {
-        // let resId: string = this.activatedRoute.snapshot.queryParamMap.get("resId");
-        // if (resId != null) {
-        //     this.resourcesService.getResourceDescription(new IRI(resId)).subscribe(
-        //         (annotatedRes: AnnotatedValue<IRI>) => {
-        //             this.viewChildStructureTabset.selectResource(annotatedRes);
-        //         }
-        //     );
-        // }
-
         /**
-         * The above was executed only when the page is initialized, while the following is executed each time the resId param changes
+         * The subscription to queryParams is MANDATORY in order to trigger the handler each time the resId param changes
+         * (not only at the first initialization of the component)
          */
         this.activatedRoute.queryParams.subscribe(
             params => {
@@ -53,12 +46,17 @@ export class DatasetDataComponent implements OnInit {
         if (node == null) return;
         this.selectedResource = node;
         this.selectedLinkset = null;
-        //update the url with the current selected resource IRI as resId parameter
-        this.router.navigate([], { 
-            relativeTo: this.activatedRoute, 
+        /* 
+         * Update the url with the current selected resource IRI as resId parameter
+         * Note: here it uses location.go() instead of router.navigate() in order to avoid to trigger the change detection to queryParams
+         * (see code in ngOnInit())
+         */
+        const urlTree = this.router.createUrlTree([], {
             queryParams: { resId: node.getValue().getIRI() },
-            replaceUrl: true,
+            queryParamsHandling: 'merge',
+            preserveFragment: true 
         });
+        this.location.go(urlTree.toString());
     }
 
     private objectDblClick(object: AnnotatedValue<Resource>) {

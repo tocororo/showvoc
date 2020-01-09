@@ -108,6 +108,20 @@
                 </div>
             </div>
         </div>
+
+        <div *ngIf="settingsForClassInstancePanel" class="card mt-1">
+            <div class="card-header">
+                <label>Classes-Instances panel search</label>
+            </div>
+            <div class="card-body">
+                <div *ngFor="let mode of clsIndSearchMode" class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="clsIndSearchMode" [value]="mode.value"
+                            [(ngModel)]="activeClsIndSearchMode" (ngModelChange)="updateSettings()">{{mode.show}}
+                    </label>
+                </div>
+            </div>
+        </div>
     
 </div>
 <div class="modal-footer">

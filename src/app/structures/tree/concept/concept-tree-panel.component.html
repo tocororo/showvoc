@@ -35,8 +35,8 @@
 
 	</div>
 
-	<div class="card-footer">
-		<search-bar (searchResults)="handleSearchResults($event)" [role]="panelRole" [schemes]="schemesForSearchBar"></search-bar>
+	<div *ngIf="!hideSearch" class="card-footer">
+		<search-bar (searchResults)="handleSearchResults($event)" [roles]="[panelRole]" [schemes]="schemesForSearchBar"></search-bar>
 	</div>
 
 </div>

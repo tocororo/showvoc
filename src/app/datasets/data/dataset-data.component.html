@@ -1,9 +1,7 @@
-<resizable-layout>
-    <structure-tabset left (nodeSelected)="onNodeSelected($event)" (linksetSelected)="onLinksetSelected($event)"></structure-tabset>
-
-    <ng-container right>
+<resizable-layout orientation="H">
+    <structure-tabset main (nodeSelected)="onNodeSelected($event)" (linksetSelected)="onLinksetSelected($event)"></structure-tabset>
+    <ng-container secondary>
         <resource-view *ngIf="selectedResource" [resource]="selectedResource.getValue()" (dblclickObj)="objectDblClick($event)"></resource-view>
         <alignments-view *ngIf="selectedLinkset" [context]="alignmentCtx" [linkset]="selectedLinkset"></alignments-view>
     </ng-container>
-    
 </resizable-layout>

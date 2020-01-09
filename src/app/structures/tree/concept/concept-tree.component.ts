@@ -23,13 +23,13 @@ export class ConceptTreeComponent extends AbstractTree {
 
     @ViewChildren(ConceptTreeNodeComponent) viewChildrenNode: QueryList<ConceptTreeNodeComponent>;
 
-    structRole: RDFResourceRolesEnum.concept;
+    structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.concept;
 
     private lastTimeInit: number;
 
-    constructor(private skosService: SkosServices, private searchService: SearchServices,
+    constructor(private skosService: SkosServices, searchService: SearchServices,
         eventHandler: PMKIEventHandler, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
-        super(eventHandler, basicModals, sharedModals);
+        super(eventHandler, searchService, basicModals, sharedModals);
     }
 
     /**
@@ -68,18 +68,6 @@ export class ConceptTreeComponent extends AbstractTree {
         } else if (conceptTreePref.visualization == ConceptTreeVisualizationMode.searchBased) {
             //don't do nothing
         }
-    }
-
-    openTreeAt(node: AnnotatedValue<IRI>) {
-        this.searchService.getPathFromRoot(node.getValue(), RDFResourceRolesEnum.concept, this.schemes).subscribe(
-            path => {
-                if (path.length == 0) {
-                    this.onTreeNodeNotReachable(node);
-                };
-                //open tree from root to node
-                this.expandPath(path);
-            }
-        );
     }
 
     public forceList(list: AnnotatedValue<IRI>[]) {

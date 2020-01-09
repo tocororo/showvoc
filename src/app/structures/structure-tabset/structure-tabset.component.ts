@@ -12,6 +12,7 @@ import { TreeListContext } from 'src/app/utils/UIUtils';
 import { LexicalEntryListPanelComponent } from '../list/lexical-entry/lexical-entry-list-panel.component';
 import { LexiconListPanelComponent } from '../list/lexicon/lexicon-list-panel.component';
 import { SchemeListPanelComponent } from '../list/scheme/scheme-list-panel.component';
+import { ClassInstancePanelComponent } from '../tree/class/class-instance-panel.component';
 import { CollectionTreePanelComponent } from '../tree/collection/collection-tree-panel.component';
 import { ConceptTreePanelComponent } from '../tree/concept/concept-tree-panel.component';
 import { PropertyTreePanelComponent } from '../tree/property/property-tree-panel.component';
@@ -26,6 +27,7 @@ export class StructureTabsetComponent implements OnInit {
     @Output() linksetSelected = new EventEmitter<LinksetMetadata>();
 
     @ViewChild(NgbTabset) viewChildTabset: NgbTabset;
+    @ViewChild(ClassInstancePanelComponent) viewChildClassInstancePanel: ClassInstancePanelComponent;
     @ViewChild(ConceptTreePanelComponent) viewChildConceptPanel: ConceptTreePanelComponent;
     @ViewChild(CollectionTreePanelComponent) viewChildCollectionPanel: CollectionTreePanelComponent;
     @ViewChild(SchemeListPanelComponent) viewChildSchemePanel: SchemeListPanelComponent;
@@ -35,13 +37,23 @@ export class StructureTabsetComponent implements OnInit {
 
     private context: TreeListContext = TreeListContext.dataPanel;
 
+    initialActiveTab: RDFResourceRolesEnum;
+
     model: string;
 
     constructor(private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices) { }
 
     ngOnInit() {
         this.model = PMKIContext.getWorkingProject().getModelType(true);
+        if (this.model == "OntoLex") {
+            this.initialActiveTab = RDFResourceRolesEnum.limeLexicon;
+        } else if (this.model == "SKOS") {
+            this.initialActiveTab = RDFResourceRolesEnum.concept;
+        } else {
+            this.initialActiveTab = RDFResourceRolesEnum.cls;
+        }
     }
+
 
     onNodeSelected(node: AnnotatedValue<IRI>) {
         this.nodeSelected.emit(node);
@@ -60,8 +72,10 @@ export class StructureTabsetComponent implements OnInit {
                 tabToActivate = RDFResourceRolesEnum.property;
             } else if (ResourceUtils.roleSubsumes(RDFResourceRolesEnum.skosCollection, role)) {
                 tabToActivate = RDFResourceRolesEnum.skosCollection;
+            } else if (role == RDFResourceRolesEnum.individual) {
+                tabToActivate = RDFResourceRolesEnum.cls;
             } else if (
-                role == RDFResourceRolesEnum.concept || role == RDFResourceRolesEnum.conceptScheme ||
+                role == RDFResourceRolesEnum.cls || role == RDFResourceRolesEnum.concept || role == RDFResourceRolesEnum.conceptScheme ||
                 role == RDFResourceRolesEnum.limeLexicon || role == RDFResourceRolesEnum.ontolexLexicalEntry
             ) {
                 tabToActivate = role;
@@ -69,7 +83,9 @@ export class StructureTabsetComponent implements OnInit {
             if (tabToActivate != null) {
                 this.viewChildTabset.select(tabToActivate);
                 setTimeout(() => { //wait for the tab to be activate
-                    if (tabToActivate == RDFResourceRolesEnum.concept) {
+                    if (tabToActivate == RDFResourceRolesEnum.cls) {
+                        this.viewChildClassInstancePanel.selectSearchedResource(annotatedIRI);
+                    } else if (tabToActivate == RDFResourceRolesEnum.concept) {
                         this.viewChildConceptPanel.selectSearchedResource(annotatedIRI);
                     } else if (tabToActivate == RDFResourceRolesEnum.conceptScheme) {
                         this.viewChildSchemePanel.openAt(annotatedIRI);

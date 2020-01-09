@@ -24,11 +24,11 @@ export class PropertyTreeComponent extends AbstractTree {
 
     @ViewChildren(PropertyTreeNodeComponent) viewChildrenNode: QueryList<PropertyTreeNodeComponent>;
 
-    structRole: RDFResourceRolesEnum.property;
+    structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.property;
 
-    constructor(private propertyService: PropertiesServices, private searchService: SearchServices, eventHandler: PMKIEventHandler,
+    constructor(private propertyService: PropertiesServices, eventHandler: PMKIEventHandler, searchService: SearchServices,
         basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
-        super(eventHandler, basicModals, sharedModals);
+        super(eventHandler, searchService, basicModals, sharedModals);
     }
 
     /**
@@ -87,17 +87,6 @@ export class PropertyTreeComponent extends AbstractTree {
                 }
             );
         }
-    }
-
-    openTreeAt(node: AnnotatedValue<IRI>) {
-        this.searchService.getPathFromRoot(node.getValue(), RDFResourceRolesEnum.property).subscribe(
-            path => {
-                if (path.length == 0) {
-                    this.onTreeNodeNotReachable(node);
-                };
-                this.expandPath(path);
-            }
-        );
     }
 
 }

@@ -1,7 +1,14 @@
 <div left class="card vbox">
     <div class="card-body vbox p-0">
 
-        <ngb-tabset [destroyOnHide]="false" class="vbox">
+        <ngb-tabset [destroyOnHide]="false" [activeId]="initialActiveTab" class="vbox">
+
+            <ngb-tab title="Class" id="cls">
+                <ng-template ngbTabContent>
+                    <class-instance-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></class-instance-panel>
+                </ng-template>
+            </ngb-tab>
+
             <ngb-tab title="Concept" id="concept">
                 <ng-template ngbTabContent>
                     <concept-tree-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></concept-tree-panel>

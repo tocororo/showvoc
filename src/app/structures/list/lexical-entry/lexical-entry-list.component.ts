@@ -19,7 +19,7 @@ export class LexicalEntryListComponent extends AbstractList {
     @Input() lexicon: IRI;
     @Input() index: string; //initial letter of the entries to show
 
-    structRole: RDFResourceRolesEnum.ontolexLexicalEntry;
+    structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.ontolexLexicalEntry;
 
     constructor(private ontolexService: OntoLexLemonServices, private pmkiProp: PMKIProperties, eventHandler: PMKIEventHandler) {
         super(eventHandler);
@@ -44,6 +44,10 @@ export class LexicalEntryListComponent extends AbstractList {
                         let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
                         ResourceUtils.sortResources(entries, orderAttribute);
                         this.nodes = entries;
+
+                        if (this.pendingSearchRes) {
+                            this.openListAt(this.pendingSearchRes);
+                        }
                     }
                 );
             } else if (visualization == LexEntryVisualizationMode.searchBased) {

@@ -16,7 +16,7 @@
         </property-tree>
 	</div>
 
-	<div class="card-footer">
-        <search-bar (searchResults)="handleSearchResults($event)" [role]="panelRole"></search-bar>
+	<div *ngIf="!hideSearch" class="card-footer">
+        <search-bar (searchResults)="handleSearchResults($event)" [roles]="[panelRole]"></search-bar>
 	</div>
 </div>

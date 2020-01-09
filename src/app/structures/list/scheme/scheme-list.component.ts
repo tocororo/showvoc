@@ -15,7 +15,7 @@ import { AbstractList } from '../abstract-list';
 })
 export class SchemeListComponent extends AbstractList {
 
-    structRole: RDFResourceRolesEnum.conceptScheme;
+    structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.conceptScheme;
 
     constructor(private skosService: SkosServices, private pmkiProp: PMKIProperties, eventHandler: PMKIEventHandler) {
         super(eventHandler);

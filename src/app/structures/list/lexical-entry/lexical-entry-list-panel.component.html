@@ -46,7 +46,7 @@
         </lexical-entry-list>
     </div>
 
-    <div class="card-footer">
-        <search-bar (searchResults)="handleSearchResults($event)" [role]="panelRole" [lexicon]="lexicon"></search-bar>
+    <div *ngIf="!hideSearch" class="card-footer">
+        <search-bar (searchResults)="handleSearchResults($event)" [roles]="[panelRole]" [lexicon]="lexicon"></search-bar>
     </div>
 </div>

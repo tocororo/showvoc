@@ -53,61 +53,62 @@ export class OWL {
     public static namespace = OWL.uri + "#";
     public static prefix = "owl";
 
-    // OWL Lite
     //CLASSES
     public static allDifferent = new IRI(OWL.namespace + "AllDifferent");
+    public static allDisjointClasses = new IRI(OWL.namespace + "AllDisjointClasses");
+    public static allDisjointProperties = new IRI(OWL.namespace + "AllDisjointProperties");
+    public static annotation = new IRI(OWL.namespace + "Annotation");
     public static annotationProperty = new IRI(OWL.namespace + "AnnotationProperty");
     public static asymmetricProperty = new IRI(OWL.namespace + "AsymmetricProperty");
+    public static axiom = new IRI(OWL.namespace + "Axiom");
     public static class = new IRI(OWL.namespace + "Class");
+    public static dataRange = new IRI(OWL.namespace + "DataRange");
     public static datatypeProperty = new IRI(OWL.namespace + "DatatypeProperty");
     public static deprecatedClass = new IRI(OWL.namespace + "DeprecatedClass");
     public static deprecatedProperty = new IRI(OWL.namespace + "DeprecatedProperty");
     public static functionalProperty = new IRI(OWL.namespace + "FunctionalProperty");
     public static inverseFunctionalProperty = new IRI(OWL.namespace + "InverseFunctionalProperty");
     public static irreflexiveProperty = new IRI(OWL.namespace + "IrreflexiveProperty");
+    public static negativePropertyAssertion = new IRI(OWL.namespace + "NegativePropertyAssertion");
+    public static namedIndividual = new IRI(OWL.namespace + "NamedIndividual");
+    public static nothing = new IRI(OWL.namespace + "Nothing");
     public static objectProperty = new IRI(OWL.namespace + "ObjectProperty");
     public static ontology = new IRI(OWL.namespace + "Ontology");
     public static ontologyProperty = new IRI(OWL.namespace + "OntologyProperty");
     public static reflexiveProperty = new IRI(OWL.namespace + "ReflexiveProperty");
     public static restriction = new IRI(OWL.namespace + "Restriction");
     public static symmetricProperty = new IRI(OWL.namespace + "SymmetricProperty");
+    public static thing = new IRI(OWL.namespace + "Thing");
     public static transitiveProperty = new IRI(OWL.namespace + "TransitiveProperty");
     //PROPERTIES
     public static allValuesFrom = new IRI(OWL.namespace + "allValuesFrom");
     public static backwardCompatibleWith = new IRI(OWL.namespace + "backwardCompatibleWith");
     public static cardinality = new IRI(OWL.namespace + "cardinality");
+    public static complementOf = new IRI(OWL.namespace + "complementOf");
     public static differentFrom = new IRI(OWL.namespace + "differentFrom");
+    public static disjointWith = new IRI(OWL.namespace + "disjointWith");
     public static distinctMembers = new IRI(OWL.namespace + "distinctMembers");
     public static equivalentClass = new IRI(OWL.namespace + "equivalentClass");
     public static equivalentProperty = new IRI(OWL.namespace + "equivalentProperty");
+    public static hasValue = new IRI(OWL.namespace + "hasValue");
     public static imports = new IRI(OWL.namespace + "imports");
     public static incompatibleWith = new IRI(OWL.namespace + "incompatibleWith");
     public static intersectionOf = new IRI(OWL.namespace + "intersectionOf");
     public static inverseOf = new IRI(OWL.namespace + "inverseOf");
     public static maxCardinality = new IRI(OWL.namespace + "maxCardinality");
     public static minCardinality = new IRI(OWL.namespace + "minCardinality");
+    public static oneOf = new IRI(OWL.namespace + "oneOf");
     public static onProperty = new IRI(OWL.namespace + "onProperty");
     public static priorVersion = new IRI(OWL.namespace + "priorVersion");
     public static propertyChainAxiom = new IRI(OWL.namespace + "propertyChainAxiom");
     public static propertyDisjointWith = new IRI(OWL.namespace + "propertyDisjointWith");
     public static sameAs = new IRI(OWL.namespace + "sameAs");
     public static someValuesFrom = new IRI(OWL.namespace + "someValuesFrom");
+    public static unionOf = new IRI(OWL.namespace + "unionOf");
     public static versionInfo = new IRI(OWL.namespace + "versionInfo");
     //DATATYPES
     public static rational = new IRI(OWL.namespace + "rational");
     public static real = new IRI(OWL.namespace + "real");
-
-    // OWL DL and OWL Full
-    //CLASSES
-    public static dataRange = new IRI(OWL.namespace + "DataRange");
-    public static nothing = new IRI(OWL.namespace + "Nothing");
-    public static thing = new IRI(OWL.namespace + "Thing");
-    //PROPERTIES
-    public static complementOf = new IRI(OWL.namespace + "complementOf");
-    public static disjointWith = new IRI(OWL.namespace + "disjointWith");
-    public static hasValue = new IRI(OWL.namespace + "hasValue");
-    public static oneOf = new IRI(OWL.namespace + "oneOf");
-    public static unionOf = new IRI(OWL.namespace + "unionOf");
 }
 
 export class SKOS {

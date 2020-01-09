@@ -2,6 +2,7 @@ import { QueryList } from '@angular/core';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
+import { SearchServices } from 'src/app/services/search.service';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { TreeListContext } from 'src/app/utils/UIUtils';
 import { AnnotatedValue, IRI } from '../../models/Resources';
@@ -31,10 +32,12 @@ export abstract class AbstractTree extends AbstractStruct {
     /**
      * CONSTRUCTOR
      */
+    protected searchService: SearchServices;
     protected basicModals: BasicModalsServices;
     protected sharedModals: SharedModalsServices;
-    constructor(eventHandler: PMKIEventHandler, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
+    constructor(eventHandler: PMKIEventHandler, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
         super(eventHandler);
+        this.searchService = searchService;
         this.basicModals = basicModals;
         this.sharedModals = sharedModals;
     }
@@ -50,7 +53,16 @@ export abstract class AbstractTree extends AbstractStruct {
 
     abstract initImpl(): void;
 
-    abstract openTreeAt(node: AnnotatedValue<IRI>): void;
+    openTreeAt(node: AnnotatedValue<IRI>) {
+        this.searchService.getPathFromRoot(node.getValue(), this.structRole).subscribe(
+            path => {
+                if (path.length == 0) {
+                    this.onTreeNodeNotReachable(node);
+                };
+                this.expandPath(path);
+            }
+        );
+    }
 
     /**
      * Ensures that the root of the searched path is visible.
@@ -60,7 +72,7 @@ export abstract class AbstractTree extends AbstractStruct {
      */
     ensureRootVisibility(resource: AnnotatedValue<IRI>, path: AnnotatedValue<IRI>[]): boolean {
         for (var i = 0; i < this.nodes.length; i++) {
-            if (this.nodes[i].getValue().equals(resource.getValue())) { //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            if (this.nodes[i].getValue().equals(resource.getValue())) {
                 if (i >= this.nodesLimit) {
                     //update rootLimit so that node at index i is within the range
                     let scrollStep: number = ((i - this.nodesLimit)/this.increaseRate)+1;

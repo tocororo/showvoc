@@ -2,7 +2,7 @@ import { Component, QueryList, ViewChildren } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
-import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
+import { RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { SearchServices } from 'src/app/services/search.service';
 import { SkosServices } from 'src/app/services/skos.service';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
@@ -19,10 +19,10 @@ export class CollectionTreeComponent extends AbstractTree {
 
     @ViewChildren(CollectionTreeNodeComponent) viewChildrenNode: QueryList<CollectionTreeNodeComponent>;
 
-    structRole: RDFResourceRolesEnum.skosCollection;
+    structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.skosCollection;
 
-    constructor(private skosService: SkosServices, private searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: PMKIEventHandler) {
-        super(eventHandler, basicModals, sharedModals);
+    constructor(private skosService: SkosServices, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: PMKIEventHandler) {
+        super(eventHandler, searchService, basicModals, sharedModals);
     }
 
     initImpl() {
@@ -34,17 +34,6 @@ export class CollectionTreeComponent extends AbstractTree {
                 let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
                 ResourceUtils.sortResources(collections, orderAttribute);
                 this.nodes = collections;
-            }
-        );
-    }
-
-    openTreeAt(node: AnnotatedValue<IRI>) {
-        this.searchService.getPathFromRoot(node.getValue(), RDFResourceRolesEnum.skosCollection).subscribe(
-            path => {
-                if (path.length == 0) {
-                    this.onTreeNodeNotReachable(node);
-                };
-                this.expandPath(path);
             }
         );
     }

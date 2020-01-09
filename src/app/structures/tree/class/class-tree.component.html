@@ -1,0 +1,13 @@
+<div class="card vbox">
+    <div class="card-body vbox">
+        <div #scrollableContainer class="scrollableContainer p-2" (scroll)="onScroll()">
+            <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
+            <ng-container *ngFor="let n of nodes; let idx = index">
+                <class-tree-node *ngIf="idx < nodesLimit && (!n.isDeprecated() || showDeprecated && n.isDeprecated())"
+                    [node]="n" [root]="true" [rendering]="rendering" [showDeprecated]="showDeprecated" [filterEnabled]="filterEnabled"
+                    [context]="context" (nodeSelected)="onNodeSelected($event)">
+                </class-tree-node> 
+            </ng-container>
+        </div>
+    </div>
+</div>

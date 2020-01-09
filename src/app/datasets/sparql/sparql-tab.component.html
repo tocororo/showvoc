@@ -2,7 +2,7 @@
 
 <!--Commands (submit, clear, inferred, ...)-->
 <div class="mt-1">
-    <button class="btn btn-sm btn-primary" (click)="doQuery()" [disabled]="queryInProgress || !queryValid">Submit</button>
+    <button class="btn btn-sm btn-primary" (click)="doQuery()" [disabled]="queryInProgress || !queryValid || queryMode != 'query'">Submit</button>
     <button class="btn btn-sm btn-secondary ml-1" (click)="clear()" [disabled]="queryResult == null">Clear</button>
     
     <div class="form-check form-check-inline ml-3">

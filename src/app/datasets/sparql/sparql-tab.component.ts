@@ -102,7 +102,7 @@ export class SparqlTabComponent implements OnInit {
                 }
             );
         } else { //queryMode "update"
-            //disallowed TODO in UI also
+            //disallowed
         }
     }
 

@@ -7,12 +7,15 @@
 			<button class="btn btn-light btn-sm ml-1" title="Refresh" (click)="refresh()">
 				<span class="fas fa-sync"></span>
 			</button>
+			<button class="btn btn-light btn-sm ml-1" title="Settings" (click)="settings()">
+				<span class="fas fa-cog"></span>
+			</button>
         </div>
 	</div>
 	
 	<div class="card-body vbox">
-		<collection-tree [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
-        </collection-tree>
+		<class-tree [rendering]="rendering" [showDeprecated]="showDeprecated" [filterEnabled]="filterEnabled" [context]="context" (nodeSelected)="onNodeSelected($event)">
+        </class-tree>
 	</div>
 
 	<div *ngIf="!hideSearch" class="card-footer">

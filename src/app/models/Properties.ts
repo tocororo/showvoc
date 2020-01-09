@@ -1,6 +1,7 @@
 import { Language } from './LanguagesCountries';
 import { IRI } from './Resources';
 import { ResViewPartition } from './ResourceView';
+import { OWL, RDF, RDFS } from './Vocabulary';
 
 export class Properties {
 
@@ -12,6 +13,10 @@ export class Properties {
     static pref_active_lexicon: string = "active_lexicon";
     static pref_show_flags: string = "show_flags";
 
+    static pref_class_tree_show_instances: string = "class_tree.show_instances";
+    static pref_class_tree_root: string = "class_tree.root";
+    static pref_class_tree_filter: string = "class_tree.filter";
+    
     static pref_concept_tree_visualization: string = "concept_tree_visualization";
 
     static pref_lex_entry_list_visualization: string = "lex_entry_list_visualization";
@@ -41,6 +46,7 @@ export class SearchSettings {
     public includeLocales: boolean = false;
     public useAutocompletion: boolean = false;
     public restrictActiveScheme: boolean = true;
+    public classIndividualSearchMode: ClassIndividualPanelSearchMode = ClassIndividualPanelSearchMode.all;
 }
 
 export enum SearchMode {
@@ -49,6 +55,30 @@ export enum SearchMode {
     endsWith = "endsWith",
     exact = "exact",
     fuzzy = "fuzzy"
+}
+
+export enum ClassIndividualPanelSearchMode {
+    onlyClasses = "onlyClasses",
+    onlyInstances = "onlyInstances",
+    all = "all"
+}
+
+export class ClassTreePreference {
+    showInstancesNumber: boolean;
+    rootClassUri: string;
+    filter: ClassTreeFilter;
+}
+export class ClassTreeFilter {
+    enabled: boolean = true;
+    map: { [key: string]: string[] } = { //map where keys are the URIs of a class and the values are the URIs of the subClasses to filter out
+        [RDFS.resource.getIRI()]: [ 
+            OWL.allDifferent.getIRI(), OWL.allDisjointClasses.getIRI(), OWL.allDisjointProperties.getIRI(),
+            OWL.annotation.getIRI(), OWL.axiom.getIRI(), OWL.negativePropertyAssertion.getIRI(), OWL.ontology.getIRI(),
+            RDF.list.getIRI(), RDF.property.getIRI(), RDF.statement.getIRI(),
+            RDFS.class.getIRI(), RDFS.container.getIRI(), RDFS.literal.getIRI(),
+        ],
+        [OWL.thing.getIRI()]: [ OWL.nothing.getIRI(), OWL.namedIndividual.getIRI()]
+    }
 }
 
 export class ConceptTreePreference {
@@ -95,9 +125,9 @@ export class ProjectPreferences {
     activeSchemes: IRI[] = [];
     activeLexicon: IRI;
     showFlags: boolean = true;
-    showInstancesNumber: boolean = true;
     projectThemeId: number = null;
 
+    classTreePreferences: ClassTreePreference;
     conceptTreePreferences: ConceptTreePreference;
     lexEntryListPreferences: LexicalEntryListPreference;
 

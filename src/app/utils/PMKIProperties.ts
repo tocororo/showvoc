@@ -6,9 +6,10 @@ import { ModalType } from '../modal-dialogs/Modals';
 import { Language, Languages } from '../models/LanguagesCountries';
 import { ExtensionPointID } from '../models/Plugins';
 import { Project } from '../models/Project';
-import { ConceptTreePreference, ConceptTreeVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, ProjectPreferences, ProjectSettings, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, ValueFilterLanguages } from '../models/Properties';
+import { ClassIndividualPanelSearchMode, ClassTreeFilter, ClassTreePreference, ConceptTreePreference, ConceptTreeVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, ProjectPreferences, ProjectSettings, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, ValueFilterLanguages } from '../models/Properties';
 import { IRI, RDFResourceRolesEnum, Value } from '../models/Resources';
 import { ResViewPartition } from '../models/ResourceView';
+import { OWL, RDFS } from '../models/Vocabulary';
 import { PreferencesSettingsServices } from '../services/preferences-settings.service';
 import { Cookie } from './Cookie';
 import { PMKIContext, ProjectContext } from './PMKIContext';
@@ -103,6 +104,12 @@ export class PMKIProperties {
         PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang = filter;
     }
 
+    //class tree settings
+    setClassTreeShowInstances(show: boolean) {
+        this.setUserProjectCookiePref(Properties.pref_class_tree_show_instances, PMKIContext.getProjectCtx().getProject(), show);
+        PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.showInstancesNumber = show;
+    }
+
     //concept tree settings
     setConceptTreeVisualization(mode: ConceptTreeVisualizationMode) {
         this.setUserProjectCookiePref(Properties.pref_concept_tree_visualization, PMKIContext.getProjectCtx().getProject(), mode);
@@ -182,6 +189,22 @@ export class PMKIProperties {
             }
             projectPreferences.hideLiteralGraphNodes = this.getUserProjectCookiePref(Properties.pref_hide_literal_graph_nodes, project) != "false";
 
+            //cls tree preferences
+            let classTreePreferences: ClassTreePreference = { 
+                showInstancesNumber: this.getUserProjectCookiePref(Properties.pref_class_tree_show_instances, project) == "true",
+                rootClassUri: (projectCtx.getProject().getModelType() == RDFS.uri) ? RDFS.resource.getIRI() : OWL.thing.getIRI(),
+                filter: new ClassTreeFilter()
+            };
+            let classTreeFilterPref: string = this.getUserProjectCookiePref(Properties.pref_class_tree_filter, project);
+            if (classTreeFilterPref != null) {
+                classTreePreferences.filter = JSON.parse(classTreeFilterPref);
+            }
+            let classTreeRootPref: string = this.getUserProjectCookiePref(Properties.pref_class_tree_root, project);
+            if (classTreeRootPref != null) {
+                classTreePreferences.rootClassUri = classTreeRootPref;
+            }
+            projectPreferences.classTreePreferences = classTreePreferences;
+
             //concept tree preferences
             let conceptTreePref: ConceptTreePreference = new ConceptTreePreference();
             let conceptTreeVisualizationPref: string = this.getUserProjectCookiePref(Properties.pref_concept_tree_visualization, project);
@@ -214,6 +237,11 @@ export class PMKIProperties {
             searchSettings.useLocalName = Cookie.getCookie(Cookie.SEARCH_USE_LOCAL_NAME) == "true";
             searchSettings.useNotes = Cookie.getCookie(Cookie.SEARCH_USE_NOTES) == "true";
             searchSettings.restrictActiveScheme = Cookie.getCookie(Cookie.SEARCH_CONCEPT_SCHEME_RESTRICTION) == "true";
+
+            let clsIndPanelSearchModeCookie: string = Cookie.getCookie(Cookie.SEARCH_CLS_IND_PANEL);
+            if (clsIndPanelSearchModeCookie != null) {
+                searchSettings.classIndividualSearchMode = <ClassIndividualPanelSearchMode>clsIndPanelSearchModeCookie;
+            }
 
             let searchLangsCookie: string = Cookie.getCookie(Cookie.SEARCH_LANGUAGES);
             searchSettings.languages = (searchLangsCookie == null) ? [] : JSON.parse(searchLangsCookie);

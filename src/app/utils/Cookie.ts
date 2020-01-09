@@ -13,6 +13,7 @@ export class Cookie {
     public static SEARCH_USE_LOCAL_NAME = "search.use_local_name";
     public static SEARCH_USE_NOTES = "search.use_notes";
     public static SEARCH_CONCEPT_SCHEME_RESTRICTION = "search.restrict_active_schemes";
+    public static SEARCH_CLS_IND_PANEL = "search.cls_ind_panel"; //tells if search classes, individuals or both
     public static SEARCH_LANGUAGES = "search.languages";
     public static SEARCH_RESTRICT_LANG = "search.restrict_lang";
     public static SEARCH_INCLUDE_LOCALES = "search.include_locales";

@@ -3,7 +3,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
-import { SearchMode, SearchSettings } from 'src/app/models/Properties';
+import { SearchMode, SearchSettings, ClassIndividualPanelSearchMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
 import { SearchServices } from 'src/app/services/search.service';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
@@ -18,10 +18,11 @@ import { PMKIContext } from 'src/app/utils/PMKIContext';
 })
 export class SearchBarComponent {
 
-    @Input() role: RDFResourceRolesEnum; //tells the role of the panel where the search bar is placed (usefull for customizing the settings)
+    @Input() roles: RDFResourceRolesEnum[]; //tells the role of the panel where the search bar is placed (usefull for customizing the settings)
     @Input() disabled: boolean = false;
     @Input() schemes: IRI[]; //if search-bar is in the conceptTreePanel
     @Input() lexicon: IRI; //if search-bar is in the lexicalEntryListPanel
+    @Input() cls: IRI; //if search-bar is in the instanceListPanel
     @Output() searchResults: EventEmitter<AnnotatedValue<Resource>[]> = new EventEmitter();
 
     loading: boolean = false;
@@ -76,16 +77,29 @@ export class SearchBarComponent {
         //     includeLocales = this.searchSettings.includeLocales;
         // }
         let searchingScheme: IRI[] = [];
-        if (this.role == RDFResourceRolesEnum.concept && this.searchSettings.restrictActiveScheme) {
+        if (this.roles.length == 1 && this.roles[0] == RDFResourceRolesEnum.concept && this.searchSettings.restrictActiveScheme) {
             searchingScheme = this.schemes;
         }
 
         let searchFn: Observable<AnnotatedValue<Resource>[]>;
-        if (this.role == RDFResourceRolesEnum.ontolexLexicalEntry) {
+        if (this.roles.length == 1 && this.roles[0] == RDFResourceRolesEnum.ontolexLexicalEntry) { //bar in lexical entry panel
             searchFn = this.searchService.searchLexicalEntry(this.lastSearch, this.searchSettings.useLocalName, this.searchSettings.useURI,
                 this.searchSettings.useNotes, this.searchSettings.stringMatchMode, [this.lexicon], searchLangs, includeLocales);
+        } else if (this.roles.length == 1 && this.roles[0] == RDFResourceRolesEnum.individual) { //bar in instances panel
+            searchFn = this.searchService.searchInstancesOfClass(this.cls, this.lastSearch, this.searchSettings.useLocalName, this.searchSettings.useURI,
+                this.searchSettings.useNotes, this.searchSettings.stringMatchMode, searchLangs, includeLocales);
+        } else if (this.roles.length == 2 && this.roles.indexOf(RDFResourceRolesEnum.cls) != -1 && this.roles.indexOf(RDFResourceRolesEnum.individual) != -1) { //panel in cls-instance panel
+            let searchRoles: RDFResourceRolesEnum[] = [RDFResourceRolesEnum.individual, RDFResourceRolesEnum.cls]; //by default search both
+            if (this.searchSettings.classIndividualSearchMode == ClassIndividualPanelSearchMode.onlyInstances) {
+                searchRoles = [RDFResourceRolesEnum.individual];
+            } else if (this.searchSettings.classIndividualSearchMode == ClassIndividualPanelSearchMode.onlyClasses) {
+                searchRoles = [RDFResourceRolesEnum.cls];
+            }
+            searchFn = this.searchService.searchResource(this.lastSearch, searchRoles, this.searchSettings.useLocalName, 
+                this.searchSettings.useURI, this.searchSettings.useNotes, this.searchSettings.stringMatchMode, searchLangs,
+                includeLocales);
         } else {
-            searchFn = this.searchService.searchResource(this.lastSearch, [this.role], this.searchSettings.useLocalName, 
+            searchFn = this.searchService.searchResource(this.lastSearch, this.roles, this.searchSettings.useLocalName, 
                 this.searchSettings.useURI, this.searchSettings.useNotes, this.searchSettings.stringMatchMode, searchLangs,
                 includeLocales, searchingScheme);
         }
@@ -106,7 +120,7 @@ export class SearchBarComponent {
 
     settings() {
 		const modalRef: NgbModalRef = this.modalService.open(SearchSettingsModal, new ModalOptions() );
-        modalRef.componentInstance.role = this.role;
+        modalRef.componentInstance.roles = this.roles;
         return modalRef.result;
     }
 

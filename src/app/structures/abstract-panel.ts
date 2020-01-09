@@ -12,6 +12,7 @@ export abstract class AbstractPanel {
      */
 
     @Input() context: TreeListContext;
+    @Input() hideSearch: boolean = false; //if true hide the search bar
 
     @Output() nodeSelected = new EventEmitter<AnnotatedValue<IRI>>();
 

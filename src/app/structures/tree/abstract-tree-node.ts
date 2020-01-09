@@ -1,4 +1,4 @@
-import { ElementRef, QueryList, ViewChild } from '@angular/core';
+import { ElementRef, QueryList, ViewChild, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
@@ -26,6 +26,8 @@ export abstract class AbstractTreeNode extends AbstractNode {
     open: boolean = false;
     loading: boolean = false;
 
+    showExpandCollapseBtn: boolean = false; //tells if the expand/collapse node button should be visible (it depends on more_attr and showDeprecated)
+
     /**
      * CONSTRUCTOR
      */
@@ -42,11 +44,41 @@ export abstract class AbstractTreeNode extends AbstractNode {
      * METHODS
      */
 
+    ngOnInit() {
+        this.initShowExpandCollapseBtn();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['showDeprecated']) {
+            this.initShowExpandCollapseBtn();
+        }
+    }
+
     /**
-     * Tells if the expand/collapse button should be shown
+     * The expand/collapse button should be visible if:
+     * the node has "more" attribute true AND
+     * - "showDeprecated" is true (all children visible)
+     * - or "showDeprecated" is false (only not-deprecated children visible) but there is at least a child not-deprecated 
      */
-    showExpandCollapse(): boolean {
-        return this.node.getAttribute(ResAttribute.MORE);
+    protected initShowExpandCollapseBtn() {
+        let more: boolean = this.node.getAttribute(ResAttribute.MORE);
+        if (more) { //if the more attribute is true, doesn't implies that the button is visible, the node children could be all deprecated
+            if (this.children.length > 0) {
+                let childVisible: boolean = false; //true if showDeprecated true, or child not-deprecated
+                for (var i = 0; i < this.children.length; i++) {
+                    if (this.showDeprecated || !this.children[i].isDeprecated()) {
+                        childVisible = true;
+                        break;
+                    }
+                }
+                //button visible if there is at least a visible child
+                this.showExpandCollapseBtn = childVisible;
+            } else { //no children and "more" true means that the node has not been yet expanded, so in the doubt return true
+                this.showExpandCollapseBtn = true;
+            }
+        } else {
+            this.showExpandCollapseBtn = false;
+        }
     }
 
     /**

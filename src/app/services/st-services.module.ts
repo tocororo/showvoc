@@ -4,11 +4,13 @@ import { HttpManager } from '../utils/HttpManager';
 import { AdministrationServices } from './administration.service';
 import { AlignmentServices } from './alignment.service';
 import { AuthServices } from "./auth.service";
+import { ClassesServices } from './classes.service';
 import { ConfigurationsServices } from './configuration.service';
 import { ExportServices } from './export.service';
 import { ExtensionsServices } from './extensions.service';
 import { GlobalSearchServices } from './global-search.service';
 import { GraphServices } from './graph.service';
+import { IndividualsServices } from './individuals.service';
 import { InputOutputServices } from './input-output.service';
 import { MapleServices } from './maple.service';
 import { MetadataRegistryServices } from './metadata-registry.service';
@@ -34,12 +36,14 @@ import { UserServices } from './user.service';
         AdministrationServices,
         AlignmentServices,
         AuthServices,
+        ClassesServices,
         ConfigurationsServices,
         ExportServices,
         ExtensionsServices,
         GlobalSearchServices,
         GraphServices,
         HttpManager,
+        IndividualsServices,
         InputOutputServices,
         MapleServices,
         MetadataServices,

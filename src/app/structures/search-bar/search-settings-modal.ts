@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SearchMode, SearchSettings } from 'src/app/models/Properties';
+import { SearchMode, SearchSettings, ClassIndividualPanelSearchMode } from 'src/app/models/Properties';
 import { RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
@@ -11,7 +11,7 @@ import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 })
 export class SearchSettingsModal implements OnInit {
 
-    @Input() role: RDFResourceRolesEnum;
+    @Input() roles: RDFResourceRolesEnum[];
 
     private settings: SearchSettings;
 
@@ -25,6 +25,7 @@ export class SearchSettingsModal implements OnInit {
     private activeStringMatchMode: SearchMode;
 
     settingsForConceptPanel: boolean = false;
+    settingsForClassInstancePanel: boolean = false;
 
     //search mode use URI/LocalName
     useURI: boolean = true;
@@ -40,10 +41,19 @@ export class SearchSettingsModal implements OnInit {
     //concept search restriction
     private restrictConceptSchemes: boolean = true;
 
+    //class-instance panel search
+    clsIndSearchMode: { show: string, value: ClassIndividualPanelSearchMode }[] = [
+        { show: "Only classes", value: ClassIndividualPanelSearchMode.onlyClasses },
+        { show: "Only instances", value: ClassIndividualPanelSearchMode.onlyInstances },
+        { show: "Both classes and instances", value: ClassIndividualPanelSearchMode.all }
+    ];
+    activeClsIndSearchMode: ClassIndividualPanelSearchMode;
+
     constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties) { }
 
     ngOnInit() {
-        this.settingsForConceptPanel = this.role == RDFResourceRolesEnum.concept;
+        this.settingsForConceptPanel = this.roles.length == 1 && this.roles[0] == RDFResourceRolesEnum.concept;
+        this.settingsForClassInstancePanel = this.roles.indexOf(RDFResourceRolesEnum.cls) != -1 && this.roles.indexOf(RDFResourceRolesEnum.individual) != -1;
 
         this.settings = PMKIContext.getProjectCtx().getProjectPreferences().searchSettings;
         this.activeStringMatchMode = this.settings.stringMatchMode;
@@ -55,7 +65,7 @@ export class SearchSettingsModal implements OnInit {
         this.languages = this.settings.languages;
         this.useAutocompletion = this.settings.useAutocompletion;
         this.restrictConceptSchemes = this.settings.restrictActiveScheme;
-        // this.activeClsIndSearchMode = this.settings.classIndividualSearchMode;
+        this.activeClsIndSearchMode = this.settings.classIndividualSearchMode;
     }
 
     // private selectRestrictionLanguages() {
@@ -81,7 +91,7 @@ export class SearchSettingsModal implements OnInit {
                 languages: this.languages,
                 useAutocompletion: this.useAutocompletion,
                 restrictActiveScheme: this.restrictConceptSchemes,
-                // classIndividualSearchMode: this.activeClsIndSearchMode
+                classIndividualSearchMode: this.activeClsIndSearchMode
             }
         );
     }
