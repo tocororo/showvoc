@@ -21,14 +21,14 @@ export class ClassTreeSettingsModal implements OnInit {
 
     private pristinePref: ClassTreePreference;
 
-    private rootClass: AnnotatedValue<IRI>;
-    private filterEnabled: boolean;
+    rootClass: AnnotatedValue<IRI>;
+    filterEnabled: boolean;
 
-    private filterMapRes: FilterMapEntry[] = [];
-    private selectedFilteredClass: AnnotatedValue<IRI>;
+    filterMapRes: FilterMapEntry[] = [];
+    selectedFilteredClass: AnnotatedValue<IRI>;
 
-    private renderingClasses: boolean = false;
-    private renderingFilter: boolean = false;
+    renderingClasses: boolean = false;
+    renderingFilter: boolean = false;
 
     showInstances: boolean;
 
@@ -71,7 +71,7 @@ export class ClassTreeSettingsModal implements OnInit {
      * ROOT CLASS HANDLERS
      */
 
-    private changeClass() {
+    changeClass() {
         this.browsingModals.browseClassTree("Select root class", [RDFS.resource]).then(
             (cls: AnnotatedValue<IRI>) => {
                 if (Cookie.getCookie(Cookie.WARNING_CUSTOM_ROOT) != "false") {
@@ -151,7 +151,7 @@ export class ClassTreeSettingsModal implements OnInit {
         }
     }
 
-    private getFilterSubClasses(): SubClassFilterItem[] {
+    getFilterSubClasses(): SubClassFilterItem[] {
         if (this.selectedFilteredClass != null) {
             return this.getFilterMapEntry(this.selectedFilteredClass).subClasses;
         } else {
@@ -159,7 +159,7 @@ export class ClassTreeSettingsModal implements OnInit {
         }
     }
 
-    private addFilter() {
+    addFilter() {
         this.browsingModals.browseClassTree("Select class", [RDFS.resource]).then(
             (cls: AnnotatedValue<IRI>) => {
                 if (this.getFilterMapEntry(cls) == null) {
@@ -172,7 +172,7 @@ export class ClassTreeSettingsModal implements OnInit {
         );
     }
 
-    private removeFilter() {
+    removeFilter() {
         for (var i = 0; i < this.filterMapRes.length; i++) {
             if (this.filterMapRes[i].cls.getValue().equals(this.selectedFilteredClass.getValue())) {
                 this.selectedFilteredClass = null;
@@ -182,7 +182,7 @@ export class ClassTreeSettingsModal implements OnInit {
         }
     }
 
-    private checkAllClasses(checked: boolean) {
+    checkAllClasses(checked: boolean) {
         this.getFilterMapEntry(this.selectedFilteredClass).subClasses.forEach((c: SubClassFilterItem) => {
             if (!c.disabled) {
                 c.checked = checked;
