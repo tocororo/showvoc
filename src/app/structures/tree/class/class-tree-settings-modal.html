@@ -4,13 +4,94 @@
         <span>&times;</span>
     </button>
 </div>
-<div class="modal-body">
-    <div class="form-check">
+<div class="modal-body vbox">
+
+    <div class="hbox align-items-center" style="flex: initial;">
+        <label class="mr-1" style="white-space: nowrap;">
+            Root class:
+        </label>
+        <input-editable *ngIf="rootClass" [value]="rootClass.getValue().getIRI()" (valueEdited)="updateRootClass($event)" style="flex: 1;"></input-editable>
+        <button class="btn btn-sm btn-outline-secondary ml-1" (click)="changeClass()">
+            <img src="../../../../assets/images/icons/res/class.png"/>
+        </button>
+    </div>
+
+    <div class="card vbox mt-2">
+        <div class="card-header d-flex align-items-center">
+            <label style="flex: 1">
+                SubClasses filter
+                <span class="fas fa-info-circle" title="Here you can create filters in order to hide subClasses of classes."></span>
+            </label>
+            <div class="custom-control custom-switch" (click)="filterEnabled = !filterEnabled" title="Filter enabled">
+                <input type="checkbox" class="custom-control-input" [ngModel]="filterEnabled">
+                <label class="custom-control-label">
+                    <span class="fas fa-filter"></span>
+                </label>
+            </div>
+        </div>
+        <div class="card-body hbox">
+            <div class="card" style="flex: 1;">
+                <div class="card-header d-flex align-items-center">
+                    <label style="flex: 1">Classes</label>
+                    <div class="btn-toolbar">
+                        <button class="btn btn-light btn-sm" title="Rendering" (click)="renderingClasses = !renderingClasses" [ngClass]="{active: renderingClasses}">
+                            <span class="fas fa-font"></span>
+                        </button>
+                        <div class="btn-group btn-group-sm ml-2">
+                            <button class="btn btn-light" (click)="addFilter()" title="Add filter">
+                                <span class="fas fa-plus"></span>
+                            </button>
+                            <button class="btn btn-light" (click)="removeFilter()" title="Remove filter" [disabled]="!selectedFilteredClass">
+                                <span class="fas fa-minus"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body scrollableContainer" style="min-height: 100px;">
+                    <div *ngFor="let f of filterMapRes" class="listItem" (click)="selectFilteredClass(f.cls)"
+                        [ngClass]="{ active: f.cls == selectedFilteredClass }">
+                        <rdf-resource [resource]="f.cls" [rendering]="renderingClasses"></rdf-resource>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card ml-1" style="flex: 1;">
+                <div class="card-header d-flex align-items-center">
+                    <label style="flex: 1">Filtered subClasses</label>
+                    <div class="btn-toolbar">
+                        <button class="btn btn-light btn-sm" title="Rendering" (click)="renderingFilter = !renderingFilter"
+                            [ngClass]="{active: renderingFilter}">
+                            <span class="glyphicon glyphicon-font"></span>
+                        </button>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-light" (click)="checkAllClasses(true)" title="Check all" [disabled]="!selectedFilteredClass">
+                                <span class="far fa-check-square"></span>
+                            </button>
+                            <button class="btn btn-light" (click)="checkAllClasses(false)" title="Uncheck all" [disabled]="!selectedFilteredClass">
+                                <span class="far fa-square"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body scrollableContainer">
+                    <div *ngFor="let f of getFilterSubClasses()" class="listItem">
+                        <input type="checkbox" class="mr-1" [(ngModel)]="f.checked" [disabled]="f.disabled">
+                        <rdf-resource [resource]="f.resource" [rendering]="renderingFilter" style="flex: 1;"></rdf-resource>
+                        <span *ngIf="f.checked" class="fas fa-eye"></span>
+                        <span *ngIf="!f.checked" class="fas fa-eye-slash"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-check mt-2">
         <label class="form-check-label">
             <input class="form-check-input" type="checkbox" [(ngModel)]="showInstances">
             Show instances number
         </label>
     </div>
+
 </div>
 <div class="modal-footer">
     <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>

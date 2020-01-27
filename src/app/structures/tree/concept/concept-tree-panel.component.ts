@@ -23,7 +23,7 @@ import { ConceptTreeComponent } from './concept-tree.component';
     host: { class: "vbox" }
 })
 export class ConceptTreePanelComponent extends AbstractTreePanel {
-    @Input() schemes: IRI[]; //if set the concept tree is initialized with this scheme, otherwise with the scheme from VB context
+    @Input('schemes') inputSchemes: IRI[]; //if set the concept tree is initialized with this scheme, otherwise with the scheme from VB context
     @Input() schemeChangeable: boolean = false; //if true, above the tree is shown a menu to select a scheme
     @Output() schemeChanged = new EventEmitter<IRI>();//when dynamic scheme is changed
 
@@ -58,13 +58,13 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
 
         this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
 
-        if (this.schemes === undefined) { //if @Input is not provided at all, get the scheme from the preferences
+        if (this.inputSchemes === undefined) { //if @Input is not provided at all, get the scheme from the preferences
             this.workingSchemes = PMKIContext.getProjectCtx().getProjectPreferences().activeSchemes;
         } else { //if @Input schemes is provided (it could be null => no scheme-mode), initialize the tree with this scheme
             if (this.schemeChangeable) {
-                if (this.schemes.length > 0) {
-                    this.selectedSchemeUri = this.schemes[0].getIRI();
-                    this.workingSchemes = [this.schemes[0]];
+                if (this.inputSchemes.length > 0) {
+                    this.selectedSchemeUri = this.inputSchemes[0].getIRI();
+                    this.workingSchemes = [this.inputSchemes[0]];
                 } else { //no scheme mode
                     this.selectedSchemeUri = "---"; //no scheme
                     this.workingSchemes = [];
@@ -77,9 +77,10 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                     }
                 );
             } else {
-                this.workingSchemes = this.schemes;
+                this.workingSchemes = this.inputSchemes;
             }
         }
+        this.updateSchemesForSearchBar();
     }
 
     //top bar commands handlers
@@ -255,7 +256,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
 
     openAt(node: AnnotatedValue<IRI>) {
         if (this.visualizationMode == ConceptTreeVisualizationMode.hierarchyBased) {
-            this.viewChildTree.openTreeAt(node);
+            this.viewChildTree.openTreeAt(node, this.workingSchemes);
         } else { //search-based
             this.viewChildTree.forceList([node]);
             setTimeout(() => {

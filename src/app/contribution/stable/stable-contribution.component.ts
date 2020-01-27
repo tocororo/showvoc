@@ -3,8 +3,9 @@ import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { ConfigurationComponents, ConfigurationObject } from 'src/app/models/Configuration';
+import { Project } from 'src/app/models/Project';
 import { IRI } from 'src/app/models/Resources';
-import { OntoLex, RDFS, SKOS, SKOSXL, SemanticTurkey } from 'src/app/models/Vocabulary';
+import { OntoLex, OWL, RDFS, SemanticTurkey, SKOS, SKOSXL } from 'src/app/models/Vocabulary';
 import { MetadataRegistryServices } from 'src/app/services/metadata-registry.service';
 import { AbstractContributionComponent } from '../abstract-contribution.component';
 
@@ -26,16 +27,18 @@ export class StableContributionComponent extends AbstractContributionComponent {
     baseURI: string;
 
     semanticModels: { uri: string, show: string }[] = [
-        { uri: SKOS.uri, show: "SKOS" },
-        { uri: OntoLex.uri, show: "Ontolex" }
+        { uri: RDFS.uri, show: Project.getPrettyPrintModelType(RDFS.uri) },
+        { uri: OWL.uri, show:  Project.getPrettyPrintModelType(OWL.uri) },
+        { uri: SKOS.uri, show: Project.getPrettyPrintModelType(SKOS.uri) },
+        { uri: OntoLex.uri, show: Project.getPrettyPrintModelType(OntoLex.uri) }
     ];
     selectedSemModel: string;
 
     lexicalizationModels: { uri: string, show: string }[] = [
-        { uri: RDFS.uri, show: "RDFS" },
-        { uri: SKOS.uri, show: "SKOS" },
-        { uri: SKOSXL.uri, show: "SKOS-XL" },
-        { uri: OntoLex.uri, show: "Ontolex" }
+        { uri: RDFS.uri, show: Project.getPrettyPrintModelType(RDFS.uri) },
+        { uri: SKOS.uri, show: Project.getPrettyPrintModelType(SKOS.uri) },
+        { uri: SKOSXL.uri, show: Project.getPrettyPrintModelType(SKOSXL.uri) },
+        { uri: OntoLex.uri, show: Project.getPrettyPrintModelType(OntoLex.uri) }
     ];
     selectedLexModel: string;
 

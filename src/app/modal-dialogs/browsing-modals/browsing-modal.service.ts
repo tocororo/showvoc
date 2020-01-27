@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AnnotatedValue, IRI } from 'src/app/models/Resources';
 import { ModalOptions } from '../Modals';
+import { ClassTreeModal } from './class-tree-modal/class-tree-modal';
 import { CollectionTreeModal } from './collection-tree-modal/collection-tree-modal';
 import { ConceptTreeModal } from './concept-tree-modal/concept-tree-modal';
 import { LexicalEntryListModal } from './lexical-entry-list-modal/lexical-entry-list-modal';
@@ -13,6 +14,20 @@ import { SchemeListModal } from './scheme-list-modal/scheme-list-modal';
 export class BrowsingModalsServices {
 
     constructor(private modalService: NgbModal) { }
+
+    /**
+     * Open a modal to browse the class tree
+     * @param title 
+     * @param roots list of IRI which the tree will be rooted on
+     * @param options 
+     */
+    browseClassTree(title: string, roots?: IRI[], options?: ModalOptions): Promise<AnnotatedValue<IRI>> {
+        let _options: ModalOptions = new ModalOptions().merge(options);
+        const modalRef: NgbModalRef = this.modalService.open(ClassTreeModal, _options);
+        modalRef.componentInstance.title = title;
+        modalRef.componentInstance.roots = roots;
+        return modalRef.result;
+    }
 
     /**
      * Opens a modal to browse the concept tree

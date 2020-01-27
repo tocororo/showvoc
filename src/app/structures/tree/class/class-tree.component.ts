@@ -1,4 +1,4 @@
-import { Component, Input, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
@@ -18,6 +18,7 @@ import { ClassTreeNodeComponent } from './class-tree-node.component';
 })
 export class ClassTreeComponent extends AbstractTree {
     @Input() filterEnabled: boolean = false;
+    @Input() roots: IRI[];
 
     @ViewChildren(ClassTreeNodeComponent) viewChildrenNode: QueryList<ClassTreeNodeComponent>;
 
@@ -27,8 +28,17 @@ export class ClassTreeComponent extends AbstractTree {
         super(eventHandler, searchService, basicModals, sharedModals);
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['roots']) {
+            this.init();
+        }
+    }
+
     initImpl() {
-        let clsTreeRoots: IRI[] = [new IRI(PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.rootClassUri)];
+        let clsTreeRoots: IRI[] = this.roots;
+        if (clsTreeRoots == undefined || clsTreeRoots.length == 0) {
+            clsTreeRoots = [new IRI(PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.rootClassUri)];
+        }
 
         this.loading = true;
         this.clsService.getClassesInfo(clsTreeRoots).pipe(

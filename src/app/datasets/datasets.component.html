@@ -9,16 +9,10 @@
 					Dataset type
 				</div>
 				<div class="card-body">
-					<div class="form-check">
+                    <div *ngFor="let f of datasetTypeFacets" class="form-check">
 						<label class="form-check-label">
-							<input class="form-check-input" type="checkbox" [(ngModel)]="kosCheck" (ngModelChange)="onFacetChange()">
-							KOS
-						</label>
-					</div>
-					<div class="form-check">
-						<label class="form-check-label">
-							<input class="form-check-input" type="checkbox" [(ngModel)]="lexiconsCheck" (ngModelChange)="onFacetChange()">
-							Lexicons
+							<input class="form-check-input" type="checkbox" [(ngModel)]="f.active" (ngModelChange)="onFacetChange()">
+							{{f.label}}
 						</label>
 					</div>
                 </div>
@@ -33,23 +27,7 @@
                     </div>
                 </div>
             </div>
-            
-			<!-- <div class="card mt-1">
-				<div class="card-header">
-					Language
-				</div>
-				<div class="card-body">
-					<div *ngFor="let lang of languages" class="form-check">
-						<label class="form-check-label">
-							<input class="form-check-input" type="checkbox">
-							{{lang}}
-						</label>
-					</div>
-				</div>
-            </div> -->
-            
         </div>
-        
 
         
 		<div class="vbox ml-2" style="flex: 4;">

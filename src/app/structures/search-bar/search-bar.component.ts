@@ -98,7 +98,7 @@ export class SearchBarComponent {
             searchFn = this.searchService.searchResource(this.lastSearch, searchRoles, this.searchSettings.useLocalName, 
                 this.searchSettings.useURI, this.searchSettings.useNotes, this.searchSettings.stringMatchMode, searchLangs,
                 includeLocales);
-        } else {
+        } else { //concept
             searchFn = this.searchService.searchResource(this.lastSearch, this.roles, this.searchSettings.useLocalName, 
                 this.searchSettings.useURI, this.searchSettings.useNotes, this.searchSettings.stringMatchMode, searchLangs,
                 includeLocales, searchingScheme);

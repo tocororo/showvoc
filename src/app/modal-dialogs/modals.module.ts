@@ -13,6 +13,7 @@ import { PromptModal } from './basic-modals/prompt-modal/prompt-modal';
 import { PromptNumberModal } from './basic-modals/prompt-modal/prompt-number-modal';
 import { ResourceSelectionModal } from './basic-modals/selection-modal/resource-selection-modal';
 import { BrowsingModalsServices } from './browsing-modals/browsing-modal.service';
+import { ClassTreeModal } from './browsing-modals/class-tree-modal/class-tree-modal';
 import { CollectionTreeModal } from './browsing-modals/collection-tree-modal/collection-tree-modal';
 import { ConceptTreeModal } from './browsing-modals/concept-tree-modal/concept-tree-modal';
 import { LexicalEntryListModal } from './browsing-modals/lexical-entry-list-modal/lexical-entry-list-modal';
@@ -25,6 +26,7 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
 @NgModule({
     declarations: [
         AlertModal,
+        ClassTreeModal,
         CollectionTreeModal,
         ConceptTreeModal,
         ConfirmCheckModal,
@@ -47,6 +49,7 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
     ],
     entryComponents: [
         AlertModal,
+        ClassTreeModal,
         CollectionTreeModal,
         ConceptTreeModal,
         ConfirmCheckModal,

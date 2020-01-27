@@ -21,12 +21,15 @@ export class Cookie {
 
     public static DATASETS_FACETS_TYPE_KOS = "datasets.facets.type.kos";
     public static DATASETS_FACETS_TYPE_LEXICON = "datasets.facets.type.lexicon";
+    public static DATASETS_FACETS_TYPE_ONTOLOGY = "datasets.facets.type.ontology";
     public static DATASETS_FACETS_ONLY_OPEN_PROJECTS = "datasets.facets.only_open_projects";
 
     public static SEARCH_FILTERS_ONLY_OPEN_PROJECTS = "search.filters.only_open_projects";
     public static SEARCH_FILTERS_LANGUAGES = "search.filters.languages";
 
     public static EXPLORE_HIDE_WARNING_MODAL_RES_VIEW = "explore.hide_warning_open_modal_res_view";
+
+    public static WARNING_CUSTOM_ROOT = "ui.tree.cls.warnings.customroot";
 
 	/**
 	 * Retrieves a single cookie by it's name

@@ -53,8 +53,8 @@ export abstract class AbstractTree extends AbstractStruct {
 
     abstract initImpl(): void;
 
-    openTreeAt(node: AnnotatedValue<IRI>) {
-        this.searchService.getPathFromRoot(node.getValue(), this.structRole).subscribe(
+    openTreeAt(node: AnnotatedValue<IRI>, schemes?: IRI[], root?: IRI) {
+        this.searchService.getPathFromRoot(node.getValue(), this.structRole, schemes, root).subscribe(
             path => {
                 if (path.length == 0) {
                     this.onTreeNodeNotReachable(node);

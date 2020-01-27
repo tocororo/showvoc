@@ -232,7 +232,6 @@ export class SystemConfigurationComponent implements OnInit {
                 this.basicModals.alert("VocBench configuration test", "The configuration has been tested successfully");
             },
             (error: Error) => {
-                console.log("error", error);
                 this.basicModals.alert("VocBench configuration test", "Test failed, the configuration provided is not correct.", ModalType.error, error.message);
             }
         )

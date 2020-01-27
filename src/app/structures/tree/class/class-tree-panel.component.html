@@ -14,7 +14,7 @@
 	</div>
 	
 	<div class="card-body vbox">
-		<class-tree [rendering]="rendering" [showDeprecated]="showDeprecated" [filterEnabled]="filterEnabled" [context]="context" (nodeSelected)="onNodeSelected($event)">
+		<class-tree [roots]="roots" [rendering]="rendering" [showDeprecated]="showDeprecated" [filterEnabled]="filterEnabled" [context]="context" (nodeSelected)="onNodeSelected($event)">
         </class-tree>
 	</div>
 

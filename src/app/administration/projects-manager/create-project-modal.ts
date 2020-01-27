@@ -1,19 +1,19 @@
 import { Component, ViewChild } from "@angular/core";
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs/operators';
+import { PmkiConstants } from 'src/app/models/Pmki';
 import { IRI } from 'src/app/models/Resources';
+import { AdministrationServices } from 'src/app/services/administration.service';
 import { ProjectsServices } from 'src/app/services/projects.service';
 import { ExtensionConfiguratorComponent } from 'src/app/widget/extensionConfigurator/extension-configurator.component';
 import { BasicModalsServices } from '../../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions, ModalType } from '../../modal-dialogs/Modals';
 import { ConfigurableExtensionFactory, ExtensionPointID, PluginSpecification, Settings } from '../../models/Plugins';
-import { BackendTypesEnum, RemoteRepositoryAccessConfig, Repository, RepositoryAccess, RepositoryAccessType } from '../../models/Project';
-import { OntoLex, RDFS, SKOS, SKOSXL } from '../../models/Vocabulary';
+import { BackendTypesEnum, Project, RemoteRepositoryAccessConfig, Repository, RepositoryAccess, RepositoryAccessType } from '../../models/Project';
+import { OntoLex, OWL, RDFS, SKOS, SKOSXL } from '../../models/Vocabulary';
 import { ExtensionsServices } from '../../services/extensions.service';
 import { RemoteAccessConfigModal } from './remote-access-config-modal';
 import { RemoteRepoSelectionModal } from './remote-repo-selection-modal';
-import { AdministrationServices } from 'src/app/services/administration.service';
-import { PmkiConstants } from 'src/app/models/Pmki';
 
 @Component({
     selector: "create-project-modal",
@@ -49,18 +49,20 @@ export class CreateProjectModal {
     baseURI: string;
 
     semanticModels: { uri: string, show: string }[] = [
-        { uri: SKOS.uri, show: "SKOS" },
-        { uri: OntoLex.uri, show: "Ontolex" }
+        { uri: RDFS.uri, show: Project.getPrettyPrintModelType(RDFS.uri) },
+        { uri: OWL.uri, show:  Project.getPrettyPrintModelType(OWL.uri) },
+        { uri: SKOS.uri, show: Project.getPrettyPrintModelType(SKOS.uri) },
+        { uri: OntoLex.uri, show: Project.getPrettyPrintModelType(OntoLex.uri) }
     ];
-    selectedSemModel: string = this.semanticModels[0].uri; //SKOS
+    selectedSemModel: string = SKOS.uri;
 
     lexicalizationModels: { uri: string, show: string }[] = [
-        { uri: RDFS.uri, show: "RDFS" },
-        { uri: SKOS.uri, show: "SKOS" },
-        { uri: SKOSXL.uri, show: "SKOS-XL" },
-        { uri: OntoLex.uri, show: "Ontolex" }
+        { uri: RDFS.uri, show: Project.getPrettyPrintModelType(RDFS.uri) },
+        { uri: SKOS.uri, show: Project.getPrettyPrintModelType(SKOS.uri) },
+        { uri: SKOSXL.uri, show: Project.getPrettyPrintModelType(SKOSXL.uri) },
+        { uri: OntoLex.uri, show: Project.getPrettyPrintModelType(OntoLex.uri) }
     ];
-    selectedLexModel: string = this.lexicalizationModels[1].uri; //SKOS
+    selectedLexModel: string = SKOS.uri; //SKOS
 
     /**
      * If the user is creation a project (not accessing an existing one),

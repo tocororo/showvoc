@@ -105,6 +105,15 @@ export class PMKIProperties {
     }
 
     //class tree settings
+    setClassTreeFilter(filter: ClassTreeFilter) {
+        this.setUserProjectCookiePref(Properties.pref_class_tree_filter, PMKIContext.getProjectCtx().getProject(), JSON.stringify(filter));
+        PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter = filter;
+        this.eventHandler.classFilterChangedEvent.emit();
+    }
+    setClassTreeRoot(rootUri: string) {
+        this.setUserProjectCookiePref(Properties.pref_class_tree_root, PMKIContext.getProjectCtx().getProject(), rootUri);
+        PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.rootClassUri = rootUri;
+    }
     setClassTreeShowInstances(show: boolean) {
         this.setUserProjectCookiePref(Properties.pref_class_tree_show_instances, PMKIContext.getProjectCtx().getProject(), show);
         PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.showInstancesNumber = show;

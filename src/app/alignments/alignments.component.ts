@@ -38,11 +38,7 @@ export class AlignmentsComponent implements OnInit {
         this.sourceProjects = [];
         this.projectService.listProjectsPerRole(PmkiConstants.rolePublic, null, true).subscribe(
             projects => {
-                projects.forEach(p => {
-                    if (p.getModelType() == SKOS.uri || p.getModelType() == OntoLex.uri) {
-                        this.sourceProjects.push(p);
-                    }
-                })
+                this.sourceProjects = projects;
             }
         );
     }

@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { NgbDropdownModule, NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 import { AlignmentsModule } from '../alignments/alignments.module';
 import { WidgetModule } from '../widget/widget.module';
+import { InstanceListPanelComponent } from './list/instance/instance-list-panel.component';
+import { InstanceListComponent } from './list/instance/instance-list.component';
 import { LexicalEntryListPanelComponent } from './list/lexical-entry/lexical-entry-list-panel.component';
 import { LexicalEntryListSettingsModal } from './list/lexical-entry/lexical-entry-list-settings-modal';
 import { LexicalEntryListComponent } from './list/lexical-entry/lexical-entry-list.component';
@@ -15,8 +17,10 @@ import { SchemeListComponent } from './list/scheme/scheme-list.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SearchSettingsModal } from './search-bar/search-settings-modal';
 import { StructureTabsetComponent } from './structure-tabset/structure-tabset.component';
+import { ClassInstancePanelComponent } from './tree/class/class-instance-panel.component';
 import { ClassTreeNodeComponent } from './tree/class/class-tree-node.component';
 import { ClassTreePanelComponent } from './tree/class/class-tree-panel.component';
+import { ClassTreeSettingsModal } from './tree/class/class-tree-settings-modal';
 import { ClassTreeComponent } from './tree/class/class-tree.component';
 import { CollectionTreeNodeComponent } from './tree/collection/collection-tree-node.component';
 import { CollectionTreePanelComponent } from './tree/collection/collection-tree-panel.component';
@@ -28,10 +32,6 @@ import { ConceptTreeComponent } from './tree/concept/concept-tree.component';
 import { PropertyTreeNodeComponent } from './tree/property/property-tree-node.component';
 import { PropertyTreePanelComponent } from './tree/property/property-tree-panel.component';
 import { PropertyTreeComponent } from './tree/property/property-tree.component';
-import { InstanceListComponent } from './list/instance/instance-list.component';
-import { InstanceListPanelComponent } from './list/instance/instance-list-panel.component';
-import { ClassInstancePanelComponent } from './tree/class/class-instance-panel.component';
-import { ClassTreeSettingsModal } from './tree/class/class-tree-settings-modal';
 
 @NgModule({
     declarations: [
@@ -76,6 +76,7 @@ import { ClassTreeSettingsModal } from './tree/class/class-tree-settings-modal';
     exports: [
         StructureTabsetComponent,
         ClassInstancePanelComponent,
+        ClassTreePanelComponent,
         CollectionTreePanelComponent,
         ConceptTreePanelComponent,
         LexicalEntryListPanelComponent,

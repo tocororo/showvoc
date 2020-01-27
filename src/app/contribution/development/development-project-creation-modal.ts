@@ -6,10 +6,10 @@ import { ExtensionConfiguratorComponent } from 'src/app/widget/extensionConfigur
 import { BasicModalsServices } from '../../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../../modal-dialogs/Modals';
 import { ConfigurableExtensionFactory, ExtensionPointID, PluginSpecification, Settings } from '../../models/Plugins';
-import { RemoteRepositoryAccessConfig, RepositoryAccessType } from '../../models/Project';
+import { RemoteRepositoryAccessConfig, RepositoryAccessType, Project } from '../../models/Project';
 import { Properties } from '../../models/Properties';
 import { IRI } from '../../models/Resources';
-import { OntoLex, RDFS, SKOS, SKOSXL } from '../../models/Vocabulary';
+import { OntoLex, RDFS, SKOS, SKOSXL, OWL } from '../../models/Vocabulary';
 import { ExtensionsServices } from '../../services/extensions.service';
 import { PmkiServices } from '../../services/pmki.service';
 import { PreferencesSettingsServices } from '../../services/preferences-settings.service';
@@ -30,16 +30,18 @@ export class DevProjectCreationModal {
     baseURI: string;
 
     semanticModels: { uri: string, show: string }[] = [
-        { uri: SKOS.uri, show: "SKOS" },
-        { uri: OntoLex.uri, show: "Ontolex" }
+        { uri: RDFS.uri, show: Project.getPrettyPrintModelType(RDFS.uri) },
+        { uri: OWL.uri, show:  Project.getPrettyPrintModelType(OWL.uri) },
+        { uri: SKOS.uri, show: Project.getPrettyPrintModelType(SKOS.uri) },
+        { uri: OntoLex.uri, show: Project.getPrettyPrintModelType(OntoLex.uri) }
     ];
     selectedSemModel: string;
 
     lexicalizationModels: { uri: string, show: string }[] = [
-        { uri: RDFS.uri, show: "RDFS" },
-        { uri: SKOS.uri, show: "SKOS" },
-        { uri: SKOSXL.uri, show: "SKOS-XL" },
-        { uri: OntoLex.uri, show: "Ontolex" }
+        { uri: RDFS.uri, show: Project.getPrettyPrintModelType(RDFS.uri) },
+        { uri: SKOS.uri, show: Project.getPrettyPrintModelType(SKOS.uri) },
+        { uri: SKOSXL.uri, show: Project.getPrettyPrintModelType(SKOSXL.uri) },
+        { uri: OntoLex.uri, show: Project.getPrettyPrintModelType(OntoLex.uri) }
     ];
     selectedLexModel: string;
 

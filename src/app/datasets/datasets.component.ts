@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { PmkiConstants } from '../models/Pmki';
 import { Project } from '../models/Project';
-import { OntoLex, SKOS } from '../models/Vocabulary';
-import { GlobalSearchServices } from '../services/global-search.service';
+import { OntoLex, OWL, RDFS, SKOS } from '../models/Vocabulary';
 import { ProjectsServices } from '../services/projects.service';
 import { Cookie } from '../utils/Cookie';
 
@@ -15,9 +14,12 @@ import { Cookie } from '../utils/Cookie';
 })
 export class DatasetsComponent implements OnInit {
 
-    // languages: string[] = ["de", "fr", "en", "es", "it"];
-    kosCheck: boolean = true;
-    lexiconsCheck: boolean = true;
+    datasetTypeFacets: { label: string, datasetTypes: string[], active: boolean, cookie: string }[] = [
+        { label: "KOS", datasetTypes: [SKOS.uri], active: true, cookie: Cookie.DATASETS_FACETS_TYPE_KOS },
+        { label: "Ontologies", datasetTypes: [RDFS.uri, OWL.uri], active: true, cookie: Cookie.DATASETS_FACETS_TYPE_ONTOLOGY },
+        { label: "Lexicons", datasetTypes: [OntoLex.uri], active: true, cookie: Cookie.DATASETS_FACETS_TYPE_LEXICON }
+    ];
+
     openCheck: boolean = true;
 
     projects: Project[];
@@ -26,7 +28,7 @@ export class DatasetsComponent implements OnInit {
     lastSearch: string;
     loading: boolean = false;
 
-    constructor(private router: Router, private projectService: ProjectsServices, private globalSearchService: GlobalSearchServices) { }
+    constructor(private router: Router, private projectService: ProjectsServices) { }
 
     ngOnInit() {
         this.initCookies();
@@ -36,9 +38,12 @@ export class DatasetsComponent implements OnInit {
     searchDataset() {
         this.lastSearch = this.searchString;
 
-        let modelFacets: string[] = [];
-        if (this.kosCheck) modelFacets.push(SKOS.uri);
-        if (this.lexiconsCheck) modelFacets.push(OntoLex.uri);
+        let modelFacets: string[] = []; //collect the active model facets
+        this.datasetTypeFacets.forEach(f => {
+            if (f.active) {
+                modelFacets = modelFacets.concat(f.datasetTypes)
+            }
+        })
 
         this.loading = true;
         this.projectService.listProjectsPerRole(PmkiConstants.rolePublic, null, this.openCheck).pipe(
@@ -52,8 +57,7 @@ export class DatasetsComponent implements OnInit {
                         (this.searchString == null || this.searchString.trim() == "" || //empty search
                             p.getName().toUpperCase().includes(this.searchString.toUpperCase()) || //check search string matches project name
                             p.getBaseURI().toUpperCase().includes(this.searchString.toUpperCase()) //check search string matches project baseuri
-                        ) &&
-                        (modelFacets == null || modelFacets.includes(p.getModelType())) //check on model facets
+                        ) && modelFacets.includes(p.getModelType()) //check on model facets
                     ) {
                         this.projects.push(p);
                     }
@@ -72,13 +76,15 @@ export class DatasetsComponent implements OnInit {
     }
 
     private initCookies() {
-        this.kosCheck = Cookie.getCookie(Cookie.DATASETS_FACETS_TYPE_KOS) != "false";
-        this.lexiconsCheck = Cookie.getCookie(Cookie.DATASETS_FACETS_TYPE_LEXICON) != "false";
+        this.datasetTypeFacets.forEach(f => {
+            f.active = Cookie.getCookie(f.cookie) != "false";
+        })
         this.openCheck = Cookie.getCookie(Cookie.DATASETS_FACETS_ONLY_OPEN_PROJECTS) != "false";
     }
     private updateCookies() {
-        Cookie.setCookie(Cookie.DATASETS_FACETS_TYPE_KOS, this.kosCheck + "");
-        Cookie.setCookie(Cookie.DATASETS_FACETS_TYPE_LEXICON, this.lexiconsCheck + "");
+        this.datasetTypeFacets.forEach(f => {
+            Cookie.setCookie(f.cookie, f.active + "");
+        })
         Cookie.setCookie(Cookie.DATASETS_FACETS_ONLY_OPEN_PROJECTS, this.openCheck + "");
     }
 

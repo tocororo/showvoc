@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, Input } from "@angular/core";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
@@ -18,6 +18,8 @@ import { ClassTreeSettingsModal } from './class-tree-settings-modal';
 })
 export class ClassTreePanelComponent extends AbstractTreePanel {
     @ViewChild(ClassTreeComponent) viewChildTree: ClassTreeComponent;
+
+    @Input() roots: IRI[];
 
     panelRole: RDFResourceRolesEnum = RDFResourceRolesEnum.cls;
     rendering: boolean = false; //override the value in AbstractPanel
@@ -56,22 +58,25 @@ export class ClassTreePanelComponent extends AbstractTreePanel {
     }
 
     openAt(node: AnnotatedValue<IRI>) {
-        this.viewChildTree.openTreeAt(node);
+        let root: IRI;
+        if (this.roots != null && this.roots.length == 1) {
+            root = this.roots[0];
+        }
+        this.viewChildTree.openTreeAt(node, null, root);
     }
 
     settings() {
         const modalRef: NgbModalRef = this.modalService.open(ClassTreeSettingsModal, new ModalOptions());
-        // modalRef.result.then(
-        //     () => {
-        //         this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
-        //         if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
-        //             this.viewChildTree.forceList([]);
-        //         } else {
-        //             this.refresh();
-        //         }
-        //     },
-        //     () => { }
-        // );
+        modalRef.result.then(
+            () => { //changes done
+                this.filterEnabled = PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter.enabled;
+                this.refresh();
+            },
+            () => {
+                //not done
+                this.filterEnabled = PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter.enabled;
+            }
+        );
     }
 
 }
