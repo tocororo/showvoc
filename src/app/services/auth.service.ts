@@ -39,8 +39,9 @@ export class AuthServices {
         var params: any = {}
         return this.httpMgr.doGet(this.serviceName, "logout", params).pipe(
             map(stResp => {
-                this.router.navigate(["/home"]);
                 PMKIContext.removeLoggedUser();
+                PMKIContext.resetContext();
+                this.router.navigate(["/"]);
                 return stResp;
             })
         );

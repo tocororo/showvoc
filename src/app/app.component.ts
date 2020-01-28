@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthServices } from './services/auth.service';
 import { PMKIContext } from './utils/PMKIContext';
+import { User } from './models/User';
 
 @Component({
     selector: 'app-root',
@@ -14,6 +15,8 @@ export class AppComponent {
     // appVersion = require('../../package.json').version;
 
     navbarCollapsed: boolean = true;
+
+    private currentUser: User;
 
     constructor(private authServices: AuthServices) { }
 
@@ -30,8 +33,8 @@ export class AppComponent {
      * - the links for the admin dashboard should be visible only if the admin is logged (returns true)
      */
     isAdminLogged(): boolean {
-        let loggedUser = PMKIContext.getLoggedUser();
-        return loggedUser != null && loggedUser.isAdmin();
+        this.currentUser = PMKIContext.getLoggedUser();
+        return this.currentUser != null && this.currentUser.isAdmin();
     }
 
     logout() {

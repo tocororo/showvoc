@@ -72,7 +72,8 @@ export class AdministrationServices {
      */
     testEmailConfig(mailTo: string) {
         var params: any = {
-            mailTo: mailTo
+            mailTo: mailTo,
+            appCtx: "PMKI"
         }
         return this.httpMgr.doGet(this.serviceName, "testEmailConfig", params);
     }

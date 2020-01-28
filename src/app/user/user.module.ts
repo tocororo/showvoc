@@ -4,15 +4,19 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ModalsModule } from '../modal-dialogs/modals.module';
 import { WidgetModule } from '../widget/widget.module';
+import { ChangePasswordModal } from './change-password-modal';
 import { LoginComponent } from './login.component';
 import { RegistrationComponent } from './registration.component';
 import { ResetPasswordComponent } from './reset-password.component';
+import { UserProfileComponent } from './user-profile.component';
 
 @NgModule({
 	declarations: [
+		ChangePasswordModal,
         LoginComponent,
 		RegistrationComponent,
-		ResetPasswordComponent
+		ResetPasswordComponent,
+		UserProfileComponent
 	],
 	imports: [
 		CommonModule,
@@ -21,6 +25,9 @@ import { ResetPasswordComponent } from './reset-password.component';
         RouterModule,
 		WidgetModule
 	],
-	providers: []
+	providers: [],
+	entryComponents: [
+		ChangePasswordModal
+	]
 })
 export class UserModule { }

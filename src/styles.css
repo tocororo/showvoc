@@ -67,6 +67,10 @@ app-root {
     transform: rotate(270deg);
 }
 
+input.invalid {
+    background: #ffaaaa;
+}
+
 rdf-resource {
     font-size: 12px;
     line-height: 12px;

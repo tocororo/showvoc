@@ -19,6 +19,7 @@ import { SearchComponent } from './search/search.component';
 import { LoginComponent } from './user/login.component';
 import { RegistrationComponent } from './user/registration.component';
 import { ResetPasswordComponent } from './user/reset-password.component';
+import { UserProfileComponent } from './user/user-profile.component';
 import { AdminAuthGuard, ProjectGuard, VisitorAuthGuard } from './utils/CanActivateGuards';
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
     { path: "home", component: HomeComponent, canActivate: [VisitorAuthGuard] }, //guard needed in order to redirect to the registration  page if no user is registered
     { path: "login", component: LoginComponent },
     { path: "registration", component: RegistrationComponent },
+    { path: "profile", component: UserProfileComponent, canActivate: [AdminAuthGuard] },
     {
         path: 'admin', component: AdminDashboardComponent, canActivate: [AdminAuthGuard],
         children: [

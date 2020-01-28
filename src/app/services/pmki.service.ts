@@ -39,17 +39,6 @@ export class PmkiServices {
 
     /**
      * 
-     * @param mailTo 
-     */
-    testEmailConfig(mailTo: string) {
-        var params = {
-            mailTo: mailTo
-        };
-        return this.httpMgr.doGet(this.serviceName, "testEmailConfig", params);
-    }
-
-    /**
-     * 
      */
     getContributionReferences(): Observable<Reference[]> {
         var params = {};

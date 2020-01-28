@@ -130,7 +130,7 @@ export class SystemConfigurationComponent implements OnInit {
             + "check the e-mail configuration", PMKIContext.getLoggedUser().getEmail()).then(
             mailTo => {
                 this.testEmailConfigLoading = true;
-                this.pmkiService.testEmailConfig(mailTo).pipe(
+                this.adminService.testEmailConfig(mailTo).pipe(
                     finalize(() => this.testEmailConfigLoading = false)
                 ).subscribe(
                     () => {

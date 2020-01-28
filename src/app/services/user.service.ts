@@ -53,13 +53,65 @@ export class UserServices {
     }
 
     /**
+     * Updates givenName of the given user. Returns the updated user.
+     * @param email email of the user to update
+     * @param givenName
+     */
+    updateUserGivenName(email: string, givenName: string): Observable<User> {
+        var params: any = {
+            email: email,
+            givenName: givenName,
+        }
+        return this.httpMgr.doPost(this.serviceName, "updateUserGivenName", params).pipe(
+            map(stResp => {
+                return User.createUser(stResp);
+            })
+        );
+    }
+
+    /**
+     * Updates familyName of the given user. Returns the updated user.
+     * @param email email of the user to update
+     * @param familyName
+     */
+    updateUserFamilyName(email: string, familyName: string): Observable<User> {
+        var params: any = {
+            email: email,
+            familyName: familyName,
+        }
+        return this.httpMgr.doPost(this.serviceName, "updateUserFamilyName", params).pipe(
+            map(stResp => {
+                return User.createUser(stResp);
+            })
+        );
+    }
+
+    /**
+     * Updates givenName of the given user. Returns the updated user.
+     * @param email email of the user to update
+     * @param givenName
+     */
+    updateUserEmail(email: string, newEmail: string): Observable<User> {
+        var params: any = {
+            email: email,
+            newEmail: newEmail,
+        }
+        return this.httpMgr.doPost(this.serviceName, "updateUserEmail", params).pipe(
+            map(stResp => {
+                return User.createUser(stResp);
+            })
+        );
+    }
+
+    /**
      * 
      * @param email 
      */
     forgotPassword(email: string) {
         var params: any = {
             email: email,
-            vbHostAddress: location.protocol+"//"+location.hostname+((location.port !="") ? ":"+location.port : "")+location.pathname
+            vbHostAddress: location.protocol+"//"+location.hostname+((location.port !="") ? ":"+location.port : "")+location.pathname,
+            appCtx: "PMKI"
         }
         return this.httpMgr.doPost(this.serviceName, "forgotPassword", params);
     }
@@ -71,9 +123,25 @@ export class UserServices {
     resetPassword(email: string, token: string) {
         var params: any = {
             email: email,
-            token: token
+            token: token,
+            appCtx: "PMKI"
         }
         return this.httpMgr.doPost(this.serviceName, "resetPassword", params);
+    }
+
+    /**
+     * 
+     * @param email
+     * @param oldPassword 
+     * @param newPassword 
+     */
+    changePassword(email: string, oldPassword: string, newPassword: string) {
+        var params: any = {
+            email: email,
+            oldPassword: oldPassword,
+            newPassword: newPassword
+        }
+        return this.httpMgr.doPost(this.serviceName, "changePassword", params);
     }
 
 }
