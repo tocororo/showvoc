@@ -11,7 +11,7 @@
             Root class:
         </label>
         <input-editable *ngIf="rootClass" [value]="rootClass.getValue().getIRI()" (valueEdited)="updateRootClass($event)" style="flex: 1;"></input-editable>
-        <button class="btn btn-sm btn-outline-secondary ml-1" (click)="changeClass()">
+        <button class="btn btn-sm btn-outline-info ml-1" (click)="changeClass()">
             <img src="../../../../assets/images/icons/res/class.png"/>
         </button>
     </div>

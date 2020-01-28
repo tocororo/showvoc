@@ -38,7 +38,7 @@
             <div class="input-group input-group-sm">
                 <input class="form-control" [(ngModel)]="baseURI" placeholder="Base URI" [disabled]="useProjectBaseURI">
                 <div class="input-group-append">
-                    <button class="btn btn-secondary" (click)="changeUseProjectBaseUri()" [ngClass]="{ active: useProjectBaseURI }" title="Use the baseURI of the project">
+                    <button class="btn btn-info" (click)="changeUseProjectBaseUri()" [ngClass]="{ active: useProjectBaseURI }" title="Use the baseURI of the project">
                         <span *ngIf="useProjectBaseURI" class="fas fa-lock"></span>
                         <span *ngIf="!useProjectBaseURI" class="fas fa-unlock-alt"></span>
                     </button>

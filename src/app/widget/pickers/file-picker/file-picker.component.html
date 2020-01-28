@@ -1,6 +1,6 @@
 <div [class]="'input-group' + inputGroupClass">
     <div class="input-group-prepend">
-        <button class="btn btn-outline-secondary" (click)="inputFile.click()">{{label}}</button>
+        <button class="btn btn-outline-info" (click)="inputFile.click()">{{label}}</button>
         <input #inputFile type="file" (change)="fileChangeEvent(inputFile.files[0])" [accept]="accept" hidden>
     </div>
     <input type="text" class="form-control" [ngModel]="file?.name" [placeholder]="placeholder" readonly>

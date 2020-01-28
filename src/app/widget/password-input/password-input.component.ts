@@ -28,7 +28,7 @@ export class PasswordInputComponent implements OnInit {
         }
 
         if (this.btnClass == null) {
-            this.btnClass = "btn btn-outline-secondary";
+            this.btnClass = "btn btn-outline-info";
         }
     }
 

@@ -11,7 +11,7 @@
             <div *ngFor="let l of languages; let i = index" class="input-group mb-1">
                 <input class="form-control" [(ngModel)]="languages[i]" placeholder="Language tag">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" (click)="deleteLang(i)" [disabled]="languages.length == 1"><span class="fas fa-trash"></span></button>
+                    <button class="btn btn-outline-info" (click)="deleteLang(i)" [disabled]="languages.length == 1"><span class="fas fa-trash"></span></button>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
             <div class="input-group mb-1">
                 <input class="form-control" [(ngModel)]="newLang" placeholder="Add language">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" (click)="addLang()" [disabled]="!newLang"><span class="fas fa-plus"></span></button>
+                    <button class="btn btn-outline-info" (click)="addLang()" [disabled]="!newLang"><span class="fas fa-plus"></span></button>
                 </div>
             </div>
         </div>

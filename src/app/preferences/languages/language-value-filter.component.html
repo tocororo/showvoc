@@ -5,10 +5,10 @@
             <span *ngIf="getActiveLanguageItems().length == 0" class="mr-2 fas fa-exclamation-triangle" title="No language selected implicitly means all languages"></span>
             <div class="btn-toolbar">
                 <div class="btn-group btn-group-sm">
-                    <button type="button" class="btn btn-outline-secondary" (click)="changeAllLangStatus(true)" title="Check all">
+                    <button type="button" class="btn btn-outline-info" (click)="changeAllLangStatus(true)" title="Check all">
                         <span class="far fa-check-square"></span>
                     </button>
-                    <button type="button" class="btn btn-outline-secondary" (click)="changeAllLangStatus(false)" title="Unchecl all">
+                    <button type="button" class="btn btn-outline-info" (click)="changeAllLangStatus(false)" title="Unchecl all">
                         <span class="far fa-square"></span>
                     </button>
                 </div>
