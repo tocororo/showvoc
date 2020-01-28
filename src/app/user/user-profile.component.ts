@@ -13,7 +13,7 @@ import { ChangePasswordModal } from './change-password-modal';
 })
 export class UserProfileComponent {
 
-    private user: User;
+    user: User;
 
     constructor(private userService: UserServices, private modalService: NgbModal) { }
 
@@ -21,7 +21,7 @@ export class UserProfileComponent {
         this.user = PMKIContext.getLoggedUser();
     }
 
-    private updateGivenName(newGivenName: string) {
+    updateGivenName(newGivenName: string) {
         this.userService.updateUserGivenName(this.user.getEmail(), newGivenName).subscribe(
             user => {
                 PMKIContext.setLoggedUser(user);
@@ -29,7 +29,7 @@ export class UserProfileComponent {
         )
     }
 
-    private updateFamilyName(newFamilyName: string) {
+    updateFamilyName(newFamilyName: string) {
         this.userService.updateUserFamilyName(this.user.getEmail(), newFamilyName).subscribe(
             user => {
                 PMKIContext.setLoggedUser(user);
@@ -37,7 +37,7 @@ export class UserProfileComponent {
         )
     }
 
-    private updateEmail(newEmail: string) {
+    updateEmail(newEmail: string) {
         this.userService.updateUserEmail(this.user.getEmail(), newEmail).subscribe(
             user => {
                 PMKIContext.setLoggedUser(user);
@@ -45,7 +45,7 @@ export class UserProfileComponent {
         )
     }
 
-    private changePwd() {
+    changePwd() {
         let _options: ModalOptions = new ModalOptions();
         const modalRef: NgbModalRef = this.modalService.open(ChangePasswordModal, _options);
         return modalRef.result;

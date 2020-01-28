@@ -7,19 +7,19 @@ import { PMKIContext } from '../utils/PMKIContext';
 
 @Component({
     selector: "change-pwd-modal",
-    templateUrl: "/change-password-modal.html",
+    templateUrl: "./change-password-modal.html",
 })
 export class ChangePasswordModal {
 
-    private oldPwd: string;
-    private newPwd: string;
-    private newPwdConfirm: string;
+    oldPwd: string;
+    newPwd: string;
+    newPwdConfirm: string;
 
     constructor(public activeModal: NgbActiveModal, private userService: UserServices, private authService: AuthServices, 
         private basicModals: BasicModalsServices) {
     }
 
-    private isInputValid(): boolean {
+    isInputValid(): boolean {
         return (
             this.oldPwd != undefined && this.oldPwd.trim() != "" &&
             this.newPwd != undefined && this.newPwd.trim() != "" &&
@@ -28,7 +28,7 @@ export class ChangePasswordModal {
         );
     }
 
-    private isNewPwdConfirmOk(): boolean {
+    isNewPwdConfirmOk(): boolean {
         return this.newPwd == this.newPwdConfirm;
     }
 
