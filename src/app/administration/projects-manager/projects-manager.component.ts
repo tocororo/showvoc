@@ -12,6 +12,7 @@ import { GlobalSearchServices } from 'src/app/services/global-search.service';
 import { PmkiServices } from 'src/app/services/pmki.service';
 import { ProjectsServices } from 'src/app/services/projects.service';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { CreateProjectModal } from './create-project-modal';
 import { LoadDataModal } from './load-data-modal';
 import { ProjectSettingsModal } from './project-settings-modal';
@@ -43,7 +44,8 @@ export class ProjectsManagerComponent {
 
 
     constructor(private modalService: NgbModal, private projectService: ProjectsServices, private pmkiService: PmkiServices, 
-        private globalSearchService: GlobalSearchServices, private basicModals: BasicModalsServices, private router: Router) { }
+        private globalSearchService: GlobalSearchServices, private basicModals: BasicModalsServices, private router: Router,
+        private eventHandler: PMKIEventHandler) { }
 
     ngOnInit() {
         this.initProjects();
@@ -79,6 +81,7 @@ export class ProjectsManagerComponent {
     createProject() {
         this.modalService.open(CreateProjectModal, new ModalOptions("lg")).result.then(
             () => {
+                this.eventHandler.projectUpdatedEvent.emit();
                 this.initProjects();
             },
             () => {}
@@ -108,6 +111,7 @@ export class ProjectsManagerComponent {
             () => {
                 this.projectService.deleteProject(project).subscribe(
                     () => {
+                        this.eventHandler.projectUpdatedEvent.emit();
                         //remove the project from the list
                         this.projectList.forEach((proj: Project, idx: number, list: Project[]) => {
                             if (proj.getName() == project.getName()) {
@@ -196,6 +200,7 @@ export class ProjectsManagerComponent {
             (performIndexAction: boolean) => { //tells if the deletion/creation of the index should be performed
                 this.pmkiService.setProjectStatus(project.getName(), role).subscribe(
                     () => {
+                        this.eventHandler.projectUpdatedEvent.emit();
                         project[this.roleAttr] = role;
                         if (performIndexAction) {
                             indexActionFn.subscribe();
@@ -214,11 +219,17 @@ export class ProjectsManagerComponent {
         if (project.isOpen()) { //project open => close it
             this.projectService.disconnectFromProject(project).pipe(
                 finalize(() => project[this.openingAttr] = false)
-            ).subscribe(() => project.setOpen(false));
+            ).subscribe(() => {
+                this.eventHandler.projectUpdatedEvent.emit();
+                project.setOpen(false);
+            });
         } else { //project closed => open it
             this.projectService.accessProject(project).pipe(
                 finalize(() => project[this.openingAttr] = false)
-            ).subscribe(() => project.setOpen(true));
+            ).subscribe(() => {
+                this.eventHandler.projectUpdatedEvent.emit();
+                project.setOpen(true);
+            });
         }
     }
 

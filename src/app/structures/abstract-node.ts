@@ -1,4 +1,5 @@
 import { EventEmitter, Input, Output } from "@angular/core";
+import { Subscription } from 'rxjs';
 import { AnnotatedValue, IRI } from '../models/Resources';
 import { TreeListContext } from '../utils/UIUtils';
 
@@ -14,7 +15,7 @@ export abstract class AbstractNode {
     @Input() context: TreeListContext;
     @Output() nodeSelected = new EventEmitter<AnnotatedValue<IRI>>();
 
-    eventSubscriptions: any[] = [];
+    eventSubscriptions: Subscription[] = [];
 
     /**
      * ATTRIBUTES

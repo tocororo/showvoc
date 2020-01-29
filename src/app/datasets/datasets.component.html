@@ -28,47 +28,48 @@
                 </div>
             </div>
         </div>
-
         
-		<div class="vbox ml-2" style="flex: 4;">
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" [(ngModel)]="searchString" (keydown.enter)="searchDataset()" placeholder="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-info" (click)="searchDataset()">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
+        <div class="card vbox ml-2" style="flex: 4;">
+            <div class="card-header d-flex align-items-center">
+                <label style="flex: 1">Datasets</label>
+                <button class="btn btn-sm btn-light" style="line-height: 1;" (click)="initDatasets()" title="Refresh datasets">
+                    <span class="fas fa-sync fa-sm"></span>
+                </button>
             </div>
-
-            <div *ngIf="loading" class="spinner-border text-info"></div>
-
-            <ng-container *ngIf="!loading && projects">
-                <h5 *ngIf="projects.length == 0" class="text-secondary">No dataset found for '{{lastSearch}}'</h5>
-
-                <div *ngIf="projects.length != 0" class="card vbox">
-                    <div class="card-body scrollableContainer">
-                        <div *ngFor="let p of projects" class="card mb-1">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <p *ngIf="!p.isOpen()" class="text-muted">{{p.getName()}}</p>
-                                    <a *ngIf="p.isOpen()" [routerLink]="" (click)="goToProject(p)">{{p.getName()}}</a>
-                                </h5>
-                                <div class="p-1 border-left border-bottom" style="position: absolute; top: 0; right: 0; border-bottom-left-radius: 5px">
-                                    <span class="mr-2">
-                                        <span class="mr-1">Model:</span><span class="badge badge-info">{{p.getModelType(true)}}</span>
-                                    </span>
-                                    <span>
-                                        <span class="mr-1">Lexicalization:</span><span class="badge badge-info">{{p.getLexicalizationModelType(true)}}</span>
-                                    </span>
-                                </div>
-
-                                <p class="card-text text-secondary">{{p.getBaseURI()}}</p>
+            <div class="card-body scrollableContainer">
+                <div *ngIf="loading" class="spinner-border text-info"></div>
+                <ng-container *ngIf="!loading">
+                    <div *ngFor="let p of projects" class="card mb-1">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <p *ngIf="!p.isOpen()" class="text-muted">{{p.getName()}}</p>
+                                <a *ngIf="p.isOpen()" [routerLink]="" (click)="goToProject(p)">{{p.getName()}}</a>
+                            </h5>
+                            <div class="p-1 border-left border-bottom" style="position: absolute; top: 0; right: 0; border-bottom-left-radius: 5px">
+                                <span class="mr-2">
+                                    <span class="mr-1">Model:</span><span class="badge badge-info">{{p.getModelType(true)}}</span>
+                                </span>
+                                <span>
+                                    <span class="mr-1">Lexicalization:</span><span class="badge badge-info">{{p.getLexicalizationModelType(true)}}</span>
+                                </span>
                             </div>
+
+                            <p class="card-text text-secondary">{{p.getBaseURI()}}</p>
                         </div>
                     </div>
+                </ng-container>
+            </div>
+            <div class="card-footer">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" [(ngModel)]="filterString" (ngModelChange)="filterDatasets()" placeholder="Filter">
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <i class="fas fa-filter"></i>
+                        </span>
+                    </div>
                 </div>
-            </ng-container>
-
-		</div>
+            </div>
+        </div>
+        
 	</div>
 </div>

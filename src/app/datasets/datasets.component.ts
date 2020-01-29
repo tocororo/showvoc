@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { PmkiConstants } from '../models/Pmki';
 import { Project } from '../models/Project';
 import { OntoLex, OWL, RDFS, SKOS } from '../models/Vocabulary';
 import { ProjectsServices } from '../services/projects.service';
 import { Cookie } from '../utils/Cookie';
+import { PMKIEventHandler } from '../utils/PMKIEventHandler';
 
 @Component({
     selector: 'datasets-component',
@@ -14,30 +16,46 @@ import { Cookie } from '../utils/Cookie';
 })
 export class DatasetsComponent implements OnInit {
 
+    allProjects: Project[];
+    projects: Project[] = [];
+
+    eventSubscriptions: Subscription[] = [];
+
     datasetTypeFacets: { label: string, datasetTypes: string[], active: boolean, cookie: string }[] = [
         { label: "KOS", datasetTypes: [SKOS.uri], active: true, cookie: Cookie.DATASETS_FACETS_TYPE_KOS },
         { label: "Ontologies", datasetTypes: [RDFS.uri, OWL.uri], active: true, cookie: Cookie.DATASETS_FACETS_TYPE_ONTOLOGY },
         { label: "Lexicons", datasetTypes: [OntoLex.uri], active: true, cookie: Cookie.DATASETS_FACETS_TYPE_LEXICON }
     ];
-
     openCheck: boolean = true;
 
-    projects: Project[];
+    filterString: string;
 
-    searchString: string;
-    lastSearch: string;
     loading: boolean = false;
 
-    constructor(private router: Router, private projectService: ProjectsServices) { }
+    constructor(private router: Router, private projectService: ProjectsServices, private eventHandler: PMKIEventHandler) {
+        this.eventSubscriptions.push(eventHandler.projectUpdatedEvent.subscribe(
+            () => this.initDatasets())
+        );
+    }
 
     ngOnInit() {
         this.initCookies();
-        this.searchDataset();
+        this.initDatasets();
     }
 
-    searchDataset() {
-        this.lastSearch = this.searchString;
+    initDatasets() {
+        this.loading = true;
+        this.projectService.listProjectsPerRole(PmkiConstants.rolePublic).pipe(
+            finalize(() => this.loading = false)
+        ).subscribe(
+            projects => {
+                this.allProjects = projects;
+                this.filterDatasets();
+            }
+        );
+    }
 
+    filterDatasets() {
         let modelFacets: string[] = []; //collect the active model facets
         this.datasetTypeFacets.forEach(f => {
             if (f.active) {
@@ -45,30 +63,26 @@ export class DatasetsComponent implements OnInit {
             }
         })
 
-        this.loading = true;
-        this.projectService.listProjectsPerRole(PmkiConstants.rolePublic, null, this.openCheck).pipe(
-            finalize(() => this.loading = false)
-        ).subscribe(
-            projects => {
-                this.projects = [];
-                //filter the results according the search string and the facets
-                projects.forEach(p => {
-                    if (
-                        (this.searchString == null || this.searchString.trim() == "" || //empty search
-                            p.getName().toUpperCase().includes(this.searchString.toUpperCase()) || //check search string matches project name
-                            p.getBaseURI().toUpperCase().includes(this.searchString.toUpperCase()) //check search string matches project baseuri
-                        ) && modelFacets.includes(p.getModelType()) //check on model facets
-                    ) {
-                        this.projects.push(p);
-                    }
-                });
+        this.projects = [];
+        //filter the results according the search string and the facets
+        this.allProjects.forEach(p => {
+            if (
+                (
+                    this.filterString == null || this.filterString.trim() == "" || //no filter
+                    p.getName().toUpperCase().includes(this.filterString.toUpperCase()) || //check filter string matches project name
+                    p.getBaseURI().toUpperCase().includes(this.filterString.toUpperCase()) //check filter string matches project baseuri
+                ) &&
+                modelFacets.includes(p.getModelType()) && //check on model facets
+                (!this.openCheck || this.openCheck && p.isOpen()) //check only open facet
+            ) {
+                this.projects.push(p);
             }
-        )
+        });
     }
 
     onFacetChange() {
         this.updateCookies();
-        this.searchDataset();
+        this.filterDatasets();
     }
 
     private goToProject(project: Project) {

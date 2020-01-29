@@ -21,6 +21,9 @@ export class PMKIEventHandler {
     public showFlagChangedEvent: EventEmitter<boolean> = new PMKIEventEmitter("showFlagChangedEvent");
     public classFilterChangedEvent: EventEmitter<any> = new PMKIEventEmitter("classFilterChangedEvent");
 
+    //when a project is created/deleted/open/closed/status-changed => trigger the update of projects in dataset page
+    public projectUpdatedEvent: EventEmitter<any> = new PMKIEventEmitter("projectUpdatedEvent");
+
     constructor() { }
 
     /**

@@ -1,4 +1,5 @@
 import { EventEmitter, Input, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from '../models/Resources';
 import { PMKIEventHandler } from '../utils/PMKIEventHandler';
@@ -24,7 +25,7 @@ export abstract class AbstractPanel {
 
     rendering: boolean = true; //if true the nodes in the tree should be rendered with the show, with the qname otherwise
     showDeprecated: boolean = true;
-    eventSubscriptions: any[] = [];
+    eventSubscriptions: Subscription[] = [];
     selectedNode: AnnotatedValue<IRI> = null;
 
     /**
