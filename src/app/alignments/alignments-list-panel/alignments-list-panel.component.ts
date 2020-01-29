@@ -19,6 +19,7 @@ export class AlignmentsListPanelComponent {
 
     selectedLinkset: LinksetMetadata;
 
+    showPercentage: boolean = false;
     loadingProfile: boolean = false;
 
     constructor(private mapleService: MapleServices, private basicModals: BasicModalsServices) { }

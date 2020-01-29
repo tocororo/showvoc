@@ -10,7 +10,10 @@
 
             <div *ngFor="let l of linksets">
                 <div class="listItem" [ngClass]="{ selectedResource : l == selectedLinkset }" style="cursor: pointer;" (click)="selectLinkset(l)">
-                    <span class="badge badge-info mr-1">{{l.linkCount}}</span>
+                    <span class="badge badge-info mr-1">
+                        <ng-container *ngIf="!showPercentage">{{l.linkCount}}</ng-container>
+                        <ng-container *ngIf="showPercentage">{{l.linkPercentage}}%</ng-container>
+                    </span>
                     <span>{{l.getTargetDatasetShow()}}</span>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { LinksetMetadata } from 'src/app/models/Metadata';
@@ -14,7 +14,7 @@ import { PMKIContext } from '../../utils/PMKIContext';
     host: { class: "structureComponent" }
 })
 export class AlignmentsListComponent {
-
+    @Input() showPercentage: boolean;
     @Output() linksetSelected = new EventEmitter<LinksetMetadata>();
 
     private workingProject: Project;
