@@ -10,12 +10,13 @@ import { ZoomableDirective } from './d3/zoomable.directive';
 import { AlignmentDetailsPanel } from './impl/alignment-graph/alignment-details-panel';
 import { AlignmentGraphPanelComponent } from './impl/alignment-graph/alignment-graph-panel.component';
 import { AlignmentGraphComponent } from './impl/alignment-graph/alignment-graph.component';
+import { AlignmentLinkComponent } from './impl/alignment-graph/alignment-link.component';
 import { AlignmentNodeComponent } from './impl/alignment-graph/alignment-node.component';
 import { DatasetDetailsPanel } from './impl/alignment-graph/dataset-details-panel';
 import { DataGraphPanel } from './impl/data-graph/data-graph-panel';
 import { DataGraphComponent } from './impl/data-graph/data-graph.component';
+import { DataLinkComponent } from './impl/data-graph/data-link.component';
 import { DataNodeComponent } from './impl/data-graph/data-node.component';
-import { LinkComponent } from './impl/link.component';
 import { DataGraphSettingsModal } from './modals/data-graph-settings-modal';
 import { GraphModal } from './modals/graph-modal';
 import { GraphModalServices } from './modals/graph-modal.service';
@@ -29,14 +30,14 @@ import { ResourceDetailsPanel } from './widget/resource-details-panel';
         DraggableDirective, 
         ZoomableDirective,
 
-        LinkComponent, 
-
+        AlignmentLinkComponent,
         AlignmentNodeComponent,
         AlignmentGraphComponent,
         AlignmentGraphPanelComponent,
         AlignmentDetailsPanel,
         DatasetDetailsPanel,
 
+        DataLinkComponent, 
         DataNodeComponent, 
         DataGraphComponent,
         DataGraphPanel, 

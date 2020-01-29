@@ -1,20 +1,13 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, SimpleChanges, ChangeDetectorRef } from '@angular/core';
-import { RDFResourceRolesEnum } from 'src/app/models/Resources';
-import { Constants } from '../model/GraphConstants';
-import { GraphUtils } from '../model/GraphUtils';
-import { Link } from '../model/Link';
-import { ResourceUtils } from 'src/app/utils/ResourceUtils';
+import { ChangeDetectorRef, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Constants } from './model/GraphConstants';
+import { GraphUtils } from './model/GraphUtils';
+import { Link } from './model/Link';
 
-@Component({
-    selector: '[link]',
-    templateUrl: "./link.component.html",
-    styleUrls: ['../graph.css']
-})
-export class LinkComponent {
+export abstract class AbstractLinkComponent {
     @Output() linkClicked: EventEmitter<Link> = new EventEmitter<Link>();
-    @Input('link') link: Link;
-    @Input() rendering: boolean = true;
     @Input() selected: boolean = false;
+
+    abstract link: Link; //Input in the implementation
 
     @ViewChild('textEl') textElement: ElementRef;
 
@@ -23,32 +16,26 @@ export class LinkComponent {
 
     show: string;
 
-    constructor(private changeDetectorRef: ChangeDetectorRef) { }
+    protected changeDetectorRef: ChangeDetectorRef;
+    constructor(changeDetectorRef: ChangeDetectorRef) {
+        this.changeDetectorRef = changeDetectorRef;
+    }
 
     ngOnInit() {
         this.initLinkStyle();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['rendering'] && !changes['rendering'].firstChange) {
-            this.updateShow();
-        }
-    }
+    /**
+     * implementation must handle the ngOnChanges on input attribute that determine the show (e.g. rendering or showPercentage)
+     * @param changes 
+     */
+    abstract ngOnChanges(changes: SimpleChanges): void;
 
     ngAfterViewInit() {
         this.updateShow();
     }
 
-    private initLinkStyle() {
-        if (this.link.res != null) {
-            //distinguish the type or predicate
-            let role: RDFResourceRolesEnum = this.link.res.getRole();
-            this.arrowClass = role + "Arrow";
-        }
-        if (this.link.classAxiom) {
-            this.linkClass += " linkDotted";
-        }
-    }
+    abstract initLinkStyle(): void;
 
     /**
      * Compute the coordinates for the "d" attributes of the path
@@ -75,10 +62,7 @@ export class LinkComponent {
         return path;
     }
 
-    private updateShow() {
-        this.show = ResourceUtils.getRendering(this.link.res, this.rendering);
-        this.changeDetectorRef.detectChanges(); //fire change detection in order to update the textEl that contains "show"
-    }
+    abstract updateShow(): void;
 
 
     /**
@@ -117,9 +101,7 @@ export class LinkComponent {
 
     onClick(event: Event) {
         event.stopPropagation(); //avoid propagation since click event is handled also in the svg container div
-        if (this.link.res != null) {
-            this.linkClicked.emit(this.link);
-        }
+        this.linkClicked.emit(this.link);
     }
 
 }

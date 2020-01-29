@@ -1,6 +1,7 @@
+import { IRI, Value } from 'src/app/models/Resources';
+import { DataLink } from './DataLink';
 import { Link } from "./Link";
 import { Node, NodeShape } from "./Node";
-import { Value, IRI } from 'src/app/models/Resources';
 
 export class GraphUtils {
 
@@ -102,8 +103,8 @@ export class GraphUtils {
         return null;
     }
 
-    public static getLinksWithPredicate(links: Link[], predicate: IRI): Link[] {
-        let linksWithPred: Link[] = [];
+    public static getLinksWithPredicate(links: DataLink[], predicate: IRI): DataLink[] {
+        let linksWithPred: DataLink[] = [];
         for (let i = 0; i < links.length; i++) {
             if (links[i].res.getValue().equals(predicate)) {
                 linksWithPred.push(links[i]);

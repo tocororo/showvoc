@@ -22,6 +22,8 @@ export class AlignmentGraphPanelComponent extends AbstractGraphPanel {
 
     @ViewChild(AlignmentGraphComponent) viewChildGraph: AlignmentGraphComponent;
 
+    showPercentage: boolean = false;
+
     constructor(basicModals: BasicModalsServices, browsingModals: BrowsingModalsServices) {
         super(basicModals, browsingModals);
     }

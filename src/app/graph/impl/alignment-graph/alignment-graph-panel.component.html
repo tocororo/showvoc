@@ -7,6 +7,9 @@
                 <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" (click)="rendering=!rendering" title="Rendering">
                     <i class="fas fa-font"></i>
                 </button>
+                <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: showPercentage}" (click)="showPercentage=!showPercentage" title="Show linkset percentage">
+                    <i class="fas fa-percent"></i>
+                </button>
                 <button class="btn btn-light btn-sm ml-1" (click)="snapshot()" title="Export a snapshot of the graph (.svg)">
                     <i class="fas fa-camera"></i>
                 </button>
@@ -14,7 +17,7 @@
         </div>
     </div>
     <div class="card-body hbox">
-        <alignment-graph class="vbox" [graph]="graph" [rendering]="rendering" (elementSelected)="onElementSelected($event)"></alignment-graph>
+        <alignment-graph class="vbox" [graph]="graph" [rendering]="rendering" [showPercentage]="showPercentage" (elementSelected)="onElementSelected($event)"></alignment-graph>
 
         <div class="vbox ml-1" style="flex: initial; width: 400px;">
             <div class="card vbox">

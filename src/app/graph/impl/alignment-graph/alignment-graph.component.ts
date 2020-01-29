@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, SimpleChanges } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, SimpleChanges } from "@angular/core";
 import { from, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { LinksetMetadata } from 'src/app/models/Metadata';
-import { AnnotatedValue, IRI, ResAttribute } from 'src/app/models/Resources';
+import { AnnotatedValue, IRI, ResAttribute, Value } from 'src/app/models/Resources';
 import { MetadataRegistryServices } from 'src/app/services/metadata-registry.service';
 import { AbstractGraph, GraphMode } from '../../abstract-graph';
 import { D3Service } from '../../d3/d3.service';
@@ -20,6 +20,8 @@ import { Node } from "../../model/Node";
     styleUrls: ['../../graph.css']
 })
 export class AlignmentGraphComponent extends AbstractGraph {
+
+    @Input() showPercentage: boolean;
 
     protected mode = GraphMode.dataOriented;
 
@@ -81,15 +83,7 @@ export class AlignmentGraphComponent extends AbstractGraph {
         linksets.forEach(l => {
             let targetNodeValue: AnnotatedValue<IRI> = this.getTargetDatasetAnnotatedIRI(l);
             let targetNode: Node = new AlignmentNode(targetNodeValue);
-            let linkRes: AnnotatedValue<IRI>
-            if (l.linkPredicate != null) {
-                linkRes = new AnnotatedValue(l.linkPredicate);
-            } else {
-                linkRes = new AnnotatedValue(new IRI(l.linkCount + ""));
-            }
-            linkRes.setAttribute(ResAttribute.SHOW, l.linkCount);
-            let link: AlignmentLink = new AlignmentLink(node, targetNode, linkRes);
-            link.linkset = l;
+            let link: AlignmentLink = new AlignmentLink(node, targetNode, l);
             links.push(link);
         });
         this.appendLinks(node, links);
@@ -121,7 +115,7 @@ export class AlignmentGraphComponent extends AbstractGraph {
 
     private appendLinks(expandedNode: Node, links: Link[]) {
         links.forEach(l => {
-            if (this.graph.getLink(l.source.res.getValue(), l.res.getValue(), l.target.res.getValue()) != null) {
+            if (this.retrieveLink(l.source.res.getValue(), l.target.res.getValue()) != null) {
                 return;
             }
 
@@ -179,6 +173,17 @@ export class AlignmentGraphComponent extends AbstractGraph {
             this.graph.addNode(graphNode);
         }
         return graphNode;
+    }
+
+    private retrieveLink(source: Value, target: Value): AlignmentLink {
+        let links: AlignmentLink[] = <AlignmentLink[]>this.graph.getLinks();
+        for (let i = 0; i < links.length; i++) {
+            let l = links[i];
+            if (l.source.res.getValue().equals(source) && l.target.res.getValue().equals(target)) {
+                return l;
+            }
+        };
+        return null;
     }
 
 

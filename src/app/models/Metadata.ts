@@ -13,6 +13,7 @@ export class LinksetMetadata {
     targetDataset: Target;
     registeredTargets: Target[];
     linkCount?: number;
+    linkPercentage?: number;
     linkPredicate?: IRI;
 
     /**

@@ -5,6 +5,7 @@ import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resour
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 import { AbstractGraphPanel } from '../../abstract-graph-panel';
 import { GraphModalServices } from '../../modals/graph-modal.service';
+import { DataNode } from '../../model/DataNode';
 import { DataGraphComponent } from './data-graph.component';
 
 @Component({
@@ -45,15 +46,19 @@ export class DataGraphPanel extends AbstractGraphPanel {
     }
 
     isExpandEnabled(): boolean {
-        return (
-            this.selectedElement != null && this.selectedElement instanceof Node && this.selectedElement.res.getValue() instanceof IRI &&
-            (
-                this.selectedElement.res.getRole() == RDFResourceRolesEnum.cls ||
-                this.selectedElement.res.getRole() == RDFResourceRolesEnum.concept ||
-                this.selectedElement.res.getRole() == RDFResourceRolesEnum.skosCollection ||
-                ResourceUtils.roleSubsumes(RDFResourceRolesEnum.property, this.selectedElement.res.getRole())
+        if (this.selectedElement != null && this.selectedElement instanceof DataNode) {
+            let resRole: RDFResourceRolesEnum = this.selectedElement.res.getRole();
+            return (
+                this.selectedElement.res.getValue() instanceof IRI &&
+                (
+                    resRole == RDFResourceRolesEnum.cls || resRole == RDFResourceRolesEnum.concept ||
+                    resRole == RDFResourceRolesEnum.skosCollection || ResourceUtils.roleSubsumes(RDFResourceRolesEnum.property, resRole)
+                )
             )
-        )
+        } else {
+            return false;
+        }
+        
     }
 
     expandSubResources() {

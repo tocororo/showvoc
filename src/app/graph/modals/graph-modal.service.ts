@@ -7,10 +7,10 @@ import { GraphResultBindings, QueryResultBinding } from '../../models/Sparql';
 import { ResourceUtils } from '../../utils/ResourceUtils';
 import { GraphMode } from '../abstract-graph';
 import { D3Service } from '../d3/d3.service';
+import { DataLink } from '../model/DataLink';
 import { DataNode } from '../model/DataNode';
 import { ForceDirectedGraph } from '../model/ForceDirectedGraph';
 import { GraphUtils } from '../model/GraphUtils';
-import { Link } from '../model/Link';
 import { ModelNode } from '../model/ModelNode';
 import { Node } from '../model/Node';
 import { DataGraphSettingsModal } from './data-graph-settings-modal';
@@ -25,7 +25,7 @@ export class GraphModalServices {
     openGraphQuertyResult(result: GraphResultBindings[]) {
         //creates nodes and links
         let nodes: Node[] = [];
-        let links: Link[] = [];
+        let links: DataLink[] = [];
         result.forEach(binding => {
             let subj: Resource = <Resource>this.convertBindingToValue(binding.subj);
             let pred: IRI = <IRI>this.convertBindingToValue(binding.pred);
@@ -41,7 +41,7 @@ export class GraphModalServices {
                 nodeObj = new DataNode(new AnnotatedValue(obj));
                 nodes.push(nodeObj);
             }
-            links.push(new Link(nodeSubj, nodeObj, new AnnotatedValue(pred)));
+            links.push(new DataLink(nodeSubj, nodeObj, new AnnotatedValue(pred)));
         });
 
         //replaces "generic" resources in nodes and links with the annotated resource

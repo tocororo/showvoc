@@ -1,6 +1,6 @@
 import { EventEmitter } from "@angular/core";
 import * as d3 from "d3";
-import { IRI, Literal, Value } from 'src/app/models/Resources';
+import { Literal, Value } from 'src/app/models/Resources';
 import { Size } from "./GraphConstants";
 import { GraphUtils } from "./GraphUtils";
 import { Link } from "./Link";
@@ -89,7 +89,7 @@ export class ForceDirectedGraph {
          * Here I collect links with the same source-target and set an offset for them,
          * so they will be rendered with different x,y coordinates (not overlapping each other).
          */
-        if (this.links.length > 0 && this.links[0].res != null) {
+        if (this.links.length > 0) {
             //resets all the offsets: useful since once the links are changed, some links could be no more overlapped
             this.links.forEach(l => l.offset = 0);
 
@@ -228,22 +228,6 @@ export class ForceDirectedGraph {
 
     public getLinks(): Link[] {
         return this.links;
-    }
-
-    /**
-     * Returns the link representing the given triple
-     * @param source 
-     * @param property 
-     * @param target 
-     */
-    public getLink(source: Value, property: IRI, target: Value): Link {
-        for (let i = 0; i < this.links.length; i++) {
-            let l = this.links[i];
-            if (l.source.res.getValue().equals(source) && l.target.res.getValue().equals(target) && l.res.getValue().equals(property)) {
-                return l;
-            }
-        };
-        return null;
     }
 
     public getLinksFrom(node: Node) {

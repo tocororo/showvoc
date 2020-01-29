@@ -6,13 +6,22 @@
             <thead>
                 <tr>
                     <th>Dataset</th>
-                    <th>Alignments</th>
+                    <th>
+                        Alignments
+                        <button class="btn btn-xs btn-light ml-2" [ngClass]="{ active: showPercentage }" 
+                            (click)="showPercentage = !showPercentage" title="Show percentage">
+                            <i class="fas fa-percent"></i>
+                        </button>
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let l of linksets" (click)="showMappings(l)"  style="cursor: pointer">
                     <td>{{l.getTargetDatasetShow()}}</td>
-                    <td>{{l.linkCount}}</td>
+                    <td>
+                        <ng-container *ngIf="!showPercentage">{{l.linkCount}}</ng-container>
+                        <ng-container *ngIf="showPercentage">{{l.linkPercentage}}%</ng-container>
+                    </td>
                 </tr>
             </tbody>
         </table>

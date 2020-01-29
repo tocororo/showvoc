@@ -9,15 +9,25 @@ import { AlignmentsModalsServices } from '../modals/alignments-modal.service';
 @Component({
     selector: 'alignments-table',
     templateUrl: './alignments-table.component.html',
-    host: { class: "vbox" }
+    host: { class: "vbox" },
+    styles: [`
+        .switch input:checked + span {
+            background-color:red;
+        }
+        .switch input:not(:checked) + span {
+            background-color:#red;
+        }
+    `]
 })
 export class AlignmentsTableComponent {
 
     @Input() sourceProject: Project;
     @Input() dataset: AnnotatedValue<IRI>;
 
-    loading: boolean = false;
     linksets: LinksetMetadata[];
+
+    showPercentage: boolean = false;
+    loading: boolean = false;
 
     constructor(private metadataRegistryService: MetadataRegistryServices, private alignmentsModals: AlignmentsModalsServices) { }
 

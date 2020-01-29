@@ -2,8 +2,8 @@
 
     <svg:svg #svg class="graphContainer" (click)="onBackgroundClicked()">
         <svg:g *ngIf="initialized" [zoomableOf]="svg">
-            <svg:g *ngFor="let link of graph.links" [id]="'link' + link.index" [link]="link" (linkClicked)="onLinkClicked($event)" 
-                [rendering]="rendering" [selected]="selectedElement == link">
+            <svg:g *ngFor="let link of graph.links" [id]="'link' + link.index" [align-link]="link" (linkClicked)="onLinkClicked($event)" 
+                [showPercentage]="showPercentage" [selected]="selectedElement == link">
             </svg:g>
             <svg:use *ngIf="linkAhead" [attr.xlink:href]="'#link' + linkAhead.index"></svg:use>
 

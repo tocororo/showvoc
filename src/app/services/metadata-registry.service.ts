@@ -38,6 +38,15 @@ export class MetadataRegistryServices {
                     l.linkPredicate = lsJson.linkPredicate ? ResourceUtils.parseIRI(lsJson.linkPredicate) : null
                     linksets.push(l);
                 }
+                //compute percentage for each link (not contained in the response)
+                let totalLinkCount: number = 0; //count total number of linksets
+                linksets.forEach(l => {
+                    totalLinkCount += l.linkCount;
+                });
+                linksets.forEach(l => {
+                    let percentage = l.linkCount/totalLinkCount*100;
+                    l.linkPercentage = Math.round((percentage + Number.EPSILON) * 100) / 100
+                });
                 return linksets;
             })
         );

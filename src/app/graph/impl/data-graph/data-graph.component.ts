@@ -12,6 +12,8 @@ import { ResourceDeserializer } from 'src/app/utils/ResourceUtils';
 import { AbstractGraph, GraphMode } from '../../abstract-graph';
 import { D3Service } from '../../d3/d3.service';
 import { GraphModalServices } from '../../modals/graph-modal.service';
+import { AlignmentNode } from '../../model/AlignmentNode';
+import { DataLink } from '../../model/DataLink';
 import { DataNode } from '../../model/DataNode';
 import { Link } from "../../model/Link";
 import { Node } from "../../model/Node";
@@ -52,18 +54,20 @@ export class DataGraphComponent extends AbstractGraph {
     }
 
     expandSub() {
-        this.graphService.expandSubResources(<IRI>this.selectedElement.res.getValue(), this.selectedElement.res.getRole()).subscribe(
+        let nodeRes: AnnotatedValue<Value> = (<AlignmentNode>this.selectedElement).res;
+        this.graphService.expandSubResources(<IRI>nodeRes.getValue(), nodeRes.getRole()).subscribe(
             (graphModel: GraphModelRecord[]) => {
-                let links: Link[] = this.convertModelToLinks(graphModel);
+                let links: DataLink[] = this.convertModelToLinks(graphModel);
                 this.appendLinks(<Node>this.selectedElement, links);
             }
         );
     }
 
     expandSuper() {
-        this.graphService.expandSuperResources(<IRI>this.selectedElement.res.getValue(), this.selectedElement.res.getRole()).subscribe(
+        let nodeRes: AnnotatedValue<Value> = (<AlignmentNode>this.selectedElement).res;
+        this.graphService.expandSuperResources(<IRI>nodeRes.getValue(), nodeRes.getRole()).subscribe(
             (graphModel: GraphModelRecord[]) => {
-                let links: Link[] = this.convertModelToLinks(graphModel);
+                let links: DataLink[] = this.convertModelToLinks(graphModel);
                 this.appendLinks(<Node>this.selectedElement, links);
             }
         );
@@ -106,7 +110,7 @@ export class DataGraphComponent extends AbstractGraph {
                     if (linkCount > this.linkLimit) {
                         this.graphModals.filterLinks(predObjListMap).then(
                             (predicatesToHide: IRI[]) => {
-                                let links: Link[] = this.convertPredObjListMapToLinks(node, predObjListMap, predicatesToHide);
+                                let links: DataLink[] = this.convertPredObjListMapToLinks(node, predObjListMap, predicatesToHide);
                                 this.appendLinks(node, links);
                                 if (selectOnComplete) {
                                     this.onNodeClicked(node);
@@ -115,7 +119,7 @@ export class DataGraphComponent extends AbstractGraph {
                             () => {}
                         );
                     } else {
-                        let links: Link[] = this.convertPredObjListMapToLinks(node, predObjListMap, []);
+                        let links: DataLink[] = this.convertPredObjListMapToLinks(node, predObjListMap, []);
                         this.appendLinks(node, links);
                         if (selectOnComplete) {
                             this.onNodeClicked(node);
@@ -140,10 +144,9 @@ export class DataGraphComponent extends AbstractGraph {
     }
 
     
-    private appendLinks(expandedNode: Node, links: Link[]) {
+    private appendLinks(expandedNode: Node, links: DataLink[]) {
         links.forEach(l => {
-
-            if (this.graph.getLink(l.source.res.getValue(), l.res.getValue(), l.target.res.getValue()) != null) {
+            if (this.retrieveLink(l.source.res.getValue(), l.target.res.getValue(), l.res.getValue())) {
                 return;
             }
 
@@ -200,9 +203,9 @@ export class DataGraphComponent extends AbstractGraph {
      * @param predObjListMap 
      * @param predicatesToHide 
      */
-    private convertPredObjListMapToLinks(sourceNode: Node, predObjListMap: { [partition: string]: PredicateObjects[] }, predicatesToHide: IRI[]): Link[] {
+    private convertPredObjListMapToLinks(sourceNode: Node, predObjListMap: { [partition: string]: PredicateObjects[] }, predicatesToHide: IRI[]): DataLink[] {
         let hideLiteralNodes: boolean = PMKIContext.getProjectCtx().getProjectPreferences().hideLiteralGraphNodes;
-        let links: Link[] = [];
+        let links: DataLink[] = [];
         for (let partition in predObjListMap) {
             predObjListMap[partition].forEach(pol => { //for each pol of a partition
                 let pred: AnnotatedValue<IRI> = pol.getPredicate();
@@ -212,7 +215,7 @@ export class DataGraphComponent extends AbstractGraph {
                         if (hideLiteralNodes && o.getValue() instanceof Literal) {
                             return; //if the literal should be hidden and the object is literal, skip the link
                         }
-                        links.push(new Link(sourceNode, new DataNode(o), pred));
+                        links.push(new DataLink(sourceNode, new DataNode(o), pred));
                     });
                 }
             });
@@ -223,13 +226,13 @@ export class DataGraphComponent extends AbstractGraph {
     /**
      * Converts the GraphModelRecord(s) (returned by getGraphModel() and expandGraphModelNode() services) into a list of nodes and links
      */
-    private convertModelToLinks(graphModel: GraphModelRecord[]): Link[] {
-        let links: Link[] = [];
+    private convertModelToLinks(graphModel: GraphModelRecord[]): DataLink[] {
+        let links: DataLink[] = [];
         //set the nodes and the links according the model
         graphModel.forEach(record => {
             let nodeSource: DataNode = new DataNode(record.source);
             let nodeTarget: DataNode = new DataNode(record.target);
-            links.push(new Link(nodeSource, nodeTarget, record.link, record.classAxiom));
+            links.push(new DataLink(nodeSource, nodeTarget, record.link));
         });
         return links;
     }
@@ -271,6 +274,16 @@ export class DataGraphComponent extends AbstractGraph {
         return graphNode;
     }
 
+    private retrieveLink(source: Value, target: Value, pred: IRI): DataLink {
+        let links: DataLink[] = <DataLink[]>this.graph.getLinks();
+        for (let i = 0; i < links.length; i++) {
+            let l = links[i];
+            if (l.source.res.getValue().equals(source) && l.target.res.getValue().equals(target) && l.res.getValue().equals(pred)) {
+                return l;
+            }
+        };
+        return null;
+    }
 
     /* ================== EVENT HANDLER ================== */
 
