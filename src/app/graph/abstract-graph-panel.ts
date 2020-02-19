@@ -12,7 +12,7 @@ export abstract class AbstractGraphPanel {
 
     abstract viewChildGraph: AbstractGraph;
 
-    selectedElement: Node | Link;
+    selectedElement: any; //Node or Link, in the GraphPanel implementations they will be respectively the implementations of Node and Link (es. DataNode|DataLink)
     forces: GraphForces;
 
     protected basicModals: BasicModalsServices;

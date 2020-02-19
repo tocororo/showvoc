@@ -5,6 +5,7 @@ import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resour
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 import { AbstractGraphPanel } from '../../abstract-graph-panel';
 import { GraphModalServices } from '../../modals/graph-modal.service';
+import { DataLink } from '../../model/DataLink';
 import { DataNode } from '../../model/DataNode';
 import { DataGraphComponent } from './data-graph.component';
 
@@ -17,6 +18,8 @@ export class DataGraphPanel extends AbstractGraphPanel {
 
     @Input() role: RDFResourceRolesEnum;
     @ViewChild(DataGraphComponent) viewChildGraph: DataGraphComponent;
+
+    selectedElement: DataNode | DataLink;
 
     constructor(basicModals: BasicModalsServices, browsingModals: BrowsingModalsServices, private graphModals: GraphModalServices) {
         super(basicModals, browsingModals);

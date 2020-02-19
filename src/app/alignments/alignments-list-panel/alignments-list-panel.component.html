@@ -2,7 +2,7 @@
     <div class="card-header">
         <div class="btn-toolbar float-right">
 
-            <button class="btn btn-light btn-sm" title="Show linkset percentage" (click)="showPercentage = !showPercentage">
+            <button class="btn btn-light btn-sm" [ngClass]="{active : showPercentage}" title="Show linkset percentage" (click)="showPercentage = !showPercentage">
                 <span class="fas fa-percent"></span>
             </button>
 

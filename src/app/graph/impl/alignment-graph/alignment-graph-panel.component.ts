@@ -4,6 +4,7 @@ import { BrowsingModalsServices } from 'src/app/modal-dialogs/browsing-modals/br
 import { Project } from 'src/app/models/Project';
 import { AnnotatedValue, IRI, ResAttribute } from 'src/app/models/Resources';
 import { AbstractGraphPanel } from '../../abstract-graph-panel';
+import { AlignmentLink } from '../../model/AlignmentLink';
 import { AlignmentNode } from '../../model/AlignmentNode';
 import { ForceDirectedGraph } from '../../model/ForceDirectedGraph';
 import { Link } from '../../model/Link';
@@ -21,6 +22,8 @@ export class AlignmentGraphPanelComponent extends AbstractGraphPanel {
     @Input() dataset: AnnotatedValue<IRI>;
 
     @ViewChild(AlignmentGraphComponent) viewChildGraph: AlignmentGraphComponent;
+
+    selectedElement: AlignmentNode | AlignmentLink;
 
     showPercentage: boolean = false;
 
