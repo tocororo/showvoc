@@ -86,12 +86,12 @@ export abstract class AbstractLinkComponent {
         return position;
     }
 
-    private getLabelTransform() {
+    getLabelTransform() {
         let labelPosition = this.getLabelPosition();
         return "translate(" + labelPosition.x + "," + labelPosition.y + ")";
     }
 
-    private getLabelRectWidth() {
+    getLabelRectWidth() {
         let padding = 1;
         if (this.textElement != null) {
             return this.textElement.nativeElement.getBoundingClientRect().width + padding * 2;
