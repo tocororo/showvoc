@@ -14,6 +14,15 @@
     <div class="card-body table-responsive">
 
         <table class="table table-sm">
+            <colgroup>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col style="width: 1%;">
+            </colgroup>
             <thead class="thead-light">
                 <tr>
                     <th class="text-center">Project Name</th>
@@ -22,7 +31,9 @@
                     <th class="text-center">Lexicalization Model</th>
                     <th class="text-center">Location</th>
                     <th class="text-center">Status</th>
-                    <th class="text-center">Actions</th>
+                    <th class="text-center">
+                        <!-- Actions -->
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -59,7 +70,7 @@
                         </div>
                     </td>
                     <td class="text-center">
-                        <button class="btn btn-sm btn-light" (click)="loadData(p)" title="Load data" [disabled]="!p.isOpen() || p.creatingIndex || p.opening">
+                        <!-- <button class="btn btn-sm btn-light" (click)="loadData(p)" title="Load data" [disabled]="!p.isOpen() || p.creatingIndex || p.opening">
                             <span class="fas fa-file-upload"></span>
                         </button>
 
@@ -75,14 +86,42 @@
                             </div>
                         </div>
                         
-                        <!-- <button class="btn btn-sm btn-light ml-1" (click)="editSettings(p)" title="Edit settings" [disabled]="!p.isOpen() || p.opening"> -->
                         <button class="btn btn-sm btn-light ml-1" (click)="editSettings(p)" title="Edit settings">
                             <span class="fas fa-user-cog"></span>
                         </button>
 
-                        <button class="btn btn-sm btn-light ml-1" (click)="deleteProject(p)" [disabled]="p.isOpen() || p.opening">
+                        <button class="btn btn-sm btn-light ml-1" (click)="deleteProject(p)" title="Delete project" [disabled]="p.isOpen() || p.opening">
                             <span class="fas fa-trash"></span>
-                        </button>
+                        </button> -->
+
+                        <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right">
+                            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-sm" ngbDropdownMenu display="dynamic">
+                                <button class="dropdown-item" (click)="loadData(p)" [disabled]="!p.isOpen() || p.creatingIndex || p.opening">
+                                    Load data
+                                </button>
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item" (click)="createIndex(p)" [disabled]="globalCreatingIndex || p.creatingIndex || p.opening">
+                                    Create/refresh index
+                                </button>
+                                <button class="dropdown-item" (click)="deleteIndex(p)" [disabled]="globalCreatingIndex || p.creatingIndex || p.opening">
+                                    Delete index
+                                </button>
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item" (click)="editDescription(p)">
+                                    Edit description
+                                </button>
+                                <button class="dropdown-item" (click)="editSettings(p)">
+                                    Edit settings
+                                </button>
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item" (click)="deleteProject(p)" [disabled]="p.isOpen() || p.opening">
+                                    Delete project
+                                </button>
+                            </div>
+                        </div>
+
                     </td>
                 </tr>
             </tbody>

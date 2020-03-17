@@ -238,6 +238,19 @@ export class ProjectsManagerComponent {
         modalRef.componentInstance.project = project;
     }
 
+    editDescription(project: Project) {
+        this.basicModals.prompt("Edit project description", { value: "Description" }, null, project.getDescription(), null, true).then(
+            descr => {
+                this.projectService.setProjectProperty(project, "description", descr).subscribe(
+                    () => {
+                        project.setDescription(descr);
+                    }
+                );
+            },
+            () => {}
+        )
+    }
+
     /* ============================== */
 
     goToProject(project: Project) {

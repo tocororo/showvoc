@@ -416,3 +416,10 @@ ngb-modal-window.modal {
 .btn-group-sm .dropdown-item {
     font-size: .875rem;
 }
+
+.dropdown-menu-sm {
+    padding: .125rem 0 !important;
+}
+.dropdown-menu-sm > .dropdown-divider {
+    margin: .125rem 0 0 !important;
+}

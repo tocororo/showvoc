@@ -9,11 +9,11 @@
         {{message}}
     </div>
 	<div class="hbox" style="align-items: center;">
-        <div *ngIf="label" class="mr-1">
+        <div *ngIf="label" class="mr-2">
             <label>{{label.value}}:</label>
             <span *ngIf="label.tooltip" class="fas fa-info-circle" [title]="label.tooltip"></span>
         </div>
-        <input type="text" class="form-control" style="flex: 1;" [(ngModel)]="value" (keydown.enter)="ok()">
+        <textarea class="form-control" style="flex: 1; resize: vertical" [(ngModel)]="value" rows="1" (keydown.enter)="ok()"></textarea>
     </div>
 </div>
 <div class="modal-footer">

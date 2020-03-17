@@ -148,6 +148,7 @@ export class ProjectsServices {
         proj.setOpen(projJson.open);
         proj.setRepositoryLocation(projJson.repositoryLocation);
         proj.setStatus(projJson.status);
+        proj.setDescription(projJson.description);
         return proj;
     }
 
@@ -192,6 +193,21 @@ export class ProjectsServices {
             projectName: project.getName(),
         };
         return this.httpMgr.doPost(this.serviceName, "deleteProject", params);
+    }
+
+    /**
+     * 
+     * @param project 
+     * @param propName 
+     * @param propValue 
+     */
+    setProjectProperty(project: Project, propName: string, propValue: string) {
+        var params = {
+            projectName: project.getName(),
+            propName: propName,
+            propValue: propValue
+        };
+        return this.httpMgr.doPost(this.serviceName, "setProjectProperty", params);
     }
 
 }

@@ -41,7 +41,7 @@
                 <ng-container *ngIf="!loading">
                     <div *ngFor="let p of projects" class="card mb-1">
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h5 class="card-title mb-1">
                                 <p *ngIf="!p.isOpen()" class="text-muted">{{p.getName()}}</p>
                                 <a *ngIf="p.isOpen()" [routerLink]="" (click)="goToProject(p)">{{p.getName()}}</a>
                             </h5>
@@ -54,7 +54,9 @@
                                 </span>
                             </div>
 
-                            <p class="card-text text-secondary">{{p.getBaseURI()}}</p>
+                            <p class="card-text text-secondary mb-2" style="font-size: 13px;">{{p.getBaseURI()}}</p>
+
+                            <p class="card-text text-dark">{{p.getDescription()}}</p>
                         </div>
                     </div>
                 </ng-container>

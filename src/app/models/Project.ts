@@ -12,6 +12,7 @@ export class Project {
     private open: boolean;
     private repositoryLocation: { location: "remote" | "local", serverURL?: string };
     private status: { status: string, message?: string };
+    private description: string;
 
     constructor(name?: string) {
         if (name != undefined) {
@@ -123,6 +124,13 @@ export class Project {
     }
     public getStatus(): { status: string, message?: string } {
         return this.status;
+    }
+
+    public setDescription(description: string) {
+        this.description = description
+    }
+    public getDescription(): string {
+        return this.description;
     }
 
 }
