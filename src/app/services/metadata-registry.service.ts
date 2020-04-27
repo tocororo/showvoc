@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { IRI, AnnotatedValue, Literal, ResourcePosition } from '../models/Resources';
-import { HttpManager, PMKIRequestOptions } from '../utils/HttpManager';
-import { Project } from '../models/Project';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { DatasetMetadata, LinksetMetadata, Target } from '../models/Metadata';
+import { Project } from '../models/Project';
+import { AnnotatedValue, IRI, Literal, ResourcePosition } from '../models/Resources';
+import { PMKIRequestOptions } from '../utils/HttpManager';
 import { ResourceDeserializer, ResourceUtils } from '../utils/ResourceUtils';
-import { LinksetMetadata, Target, DatasetMetadata } from '../models/Metadata';
+import { StMetadataRegistry } from '../utils/STMetadataRegistry';
 
 @Injectable()
 export class MetadataRegistryServices {
 
     private serviceName = "MetadataRegistry";
 
-    constructor(private httpMgr: HttpManager) { }
+    constructor(private httpMgr: StMetadataRegistry) { }
 
     /**
      * Returns metadata about the linksets sets embedded in a given dataset

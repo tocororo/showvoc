@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { HttpManager } from '../utils/HttpManager';
+import { StMetadataRegistry } from '../utils/STMetadataRegistry';
 import { AdministrationServices } from './administration.service';
 import { AlignmentServices } from './alignment.service';
 import { AuthServices } from "./auth.service";
@@ -59,6 +60,7 @@ import { UserServices } from './user.service';
         SearchServices,
         SkosServices,
         SparqlServices,
+        StMetadataRegistry,
         UserServices
     ]
 })
