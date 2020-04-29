@@ -9,7 +9,7 @@
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab title="Concept" id="concept">
+            <ngb-tab *ngIf="model == 'SKOS'" title="Concept" id="concept">
                 <ng-template ngbTabContent>
                     <concept-tree-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></concept-tree-panel>
                 </ng-template>
@@ -55,4 +55,14 @@
         </ngb-tabset>
 
     </div>
+
+
+    <div style="position: absolute; top: 6px; right: 6px;">
+        <button class="btn btn-sm btn-light" (click)="changeRendering()">
+            <span class="fas fa-globe-europe"></span>
+        </button>
+    </div>
+    
+    
+
 </div>

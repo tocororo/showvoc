@@ -6,7 +6,9 @@ import { catchError, map } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
 import { Project } from '../models/Project';
+import { Properties } from '../models/Properties';
 import { Value } from '../models/Resources';
+import { Cookie } from './Cookie';
 import { PMKIContext } from './PMKIContext';
 import { STResponseUtils } from './STServicesUtils';
 
@@ -295,6 +297,15 @@ export class HttpManager {
             params += "ctx_consumer=" + encodeURIComponent(ctxConsumer.getName()) + "&";
         }
 
+        //language (if languages provided in cookies, override the preference stored server side through the ctx_langs param)
+        let proj = PMKIContext.getWorkingProject();
+        if (proj != null && ctxProject != null && proj.getName() == ctxProject.getName()) {
+            let langsCookie = Cookie.getUserProjectCookiePref(Properties.pref_languages, proj);
+            if (langsCookie != null) {
+                params += "ctx_langs=" + langsCookie + "&";
+            }
+        }
+        
         return params;
     }
 

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
-import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { LinksetMetadata } from 'src/app/models/Metadata';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
@@ -9,6 +9,7 @@ import { Cookie } from 'src/app/utils/Cookie';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 import { TreeListContext } from 'src/app/utils/UIUtils';
+import { RenderingEditorModal } from 'src/app/widget/rendering-editor/rendering-editor-modal';
 import { LexicalEntryListPanelComponent } from '../list/lexical-entry/lexical-entry-list-panel.component';
 import { LexiconListPanelComponent } from '../list/lexicon/lexicon-list-panel.component';
 import { SchemeListPanelComponent } from '../list/scheme/scheme-list-panel.component';
@@ -41,7 +42,7 @@ export class StructureTabsetComponent implements OnInit {
 
     model: string;
 
-    constructor(private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices) { }
+    constructor(private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices, private modalService: NgbModal) { }
 
     ngOnInit() {
         this.model = PMKIContext.getWorkingProject().getModelType(true);
@@ -124,5 +125,10 @@ export class StructureTabsetComponent implements OnInit {
     onLinksetSelected(linkset: LinksetMetadata) {
         this.linksetSelected.emit(linkset);
     }
+
+    changeRendering() {
+        const modalRef: NgbModalRef = this.modalService.open(RenderingEditorModal, new ModalOptions());
+    }
+    
 
 }

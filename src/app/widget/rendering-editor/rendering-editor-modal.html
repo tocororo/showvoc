@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h5 class="modal-title">Edit languages</h5>
+    <button class="close" (click)="close()">
+        <span>&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <div *ngIf="!closedAlert" class="alert alert-info alert-dismissible mb-2">
+        Set the language(s) used for rendering the resources.
+    </div>
+
+    <rendering-editor [(ngModel)]="renderingLangs" (ngModelChange)="onRenderingChange()"></rendering-editor>
+
+    <div *ngIf="defaultPrefLangs" class="mt-2" style="font-size: 12px;">
+        <span *ngIf="cookieLangs">
+            The administrator has provided a default language set for the project <i>{{project.getName()}}</i>.
+            Click <a href="javascript:void(0)" (click)="restoreDefault()">here</a> to set it.
+        </span>
+        <span *ngIf="!cookieLangs">
+            The current language set is the default provided by the administrator for the project <i>{{project.getName()}}</i>.
+        </span>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-sm btn-secondary" (click)="close()">Close</button>
+</div>

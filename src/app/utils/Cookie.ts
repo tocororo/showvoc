@@ -1,6 +1,9 @@
 // this class is partially re-using code from the project:
 // https://github.com/BCJTI/ng2-cookies
 
+import { Project } from '../models/Project';
+import { Value } from '../models/Resources';
+
 export class Cookie {
 
     public static RES_VIEW_INCLUDE_INFERENCE = "resource_view.include_inference";
@@ -85,6 +88,60 @@ export class Cookie {
         if (Cookie.getCookie(name)) {
             Cookie.setCookie(name, '', -1, userIri);
         }
+    }
+
+
+
+    /**
+     * Gets a preference for the given project stored as cookie
+     * @param pref 
+     * @param project 
+     */
+    public static getUserProjectCookiePref(pref: string, project: Project): string {
+        let value = Cookie.getCookie(pref + "." + project.getName());
+        if (value != null || value != "") {
+            return value;
+        }
+        return null;
+    }
+    /**
+     * Stores in cookie a preference for a given project
+     * @param pref 
+     * @param project 
+     * @param value 
+     */
+    public static setUserProjectCookiePref(pref: string, project: Project, value: any) {
+        let valueAsString: string;
+        if (Array.isArray(value)) {
+            if (value.length > 0) {
+                let stringArray: string[] = [];
+                value.forEach((v: any) => {
+                    if (v instanceof Value) {
+                        stringArray.push((<Value>v).toNT());
+                    } else {
+                        stringArray.push(v);
+                    }
+                })
+                valueAsString = stringArray.join(",");
+            }
+        } else if (value instanceof Map) {
+            if (value.size > 0) {
+                let stringMap: { [key: string]: string } = {};
+                value.forEach((v: any, key: string) => {
+                    if (v instanceof Value) {
+                        stringMap[key] = (<Value>v).toNT();
+                    } else {
+                        stringMap[key] = v;
+                    }
+                })
+                valueAsString = JSON.stringify(stringMap);
+            }
+        } else if (value instanceof Value) {
+            valueAsString = (<Value>value).toNT();
+        } else if (value != null) {
+            valueAsString = value;
+        }
+        Cookie.setCookie(pref + "." + project.getName(), valueAsString);
     }
 
 }

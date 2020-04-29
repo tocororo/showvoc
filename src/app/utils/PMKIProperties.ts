@@ -7,7 +7,7 @@ import { Language, Languages } from '../models/LanguagesCountries';
 import { ExtensionPointID } from '../models/Plugins';
 import { Project } from '../models/Project';
 import { ClassIndividualPanelSearchMode, ClassTreeFilter, ClassTreePreference, ConceptTreePreference, ConceptTreeVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, ProjectPreferences, ProjectSettings, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, ValueFilterLanguages } from '../models/Properties';
-import { IRI, RDFResourceRolesEnum, Value } from '../models/Resources';
+import { IRI, RDFResourceRolesEnum } from '../models/Resources';
 import { ResViewPartition } from '../models/ResourceView';
 import { OWL, RDFS } from '../models/Vocabulary';
 import { PreferencesSettingsServices } from '../services/preferences-settings.service';
@@ -43,7 +43,6 @@ export class PMKIProperties {
                 this.initPreferencesCookie(projectCtx);
             })
         );
-
     }
 
     initProjectSettings(projectCtx: ProjectContext): Observable<void> {
@@ -76,14 +75,14 @@ export class PMKIProperties {
             projPref.activeSchemes = schemes;
         }
         this.eventHandler.schemeChangedEvent.emit(projPref.activeSchemes);
-        this.setUserProjectCookiePref(Properties.pref_active_schemes, projectCtx.getProject(), projPref.activeSchemes);
+        Cookie.setUserProjectCookiePref(Properties.pref_active_schemes, projectCtx.getProject(), projPref.activeSchemes);
     }
 
     setActiveLexicon(projectCtx: ProjectContext, lexicon: IRI) {
         let projPref: ProjectPreferences = projectCtx.getProjectPreferences();
         projPref.activeLexicon = lexicon;
         this.eventHandler.lexiconChangedEvent.emit(projPref.activeLexicon);
-        this.setUserProjectCookiePref(Properties.pref_active_lexicon, projectCtx.getProject(), projPref.activeLexicon);
+        Cookie.setUserProjectCookiePref(Properties.pref_active_lexicon, projectCtx.getProject(), projPref.activeLexicon);
     }
 
     getShowFlags(): boolean {
@@ -96,54 +95,54 @@ export class PMKIProperties {
     setShowFlags(show: boolean) {
         PMKIContext.getProjectCtx().getProjectPreferences().showFlags = show;
         this.eventHandler.showFlagChangedEvent.emit(show);
-        this.setUserProjectCookiePref(Properties.pref_show_flags, PMKIContext.getProjectCtx().getProject(), show);
+        Cookie.setUserProjectCookiePref(Properties.pref_show_flags, PMKIContext.getProjectCtx().getProject(), show);
     }
 
     setValueFilterLanguages(filter: ValueFilterLanguages) {
-        this.setUserProjectCookiePref(Properties.pref_filter_value_languages, PMKIContext.getProjectCtx().getProject(), JSON.stringify(filter));
+        Cookie.setUserProjectCookiePref(Properties.pref_filter_value_languages, PMKIContext.getProjectCtx().getProject(), JSON.stringify(filter));
         PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang = filter;
     }
 
     //class tree settings
     setClassTreeFilter(filter: ClassTreeFilter) {
-        this.setUserProjectCookiePref(Properties.pref_class_tree_filter, PMKIContext.getProjectCtx().getProject(), JSON.stringify(filter));
+        Cookie.setUserProjectCookiePref(Properties.pref_class_tree_filter, PMKIContext.getProjectCtx().getProject(), JSON.stringify(filter));
         PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter = filter;
         this.eventHandler.classFilterChangedEvent.emit();
     }
     setClassTreeRoot(rootUri: string) {
-        this.setUserProjectCookiePref(Properties.pref_class_tree_root, PMKIContext.getProjectCtx().getProject(), rootUri);
+        Cookie.setUserProjectCookiePref(Properties.pref_class_tree_root, PMKIContext.getProjectCtx().getProject(), rootUri);
         PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.rootClassUri = rootUri;
     }
     setClassTreeShowInstances(show: boolean) {
-        this.setUserProjectCookiePref(Properties.pref_class_tree_show_instances, PMKIContext.getProjectCtx().getProject(), show);
+        Cookie.setUserProjectCookiePref(Properties.pref_class_tree_show_instances, PMKIContext.getProjectCtx().getProject(), show);
         PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.showInstancesNumber = show;
     }
 
     //concept tree settings
     setConceptTreeVisualization(mode: ConceptTreeVisualizationMode) {
-        this.setUserProjectCookiePref(Properties.pref_concept_tree_visualization, PMKIContext.getProjectCtx().getProject(), mode);
+        Cookie.setUserProjectCookiePref(Properties.pref_concept_tree_visualization, PMKIContext.getProjectCtx().getProject(), mode);
         PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization = mode;
     }
 
     //lex entry list settings
     setLexicalEntryListVisualization(mode: LexEntryVisualizationMode) {
-        this.setUserProjectCookiePref(Properties.pref_lex_entry_list_visualization, PMKIContext.getProjectCtx().getProject(), mode);
+        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_visualization, PMKIContext.getProjectCtx().getProject(), mode);
         PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization = mode;
     }
     setLexicalEntryListIndexLenght(lenght: number) {
-        this.setUserProjectCookiePref(Properties.pref_lex_entry_list_index_lenght, PMKIContext.getProjectCtx().getProject(), lenght);
+        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_index_lenght, PMKIContext.getProjectCtx().getProject(), lenght);
         PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength = lenght;
     }
 
     //Graph settings
     setResourceViewPartitionFilter(pref: ResViewPartitionFilterPreference) {
-        this.setUserProjectCookiePref(Properties.pref_res_view_partition_filter, PMKIContext.getProjectCtx().getProject(), JSON.stringify(pref));
+        Cookie.setUserProjectCookiePref(Properties.pref_res_view_partition_filter, PMKIContext.getProjectCtx().getProject(), JSON.stringify(pref));
         PMKIContext.getProjectCtx().getProjectPreferences().resViewPartitionFilter = pref;
     }
 
     setHideLiteralGraphNodes(show: boolean) {
         PMKIContext.getProjectCtx().getProjectPreferences().hideLiteralGraphNodes = show;
-        this.setUserProjectCookiePref(Properties.pref_filter_value_languages, PMKIContext.getProjectCtx().getProject(), show);
+        Cookie.setUserProjectCookiePref(Properties.pref_filter_value_languages, PMKIContext.getProjectCtx().getProject(), show);
     }
 
 
@@ -153,110 +152,110 @@ export class PMKIProperties {
 
     private initPreferencesCookie(projectCtx: ProjectContext) {
         let projectPreferences: ProjectPreferences = projectCtx.getProjectPreferences();
-            let project: Project = projectCtx.getProject();
+        let project: Project = projectCtx.getProject();
 
-            //active scheme
-            let activeSchemes = [];
-            let activeSchemesPref: string = this.getUserProjectCookiePref(Properties.pref_active_schemes, project);
-            if (activeSchemesPref != null) {
-                let skSplitted: string[] = activeSchemesPref.split(",");
-                for (var i = 0; i < skSplitted.length; i++) {
-                    activeSchemes.push(ResourceUtils.parseIRI(skSplitted[i]));
-                }
+        //active scheme
+        let activeSchemes = [];
+        let activeSchemesPref: string = Cookie.getUserProjectCookiePref(Properties.pref_active_schemes, project);
+        if (activeSchemesPref != null) {
+            let skSplitted: string[] = activeSchemesPref.split(",");
+            for (var i = 0; i < skSplitted.length; i++) {
+                activeSchemes.push(ResourceUtils.parseIRI(skSplitted[i]));
             }
-            this.setActiveSchemes(projectCtx, activeSchemes);
+        }
+        this.setActiveSchemes(projectCtx, activeSchemes);
 
-            //active lexicon
-            let activeLexicon = null;
-            let activeLexiconPref: string = this.getUserProjectCookiePref(Properties.pref_active_lexicon, project);
-            if (activeLexiconPref != null) {
-                activeLexicon = ResourceUtils.parseIRI(activeLexiconPref);
-                this.setActiveLexicon(projectCtx, activeLexicon);
-            }
+        //active lexicon
+        let activeLexicon = null;
+        let activeLexiconPref: string = Cookie.getUserProjectCookiePref(Properties.pref_active_lexicon, project);
+        if (activeLexiconPref != null) {
+            activeLexicon = ResourceUtils.parseIRI(activeLexiconPref);
+            this.setActiveLexicon(projectCtx, activeLexicon);
+        }
 
-            //show flag
-            projectPreferences.showFlags = this.getUserProjectCookiePref(Properties.pref_show_flags, project) != "false";
-            
-            //graph & resView pref: filter value lang
-            let filterValueLangPref = this.getUserProjectCookiePref(Properties.pref_filter_value_languages, project);
-            if (filterValueLangPref == null) {
-                projectPreferences.filterValueLang = { languages: [], enabled: false }; //default
-            } else {
-                projectPreferences.filterValueLang = JSON.parse(filterValueLangPref);
-            }
+        //show flag
+        projectPreferences.showFlags = Cookie.getUserProjectCookiePref(Properties.pref_show_flags, project) != "false";
+        
+        //graph & resView pref: filter value lang
+        let filterValueLangPref = Cookie.getUserProjectCookiePref(Properties.pref_filter_value_languages, project);
+        if (filterValueLangPref == null) {
+            projectPreferences.filterValueLang = { languages: [], enabled: false }; //default
+        } else {
+            projectPreferences.filterValueLang = JSON.parse(filterValueLangPref);
+        }
 
-            //graph preferences
-            let rvPartitionFilterPref = this.getUserProjectCookiePref(Properties.pref_res_view_partition_filter, project);
-            if (rvPartitionFilterPref != null) {
-                projectPreferences.resViewPartitionFilter = JSON.parse(rvPartitionFilterPref);
-            } else {
-                let resViewPartitionFilter: ResViewPartitionFilterPreference = {};
-                for (let role in RDFResourceRolesEnum) {
-                    resViewPartitionFilter[role] = [ResViewPartition.lexicalizations];
-                }
-                projectPreferences.resViewPartitionFilter = resViewPartitionFilter;
+        //graph preferences
+        let rvPartitionFilterPref = Cookie.getUserProjectCookiePref(Properties.pref_res_view_partition_filter, project);
+        if (rvPartitionFilterPref != null) {
+            projectPreferences.resViewPartitionFilter = JSON.parse(rvPartitionFilterPref);
+        } else {
+            let resViewPartitionFilter: ResViewPartitionFilterPreference = {};
+            for (let role in RDFResourceRolesEnum) {
+                resViewPartitionFilter[role] = [ResViewPartition.lexicalizations];
             }
-            projectPreferences.hideLiteralGraphNodes = this.getUserProjectCookiePref(Properties.pref_hide_literal_graph_nodes, project) != "false";
+            projectPreferences.resViewPartitionFilter = resViewPartitionFilter;
+        }
+        projectPreferences.hideLiteralGraphNodes = Cookie.getUserProjectCookiePref(Properties.pref_hide_literal_graph_nodes, project) != "false";
 
-            //cls tree preferences
-            let classTreePreferences: ClassTreePreference = { 
-                showInstancesNumber: this.getUserProjectCookiePref(Properties.pref_class_tree_show_instances, project) == "true",
-                rootClassUri: (projectCtx.getProject().getModelType() == RDFS.uri) ? RDFS.resource.getIRI() : OWL.thing.getIRI(),
-                filter: new ClassTreeFilter()
-            };
-            let classTreeFilterPref: string = this.getUserProjectCookiePref(Properties.pref_class_tree_filter, project);
-            if (classTreeFilterPref != null) {
-                classTreePreferences.filter = JSON.parse(classTreeFilterPref);
-            }
-            let classTreeRootPref: string = this.getUserProjectCookiePref(Properties.pref_class_tree_root, project);
-            if (classTreeRootPref != null) {
-                classTreePreferences.rootClassUri = classTreeRootPref;
-            }
-            projectPreferences.classTreePreferences = classTreePreferences;
+        //cls tree preferences
+        let classTreePreferences: ClassTreePreference = { 
+            showInstancesNumber: Cookie.getUserProjectCookiePref(Properties.pref_class_tree_show_instances, project) == "true",
+            rootClassUri: (projectCtx.getProject().getModelType() == RDFS.uri) ? RDFS.resource.getIRI() : OWL.thing.getIRI(),
+            filter: new ClassTreeFilter()
+        };
+        let classTreeFilterPref: string = Cookie.getUserProjectCookiePref(Properties.pref_class_tree_filter, project);
+        if (classTreeFilterPref != null) {
+            classTreePreferences.filter = JSON.parse(classTreeFilterPref);
+        }
+        let classTreeRootPref: string = Cookie.getUserProjectCookiePref(Properties.pref_class_tree_root, project);
+        if (classTreeRootPref != null) {
+            classTreePreferences.rootClassUri = classTreeRootPref;
+        }
+        projectPreferences.classTreePreferences = classTreePreferences;
 
-            //concept tree preferences
-            let conceptTreePref: ConceptTreePreference = new ConceptTreePreference();
-            let conceptTreeVisualizationPref: string = this.getUserProjectCookiePref(Properties.pref_concept_tree_visualization, project);
-            if (conceptTreeVisualizationPref != null && conceptTreeVisualizationPref == ConceptTreeVisualizationMode.searchBased) {
-                conceptTreePref.visualization = conceptTreeVisualizationPref;
-            }
-            projectPreferences.conceptTreePreferences = conceptTreePref
+        //concept tree preferences
+        let conceptTreePref: ConceptTreePreference = new ConceptTreePreference();
+        let conceptTreeVisualizationPref: string = Cookie.getUserProjectCookiePref(Properties.pref_concept_tree_visualization, project);
+        if (conceptTreeVisualizationPref != null && conceptTreeVisualizationPref == ConceptTreeVisualizationMode.searchBased) {
+            conceptTreePref.visualization = conceptTreeVisualizationPref;
+        }
+        projectPreferences.conceptTreePreferences = conceptTreePref
 
-            //lexical entry list preferences
-            let lexEntryListPref = new LexicalEntryListPreference();
-            let lexEntryListVisualizationPref: string = this.getUserProjectCookiePref(Properties.pref_lex_entry_list_visualization, project);
-            if (lexEntryListVisualizationPref != null && lexEntryListVisualizationPref == LexEntryVisualizationMode.searchBased) {
-                lexEntryListPref.visualization = lexEntryListVisualizationPref;
-            }
-            let lexEntryListIndexLenghtPref: string = this.getUserProjectCookiePref(Properties.pref_lex_entry_list_index_lenght, project);
-            if (lexEntryListIndexLenghtPref == "2") {
-                lexEntryListPref.indexLength = 2;
-            }
-            projectPreferences.lexEntryListPreferences = lexEntryListPref;
+        //lexical entry list preferences
+        let lexEntryListPref = new LexicalEntryListPreference();
+        let lexEntryListVisualizationPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_visualization, project);
+        if (lexEntryListVisualizationPref != null && lexEntryListVisualizationPref == LexEntryVisualizationMode.searchBased) {
+            lexEntryListPref.visualization = lexEntryListVisualizationPref;
+        }
+        let lexEntryListIndexLenghtPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_index_lenght, project);
+        if (lexEntryListIndexLenghtPref == "2") {
+            lexEntryListPref.indexLength = 2;
+        }
+        projectPreferences.lexEntryListPreferences = lexEntryListPref;
 
-            //search settings
-            let searchSettings: SearchSettings = new SearchSettings();
-            projectPreferences.searchSettings = searchSettings;
+        //search settings
+        let searchSettings: SearchSettings = new SearchSettings();
+        projectPreferences.searchSettings = searchSettings;
 
-            let searchModeCookie: string = Cookie.getCookie(Cookie.SEARCH_STRING_MATCH_MODE);
-            if (searchModeCookie != null) {
-                searchSettings.stringMatchMode = <SearchMode>searchModeCookie;
-            }
-            searchSettings.useURI = Cookie.getCookie(Cookie.SEARCH_USE_URI) == "true";
-            searchSettings.useLocalName = Cookie.getCookie(Cookie.SEARCH_USE_LOCAL_NAME) == "true";
-            searchSettings.useNotes = Cookie.getCookie(Cookie.SEARCH_USE_NOTES) == "true";
-            searchSettings.restrictActiveScheme = Cookie.getCookie(Cookie.SEARCH_CONCEPT_SCHEME_RESTRICTION) == "true";
+        let searchModeCookie: string = Cookie.getCookie(Cookie.SEARCH_STRING_MATCH_MODE);
+        if (searchModeCookie != null) {
+            searchSettings.stringMatchMode = <SearchMode>searchModeCookie;
+        }
+        searchSettings.useURI = Cookie.getCookie(Cookie.SEARCH_USE_URI) == "true";
+        searchSettings.useLocalName = Cookie.getCookie(Cookie.SEARCH_USE_LOCAL_NAME) == "true";
+        searchSettings.useNotes = Cookie.getCookie(Cookie.SEARCH_USE_NOTES) == "true";
+        searchSettings.restrictActiveScheme = Cookie.getCookie(Cookie.SEARCH_CONCEPT_SCHEME_RESTRICTION) == "true";
 
-            let clsIndPanelSearchModeCookie: string = Cookie.getCookie(Cookie.SEARCH_CLS_IND_PANEL);
-            if (clsIndPanelSearchModeCookie != null) {
-                searchSettings.classIndividualSearchMode = <ClassIndividualPanelSearchMode>clsIndPanelSearchModeCookie;
-            }
+        let clsIndPanelSearchModeCookie: string = Cookie.getCookie(Cookie.SEARCH_CLS_IND_PANEL);
+        if (clsIndPanelSearchModeCookie != null) {
+            searchSettings.classIndividualSearchMode = <ClassIndividualPanelSearchMode>clsIndPanelSearchModeCookie;
+        }
 
-            let searchLangsCookie: string = Cookie.getCookie(Cookie.SEARCH_LANGUAGES);
-            searchSettings.languages = (searchLangsCookie == null) ? [] : JSON.parse(searchLangsCookie);
-            searchSettings.restrictLang = Cookie.getCookie(Cookie.SEARCH_RESTRICT_LANG) == "true";
-            searchSettings.includeLocales = Cookie.getCookie(Cookie.SEARCH_INCLUDE_LOCALES) == "true";
-            searchSettings.useAutocompletion = Cookie.getCookie(Cookie.SEARCH_USE_AUTOMOMPLETION) == "true";
+        let searchLangsCookie: string = Cookie.getCookie(Cookie.SEARCH_LANGUAGES);
+        searchSettings.languages = (searchLangsCookie == null) ? [] : JSON.parse(searchLangsCookie);
+        searchSettings.restrictLang = Cookie.getCookie(Cookie.SEARCH_RESTRICT_LANG) == "true";
+        searchSettings.includeLocales = Cookie.getCookie(Cookie.SEARCH_INCLUDE_LOCALES) == "true";
+        searchSettings.useAutocompletion = Cookie.getCookie(Cookie.SEARCH_USE_AUTOMOMPLETION) == "true";
     }
 
     /**
@@ -321,45 +320,6 @@ export class PMKIProperties {
     }
 
 
-    getUserProjectCookiePref(pref: string, project: Project): string {
-        let value = Cookie.getCookie(pref + "." + project.getName());
-        if (value != null || value != "") {
-            return value;
-        }
-        return null;
-    }
-    setUserProjectCookiePref(pref: string, project: Project, value: any) {
-        let valueAsString: string;
-        if (Array.isArray(value)) {
-            if (value.length > 0) {
-                let stringArray: string[] = [];
-                value.forEach((v: any) => {
-                    if (v instanceof Value) {
-                        stringArray.push((<Value>v).toNT());
-                    } else {
-                        stringArray.push(v);
-                    }
-                })
-                valueAsString = stringArray.join(",");
-            }
-        } else if (value instanceof Map) {
-            if (value.size > 0) {
-                let stringMap: { [key: string]: string } = {};
-                value.forEach((v: any, key: string) => {
-                    if (v instanceof Value) {
-                        stringMap[key] = (<Value>v).toNT();
-                    } else {
-                        stringMap[key] = v;
-                    }
-                })
-                valueAsString = JSON.stringify(stringMap);
-            }
-        } else if (value instanceof Value) {
-            valueAsString = (<Value>value).toNT();
-        } else if (value != null) {
-            valueAsString = value;
-        }
-        Cookie.setCookie(pref + "." + project.getName(), valueAsString);
-    }
+    
 
 }
