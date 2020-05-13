@@ -18,7 +18,8 @@ import { PreferencesModule } from './preferences/preferences.module';
 import { SearchModule } from './search/search.module';
 import { STServicesModule } from './services/st-services.module';
 import { UserModule } from './user/user.module';
-import { GUARD_PROVIDERS } from './utils/CanActivateGuards';
+import { AdminAuthGuard, VisitorAuthGuard } from './utils/CanActivateAuthGuards';
+import { ProjectGuard } from './utils/CanActivateProjectGuard';
 import { PMKIEventHandler } from './utils/PMKIEventHandler';
 import { PMKIProperties } from './utils/PMKIProperties';
 
@@ -46,7 +47,7 @@ import { PMKIProperties } from './utils/PMKIProperties';
     ],
     providers: [
         PMKIProperties, PMKIEventHandler,
-        GUARD_PROVIDERS,
+        VisitorAuthGuard, AdminAuthGuard, ProjectGuard,
         { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
 		/** Uses the HashLocationStrategy instead of the default "HTML 5 pushState" PathLocationStrategy.
 		 * This solves the 404 error problem when reloading a page in a production server

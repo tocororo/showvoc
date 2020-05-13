@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { User } from './models/User';
 import { AuthServices } from './services/auth.service';
 import { PMKIContext } from './utils/PMKIContext';
-import { User } from './models/User';
 
 @Component({
     selector: 'app-root',
@@ -40,7 +40,5 @@ export class AppComponent {
     logout() {
         this.authServices.logout().subscribe(); //no need to login again as visitor, the auth guard will do the job
     }
-
-
 
 }

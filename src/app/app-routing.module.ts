@@ -20,7 +20,8 @@ import { LoginComponent } from './user/login.component';
 import { RegistrationComponent } from './user/registration.component';
 import { ResetPasswordComponent } from './user/reset-password.component';
 import { UserProfileComponent } from './user/user-profile.component';
-import { AdminAuthGuard, ProjectGuard, VisitorAuthGuard } from './utils/CanActivateGuards';
+import { AdminAuthGuard, VisitorAuthGuard } from './utils/CanActivateAuthGuards';
+import { ProjectGuard } from './utils/CanActivateProjectGuard';
 
 const routes: Routes = [
     { path: '', redirectTo: "/home", pathMatch: 'full' },
@@ -44,7 +45,7 @@ const routes: Routes = [
     { path: "ResetPassword/:token", component: ResetPasswordComponent },
     { path: 'datasets', component: DatasetsComponent, canActivate: [VisitorAuthGuard] },
     {
-        path: 'datasets/:id', component: DatasetViewComponent, canActivate: [VisitorAuthGuard, ProjectGuard],
+        path: 'datasets/:id', component: DatasetViewComponent, canActivate: [ProjectGuard], //ProjectGuard implicitly requires VisitorAuthGuard
         children: [
             { path: '', redirectTo: "data", pathMatch: 'full' },
             { path: 'data', component: DatasetDataComponent },
