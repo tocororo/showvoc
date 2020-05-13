@@ -88,7 +88,16 @@ export class ConceptTreePreference {
     // includeSubProps: boolean; //tells if the hierarchy should consider
     // syncInverse: boolean; //tells if the narrower/broader properties should be synced with their inverse
     visualization: ConceptTreeVisualizationMode = ConceptTreeVisualizationMode.hierarchyBased;
+
+    safeToGoMap: SafeToGoMap = {}; //this is not a preference, but it is cached with them since it is contextual to the project 
 }
+
+/**
+ * map <string, boolean> 
+ * checksum: string - it is a representation of the request params (it could be a concat of the params serialization)
+ * safe: boolean tells if the tree/list is safe to be initialized, namely if the amount of elements (root/items) are under a safety limit
+ */
+export interface SafeToGoMap { [checksum: string]: boolean };
 
 export enum ConceptTreeVisualizationMode {
     searchBased = "searchBased",
@@ -98,6 +107,7 @@ export enum ConceptTreeVisualizationMode {
 export class LexicalEntryListPreference {
     visualization: LexEntryVisualizationMode = LexEntryVisualizationMode.indexBased;
     indexLength: number = 1;
+    safeToGoMap: SafeToGoMap = {}; //this is not a preference, but it is cached with them since it is contextual to the project 
 }
 
 export enum LexEntryVisualizationMode {

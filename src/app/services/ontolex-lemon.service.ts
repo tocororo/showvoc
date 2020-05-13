@@ -42,6 +42,14 @@ export class OntoLexLemonServices {
         );
     }
 
+    countLexicalEntriesByAlphabeticIndex(index: string, lexicon: IRI): Observable<number> {
+        var params: any = {
+            index: index,
+            lexicon: lexicon
+        };
+        return this.httpMgr.doGet(this.serviceName, "countLexicalEntriesByAlphabeticIndex", params);
+    }
+
     /**
      * Returns the lexicon which the lexicalEntry belongs to
      * @param lexicalEntry 

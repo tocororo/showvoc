@@ -41,7 +41,8 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     //(useful expecially when schemeChangeable is true so the changes don't effect the scheme in context)
     schemesForSearchBar: IRI[];
 
-    visualizationMode: ConceptTreeVisualizationMode;
+    visualizationMode: ConceptTreeVisualizationMode;//this could be changed dynamically, so each time it is used, get it again from preferences
+
     showInfoAlert: boolean = true;
 
     closedAlert: boolean;
@@ -86,6 +87,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     //top bar commands handlers
 
     refresh() {
+        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
         if (this.visualizationMode == ConceptTreeVisualizationMode.hierarchyBased) {
             // in index based visualization reinit the list
             this.viewChildTree.init();
@@ -159,6 +161,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     }
 
     handleSearchResults(results: AnnotatedValue<IRI>[]) {
+        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
         if (this.visualizationMode == ConceptTreeVisualizationMode.hierarchyBased) {
             if (results.length == 1) { //only one result => select in the tree
                 this.selectSearchedResource(results[0]);
@@ -255,6 +258,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     }
 
     openAt(node: AnnotatedValue<IRI>) {
+        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
         if (this.visualizationMode == ConceptTreeVisualizationMode.hierarchyBased) {
             this.viewChildTree.openTreeAt(node, this.workingSchemes);
         } else { //search-based
@@ -270,6 +274,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     private onSchemeChanged(schemes: IRI[]) {
         this.workingSchemes = schemes;
         //in case of visualization search based reset the list
+        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
         if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
             this.viewChildTree.forceList([]);
         }

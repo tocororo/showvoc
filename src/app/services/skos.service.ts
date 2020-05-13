@@ -38,6 +38,25 @@ export class SkosServices {
     }
 
     /**
+     * 
+     * @param schemes 
+     * @param schemeFilter 
+     * @param broaderProps 
+     * @param narrowerProps 
+     * @param includeSubProperties 
+     * @param options 
+     */
+    countTopConcepts(schemes?: IRI[], broaderProps?: IRI[], narrowerProps?: IRI[], includeSubProperties?: boolean): Observable<number> {
+        var params: any = {
+            schemes: schemes,
+            broaderProps: broaderProps,
+            narrowerProps: narrowerProps,
+            includeSubProperties: includeSubProperties,
+        };
+        return this.httpMgr.doGet(this.serviceName, "countTopConcepts", params)
+    }
+
+    /**
      * Returns the narrowers of the given concept
      * @param concept
      * @param schemes schemes where the narrower should belong

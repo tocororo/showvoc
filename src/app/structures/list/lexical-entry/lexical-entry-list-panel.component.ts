@@ -86,6 +86,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
 
 
     handleSearchResults(results: AnnotatedValue<IRI>[]) {
+        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
         if (this.visualizationMode == LexEntryVisualizationMode.indexBased) {
             if (results.length == 1) {
                 this.openAt(results[0]);
@@ -133,6 +134,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     }
 
     public openAt(node: AnnotatedValue<IRI>) {
+        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
         if (this.visualizationMode == LexEntryVisualizationMode.indexBased) {
             this.viewChildList.openListAt(node);
         } else { //search-based
@@ -144,6 +146,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     }
 
     refresh() {
+        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
         if (this.visualizationMode == LexEntryVisualizationMode.indexBased) {
             // in index based visualization reinit the list
             this.viewChildList.init();
@@ -164,7 +167,8 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
                 } else {
                     this.indexLenght = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength;
                     this.onDigitChange();
-                    this.refresh();
+                    // this.refresh();
+                    //should not be necessary to refresh since the index change triggers a re-init on the child list
                 }
             },
             () => { }
@@ -194,6 +198,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     private onLexiconChanged(lexicon: IRI) {
         this.workingLexicon = lexicon;
         //in case of visualization search based reset the list
+        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
         if (this.visualizationMode == LexEntryVisualizationMode.searchBased) {
             this.viewChildList.forceList([]);
         }
