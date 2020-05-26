@@ -2,11 +2,33 @@
     <div class="card-body vbox">
         <div #scrollableContainer class="scrollableContainer p-2" (scroll)="onScroll()">
             <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
-            <ng-container *ngFor="let n of nodes; let idx = index;">
-                <list-node *ngIf="idx < nodesLimit && (!n.isDeprecated() || showDeprecated && n.isDeprecated())"
-                    [node]="n" [rendering]="rendering" [context]="context" (nodeSelected)="onNodeSelected($event)">
-                </list-node>
+
+            <ng-container *ngIf="safeToGo; else unsafetyBlock">
+                <ng-container *ngFor="let n of nodes; let idx = index;">
+                    <list-node *ngIf="idx < nodesLimit && (!n.isDeprecated() || showDeprecated && n.isDeprecated())"
+                        [node]="n" [rendering]="rendering" [context]="context" (nodeSelected)="onNodeSelected($event)">
+                    </list-node>
+                </ng-container>
             </ng-container>
+
+            <ng-template #unsafetyBlock>
+                <div class="alert alert-warning" style="margin: 4px;">
+                    This LexicalEntry list has a large amount of elements. Retrieving them all could be a long process, 
+                    you might experience performance decrease or it might even hang the system.<br>
+                    <ng-container *ngIf="unsafeScenario == 'noLexiconMode'">
+                        It is highly recommended to restrict the lexicon selection, to improve the index length or to switch from 'index-based' to 'search-based' visualization mode.
+                    </ng-container>
+                    <ng-container *ngIf="unsafeScenario == 'oneCharIndex'">
+                        It is highly recommended to improve the index length or to switch from 'index-based' to 'search-based' visualization mode.
+                    </ng-container>
+                    <ng-container *ngIf="unsafeScenario == 'twoCharIndex'">
+                        It is highly recommended to switch from 'index-based' to 'search-based' visualization mode.
+                    </ng-container>
+                    <br>
+                    If you want to force the lexical entry list initialization at your own risk, click <a href="javascript:void(0)" (click)="forceSafeness()">here</a>
+                </div>
+            </ng-template>
+
         </div>
     </div>
 </div>

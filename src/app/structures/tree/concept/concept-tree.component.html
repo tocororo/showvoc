@@ -1,12 +1,27 @@
 <div class="card vbox">
     <div class="card-body vbox">
         <div #scrollableContainer class="scrollableContainer p-2" (scroll)="onScroll()">
+
             <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
-            <ng-container *ngFor="let n of nodes; let idx = index">
-                <concept-tree-node *ngIf="idx < nodesLimit && (!n.isDeprecated() || showDeprecated && n.isDeprecated())"
-                    [node]="n" [schemes]="schemes" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
-                </concept-tree-node> 
+
+            <ng-container *ngIf="safeToGo; else unsafetyBlock">
+                <ng-container *ngFor="let n of nodes; let idx = index">
+                    <concept-tree-node *ngIf="idx < nodesLimit && (!n.isDeprecated() || showDeprecated && n.isDeprecated())"
+                        [node]="n" [schemes]="schemes" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
+                    </concept-tree-node> 
+                </ng-container>
             </ng-container>
+
+            <ng-template #unsafetyBlock>
+                <div class="alert alert-warning">
+                    This Concept tree has a large amount of top concepts. Retrieving them all could be a long process, 
+                    you might experience performance decrease or it might even hang the system.<br>
+                    It is highly recommended to restrict the scheme selection (if possible) or
+                    to switch from 'hierarchy' to 'search-based' visualization mode from the tree settings.<br>
+                    If you want to force the Concept tree initialization at your own risk, click <a href="javascript:void(0)" (click)="forceSafeness()">here</a>.
+                </div>
+            </ng-template>
+
         </div>
     </div>
 </div>

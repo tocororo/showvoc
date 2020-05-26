@@ -23,7 +23,14 @@ export class LexiconListComponent extends AbstractList {
         super(eventHandler);
         //handler when active lexicon is changed programmatically when a searched entry belong to a non active lexicon
         this.eventSubscriptions.push(eventHandler.lexiconChangedEvent.subscribe(
-            (node: IRI) => this.activeLexicon = this.nodes[ResourceUtils.indexOfNode(this.nodes, node)]));
+            (lexicon: IRI) => {
+                if (lexicon != null) {
+                    this.activeLexicon = this.nodes.find(n => n.getValue().equals(lexicon));
+                } else {
+                    this.activeLexicon = null;
+                }
+            })
+        );
     }
 
     initImpl() {
@@ -46,8 +53,14 @@ export class LexiconListComponent extends AbstractList {
         );
     }
 
-    updateActiveLexiconPref() {
-        this.pmkiProp.setActiveLexicon(PMKIContext.getProjectCtx(), this.activeLexicon.getValue());
+    toggleLexicon(lexicon: AnnotatedValue<IRI>) {
+        if (this.activeLexicon == lexicon) {
+            this.activeLexicon = null;
+        } else {
+            this.activeLexicon = lexicon;
+        }
+        let activeLexiconIRI: IRI = this.activeLexicon != null ? this.activeLexicon.getValue() : null;
+        this.pmkiProp.setActiveLexicon(PMKIContext.getProjectCtx(), activeLexiconIRI);
     }
 
 }
