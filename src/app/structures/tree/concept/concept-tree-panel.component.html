@@ -30,7 +30,8 @@
 			</button>
 		</div>
 
-		<concept-tree [schemes]="workingSchemes" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
+		<concept-tree [schemes]="workingSchemes" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context"
+			(nodeSelected)="onNodeSelected($event)" (requireSettings)="settings()">
 		</concept-tree>
 
 	</div>

@@ -18,9 +18,11 @@ export class Properties {
     static pref_class_tree_filter: string = "class_tree.filter";
     
     static pref_concept_tree_visualization: string = "concept_tree_visualization";
+    static pref_concept_tree_safe_to_go_limit: string = "concept_tree_safe_to_go_limit";
 
     static pref_lex_entry_list_visualization: string = "lex_entry_list_visualization";
     static pref_lex_entry_list_index_lenght: string = "lex_entry_list_index_lenght";
+    static pref_lex_entry_list_safe_to_go_limit: string = "lex_entry_list_safe_to_go_limit";
 
     static pref_search_languages: string = "search_languages";
     static pref_search_restrict_lang: string = "search_restrict_lang";
@@ -82,22 +84,17 @@ export class ClassTreeFilter {
 }
 
 export class ConceptTreePreference {
-    // baseBroaderUri: string;
-    // broaderProps: string[];
-    // narrowerProps: string[];
-    // includeSubProps: boolean; //tells if the hierarchy should consider
-    // syncInverse: boolean; //tells if the narrower/broader properties should be synced with their inverse
     visualization: ConceptTreeVisualizationMode = ConceptTreeVisualizationMode.hierarchyBased;
-
+    safeToGoLimit: number = 1000;
     safeToGoMap: SafeToGoMap = {}; //this is not a preference, but it is cached with them since it is contextual to the project 
 }
 
 /**
- * map <string, boolean> 
  * checksum: string - it is a representation of the request params (it could be a concat of the params serialization)
  * safe: boolean tells if the tree/list is safe to be initialized, namely if the amount of elements (root/items) are under a safety limit
  */
-export interface SafeToGoMap { [checksum: string]: boolean };
+export interface SafeToGoMap { [checksum: string]: SafeToGo };
+export interface SafeToGo { safe: boolean, count?: number };
 
 export enum ConceptTreeVisualizationMode {
     searchBased = "searchBased",
@@ -107,6 +104,7 @@ export enum ConceptTreeVisualizationMode {
 export class LexicalEntryListPreference {
     visualization: LexEntryVisualizationMode = LexEntryVisualizationMode.indexBased;
     indexLength: number = 1;
+    safeToGoLimit: number = 1000;
     safeToGoMap: SafeToGoMap = {}; //this is not a preference, but it is cached with them since it is contextual to the project 
 }
 

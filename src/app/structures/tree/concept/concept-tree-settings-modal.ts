@@ -18,19 +18,26 @@ export class ConceptTreeSettingsModal implements OnInit {
         { label: "Search based", value: ConceptTreeVisualizationMode.searchBased }
     ]
 
-    constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties) {
-    }
+    private safeToGoLimit: number;
+
+    constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties) {}
 
     ngOnInit() {
         let conceptTreePref: ConceptTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
         this.pristineConcPref = JSON.parse(JSON.stringify(conceptTreePref));
         
         this.visualization = conceptTreePref.visualization;
+        this.safeToGoLimit = conceptTreePref.safeToGoLimit;
     }
 
 	ok() {
         if (this.pristineConcPref.visualization != this.visualization) {
             this.pmkiProp.setConceptTreeVisualization(this.visualization);
+        }
+        if (this.visualization == ConceptTreeVisualizationMode.hierarchyBased) {
+            if (this.pristineConcPref.safeToGoLimit != this.safeToGoLimit) {
+                this.pmkiProp.setConceptTreeSafeToGoLimit(this.safeToGoLimit);
+            }
         }
 		this.activeModal.close();
 	}

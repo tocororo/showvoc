@@ -42,7 +42,8 @@
             </button>
         </div>
 
-        <lexical-entry-list [lexicon]="workingLexicon" [index]="index" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
+        <lexical-entry-list [lexicon]="workingLexicon" [index]="index" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context"
+            (nodeSelected)="onNodeSelected($event)" (requireSettings)="settings()">
         </lexical-entry-list>
     </div>
 

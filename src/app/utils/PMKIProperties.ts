@@ -123,6 +123,12 @@ export class PMKIProperties {
         Cookie.setUserProjectCookiePref(Properties.pref_concept_tree_visualization, PMKIContext.getProjectCtx().getProject(), mode);
         PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization = mode;
     }
+    setConceptTreeSafeToGoLimit(limit: number) {
+        Cookie.setUserProjectCookiePref(Properties.pref_concept_tree_safe_to_go_limit, PMKIContext.getProjectCtx().getProject(), limit);
+        let conceptTreePref = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences; 
+        conceptTreePref.safeToGoLimit = limit;
+        conceptTreePref.safeToGoMap = {}; //changing the limit invalidated the safe => reset the map
+    }
 
     //lex entry list settings
     setLexicalEntryListVisualization(mode: LexEntryVisualizationMode) {
@@ -132,6 +138,12 @@ export class PMKIProperties {
     setLexicalEntryListIndexLenght(lenght: number) {
         Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_index_lenght, PMKIContext.getProjectCtx().getProject(), lenght);
         PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength = lenght;
+    }
+    setLexicalEntryListSafeToGoLimit(limit: number) {
+        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_safe_to_go_limit, PMKIContext.getProjectCtx().getProject(), limit);
+        let lexEntryListPref = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
+        lexEntryListPref.safeToGoLimit = limit;
+        lexEntryListPref.safeToGoMap = {}; //changing the limit invalidated the safe => reset the map
     }
 
     //Graph settings
@@ -219,6 +231,10 @@ export class PMKIProperties {
         if (conceptTreeVisualizationPref != null && conceptTreeVisualizationPref == ConceptTreeVisualizationMode.searchBased) {
             conceptTreePref.visualization = conceptTreeVisualizationPref;
         }
+        let conceptTreeSafeToGoLimitPref: string = Cookie.getUserProjectCookiePref(Properties.pref_concept_tree_safe_to_go_limit, project);
+        if (conceptTreeSafeToGoLimitPref != null) {
+            conceptTreePref.safeToGoLimit = parseInt(conceptTreeSafeToGoLimitPref);
+        }
         projectPreferences.conceptTreePreferences = conceptTreePref
 
         //lexical entry list preferences
@@ -230,6 +246,10 @@ export class PMKIProperties {
         let lexEntryListIndexLenghtPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_index_lenght, project);
         if (lexEntryListIndexLenghtPref == "2") {
             lexEntryListPref.indexLength = 2;
+        }
+        let lexEntryListSafeToGoLimitPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_safe_to_go_limit, project);
+        if (lexEntryListSafeToGoLimitPref != null) {
+            lexEntryListPref.safeToGoLimit = parseInt(lexEntryListSafeToGoLimitPref);
         }
         projectPreferences.lexEntryListPreferences = lexEntryListPref;
 

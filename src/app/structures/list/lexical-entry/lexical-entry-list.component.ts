@@ -1,7 +1,7 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { finalize, flatMap } from 'rxjs/operators';
-import { LexEntryVisualizationMode, LexicalEntryListPreference, SafeToGoMap } from 'src/app/models/Properties';
+import { LexEntryVisualizationMode, LexicalEntryListPreference, SafeToGoMap, SafeToGo } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
@@ -18,12 +18,13 @@ export class LexicalEntryListComponent extends AbstractList {
 
     @Input() lexicon: IRI;
     @Input() index: string; //initial letter of the entries to show
+    @Output() requireSettings = new EventEmitter<void>(); //requires to the parent panel to open/change settings
 
     structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.ontolexLexicalEntry;
 
-    private safeToGoLimit: number = 1000;
-    safeToGo: boolean = true;
-    unsafeScenario: UnsafeScenario; //describe the scenario where the usafeness happened (useful for customizing the warning alert)
+    safeToGoLimit: number;
+    safeToGo: SafeToGo = { safe: true };
+    unsafeIndexOneChar: boolean; //true if in case of safeToGo = false, the current index is 1-char
 
     constructor(private ontolexService: OntoLexLemonServices, eventHandler: PMKIEventHandler) {
         super(eventHandler);
@@ -40,7 +41,7 @@ export class LexicalEntryListComponent extends AbstractList {
         if (visualization == LexEntryVisualizationMode.indexBased && this.index != undefined) {
             this.checkInitializationSafe().subscribe(
                 () => {
-                    if (this.safeToGo) {
+                    if (this.safeToGo.safe) {
                         this.loading = true;
                         this.ontolexService.getLexicalEntriesByAlphabeticIndex(this.index, this.lexicon).pipe(
                             finalize(() => this.loading = false)
@@ -67,7 +68,7 @@ export class LexicalEntryListComponent extends AbstractList {
      * Forces the safeness of the structure even if it was reported as not safe, then re initialize it
      */
     forceSafeness() {
-        this.safeToGo = true;
+        this.safeToGo = { safe: true };
         let lexEntryListPreference: LexicalEntryListPreference = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
         let safeToGoMap: SafeToGoMap = lexEntryListPreference.safeToGoMap;
         let checksum = this.getInitRequestChecksum();
@@ -81,33 +82,24 @@ export class LexicalEntryListComponent extends AbstractList {
      */
     private checkInitializationSafe(): Observable<void> {
         let lexEntryListPreference: LexicalEntryListPreference = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
-
-        if (this.lexicon == null) {
-            this.unsafeScenario = UnsafeScenario.noLexiconMode;
-        } else { //lexicon selected
-            if (lexEntryListPreference.indexLength == 1) {
-                this.unsafeScenario = UnsafeScenario.oneCharIndex;
-            } else {
-                this.unsafeScenario = UnsafeScenario.twoCharIndex;
-            }
-        }
-
         let safeToGoMap: SafeToGoMap = lexEntryListPreference.safeToGoMap;
+        this.safeToGoLimit = lexEntryListPreference.safeToGoLimit;
+        this.unsafeIndexOneChar = lexEntryListPreference.indexLength == 1;
 
         let checksum = this.getInitRequestChecksum();
 
-        let safe: boolean = safeToGoMap[checksum];
-        if (safe != null) { //found safeness in cache
-            this.safeToGo = safe;
+        let safeness: SafeToGo = safeToGoMap[checksum];
+        if (safeness != null) { //found safeness in cache
+            this.safeToGo = safeness;
             return of(null);
         } else { //never initialized => count
             this.loading = true;
             return this.ontolexService.countLexicalEntriesByAlphabeticIndex(this.index, this.lexicon).pipe(
-                finalize(() => this.loading = false),
                 flatMap(count => {
-                    safe = count < this.safeToGoLimit;
-                    safeToGoMap[checksum] = safe; //cache the safetyness
-                    this.safeToGo = safe;
+                    this.loading = false;
+                    safeness = { safe: count < this.safeToGoLimit, count: count };
+                    safeToGoMap[checksum] = safeness; //cache the safetyness
+                    this.safeToGo = safeness;
                     return of(null);
                 })
             );
@@ -124,11 +116,4 @@ export class LexicalEntryListComponent extends AbstractList {
         this.nodes = list;
     }
 
-}
-
-enum UnsafeScenario {
-    noLexiconMode = "noLexiconMode", //when there is no lexicon selected => suggest to select a lexicon or to switch to search based
-    oneCharIndex = "oneCharIndex", //index-based mode with 1-char => suggest to increase the index length or to switch to search based
-    twoCharIndex = "twoCharIndex", //index-based mode with 2-char => suggest to switch to search based
-    //for each case it is also provided the possibility to force the initialization
 }

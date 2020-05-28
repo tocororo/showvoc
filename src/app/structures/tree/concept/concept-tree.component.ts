@@ -1,9 +1,9 @@
-import { Component, Input, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, Input, Output, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { finalize, flatMap } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
-import { ConceptTreePreference, ConceptTreeVisualizationMode, SafeToGoMap } from 'src/app/models/Properties';
+import { ConceptTreePreference, ConceptTreeVisualizationMode, SafeToGo, SafeToGoMap } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { SearchServices } from 'src/app/services/search.service';
 import { SkosServices } from 'src/app/services/skos.service';
@@ -21,13 +21,14 @@ import { ConceptTreeNodeComponent } from './concept-tree-node.component';
 export class ConceptTreeComponent extends AbstractTree {
 
     @Input() schemes: IRI[];
+    @Output() requireSettings = new EventEmitter<void>(); //requires to the parent panel to open/change settings
 
     @ViewChildren(ConceptTreeNodeComponent) viewChildrenNode: QueryList<ConceptTreeNodeComponent>;
 
     structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.concept;
 
-    private safeToGoLimit: number = 1000;
-    safeToGo: boolean = true;
+    safeToGoLimit: number;
+    safeToGo: SafeToGo = { safe: true };
 
     private lastTimeInit: number;
 
@@ -54,9 +55,9 @@ export class ConceptTreeComponent extends AbstractTree {
         if (conceptTreePref.visualization == ConceptTreeVisualizationMode.hierarchyBased) {
             this.checkInitializationSafe().subscribe(
                 () => {
-                    if (this.safeToGo) {
-                        this.loading = true;
+                    if (this.safeToGo.safe) {
                         this.lastTimeInit = new Date().getTime();
+                        this.loading = true;
                         this.skosService.getTopConcepts(this.lastTimeInit, this.schemes).pipe(
                             finalize(() => this.loading = false)
                         ).subscribe(
@@ -84,7 +85,7 @@ export class ConceptTreeComponent extends AbstractTree {
      * Forces the safeness of the structure even if it was reported as not safe, then re initialize it
      */
     forceSafeness() {
-        this.safeToGo = true;
+        this.safeToGo.safe = true;
         let conceptTreePreference: ConceptTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
         let safeToGoMap: SafeToGoMap = conceptTreePreference.safeToGoMap;
         let checksum = this.getInitRequestChecksum();
@@ -99,21 +100,22 @@ export class ConceptTreeComponent extends AbstractTree {
     private checkInitializationSafe(): Observable<void> {
         let conceptTreePreference: ConceptTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
         let safeToGoMap: SafeToGoMap = conceptTreePreference.safeToGoMap;
+        this.safeToGoLimit = conceptTreePreference.safeToGoLimit;
 
         let checksum = this.getInitRequestChecksum();
 
-        let safe: boolean = safeToGoMap[checksum];
-        if (safe != null) { //found safeness in cache
-            this.safeToGo = true;
+        let safeness: SafeToGo = safeToGoMap[checksum];
+        if (safeness != null) { //found safeness in cache
+            this.safeToGo = safeness;
             return of(null)
         } else { //never initialized => count
             this.loading = true;
             return this.skosService.countTopConcepts(this.schemes).pipe(
-                finalize(() => this.loading = false),
                 flatMap(count => {
-                    safe = count < this.safeToGoLimit;
-                    safeToGoMap[checksum] = safe; //cache the safetyness
-                    this.safeToGo = safe;
+                    this.loading = false;
+                    safeness = { safe: count < this.safeToGoLimit, count: count };
+                    safeToGoMap[checksum] = safeness; //cache the safetyness
+                    this.safeToGo = safeness;
                     return of(null)
                 })
             );

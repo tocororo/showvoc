@@ -4,7 +4,7 @@
 
             <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
 
-            <ng-container *ngIf="safeToGo; else unsafetyBlock">
+            <ng-container *ngIf="safeToGo.safe; else unsafetyBlock">
                 <ng-container *ngFor="let n of nodes; let idx = index">
                     <concept-tree-node *ngIf="idx < nodesLimit && (!n.isDeprecated() || showDeprecated && n.isDeprecated())"
                         [node]="n" [schemes]="schemes" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
@@ -13,11 +13,14 @@
             </ng-container>
 
             <ng-template #unsafetyBlock>
-                <div class="alert alert-warning">
-                    This Concept tree has a large amount of top concepts. Retrieving them all could be a long process, 
-                    you might experience performance decrease or it might even hang the system.<br>
-                    It is highly recommended to restrict the scheme selection (if possible) or
-                    to switch from 'hierarchy' to 'search-based' visualization mode from the tree settings.<br>
+                <div *ngIf="!loading" class="alert alert-warning">
+                    This Concept tree has an amount of top concepts ({{safeToGo.count}}) that exceeds the limit set in the settings ({{safeToGoLimit}}). 
+                    Retrieving them all could be a long process, you might experience performance decrease or it might even hang the system.<br>
+                    It is recommended to switch from <i>Hierarchy based</i> to <i>Search based</i> visualization mode from the tree <a href="javascript:void(0)" (click)="requireSettings.emit()">settings</a>.
+                    <br>
+                    <ng-container *ngIf="!schemes || schemes.length == 0">
+                        You can also reduce the amount of top concepts by selecting a scheme from the <i>Scheme</i> panel.<br>
+                    </ng-container>
                     If you want to force the Concept tree initialization at your own risk, click <a href="javascript:void(0)" (click)="forceSafeness()">here</a>.
                 </div>
             </ng-template>
