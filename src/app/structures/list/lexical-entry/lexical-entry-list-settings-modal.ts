@@ -17,11 +17,13 @@ export class LexicalEntryListSettingsModal implements OnInit {
         { label: "Index based", value: LexEntryVisualizationMode.indexBased },
         { label: "Search based", value: LexEntryVisualizationMode.searchBased }
     ]
+    allowVisualizationChange: boolean;
 
     private safeToGoLimit: number;
 
     private indexLenght: number;
-    private lenghtChoices: number[] = [1, 2];
+    lenghtChoices: number[] = [1, 2];
+    allowIndexLengthChange: boolean;
 
     constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties) {}
 
@@ -31,6 +33,9 @@ export class LexicalEntryListSettingsModal implements OnInit {
         this.visualization = lexEntryPref.visualization;
         this.indexLenght = lexEntryPref.indexLength;
         this.safeToGoLimit = lexEntryPref.safeToGoLimit;
+
+        this.allowVisualizationChange = lexEntryPref.allowVisualizationChange;
+        this.allowIndexLengthChange = lexEntryPref.allowIndexLengthChange;
     }
 
     ok() {

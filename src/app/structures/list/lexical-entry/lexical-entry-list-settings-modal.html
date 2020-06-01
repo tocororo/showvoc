@@ -14,7 +14,7 @@
             <tr>
                 <td nowrap><label>Visualization mode:</label></td>
                 <td>
-                    <select class="form-control form-control-sm" [(ngModel)]="visualization">
+                    <select class="form-control form-control-sm" [(ngModel)]="visualization" [disabled]="!allowVisualizationChange">
                         <option *ngFor="let vm of visualizationModes" [value]="vm.value">{{vm.label}}</option>
                     </select>
                 </td>
@@ -38,7 +38,7 @@
                         <label>Index length:</label>
                     </td>
                     <td>
-                        <select class="form-control form-control-sm" [(ngModel)]="indexLenght">
+                        <select class="form-control form-control-sm" [(ngModel)]="indexLenght" [disabled]="!allowIndexLengthChange">
                             <option *ngFor="let l of lenghtChoices">{{l}}</option>
                         </select>
                     </td>

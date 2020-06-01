@@ -17,6 +17,7 @@ export class ConceptTreeSettingsModal implements OnInit {
         { label: "Hierarchy based", value: ConceptTreeVisualizationMode.hierarchyBased },
         { label: "Search based", value: ConceptTreeVisualizationMode.searchBased }
     ]
+    allowVisualizationChange: boolean;
 
     private safeToGoLimit: number;
 
@@ -24,6 +25,7 @@ export class ConceptTreeSettingsModal implements OnInit {
 
     ngOnInit() {
         let conceptTreePref: ConceptTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
+        this.allowVisualizationChange = conceptTreePref.allowVisualizationChange;
         this.pristineConcPref = JSON.parse(JSON.stringify(conceptTreePref));
         
         this.visualization = conceptTreePref.visualization;

@@ -57,7 +57,8 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     ngOnInit() {
         super.ngOnInit();
 
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
+        let prefs = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
+        this.visualizationMode = prefs.visualization;
 
         if (this.inputSchemes === undefined) { //if @Input is not provided at all, get the scheme from the preferences
             this.workingSchemes = PMKIContext.getProjectCtx().getProjectPreferences().activeSchemes;

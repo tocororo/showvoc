@@ -15,7 +15,7 @@
             <tr>
                 <td nowrap><label>Visualization mode:</label></td>
                 <td>
-                    <select class="form-control form-control-sm" [(ngModel)]="visualization">
+                    <select class="form-control form-control-sm" [(ngModel)]="visualization" [disabled]="!allowVisualizationChange">
                         <option *ngFor="let vm of visualizationModes" [value]="vm.value">{{vm.label}}</option>
                     </select>
                 </td>

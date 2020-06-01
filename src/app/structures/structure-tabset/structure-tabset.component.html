@@ -3,13 +3,13 @@
 
         <ngb-tabset [destroyOnHide]="false" [activeId]="initialActiveTab" class="vbox">
 
-            <ngb-tab title="Class" id="cls">
+            <ngb-tab *ngIf="model == 'OWL' || model == 'RDFS'" title="Class" id="cls">
                 <ng-template ngbTabContent>
                     <class-instance-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></class-instance-panel>
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab *ngIf="model == 'SKOS'" title="Concept" id="concept">
+            <ngb-tab *ngIf="model == 'SKOS' || model == 'OntoLex'" title="Concept" id="concept">
                 <ng-template ngbTabContent>
                     <concept-tree-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></concept-tree-panel>
                 </ng-template>
@@ -21,7 +21,7 @@
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab *ngIf="model == 'SKOS'" title="Scheme" id="conceptScheme">
+            <ngb-tab *ngIf="model == 'SKOS' || model == 'OntoLex'" title="Scheme" id="conceptScheme">
                 <ng-template ngbTabContent>
                     <scheme-list-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></scheme-list-panel>
                 </ng-template>

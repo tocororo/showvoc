@@ -14,6 +14,7 @@ import { PMKIContext, ProjectContext } from 'src/app/utils/PMKIContext';
 export class RenderingEditor implements ControlValueAccessor {
 
     @Input() projectCtx: ProjectContext; //if provided, retrieve the project languages from it (not from the PMKI context project)
+    @Input() alert: string; //if provided, show an alert containing the given message
 
     projectLanguages: Language[];
     renderingLanguages: LanguageItem[];

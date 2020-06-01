@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
@@ -31,14 +31,50 @@ export class PMKIProperties {
      * 
      * Note: since the default user is the same for every visitor, the user-project preferences are stored as cookie
      * (and not on ST as in VocBench). In this way we prevent that a visitor changes the preferences for all the other visitors.
-     * The only preference stored server-side is the rendering languages since this is used even server-side by the rendering engine.
+     * Some exceptions are made for
+     * - the rendering languages
+     * - the concept tree and lexical entry list visualization mode
+     * that are stored also as settings. The settings provide the default and the user can override them with the cookies,
+     * except for some scenarios where some settings abount concept tree and lex.entry list could block the overriding by the user
+     * (see the related handling in initPreferencesCookie())
      */
-    initUserProjectPreferences(projectCtx: ProjectContext): Observable<any> {
+    initUserProjectPreferences(projectCtx: ProjectContext): Observable<void> {
         PMKIContext.setTempProject(projectCtx.getProject());
-        return this.prefService.getPUSettings([Properties.pref_languages], null, ExtensionPointID.RENDERING_ENGINE_ID).pipe(
+
+        let projectPreferences = projectCtx.getProjectPreferences();
+        let initRenderingPrefFn = this.prefService.getPUSettings([Properties.pref_languages], null, ExtensionPointID.RENDERING_ENGINE_ID).pipe(
             map(prefs => {
-                PMKIContext.removeTempProject();
-                projectCtx.getProjectPreferences().projectLanguagesPreference = prefs[Properties.pref_languages].split(",");
+                projectPreferences.projectLanguagesPreference = prefs[Properties.pref_languages].split(",");
+            })
+        );
+        let structuresPrefs: string[] = [Properties.pref_concept_tree_visualization, Properties.pref_concept_tree_allow_visualization_change, 
+            Properties.pref_lex_entry_list_visualization, Properties.pref_lex_entry_allow_visualization_change, 
+            Properties.pref_lex_entry_list_index_length, Properties.pref_lex_entry_allow_index_length_change];
+        let initStructuresPrefFn = this.prefService.getPUSettings(structuresPrefs, null).pipe(
+            map(prefs => {
+                //concept tree pref (initialized here, eventually overwritten later with cookie)
+                projectPreferences.conceptTreePreferences = new ConceptTreePreference();
+                let conceptTreeVisualizationPref: string = prefs[Properties.pref_concept_tree_visualization];
+                if (conceptTreeVisualizationPref == ConceptTreeVisualizationMode.searchBased) {
+                    projectPreferences.conceptTreePreferences.visualization = conceptTreeVisualizationPref;
+                }
+                projectPreferences.conceptTreePreferences.allowVisualizationChange = prefs[Properties.pref_concept_tree_allow_visualization_change] != "false";
+                
+                //lex entry list pref (initialized here, eventually overwritten later with cookie)
+                projectPreferences.lexEntryListPreferences = new LexicalEntryListPreference();
+                let lexEntryListVisualizationPref: string = prefs[Properties.pref_lex_entry_list_visualization];
+                if (lexEntryListVisualizationPref == LexEntryVisualizationMode.searchBased) {
+                    projectPreferences.lexEntryListPreferences.visualization = lexEntryListVisualizationPref;
+                }
+                if (prefs[Properties.pref_lex_entry_list_index_length] == "2") {
+                    projectPreferences.lexEntryListPreferences.indexLength = 2;
+                }
+                projectPreferences.lexEntryListPreferences.allowVisualizationChange = prefs[Properties.pref_lex_entry_allow_visualization_change] != "false";
+                projectPreferences.lexEntryListPreferences.allowIndexLengthChange = prefs[Properties.pref_lex_entry_allow_index_length_change] != "false";
+            })
+        );
+        return forkJoin(initRenderingPrefFn, initStructuresPrefFn).pipe(
+            map(() => {
                 //init also cookie-stored preferences
                 this.initPreferencesCookie(projectCtx);
             })
@@ -51,7 +87,7 @@ export class PMKIProperties {
             map(settings => {
                 let projectSettings: ProjectSettings = projectCtx.getProjectSettings();
                 
-                var langsValue: string = settings[Properties.setting_languages];
+                let langsValue: string = settings[Properties.setting_languages];
                 try {
                     projectSettings.projectLanguagesSetting = <Language[]>JSON.parse(langsValue);
                     Languages.sortLanguages(projectSettings.projectLanguagesSetting);
@@ -136,7 +172,7 @@ export class PMKIProperties {
         PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization = mode;
     }
     setLexicalEntryListIndexLenght(lenght: number) {
-        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_index_lenght, PMKIContext.getProjectCtx().getProject(), lenght);
+        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_index_length, PMKIContext.getProjectCtx().getProject(), lenght);
         PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength = lenght;
     }
     setLexicalEntryListSafeToGoLimit(limit: number) {
@@ -226,32 +262,42 @@ export class PMKIProperties {
         projectPreferences.classTreePreferences = classTreePreferences;
 
         //concept tree preferences
-        let conceptTreePref: ConceptTreePreference = new ConceptTreePreference();
-        let conceptTreeVisualizationPref: string = Cookie.getUserProjectCookiePref(Properties.pref_concept_tree_visualization, project);
-        if (conceptTreeVisualizationPref != null && conceptTreeVisualizationPref == ConceptTreeVisualizationMode.searchBased) {
-            conceptTreePref.visualization = conceptTreeVisualizationPref;
+        let conceptTreePref: ConceptTreePreference = projectPreferences.conceptTreePreferences;
+        //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin
+        if (PMKIContext.getLoggedUser().isAdmin() || conceptTreePref.allowVisualizationChange) {
+            let conceptTreeVisualizationPref: string = Cookie.getUserProjectCookiePref(Properties.pref_concept_tree_visualization, project);
+            if (conceptTreeVisualizationPref == ConceptTreeVisualizationMode.searchBased || conceptTreeVisualizationPref == ConceptTreeVisualizationMode.hierarchyBased) {
+                //overwrite only if the cookie value is an admitted value
+                conceptTreePref.visualization = conceptTreeVisualizationPref;
+            }
         }
         let conceptTreeSafeToGoLimitPref: string = Cookie.getUserProjectCookiePref(Properties.pref_concept_tree_safe_to_go_limit, project);
         if (conceptTreeSafeToGoLimitPref != null) {
             conceptTreePref.safeToGoLimit = parseInt(conceptTreeSafeToGoLimitPref);
         }
-        projectPreferences.conceptTreePreferences = conceptTreePref
 
         //lexical entry list preferences
-        let lexEntryListPref = new LexicalEntryListPreference();
-        let lexEntryListVisualizationPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_visualization, project);
-        if (lexEntryListVisualizationPref != null && lexEntryListVisualizationPref == LexEntryVisualizationMode.searchBased) {
-            lexEntryListPref.visualization = lexEntryListVisualizationPref;
+        let lexEntryListPref: LexicalEntryListPreference = projectPreferences.lexEntryListPreferences;
+        //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin
+        if (PMKIContext.getLoggedUser().isAdmin() || lexEntryListPref.allowVisualizationChange) {
+            let lexEntryListVisualizationPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_visualization, project);
+            if (lexEntryListVisualizationPref == LexEntryVisualizationMode.searchBased || lexEntryListVisualizationPref == LexEntryVisualizationMode.indexBased) {
+                //overwrite only if the cookie value is an admitted value
+                lexEntryListPref.visualization = lexEntryListVisualizationPref;
+            }
         }
-        let lexEntryListIndexLenghtPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_index_lenght, project);
-        if (lexEntryListIndexLenghtPref == "2") {
-            lexEntryListPref.indexLength = 2;
+        //the index length is taken from cookie only if admin there isn't any restriction on it or if the user is the admin
+        if (PMKIContext.getLoggedUser().isAdmin() || lexEntryListPref.allowIndexLengthChange) {
+            let lexEntryListIndexLenghtPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_index_length, project);
+            if (lexEntryListIndexLenghtPref == "1" || lexEntryListIndexLenghtPref == "2") {
+                //overwrite only if the cookie value is an admitted value
+                lexEntryListPref.indexLength = parseInt(lexEntryListIndexLenghtPref);
+            }
         }
         let lexEntryListSafeToGoLimitPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_safe_to_go_limit, project);
         if (lexEntryListSafeToGoLimitPref != null) {
             lexEntryListPref.safeToGoLimit = parseInt(lexEntryListSafeToGoLimitPref);
         }
-        projectPreferences.lexEntryListPreferences = lexEntryListPref;
 
         //search settings
         let searchSettings: SearchSettings = new SearchSettings();

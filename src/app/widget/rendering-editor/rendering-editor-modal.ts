@@ -18,8 +18,6 @@ export class RenderingEditorModal {
 
     renderingLangs: string[];
 
-    closedAlert: boolean = false;
-
     constructor(public activeModal: NgbActiveModal) { }
 
     ngOnInit() {

@@ -79,8 +79,10 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
             this.workingLexicon = activeLexicon;
         }
 
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
-        this.indexLenght = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength;
+        let lexEntryListPrefs = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
+        // settings modal di lex-entry list deve permettere il change di solo del setting permesso
+        this.visualizationMode = lexEntryListPrefs.visualization;
+        this.indexLenght = lexEntryListPrefs.indexLength;
         this.onDigitChange();
     }
 

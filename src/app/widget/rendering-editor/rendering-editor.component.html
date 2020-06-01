@@ -1,6 +1,6 @@
 <div class="card vbox">
     <div class="card-header d-flex align-items-center">
-        <label style="flex: 1">Rendering Languages:</label>
+        <label style="flex: 1">Rendering Languages</label>
         <span *ngIf="getActiveLanguageItems().length == 0" class="fas fa-exclamation-triangle text-muted mr-2" 
             title="No language selected implicitly means all languages">
         </span>
@@ -16,6 +16,9 @@
         </div>
     </div>
     <div class="card-body vbox">
+        <div *ngIf="alert" class="alert alert-info mb-1">
+            {{alert}}
+        </div>
         <div class="table-responsive vbox border rounded p-1">
             <table class="table table-sm table-hover" style="flex: 1">
                 <colgroup>

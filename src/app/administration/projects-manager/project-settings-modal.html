@@ -4,13 +4,132 @@
         <span>&times;</span>
     </button>
 </div>
-<div class="modal-body">
+<div class="modal-body scrollableContainer">
 
-    <div class="alert alert-info mb-1">
-        Set the language(s) used for rendering the resources
+    <div *ngIf="isSkos || isOntolex" class="card mb-2">
+        <div class="card-header">Concept tree settings</div>
+        <div class="card-body">
+            <div class="alert alert-info mb-1">
+                Restricts the visualization of the Concept tree for the visitor user.<br>
+                Administrator user will still be able to customize the visualization for itself.
+            </div>
+            <table class="table table-sm table-borderless">
+                <colgroup>
+                    <col style="width: 1%;">
+                    <col style="width: 1%;">
+                    <col>
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td nowrap>
+                            <label>Default visualization mode:</label>
+                        </td>
+                        <td>
+                            <select class="form-control form-control-sm" [(ngModel)]="selectedSkosMode" (ngModelChange)="changeSkosVisualizationMode()">
+                                <option *ngFor="let vm of skosVisualizationModes" [value]="vm.value">{{vm.label}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="fas fa-info-circle" title="Tells if visitor user can customize the visualization mode for itself"></span>
+                        </td>
+                        <td nowrap>
+                            <label>Allow visualization change:</label>
+                        </td>
+                        <td>
+                            <div class="custom-control custom-switch" (click)="changeSkosAllowVisualizationChange()">
+                                <input type="checkbox" class="custom-control-input" [ngModel]="skosAllowVisualizationChange">
+                                <label class="custom-control-label">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <rendering-editor *ngIf="renderingLangs" [projectCtx]="projectCtx" [(ngModel)]="renderingLangs" (ngModelChange)="onRenderingChange()"></rendering-editor>
+    <div *ngIf="isOntolex" class="card mb-2">
+        <div class="card-header">Lexical Entry list settings</div>
+        <div class="card-body">
+            <div class="alert alert-info mb-1">
+                Restricts the visualization of the Lexical Entry list for the visitor user.<br>
+                Administrator user will still be able to customize the visualization for itself.
+            </div>
+            <table class="table table-sm table-borderless">
+                <colgroup>
+                    <col style="width: 1%;">
+                    <col style="width: 1%;">
+                    <col>
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td nowrap>
+                            <label>Default visualization mode:</label>
+                        </td>
+                        <td>
+                            <select class="form-control form-control-sm" [(ngModel)]="selectedOntolexMode" (ngModelChange)="changeOntolexVisualizationMode()">
+                                <option *ngFor="let vm of ontolexVisualizationModes" [value]="vm.value">{{vm.label}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="fas fa-info-circle" title="Tells if visitor user can customize the visualization mode for itself"></span>
+                        </td>
+                        <td nowrap>
+                            <label>Allow visualization change:</label>
+                        </td>
+                        <td>
+                            <div class="custom-control custom-switch" (click)="changeOntolexAllowVisualizationModeChage()">
+                                <input type="checkbox" class="custom-control-input" [ngModel]="ontolexAllowVisualizationChange">
+                                <label class="custom-control-label">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <ng-container *ngIf="selectedOntolexMode == 'indexBased'">
+                        <tr>
+                            <td>
+                                <span class="fas fa-info-circle" title="Tells if the Lexical Entry index is 1-char or 2-char based"></span>
+                            </td>
+                            <td nowrap>
+                                <label>Index length:</label>
+                            </td>
+                            <td>
+                                <select class="form-control form-control-sm" [(ngModel)]="indexLength" (ngModelChange)="changeOntolexIndexLength()">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="fas fa-info-circle" title="Tells if visitor user can customize the index-length for itself"></span>
+                            </td>
+                            <td nowrap>
+                                <label>Allow index length change:</label>
+                            </td>
+                            <td>
+                                <div class="custom-control custom-switch" (click)="changeOntolexAllowIndexLengthChange()">
+                                    <input type="checkbox" class="custom-control-input" [ngModel]="ontolexAllowIndexLengthChange">
+                                    <label class="custom-control-label">
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <rendering-editor *ngIf="renderingLangs" style="min-height: 300px;" [projectCtx]="projectCtx" [(ngModel)]="renderingLangs" 
+        (ngModelChange)="onRenderingChange()" alert="Set the default language(s) used for rendering the resources">
+    </rendering-editor>
 
 </div>
 <div class="modal-footer">
