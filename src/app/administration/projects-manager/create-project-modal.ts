@@ -183,6 +183,11 @@ export class CreateProjectModal {
             coreRepoBackendType = this.selectedCoreRepoBackendType;
         }
 
+        //support repo ID even if it's not used it is a mandatory param. Here set a fake id only if not explicitly initialized
+        if (this.supportRepoId == null) {
+            this.supportRepoId = this.projectName + "_support";
+        }
+
         this.loading = true;
         this.projectService.createProject(this.projectName, this.baseURI, new IRI(this.selectedSemModel), new IRI(this.selectedLexModel),
             false, false, false, repositoryAccess, this.dataRepoId, this.supportRepoId, coreRepoSailConfigurerSpecification,
