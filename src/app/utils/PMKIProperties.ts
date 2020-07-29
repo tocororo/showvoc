@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, finalize } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
 import { Language, Languages } from '../models/LanguagesCountries';
@@ -74,6 +74,9 @@ export class PMKIProperties {
             })
         );
         return forkJoin(initRenderingPrefFn, initStructuresPrefFn).pipe(
+            finalize(() => {
+                PMKIContext.removeTempProject()
+            }),
             map(() => {
                 //init also cookie-stored preferences
                 this.initPreferencesCookie(projectCtx);
