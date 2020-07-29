@@ -148,7 +148,7 @@ export class CreateProjectModal {
             return;
         }
         //check baseURI
-        if (this.baseURI.trim() == "") {
+        if (this.baseURI.trim() == null || this.baseURI.trim() == "") {
             this.basicModals.alert("Create project", "BaseURI is missing or not valid", ModalType.warning);
             return;
         }

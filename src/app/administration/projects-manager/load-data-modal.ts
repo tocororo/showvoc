@@ -124,8 +124,10 @@ export class LoadDataModal {
         }
 
         PMKIContext.setTempProject(this.project);
+        this.loading = true;
         this.inputOutputService.loadRDF(this.project.getBaseURI(), this.selectedImportAllowance, this.file, this.selectedInputFormat.name, null, rdfLifterSpec).subscribe(
             () => {
+                this.loading = false;
                 PMKIContext.removeTempProject();
                 this.basicModals.alert("Load data", "Data loaded successfully").then(
                     () => this.activeModal.close()
