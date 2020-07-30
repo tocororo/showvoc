@@ -170,6 +170,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
                     let newIndexLenght = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength;
                     if (newIndexLenght != this.indexLenght) {
                         //in this case should not be necessary to refresh since the index change triggers a re-init on the child list
+                        this.indexLenght = newIndexLenght;
                         this.onDigitChange();
                     } else { //other changes (limitation or visualization mode) requires reinitialization
                         this.refresh();
