@@ -144,12 +144,12 @@ export class CreateProjectModal {
     ok() {
         //check project name
         if (!this.projectName || this.projectName.trim() == "") {
-            this.basicModals.alert("Create project", "Project name is missing or not valid", ModalType.warning);
+            this.basicModals.alert("Create dataset", "Dataset name is missing or not valid", ModalType.warning);
             return;
         }
         //check baseURI
         if (this.baseURI.trim() == null || this.baseURI.trim() == "") {
-            this.basicModals.alert("Create project", "BaseURI is missing or not valid", ModalType.warning);
+            this.basicModals.alert("Create dataset", "BaseURI is missing or not valid", ModalType.warning);
             return;
         }
 
@@ -197,7 +197,7 @@ export class CreateProjectModal {
                 this.adminService.addRolesToUser(this.projectName, PmkiConstants.visitorEmail, [PmkiConstants.roleStaging]).pipe(
                     finalize(() => this.loading = false)
                 ).subscribe(() => {
-                    this.basicModals.alert("Project created", "The project has been successfully created");
+                    this.basicModals.alert("Dataset created", "The dataset has been successfully created");
                     this.activeModal.close();
                 })
             });

@@ -29,7 +29,7 @@ export class AlignmentsListPanelComponent {
     }
 
     refreshProfile() {
-        this.basicModals.confirm("Profile dataset", "You're going to refresh the metadata about the project '" + PMKIContext.getWorkingProject().getName() + 
+        this.basicModals.confirm("Profile dataset", "You're going to refresh the metadata about the dataset '" + PMKIContext.getWorkingProject().getName() + 
             "'. Are you sure?", ModalType.info).then(
             () => {
                 this.loadingProfile = true;

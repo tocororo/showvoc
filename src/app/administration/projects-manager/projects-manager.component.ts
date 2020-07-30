@@ -94,7 +94,7 @@ export class ProjectsManagerComponent {
 
     loadData(project: Project) {
         if (!project.isOpen()) {
-            this.basicModals.alert("Load data", "Cannot load data into a closed project. Please, open the project and then retry.", ModalType.warning);
+            this.basicModals.alert("Load data", "Cannot load data into a closed dataset. Please, open the dataset and then retry.", ModalType.warning);
             return;
         }
         const modalRef: NgbModalRef = this.modalService.open(LoadDataModal, new ModalOptions("lg"));
@@ -103,10 +103,10 @@ export class ProjectsManagerComponent {
 
     deleteProject(project: Project) {
         if (project.isOpen()) {
-            this.basicModals.alert("Delete project", "Cannot delete an open project. Please, close the project and then retry.", ModalType.warning);
+            this.basicModals.alert("Delete dataset", "Cannot delete an open dataset. Please, close the dataset and then retry.", ModalType.warning);
             return;
         }
-        this.basicModals.confirm("Delete project", "Attention, this operation will delete the project " +
+        this.basicModals.confirm("Delete dataset", "Attention, this operation will delete the dataset " +
             project.getName() + ". Are you sure to proceed?", ModalType.warning).then(
             () => {
                 this.projectService.deleteProject(project).subscribe(
@@ -129,7 +129,7 @@ export class ProjectsManagerComponent {
 
     createIndex(project: Project) {
         if (!project.isOpen()) {
-            this.basicModals.alert("Create index", "Cannot create the index of a closed project. Please, open the project and then retry.", ModalType.warning);
+            this.basicModals.alert("Create index", "Cannot create the index of a closed dataset. Please, open the dataset and then retry.", ModalType.warning);
             return;
         }
         this.clearIndexImpl(project).subscribe(
@@ -178,17 +178,17 @@ export class ProjectsManagerComponent {
         let indexActionOpt: ConfirmCheckOptions;
         let indexActionFn: Observable<void>;
         if (role == PmkiConstants.rolePublic) { //from staging to public
-            confirmationMsg = "You are going to make the project public, so it will be visible in the Datasets page and the content will be " + 
+            confirmationMsg = "You are going to make the dataset public, so it will be visible in the Datasets page and the content will be " + 
                 "available to the visitors. Do you want to continue?";
             indexActionOpt = { 
                 label: "Create index",
                 value: project.isOpen(),
                 disabled: !project.isOpen(),
-                info: !project.isOpen() ? "The index creation is not available for a closed project" : null
+                info: !project.isOpen() ? "The index creation is not available for a closed dataset" : null
             };
             indexActionFn = this.createIndexImpl(project);
         } else if (role == PmkiConstants.roleStaging) { //from public to staging
-            confirmationMsg = "You are going to make the project staging, so it will be no more visible in the Datasets page and the " + 
+            confirmationMsg = "You are going to make the dataset staging, so it will be no more visible in the Datasets page and the " + 
                 "visitors will not be able to access its content. Contextually you can delete the index. Do you want to continue?";
             indexActionOpt = { 
                 label: "Delete index",
@@ -239,7 +239,7 @@ export class ProjectsManagerComponent {
     }
 
     editDescription(project: Project) {
-        this.basicModals.prompt("Edit project description", { value: "Description" }, null, project.getDescription(), null, true).then(
+        this.basicModals.prompt("Edit dataset description", { value: "Description" }, null, project.getDescription(), null, true).then(
             descr => {
                 this.projectService.setProjectProperty(project, "description", descr).subscribe(
                     () => {

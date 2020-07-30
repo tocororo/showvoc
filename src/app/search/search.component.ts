@@ -102,7 +102,7 @@ export class SearchComponent {
             },
             (err: Error) => {
                 if (err.name.endsWith("IndexNotFoundException")) {
-                    this.basicModals.alert("Index not found", "Cannot find any index. Please create the index for at least one project, then retry.", ModalType.warning);
+                    this.basicModals.alert("Index not found", "Cannot find any index. Please create the index for at least one dataset, then retry.", ModalType.warning);
                 }
             }
         )

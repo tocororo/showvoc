@@ -124,7 +124,7 @@ export class DevProjectCreationModal {
                 finalize(() => this.loading = false)
             ).subscribe(
                 () => {
-                    this.basicModals.alert("Project created", "The contribution has been approved and the project has been successfully created");
+                    this.basicModals.alert("Dataset created", "The contribution has been approved and the dataset has been successfully created");
                     this.activeModal.close();
                 }
             );
