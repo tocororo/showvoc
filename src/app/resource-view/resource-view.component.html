@@ -29,10 +29,10 @@
         <div *ngIf="loading" class="spinner-border text-info"></div>
 
         <div *ngIf="unknownHost" class="alert alert-danger">
-            This resource is not available on accessible local projects nor can be reached on the Web
+            This resource is not available on accessible local datasets nor can be reached on the Web
         </div>
         <div *ngIf="unexistingResource" class="alert alert-danger">
-            This resource is not available in the current project
+            This resource is not available in the current dataset
         </div>
         
         <ng-container *ngIf="!unexistingResource && !unknownHost">

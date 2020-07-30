@@ -14,11 +14,11 @@
 
     <div *ngIf="defaultPrefLangs" class="mt-2" style="font-size: 12px;">
         <span *ngIf="cookieLangs">
-            The administrator has provided a default language set for the project <i>{{project.getName()}}</i>.
+            The administrator has provided a default language set for the dataset <i>{{project.getName()}}</i>.
             Click <a href="javascript:void(0)" (click)="restoreDefault()">here</a> to set it.
         </span>
         <span *ngIf="!cookieLangs">
-            The current language set is the default provided by the administrator for the project <i>{{project.getName()}}</i>.
+            The current language set is the default provided by the administrator for the dataset <i>{{project.getName()}}</i>.
         </span>
     </div>
 

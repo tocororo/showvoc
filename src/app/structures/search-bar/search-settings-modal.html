@@ -46,55 +46,6 @@
             </div>
         </div>
     
-        <!-- <div class="card mt-1">
-            <div class="card-header">
-                <label>Lexicalizations search</label>
-            </div>
-            <div class="card-body">
-                <div class="hbox" style="align-items: center;">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" [(ngModel)]="restrictLang" (ngModelChange)="updateSettings()">
-                            Restrict search to languages
-                        </label>
-                    </div>
-                    <div class="hbox ml-1" style="align-items: center;">
-                        <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" [ngModel]="languages" [disabled]="!restrictLang" readonly>
-                            <span class="input-group-append">
-                                <button class="btn btn-outline-info" (click)="selectRestrictionLanguages()" placeholder="Select languages"
-                                    [disabled]="!restrictLang">
-                                    <span class="fas fa-edit"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" [(ngModel)]="includeLocales" [disabled]="!restrictLang" (ngModelChange)="updateSettings()">
-                        Include locales in search (e.g. en-GB, en-US)
-                    </label>
-                </div>
-            </div>
-        </div> -->
-    
-        <!-- <div class="card mt-1">
-            <div class="card-header">
-				<label>Autocompletion</label>
-				<i class="fas fa-info-circle float-right"
-					title="It is highly recommended to disable this feature in big project not hosted by a GraphDB server"></i>
-            </div>
-            <div class="card-body">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" [(ngModel)]="useAutocompletion" (ngModelChange)="updateSettings()">
-                        Enable autocompletion support during typing
-                    </label>
-                </div>
-            </div>
-        </div> -->
-    
         <div *ngIf="settingsForConceptPanel" class="card mt-1">
             <div class="card-header">
                 <label>Concept search</label>

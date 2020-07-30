@@ -1,7 +1,7 @@
 <div class="card vbox">
 
     <div class="card-header d-flex align-items-center">
-        <label style="flex: 1;">Projects manager</label>
+        <label style="flex: 1;">Datasets manager</label>
         <div class="btn-toolbar">
             <div class="btn-group">
                 <button class="btn btn-light btn-sm" title="Create" (click)="createProject()">
@@ -25,7 +25,7 @@
             </colgroup>
             <thead class="thead-light">
                 <tr>
-                    <th class="text-center">Project Name</th>
+                    <th class="text-center">Dataset Name</th>
                     <th class="text-center">Open/Close</th>
                     <th class="text-center">Model</th>
                     <th class="text-center">Lexicalization Model</th>
@@ -93,7 +93,7 @@
                                 </button>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item" (click)="deleteProject(p)" [disabled]="p.isOpen() || p.opening">
-                                    Delete project
+                                    Delete dataset
                                 </button>
                             </div>
                         </div>
