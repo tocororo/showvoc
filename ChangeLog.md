@@ -4,5 +4,8 @@ The full changelog of the platform includes also changes brought to the Semantic
 
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
+# 1.0.1 (dd-mm-yyyy)
+  * 
+
 # 1.0.0 (31-07-2020)
   * First release of the system
