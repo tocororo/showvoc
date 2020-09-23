@@ -61,13 +61,7 @@ export class ProjectsServices {
             preloadedDataFormat: preloadedDataFormat,
             transitiveImportAllowance: transitiveImportAllowance
         };
-        var options: PMKIRequestOptions = new PMKIRequestOptions({
-            errorAlertOpt: { 
-                show: true, 
-                exceptionsToSkip: ['it.uniroma2.art.semanticturkey.exceptions.ProjectAccessException', 'org.eclipse.rdf4j.repository.RepositoryException'] 
-            } 
-        });
-        return this.httpMgr.doPost(this.serviceName, "createProject", params, options);
+        return this.httpMgr.doPost(this.serviceName, "createProject", params);
     }
 
 
