@@ -19,7 +19,7 @@
             <tr *ngIf="savedConfigs.length == 0">
                 <td colspan="4">No Remote Access Configuration found. Please, create a new one.</td>
             </tr>
-            <tr *ngFor="let conf of savedConfigs" (click)="selectConfig(conf)" [ngClass]="{ 'table-info': selectedConfig == conf }" style="cursor: pointer">
+            <tr *ngFor="let conf of savedConfigs">
                 <td>
                     <input-editable [value]="conf.serverURL" (valueEdited)="updateConfServerURL(conf, $event)"></input-editable>
                 </td>
@@ -52,6 +52,5 @@
 
 </div>
 <div class="modal-footer">
-    <button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="!selectedConfig">Ok</button>
-    <button class="btn btn-sm btn-secondary" (click)="close()">Close</button>
+    <button class="btn btn-sm btn-secondary" (click)="ok()">Close</button>
 </div>

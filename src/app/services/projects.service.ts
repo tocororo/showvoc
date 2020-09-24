@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TransitiveImportMethodAllowance } from '../models/Metadata';
 import { PluginSpecification } from '../models/Plugins';
-import { BackendTypesEnum, Project, RepositoryAccess } from '../models/Project';
+import { BackendTypesEnum, Project, RepositoryAccess, RepositorySummary } from '../models/Project';
 import { IRI } from '../models/Resources';
-import { HttpManager, PMKIRequestOptions } from '../utils/HttpManager';
+import { HttpManager } from '../utils/HttpManager';
 import { PMKIContext } from '../utils/PMKIContext';
 
 @Injectable()
@@ -202,6 +203,16 @@ export class ProjectsServices {
             propValue: propValue
         };
         return this.httpMgr.doPost(this.serviceName, "setProjectProperty", params);
+    }
+
+    getRepositories(project: Project, excludeLocal?: boolean): Observable<RepositorySummary[]> {
+        let params: any = {
+            projectName: project.getName()
+        };
+        if (excludeLocal != null) {
+            params.excludeLocal = excludeLocal;
+        }
+        return this.httpMgr.doGet(this.serviceName, "getRepositories", params);
     }
 
 }

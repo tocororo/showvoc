@@ -2,8 +2,10 @@ import { Component, ViewChild } from "@angular/core";
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs/operators';
 import { PmkiConstants } from 'src/app/models/Pmki';
+import { Properties } from 'src/app/models/Properties';
 import { IRI } from 'src/app/models/Resources';
 import { AdministrationServices } from 'src/app/services/administration.service';
+import { PreferencesSettingsServices } from 'src/app/services/preferences-settings.service';
 import { ProjectsServices } from 'src/app/services/projects.service';
 import { ExtensionConfiguratorComponent } from 'src/app/widget/extensionConfigurator/extension-configurator.component';
 import { BasicModalsServices } from '../../modal-dialogs/basic-modals/basic-modals.service';
@@ -13,7 +15,7 @@ import { BackendTypesEnum, Project, RemoteRepositoryAccessConfig, Repository, Re
 import { OntoLex, OWL, RDFS, SKOS, SKOSXL } from '../../models/Vocabulary';
 import { ExtensionsServices } from '../../services/extensions.service';
 import { RemoteAccessConfigModal } from './remote-access-config-modal';
-import { RemoteRepoSelectionModal } from './remote-repo-selection-modal';
+import { RemoteRepoSelectionModal } from './remote-repositories/remote-repo-selection-modal';
 
 @Component({
     selector: "create-project-modal",
@@ -27,7 +29,7 @@ export class CreateProjectModal {
 
     constructor(public activeModal: NgbActiveModal, private modalService: NgbModal, private projectService: ProjectsServices,
         private extensionsService: ExtensionsServices, private adminService: AdministrationServices,
-        private basicModals: BasicModalsServices) { }
+        private prefService: PreferencesSettingsServices, private basicModals: BasicModalsServices) { }
 
     ngOnInit() {
         // init core repo extensions
@@ -39,6 +41,8 @@ export class CreateProjectModal {
                 });
             }
         );
+
+        this.initRemoteConfigs();
     }
 
     /** =========================================
@@ -88,7 +92,11 @@ export class CreateProjectModal {
     private selectedDataRepoExtension: ConfigurableExtensionFactory;
     private selectedDataRepoConfig: Settings;
 
+    remoteRepoConfigs: RemoteRepositoryAccessConfig[] = [];
+    selectedRemoteRepoConfig: RemoteRepositoryAccessConfig;
+
     private supportRepoId: string; //not used (since in PMKI the project creation doesn't support History nor Validation), but still necessary to the createProject()
+
 
     //backend types (when accessing an existing remote repository)
     private backendTypes: BackendTypesEnum[] = [BackendTypesEnum.openrdf_NativeStore, BackendTypesEnum.openrdf_MemoryStore, BackendTypesEnum.graphdb_FreeSail];
@@ -98,7 +106,27 @@ export class CreateProjectModal {
     private DEFAULT_REPO_EXTENSION_ID = "it.uniroma2.art.semanticturkey.extension.impl.repositoryimplconfigurer.predefined.PredefinedRepositoryImplConfigurer";
     private DEFAULT_REPO_CONFIG_TYPE = "it.uniroma2.art.semanticturkey.extension.impl.repositoryimplconfigurer.predefined.RDF4JNativeSailConfigurerConfiguration";
 
-    private remoteAccessConfig: RemoteRepositoryAccessConfig;
+    private initRemoteConfigs() {
+        this.prefService.getSystemSettings([Properties.setting_remote_configs]).subscribe(
+            stResp => {
+                if (stResp[Properties.setting_remote_configs] != null) {
+                    this.remoteRepoConfigs = <RemoteRepositoryAccessConfig[]> JSON.parse(stResp[Properties.setting_remote_configs]);
+                    //initialize the selected configuration
+                    if (this.selectedRemoteRepoConfig != null) {
+                        //if previously a config was already selected, select it again (deselected if not found, probably it has been deleted)
+                        this.selectedRemoteRepoConfig = this.remoteRepoConfigs.find(c => c.serverURL == this.selectedRemoteRepoConfig.serverURL);
+                    } else {
+                        if (this.remoteRepoConfigs.length == 1) { //in case of just one configuration, select it
+                            this.selectedRemoteRepoConfig = this.remoteRepoConfigs[0];
+                        }
+                    }
+                } else {
+                    this.remoteRepoConfigs = [];
+                    this.selectedRemoteRepoConfig = null;
+                }
+            }
+        );
+    }
 
     /**
      * Tells if the selected RepositoryAccess is remote
@@ -117,22 +145,24 @@ export class CreateProjectModal {
 
     configRemoteRepoAccess() {
         this.modalService.open(RemoteAccessConfigModal, new ModalOptions("lg")).result.then(
-            (remoteConfig: RemoteRepositoryAccessConfig) => {
-                this.remoteAccessConfig = remoteConfig;
+            () => {
+                this.initRemoteConfigs();
             },
-            () => { }
+            () => {
+                this.initRemoteConfigs();
+            }
         );
     }
 
     changeRemoteRepository() {
-        if (this.remoteAccessConfig == null || this.remoteAccessConfig.serverURL == null) {
+        if (this.selectedRemoteRepoConfig == null || this.selectedRemoteRepoConfig.serverURL == null) {
             this.basicModals.alert("Missing configuration", "The remote 'Repository Access' has not been configure.", ModalType.warning);
             return;
         }
 
         const modalRef: NgbModalRef = this.modalService.open(RemoteRepoSelectionModal, new ModalOptions("lg"));
         modalRef.componentInstance.title = "Select Remote Data Repository";
-        modalRef.componentInstance.repoConfig = this.remoteAccessConfig;
+        modalRef.componentInstance.repoConfig = this.selectedRemoteRepoConfig;
         modalRef.result.then(
             (repo: Repository) => {
                 this.dataRepoId = (<Repository>repo).id;
@@ -159,11 +189,11 @@ export class CreateProjectModal {
         let repositoryAccess: RepositoryAccess = new RepositoryAccess(this.selectedRepositoryAccess);
         //in case of remote repository access, set the configuration
         if (this.isRepoAccessRemote()) {
-            if (this.remoteAccessConfig == null) {
+            if (this.selectedRemoteRepoConfig == null) {
                 this.basicModals.alert("Missing configuration", "The remote 'Repository Access' has not been configure.", ModalType.warning);
                 return;
             }
-            repositoryAccess.setConfiguration(this.remoteAccessConfig);
+            repositoryAccess.setConfiguration(this.selectedRemoteRepoConfig);
         }
 
         //check if data repository configuration needs to be configured

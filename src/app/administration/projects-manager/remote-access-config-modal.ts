@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { PreferencesSettingsServices } from 'src/app/services/preferences-settings.service';
-import { Properties } from 'src/app/models/Properties';
-import { RemoteRepositoryAccessConfig } from 'src/app/models/Project';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { RemoteRepositoryAccessConfig } from 'src/app/models/Project';
+import { Properties } from 'src/app/models/Properties';
+import { PreferencesSettingsServices } from 'src/app/services/preferences-settings.service';
 
 @Component({
     selector: "remote-access-config-modal",
@@ -13,7 +13,6 @@ import { ModalType } from 'src/app/modal-dialogs/Modals';
 export class RemoteAccessConfigModal {
 
     savedConfigs: RemoteRepositoryAccessConfig[] = [];
-    selectedConfig: RemoteRepositoryAccessConfig;
 
     newConfig: RemoteRepositoryAccessConfig = { serverURL: null, username: null, password: null };
 
@@ -28,14 +27,6 @@ export class RemoteAccessConfigModal {
                 }
             }
         );
-    }
-
-    private selectConfig(c: RemoteRepositoryAccessConfig) {
-        if (this.selectedConfig == c) {
-            this.selectedConfig = null;
-        } else {
-            this.selectedConfig = c;
-        }
     }
 
     createConfiguration() {
@@ -54,9 +45,6 @@ export class RemoteAccessConfigModal {
 
     private deleteConfig(c: RemoteRepositoryAccessConfig) {
         this.savedConfigs.splice(this.savedConfigs.indexOf(c), 1);
-        if (this.selectedConfig == c) {
-            this.selectedConfig = null;
-        }
         this.updateConfigurations();
     }
     private updateConfServerURL(conf: RemoteRepositoryAccessConfig, newValue: string) {
@@ -82,7 +70,7 @@ export class RemoteAccessConfigModal {
     }
 
     ok() {
-        this.activeModal.close(this.selectedConfig);
+        this.activeModal.close();
     }
 
     close() {

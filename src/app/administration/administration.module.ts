@@ -11,7 +11,9 @@ import { LoadDataModal } from './projects-manager/load-data-modal';
 import { ProjectSettingsModal } from './projects-manager/project-settings-modal';
 import { ProjectsManagerComponent } from './projects-manager/projects-manager.component';
 import { RemoteAccessConfigModal } from './projects-manager/remote-access-config-modal';
-import { RemoteRepoSelectionModal } from './projects-manager/remote-repo-selection-modal';
+import { DeleteRemoteRepoModal } from './projects-manager/remote-repositories/delete-remote-repo-modal';
+import { DeleteRemoteRepoReportModal } from './projects-manager/remote-repositories/delete-remote-repo-report-modal';
+import { RemoteRepoSelectionModal } from './projects-manager/remote-repositories/remote-repo-selection-modal';
 import { InitialConfigurationComponent } from './system-configuration/initial-configuration.component';
 import { SystemConfigurationComponent } from './system-configuration/system-configuration.component';
 
@@ -19,6 +21,8 @@ import { SystemConfigurationComponent } from './system-configuration/system-conf
     declarations: [
         AdminDashboardComponent,
         CreateProjectModal,
+        DeleteRemoteRepoModal,
+        DeleteRemoteRepoReportModal,
         LoadDataModal,
         InitialConfigurationComponent,
         ProjectsManagerComponent,
@@ -39,6 +43,8 @@ import { SystemConfigurationComponent } from './system-configuration/system-conf
     providers: [],
     entryComponents: [
         CreateProjectModal,
+        DeleteRemoteRepoModal,
+        DeleteRemoteRepoReportModal,
         LoadDataModal,
         ProjectSettingsModal,
         RemoteAccessConfigModal,

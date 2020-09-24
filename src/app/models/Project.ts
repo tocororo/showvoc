@@ -169,6 +169,18 @@ export class RepositoryAccess {
     }
 }
 
+export class RepositorySummary {
+    public id: string;
+    public description: string;
+    public remoteRepoSummary: RemoteRepositorySummary
+}
+export class RemoteRepositorySummary {
+    public serverURL: string;
+    public repositoryId: string;
+    public username: string;
+    public password: string;
+}
+
 export class RemoteRepositoryAccessConfig {
     public serverURL: string;
     public username: string;
@@ -185,4 +197,10 @@ export enum BackendTypesEnum {
     graphdb_FreeSail = "graphdb:FreeSail",
     openrdf_NativeStore = "openrdf:NativeStore",
     openrdf_MemoryStore = "openrdf:MemoryStore"
+}
+
+export class ExceptionDAO {
+    public message: string;
+    public type: string;
+    public stacktrace: string;
 }

@@ -1,21 +1,24 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { forkJoin, Observable, Observer } from 'rxjs';
+import { forkJoin, from, Observable, Observer } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ConfirmCheckOptions } from 'src/app/modal-dialogs/basic-modals/confirm-modal/confirm-check-modal';
 import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { PmkiConstants } from 'src/app/models/Pmki';
-import { Project } from 'src/app/models/Project';
+import { ExceptionDAO, Project, RemoteRepositorySummary, RepositorySummary } from 'src/app/models/Project';
 import { GlobalSearchServices } from 'src/app/services/global-search.service';
 import { PmkiServices } from 'src/app/services/pmki.service';
 import { ProjectsServices } from 'src/app/services/projects.service';
+import { RepositoriesServices } from 'src/app/services/repositories.service';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { CreateProjectModal } from './create-project-modal';
 import { LoadDataModal } from './load-data-modal';
 import { ProjectSettingsModal } from './project-settings-modal';
+import { DeleteRemoteRepoModal } from './remote-repositories/delete-remote-repo-modal';
+import { DeleteRemoteRepoReportModal } from './remote-repositories/delete-remote-repo-report-modal';
 
 @Component({
     selector: 'projects-manager',
@@ -43,9 +46,9 @@ export class ProjectsManagerComponent {
     globalCreatingIndex: boolean = false; //when it's true, all the other "create index" button should be disabled
 
 
-    constructor(private modalService: NgbModal, private projectService: ProjectsServices, private pmkiService: PmkiServices, 
-        private globalSearchService: GlobalSearchServices, private basicModals: BasicModalsServices, private router: Router,
-        private eventHandler: PMKIEventHandler) { }
+    constructor(private modalService: NgbModal, private projectService: ProjectsServices, private repositoriesService: RepositoriesServices,
+        private pmkiService: PmkiServices, private globalSearchService: GlobalSearchServices, 
+        private basicModals: BasicModalsServices, private router: Router, private eventHandler: PMKIEventHandler) { }
 
     ngOnInit() {
         this.initProjects();
@@ -109,22 +112,66 @@ export class ProjectsManagerComponent {
         this.basicModals.confirm("Delete dataset", "Attention, this operation will delete the dataset " +
             project.getName() + ". Are you sure to proceed?", ModalType.warning).then(
             () => {
-                this.projectService.deleteProject(project).subscribe(
-                    () => {
-                        this.eventHandler.projectUpdatedEvent.emit();
-                        //remove the project from the list
-                        this.projectList.forEach((proj: Project, idx: number, list: Project[]) => {
-                            if (proj.getName() == project.getName()) {
-                                list.splice(idx, 1);
+                //retrieve the remote repositories referenced by the deleting project (this must be done before the deletion in order to prevent errors)
+                this.projectService.getRepositories(project, true).subscribe(
+                    (repositories: RepositorySummary[]) => {
+                        this.projectService.deleteProject(project).subscribe( //delete the project
+                            () => {
+                                if (repositories.length > 0) { //if the deleted project was linked with remote repositories proceed with the deletion
+                                    this.deleteRemoteRepo(project, repositories);
+                                }
+
+                                this.eventHandler.projectUpdatedEvent.emit();
+                                //remove the project from the list
+                                this.projectList.forEach((proj: Project, idx: number, list: Project[]) => {
+                                    if (proj.getName() == project.getName()) {
+                                        list.splice(idx, 1);
+                                    }
+                                });
+                                //clear the index of the project
+                                this.clearIndexImpl(project).subscribe();
                             }
-                        });
-                        //clear the index of the project
-                        this.clearIndexImpl(project).subscribe();
+                        )
                     }
                 )
             },
             () => { }
         );
+    }
+
+    private deleteRemoteRepo(deletedProject: Project, repositories: RepositorySummary[]) {
+        this.selectRemoteRepoToDelete(deletedProject, repositories).subscribe( //ask to the user which repo delete
+            (deletingRepositories: RemoteRepositorySummary[]) => {
+                if (deletingRepositories.length > 0) {
+                    this.repositoriesService.deleteRemoteRepositories(deletingRepositories).subscribe( //delete them
+                        (exceptions: ExceptionDAO[]) => {
+                            if (exceptions.some(e => e != null)) { //some deletion has failed => show the report
+                                this.showDeleteRemoteRepoReport(deletingRepositories, exceptions);
+                            }
+                        }
+                    );
+                }
+            }
+        );
+    }
+
+    private selectRemoteRepoToDelete(project: Project, repositories: RepositorySummary[]): Observable<RemoteRepositorySummary[]> {
+        const modalRef: NgbModalRef = this.modalService.open(DeleteRemoteRepoModal, new ModalOptions("lg"));
+        modalRef.componentInstance.project = project;
+        modalRef.componentInstance.repositories = repositories;
+        return from(
+            modalRef.result.then(
+                repos => {
+                    return repos;
+                }
+            )
+        );
+    }
+
+    private showDeleteRemoteRepoReport(deletingRepositories: RemoteRepositorySummary[], exceptions: ExceptionDAO[]) {
+        const modalRef: NgbModalRef = this.modalService.open(DeleteRemoteRepoReportModal, new ModalOptions("lg"));
+        modalRef.componentInstance.deletingRepositories = deletingRepositories;
+        modalRef.componentInstance.exceptions = exceptions;
     }
 
     createIndex(project: Project) {
