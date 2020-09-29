@@ -14,7 +14,7 @@ export class DeleteRemoteRepoReportModal {
     @Input() exceptions: ExceptionDAO[];
 
     message: string;
-    private failReports: FailReport[];
+    failReports: FailReport[];
 
     constructor(public activeModal: NgbActiveModal) { }
 
