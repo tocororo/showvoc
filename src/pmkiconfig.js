@@ -31,3 +31,9 @@ var st_path;
  * container hosting the PMKI portal.
  */
 // var st_protocol = "http";
+
+/**
+ * A custom name for the current PMKI instance. 
+ * If provided, the instance name will be visible in the Home and Datasets page.
+ */
+// var pmki_instance_name = "PMKI";

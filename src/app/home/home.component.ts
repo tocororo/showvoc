@@ -7,8 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+	instanceName: string;
+
 	constructor() { }
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.instanceName = window['pmki_instance_name'];
+	}
 
 }
