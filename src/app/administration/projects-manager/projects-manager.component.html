@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="card-body table-responsive">
+    <div class="card-body table-responsive" style="overflow-x: hidden;">
 
         <table class="table table-sm">
             <colgroup>
@@ -70,10 +70,10 @@
                         </div>
                     </td>
                     <td>
-                        <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right">
+                        <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right top-right" display="dynamic">
                             <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-sm" ngbDropdownMenu display="dynamic">
+                            <div class="dropdown-menu dropdown-menu-sm" ngbDropdownMenu>
                                 <button class="dropdown-item" (click)="loadData(p)" [disabled]="!p.isOpen() || p.creatingIndex || p.opening">
                                     Load data
                                 </button>
