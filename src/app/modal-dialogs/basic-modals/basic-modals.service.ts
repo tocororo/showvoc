@@ -57,17 +57,17 @@ export class BasicModalsServices {
      * Returns a Promise with the checkbox status
      * @param title the title of the modal dialog
      * @param message the message to show in the modal dialog body
-     * @param checkOpt options for customizing the checkbox
+     * @param checkOpts options for customizing the checkbox
      * @param type tells the type of the dialog. Determines the style of the message in the dialog.
      * Available values: info (default), error, warning
      * @return if the modal closes with ok returns a promise containing a boolean true
      */
-    confirmCheck(title: string, message: string, checkOpt: ConfirmCheckOptions, type?: ModalType, options?: ModalOptions) {
+    confirmCheck(title: string, message: string, checkOpts: ConfirmCheckOptions[], type?: ModalType, options?: ModalOptions) {
         let _options: ModalOptions = new ModalOptions().merge(options);
         const modalRef: NgbModalRef = this.modalService.open(ConfirmCheckModal, _options);
         modalRef.componentInstance.title = title;
         modalRef.componentInstance.message = message;
-        modalRef.componentInstance.checkOpt = checkOpt;
+        modalRef.componentInstance.checkOpts = checkOpts;
         modalRef.componentInstance.type = type;
         return modalRef.result;
     }

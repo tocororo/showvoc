@@ -9,6 +9,7 @@ import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { PmkiConstants } from 'src/app/models/Pmki';
 import { ExceptionDAO, Project, RemoteRepositorySummary, RepositorySummary } from 'src/app/models/Project';
 import { GlobalSearchServices } from 'src/app/services/global-search.service';
+import { MapleServices } from 'src/app/services/maple.service';
 import { PmkiServices } from 'src/app/services/pmki.service';
 import { ProjectsServices } from 'src/app/services/projects.service';
 import { RepositoriesServices } from 'src/app/services/repositories.service';
@@ -47,7 +48,7 @@ export class ProjectsManagerComponent {
 
 
     constructor(private modalService: NgbModal, private projectService: ProjectsServices, private repositoriesService: RepositoriesServices,
-        private pmkiService: PmkiServices, private globalSearchService: GlobalSearchServices, 
+        private pmkiService: PmkiServices, private globalSearchService: GlobalSearchServices,  private mapleService: MapleServices,
         private basicModals: BasicModalsServices, private router: Router, private eventHandler: PMKIEventHandler) { }
 
     ngOnInit() {
@@ -220,38 +221,66 @@ export class ProjectsManagerComponent {
         });
     }
 
+    private createMapleMetadata(project: Project): Observable<void> {
+        return new Observable((observer: Observer<void>) => {
+            PMKIContext.setTempProject(project);
+            this.mapleService.profileProject().pipe(
+                finalize(() => {
+                    console.log("fin create metadata")
+                    PMKIContext.removeTempProject();
+                })
+            ).subscribe(
+                () => observer.next()
+            )
+        });
+    }
+
     changeProjectStatus(project: Project, role: string) {
         let confirmationMsg: string;
-        let indexActionOpt: ConfirmCheckOptions;
-        let indexActionFn: Observable<void>;
+        let confirmActionOpt: ConfirmCheckOptions[] = [];
+        let createIndexLabel: string = "Create index";
+        let deleteIndexLabel: string = "Delete index";
+        let createMetadataLabel: string = "Create dataset metadata";
         if (role == PmkiConstants.rolePublic) { //from staging to public
             confirmationMsg = "You are going to make the dataset public, so it will be visible in the Datasets page and the content will be " + 
                 "available to the visitors. Do you want to continue?";
-            indexActionOpt = { 
-                label: "Create index",
+            confirmActionOpt.push({ 
+                label: createIndexLabel,
                 value: project.isOpen(),
                 disabled: !project.isOpen(),
-                info: !project.isOpen() ? "The index creation is not available for a closed dataset" : null
-            };
-            indexActionFn = this.createIndexImpl(project);
+                warning: !project.isOpen() ? "The index creation is not available for a closed dataset" : null
+            });
+            confirmActionOpt.push({ 
+                label: createMetadataLabel,
+                value: project.isOpen(),
+                disabled: !project.isOpen(),
+                warning: !project.isOpen() ? "A closed dataset cannot be profiled" : null
+            })
         } else if (role == PmkiConstants.roleStaging) { //from public to staging
             confirmationMsg = "You are going to make the dataset staging, so it will be no more visible in the Datasets page and the " + 
                 "visitors will not be able to access its content. Contextually you can delete the index. Do you want to continue?";
-            indexActionOpt = { 
-                label: "Delete index",
+            confirmActionOpt.push({ 
+                label: deleteIndexLabel,
                 value: true,
-            };
-            indexActionFn = this.clearIndexImpl(project);
+            });
         }
-        this.basicModals.confirmCheck("Change status", confirmationMsg, indexActionOpt, ModalType.warning).then(
-            (performIndexAction: boolean) => { //tells if the deletion/creation of the index should be performed
+        this.basicModals.confirmCheck("Change status", confirmationMsg, confirmActionOpt, ModalType.warning).then(
+            (checkboxOpts: ConfirmCheckOptions[]) => {
                 this.pmkiService.setProjectStatus(project.getName(), role).subscribe(
                     () => {
                         this.eventHandler.projectUpdatedEvent.emit();
                         project[this.roleAttr] = role;
-                        if (performIndexAction) {
-                            indexActionFn.subscribe();
-                        }
+                        checkboxOpts.forEach(opt => {
+                            if (opt.label == createIndexLabel && opt.value) {
+                                this.createIndexImpl(project).subscribe();
+                            }
+                            if (opt.label == deleteIndexLabel && opt.value) {
+                                this.clearIndexImpl(project).subscribe();
+                            }
+                            if (opt.label == createMetadataLabel && opt.value) {
+                                this.createMapleMetadata(project).subscribe();
+                            }
+                        });
                     }
                 );
             },

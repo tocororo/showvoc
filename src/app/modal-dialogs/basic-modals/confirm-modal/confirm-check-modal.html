@@ -9,11 +9,12 @@
 		{{message}}
 	</div>
 
-	<div class="form-check mt-2">
+	<div *ngFor="let checkOpt of checkOpts" class="form-check mt-2">
 		<label class="form-check-label">
-			<input class="form-check-input" type="checkbox" [(ngModel)]="check" [disabled]="checkOpt.disabled">
+			<input class="form-check-input" type="checkbox" [(ngModel)]="checkOpt.value" [disabled]="checkOpt.disabled">
 			{{checkOpt.label}}
 			<span *ngIf="checkOpt.info" class="fas fa-info-circle" [title]="checkOpt.info"></span>
+			<span *ngIf="checkOpt.warning" class="fas fa-exclamation-triangle" [title]="checkOpt.warning"></span>
 		</label>
 	</div>
 </div>

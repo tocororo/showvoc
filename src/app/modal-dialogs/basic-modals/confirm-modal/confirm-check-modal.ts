@@ -9,9 +9,8 @@ import { AbstractConfirmModal } from './abstract-confirm-modal';
 })
 export class ConfirmCheckModal extends AbstractConfirmModal {
 
-	@Input() checkOpt: ConfirmCheckOptions;
+	@Input() checkOpts: ConfirmCheckOptions[];
 
-	check: boolean;
 
 	constructor(public activeModal: NgbActiveModal) {
 		super(activeModal);
@@ -19,16 +18,15 @@ export class ConfirmCheckModal extends AbstractConfirmModal {
 
 	ngOnInit() {
 		super.ngOnInit();
-		this.check = this.checkOpt.value;
 	}
 
 
 	ok() {
-		this.activeModal.close(this.check);
+		this.activeModal.close(this.checkOpts);
 	}
 
 	close() {
-		this.activeModal.dismiss(this.check);
+		this.activeModal.dismiss(this.checkOpts);
 	}
 
 }
@@ -37,5 +35,6 @@ export class ConfirmCheckOptions {
 	label: string;
 	value: boolean; //default value
 	disabled?: boolean;
-	info?: string; //message shown as tooltip on an info icon (useful for example in combo with disabled=true in order to explain the reason)
+	info?: string; //message shown as tooltip on an info icon 
+	warning?: string; //message shown as tooltip on a warning icon (useful for example in combo with disabled=true in order to explain the reason)
 }
