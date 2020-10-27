@@ -71,7 +71,8 @@
                     </td>
                     <td>
                         <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right top-right" display="dynamic">
-                            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>
+                            <button class="btn btn-light" [ngClass]="{'dropdown-toggle': !p.creatingIndex}" style="width: 32px;" data-toggle="dropdown" ngbDropdownToggle>
+                                <div *ngIf="p.creatingIndex" class="spinner-border spinner-border-sm"></div>
                             </button>
                             <div class="dropdown-menu dropdown-menu-sm" ngbDropdownMenu>
                                 <button class="dropdown-item" (click)="loadData(p)" [disabled]="!p.isOpen() || p.creatingIndex || p.opening">
