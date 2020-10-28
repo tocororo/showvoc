@@ -25,7 +25,7 @@ import { ProjectGuard } from './utils/CanActivateProjectGuard';
 
 const routes: Routes = [
     { path: '', redirectTo: "/home", pathMatch: 'full' },
-    { path: "home", component: HomeComponent, canActivate: [VisitorAuthGuard] }, //guard needed in order to redirect to the registration  page if no user is registered
+    { path: "home", component: HomeComponent, canActivate: [VisitorAuthGuard], runGuardsAndResolvers: 'always' }, //guard needed in order to redirect to the registration page if no user is registered
     { path: "login", component: LoginComponent },
     { path: "registration", component: RegistrationComponent },
     { path: "profile", component: UserProfileComponent, canActivate: [AdminAuthGuard] },
