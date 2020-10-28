@@ -149,12 +149,10 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
 
     refresh() {
         this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
-        if (this.visualizationMode == LexEntryVisualizationMode.indexBased) {
-            // in index based visualization reinit the list
-            this.viewChildList.init();
-        } else if (this.visualizationMode == LexEntryVisualizationMode.searchBased) {
+        //reinit the list
+        this.viewChildList.init();
+        if (this.visualizationMode == LexEntryVisualizationMode.searchBased) {
             //in search based visualization repeat the search
-            this.viewChildList.setInitialStatus();
             this.searchBar.doSearchImpl();
         }
     }
@@ -166,6 +164,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
                 this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
                 if (this.visualizationMode == LexEntryVisualizationMode.searchBased) {
                     this.viewChildList.forceList([]);
+                    this.refresh(); //refresh in order to update the visualization mode in the child list
                 } else {
                     let newIndexLenght = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength;
                     if (newIndexLenght != this.indexLenght) {

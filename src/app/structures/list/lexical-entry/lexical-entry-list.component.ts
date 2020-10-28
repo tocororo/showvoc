@@ -26,6 +26,8 @@ export class LexicalEntryListComponent extends AbstractList {
     safeToGo: SafeToGo = { safe: true };
     unsafeIndexOneChar: boolean; //true if in case of safeToGo = false, the current index is 1-char
 
+    visualizationMode: LexEntryVisualizationMode;
+
     constructor(private ontolexService: OntoLexLemonServices, eventHandler: PMKIEventHandler) {
         super(eventHandler);
     }
@@ -37,8 +39,8 @@ export class LexicalEntryListComponent extends AbstractList {
     }
 
     initImpl() {
-        let visualization: LexEntryVisualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
-        if (visualization == LexEntryVisualizationMode.indexBased && this.index != undefined) {
+        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
+        if (this.visualizationMode == LexEntryVisualizationMode.indexBased && this.index != undefined) {
             this.checkInitializationSafe().subscribe(
                 () => {
                     if (this.safeToGo.safe) {
@@ -59,7 +61,7 @@ export class LexicalEntryListComponent extends AbstractList {
                     }
                 }
             );
-        } else if (visualization == LexEntryVisualizationMode.searchBased) {
+        } else if (this.visualizationMode == LexEntryVisualizationMode.searchBased) {
             //don't do nothing
         }
     }

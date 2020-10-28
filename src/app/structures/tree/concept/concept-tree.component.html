@@ -4,13 +4,15 @@
 
             <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
 
-            <ng-container *ngIf="safeToGo.safe; else unsafetyBlock">
+            <ng-container *ngIf="!safeToGo.safe && visualizationMode == 'hierarchyBased'; then unsafetyBlock else safetyBlock"></ng-container>
+
+            <ng-template #safetyBlock>
                 <ng-container *ngFor="let n of nodes; let idx = index">
                     <concept-tree-node *ngIf="idx < nodesLimit && (!n.isDeprecated() || showDeprecated && n.isDeprecated())"
                         [node]="n" [schemes]="schemes" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
                     </concept-tree-node> 
                 </ng-container>
-            </ng-container>
+            </ng-template>
 
             <ng-template #unsafetyBlock>
                 <div *ngIf="!loading" class="alert alert-warning">

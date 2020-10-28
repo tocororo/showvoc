@@ -32,6 +32,8 @@ export class ConceptTreeComponent extends AbstractTree {
 
     private lastTimeInit: number;
 
+    visualizationMode: ConceptTreeVisualizationMode;//this could be changed dynamically, so each time it is used, get it again from preferences
+
     constructor(private skosService: SkosServices, searchService: SearchServices,
         eventHandler: PMKIEventHandler, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
         super(eventHandler, searchService, basicModals, sharedModals);
@@ -51,8 +53,8 @@ export class ConceptTreeComponent extends AbstractTree {
     }
 
     initImpl() {
-        let conceptTreePref: ConceptTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
-        if (conceptTreePref.visualization == ConceptTreeVisualizationMode.hierarchyBased) {
+        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
+        if (this.visualizationMode == ConceptTreeVisualizationMode.hierarchyBased) {
             this.checkInitializationSafe().subscribe(
                 () => {
                     if (this.safeToGo.safe) {
@@ -76,7 +78,7 @@ export class ConceptTreeComponent extends AbstractTree {
                     }
                 }
             )
-        } else if (conceptTreePref.visualization == ConceptTreeVisualizationMode.searchBased) {
+        } else if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
             //don't do nothing
         }
     }

@@ -89,12 +89,10 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
 
     refresh() {
         this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
-        if (this.visualizationMode == ConceptTreeVisualizationMode.hierarchyBased) {
-            // in index based visualization reinit the list
-            this.viewChildTree.init();
-        } else if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
-            //in search based visualization repeat the search
-            this.viewChildTree.setInitialStatus();
+        //reinit the tree
+        this.viewChildTree.init();
+        if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
+            //in search based visualization repeat also the search
             this.searchBar.doSearchImpl();
         }
     }
@@ -106,9 +104,8 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                 this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
                 if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
                     this.viewChildTree.forceList([]);
-                } else {
-                    this.refresh();
                 }
+                this.refresh();
             },
             () => { }
         );
