@@ -36,6 +36,7 @@ export class ProjectsManagerComponent {
     //usefuld attributes to set in the Project objects
     private readonly roleAttr: string = "role"; //the role that the visitor user has in the project (tells the project status)
     private readonly creatingIndexAttr: string = "creatingIndex"; //stores a boolean that tells if the system is creating the index for the project
+    private readonly creatingMetadataAttr: string = "creatingMetadata"; //stores a boolean that tells if the system is creating the metadata for the project
     private readonly openingAttr: string = "opening"; //stores a boolean that tells if the system is creating the index for the project
 
     private readonly roleStatusMap: { [role: string]: string } = {
@@ -221,13 +222,22 @@ export class ProjectsManagerComponent {
         });
     }
 
-    private createMapleMetadata(project: Project): Observable<void> {
+    createMapleMetadata(project: Project) {
+        if (!project.isOpen()) {
+            this.basicModals.alert("Create dataset metadata", "Cannot create the metadata of a closed dataset. Please, open the dataset and then retry.", ModalType.warning);
+            return;
+        }
+        this.createMapleMetadataImpl(project).subscribe();
+    }
+
+    private createMapleMetadataImpl(project: Project): Observable<void> {
         return new Observable((observer: Observer<void>) => {
             PMKIContext.setTempProject(project);
+            project[this.creatingMetadataAttr] = true;
             this.mapleService.profileProject().pipe(
                 finalize(() => {
-                    console.log("fin create metadata")
                     PMKIContext.removeTempProject();
+                    project[this.creatingMetadataAttr] = false;
                 })
             ).subscribe(
                 () => observer.next()
@@ -278,7 +288,7 @@ export class ProjectsManagerComponent {
                                 this.clearIndexImpl(project).subscribe();
                             }
                             if (opt.label == createMetadataLabel && opt.value) {
-                                this.createMapleMetadata(project).subscribe();
+                                this.createMapleMetadataImpl(project).subscribe();
                             }
                         });
                     }

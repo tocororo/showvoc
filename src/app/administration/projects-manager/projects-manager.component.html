@@ -42,7 +42,7 @@
                         <a [routerLink]="" (click)="goToProject(p)" [ngClass]="{ disabled: !p.isOpen() || p.role == rolePristine}">{{p.getName()}}</a>
                     </td>
                     <td class="text-center">
-                        <button class="btn btn-sm btn-light" style="width: 32px;" (click)="openCloseProject(p)" [ngClass]="{ active: p.isOpen() }">
+                        <button class="btn btn-sm btn-light" style="width: 32px;" (click)="openCloseProject(p)" [ngClass]="{ active: p.isOpen() }" [disabled]="p.creatingIndex || p.creatingMetadata">
                             <i *ngIf="p.opening" class="spinner-border spinner-border-sm"></i>
                             <ng-container *ngIf="!p.opening">
                                 <span *ngIf="p.isOpen()" class="fas fa-folder-open"></span>
@@ -71,19 +71,25 @@
                     </td>
                     <td>
                         <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right top-right" display="dynamic">
-                            <button class="btn btn-light" [ngClass]="{'dropdown-toggle': !p.creatingIndex}" style="width: 32px;" data-toggle="dropdown" ngbDropdownToggle>
-                                <div *ngIf="p.creatingIndex" class="spinner-border spinner-border-sm"></div>
+                            <button class="btn btn-light" [ngClass]="{'dropdown-toggle': !p.creatingIndex && !p.creatingMetadata}" style="width: 32px;" data-toggle="dropdown" ngbDropdownToggle>
+                                <div *ngIf="p.creatingIndex || p.creatingMetadata" class="spinner-border spinner-border-sm"></div>
                             </button>
                             <div class="dropdown-menu dropdown-menu-sm" ngbDropdownMenu>
                                 <button class="dropdown-item" (click)="loadData(p)" [disabled]="!p.isOpen() || p.creatingIndex || p.opening">
                                     Load data
                                 </button>
                                 <div class="dropdown-divider"></div>
-                                <button class="dropdown-item" (click)="createIndex(p)" [disabled]="globalCreatingIndex || p.creatingIndex || p.opening">
-                                    Create/refresh index
+                                <button class="dropdown-item d-flex align-items-center" (click)="createIndex(p)" [disabled]="globalCreatingIndex || p.creatingIndex || p.opening">
+                                    <span style="flex: 1;">Create/refresh index</span>
+                                    <span *ngIf="p.creatingIndex" class="spinner-border spinner-border-sm ml-2"></span>
                                 </button>
                                 <button class="dropdown-item" (click)="deleteIndex(p)" [disabled]="globalCreatingIndex || p.creatingIndex || p.opening">
                                     Delete index
+                                </button>
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item d-flex align-items-center" (click)="createMapleMetadata(p)" [disabled]="p.creatingMetadata || p.opening">
+                                    <span style="flex: 1;">Create/refresh dataset metadata</span>
+                                    <span *ngIf="p.creatingMetadata" class="spinner-border spinner-border-sm ml-2"></span>
                                 </button>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item" (click)="editDescription(p)">
@@ -93,7 +99,7 @@
                                     Edit settings
                                 </button>
                                 <div class="dropdown-divider"></div>
-                                <button class="dropdown-item" (click)="deleteProject(p)" [disabled]="p.isOpen() || p.opening">
+                                <button class="dropdown-item" (click)="deleteProject(p)" [disabled]="p.isOpen() || p.opening || p.creatingIndex || p.creatingMetadata">
                                     Delete dataset
                                 </button>
                             </div>
