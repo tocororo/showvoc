@@ -1,4 +1,4 @@
-import { QueryList } from '@angular/core';
+import { Directive, QueryList } from '@angular/core';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
@@ -9,6 +9,7 @@ import { AnnotatedValue, IRI } from '../../models/Resources';
 import { AbstractStruct } from '../abstract-structure';
 import { AbstractTreeNode } from './abstract-tree-node';
 
+@Directive()
 export abstract class AbstractTree extends AbstractStruct {
 
     /**

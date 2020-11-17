@@ -1,9 +1,10 @@
+import { Directive, QueryList, ViewChildren } from '@angular/core';
 import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 import { AnnotatedValue, IRI, ResAttribute } from '../../models/Resources';
 import { AbstractStruct } from '../abstract-structure';
 import { ListNodeComponent } from './list-node.component';
-import { QueryList, ViewChildren } from '@angular/core';
 
+@Directive()
 export abstract class AbstractList extends AbstractStruct {
 
     @ViewChildren(ListNodeComponent) viewChildrenNode: QueryList<ListNodeComponent>;

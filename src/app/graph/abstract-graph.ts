@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ElementRef, EventEmitter, Input, Output, ViewChild, SimpleChanges } from "@angular/core";
+import { ChangeDetectorRef, ElementRef, EventEmitter, Input, Output, ViewChild, SimpleChanges, Directive } from "@angular/core";
 import { AnnotatedValue, IRI } from '../models/Resources';
 import { ForceDirectedGraph, GraphForces, GraphOptions } from "./model/ForceDirectedGraph";
 import { Link } from "./model/Link";
@@ -6,6 +6,7 @@ import { Node } from "./model/Node";
 import { D3Service } from './d3/d3.service';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 
+@Directive()
 export abstract class AbstractGraph {
     @Input() graph: ForceDirectedGraph;
     @Input() rendering: boolean;

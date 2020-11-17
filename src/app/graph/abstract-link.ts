@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Directive, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Constants } from './model/GraphConstants';
 import { GraphUtils } from './model/GraphUtils';
 import { Link } from './model/Link';
 
+@Directive()
 export abstract class AbstractLinkComponent {
     @Output() linkClicked: EventEmitter<Link> = new EventEmitter<Link>();
     @Input() selected: boolean = false;

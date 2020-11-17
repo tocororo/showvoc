@@ -9,6 +9,8 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
   * Improved management of Remote Repository configurations
   * Enabled possibility to customize PMKI instance name
   * Fixed missing error message in case of exception during the project creation
+  * Updated Angular cli to version 10.2.0 and Angular version to ^10.2.2
+  * Updated ng-bootstrap dependency to version 7.0.0
 
 # 1.0.0 (31-07-2020)
   * First release of the system

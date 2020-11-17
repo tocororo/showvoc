@@ -1,8 +1,9 @@
-import { ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AnnotatedValue, IRI } from 'src/app/models/Resources';
 import { UIUtils } from 'src/app/utils/UIUtils';
 
+@Directive()
 export class AbstractStructureModal {
 
     @Input() title: string;

@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Directive, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { AnnotatedValue, RDFResourceRolesEnum, ResAttribute, Resource, Value } from '../models/Resources';
 import { ResourceUtils } from '../utils/ResourceUtils';
 import { GraphMode } from './abstract-graph';
 import { Node, NodeMeasure } from './model/Node';
 
+@Directive()
 export abstract class AbstractGraphNode {
 
     @ViewChild('textEl') textElement: ElementRef;

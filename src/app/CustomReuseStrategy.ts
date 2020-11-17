@@ -1,6 +1,6 @@
 import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle, OutletContext } from '@angular/router';
 import { PMKIContext } from './utils/PMKIContext';
-import { ComponentRef } from '@angular/core/src/render3';
+import { ComponentRef } from '@angular/core';
 
 // https://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular
 

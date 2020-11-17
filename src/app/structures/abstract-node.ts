@@ -1,8 +1,9 @@
-import { EventEmitter, Input, Output } from "@angular/core";
+import { Directive, EventEmitter, Input, Output } from "@angular/core";
 import { Subscription } from 'rxjs';
 import { AnnotatedValue, IRI } from '../models/Resources';
 import { TreeListContext } from '../utils/UIUtils';
 
+@Directive()
 export abstract class AbstractNode {
 
     /**

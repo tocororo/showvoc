@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbDropdownModule, NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbNavModule, NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 import { AlignmentsModule } from '../alignments/alignments.module';
 import { WidgetModule } from '../widget/widget.module';
 import { InstanceListPanelComponent } from './list/instance/instance-list-panel.component';
@@ -70,7 +70,7 @@ import { PropertyTreeComponent } from './tree/property/property-tree.component';
         CommonModule,
         FormsModule,
         NgbDropdownModule,
-        NgbTabsetModule,
+        NgbNavModule,
         WidgetModule
     ],
     exports: [

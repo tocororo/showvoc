@@ -1,9 +1,10 @@
-import { EventEmitter, Input, OnInit, Output, ElementRef, ViewChild } from "@angular/core";
+import { EventEmitter, Input, OnInit, Output, ElementRef, ViewChild, Directive } from "@angular/core";
 import { Subscription } from 'rxjs';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, ResAttribute } from '../models/Resources';
 import { PMKIEventHandler } from '../utils/PMKIEventHandler';
 import { TreeListContext } from '../utils/UIUtils';
 
+@Directive()
 export abstract class AbstractStruct implements OnInit {
 
     @Input() rendering: boolean = true; //if true the nodes in the list should be rendered with the show, with the qname otherwise

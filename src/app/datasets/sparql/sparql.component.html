@@ -1,27 +1,25 @@
 <div left class="card vbox">
     <div class="card-body vbox p-0">
 
-        <ngb-tabset [destroyOnHide]="false" class="vbox" (tabChange)="onTabChange($event)">
-            
-            <ngb-tab *ngFor="let t of tabs" [id]="'tab'+t.id">
-                <ng-template ngbTabTitle>
+        <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs" (navChange)="onTabChange($event)">
+            <li *ngFor="let t of tabs" [ngbNavItem]="'tab'+t.id">
+                <a ngbNavLink>
                     <span>Query </span>
                     <span *ngIf="tabs.length > 1" class="ml-2" (click)="closeTab(t, $event)">
                         <i class="fas fa-times-circle clickable"></i>
                     </span>
-                </ng-template>
-                <ng-template ngbTabContent>
+                </a>
+                <ng-template ngbNavContent>
                     <sparql-tab></sparql-tab>
                 </ng-template>
-            </ngb-tab>
-
-            <ngb-tab id="addTab" [disabled]="tabs.length > 10">
-                <ng-template ngbTabTitle>
+            </li>
+            <li [ngbNavItem]="'addTab'" [disabled]="tabs.length > 10">
+                <a ngbNavLink>
                     <i class="fas fa-plus clickable"></i>
-                </ng-template>
-            </ngb-tab>
-
-        </ngb-tabset>
+                </a>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="nav"></div>
 
     </div>
 </div>

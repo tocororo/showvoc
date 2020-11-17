@@ -1,4 +1,4 @@
-import { EventEmitter, Input, Output } from '@angular/core';
+import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from '../models/Resources';
@@ -6,6 +6,7 @@ import { PMKIEventHandler } from '../utils/PMKIEventHandler';
 import { PMKIProperties } from '../utils/PMKIProperties';
 import { TreeListContext } from '../utils/UIUtils';
 
+@Directive()
 export abstract class AbstractPanel {
 
     /**

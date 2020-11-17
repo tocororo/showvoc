@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbTabset, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	selector: 'sparql-component',
@@ -8,7 +8,7 @@ import { NgbTabset, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 })
 export class SparqlComponent implements OnInit {
 
-    @ViewChild(NgbTabset) viewChildTabset: NgbTabset;
+    @ViewChild(NgbNav) viewChildNavbar: NgbNav;
 
     tabs: Tab[] = [];
     private idCount: number = 1;
@@ -19,12 +19,10 @@ export class SparqlComponent implements OnInit {
         this.addTab();
 	}
 
-    addTab(event?: Event) {
-        if (event) event.preventDefault();
-
+    addTab() {
         this.tabs.push({ id: this.idCount });
         setTimeout(() => {
-            this.viewChildTabset.select("tab"+this.idCount);
+            this.viewChildNavbar.select("tab"+this.idCount);
             this.idCount++;
         });
     }
@@ -36,15 +34,14 @@ export class SparqlComponent implements OnInit {
         this.tabs.splice(idxTabToClose, 1);
         //select the previous tab, or the following in case the closed tab was the first one
         if (idxTabToClose > 0) {
-            this.viewChildTabset.select("tab"+this.tabs[idxTabToClose-1].id);
+            this.viewChildNavbar.select("tab"+this.tabs[idxTabToClose-1].id);
         } else {
-            this.viewChildTabset.select("tab"+this.tabs[idxTabToClose].id);
+            this.viewChildNavbar.select("tab"+this.tabs[idxTabToClose].id);
         }
     }
 
-    onTabChange(event: NgbTabChangeEvent) {
+    onTabChange(event: any) {
         if (event.nextId == "addTab") {
-            event.preventDefault();
             this.addTab();
         }
     }

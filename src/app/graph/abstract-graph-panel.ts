@@ -1,4 +1,4 @@
-import { Input } from "@angular/core";
+import { Directive, Input } from "@angular/core";
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { BrowsingModalsServices } from '../modal-dialogs/browsing-modals/browsing-modal.service';
 import { AbstractGraph } from './abstract-graph';
@@ -6,6 +6,7 @@ import { ForceDirectedGraph, GraphForces } from "./model/ForceDirectedGraph";
 import { Link } from "./model/Link";
 import { Node } from "./model/Node";
 
+@Directive()
 export abstract class AbstractGraphPanel {
     @Input() graph: ForceDirectedGraph;
     @Input() rendering: boolean = true;

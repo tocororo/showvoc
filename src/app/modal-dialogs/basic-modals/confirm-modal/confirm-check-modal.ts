@@ -16,11 +16,6 @@ export class ConfirmCheckModal extends AbstractConfirmModal {
 		super(activeModal);
 	}
 
-	ngOnInit() {
-		super.ngOnInit();
-	}
-
-
 	ok() {
 		this.activeModal.close(this.checkOpts);
 	}

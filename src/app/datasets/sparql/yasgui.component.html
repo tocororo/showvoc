@@ -5,8 +5,8 @@
     </label>
 </div>
 
-<div style="position: relative" [ngClass]="{ 'yasqe-hide-btns' : hideButtons }">
-    <textarea #txtarea>{{query}}</textarea>
+<div style="position: relative" class="vbox" [ngClass]="{ 'yasqe-hide-btns' : hideButtons }">
+    <textarea #txtarea></textarea>
     <div *ngIf="!hideButtons" style="position: absolute; bottom: 5px; right: 22px; z-index: 5; opacity: 0.7">        
         Powered by <a href="http://about.yasgui.org/" target="_blank">YASGUI</a>
     </div>

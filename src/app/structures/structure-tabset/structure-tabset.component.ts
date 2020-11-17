@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalRef, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef, NgbNav, NgbNavbar } from '@ng-bootstrap/ng-bootstrap';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
@@ -27,7 +27,7 @@ export class StructureTabsetComponent implements OnInit {
     @Output() nodeSelected = new EventEmitter<AnnotatedValue<IRI>>();
     @Output() linksetSelected = new EventEmitter<LinksetMetadata>();
 
-    @ViewChild(NgbTabset) viewChildTabset: NgbTabset;
+    @ViewChild(NgbNav) viewChildNavbar: NgbNav;
     @ViewChild(ClassInstancePanelComponent) viewChildClassInstancePanel: ClassInstancePanelComponent;
     @ViewChild(ConceptTreePanelComponent) viewChildConceptPanel: ConceptTreePanelComponent;
     @ViewChild(CollectionTreePanelComponent) viewChildCollectionPanel: CollectionTreePanelComponent;
@@ -82,7 +82,7 @@ export class StructureTabsetComponent implements OnInit {
                 tabToActivate = role;
             }
             if (tabToActivate != null) {
-                this.viewChildTabset.select(tabToActivate);
+                this.viewChildNavbar.select(tabToActivate);
                 setTimeout(() => { //wait for the tab to be activate
                     if (tabToActivate == RDFResourceRolesEnum.cls) {
                         this.viewChildClassInstancePanel.selectSearchedResource(annotatedIRI);

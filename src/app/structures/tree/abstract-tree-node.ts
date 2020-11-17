@@ -1,4 +1,4 @@
-import { ElementRef, QueryList, ViewChild, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, QueryList, SimpleChanges, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
@@ -8,6 +8,7 @@ import { TreeListContext } from 'src/app/utils/UIUtils';
 import { AnnotatedValue, IRI, ResAttribute } from '../../models/Resources';
 import { AbstractNode } from '../abstract-node';
 
+@Directive()
 export abstract class AbstractTreeNode extends AbstractNode {
 
     /**

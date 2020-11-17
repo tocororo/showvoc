@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import * as $ from 'jquery';
 import { PrefixMapping } from 'src/app/models/Metadata';
 import { SearchMode } from 'src/app/models/Properties';
@@ -9,15 +9,16 @@ import { PMKIContext } from 'src/app/utils/PMKIContext';
 import * as YASQE from 'yasgui-yasqe';
 
 @Component({
-	selector: 'yasgui',
-	templateUrl: './yasgui.component.html',
+    selector: 'yasgui',
+    templateUrl: './yasgui.component.html',
+    host: { class: "vbox" }
 })
 export class YasguiComponent {
     @Input() query: string;
     @Input() hideButtons: boolean = false;
     @Output() querychange = new EventEmitter<QueryChangedEvent>();
 
-    @ViewChild('txtarea') textareaElement: ElementRef;
+    @ViewChild('txtarea', { static: true }) textareaElement: ElementRef;
 
     private CLASS_COMPLETER_NAME = "customClassCompleter";
     private PREFIX_COMPLETER_NAME = "customPrefixCompleter";
@@ -34,6 +35,15 @@ export class YasguiComponent {
         YASQE.defaults.persistent = null; //disable persistency
         YASQE.defaults.autocompleters = ["variables"];
 
+        this.yasqe = YASQE.fromTextArea(
+            this.textareaElement.nativeElement,
+            {
+                persistent: null, //avoid same query for all the tabs
+                createShareLink: null, //disable share button
+                extraKeys: { "Ctrl-7": YASQE.commentLines },
+            }
+        );
+        
         //register the autocompleters if not yet done (by other instances of YasguiComponent)
         if (YASQE.defaults.autocompleters.indexOf(this.PREFIX_COMPLETER_NAME) == -1) {
             YASQE.registerAutocompleter(this.PREFIX_COMPLETER_NAME,
@@ -57,17 +67,6 @@ export class YasguiComponent {
             );
         }
 
-        this.yasqe = YASQE.fromTextArea(
-            this.textareaElement.nativeElement,
-            {
-                persistent: null, //avoid same query for all the tabs
-                createShareLink: null, //disable share button
-                extraKeys: { "Ctrl-7": YASQE.commentLines },
-            }
-        );
-
-        this.collapsePrefixDeclaration();
-
         //called on changes in yasqe editor
         this.yasqe.on('change', (yasqe: any) => {
             //update query in parent component
@@ -77,8 +76,23 @@ export class YasguiComponent {
             YASQE.Autocompleters.prefixes.appendPrefixIfNeeded(yasqe, this.PREFIX_COMPLETER_NAME);
         });
 
+        //I can't explain why, but if I don't force the update of the content, when a new tab is added, the editor is initialized with UI issues
+        setTimeout(() => {
+            this.forceContentUpdate();
+        })
     }
-    
+
+    /**
+     * If query is changed in code from the parent component, the @Input query changes, but content of the yasqe editor is not updated.
+     * I need to force it by setting the value with setValue().
+     * Note: this operation reset the caret at the beginning of the editor, so use it with caution.
+     * @param changes 
+     */
+    public forceContentUpdate() {
+        this.yasqe.setValue(this.query);
+        this.collapsePrefixDeclaration();
+    }
+
     private collapsePrefixDeclaration() {
         //collapse prefixes declaration if any
         if (Object.keys(this.yasqe.getPrefixesFromQuery()).length != 0) {

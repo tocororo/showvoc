@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Directive, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalType } from '../../Modals';
 
+@Directive()
 export abstract class AbstractConfirmModal implements OnInit {
 
     @Input() title: string;

@@ -1,5 +1,7 @@
+import { Directive } from '@angular/core';
 import { ConfigurationObject } from '../models/Configuration';
 
+@Directive()
 export abstract class AbstractContributionComponent {
 
     abstract storedConfigurationTypeId: string;

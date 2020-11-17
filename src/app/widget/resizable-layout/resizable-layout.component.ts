@@ -33,8 +33,8 @@ export class ResizableLayoutComponent {
     @HostBinding('class.hbox') horizontalLayout: boolean = false;
     @HostBinding('class.vbox') verticalLayout: boolean = false;
 
-    @ViewChild('maindiv') private mainDiv: ElementRef;
-    @ViewChild('secondarydiv') private secondaryDiv: ElementRef;
+    @ViewChild('maindiv', { static: false }) private mainDiv: ElementRef;
+    @ViewChild('secondarydiv', { static: false }) private secondaryDiv: ElementRef;
 
     readonly secondaryFlex: number = 4;
 
@@ -126,7 +126,7 @@ export class ResizableLayoutComponent {
      * Returns true if the second div has been provided in the parent template
      */
     secondaryProvided(): boolean {
-        return this.secondaryDiv.nativeElement && this.secondaryDiv.nativeElement.children.length > 0;
+        return this.secondaryDiv != null && this.secondaryDiv.nativeElement && this.secondaryDiv.nativeElement.children.length > 0;
     }
 
 

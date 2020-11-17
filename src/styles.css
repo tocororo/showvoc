@@ -228,8 +228,17 @@ a.disabled {
 
 /* YASQE extension */
 
-/* Limit height of codemirror in relation of the viewport */ 
-sparql-component .CodeMirror { height: 28vh !important }
+.yasqe {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+}
+.yasqe .CodeMirror {
+    height: 100%;
+}
+
 /* Reset height to auto when codemirror is fullscreen */
 .CodeMirror.CodeMirror-fullscreen { height: auto !important }
 /* To put codemirror in fullscreen in front of the menubar (default z-index 7 made the textarea behind the navbar) */
