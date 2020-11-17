@@ -33,8 +33,8 @@
             </thead>
             <tbody style="overflow: auto;">
                 <ng-container *ngIf="resultType != 'boolean'">
-                    <ng-container *ngFor let-bindings [ngForOf]="queryResult" let-i="index">
-                        <ng-container [ngIf]="i >= resultsPage*resultsLimit && i < resultsPage*resultsLimit + resultsLimit">
+                    <ng-container *ngFor="let bindings of queryResult; let i=index">
+                        <ng-container *ngIf="i >= resultsPage*resultsLimit && i < resultsPage*resultsLimit + resultsLimit">
                             <tr>
                                 <td *ngFor="let h of headers">
                                     <span *ngIf="bindings[h]" [ngClass]="{ clickable: isBindingResource(bindings[h]) }" (click)="onBindingClick(bindings[h])">
