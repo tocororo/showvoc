@@ -15,7 +15,15 @@ export class ResourceUtils {
             let collator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
             list.sort(
                 function (r1: AnnotatedValue<Value>, r2: AnnotatedValue<Value>) {
-                    return collator.compare(r1.getShow().toLowerCase(), r2.getShow().toLowerCase());
+                    //if both resources have language tag (literals or reified resources with lang), sort according lang
+                    if (r1.getAttribute(ResAttribute.LANG) != null && r2.getAttribute(ResAttribute.LANG) != null) {
+                        if (r1.getAttribute(ResAttribute.LANG) < r2.getAttribute(ResAttribute.LANG)) return -1;
+                        if (r1.getAttribute(ResAttribute.LANG) > r2.getAttribute(ResAttribute.LANG)) return 1;
+                        //same lang code, order alphabetically
+                        return collator.compare(r1.getShow().toLowerCase(), r2.getShow().toLowerCase());
+                    } else {
+                        return collator.compare(r1.getShow().toLowerCase(), r2.getShow().toLowerCase());
+                    }
                 }
             );
         }
@@ -571,14 +579,18 @@ export class ResourceDeserializer {
     }
 
     public static createPredicateObjectsList(poList: any, additionalAttr?: string[]): PredicateObjects[] {
-        let result: PredicateObjects[] = [];
+        let poLists: PredicateObjects[] = [];
         for (let i = 0; i < poList.length; i++) {
             let predicate = this.createIRI(poList[i].predicate, additionalAttr);
             let objects = this.createValueArray(poList[i].objects, additionalAttr);
             let predicateObjects = new PredicateObjects(predicate, objects);
-            result.push(predicateObjects);
+            poLists.push(predicateObjects);
         }
-        return result;
+        //need to sort for predicate?
+        // poLists.sort((po1, po2) => {
+        //     return po1.getPredicate().getShow().localeCompare(po2.getPredicate().getShow());
+        // })
+        return poLists;
     };
     
 }

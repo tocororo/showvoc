@@ -485,14 +485,14 @@ export class ResourceViewComponent {
     }
 
     private sortLexicalizations(predObjList: PredicateObjects[]) {
-        let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
         for (var i = 0; i < predObjList.length; i++) {
             let objList: AnnotatedValue<Value>[] = predObjList[i].getObjects();
             if (this.rendering) {
                 objList.sort((o1: AnnotatedValue<Value>, o2: AnnotatedValue<Value>) => {
                     if (o1.getAttribute(ResAttribute.LANG) < o2.getAttribute(ResAttribute.LANG)) return -1;
                     if (o1.getAttribute(ResAttribute.LANG) > o2.getAttribute(ResAttribute.LANG)) return 1;
-                    return 0;
+                    //same lang code, order alphabetically
+                    return o1.getShow().localeCompare(o2.getShow());
                 });
             } else { //in case the rendering is off, sort according the value
                 ResourceUtils.sortResources(objList, SortAttribute.value);
