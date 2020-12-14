@@ -12,10 +12,19 @@
             </td>
             <td>
 
-                <select *ngIf="p.enumeration; else notEnumerationBlock" class="form-control form-control-sm" [(ngModel)]="p.value" (ngModelChange)="onModelChanged()">
-                    <option *ngFor="let enum of p.enumeration" [value]="enum">{{enum}}</option>
-                </select>
+    <ng-container  *ngIf="p.enumeration; else notEnumerationBlock">
+        <select *ngIf="!p.enumeration.open" class="form-control form-control-sm" [(ngModel)]="p.value" (ngModelChange)="onModelChanged()">
+            <option *ngFor="let enum of p.enumeration.values" [value]="enum">{{enum}}</option>
+        </select>
 
+        <ng-container *ngIf="p.enumeration.open">
+            <!-- Why attr.list? https://github.com/angular/angular/issues/12759#issuecomment-278940455 -->
+            <input class="form-control" [(ngModel)]="p.value" (ngModelChange)="onModelChanged()" [attr.list]="'datalist_' + p.name">
+            <datalist [id]="'datalist_' + p.name">
+                <option *ngFor="let enum of p.enumeration.values" [value]="enum">
+            </datalist>
+        </ng-container>
+    </ng-container>
                 <ng-template #notEnumerationBlock>
                     <div [ngSwitch]="p.type.name">
                         <div *ngSwitchCase="'boolean'" class="form-control form-control-sm text-center">
@@ -43,9 +52,14 @@
                         <literal-picker *ngSwitchCase="'Literal'" [literal]="p.value" (literalChanged)="updateValue(p, $event)">
                         </literal-picker> -->
 
-                        <setting-set *ngSwitchCase="'Set'" [value]="p.value" [types]="p.type.typeArguments" (valueChanged)="updateSetValue(p, $event)"></setting-set>
+			            <setting-set *ngSwitchCase="'List'" [collapsable]="!p.required" [value]="p.value" [types]="p.type.typeArguments" 
+			                (valueChanged)="updateSetValue(p, $event)"></setting-set>
 
-                        <setting-map *ngSwitchCase="'Map'" [value]="p.value" [types]="p.type.typeArguments" (valueChanged)="updateMapValue(p, $event)"></setting-map>
+			            <setting-set *ngSwitchCase="'Set'" [collapsable]="!p.required" [value]="p.value" [types]="p.type.typeArguments" 
+			                (valueChanged)="updateSetValue(p, $event)" ></setting-set>
+
+			            <setting-map *ngSwitchCase="'Map'" [value]="p.value" [types]="p.type.typeArguments" 
+			                (valueChanged)="updateMapValue(p, $event)"></setting-map>
 
                         <textarea *ngSwitchCase="'java.lang.String'" type="text" rows="1" class="form-control form-control-sm" style="resize: vertical" [(ngModel)]="p.value">
                         </textarea>

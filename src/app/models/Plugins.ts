@@ -41,13 +41,7 @@ export class Settings {
     public requireConfiguration(): boolean {
         if (this.editRequired) {
             for (var i = 0; i < this.properties.length; i++) {
-                if (
-                    this.properties[i].required && (
-                        this.properties[i].value == null || 
-                        (typeof this.properties[i].value == "string" && this.properties[i].value.trim() == "") ||
-                        (this.properties[i].value instanceof Array && this.properties[i].value.length == 0)
-                    )
-                ) {
+                if (this.properties[i].requireConfiguration()) {
                     return true;
                 }
             }
@@ -55,8 +49,11 @@ export class Settings {
         return false;
     }
 
-    public getPropertiesAsMap(): { [key: string]: string } {
+    public getPropertiesAsMap(includeType?: boolean): { [key: string]: string } {
         let map: { [key: string]: string } = {};
+        if (includeType) {
+            map["@type"] = this.type;
+        }
         for (var i = 0; i < this.properties.length; i++) {
             let value = this.properties[i].value;
 
@@ -65,16 +62,24 @@ export class Settings {
             } else if (value instanceof IRI) {
                 value = value.toNT();
             } else if (value instanceof Array) {
-                let serializedValues: string[] = [];
+                let serializedValues: any[] = [];
                 for (var j = 0; j < value.length; j++) {
                     let v: any = value[j];
                     if (v instanceof IRI) {
                         serializedValues.push(v.toNT())
+                    } else if(v instanceof Settings) {
+                        serializedValues.push(v.getPropertiesAsMap());
                     } else {
                         serializedValues.push(v);
                     }
                 }
-                value = serializedValues;
+                if (serializedValues.length) {
+                    value = serializedValues;
+                } else {
+                    value = undefined;
+                }
+            } else if (value instanceof Settings) {
+                value = value.getPropertiesAsMap();
             } else if (typeof value == "object") { //object => probably a map (associative array object)
                 //don't do nothing
             }
@@ -102,6 +107,11 @@ export class Settings {
     }
 }
 
+export class Enumeration {
+    values: string[];
+    open: boolean;
+};
+
 export class SettingsProp {
     public name: string;
     public displayName: string;
@@ -109,8 +119,9 @@ export class SettingsProp {
     public required: boolean;
     public type: SettingsPropType;
     public value: any;
-    public enumeration: string[];
-    constructor (name: string, displayName: string, description: string, required: boolean, type: SettingsPropType, enumeration?: string[], value?: string) {
+    public enumeration: Enumeration;
+
+    constructor (name: string, displayName: string, description: string, required: boolean, type: SettingsPropType, enumeration?: Enumeration, value?: string) {
         this.name = name;
         this.displayName = displayName;
         this.description = description;
@@ -121,7 +132,43 @@ export class SettingsProp {
     }
 
     public clone(): SettingsProp {
-        return new SettingsProp(this.name, this.displayName, this.description, this.required, this.type.clone(), this.enumeration, this.value);
+        let clonedValue = SettingsProp.cloneValue(this.value);
+        return new SettingsProp(this.name, this.displayName, this.description, this.required, this.type.clone(), this.enumeration, clonedValue);
+    }
+
+    private static cloneValue(value: any): any {
+        if (value === null || typeof value != "object" || value instanceof String) { // "primitive" values that don't need to be cloned
+            return value;
+        } else if (value instanceof Array) {
+            return value.map(v => SettingsProp.cloneValue(v));
+        } else {
+            let propValues = {};
+            for (let prop of Object.getOwnPropertyNames(value)) {
+                propValues[prop] = Object.getOwnPropertyDescriptor(value, prop);
+                propValues[prop].value = SettingsProp.cloneValue(propValues[prop].value);
+            }
+
+            return Object.create(Object.getPrototypeOf(value), propValues);
+        }
+    }
+
+    public requireConfiguration(): boolean {
+        if (this.required) {
+            return SettingsProp.isNullish(this.value);
+        } else {
+            return (this.value instanceof Array && this.value.some(v => SettingsProp.isNullish(v))) ||
+                (this.value instanceof Settings && SettingsProp.isNullish(this.value));
+
+        }
+    }
+
+    private static isNullish(v: any): boolean {
+        return v == null ||
+            (typeof v == "string" && v.trim() == "") ||
+            (v instanceof Settings && v.requireConfiguration()) ||
+            (v instanceof Array && (v.length == 0 ||
+                v.findIndex(SettingsProp.isNullish) != -1
+            ))
     }
 }
 
@@ -129,11 +176,13 @@ export class SettingsPropType {
     public name: string;
     public constraints: SettingsPropTypeConstraint[];
     public typeArguments: SettingsPropType[];
+    public schema?: Settings;
 
-    constructor(name: string, constraints?: SettingsPropTypeConstraint[], typeArguments?: SettingsPropType[]) {
+    constructor(name: string, constraints?: SettingsPropTypeConstraint[], typeArguments?: SettingsPropType[], schema?: Settings) {
         this.name = name;
         this.constraints = constraints;
         this.typeArguments = typeArguments;
+        this.schema = schema;
     }
 
     public static parse(jsonObject: any): SettingsPropType {
@@ -157,7 +206,12 @@ export class SettingsPropType {
             }
         }
 
-        return new SettingsPropType(name, constraints, typeArguments);
+        let schema: Settings = null;
+        if (jsonObject.schema) {
+            schema = Settings.parse(jsonObject.schema);
+        }
+
+        return new SettingsPropType(name, constraints, typeArguments, schema);
     }
 
     public clone(): SettingsPropType {
@@ -175,7 +229,7 @@ export class SettingsPropType {
                 typeArguments.push(this.typeArguments[i].clone());
             }
         }
-        return new SettingsPropType(this.name, constraints, typeArguments);
+        return new SettingsPropType(this.name, constraints, typeArguments, this.schema ? this.schema.clone() : null);
     }
 }
 
