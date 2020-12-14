@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { User } from './models/User';
 import { AuthServices } from './services/auth.service';
+import { Cookie } from './utils/Cookie';
 import { PMKIContext } from './utils/PMKIContext';
 
 @Component({
@@ -18,7 +20,27 @@ export class AppComponent {
 
     private currentUser: User;
 
-    constructor(private authServices: AuthServices) { }
+    translateLangs: string[];
+    translateLang: string;
+
+    constructor(private authServices: AuthServices, private translate: TranslateService) {
+        //set the available languages
+        translate.addLangs(['en', 'it']);
+        //fallback when a translation isn't found in the current language
+        translate.setDefaultLang('en');
+        //restore the lang to use, check first the cookies, if not found, set english by default
+        let langCookie: string = Cookie.getCookie(Cookie.TRANSLATE_LANG);
+        if (langCookie != null && translate.getLangs().includes(langCookie)) {
+            translate.use(langCookie);
+        } else {
+            translate.use('en');
+        }
+    }
+
+    ngOnInit() {
+        this.translateLangs = this.translate.getLangs();
+        this.translateLang = this.translate.currentLang;
+    }
 
     /**
      * Determines if the items in the navbar are available: they are available only if the admin or the visitor user is logged
@@ -39,6 +61,12 @@ export class AppComponent {
 
     logout() {
         this.authServices.logout().subscribe(); //no need to login again as visitor, the auth guard will do the job
+    }
+
+    changeLang(lang: string) {
+        this.translateLang = lang;
+        this.translate.use(this.translateLang);
+        Cookie.setCookie(Cookie.TRANSLATE_LANG, this.translateLang);
     }
 
 }

@@ -1,8 +1,11 @@
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdministrationModule } from './administration/administration.module';
 import { AlignmentsModule } from './alignments/alignments.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +26,9 @@ import { ProjectGuard } from './utils/CanActivateProjectGuard';
 import { PMKIEventHandler } from './utils/PMKIEventHandler';
 import { PMKIProperties } from './utils/PMKIProperties';
 
+export function HttpLoaderFactory(http: HttpClient) {
+	return new TranslateHttpLoader(http, "./assets/i18n/");
+}
 
 @NgModule({
     declarations: [
@@ -43,6 +49,14 @@ import { PMKIProperties } from './utils/PMKIProperties';
         PreferencesModule,
         SearchModule,
         STServicesModule,
+        TranslateModule.forRoot({
+			defaultLanguage: 'en',
+            loader: {
+                provide: TranslateLoader,
+				useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
         UserModule
     ],
     providers: [

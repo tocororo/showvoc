@@ -8,13 +8,13 @@
     <div *ngIf="isLogged()" class="collapse navbar-collapse" id="mainNavbar" [ngbCollapse]="navbarCollapsed">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/datasets']" routerLinkActive="active">Datasets</a>
+                <a class="nav-link" [routerLink]="['/datasets']" routerLinkActive="active">{{'APP.NAVBAR.DATASETS'|translate}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/search']" routerLinkActive="active">Search</a>
+                <a class="nav-link" [routerLink]="['/search']" routerLinkActive="active">{{'APP.NAVBAR.SEARCH'|translate}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/alignments']" routerLinkActive="active">Alignments</a>
+                <a class="nav-link" [routerLink]="['/alignments']" routerLinkActive="active">{{'APP.NAVBAR.ALIGNMENTS'|translate}}</a>
             </li>
         </ul>
 
@@ -33,12 +33,12 @@
                         </div>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" [routerLink]="['/admin']">Administration dashboard</a>
+                    <a class="dropdown-item" [routerLink]="['/admin']">{{'APP.USER_MENU.ADMINISTRATION_DASHBOARD'|translate}}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" [routerLink]="" (click)="logout()">Logout</a>
+                    <a class="dropdown-item" [routerLink]="" (click)="logout()">{{'APP.USER_MENU.LOGOUT'|translate}}</a>
                 </div>
             </li>
-            <button *ngIf="!isAdminLogged()" class="btn btn-outline-info" routerLink="/login">Login</button>
+            <button *ngIf="!isAdminLogged()" class="btn btn-outline-info" routerLink="/login">{{'APP.USER_MENU.LOGIN'|translate}}</button>
         </ul>
     </div>
 </nav>
@@ -50,13 +50,24 @@
         <div class="row">
             <div class="col">
                 <div class="btn-group btn-group-sm dropup" ngbDropdown placement="top-left">
-                    <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>
-                        About PMKI
+                    <button class="btn btn-info dropdown-toggle dropdown-no-arrow" data-toggle="dropdown" ngbDropdownToggle>
+                        <span class="fas fa-globe-europe"></span>
                     </button>
                     <div class="dropdown-menu" ngbDropdownMenu>
-                        <a class="dropdown-item" href="#">PMKI website</a>
-                        <a class="dropdown-item" href="#">Contact us</a>
-                        <a class="dropdown-item" href="#">Support</a>
+                        <a *ngFor="let l of translateLangs" class="dropdown-item" (click)="changeLang(l)">
+                            {{l}}
+                            <i *ngIf="translateLang == l" class="fas fa-check float-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="btn-group btn-group-sm dropup" ngbDropdown placement="top-left">
+                    <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>
+                        {{'APP.FOOTER.ABOUT_PMKI'|translate}}
+                    </button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                        <a class="dropdown-item" href="#">{{'APP.FOOTER.PMKI_WEBSITE'|translate}}</a>
+                        <a class="dropdown-item" href="#">{{'APP.FOOTER.CONTACT_US'|translate}}</a>
+                        <a class="dropdown-item" href="#">{{'APP.FOOTER.SUPPORT'|translate}}</a>
                     </div>
                 </div>
             </div>

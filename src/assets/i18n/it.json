@@ -1,0 +1,20 @@
+{
+    "APP": {
+        "NAVBAR": {
+            "DATASETS": "Dataset",
+            "SEARCH": "Ricerca",
+            "ALIGNMENTS": "Allineamenti"
+        },
+        "USER_MENU": {
+            "ADMINISTRATION_DASHBOARD": "Dashboard di amministrazione",
+            "LOGIN": "Login",
+            "LOGOUT": "Logout"
+        },
+        "FOOTER": {
+            "ABOUT_PMKI": "About PMKI",
+            "PMKI_WEBSITE": "PMKI website",
+            "CONTACT_US": "Contattaci",
+            "SUPPORT": "Supporto"
+        }
+    }
+}

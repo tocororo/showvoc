@@ -23,6 +23,8 @@
     "@angular/router": "^10.2.2",
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
+    "@ngx-translate/core": "13.0.0",
+    "@ngx-translate/http-loader": "6.0.0",
     "bootstrap": "^4.5.3",
     "d3": "5.9.2",
     "jquery": "3.5.1",
