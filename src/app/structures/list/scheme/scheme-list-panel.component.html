@@ -3,10 +3,10 @@
 
         <div class="btn-toolbar" style="flex: 1;">
             <div class="btn-group btn-group-sm">
-                <button type="button" class="btn btn-outline-info" style="width: 28px;" (click)="activateAllScheme()" title="Select all schemes">
+                <button type="button" class="btn btn-outline-info" style="width: 28px;" (click)="activateAllScheme()" [title]="'COMMONS.ACTIONS.CHECK_ALL'|translate">
                     <span class="far fa-check-square"></span>
                 </button>
-                <button type="button" class="btn btn-outline-info" style="width: 28px;" (click)="deactivateAllScheme()" title="Deselect all schemes">
+                <button type="button" class="btn btn-outline-info" style="width: 28px;" (click)="deactivateAllScheme()" [title]="'COMMONS.ACTIONS.UNCHECK_ALL'|translate">
                     <span class="far fa-square"></span>
                 </button>
             </div>
@@ -17,7 +17,7 @@
             <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: rendering}" title="Rendering" (click)="rendering=!rendering">
                 <i class="fas fa-font"></i>
             </button>
-            <button class="btn btn-light btn-sm ml-1" title="Refresh" (click)="refresh()">
+            <button class="btn btn-light btn-sm ml-1" [title]="'COMMONS.ACTIONS.REFRESH'|translate" (click)="refresh()">
                 <span class="fas fa-sync"></span>
             </button>
         </div>

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { GraphModule } from '../graph/graph.module';
 import { WidgetModule } from '../widget/widget.module';
 import { AlignmentsListPanelComponent } from './alignments-list-panel/alignments-list-panel.component';
@@ -24,6 +25,7 @@ import { AlignmentsModalsServices } from './modals/alignments-modal.service';
         CommonModule,
         FormsModule,
         GraphModule,
+        TranslateModule,
         WidgetModule
     ],
     exports: [

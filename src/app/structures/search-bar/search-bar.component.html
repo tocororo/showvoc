@@ -1,6 +1,6 @@
 <div class="hbox">
 
-    <input type="text" class="form-control form-control-sm" [(ngModel)]="searchStr" (keydown.enter)="doSearch()" placeholder="Search..." [disabled]="disabled">
+    <input type="text" class="form-control form-control-sm" [(ngModel)]="searchStr" (keydown.enter)="doSearch()" [placeholder]="'COMMONS.ACTIONS.SEARCH'|translate" [disabled]="disabled">
 
     <div class="btn-toolbar ml-1" style="flex-wrap: nowrap">
         <button class="btn btn-info btn-sm" (click)="doSearch()" [disabled]="disabled || loading">

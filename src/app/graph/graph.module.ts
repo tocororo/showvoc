@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 import { PreferencesModule } from '../preferences/preferences.module';
 import { WidgetModule } from '../widget/widget.module';
 import { D3Service } from './d3/d3.service';
@@ -55,6 +56,7 @@ import { ResourceDetailsPanel } from './widget/resource-details-panel';
         FormsModule,
         NgbDropdownModule,
         PreferencesModule,
+        TranslateModule,
         WidgetModule
     ],
     exports: [

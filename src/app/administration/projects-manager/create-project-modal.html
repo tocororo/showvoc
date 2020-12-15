@@ -10,25 +10,25 @@
         <div class="card-body">
 
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Name</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.NAME'|translate}}</label>
                 <div class="col-sm-10">
                     <input class="form-control form-control-sm" [(ngModel)]="projectName" (ngModelChange)="onProjectNameChange()" placeholder="Dataset name" sanitized>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Base URI</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.BASE_URI'|translate}}</label>
                 <div class="col-sm-10">
-                    <input class="form-control form-control-sm" [(ngModel)]="baseURI" placeholder="Base URI">
+                    <input class="form-control form-control-sm" [(ngModel)]="baseURI" [placeholder]="'MODELS.PROJECT.BASE_URI'|translate">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Model</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.MODEL'|translate}}</label>
                 <div class="col-sm-4">
                     <select class="form-control form-control-sm" [(ngModel)]="selectedSemModel">
                         <option *ngFor="let m of semanticModels" [ngValue]="m.uri">{{m.show}}</option>
                     </select>
                 </div>
-                <label class="col-sm-2 col-form-label col-form-label-sm">Lexicalization model</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.LEXICALIZATION_MODEL'|translate}}</label>
                 <div class="col-sm-4">
                     <select class="form-control form-control-sm" [(ngModel)]="selectedLexModel">
                         <option *ngFor="let m of lexicalizationModels" [ngValue]="m.uri">{{m.show}}</option>
@@ -39,7 +39,7 @@
             <hr class="separator">
 
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Repository Access</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.REPO_ACCESS'|translate}}</label>
                 <div class="col-sm-10">
                     <div class="hbox">
                         <select class="form-control form-control-sm" [(ngModel)]="selectedRepositoryAccess">
@@ -61,10 +61,10 @@
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Data Repository ID</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.DATA_REPO_ID'|translate}}</label>
                 <div class="col-sm-4">
                     <div class="input-group input-group-sm">
-                        <input class="form-control" [(ngModel)]="dataRepoId" placeholder="Data Repository ID" [disabled]="isRepoAccessCreateMode()">
+                        <input class="form-control" [(ngModel)]="dataRepoId" [placeholder]="'MODELS.PROJECT.DATA_REPO_ID'|translate" [disabled]="isRepoAccessCreateMode()">
                         <div class="input-group-append">
                             <button class="btn btn-outline-info" (click)="changeRemoteRepository()" [disabled]="isRepoAccessCreateMode()">
                                 <span class="fas fa-list"></span>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <ng-container *ngIf="isRepoAccessCreateMode()">
-                    <label class="col-sm-2 col-form-label col-form-label-sm">Configuration</label>
+                    <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.CONFIG.CONFIGURATION'|translate}}</label>
                     <div class="col-sm-4">
                         <extension-configurator #dataRepoConfigurator *ngIf="dataRepoExtensions" [extensions]="dataRepoExtensions" [storeable]="false" 
                             (extensionUpdated)="selectedDataRepoExtension = $event" (configurationUpdated)="selectedDataRepoConfig = $event">
@@ -81,7 +81,7 @@
                     </div>
                 </ng-container>
                 <ng-container *ngIf="!isRepoAccessCreateMode()">
-                    <label class="col-sm-2 col-form-label col-form-label-sm">Backend type</label>
+                    <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.BACKEND_TYPE'|translate}}</label>
                     <div class="col-sm-4">
                         <select class="form-control form-control-sm" [(ngModel)]="selectedCoreRepoBackendType">
                             <option *ngFor="let bt of backendTypes">{{bt}}</option>
@@ -99,5 +99,5 @@
     <button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="loading">
         Ok <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
     </button>
-    <button class="btn btn-sm btn-secondary" (click)="close()">Close</button>
+    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
 </div>

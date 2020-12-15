@@ -4,10 +4,10 @@
 			<button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" title="Rendering" (click)="rendering=!rendering">
 				<i class="fas fa-font"></i>
 			</button>
-			<button class="btn btn-light btn-sm ml-1" title="Refresh" (click)="refresh()">
+			<button class="btn btn-light btn-sm ml-1" [title]="'COMMONS.ACTIONS.REFRESH'|translate" (click)="refresh()">
 				<span class="fas fa-sync"></span>
 			</button>
-			<button class="btn btn-light btn-sm ml-1" title="Settings" (click)="settings()">
+			<button class="btn btn-light btn-sm ml-1" [title]="'COMMONS.SETTINGS'|translate" (click)="settings()">
 				<span class="fas fa-cog"></span>
 			</button>
 		</div>
@@ -16,7 +16,7 @@
 	<div class="card-body vbox" style="position: relative">
 
 		<div *ngIf="schemeChangeable" class="pb-1" style="display: flex; align-items: center">
-			<span class="mx-1" style="white-space: nowrap;">Concept Scheme:</span>
+			<span class="mx-1" style="white-space: nowrap;">{{'DATA.SCHEME.CONCEPT_SCHEME'|translate}}:</span>
 			<select class="form-control form-control-sm" [(ngModel)]="selectedScheme" (ngModelChange)="onSchemeSelectionChange()">
 				<option value="---">no-scheme</option>
 				<option *ngFor="let s of schemeList" [value]="s.getValue().getIRI()">{{getSchemeRendering(s)}}</option>
@@ -24,7 +24,7 @@
 		</div>
 
 		<div *ngIf="visualizationMode == 'searchBased' && !closedAlert" class="alert alert-info alert-dismissible mb-1">
-			Please use the search field to retrieve concepts
+			{{'DATA.CONCEPT.USE_SEARCH_MSG'|translate}}
 			<button class="close" (click)="closedAlert=true">
 				<span>&times;</span>
 			</button>

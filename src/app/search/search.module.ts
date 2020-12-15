@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 import { EditLanguageModal } from './edit-language-modal.component';
 import { SearchComponent } from './search.component';
 
@@ -15,7 +16,8 @@ import { SearchComponent } from './search.component';
         CommonModule,
         FormsModule,
         NgbDropdownModule,
-        RouterModule
+        RouterModule,
+        TranslateModule
     ],
     entryComponents: [
         EditLanguageModal

@@ -2,9 +2,9 @@
     <div class="container vbox">
         <div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Name</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.NAME'|translate}}</label>
                 <div class="col-sm-4">
-                    <input class="form-control form-control-sm" [(ngModel)]="name" placeholder="Name">
+                    <input class="form-control form-control-sm" [(ngModel)]="name" [placeholder]="'COMMONS.NAME'|translate">
                 </div>
                 <label class="col-sm-2 col-form-label col-form-label-sm">Last name</label>
                 <div class="col-sm-4">
@@ -44,8 +44,8 @@
         </div>
 
         <div class="d-flex align-items-center mt-2">
-            <small class="form-text text-muted" style="flex: 1;">(*) Optional field</small>
-            <button class="btn btn-info" (click)="submit()" title="Submit contribution request" [disabled]="!selectedContribution || loading">
+            <small class="form-text text-muted" style="flex: 1;">(*) {{'COMMONS.OPTIONAL_FIELD'|translate}}</small>
+            <button class="btn btn-info" (click)="submit()" [disabled]="!selectedContribution || loading">
                 Submit request
                 <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
             </button>

@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Concept tree settings</h5>
+    <h5 class="modal-title">{{'DATA.CONCEPT.SETTINGS.CONCEPT_TREE_SETTINGS'|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
@@ -13,7 +13,7 @@
         </colgroup>
         <tbody>
             <tr>
-                <td nowrap><label>Visualization mode:</label></td>
+                <td nowrap><label>{{'DATA.COMMONS.VISUALIZATION_MODE.MODE'|translate}}:</label></td>
                 <td>
                     <select class="form-control form-control-sm" [(ngModel)]="visualization" [disabled]="!allowVisualizationChange">
                         <option *ngFor="let vm of visualizationModes" [value]="vm.value">{{vm.label}}</option>
@@ -23,7 +23,7 @@
             <tr *ngIf="visualization == 'hierarchyBased'">
                 <td nowrap>
                     <label>
-                        Top concepts limitation:
+                        {{'DATA.CONCEPT.SETTINGS.TOP_CONCEPTS_LIMIT'|translate}}:
                         <span class="fas fa-info-circle" 
                             title="Sets the maximum amount of top concept visible in the tree. This setting prevents the initialization of a tree that might cause performance issues">
                         </span>
@@ -38,5 +38,5 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
-    <button class="btn btn-sm btn-secondary" (click)="close()">Cancel</button>
+    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CANCEL'|translate}}</button>
 </div>

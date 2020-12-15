@@ -32,13 +32,13 @@
         <span>Mappings: {{linkset.linkCount}}</span>
         <div class="btn-group btn-group-sm float-right">
             <div class="btn-group btn-group-sm mx-2">
-                <button class="btn btn-light" title="Previous page" (click)="prevPage()" [disabled]="page==0 || loading">
+                <button class="btn btn-light" [title]="'COMMONS.PAGING.PREV_PAGE'|translate" (click)="prevPage()" [disabled]="page==0 || loading">
                     <span class="fas fa-caret-left"></span>
                 </button>
                 <button class="btn btn-light" style="cursor: auto" disabled>
-                    <span>{{page+1}} of {{totPage}}</span>
+                    <span>{{page+1}} {{'COMMONS.PAGING.PAGE_OF_TOT'|translate}} {{totPage}}</span>
                 </button>
-                <button class="btn btn-light" title="Next page" (click)="nextPage()" [disabled]="page>=totPage-1 || loading">
+                <button class="btn btn-light" [title]="'COMMONS.PAGING.NEXT_PAGE'|translate" (click)="nextPage()" [disabled]="page>=totPage-1 || loading">
                     <span class="fas fa-caret-right"></span>
                 </button>
             </div>

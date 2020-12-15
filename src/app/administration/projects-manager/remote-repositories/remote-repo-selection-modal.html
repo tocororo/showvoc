@@ -12,7 +12,7 @@
                 <tr>
                     <th class="text-center" style="width: 1%">ID</th>
                     <th class="text-center">Location</th>
-                    <th class="text-center">Description</th>
+                    <th class="text-center">{{'COMMONS.DESCRIPTION'|translate}}</th>
                     <th class="text-center" style="width: 1%">Readable</th>
                     <th class="text-center" style="width: 1%">Writeable</th>
                 </tr>
@@ -32,5 +32,5 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="!selectedRepo">Ok</button>
-    <button class="btn btn-sm btn-secondary" (click)="close()">Close</button>
+    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
 </div>

@@ -4,15 +4,12 @@
     <label>Email address</label>
     <input type="email" class="form-control" [(ngModel)]="email" placeholder="Email address">
 
-    <label class="mt-1">Password</label>
-    <password-input placeholder="Password" [(ngModel)]="password" placeholder="Password"></password-input>
+    <label class="mt-1">{{'COMMONS.CONFIG.PASSWORD'|translate}}</label>
+    <password-input [(ngModel)]="password" [placeholder]="'COMMONS.CONFIG.PASSWORD'|translate"></password-input>
 
     <button class="btn btn-lg btn-info btn-block mt-3" (click)="login()">Log in</button>
 
     <div class="text-center mt-2" style="font-size: 1.125rem">
         <a [routerLink]="" (click)="forgotPassword()">Forgot password?</a>
     </div>
-    <!-- <div class="text-center mt-2" style="font-size: 1.125rem">
-        Not registered? <a routerLink="/registration">Sign up</a>
-    </div> -->
 </div>

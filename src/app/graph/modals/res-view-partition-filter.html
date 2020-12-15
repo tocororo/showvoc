@@ -38,7 +38,7 @@
                                         <span class="far fa-check-square"></span>
                                     </button>
                                     <div class="dropdown-menu" ngbDropdownMenu>
-                                        <button class="dropdown-item" (click)="checkAll(selectedRolePartitionsStruct, true)">Check all</button>
+                                        <button class="dropdown-item" (click)="checkAll(selectedRolePartitionsStruct, true)">{{'COMMONS.ACTIONS.CHECK_ALL'|translate}}</button>
                                         <button class="dropdown-item" [ngClass]="{ disabled: !selectedPartition }" (click)="checkInAllRoles(true)">Check selected partition in all roles</button>
                                     </div>
                                 </div>
@@ -47,7 +47,7 @@
                                         <span class="far fa-square"></span>
                                     </button>
                                     <div class="dropdown-menu" ngbDropdownMenu>
-                                        <button class="dropdown-item" (click)="checkAll(selectedRolePartitionsStruct, false)">Uncheck all</button>
+                                        <button class="dropdown-item" (click)="checkAll(selectedRolePartitionsStruct, false)">{{'COMMONS.ACTIONS.UNCHECK_ALL'|translate}}</button>
                                         <button class="dropdown-item" [ngClass]="{ disabled: !selectedPartition }" (click)="checkInAllRoles(false)">Uncheck selected partition in all roles</button>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
     </div>
 
     <div class="card-footer">
-        <button class="btn btn-sm btn-light float-right" (click)="reset()">Reset</button>
+        <button class="btn btn-sm btn-light float-right" (click)="reset()">{{'COMMONS.ACTIONS.RESET'|translate}}</button>
     </div>
 
 </div>

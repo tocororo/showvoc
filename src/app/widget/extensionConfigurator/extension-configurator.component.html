@@ -19,12 +19,12 @@
     </select>
 
     <span *ngIf="selectedExtension.configurations" class="btn-group btn-group-sm ml-1" style="display: flex">
-        <button class="btn btn-light" (click)="configure()" [disabled]="disabled">Configure</button>
+        <button class="btn btn-light" (click)="configure()" [disabled]="disabled">{{'COMMONS.CONFIG.CONFIGURE'|translate}}</button>
         <ng-container *ngIf="storeable">
-            <button class="btn btn-light" title="Save configuration" (click)="saveConfig()" [disabled]="disabled">
+            <button class="btn btn-light" [title]="'COMMONS.CONFIG.SAVE_CONFIGURATION'|translate" (click)="saveConfig()" [disabled]="disabled">
                 <span class="fas fa-save"></span>
             </button>
-            <button class="btn btn-light" title="Load configuration" (click)="loadConfig()" [disabled]="disabled">
+            <button class="btn btn-light" [title]="'COMMONS.CONFIG.LOAD_CONFIGURATION'|translate" (click)="loadConfig()" [disabled]="disabled">
                 <span class="fas fa-save"></span>
             </button>
         </ng-container>

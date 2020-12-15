@@ -25,7 +25,7 @@
                 (configurationUpdated)="selectedLifterConfig = $event">
             </extension-configurator>
         </div>
-        <label class="col-sm-2 col-form-label col-form-label-sm">Format</label>
+        <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.FORMAT'|translate}}</label>
         <div class="col-sm-4">
             <select class="form-control form-control-sm" [(ngModel)]="selectedInputFormat">
                 <option *ngFor="let f of inputFormats" [ngValue]="f">{{f.name}}</option>
@@ -33,10 +33,10 @@
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-1 col-form-label col-form-label-sm">BaseURI</label>
+        <label class="col-sm-1 col-form-label col-form-label-sm">{{'MODELS.PROJECTS.BASE_URI'|translate}}</label>
         <div class="col-sm-5">
             <div class="input-group input-group-sm">
-                <input class="form-control" [(ngModel)]="baseURI" placeholder="Base URI" [disabled]="useProjectBaseURI">
+                <input class="form-control" [(ngModel)]="baseURI" [placeholder]="'MODELS.PROJECT.BASE_URI'|translate" [disabled]="useProjectBaseURI">
                 <div class="input-group-append">
                     <button class="btn btn-info" (click)="changeUseProjectBaseUri()" [ngClass]="{ active: useProjectBaseURI }" title="Use the baseURI of the dataset">
                         <span *ngIf="useProjectBaseURI" class="fas fa-lock"></span>
@@ -59,5 +59,5 @@
     <button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="loading">
         Ok <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
     </button>
-    <button class="btn btn-sm btn-secondary" (click)="close()">Close</button>
+    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
 </div>

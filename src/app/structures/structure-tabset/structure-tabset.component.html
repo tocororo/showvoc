@@ -2,48 +2,48 @@
     <div class="card-body vbox p-0">
         <ul ngbNav #nav="ngbNav" [(activeId)]="initialActiveTab" [destroyOnHide]="false" class="nav-tabs">
             <li *ngIf="model == 'OWL' || model == 'RDFS'" [ngbNavItem]="'cls'">
-                <a ngbNavLink>Class</a>
+                <a ngbNavLink>{{'DATA.CLASS.CLASS'|translate}}</a>
                 <ng-template ngbNavContent>
                     <class-instance-panel [context]="context" (nodeSelected)="onNodeSelected($event)">
                     </class-instance-panel>
                 </ng-template>
             </li>
             <li *ngIf="model == 'SKOS' || model == 'OntoLex'" [ngbNavItem]="'concept'">
-                <a ngbNavLink>Concept</a>
+                <a ngbNavLink>{{'DATA.CONCEPT.CONCEPT'|translate}}</a>
                 <ng-template ngbNavContent>
                     <concept-tree-panel [context]="context" (nodeSelected)="onNodeSelected($event)">
                     </concept-tree-panel>
                 </ng-template>
             </li>
             <li *ngIf="model == 'SKOS'" [ngbNavItem]="'collection'">
-                <a ngbNavLink>Collection</a>
+                <a ngbNavLink>{{'DATA.COLLECTION.COLLECTION'|translate}}</a>
                 <ng-template ngbNavContent>
                     <collection-tree-panel [context]="context" (nodeSelected)="onNodeSelected($event)">
                     </collection-tree-panel>
                 </ng-template>
             </li>
             <li *ngIf="model == 'SKOS' || model == 'OntoLex'" [ngbNavItem]="'conceptScheme'">
-                <a ngbNavLink>Scheme</a>
+                <a ngbNavLink>{{'DATA.SCHEME.SCHEME'|translate}}</a>
                 <ng-template ngbNavContent>
                     <scheme-list-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></scheme-list-panel>
                 </ng-template>
             </li>
             <li [ngbNavItem]="'property'">
-                <a ngbNavLink>Property</a>
+                <a ngbNavLink>{{'DATA.PROPERTY.PROPERTY'|translate}}</a>
                 <ng-template ngbNavContent>
                     <property-tree-panel [context]="context" (nodeSelected)="onNodeSelected($event)">
                     </property-tree-panel>
                 </ng-template>
             </li>
             <li *ngIf="model == 'OntoLex'" [ngbNavItem]="'limeLexicon'">
-                <a ngbNavLink>Lexicon</a>
+                <a ngbNavLink>{{'DATA.LEXICON.LEXICON'|translate}}</a>
                 <ng-template ngbNavContent>
                     <lexicon-list-panel [context]="context" (nodeSelected)="onNodeSelected($event)">
                     </lexicon-list-panel>
                 </ng-template>
             </li>
             <li *ngIf="model == 'OntoLex'" [ngbNavItem]="'ontolexLexicalEntry'">
-                <a ngbNavLink>LexEntry</a>
+                <a ngbNavLink>{{'DATA.LEX_ENTRY.LEX_ENTRY'|translate}}</a>
                 <ng-template ngbNavContent>
                     <lexical-entry-list-panel [context]="context" (nodeSelected)="onNodeSelected($event)">
                     </lexical-entry-list-panel>

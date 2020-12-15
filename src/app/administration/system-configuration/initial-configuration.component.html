@@ -1,9 +1,6 @@
 <div class="container my-3">
 
-    <div class="alert alert-info mb-2">
-        In this section you can setup some core aspects of the system.
-        This panel can be accessed also later from <i>Administration dashboard</i> > <i>Configuration</i>
-    </div>
+    <div class="alert alert-info mb-2" [innerHTML]="'ADMINISTRATION.SYSTEM.INTRO'|translate"></div>
 
     <system-config></system-config>
 

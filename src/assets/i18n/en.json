@@ -1,4 +1,40 @@
 {
+    "ADMINISTRATION": {
+        "SYSTEM": {
+            "INTRO": "In this section you can setup some core aspects of the system. This panel can be accessed also later from <i>Administration dashboard</i> > <i>Configuration</i>",
+            "EMAIL": {
+                "EMAIL_CONFIG": "Email Configuration",
+                "EMAIL_CONFIG_INFO": "Configuration of the PMKI e-mail service. This service will be used to send notifications to the contributors<br><strong>Note</strong>: if this is not properly configured, it will be impossible to send email to contributors, so they will be not able to complete a contribution.",
+                "MAIL_SERVER_URL_INFO": "SMTP Mail Server IP/URL",
+                "MAIL_SERVER_PORT_INFO": "Mail Server Port",
+                "CRYPTOGRAPHIC_PROTOCOL": "Cryptographic protocol",
+                "AUTHENTICATION": "Authentication",
+                "AUTHENTICATION_INFO": "Tells if SMTP server requires authentication",
+                "MAIL_FROM_INFO": "Email address used to send administration emails",
+                "MAIL_PASSWORD_INFO": "Password of the above email address",
+                "MAIL_PASSWORD_WARN": "Password is stored wihtout encryption on the server",
+                "MAIL_ALIAS_INFO": "Alias name shown in the administration emails"
+            },
+            "REMOTE_ACCESS": {
+                "REMOTE_ACCESS_CONFIG": "Remote access configuration",
+                "REMOTE_ACCESS_CONFIG_INFO": "Configuration of the remote triple store that hosts the datasets in PMKI.<br><strong>Note</strong>: if this is not properly configured, the PMKI portal will not be able to create remotedatasets for hosting stable resources.",
+                "URL_INFO": "URL of the remote triple store",
+                "USERNAME_INFO": "Username of the remote triple store (if authentication is required)",
+                "PASSWORD_INFO": "Password of the remote triple store (if authentication is required)"
+            },
+            "VB_CONFIG": {
+                "VB_CONFIG": "VocBench configuration",
+                "VB_CONFIG_INFO": "Configuration of the VocBench/SemanticTurkey instance dedicated to the development of unstable resources.<br><strong>Note</strong>: if this is not properly configured, the PMKI portal will not be able to connect with VocBench, so it will be impossible to accept contribution of under-development resources.",
+                "VB_URL_INFO": "URL of the VocBench istance accessible by the contributors",
+                "ST_HOST_INFO": "Complete URL (protocol+hostname+port) of the SemanticTurkey host",
+                "ADMIN_EMAIL_INFO": "Email of the administrator of VocBench/SemanticTurkey",
+                "ADMIN_PASSWORD_INFO": "Password of the administrator of VocBench/SemanticTurkey"
+            },
+            "COMMONS": {
+                "MAIL_PASSWORD_WARN": "Password is stored wihtout encryption on the server"
+            }
+        }
+    },
     "APP": {
         "NAVBAR": {
             "DATASETS": "Datasets",
@@ -16,5 +52,148 @@
             "CONTACT_US": "Contact us",
             "SUPPORT": "Support"
         }
+    },
+    "DATA": {
+        "CLASS": {
+            "CLASS": "Class",
+            "CLASSES": "Classes",
+            "SETTINGS": {
+                "CLASS_TREE_SETTINGS": "Class tree settings",
+                "ROOT_CLASS": "Root class",
+                "SUBCLASS_FILTER": "SubClasses filter",
+                "SUBCLASS_FILTER_INFO": "Here you can create filters in order to hide subClasses of classes",
+                "FILTERED_SUBCLASSES": "Filtered subClasses",
+                "SHOW_INSTANCES_NUMBER": "Show instances number"
+            }
+        },
+        "COLLECTION": {
+            "COLLECTION": "Collection",
+            "COLLECTIONS": "Collections"
+        },
+        "CONCEPT": {
+            "CONCEPT": "Concept",
+            "CONCEPTS": "Concepts",
+            "USE_SEARCH_MSG": "Please use the search field to retrieve concepts",
+            "SETTINGS": {
+                "CONCEPT_TREE_SETTINGS": "Concept tree settings",
+                "TOP_CONCEPTS_LIMIT": "Top concepts limitation",
+                "TOP_CONCEPTS_LIMIT_INFO": "Sets the maximum amount of top concepts visible in the tree. This setting prevents the initialization of a tree that might cause performance issues"
+            }
+        },
+        "INSTANCE": {
+            "INSTANCE": "Instance",
+            "INSTANCES": "Instances"
+        },
+        "LEX_ENTRY": {
+            "LEX_ENTRY": "Lex.Entry",
+            "LEX_ENTRIES": "Lex.Entries",
+            "USE_SEARCH_MSG": "Please use the search field to retrieve lexical entries",
+            "SETTINGS": {
+                "LEX_ENTRY_SETTINGS": "Lexical Entry list settings",
+                "LEX_ENTRIES_LIMIT": "Lexical entries limitation",
+                "LEX_ENTRIES_LIMIT_INFO": "Sets the maximum amount of lexical entries visible in the list. This setting prevents the initialization of a list that might cause performance issues",
+                "INDEX_LENGHT": "Index lenght"
+            }
+        },
+        "LEXICON": {
+            "LEXICON": "Lexicon",
+            "LEXICONS": "Lexicons",
+            "SELECT_LEXICON": "Select Lexicon",
+            "CHANGE_LEXICON": "Change Lexicon"
+        },
+        "PROPERTY": {
+            "PROPERTY": "Property",
+            "PROPERTIES": "Properties",
+            "SHOW_ALL": "Show all properties"
+        },
+        "SCHEME": {
+            "CONCEPT_SCHEME": "Concept Scheme",
+            "SCHEME": "Scheme",
+            "SCHEMES": "Schemes"
+        },
+        "COMMONS": {
+            "VISUALIZATION_MODE": {
+                "MODE": "Visualization mode",
+                "SEARCH_BASED": "Search based",
+                "INDEX_BASED": "Index based",
+                "HIERARCHY_BASED": "Hierarchy based"
+            }
+        }
+    },
+    "HOME": {
+        "WELCOME_W_INST_NAME": {
+            "WELCOME": "Welcome to {{instanceName}} dataset browser!",
+            "POWERED_BY": "{{instanceName}} is powered by the Public Multilingual Knowledge Infrastructure",
+            "CONTRIBUTE_TO": "Contribute to {{instanceName}}"
+        },
+        "WELCOME_WO_INST_NAME": {
+            "WELCOME": "Welcome to PMKI!",
+            "PMKI": "Public Multilingual Knowledge Infrastructure for the Digital Single Market",
+            "CONTRIBUTE_TO": "Contribute to PMKI"
+        }
+    },
+    "MODELS": {
+        "PROJECT": {
+            "BASE_URI": "Base URI",
+            "LEXICALIZATION": "Lexicalization",
+            "LEXICALIZATION_MODEL": "Lexicalization Model",
+            "MODEL": "Model",
+            "BACKEND_TYPE": "Backend type",
+            "REPO_ACCESS": "Repository Access",
+            "REPOSITORY_ID": "Repository ID",
+            "DATA_REPO_ID": "Data Repository ID"
+        }
+    },
+    "COMMONS": {
+        "ACTIONS": {
+            "ADD": "Add",
+            "CANCEL": "Cancel",
+            "CHECK_ALL": "Check all",
+            "CLOSE": "Close",
+            "CONFIRM": "Confirm",
+            "CREATE": "Create",
+            "EDIT": "Edit",
+            "LOAD": "Load",
+            "REFRESH": "Refresh",
+            "REMOVE": "Remove",
+            "RESET": "Reset",
+            "SEARCH": "Search",
+            "SUBMIT": "Submit",
+            "UNCHECK_ALL": "Uncheck all"
+        },
+        "CONFIG": {
+            "CONFIGURATION": "Configuration",
+            "CONFIGURE": "Configure",
+            "LOAD_CONFIGURATION": "Load configuration",
+            "SAVE_CONFIGURATION": "Save configuration",
+            "SERVER_URL": "Server URL",
+            "USERNAME": "Username",
+            "PASSWORD": "Password"
+        },
+        "LANGUAGE": {
+            "LANGUAGE": "Language",
+            "LANGUAGES": "Languages",
+            "ISO_CODE": "ISO code",
+            "NO_LANG_INFO": "No language selected implicitly means all languages"
+        },
+        "PAGING": {
+            "PAGE_OF_TOT": "of",
+            "PREV_PAGE": "Previous page",
+            "NEXT_PAGE": "Next page"
+        },
+        "STATUS": {
+            "ACTIVE": "Active",
+            "STATUS": "Status"
+        },
+        "DESCRIPTION": "Description",
+        "DETAILS": "Details",
+        "FORMAT": "Format",
+        "MANDATORY_FIELD": "Mandatory field",
+        "NAME": "Name",
+        "OPTIONAL_FIELD": "Optional field",
+        "POSITION": "Position",
+        "SETTINGS": "Settings",
+        "TITLE": "Title",
+        "VALUE": "Value"
     }
 }

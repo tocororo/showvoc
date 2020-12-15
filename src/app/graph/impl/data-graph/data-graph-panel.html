@@ -5,10 +5,6 @@
                 <button class="btn btn-sm btn-light" (click)="addNode()" title="Add a new node">
                     <span class="fas fa-plus"></span>
                 </button>
-                <!-- <div *ngIf="isExpandEnabled()" class="btn-group btn-group-xs">
-                    <button class="btn btn-default" (click)="expandSubResources()" title="Expand sub-resources">Sub</button>
-                    <button class="btn btn-default" (click)="expandSuperResources()" title="Expand super-resources">Super</button>
-                </div> -->
             </div>
             <div class="btn-toolbar float-right">
                 <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" (click)="rendering=!rendering" title="Rendering">
@@ -17,7 +13,7 @@
                 <button class="btn btn-light btn-sm ml-1" (click)="snapshot()" title="Export a snapshot of the graph (.svg)">
                     <i class="fas fa-camera"></i>
                 </button>
-                <button class="btn btn-light btn-sm ml-1" (click)="openSettings()" title="Settings">
+                <button class="btn btn-light btn-sm ml-1" (click)="openSettings()" [title]="'COMMONS.SETTINGS'|translate">
                     <span class="fas fa-cog"></span>
                 </button>
             </div>

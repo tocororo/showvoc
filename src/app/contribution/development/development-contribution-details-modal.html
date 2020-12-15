@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Details</h5>
+    <h5 class="modal-title">{{'COMMONS.DETAILS'|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
@@ -10,7 +10,7 @@
         <div class="card-header">Contributor</div>
         <div class="card-body">
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Name</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.NAME'|translate}}</label>
                 <div class="col-sm-4">
                     <input class="form-control form-control-sm" [ngModel]="contribution.contributorName" readonly>
                 </div>
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Description</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.DESCRIPTION'|translate}}</label>
                 <div class="col-sm-10">
                     <textarea class="form-control form-control-sm" [ngModel]="contribution.description" readonly></textarea>
                 </div>
@@ -61,13 +61,13 @@
             </div>
             <hr class="separator">
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Base URI</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.BASE_URI'|translate}}</label>
                 <div class="col-sm-10">
                     <input class="form-control form-control-sm" [ngModel]="contribution.baseURI.toNT()" readonly>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Model</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.MODEL'|translate}}</label>
                 <div class="col-sm-4">
                     <input class="form-control form-control-sm" [ngModel]="modelsLabelMap[contribution.model.getIRI()]" readonly>
                 </div>
@@ -81,6 +81,5 @@
 
 </div>
 <div class="modal-footer">
-    <!-- <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button> -->
-    <button class="btn btn-sm btn-secondary" (click)="close()">Close</button>
+    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
 </div>

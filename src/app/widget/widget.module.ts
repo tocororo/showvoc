@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { SanitizerDirective } from './directives/sanitizer.directive';
 import { ExtensionConfiguratorComponent } from './extensionConfigurator/extension-configurator.component';
 import { InputEditableComponent } from './input-editable/input-editable.component';
@@ -38,6 +39,7 @@ import { SettingsRendererComponent } from './settings-renderer/settings-renderer
     imports: [
         CommonModule,
         FormsModule,
+        TranslateModule
     ],
     exports: [
         ExtensionConfiguratorComponent,

@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Class tree settings</h5>
+    <h5 class="modal-title">{{'DATA.CLASS.SETTINGS.CLASS_TREE_SETTINGS'|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
@@ -8,7 +8,7 @@
 
     <div class="hbox align-items-center" style="flex: initial;">
         <label class="mr-1" style="white-space: nowrap;">
-            Root class:
+            {{'DATA.CLASS.SETTINGS.ROOT_CLASS'|translate}}:
         </label>
         <input-editable *ngIf="rootClass" [value]="rootClass.getValue().getIRI()" (valueEdited)="updateRootClass($event)" style="flex: 1;"></input-editable>
         <button class="btn btn-sm btn-outline-info ml-1" (click)="changeClass()">
@@ -19,8 +19,8 @@
     <div class="card vbox mt-2">
         <div class="card-header d-flex align-items-center">
             <label style="flex: 1">
-                SubClasses filter
-                <span class="fas fa-info-circle" title="Here you can create filters in order to hide subClasses of classes."></span>
+                {{'DATA.CLASS.SETTINGS.SUBCLASS_FILTER'|translate}}
+                <span class="fas fa-info-circle" [title]="'DATA.CLASS.SETTINGS.SUBCLASS_FILTER_INFO'|translate"></span>
             </label>
             <div class="custom-control custom-switch" (click)="filterEnabled = !filterEnabled" title="Filter enabled">
                 <input type="checkbox" class="custom-control-input" [ngModel]="filterEnabled">
@@ -32,16 +32,16 @@
         <div class="card-body hbox">
             <div class="card" style="flex: 1;">
                 <div class="card-header d-flex align-items-center">
-                    <label style="flex: 1">Classes</label>
+                    <label style="flex: 1">{{'DATA.CLASS.CLASSES'|translate}}</label>
                     <div class="btn-toolbar">
                         <button class="btn btn-light btn-sm" title="Rendering" (click)="renderingClasses = !renderingClasses" [ngClass]="{active: renderingClasses}">
                             <span class="fas fa-font"></span>
                         </button>
                         <div class="btn-group btn-group-sm ml-2">
-                            <button class="btn btn-light" (click)="addFilter()" title="Add filter">
+                            <button class="btn btn-light" (click)="addFilter()" [title]="'COMMONS.ACTIONS.ADD'|translate">
                                 <span class="fas fa-plus"></span>
                             </button>
-                            <button class="btn btn-light" (click)="removeFilter()" title="Remove filter" [disabled]="!selectedFilteredClass">
+                            <button class="btn btn-light" (click)="removeFilter()" [title]="'COMMONS.ACTIONS.REMOVE'|translate" [disabled]="!selectedFilteredClass">
                                 <span class="fas fa-minus"></span>
                             </button>
                         </div>
@@ -57,17 +57,17 @@
 
             <div class="card ml-1" style="flex: 1;">
                 <div class="card-header d-flex align-items-center">
-                    <label style="flex: 1">Filtered subClasses</label>
+                    <label style="flex: 1">{{'DATA.CLASS.SETTINGS.FILTERED_SUBCLASSES'|translate}}</label>
                     <div class="btn-toolbar">
                         <button class="btn btn-light btn-sm" title="Rendering" (click)="renderingFilter = !renderingFilter"
                             [ngClass]="{active: renderingFilter}">
                             <span class="glyphicon glyphicon-font"></span>
                         </button>
                         <div class="btn-group btn-group-sm">
-                            <button class="btn btn-light" (click)="checkAllClasses(true)" title="Check all" [disabled]="!selectedFilteredClass">
+                            <button class="btn btn-light" (click)="checkAllClasses(true)" [title]="'COMMONS.ACTIONS.CHECK_ALL'|translate" [disabled]="!selectedFilteredClass">
                                 <span class="far fa-check-square"></span>
                             </button>
-                            <button class="btn btn-light" (click)="checkAllClasses(false)" title="Uncheck all" [disabled]="!selectedFilteredClass">
+                            <button class="btn btn-light" (click)="checkAllClasses(false)" [title]="'COMMONS.ACTIONS.UNCHECK_ALL'|translate" [disabled]="!selectedFilteredClass">
                                 <span class="far fa-square"></span>
                             </button>
                         </div>
@@ -88,12 +88,12 @@
     <div class="form-check mt-2">
         <label class="form-check-label">
             <input class="form-check-input" type="checkbox" [(ngModel)]="showInstances">
-            Show instances number
+            {{'DATA.CLASS.SETTINGS.SHOW_INSTANCES_NUMBER'|translate}}
         </label>
     </div>
 
 </div>
 <div class="modal-footer">
     <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
-    <button class="btn btn-sm btn-secondary" (click)="close()">Cancel</button>
+    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CANCEL'|translate}}</button>
 </div>

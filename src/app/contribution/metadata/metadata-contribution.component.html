@@ -1,8 +1,8 @@
 <div class="form-group row">
-    <label class="col-sm-2 col-form-label col-form-label-sm">Base URI</label>
+    <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.BASE_URI'|translate}}</label>
     <div class="col-sm-10">
         <div class="input-group input-group-sm">
-            <input class="form-control" [(ngModel)]="baseURI" placeholder="Base URI">
+            <input class="form-control" [(ngModel)]="baseURI" [placeholder]="'MODELS.PROJECT.BASE_URI'|translate">
             <div class="input-group-append">
                 <button class="btn btn-info" (click)="discover()" [disabled]="!baseURI || loading">
                     Discover

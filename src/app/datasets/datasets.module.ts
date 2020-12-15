@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 import { AlignmentsModule } from '../alignments/alignments.module';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ResourceViewModule } from '../resource-view/resource-view.module';
@@ -35,6 +36,7 @@ import { YasguiComponent } from './sparql/yasgui.component';
 		ResourceViewModule,
 		RouterModule,
 		StructuresModule,
+		TranslateModule,
 		WidgetModule,
 	],
 	providers: [

@@ -2,19 +2,19 @@
 	<div class="jumbotron">
 
 		<ng-container *ngIf="instanceName">
-			<h1 class="display-4">Welcome to {{instanceName}} dataset browser!</h1>
+			<h1 class="display-4">{{'HOME.WELCOME_W_INST_NAME.WELCOME'|translate:translationParam}}</h1>
 			<p class="lead">
-				{{instanceName}} is powered by the Public Multilingual Knowledge Infrastructure (<a href=".">PMKI</a>)
+				{{'HOME.WELCOME_W_INST_NAME.POWERED_BY'|translate:translationParam}} (<a href=".">PMKI</a>)
 			</p>
 			<hr class="my-4">
-			<a class="btn btn-info" [routerLink]="['/contribution']" role="button">Contribute to {{instanceName}}</a>
+			<a class="btn btn-info" [routerLink]="['/contribution']" role="button">{{'HOME.WELCOME_W_INST_NAME.CONTRIBUTE_TO'|translate:translationParam}}</a>
 		</ng-container>
 
 		<ng-container *ngIf="!instanceName">
-			<h1 class="display-4">Welcome to PMKI!</h1>
-			<p class="lead">Public Multilingual Knowledge Infrastructure for the Digital Single Market</p>
+			<h1 class="display-4">{{'HOME.WELCOME_WO_INST_NAME.WELCOME'|translate}}</h1>
+			<p class="lead">{{'HOME.WELCOME_WO_INST_NAME.PMKI'|translate}}</p>
 			<hr class="my-4">
-			<a class="btn btn-info" [routerLink]="['/contribution']" role="button">Contribute to PMKI</a>
+			<a class="btn btn-info" [routerLink]="['/contribution']" role="button">{{'HOME.WELCOME_WO_INST_NAME.CONTRIBUTE_TO'|translate}}</a>
 		</ng-container>
 
 	</div>

@@ -2,14 +2,14 @@
     <div class="card-header d-flex align-items-center">
         <label style="flex: 1">Rendering Languages</label>
         <span *ngIf="getActiveLanguageItems().length == 0" class="fas fa-exclamation-triangle text-muted mr-2" 
-            title="No language selected implicitly means all languages">
+            [title]="'COMMONS.LANGUAGE.NO_LANG_INFO'|translate">
         </span>
         <div class="btn-toolbar">
             <div class="btn-group btn-group-xs">
-                <button class="btn btn-outline-info" (click)="changeAllLangStatus(true)" title="Check all">
+                <button class="btn btn-outline-info" (click)="changeAllLangStatus(true)" [title]="'COMMONS.ACTIONS.CHECK_ALL'|translate">
                     <span class="far fa-check-square"></span>
                 </button>
-                <button class="btn btn-outline-info" (click)="changeAllLangStatus(false)" title="Uncheck all">
+                <button class="btn btn-outline-info" (click)="changeAllLangStatus(false)" [title]="'COMMONS.ACTIONS.UNCHECK_ALL'|translate">
                     <span class="far fa-square"></span>
                 </button>
             </div>
@@ -29,9 +29,9 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th class="text-center">Active</th>
+                        <th class="text-center">{{'COMMONS.STATUS.ACTIVE'|translate}}</th>
                         <th class="text-center" nowrap>
-                            Position
+                            {{'COMMONS.POSITION'|translate}}
                             <button class="btn btn-xs btn-default" [ngSwitch]="sortOrder" (click)="changePositionOrder()">
                                 <span class="fas fa-sort-numeric-down" *ngSwitchCase="'position_ascending'" ></span>
                                 <span class="fas fa-sort-numeric-up" *ngSwitchCase="'position_descending'"></span>
@@ -39,7 +39,7 @@
                             </button>
                         </th>
                         <th class="text-center" nowrap>
-                            ISO code
+                            {{'COMMONS.LANGUAGE.ISO_CODE'|translate}}
                             <button class="btn btn-xs btn-default" [ngSwitch]="sortOrder" (click)="changeIsocodeOrder()">
                                 <span class="fas fa-sort-alpha-down" *ngSwitchCase="'isocode_ascending'" ></span>
                                 <span class="fas fa-sort-alpha-up" *ngSwitchCase="'isocode_descending'"></span>
@@ -47,7 +47,7 @@
                             </button>
                         </th>
                         <th class="text-center" nowrap>
-                            Language
+                            {{'COMMONS.LANGUAGE.LANGUAGE'|translate}}
                             <button class="btn btn-xs btn-default" [ngSwitch]="sortOrder" (click)="changeLanguageOrder()">
                                 <span class="fas fa-sort-alpha-down" *ngSwitchCase="'language_ascending'"></span>
                                 <span class="fas fa-sort-alpha-up" *ngSwitchCase="'language_descending'"></span>

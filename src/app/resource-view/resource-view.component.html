@@ -12,7 +12,7 @@
                 <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: rendering}" title="Rendering" (click)="switchRendering()">
                     <i class="fas fa-font"></i>
                 </button>
-                <button *ngIf="btnSettingsAvailable" class="btn btn-light btn-sm ml-1" title="Settings" (click)="settings()">
+                <button *ngIf="btnSettingsAvailable" class="btn btn-light btn-sm ml-1" [title]="'COMMONS.SETTINGS'|translate" (click)="settings()">
                     <i class="fas fa-cog"></i>
                 </button>
                 <div *ngIf="btnGraphAvailable" class="btn-group btn-group-sm dropup ml-1" ngbDropdown placement="bottom-right">

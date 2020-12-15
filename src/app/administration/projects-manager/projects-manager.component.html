@@ -4,7 +4,7 @@
         <label style="flex: 1;">Datasets manager</label>
         <div class="btn-toolbar">
             <div class="btn-group">
-                <button class="btn btn-light btn-sm" title="Create" (click)="createProject()">
+                <button class="btn btn-light btn-sm" [title]="'COMMONS.ACTIONS.CREATE'|translate" (click)="createProject()">
                     <span class="fas fa-plus"></span>
                 </button>
             </div>
@@ -27,10 +27,10 @@
                 <tr>
                     <th class="text-center">Dataset Name</th>
                     <th class="text-center">Open/Close</th>
-                    <th class="text-center">Model</th>
-                    <th class="text-center">Lexicalization Model</th>
+                    <th class="text-center">{{'MODELS.PROJECT.MODEL'|translate}}</th>
+                    <th class="text-center">{{'MODELS.PROJECT.LEXICALIZATION_MODEL'|translate}}</th>
                     <th class="text-center">Location</th>
-                    <th class="text-center">Status</th>
+                    <th class="text-center">{{'COMMONS.STATUS.STATUS'|translate}}</th>
                     <th class="text-center">
                         <!-- Actions -->
                     </th>

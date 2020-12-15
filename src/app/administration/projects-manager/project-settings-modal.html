@@ -7,7 +7,7 @@
 <div class="modal-body scrollableContainer">
 
     <div *ngIf="isSkos || isOntolex" class="card mb-2">
-        <div class="card-header">Concept tree settings</div>
+        <div class="card-header">{{'DATA.CONCEPT.SETTINGS.CONCEPT_TREE_SETTINGS'|translate}}</div>
         <div class="card-body">
             <div class="alert alert-info mb-1">
                 Restricts the visualization of the Concept tree for the visitor user.<br>
@@ -52,7 +52,7 @@
     </div>
 
     <div *ngIf="isOntolex" class="card mb-2">
-        <div class="card-header">Lexical Entry list settings</div>
+        <div class="card-header">{{'DATA.LEX_ENTRY.SETTINGS.LEX_ENTRY_SETTINGS'|translate}}</div>
         <div class="card-body">
             <div class="alert alert-info mb-1">
                 Restricts the visualization of the Lexical Entry list for the visitor user.<br>
@@ -97,7 +97,7 @@
                                 <span class="fas fa-info-circle" title="Tells if the Lexical Entry index is 1-char or 2-char based"></span>
                             </td>
                             <td nowrap>
-                                <label>Index length:</label>
+                                <label>{{'DATA.LEX_ENTRY.SETTINGS.INDEX_LENGHT'|translate}}:</label>
                             </td>
                             <td>
                                 <select class="form-control form-control-sm" [(ngModel)]="indexLength" (ngModelChange)="changeOntolexIndexLength()">
@@ -133,5 +133,5 @@
 
 </div>
 <div class="modal-footer">
-    <button class="btn btn-sm btn-secondary" (click)="close()">Close</button>
+    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
 </div>

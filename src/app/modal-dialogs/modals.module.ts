@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { ResourceViewModule } from '../resource-view/resource-view.module';
 import { StructuresModule } from '../structures/structures.module';
 import { WidgetModule } from '../widget/widget.module';
@@ -42,7 +43,12 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         SchemeListModal
     ],
     imports: [
-        CommonModule, FormsModule, WidgetModule, ResourceViewModule, StructuresModule
+        CommonModule, 
+        FormsModule,
+        ResourceViewModule,
+        StructuresModule,
+        TranslateModule,
+        WidgetModule,  
     ],
     providers: [
         BasicModalsServices, BrowsingModalsServices, SharedModalsServices

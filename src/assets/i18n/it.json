@@ -1,4 +1,40 @@
 {
+    "ADMINISTRATION": {
+        "SYSTEM": {
+            "INTRO": "In questa sezione è possibile impostare alcuni aspetti principali del sistema. Questo pannello può essere acceduto anche più tardi da <i>Dashboard di amministrazione</i> > <i>Configurazione</i>",
+            "EMAIL": {
+                "EMAIL_CONFIG": "Configurazione Email",
+                "EMAIL_CONFIG_INFO": "Configurazione del servizio e-mail di PMKI. Questo servizio sarà usato per inviare notifiche ai contributor<br><strong>Nota</strong>: se non opportunamente configurato, sarà impossibile inviare email ai contributor, pertanto non saranno in grado di portare a completamento il contributo.",
+                "MAIL_SERVER_URL_INFO": "IP/URL del Mail Server SMTP",
+                "MAIL_SERVER_PORT_INFO": "Porta del Mail Server",
+                "CRYPTOGRAPHIC_PROTOCOL": "Protocollo crittografico",
+                "AUTHENTICATION": "Autenticazione",
+                "AUTHENTICATION_INFO": "Indica se il server SMTP richiede l'autenticazione",
+                "MAIL_FROM_INFO": "Indirizzo email usato per inviare email di amministrazione",
+                "MAIL_PASSWORD_INFO": "Password del suddetto indirizzo email",
+                "MAIL_PASSWORD_WARN": "La password viene salvata in chiaro sul server",
+                "MAIL_ALIAS_INFO": "Alias mostrato nelle email di amministrazione"
+            },
+            "REMOTE_ACCESS": {
+                "REMOTE_ACCESS_CONFIG": "Configurazione accesso remoto",
+                "REMOTE_ACCESS_CONFIG_INFO": "Configurazione del Triple Store remoto che hosta i dataset in PMKI.<br><strong>Nota</strong>: se non opportunamente configurato, il sistema non sarà in grado di creare dataset remoti per hostare risorse stabili.",
+                "URL_INFO": "URL del Triple Store remoto",
+                "USERNAME_INFO": "Username del Triple Store remoto (se è richiesta l'autenticazione)",
+                "PASSWORD_INFO": "Password del Triple Store remoto (se è richiesta l'autenticazione)"
+            },
+            "VB_CONFIG": {
+                "VB_CONFIG": "Configurazione di VocBench",
+                "VB_CONFIG_INFO": "Configurazione dell'istanza di VocBench/SemanticTurkey dedicata allo sviluppo di risorse non stabili.<br><strong>Nota</strong>: se non opportunamente configurato, il portale PMKI non sarà in grado di connettersi a VocBench, pertanto sarà impossibile accettare contributi di risorse in sviluppo.",
+                "VB_URL_INFO": "URL dell'istanza di VocBench accessibile dai contributor",
+                "ST_HOST_INFO": "URL completo (protocollo+hostname+porta) dell'host di SemanticTurkey",
+                "ADMIN_EMAIL_INFO": "Email dell'amministratore di VocBench/SemanticTurkey",
+                "ADMIN_PASSWORD_INFO": "Password dell'amministratore di VocBench/SemanticTurkey"
+            },
+            "COMMONS": {
+                "MAIL_PASSWORD_WARN": "La password è salvata in chiaro sul server"
+            }
+        }
+    },
     "APP": {
         "NAVBAR": {
             "DATASETS": "Dataset",
@@ -16,5 +52,148 @@
             "CONTACT_US": "Contattaci",
             "SUPPORT": "Supporto"
         }
+    },
+    "DATA": {
+        "CLASS": {
+            "CLASS": "Classe",
+            "CLASSES": "Classi",
+            "SETTINGS": {
+                "CLASS_TREE_SETTINGS": "Impostazioni albero delle classi",
+                "ROOT_CLASS": "Classe root",
+                "SUBCLASS_FILTER": "Filtro sotto-classi",
+                "SUBCLASS_FILTER_INFO": "Da qui è possibile crare filtri in modo da nascondere le sottoclassi di classi",
+                "FILTERED_SUBCLASSES": "Sottoclassi filtrate",
+                "SHOW_INSTANCES_NUMBER": "Mostra numero istanze"
+            }
+        },
+        "COLLECTION": {
+            "COLLECTION": "Collezione",
+            "COLLECTIONS": "Collezioni"
+        },
+        "CONCEPT": {
+            "CONCEPT": "Concetto",
+            "CONCEPTS": "Concetti",
+            "USE_SEARCH_MSG": "Usa il campo di ricerca per recuperare concetti",
+            "SETTINGS": {
+                "CONCEPT_TREE_SETTINGS": "Impostazioni albero dei concetti",
+                "TOP_CONCEPTS_LIMIT": "Limite top concept",
+                "TOP_CONCEPTS_LIMIT_INFO": "Imposta la quantità massima di top concept visibili nell'albero. Questo setting evita che venga inizializzato un albero che potrebbe causare problemi di performance"
+            }
+        },
+        "INSTANCE": {
+            "INSTANCE": "Istanza",
+            "INSTANCES": "Istanze"
+        },
+        "LEX_ENTRY": {
+            "LEX_ENTRY": "Lex.Entry",
+            "LEX_ENTRIES": "Lex.Entries",
+            "USE_SEARCH_MSG": "Usa il campo di ricerca per recuperare le lexical entry",
+            "SETTINGS": {
+                "LEX_ENTRY_SETTINGS": "Impostazioni lista lexical entry",
+                "LEX_ENTRIES_LIMIT": "Limite lexical entry",
+                "LEX_ENTRIES_LIMIT_INFO": "Imposta la quantità massima di lexical entry visibili nella lista. Questo setting evita che venga inizializzata una lista che potrebbe causare problemi di performance",
+                "INDEX_LENGHT": "Lunghezza indice"
+            }
+        },
+        "LEXICON": {
+            "LEXICON": "Lessico",
+            "LEXICONS": "Lessici",
+            "SELECT_LEXICON": "Seleziona lessico",
+            "CHANGE_LEXICON": "Cambia lessico"
+        },
+        "PROPERTY": {
+            "PROPERTY": "Proprietà",
+            "PROPERTIES": "Proprietà",
+            "SHOW_ALL": "Mostra tutte le proprietà"
+        },
+        "SCHEME": {
+            "CONCEPT_SCHEME": "Concept Scheme",
+            "SCHEME": "Schema",
+            "SCHEMES": "Schemi"
+        },
+        "COMMONS": {
+            "VISUALIZATION_MODE": {
+                "MODE": "Modalità di visualizzazione",
+                "SEARCH_BASED": "Basata su ricerca",
+                "INDEX_BASED": "Basata su indice",
+                "HIERARCHY_BASED": "Gerarchica"
+            }
+        }
+    },
+    "HOME": {
+        "WELCOME_W_INST_NAME": {
+            "WELCOME": "Benvenuto nel dataset browser {{instanceName}}!",
+            "POWERED_BY": "{{instanceName}} é fornito da Public Multilingual Knowledge Infrastructure",
+            "CONTRIBUTE_TO": "Contribuisci a {{instanceName}}"
+        },
+        "WELCOME_WO_INST_NAME": {
+            "WELCOME": "Benvenuto in PMKI!",
+            "PMKI": "Public Multilingual Knowledge Infrastructure for the Digital Single Market",
+            "CONTRIBUTE_TO": "Contribuisci a PMKI"
+        }
+    },
+    "MODELS": {
+        "PROJECT": {
+            "BASE_URI": "Base URI",
+            "LEXICALIZATION": "Lessicalizzazione",
+            "LEXICALIZATION_MODEL": "Modello di lessicalizzazione",
+            "MODEL": "Modello",
+            "BACKEND_TYPE": "Tipo backend",
+            "REPO_ACCESS": "Repository Access",
+            "REPOSITORY_ID": "ID repository",
+            "DATA_REPO_ID": "ID repository dati"
+        }
+    },
+    "COMMONS": {
+        "ACTIONS": {
+            "ADD": "Aggiungi",
+            "CANCEL": "Cancella",
+            "CHECK_ALL": "Seleziona tutto",
+            "CLOSE": "Chiudi",
+            "CONFIRM": "Conferma",
+            "CREATE": "Crea",
+            "EDIT": "Modifica",
+            "LOAD": "Carica",
+            "REFRESH": "Aggiorna",
+            "REMOVE": "Rimuovi",
+            "RESET": "Reset",
+            "SEARCH": "Cerca",
+            "SUBMIT": "Invia",
+            "UNCHECK_ALL": "Deseleziona tutto"
+        },
+        "CONFIG": {
+            "CONFIGURATION": "Configurazione",
+            "CONFIGURE": "Configura",
+            "LOAD_CONFIGURATION": "Carica configurazione",
+            "SAVE_CONFIGURATION": "Salva configurazione",
+            "SERVER_URL": "URL server",
+            "USERNAME": "Username",
+            "PASSWORD": "Password"
+        },
+        "LANGUAGE": {
+            "LANGUAGE": "Lingua",
+            "LANGUAGES": "Lingue",
+            "ISO_CODE": "Codice ISO",
+            "NO_LANG_INFO": "Nessuna lingua selezionata implica tutte le lingue"
+        },
+        "PAGING": {
+            "PAGE_OF_TOT": "di",
+            "PREV_PAGE": "Pagina precedente",
+            "NEXT_PAGE": "Pagina successiva"
+        },
+        "STATUS": {
+            "ACTIVE": "Attivo",
+            "STATUS": "Stato"
+        },
+        "DESCRIPTION": "Descrizione",
+        "DETAILS": "Dettagli",
+        "FORMAT": "Formato",
+        "MANDATORY_FIELD": "Campo obbligatorio",
+        "NAME": "Nome",
+        "OPTIONAL_FIELD": "Campo opzionale",
+        "POSITION": "Posizione",
+        "SETTINGS": "Impostazioni",
+        "TITLE": "Titolo",
+        "VALUE": "Valore"
     }
 }

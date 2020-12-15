@@ -35,7 +35,7 @@
                     (configurationUpdated)="selectedLifterConfig = $event" disabled="true">
                 </extension-configurator>
             </div>
-            <label class="col-sm-1 col-form-label col-form-label-sm">Format</label>
+            <label class="col-sm-1 col-form-label col-form-label-sm">{{'COMMONS.FORMAT'|translate}}</label>
             <div class="col-sm-3">
                 <select class="form-control form-control-sm" [(ngModel)]="selectedInputFormat">
                     <option *ngFor="let f of inputFormats" [ngValue]="f">{{f.name}}</option>
@@ -55,7 +55,7 @@
 
     <div class="text-right">
         <button class="btn btn-info" (click)="load()" [disabled]="!projectName || !contributorEmail || !file || loading">
-            Load
+            {{'COMMONS.ACTIONS.LOAD'|translate}}
             <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
         </button>
     </div>

@@ -4,7 +4,7 @@
             <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" title="Rendering" (click)="rendering=!rendering">
                 <i class="fas fa-font"></i>
             </button>
-            <button class="btn btn-light btn-sm ml-1" title="Refresh" (click)="refresh()">
+            <button class="btn btn-light btn-sm ml-1" [title]="'COMMONS.ACTIONS.REFRESH'|translate" (click)="refresh()">
                 <span class="fas fa-sync"></span>
             </button>
         </div>

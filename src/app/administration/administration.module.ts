@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 import { ContributionModule } from '../contribution/contribution.module';
 import { WidgetModule } from '../widget/widget.module';
 import { AdminDashboardComponent } from './admin-dashboard.component';
@@ -37,6 +38,7 @@ import { SystemConfigurationComponent } from './system-configuration/system-conf
         FormsModule,
         NgbDropdownModule,
         RouterModule,
+        TranslateModule,
         WidgetModule
     ],
     exports: [],

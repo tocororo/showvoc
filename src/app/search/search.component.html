@@ -1,9 +1,9 @@
 <div class="container my-3">
 
-    <h1>Search</h1>
+    <h1>{{'COMMONS.ACTIONS.SEARCH'|translate}}</h1>
 
     <div class="input-group mb-2">
-        <input type="text" class="form-control" [(ngModel)]="searchString" (keydown.enter)="searchKeyHandler()" placeholder="Search">
+        <input type="text" class="form-control" [(ngModel)]="searchString" (keydown.enter)="searchKeyHandler()" [placeholder]="'COMMONS.ACTIONS.SEARCH'|translate">
         <div class="input-group-append">
             <button class="btn btn-info" (click)="search()" [disabled]="!searchString || loading">
                 <i class="fas fa-search"></i>
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="btn-group btn-group-sm ml-1" ngbDropdown autoClose="outside">
-            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>Languages</button>
+            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>{{'COMMONS.LANGUAGE.LANGUAGES'|translate}}</button>
             <div class="dropdown-menu" ngbDropdownMenu>
                 <button class="dropdown-item d-flex align-items-center" (click)="setAllLanguagesFilter()">
                     <span style="flex: 1;">Any language</span>

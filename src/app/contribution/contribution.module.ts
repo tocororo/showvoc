@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { WidgetModule } from '../widget/widget.module';
 import { ContributionsManagerComponent } from './administration/contributions-manager.component';
 import { ContributionComponent } from './contribution.component';
@@ -33,6 +34,7 @@ import { StableProjectCreationModal } from './stable/stable-project-creation-mod
     imports: [
         CommonModule,
         FormsModule,
+        TranslateModule,
         WidgetModule,
     ],
     exports: [

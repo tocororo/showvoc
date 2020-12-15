@@ -10,13 +10,13 @@
 
     <!-- Edit buttons -->
     <span class="input-group-append">
-        <button *ngIf="!editInProgress" class="btn btn-outline-info" style="width:36px;" (click)="edit()" title="Edit" [disabled]="disabled">
+        <button *ngIf="!editInProgress" class="btn btn-outline-info" style="width:36px;" (click)="edit()" [title]="'COMMONS.ACTIONS.EDIT'|translate" [disabled]="disabled">
             <span class="fas fa-edit"></span>
         </button>
-        <button *ngIf="editInProgress" class="btn btn-outline-info p-0" style="width:18px;" (click)="confirmEdit()" title="Confirm">
+        <button *ngIf="editInProgress" class="btn btn-outline-info p-0" style="width:18px;" (click)="confirmEdit()" [title]="'COMMONS.ACTIONS.CONFIRM'|translate">
             <span class="fas fa-check" style="color: green"></span>
         </button>
-        <button *ngIf="editInProgress" class="btn btn-outline-info p-0" style="width:18px;" (click)="cancelEdit()" title="Cancel">
+        <button *ngIf="editInProgress" class="btn btn-outline-info p-0" style="width:18px;" (click)="cancelEdit()" [title]="'COMMONS.ACTIONS.CANCEL'|translate">
             <span class="fas fa-times" style="color: red"></span>
         </button>
     </span>
