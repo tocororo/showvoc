@@ -2,13 +2,13 @@
 
     <div class="mb-2">
         <div class="btn-group btn-group-sm">
-            <button type="button" class="btn btn-outline-info" [routerLink]="['projects']" routerLinkActive="active">Datasets</button>
-            <button type="button" class="btn btn-outline-info" [routerLink]="['contributions']" routerLinkActive="active">Contributions</button>
+            <button type="button" class="btn btn-outline-info" [routerLink]="['projects']" routerLinkActive="active">{{'DATASETS.DATASETS'|translate}}</button>
+            <button type="button" class="btn btn-outline-info" [routerLink]="['contributions']" routerLinkActive="active">{{'CONTRIBUTIONS.CONTRIBUTIONS'|translate}}</button>
         </div>
 
         <div class="btn-group btn-group-sm float-right">
             <button type="button" class="btn btn-outline-info" [routerLink]="['config']" routerLinkActive="active">
-                Configuration
+                {{'COMMONS.CONFIG.CONFIGURATION'|translate}}
                 <span class="fas fa-wrench"></span>
             </button>
         </div>

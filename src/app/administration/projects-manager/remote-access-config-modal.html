@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Remote access configuration</h5>
+    <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.REMOTE.CONFIG.REMOTE_ACCESS_CONFIG'|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
@@ -17,7 +17,7 @@
         </thead>
         <tbody>
             <tr *ngIf="savedConfigs.length == 0">
-                <td colspan="4">No Remote Access Configuration found. Please, create a new one.</td>
+                <td colspan="4">{{'ADMINISTRATION.DATASETS.REMOTE.CONFIG.NO_CONFIG_FOUND'|translate}}</td>
             </tr>
             <tr *ngFor="let conf of savedConfigs">
                 <td>

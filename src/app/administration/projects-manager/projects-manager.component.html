@@ -1,7 +1,7 @@
 <div class="card vbox">
 
     <div class="card-header d-flex align-items-center">
-        <label style="flex: 1;">Datasets manager</label>
+        <label style="flex: 1;">{{'ADMINISTRATION.DATASETS.MANAGEMENT.DATASET_MANAGER'|translate}}</label>
         <div class="btn-toolbar">
             <div class="btn-group">
                 <button class="btn btn-light btn-sm" [title]="'COMMONS.ACTIONS.CREATE'|translate" (click)="createProject()">
@@ -25,11 +25,11 @@
             </colgroup>
             <thead class="thead-light">
                 <tr>
-                    <th class="text-center">Dataset Name</th>
-                    <th class="text-center">Open/Close</th>
+                    <th class="text-center">{{'ADMINISTRATION.DATASETS.MANAGEMENT.DATASET_NAME'|translate}}</th>
+                    <th class="text-center">{{'ADMINISTRATION.DATASETS.MANAGEMENT.OPEN_CLOSE'|translate}}</th>
                     <th class="text-center">{{'MODELS.PROJECT.MODEL'|translate}}</th>
-                    <th class="text-center">{{'MODELS.PROJECT.LEXICALIZATION_MODEL'|translate}}</th>
-                    <th class="text-center">Location</th>
+                    <th class="text-center">{{'MODELS.PROJECT.LEXICALIZATION'|translate}}</th>
+                    <th class="text-center">{{'MODELS.PROJECT.LOCATION'|translate}}</th>
                     <th class="text-center">{{'COMMONS.STATUS.STATUS'|translate}}</th>
                     <th class="text-center">
                         <!-- Actions -->
@@ -64,8 +64,8 @@
                                 {{roleStatusMap[p.role]}}
                             </button>
                             <div class="dropdown-menu" ngbDropdownMenu>
-                                <button class="dropdown-item" (click)="changeProjectStatus(p, rolePublic)" [disabled]="p.role != roleStaging">Make public</button>
-                                <button class="dropdown-item" (click)="changeProjectStatus(p, roleStaging)" [disabled]="p.role != rolePublic">Make staging</button>
+                                <button class="dropdown-item" (click)="changeProjectStatus(p, rolePublic)" [disabled]="p.role != roleStaging">{{'ADMINISTRATION.DATASETS.MANAGEMENT.MAKE_PUBLIC'|translate}}</button>
+                                <button class="dropdown-item" (click)="changeProjectStatus(p, roleStaging)" [disabled]="p.role != rolePublic">{{'ADMINISTRATION.DATASETS.MANAGEMENT.MAKE_STAGING'|translate}}</button>
                             </div>
                         </div>
                     </td>
@@ -76,31 +76,31 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-sm" ngbDropdownMenu>
                                 <button class="dropdown-item" (click)="loadData(p)" [disabled]="!p.isOpen() || p.creatingIndex || p.opening">
-                                    Load data
+                                    {{'ADMINISTRATION.DATASETS.LOAD_DATA'|translate}}
                                 </button>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item d-flex align-items-center" (click)="createIndex(p)" [disabled]="globalCreatingIndex || p.creatingIndex || p.opening">
-                                    <span style="flex: 1;">Create/refresh index</span>
+                                    <span style="flex: 1;">{{'ADMINISTRATION.DATASETS.MANAGEMENT.CREATE_REFRESH_INDEX'|translate}}</span>
                                     <span *ngIf="p.creatingIndex" class="spinner-border spinner-border-sm ml-2"></span>
                                 </button>
                                 <button class="dropdown-item" (click)="deleteIndex(p)" [disabled]="globalCreatingIndex || p.creatingIndex || p.opening">
-                                    Delete index
+                                    {{'ADMINISTRATION.DATASETS.MANAGEMENT.DELETE_INDEX'|translate}}
                                 </button>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item d-flex align-items-center" (click)="createMapleMetadata(p)" [disabled]="p.creatingMetadata || p.opening">
-                                    <span style="flex: 1;">Create/refresh dataset metadata</span>
+                                    <span style="flex: 1;">{{'ADMINISTRATION.DATASETS.MANAGEMENT.CREATE_REFRESH_METADATA'|translate}}</span>
                                     <span *ngIf="p.creatingMetadata" class="spinner-border spinner-border-sm ml-2"></span>
                                 </button>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item" (click)="editDescription(p)">
-                                    Edit description
+                                    {{'ADMINISTRATION.DATASETS.MANAGEMENT.EDIT_DESCRIPTION'|translate}}
                                 </button>
                                 <button class="dropdown-item" (click)="editSettings(p)">
-                                    Edit settings
+                                    {{'ADMINISTRATION.DATASETS.MANAGEMENT.EDIT_SETTINGS'|translate}}
                                 </button>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item" (click)="deleteProject(p)" [disabled]="p.isOpen() || p.opening || p.creatingIndex || p.creatingMetadata">
-                                    Delete dataset
+                                    {{'ADMINISTRATION.DATASETS.MANAGEMENT.DELETE_DATASET'|translate}}
                                 </button>
                             </div>
                         </div>

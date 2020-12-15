@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Dataset settings</h5>
+    <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.SETTINGS.DATASET_SETTINGS'|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
@@ -10,8 +10,7 @@
         <div class="card-header">{{'DATA.CONCEPT.SETTINGS.CONCEPT_TREE_SETTINGS'|translate}}</div>
         <div class="card-body">
             <div class="alert alert-info mb-1">
-                Restricts the visualization of the Concept tree for the visitor user.<br>
-                Administrator user will still be able to customize the visualization for itself.
+                {{'ADMINISTRATION.DATASETS.SETTINGS.CONCEPT_VISUALIZATION_INFO'|translate}}
             </div>
             <table class="table table-sm table-borderless">
                 <colgroup>
@@ -23,7 +22,7 @@
                     <tr>
                         <td></td>
                         <td nowrap>
-                            <label>Default visualization mode:</label>
+                            <label>{{'ADMINISTRATION.DATASETS.SETTINGS.DEFAULT_VISUALIZATION_MODE'|translate}}:</label>
                         </td>
                         <td>
                             <select class="form-control form-control-sm" [(ngModel)]="selectedSkosMode" (ngModelChange)="changeSkosVisualizationMode()">
@@ -33,10 +32,10 @@
                     </tr>
                     <tr>
                         <td>
-                            <span class="fas fa-info-circle" title="Tells if visitor user can customize the visualization mode for itself"></span>
+                            <span class="fas fa-info-circle" [title]="'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE_INFO'|translate"></span>
                         </td>
                         <td nowrap>
-                            <label>Allow visualization change:</label>
+                            <label>{{'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE'|translate}}:</label>
                         </td>
                         <td>
                             <div class="custom-control custom-switch" (click)="changeSkosAllowVisualizationChange()">
@@ -55,8 +54,7 @@
         <div class="card-header">{{'DATA.LEX_ENTRY.SETTINGS.LEX_ENTRY_SETTINGS'|translate}}</div>
         <div class="card-body">
             <div class="alert alert-info mb-1">
-                Restricts the visualization of the Lexical Entry list for the visitor user.<br>
-                Administrator user will still be able to customize the visualization for itself.
+                {{'ADMINISTRATION.DATASETS.SETTINGS.LEX_ENTRY_VISUALIZATION_INFO'|translate}}
             </div>
             <table class="table table-sm table-borderless">
                 <colgroup>
@@ -68,7 +66,7 @@
                     <tr>
                         <td></td>
                         <td nowrap>
-                            <label>Default visualization mode:</label>
+                            <label>{{'ADMINISTRATION.DATASETS.SETTINGS.DEFAULT_VISUALIZATION_MODE'|translate}}:</label>
                         </td>
                         <td>
                             <select class="form-control form-control-sm" [(ngModel)]="selectedOntolexMode" (ngModelChange)="changeOntolexVisualizationMode()">
@@ -78,10 +76,10 @@
                     </tr>
                     <tr>
                         <td>
-                            <span class="fas fa-info-circle" title="Tells if visitor user can customize the visualization mode for itself"></span>
+                            <span class="fas fa-info-circle" [title]="'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE_INFO'|translate"></span>
                         </td>
                         <td nowrap>
-                            <label>Allow visualization change:</label>
+                            <label>{{'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE'|translate}}:</label>
                         </td>
                         <td>
                             <div class="custom-control custom-switch" (click)="changeOntolexAllowVisualizationModeChage()">
@@ -94,7 +92,7 @@
                     <ng-container *ngIf="selectedOntolexMode == 'indexBased'">
                         <tr>
                             <td>
-                                <span class="fas fa-info-circle" title="Tells if the Lexical Entry index is 1-char or 2-char based"></span>
+                                <span class="fas fa-info-circle" [title]="'DATA.LEX_ENTRY.SETTINGS.INDEX_LENGHT'|translate"></span>
                             </td>
                             <td nowrap>
                                 <label>{{'DATA.LEX_ENTRY.SETTINGS.INDEX_LENGHT'|translate}}:</label>
@@ -108,10 +106,10 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="fas fa-info-circle" title="Tells if visitor user can customize the index-length for itself"></span>
+                                <span class="fas fa-info-circle" [title]="'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_INDEX_CHANGE_INFO'|translate"></span>
                             </td>
                             <td nowrap>
-                                <label>Allow index length change:</label>
+                                <label>{{'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_INDEX_CHANGE'|translate}}:</label>
                             </td>
                             <td>
                                 <div class="custom-control custom-switch" (click)="changeOntolexAllowIndexLengthChange()">
@@ -128,7 +126,7 @@
     </div>
 
     <rendering-editor *ngIf="renderingLangs" style="min-height: 300px;" [projectCtx]="projectCtx" [(ngModel)]="renderingLangs" 
-        (ngModelChange)="onRenderingChange()" alert="Set the default language(s) used for rendering the resources">
+        (ngModelChange)="onRenderingChange()" [alert]="'ADMINISTRATION.DATASETS.SETTINGS.RENDERING_LANG_INFO'|translate">
     </rendering-editor>
 
 </div>

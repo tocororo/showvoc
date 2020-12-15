@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Create dataset</h5>
+    <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.CREATE_DATASET'|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
@@ -28,7 +28,7 @@
                         <option *ngFor="let m of semanticModels" [ngValue]="m.uri">{{m.show}}</option>
                     </select>
                 </div>
-                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.LEXICALIZATION_MODEL'|translate}}</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.LEXICALIZATION'|translate}}</label>
                 <div class="col-sm-4">
                     <select class="form-control form-control-sm" [(ngModel)]="selectedLexModel">
                         <option *ngFor="let m of lexicalizationModels" [ngValue]="m.uri">{{m.show}}</option>

@@ -122,11 +122,11 @@
         <!-- Remote access -->
         <div class="card mb-2">
             <div class="card-header">
-                <label>{{'ADMINISTRATION.SYSTEM.REMOTE_ACCESS_CONFIG.REMOTE_ACCESS_CONFIG'|translate}}:</label>
+                <label>{{'ADMINISTRATION.SYSTEM.REMOTE_ACCESS.REMOTE_ACCESS_CONFIG'|translate}}:</label>
             </div>
             <div class="card-body">
                 <div *ngIf="!closedAlert2" class="alert alert-info alert-dismissible mb-1">
-                    <span [innerHTML]="'ADMINISTRATION.SYSTEM.REMOTE_ACCESS_CONFIG.REMOTE_ACCESS_CONFIG_INFO'|translate"></span>
+                    <span [innerHTML]="'ADMINISTRATION.SYSTEM.REMOTE_ACCESS.REMOTE_ACCESS_CONFIG_INFO'|translate"></span>
                     <button class="close" (click)="closedAlert2=true"><span>&times;</span></button>
                 </div>
                 <table class="table table-sm table-borderless">
@@ -138,7 +138,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <span class="fas fa-info-circle" [title]="'ADMINISTRATION.SYSTEM.REMOTE_ACCESS_CONFIG.URL_INFO'|translate"></span>
+                                <span class="fas fa-info-circle" [title]="'ADMINISTRATION.SYSTEM.REMOTE_ACCESS.URL_INFO'|translate"></span>
                             </td>
                             <td nowrap>
                                 <label>{{'COMMONS.CONFIG.SERVER_URL'|translate}}:</label>
@@ -147,7 +147,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="fas fa-info-circle" [title]="'ADMINISTRATION.SYSTEM.REMOTE_ACCESS_CONFIG.USERNAME_INFO'|translate"></span>
+                                <span class="fas fa-info-circle" [title]="'ADMINISTRATION.SYSTEM.REMOTE_ACCESS.USERNAME_INFO'|translate"></span>
                             </td>
                             <td nowrap>
                                 <label>{{'COMMONS.CONFIG.USERNAME'|translate}}:</label>
@@ -156,7 +156,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="fas fa-info-circle" [title]="'ADMINISTRATION.SYSTEM.REMOTE_ACCESS_CONFIG.PASSWORD_INFO'|translate"></span>
+                                <span class="fas fa-info-circle" [title]="'ADMINISTRATION.SYSTEM.REMOTE_ACCESS.PASSWORD_INFO'|translate"></span>
                             </td>
                             <td nowrap>
                                 <label>{{'COMMONS.CONFIG.PASSWORD'|translate}}:</label>

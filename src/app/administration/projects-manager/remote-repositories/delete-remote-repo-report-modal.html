@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Delete remote repositories</h5>
+    <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.REMOTE.DELETE_REPO'|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
@@ -26,7 +26,7 @@
                                 <td>{{report.repositoryID}}</td>
                             </tr>
                             <tr>
-                                <td nowrap><label>Reason:</label></td>
+                                <td nowrap><label>{{'ADMINISTRATION.DATASETS.REMOTE.REASON'|translate}}:</label></td>
                                 <td>
                                     {{report.exception.type}}:<br>
                                     {{report.exception.message}}

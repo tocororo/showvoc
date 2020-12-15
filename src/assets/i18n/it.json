@@ -1,5 +1,46 @@
 {
     "ADMINISTRATION": {
+        "DATASETS": {
+            "CREATE_DATASET": "Crea dataset",
+            "LOAD_DATA": "Carica dati",
+            "USE_DATASET_BASEURI": "Usa il baseURI del dataset",
+            "RESOLVE_IMPORTS": "Risolvi import",
+            "MANAGEMENT": {
+                "DATASET_MANAGER": "Gestione dataset",
+                "DATASET_NAME": "Nome dataset",
+                "OPEN_CLOSE": "Apri/Chiudi",
+                "MAKE_PUBLIC": "Rendi publico",
+                "MAKE_STAGING": "Rendi staging",
+                "CREATE_REFRESH_INDEX": "Crea/aggiorna indice",
+                "DELETE_INDEX": "Cancella indice",
+                "CREATE_REFRESH_METADATA": "Crea/aggiorna metadati dataset",
+                "EDIT_DESCRIPTION": "Modifica descrizione",
+                "EDIT_SETTINGS": "Modifica impostazioni",
+                "DELETE_DATASET": "Cancella dataset"
+            },
+            "REMOTE": {
+                "DELETE_REPO": "Cancella repository remoto",
+                "DELETE_REFERENCED_REPO_INFO": "Il progetto eliminato faceva riferimento ai seguenti repository. Seleziona i repository che vuoi eliminare.",
+                "REASON": "Motivo",
+                "CONFIG": {
+                    "REMOTE_ACCESS_CONFIG": "Configurazione accesso remoto",
+                    "NO_CONFIG_FOUND": "Nessuna configurazione per accesso remoto trovata. Creane una nuova."
+                }
+                
+                
+            },
+            "SETTINGS": {
+                "DATASET_SETTINGS": "Impostazioni dataset",
+                "DEFAULT_VISUALIZATION_MODE": "Modalità di visualizzazione di default",
+                "ALLOW_VISUALIZATION_CHANGE": "Consenti modifica della visualizzazione",
+                "ALLOW_VISUALIZATION_CHANGE_INFO": "Indica se l'utente visitatore può modificare la modalità di visualizzazione per sè stesso",
+                "CONCEPT_VISUALIZATION_INFO": "Limita la modalità di visualizzazione dell'albero dei concetti per l'utente visitatore. L'amministratore sarà ancora in grado di modificare la visualizzazione per sè stesso.",
+                "LEX_ENTRY_VISUALIZATION_INFO": "Limita la modalità di visualizzazione della lista delle Lexical Entry per l'utente visitatore. L'amministratore sarà ancora in grado di modificare la visualizzazione per sè stesso.",
+                "ALLOW_INDEX_CHANGE": "Consenti la modifica della dimensione dell'indice",
+                "ALLOW_INDEX_CHANGE_INFO": "Indica se l'utente visitatore può modificare la dimensione dell'indice per sè stesso",
+                "RENDERING_LANG_INFO": "Imposta le lingue di default usate per renderizzare le risorse"
+            }
+        },
         "SYSTEM": {
             "INTRO": "In questa sezione è possibile impostare alcuni aspetti principali del sistema. Questo pannello può essere acceduto anche più tardi da <i>Dashboard di amministrazione</i> > <i>Configurazione</i>",
             "EMAIL": {
@@ -53,6 +94,9 @@
             "SUPPORT": "Supporto"
         }
     },
+    "CONTRIBUTIONS": {
+        "CONTRIBUTIONS": "Contributi"
+    },
     "DATA": {
         "CLASS": {
             "CLASS": "Classe",
@@ -92,7 +136,8 @@
                 "LEX_ENTRY_SETTINGS": "Impostazioni lista lexical entry",
                 "LEX_ENTRIES_LIMIT": "Limite lexical entry",
                 "LEX_ENTRIES_LIMIT_INFO": "Imposta la quantità massima di lexical entry visibili nella lista. Questo setting evita che venga inizializzata una lista che potrebbe causare problemi di performance",
-                "INDEX_LENGHT": "Lunghezza indice"
+                "INDEX_LENGHT": "Dimensione indice",
+                "INDEX_LENGHT_INFO": "Indica se l'indice per filtrare le Lexical Entry è di 1 o 2 caratteri"
             }
         },
         "LEXICON": {
@@ -120,6 +165,9 @@
             }
         }
     },
+    "DATASETS": {
+        "DATASETS": "Dataset"
+    },
     "HOME": {
         "WELCOME_W_INST_NAME": {
             "WELCOME": "Benvenuto nel dataset browser {{instanceName}}!",
@@ -138,6 +186,7 @@
             "LEXICALIZATION": "Lessicalizzazione",
             "LEXICALIZATION_MODEL": "Modello di lessicalizzazione",
             "MODEL": "Modello",
+            "LOCATION": "Posizione",
             "BACKEND_TYPE": "Tipo backend",
             "REPO_ACCESS": "Repository Access",
             "REPOSITORY_ID": "ID repository",

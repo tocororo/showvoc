@@ -1,5 +1,46 @@
 {
     "ADMINISTRATION": {
+        "DATASETS": {
+            "CREATE_DATASET": "Create dataset",
+            "LOAD_DATA": "Load data",
+            "USE_DATASET_BASEURI": "Use the baseURI of the dataset",
+            "RESOLVE_IMPORTS": "Resolve imports",
+            "MANAGEMENT": {
+                "DATASET_MANAGER": "Datasets manager",
+                "DATASET_NAME": "Dataset Name",
+                "OPEN_CLOSE": "Open/Close",
+                "MAKE_PUBLIC": "Make public",
+                "MAKE_STAGING": "Make staging",
+                "CREATE_REFRESH_INDEX": "Create/refresh index",
+                "DELETE_INDEX": "Delete index",
+                "CREATE_REFRESH_METADATA": "Create/refresh dataset metadata",
+                "EDIT_DESCRIPTION": "Edit description",
+                "EDIT_SETTINGS": "Edit settings",
+                "DELETE_DATASET": "Delete dataset"
+            },
+            "REMOTE": {
+                "DELETE_REPO": "Delete remote repositories",
+                "DELETE_REFERENCED_REPO_INFO": "The following repositories was referenced by the deleted project. Select the repositories you want to delete.",
+                "REASON": "Reason",
+                "CONFIG": {
+                    "REMOTE_ACCESS_CONFIG": "Remote access configuration",
+                    "NO_CONFIG_FOUND": "No Remote Access Configuration found. Please, create a new one."
+                }
+                
+                
+            },
+            "SETTINGS": {
+                "DATASET_SETTINGS": "Dataset settings",
+                "DEFAULT_VISUALIZATION_MODE": "Default visualization mode",
+                "ALLOW_VISUALIZATION_CHANGE": "Allow visualization change",
+                "ALLOW_VISUALIZATION_CHANGE_INFO": "Tells if visitor user can customize the visualization mode for itself",
+                "CONCEPT_VISUALIZATION_INFO": "Restricts the visualization of the Concept tree for the visitor user. Administrator user will still be able to customize the visualization for itself.",
+                "LEX_ENTRY_VISUALIZATION_INFO": "Restricts the visualization of the Lexical Entry list for the visitor user. Administrator user will still be able to customize the visualization for itself.",
+                "ALLOW_INDEX_CHANGE": "Allow index length change",
+                "ALLOW_INDEX_CHANGE_INFO": "Tells if visitor user can customize the index-length for itself",
+                "RENDERING_LANG_INFO": "Set the default language(s) used for rendering the resources"
+            }
+        },
         "SYSTEM": {
             "INTRO": "In this section you can setup some core aspects of the system. This panel can be accessed also later from <i>Administration dashboard</i> > <i>Configuration</i>",
             "EMAIL": {
@@ -53,6 +94,9 @@
             "SUPPORT": "Support"
         }
     },
+    "CONTRIBUTIONS": {
+        "CONTRIBUTIONS": "Contributions"
+    },
     "DATA": {
         "CLASS": {
             "CLASS": "Class",
@@ -92,7 +136,8 @@
                 "LEX_ENTRY_SETTINGS": "Lexical Entry list settings",
                 "LEX_ENTRIES_LIMIT": "Lexical entries limitation",
                 "LEX_ENTRIES_LIMIT_INFO": "Sets the maximum amount of lexical entries visible in the list. This setting prevents the initialization of a list that might cause performance issues",
-                "INDEX_LENGHT": "Index lenght"
+                "INDEX_LENGHT": "Index lenght",
+                "INDEX_LENGHT_INFO": "Tells if the Lexical Entry index is 1-char or 2-char based"
             }
         },
         "LEXICON": {
@@ -120,6 +165,9 @@
             }
         }
     },
+    "DATASETS": {
+        "DATASETS": "Datasets"
+    },
     "HOME": {
         "WELCOME_W_INST_NAME": {
             "WELCOME": "Welcome to {{instanceName}} dataset browser!",
@@ -138,6 +186,7 @@
             "LEXICALIZATION": "Lexicalization",
             "LEXICALIZATION_MODEL": "Lexicalization Model",
             "MODEL": "Model",
+            "LOCATION": "Location",
             "BACKEND_TYPE": "Backend type",
             "REPO_ACCESS": "Repository Access",
             "REPOSITORY_ID": "Repository ID",
