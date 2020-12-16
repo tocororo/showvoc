@@ -149,6 +149,7 @@
                 "CLASS_TREE_SETTINGS": "Impostazioni albero delle classi",
                 "ROOT_CLASS": "Classe root",
                 "SUBCLASS_FILTER": "Filtro sotto-classi",
+                "FILTER_ENABLED": "Filtro abilitato",
                 "SUBCLASS_FILTER_INFO": "Da qui è possibile crare filtri in modo da nascondere le sottoclassi di classi",
                 "FILTERED_SUBCLASSES": "Sottoclassi filtrate",
                 "SHOW_INSTANCES_NUMBER": "Mostra numero istanze"
@@ -162,6 +163,15 @@
             "CONCEPT": "Concetto",
             "CONCEPTS": "Concetti",
             "USE_SEARCH_MSG": "Usa il campo di ricerca per recuperare concetti",
+            "UNSAFE_WARN": {
+                "ELEMENT_COUNT": "Questo albero dei concetti ha una quantità di top concept ({{elemCount}}) che supera il limite impostato ({{safeToGoLimit}}).",
+                "PERFORMANCE_ISSUE": "Recuperarli tutti potrebbe essere un processo lungo, si potrebbero riscontrare rallentamenti delle prestazioni o si potrebbe addirittura bloccare il sistema.",
+                "SWITCH_MODE": "Si consiglia di passare dalla visualizzazione gerarchica a quella basata sulla ricerca tramite le",
+                "SETTINGS": "impostazioni",
+                "SELECT_SCHEME": "E' inoltre possibile ridurre la quantità di top concept selezionando uno schema dal pannello dedicato.",
+                "FORCE_INIT": "Se si desidera forzare l'inizializzazione dell'albero a proprio rischio, cliccare",
+                "HERE": "qui"
+            },
             "SETTINGS": {
                 "CONCEPT_TREE_SETTINGS": "Impostazioni albero dei concetti",
                 "TOP_CONCEPTS_LIMIT": "Limite top concept",
@@ -176,6 +186,17 @@
             "LEX_ENTRY": "Lex.Entry",
             "LEX_ENTRIES": "Lex.Entries",
             "USE_SEARCH_MSG": "Usa il campo di ricerca per recuperare le lexical entry",
+            "UNSAFE_WARN": {
+                "ELEMENT_COUNT": "Questa lista di LexicalEntry ha una quantità di elementi ({{elemCount}}) che supera il limite impostato ({{safeToGoLimit}}).",
+                "PERFORMANCE_ISSUE": "Recuperarli tutti potrebbe essere un processo lungo, si potrebbero riscontrare rallentamenti delle prestazioni o si potrebbe addirittura bloccare il sistema.",
+                "IT_IS_RECOMMENDED": "Si consiglia di", 
+                "CHANGE_INDEX_LENGHT": "cambiare la dimensione dell'indice da 1 a 2 caratteri o",
+                "SWITCH_MODE": "passare dalla modialità di visualizzazione basata su indice a quella basata su ricerca tramite le",
+                "SETTINGS": "impostazioni",
+                "SELECT_LEXICON": "E' inoltre possibile ridurre la quantità di LexicalEntry selezionando un lessico dal pannello dedicato.",
+                "FORCE_INIT": "Se si desidera forzare l'inizializzazione della lista a proprio rischio, cliccare", 
+                "HERE": "qui"
+            },
             "SETTINGS": {
                 "LEX_ENTRY_SETTINGS": "Impostazioni lista lexical entry",
                 "LEX_ENTRIES_LIMIT": "Limite lexical entry",
@@ -211,7 +232,38 @@
     },
     "DATASETS": {
         "DATASET": "Dataset",
-        "DATASETS": "Dataset"
+        "DATASETS": "Dataset",
+        "BROWSE_DATASETS": "Esplora dataset di {{instanceName}}",
+        "DATASET_TYPE": "Tipo dataset",
+        "ONLY_OPEN": "Solo dataset aperti",
+        "DATA": "Dati"
+    },
+    "GRAPHS": {
+        "ADD_NEW_NODE": "Aggiungi nuovo nodo",
+        "EXPORT_SNAPSHOT": "Esporta un'istantanea del grafo (.svg)",
+        "FIX_NODES_POSITION": "Blocca posizione nodi",
+        "SETTINGS": {
+            "DATA_GRAPH_SETTINGS": "Impostazioni grafo Data-Oriented",
+            "PARTITION_FILTER_INFO": "Seleziona le partizioni della descrizione della risorsa che verranno mostrate quando si espande un nodo.",
+            "HIDE_LITERAL_NODES": "Nascondi nodi literal",
+            "HIDE_LITERAL_NODES_INFO": "Se spuntata, tutti i nodi literal saranno nascosti nel grafo"
+        },
+        "LINKS_FILTER": {
+            "EXPAND_NODE": "Espandi nodo",
+            "TOO_MUCH_RELATIONS_WARNING": "La risorsa che stai espandendo ha una grande quantità di relazioni, ciò produrrebbe molti link e nodi che potrebbero rendere confusa la visualizzazione del grafo. E' consigliabile filtrare alcune relazioni in modo da limitare le dimensioni del grafo.",
+            "VISIBLE_X_OUT_OF_Y": [
+                "Visibili",
+                "di"
+            ]
+        },
+        "FORCE_CONTROL": {
+            "LINKS": "Link",
+            "STRENGTH": "Forza",
+            "LENGTH": "Lunghezza"
+        },
+        "RESOURCE_DETAILS": {
+            "SHOW_THE_COMPLETE": "Mostra il completo"
+        }
     },
     "HOME": {
         "WELCOME_W_INST_NAME": {
@@ -251,6 +303,61 @@
             "ROLE": "Ruolo"
         }
     },
+    "PREFERENCES": {
+        "LANG": {
+            "RENDERING": {
+                "RENDERING_LANGS": "Lingue di rendering",
+                "DESCRIPTION": "Seleziona le lingue (ed il loro ordine) usate per il rendering delle risorse"
+            },
+            "VALUE_FILTER": {
+                "VALUE_FILTER_LANGS": "Lingue Value-filter",
+                "DESCRIPTION": "Seleziona le lingue che verranno mostrate quando si filtrano i valori literal nella descrizione delle risorse. Attiva il filtro in modo da nascondere i valori con le lingue non selezionate.",
+                "ENABLE_FILTER": "Abilita filtro"
+            }
+        }
+    },
+    "RESOURCE_VIEW": {
+        "ACTIONS": {
+            "SHOW_HIDE_INFERRED": "Mostra/nascondi informazioni inferite",
+            "OPEN_GRAP": "Apri la rappresentazione a grafo"
+        },
+        "SETTINGS": {
+            "RES_VIEW_SETTINGS": "Impostazioni ResourceView"
+        },
+        "STATUS": {
+            "RESOURCE_NOT_EXISTING": "Questa risorsa non è disponibile nel progetto corrente",
+            "RESOURCE_UNKNOWN_HOST": "Questa risorsa non è disponibile o accessibile in progetti locali nè può essere raggiungibile sul Web"
+        }
+    },
+    "SEARCH": {
+        "FILTERS": "Filtri",
+        "ONLY_OPEN": "Solo aperti",
+        "ANY_LANGUAGE": "Qualsiasi lingua",
+        "NO_RESOURCE_FOUND_FOR": "Nessuna risorsa trovata per",
+        "X_MATCHES_IN_N_DATASETS": ["trovato in", "dataset"],
+        "EDIT_LANGS": {
+            "EDIT_LANGS": "Cambia lingue",
+            "LANG_TAG": "Tag lingua",
+            "ADD_LANG": "Aggiungi lingua"
+        },
+        "SETTINGS": {
+            "SEARCH_SETTINGS": "Impostazioni ricerca",
+            "STRING_MATCH_MODE": "Modalità di string match",
+            "STARTS_WITH": "Comincia per",
+            "CONTAINS": "Contiene",
+            "ENDS_WITH": "Finisce con",
+            "EXACT": "Esatta",
+            "FUZZY": "Fuzzy",
+            "SEARCH_MODE": "Modalità di ricerca",
+            "SEARCH_MODE_INFO": "La ricerca viene sempre effettuata nelle lessicalizzazioni",
+            "SEARCH_IN_URI": "Cerca nell'URI",
+            "SEARCH_IN_LOCAL_NAME": "Cerca nel local name",
+            "SEARCH_IN_NOTES": "Cerca nelle note",
+            "CONCEPTS_SEARCH": "Ricerca concetti",
+            "RESTRICT_TO_SCHEME": "Restringi la ricerca agli skos:ConceptScheme attivi",
+            "CLS_INSTANCE_SEARCH": "Ricerca classi-istanze"
+        }
+    },
     "COMMONS": {
         "ACTIONS": {
             "ADD": "Aggiungi",
@@ -276,6 +383,7 @@
         },
         "CONFIG": {
             "CONFIGURATION": "Configurazione",
+            "CONFIGURATION_OF": "Configurazione di",
             "CONFIGURE": "Configura",
             "LOAD_CONFIGURATION": "Carica configurazione",
             "REPO_CONFIGURATION": "Configurazione repo",
@@ -301,6 +409,7 @@
         },
         "DESCRIPTION": "Descrizione",
         "DETAILS": "Dettagli",
+        "FILTER": "Filtro",
         "FORMAT": "Formato",
         "MANDATORY_FIELD": "Campo obbligatorio",
         "NAME": "Nome",

@@ -16,7 +16,7 @@
     <div class="card-body vbox">
 
         <div *ngIf="lexiconChangeable" class="pb-1" style="display: flex; align-items: center">
-            <span class="mx-1" style="white-space: nowrap;">Lexicon:</span>
+            <span class="mx-1" style="white-space: nowrap;">{{'DATA.LEXICON.LEXICON'|translate}}:</span>
             <select class="form-control form-control-sm" [(ngModel)]="workingLexicon" (ngModelChange)="onLexiconSelectionChange()">
                 <option *ngFor="let l of lexiconList" [ngValue]="l">{{getLexiconRendering(l)}}</option>
             </select>

@@ -1,15 +1,14 @@
 <div class="modal-header">
-    <h5 class="modal-title">Edit languages</h5>
+    <h5 class="modal-title">{{'SEARCH.EDIT_LANGS.EDIT_LANGS'|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
 </div>
 <div class="modal-body scrollableContainer">
-
     <div class="card text-center">
         <div class="card-body">
             <div *ngFor="let l of languages; let i = index" class="input-group mb-1">
-                <input class="form-control" [(ngModel)]="languages[i]" placeholder="Language tag">
+                <input class="form-control" [(ngModel)]="languages[i]" [placeholder]="'SEARCH.EDIT_LANGS.LANG_TAG'|translate">
                 <div class="input-group-append">
                     <button class="btn btn-outline-info" (click)="deleteLang(i)" [disabled]="languages.length == 1"><span class="fas fa-trash"></span></button>
                 </div>
@@ -17,14 +16,13 @@
         </div>
         <div class="card-footer text-muted">
             <div class="input-group mb-1">
-                <input class="form-control" [(ngModel)]="newLang" placeholder="Add language">
+                <input class="form-control" [(ngModel)]="newLang" [placeholder]="'SEARCH.EDIT_LANGS.ADD_LANG'|translate">
                 <div class="input-group-append">
                     <button class="btn btn-outline-info" (click)="addLang()" [disabled]="!newLang"><span class="fas fa-plus"></span></button>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 <div class="modal-footer">
     <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>

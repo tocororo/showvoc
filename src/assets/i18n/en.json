@@ -149,6 +149,7 @@
                 "CLASS_TREE_SETTINGS": "Class tree settings",
                 "ROOT_CLASS": "Root class",
                 "SUBCLASS_FILTER": "SubClasses filter",
+                "FILTER_ENABLED": "Filter enabled",
                 "SUBCLASS_FILTER_INFO": "Here you can create filters in order to hide subClasses of classes",
                 "FILTERED_SUBCLASSES": "Filtered subClasses",
                 "SHOW_INSTANCES_NUMBER": "Show instances number"
@@ -162,6 +163,15 @@
             "CONCEPT": "Concept",
             "CONCEPTS": "Concepts",
             "USE_SEARCH_MSG": "Please use the search field to retrieve concepts",
+            "UNSAFE_WARN": {
+                "ELEMENT_COUNT": "This Concept tree has an amount of top concepts ({{elemCount}}) that exceeds the limit set in the settings ({{safeToGoLimit}}).",
+                "PERFORMANCE_ISSUE": "Retrieving them all could be a long process, you might experience performance decrease or it might even hang the system.",
+                "SWITCH_MODE": "It is recommended to switch from 'Hierarchy based' to 'Search based' visualization mode from the",
+                "SETTINGS": "settings",
+                "SELECT_SCHEME": "You can also reduce the amount of top concepts by selecting a scheme from the 'Scheme' panel.",
+                "FORCE_INIT": "If you want to force the Concept tree initialization at your own risk, click",
+                "HERE": "here"
+            },
             "SETTINGS": {
                 "CONCEPT_TREE_SETTINGS": "Concept tree settings",
                 "TOP_CONCEPTS_LIMIT": "Top concepts limitation",
@@ -176,6 +186,17 @@
             "LEX_ENTRY": "Lex.Entry",
             "LEX_ENTRIES": "Lex.Entries",
             "USE_SEARCH_MSG": "Please use the search field to retrieve lexical entries",
+            "UNSAFE_WARN": {
+                "ELEMENT_COUNT": "This LexicalEntry list has an amount of elements ({{elemCount}}) that exceeds the limit set in the settings ({{safeToGoLimit}}).",
+                "PERFORMANCE_ISSUE": "Retrieving them all could be a long process, you might experience performance decrease or it might even hang the system.",
+                "IT_IS_RECOMMENDED": "It is recommended", 
+                "CHANGE_INDEX_LENGHT": "to change the index lenght from 1-char to 2-char or",
+                "SWITCH_MODE": "to switch from 'Index based' to 'Search based' visualization mode from the",
+                "SETTINGS": "settings",
+                "SELECT_LEXICON": "You can also reduce the amount of lexical entries by selecting a lexicon from the 'Lexicon' panel.",
+                "FORCE_INIT": "If you want to force the lexical entry list initialization at your own risk, click", 
+                "HERE": "here"
+            },
             "SETTINGS": {
                 "LEX_ENTRY_SETTINGS": "Lexical Entry list settings",
                 "LEX_ENTRIES_LIMIT": "Lexical entries limitation",
@@ -211,7 +232,38 @@
     },
     "DATASETS": {
         "DATASET": "Dataset",
-        "DATASETS": "Datasets"
+        "DATASETS": "Datasets",
+        "BROWSE_DATASETS": "Browse {{instanceName}} datasets",
+        "DATASET_TYPE": "Dataset type",
+        "ONLY_OPEN": "Only open datasets",
+        "DATA": "Data"
+    },
+    "GRAPHS": {
+        "ADD_NEW_NODE": "Add a new node",
+        "EXPORT_SNAPSHOT": "Export a snapshot of the graph (.svg)",
+        "FIX_NODE_POSITION": "Fix node position",
+        "SETTINGS": {
+            "DATA_GRAPH_SETTINGS": "Data-Oriented Graph settings",
+            "PARTITION_FILTER_INFO": "Select the partition of the resource description that will be shown when expanding a node.",
+            "HIDE_LITERAL_NODES": "Hide literal nodes",
+            "HIDE_LITERAL_NODES_INFO": "If checked, all the literal nodes will be hidden in the graph"
+        },
+        "LINKS_FILTER": {
+            "EXPAND_NODE": "Expand node",
+            "TOO_MUCH_RELATIONS_WARNING": "The resource you are expanding has a big amount of relations, thus it would generate a lot of links and nodes that could confuse the graph visualization. It is highly recommended to filter out some relations in order to limit the graph size.",
+            "VISIBLE_X_OUT_OF_Y": [
+                "Visible",
+                "out of"
+            ]
+        },
+        "FORCE_CONTROL": {
+            "LINKS": "Links",
+            "STRENGTH": "Strength",
+            "LENGTH": "Length"
+        },
+        "RESOURCE_DETAILS": {
+            "SHOW_THE_COMPLETE": "Show the complete"
+        }
     },
     "HOME": {
         "WELCOME_W_INST_NAME": {
@@ -251,6 +303,61 @@
             "ROLE": "Role"
         }
     },
+    "PREFERENCES": {
+        "LANG": {
+            "RENDERING": {
+                "RENDERING_LANGS": "Rendering Languages",
+                "DESCRIPTION": "Select the languages (and their order) used for rendering the resources"
+            },
+            "VALUE_FILTER": {
+                "VALUE_FILTER_LANGS": "Value-filter Languages",
+                "DESCRIPTION": "Select the languages that will be shown when filtering literal values in resource descriptions. Toggle the filter in order to hide the values with the unselected languages.",
+                "ENABLE_FILTER": "Enable filter"
+            }
+        }
+    },
+    "RESOURCE_VIEW": {
+        "ACTIONS": {
+            "SHOW_HIDE_INFERRED": "Show/hide inferred information",
+            "OPEN_GRAP": "Open graph representation"
+        },
+        "SETTINGS": {
+            "RES_VIEW_SETTINGS": "ResourceView settings"
+        },
+        "STATUS": {
+            "RESOURCE_NOT_EXISTING": "This resource is not available in the current project",
+            "RESOURCE_UNKNOWN_HOST": "This resource is not available on accessible local projects nor can be reached on the Web"
+        }
+    },
+    "SEARCH": {
+        "FILTERS": "Filters",
+        "ONLY_OPEN": "Only open",
+        "ANY_LANGUAGE": "Any language",
+        "NO_RESOURCE_FOUND_FOR": "No resource found for",
+        "X_MATCHES_IN_N_DATASETS": ["matches in", "datasets"],
+        "EDIT_LANGS": {
+            "EDIT_LANGS": "Edit languages",
+            "LANG_TAG": "Language tag",
+            "ADD_LANG": "Add language"
+        },
+        "SETTINGS": {
+            "SEARCH_SETTINGS": "Search settings",
+            "STRING_MATCH_MODE": "String match mode",
+            "STARTS_WITH": "Starts with",
+            "CONTAINS": "Contains",
+            "ENDS_WITH": "Ends with",
+            "EXACT": "Exact",
+            "FUZZY": "Fuzzy",
+            "SEARCH_MODE": "Search mode",
+            "SEARCH_MODE_INFO": "Search always looks for the input string among the lexicalizations",
+            "SEARCH_IN_URI": "Search in URI",
+            "SEARCH_IN_LOCAL_NAME": "Search in local name",
+            "SEARCH_IN_NOTES": "Search in notes",
+            "CONCEPTS_SEARCH": "Concept search",
+            "RESTRICT_TO_SCHEME": "Restrict the search to the active skos:ConceptScheme(s)",
+            "CLS_INSTANCE_SEARCH": "Classes-Instances search"
+        }
+    },
     "COMMONS": {
         "ACTIONS": {
             "ADD": "Add",
@@ -276,6 +383,7 @@
         },
         "CONFIG": {
             "CONFIGURATION": "Configuration",
+            "CONFIGURATION_OF": "Configuration of",
             "CONFIGURE": "Configure",
             "LOAD_CONFIGURATION": "Load configuration",
             "REPO_CONFIGURATION": "Repo Configuration",
@@ -301,6 +409,7 @@
         },
         "DESCRIPTION": "Description",
         "DETAILS": "Details",
+        "FILTER": "Filter",
         "FORMAT": "Format",
         "MANDATORY_FIELD": "Mandatory field",
         "NAME": "Name",

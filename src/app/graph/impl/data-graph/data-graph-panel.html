@@ -2,7 +2,7 @@
     <div class="card-header">
         <div class="hbox">
             <div class="btn-toolbar" style="flex: 1;">
-                <button class="btn btn-sm btn-light" (click)="addNode()" title="Add a new node">
+                <button class="btn btn-sm btn-light" (click)="addNode()" [title]="'GRAPHS.ADD_NEW_NODE'|translate">
                     <span class="fas fa-plus"></span>
                 </button>
             </div>
@@ -10,7 +10,7 @@
                 <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" (click)="rendering=!rendering" title="Rendering">
                     <i class="fas fa-font"></i>
                 </button>
-                <button class="btn btn-light btn-sm ml-1" (click)="snapshot()" title="Export a snapshot of the graph (.svg)">
+                <button class="btn btn-light btn-sm ml-1" (click)="snapshot()" [title]="'GRAPHS.EXPORT_SNAPSHOT'|translate">
                     <i class="fas fa-camera"></i>
                 </button>
                 <button class="btn btn-light btn-sm ml-1" (click)="openSettings()" [title]="'COMMONS.SETTINGS'|translate">
@@ -27,7 +27,7 @@
                 <div class="card-header" style="min-height: 41px;">
                     <div *ngIf="isSelectedElementNode()" class="btn-toolbar float-right">
                         <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-light" [ngClass]="{ active: selectedElement?.fixed }" title="Fix node position" (click)="fixNode()" [disabled]="!selectedElement">
+                            <button type="button" class="btn btn-light" [ngClass]="{ active: selectedElement?.fixed }" [title]="'GRAPHS.FIX_NODE_POSITION'|translate" (click)="fixNode()" [disabled]="!selectedElement">
                                 <span class="fas fa-lock"></span>
                             </button>
                         </div>

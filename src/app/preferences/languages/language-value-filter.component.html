@@ -1,19 +1,19 @@
 <div class="card vbox">
     <div class="card-header">
         <div class="hbox align-items-center">
-            <label style="flex: 1; white-space: nowrap;">Value-filter Languages:</label>
+            <label style="flex: 1; white-space: nowrap;">{{'PREFERENCES.LANG.VALUE_FILTER.VALUE_FILTER_LANGS'|translate}}:</label>
             <span *ngIf="getActiveLanguageItems().length == 0" class="mr-2 fas fa-exclamation-triangle" [title]="'COMMONS.LANGUAGE.NO_LANG_INFO'|translate"></span>
             <div class="btn-toolbar">
                 <div class="btn-group btn-group-sm">
                     <button type="button" class="btn btn-outline-info" (click)="changeAllLangStatus(true)" [title]="'COMMONS.ACTIONS.CHECK_ALL'|translate">
                         <span class="far fa-check-square"></span>
                     </button>
-                    <button type="button" class="btn btn-outline-info" (click)="changeAllLangStatus(false)" title="Unchecl all">
+                    <button type="button" class="btn btn-outline-info" (click)="changeAllLangStatus(false)" [title]="'COMMONS.ACTIONS.UNCHECK_ALL'|translate">
                         <span class="far fa-square"></span>
                     </button>
                 </div>
             </div>
-            <div class="custom-control custom-switch text-right ml-2" (click)="toggleFilter()" title="Enable filter">
+            <div class="custom-control custom-switch text-right ml-2" (click)="toggleFilter()" [title]="'PREFERENCES.LANG.VALUE_FILTER.ENABLE_FILTER'|translate">
                 <input type="checkbox" class="custom-control-input" [ngModel]="filterEnabled">
                 <label class="custom-control-label">
                     <span class="fas fa-filter"></span>
@@ -24,8 +24,7 @@
     <div class="card-body vbox">
 
         <div class="alert alert-info mb-2" role="alert">
-            Select the languages that will be shown when filtering literal values in resource descriptions.
-            Toggle the filter in order to hide the values with the unselected languages.
+            {{'PREFERENCES.LANG.VALUE_FILTER.DESCRIPTION'|translate}}
         </div>
         
         <div class="table-responsive">

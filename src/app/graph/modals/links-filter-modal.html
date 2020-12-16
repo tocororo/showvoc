@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Expand node</h5>
+    <h5 class="modal-title">{{'GRAPHS.LINKS_FILTER.EXPAND_NODE'|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
@@ -7,8 +7,7 @@
 <div class="modal-body vbox">
 
     <div class="alert alert-warning">
-        The resource you are expanding has a big amount of relations, thus it would generate a lot of links and nodes that could
-        confuse the graph visualization. It is highly recommended to filter out some relations in order to limit the graph size.
+        {{'GRAPHS.LINKS_FILTER.TOO_MUCH_RELATIONS_WARNING'|translate}}
     </div>
 
     <div class="card vbox mt-1">
@@ -42,7 +41,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <span class="float-right" style="font-weight: bold">Visible {{getVisibleCount()}} out of {{totalObjCount}}</span>
+            <span class="float-right" style="font-weight: bold">
+                {{'GRAPHS.LINKS_FILTER.VISIBLE_X_OUT_OF_Y.0'|translate}} {{getVisibleCount()}}
+                {{'GRAPHS.LINKS_FILTER.VISIBLE_X_OUT_OF_Y.1'|translate}} {{totalObjCount}}
+            </span>
         </div>
     </div>
 

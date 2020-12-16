@@ -12,12 +12,12 @@
     </div>
 
     <div class="mb-2">
-        <span class="text-muted">Filters: </span>
+        <span class="text-muted">{{'SEARCH.FILTERS'|translate}}: </span>
         <div class="btn-group btn-group-sm" ngbDropdown autoClose="outside">
-            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>Datasets</button>
+            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>{{'DATASETS.DATASETS'|translate}}</button>
             <div class="dropdown-menu" ngbDropdownMenu>
                 <button class="dropdown-item d-flex align-items-center" (click)="updateProjectFilter()">
-                    <span style="flex: 1;">Only open</span>
+                    <span style="flex: 1;">{{'SEARCH.ONLY_OPEN'|translate}}</span>
                     <i *ngIf="openProjectFilter" class="fas fa-check"></i>
                 </button>
             </div>
@@ -26,7 +26,7 @@
             <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>{{'COMMONS.LANGUAGE.LANGUAGES'|translate}}</button>
             <div class="dropdown-menu" ngbDropdownMenu>
                 <button class="dropdown-item d-flex align-items-center" (click)="setAllLanguagesFilter()">
-                    <span style="flex: 1;">Any language</span>
+                    <span style="flex: 1;">{{'SEARCH.ANY_LANGUAGE'|translate}}</span>
                     <i *ngIf="anyLangFilter" class="fas fa-check"></i>
                 </button>
                 <div class="dropdown-divider"></div>
@@ -36,7 +36,7 @@
                 </button>
 
                 <div class="dropdown-divider"></div>
-                <button class="dropdown-item d-flex align-items-center" (click)="editLangList()">Edit language list</button>
+                <button class="dropdown-item d-flex align-items-center" (click)="editLangList()">{{'SEARCH.EDIT_LANGS.EDIT_LANGS'|translate}}</button>
             </div>
         </div>
 
@@ -47,10 +47,15 @@
 
     <ng-container *ngIf="!loading && groupedSearchResults">
         <!-- No results found -->
-        <h5 *ngIf="filteredRepoIds.length == 0" class="text-secondary">No resource found for '{{lastSearch}}'</h5>
+        <h5 *ngIf="filteredRepoIds.length == 0" class="text-secondary">{{'SEARCH.NO_RESOURCE_FOUND_FOR'|translate}} '{{lastSearch}}'</h5>
         <!-- Results found -->
         <ng-container *ngIf="filteredRepoIds.length != 0">
-            <h5 class="text-secondary">'{{lastSearch}}' matches in {{filteredRepoIds.length}} datasets.</h5>
+            <h5 class="text-secondary">
+                '{{lastSearch}}' 
+                {{'SEARCH.X_MATCHES_IN_N_DATASETS.0'|translate}}
+                {{filteredRepoIds.length}} 
+                {{'SEARCH.X_MATCHES_IN_N_DATASETS.1'|translate}}
+            </h5>
 
             <div class="card vbox mt-1">
                 <div class="card-body vbox scrollableContainer">

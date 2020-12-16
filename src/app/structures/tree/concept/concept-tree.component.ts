@@ -34,6 +34,8 @@ export class ConceptTreeComponent extends AbstractTree {
 
     visualizationMode: ConceptTreeVisualizationMode;//this could be changed dynamically, so each time it is used, get it again from preferences
 
+    translationParam: { elemCount: number, safeToGoLimit: number };
+
     constructor(private skosService: SkosServices, searchService: SearchServices,
         eventHandler: PMKIEventHandler, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
         super(eventHandler, searchService, basicModals, sharedModals);
@@ -118,6 +120,7 @@ export class ConceptTreeComponent extends AbstractTree {
                     safeness = { safe: count < this.safeToGoLimit, count: count };
                     safeToGoMap[checksum] = safeness; //cache the safetyness
                     this.safeToGo = safeness;
+                    this.translationParam = { elemCount: this.safeToGo.count, safeToGoLimit: this.safeToGoLimit };
                     return of(null)
                 })
             );

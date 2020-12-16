@@ -22,7 +22,7 @@
                 {{'DATA.CLASS.SETTINGS.SUBCLASS_FILTER'|translate}}
                 <span class="fas fa-info-circle" [title]="'DATA.CLASS.SETTINGS.SUBCLASS_FILTER_INFO'|translate"></span>
             </label>
-            <div class="custom-control custom-switch" (click)="filterEnabled = !filterEnabled" title="Filter enabled">
+            <div class="custom-control custom-switch" (click)="filterEnabled = !filterEnabled" [title]="'DATA.CLASS.SETTINGS.FILTER_ENABLED'|translate">
                 <input type="checkbox" class="custom-control-input" [ngModel]="filterEnabled">
                 <label class="custom-control-label">
                     <span class="fas fa-filter"></span>

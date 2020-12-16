@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Search settings</h5>
+    <h5 class="modal-title">{{'SEARCH.SETTINGS.SEARCH_SETTINGS'|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
@@ -7,7 +7,7 @@
 <div class="modal-body scrollableContainer">
         <div class="card">
             <div class="card-header">
-                <label>String match mode</label>
+                <label>{{'SEARCH.SETTINGS.STRING_MATCH_MODE'|translate}}</label>
             </div>
             <div class="card-body">
                 <div *ngFor="let mode of stringMatchModes" class="form-check">
@@ -21,26 +21,26 @@
     
         <div class="card mt-1">
             <div class="card-header">
-                <label>Search mode</label>
-                <i class="fas fa-info-circle float-right" title="Search always looks for the input string among the lexicalizations"></i>
+                <label>{{'SEARCH.SETTINGS.SEARCH_MODE'|translate}}</label>
+                <i class="fas fa-info-circle float-right" [title]="'SEARCH.SETTINGS.SEARCH_MODE_INFO'|translate"></i>
             </div>
             <div class="card-body">
                 <div class="form-check">
                     <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" [(ngModel)]="useURI" (ngModelChange)="updateSettings()">
-                        Search in URI
+                        {{'SEARCH.SETTINGS.SEARCH_IN_URI'|translate}}
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" [(ngModel)]="useLocalName" (ngModelChange)="updateSettings()">
-                        Search in local name
+                        {{'SEARCH.SETTINGS.SEARCH_IN_LOCAL_NAME'|translate}}
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" [(ngModel)]="useNotes" (ngModelChange)="updateSettings()">
-                        Search in notes
+                        {{'SEARCH.SETTINGS.SEARCH_IN_NOTES'|translate}}
                     </label>
                 </div>
             </div>
@@ -48,13 +48,13 @@
     
         <div *ngIf="settingsForConceptPanel" class="card mt-1">
             <div class="card-header">
-                <label>Concept search</label>
+                <label>{{'SEARCH.SETTINGS.CONCEPTS_SEARCH'|translate}}</label>
             </div>
             <div class="card-body">
                 <div class="form-check">
                     <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" [(ngModel)]="restrictConceptSchemes" (ngModelChange)="updateSettings()">
-                        Restrict the search to the active skos:ConceptScheme(s)
+                        {{'SEARCH.SETTINGS.RESTRICT_TO_SCHEME'|translate}}
                     </label>
                 </div>
             </div>
@@ -62,7 +62,7 @@
 
         <div *ngIf="settingsForClassInstancePanel" class="card mt-1">
             <div class="card-header">
-                <label>Classes-Instances panel search</label>
+                <label>{{'SEARCH.SETTINGS.CLS_INSTANCE_SEARCH'|translate}}</label>
             </div>
             <div class="card-body">
                 <div *ngFor="let mode of clsIndSearchMode" class="form-check">

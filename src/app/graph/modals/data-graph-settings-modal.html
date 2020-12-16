@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Data-Oriented Graph settings</h5>
+    <h5 class="modal-title">{{'GRAPHS.SETTINGS.DATA_GRAPH_SETTINGS'|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
@@ -17,8 +17,8 @@
             <div class="form-check">
                 <label class="form-check-label">
                     <input type="checkbox" class="form-check-input" [(ngModel)]="hideLiteralNodes" (ngModelChange)="onHideLiteralChange()">
-                    Hide literal nodes
-                    <span class="fas fa-info-circle" title="If checked, all the literal nodes will be hidden in the graph"></span>
+                    {{'GRAPHS.SETTINGS.HIDE_LITERAL_NODES'|translate}}
+                    <span class="fas fa-info-circle" [title]="'GRAPHS.SETTINGS.HIDE_LITERAL_NODES_INFO'|translate"></span>
                 </label>
             </div>
 

@@ -28,6 +28,8 @@ export class LexicalEntryListComponent extends AbstractList {
 
     visualizationMode: LexEntryVisualizationMode;
 
+    translationParam: { elemCount: number, safeToGoLimit: number };
+
     constructor(private ontolexService: OntoLexLemonServices, eventHandler: PMKIEventHandler) {
         super(eventHandler);
     }
@@ -102,6 +104,7 @@ export class LexicalEntryListComponent extends AbstractList {
                     safeness = { safe: count < this.safeToGoLimit, count: count };
                     safeToGoMap[checksum] = safeness; //cache the safetyness
                     this.safeToGo = safeness;
+                    this.translationParam = { elemCount: this.safeToGo.count, safeToGoLimit: this.safeToGoLimit };
                     return of(null);
                 })
             );

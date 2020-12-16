@@ -34,6 +34,8 @@ export class DatasetsComponent implements OnInit {
 
     instanceName: string;
 
+    translationParam: { instanceName: string }
+
     constructor(private router: Router, private projectService: ProjectsServices, private eventHandler: PMKIEventHandler) {
         this.eventSubscriptions.push(eventHandler.projectUpdatedEvent.subscribe(
             () => this.initDatasets())
@@ -45,6 +47,7 @@ export class DatasetsComponent implements OnInit {
         this.initDatasets();
 
         this.instanceName = window['pmki_instance_name'];
+        this.translationParam = { instanceName: this.instanceName };
     }
 
     initDatasets() {

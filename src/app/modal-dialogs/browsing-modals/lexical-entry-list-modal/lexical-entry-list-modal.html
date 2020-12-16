@@ -7,10 +7,10 @@
 <div class="modal-body">
 
     <div class="hbox align-items-center mb-1" style="flex: initial;">
-        <label class="mr-1">Lexicon:</label>
-        <button class="btn btn-light btn-sm" title="Change Lexicon" (click)="changeLexicon()" [disabled]="!lexiconChangeable">
+        <label class="mr-1">{{'DATA.LEXICON.LEXICON'|translate}}:</label>
+        <button class="btn btn-light btn-sm" title="'DATA.LEXICON.CHANGE_LEXICON'|translate" (click)="changeLexicon()" [disabled]="!lexiconChangeable">
             <rdf-resource *ngIf="activeLexicon" [resource]="activeLexicon"></rdf-resource>
-            <span *ngIf="!activeLexicon">Select Lexicon</span>
+            <span *ngIf="!activeLexicon">{{'DATA.LEXICON.SELECT_LEXICON'|translate}}</span>
         </button>
     </div>
 
