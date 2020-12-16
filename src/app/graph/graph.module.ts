@@ -22,7 +22,7 @@ import { DataGraphSettingsModal } from './modals/data-graph-settings-modal';
 import { GraphModal } from './modals/graph-modal';
 import { GraphModalServices } from './modals/graph-modal.service';
 import { LinksFilterModal } from './modals/links-filter-modal';
-import { ResViewPartitionFilter } from './modals/res-view-partition-filter';
+import { PartitionFilter } from './modals/partition-filter';
 import { ForceControlPanel } from './widget/force-control-panel';
 import { ResourceDetailsPanel } from './widget/resource-details-panel';
 
@@ -45,7 +45,7 @@ import { ResourceDetailsPanel } from './widget/resource-details-panel';
         
         ForceControlPanel, 
         ResourceDetailsPanel, 
-        ResViewPartitionFilter,
+        PartitionFilter,
         //modals
         GraphModal,
         LinksFilterModal, 

@@ -15,7 +15,7 @@
                 <td nowrap><label>{{'DATA.COMMONS.VISUALIZATION_MODE.MODE'|translate}}:</label></td>
                 <td>
                     <select class="form-control form-control-sm" [(ngModel)]="visualization" [disabled]="!allowVisualizationChange">
-                        <option *ngFor="let vm of visualizationModes" [value]="vm.value">{{vm.label}}</option>
+                        <option *ngFor="let vm of visualizationModes" [value]="vm.value">{{vm.labelTranslationKey|translate}}</option>
                     </select>
                 </td>
             </tr>

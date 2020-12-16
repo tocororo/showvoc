@@ -1,18 +1,18 @@
 <div class="card vbox">
     <div class="card-header card-header-btn-sm">
-        <label>Resource View partition filter</label>
+        <label>{{'GRAPHS.PARTITIONS_FILTER.PARTITIONS_FILTER'|translate}}</label>
     </div>
     <div class="card-body vbox">
 
         <div class="alert alert-info mb-1">
-            {{'GRAPHS.SETTINGS.PARTITION_FILTER_INFO'|translate}}
+            {{'GRAPHS.PARTITIONS_FILTER.PARTITIONS_FILTER_INFO'|translate}}
         </div>
 
         <div class="hbox">
 
             <div class="card vbox mr-1">
                 <div class="card-header">
-                    <label>Roles</label>
+                    <label>{{'GRAPHS.PARTITIONS_FILTER.RESOURCE_TYPES'|translate}}</label>
                 </div>
                 <div class="card-body scrollableContainer">
                     <div *ngFor="let rps of rolePartitionsStructs">
@@ -27,28 +27,28 @@
             <div class="card vbox">
                 <div class="card-header">
                     <div class="hbox align-items-center">
-                        <label style="flex: 1;">Partitions</label>
+                        <label style="flex: 1;">{{'GRAPHS.PARTITIONS_FILTER.PARTITIONS'|translate}}</label>
                         <span *ngIf="areAllUnchecked(selectedRolePartitionsStruct)" class="fas fa-exclamation-triangle"
-                            title="If all the partitions are hidden the expansion of a node will not produce any effect">
+                            [title]="'GRAPHS.PARTITIONS_FILTER.ALL_PARTITIONS_HIDDEN_WARN'|translate">
                         </span>
                         <div class="btn-toolbar ml-1">
                             <div class="btn-group btn-group-xs">
                                 <div class="btn-group btn-group-xs" ngbDropdown placement="bottom-right">
-                                    <button class="btn btn-outline-info dropdown-toggle dropdown-no-arrow" data-toggle="dropdown" title="Check" ngbDropdownToggle>
+                                    <button class="btn btn-outline-info dropdown-toggle dropdown-no-arrow" data-toggle="dropdown" [title]="'COMMONS.ACTIONS.CHECK'|translate" ngbDropdownToggle>
                                         <span class="far fa-check-square"></span>
                                     </button>
                                     <div class="dropdown-menu" ngbDropdownMenu>
                                         <button class="dropdown-item" (click)="checkAll(selectedRolePartitionsStruct, true)">{{'COMMONS.ACTIONS.CHECK_ALL'|translate}}</button>
-                                        <button class="dropdown-item" [ngClass]="{ disabled: !selectedPartition }" (click)="checkInAllRoles(true)">Check selected partition in all roles</button>
+                                        <button class="dropdown-item" [ngClass]="{ disabled: !selectedPartition }" (click)="checkInAllRoles(true)">{{'GRAPHS.PARTITIONS_FILTER.CHECK_PARTITION_FOR_ALL_TYPES'|translate}}</button>
                                     </div>
                                 </div>
                                 <div class="btn-group btn-group-xs" ngbDropdown placement="bottom-right">
-                                    <button class="btn btn-outline-info dropdown-toggle dropdown-no-arrow" data-toggle="dropdown" title="Uncheck" ngbDropdownToggle>
+                                    <button class="btn btn-outline-info dropdown-toggle dropdown-no-arrow" data-toggle="dropdown" [title]="'COMMONS.ACTIONS.UNCHECK'|translate" ngbDropdownToggle>
                                         <span class="far fa-square"></span>
                                     </button>
                                     <div class="dropdown-menu" ngbDropdownMenu>
                                         <button class="dropdown-item" (click)="checkAll(selectedRolePartitionsStruct, false)">{{'COMMONS.ACTIONS.UNCHECK_ALL'|translate}}</button>
-                                        <button class="dropdown-item" [ngClass]="{ disabled: !selectedPartition }" (click)="checkInAllRoles(false)">Uncheck selected partition in all roles</button>
+                                        <button class="dropdown-item" [ngClass]="{ disabled: !selectedPartition }" (click)="checkInAllRoles(false)">{{'GRAPHS.PARTITIONS_FILTER.UNCHECK_PARTITION_FOR_ALL_TYPES'|translate}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                         <div class="listItem" (click)="selectPartition(partition)"
                             [ngClass]="{ active: partition == selectedPartition }">
                             <input type="checkbox" [(ngModel)]="partition.checked" (ngModelChange)="updatePref()">
-                            <span style="flex: 1;" class="ml-1">{{partition.show}}</span>
+                            <span style="flex: 1;" class="ml-1">{{partition.showTranslationKey|translate}}</span>
                             <span *ngIf="partition.checked" class="fas fa-eye"></span>
                             <span *ngIf="!partition.checked" class="fas fa-eye-slash"></span>
                         </div>

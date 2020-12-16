@@ -38,7 +38,7 @@
             <div class="input-group input-group-sm">
                 <input class="form-control" [(ngModel)]="baseURI" [placeholder]="'MODELS.PROJECT.BASE_URI'|translate" [disabled]="useProjectBaseURI">
                 <div class="input-group-append">
-                    <button class="btn btn-info" (click)="changeUseProjectBaseUri()" [ngClass]="{ active: useProjectBaseURI }" title="Use the baseURI of the dataset">
+                    <button class="btn btn-info" (click)="changeUseProjectBaseUri()" [ngClass]="{ active: useProjectBaseURI }" [title]="'ADMINISTRATION.DATASET.USE_DATASET_BASEURI'|translate">
                         <span *ngIf="useProjectBaseURI" class="fas fa-lock"></span>
                         <span *ngIf="!useProjectBaseURI" class="fas fa-unlock-alt"></span>
                     </button>

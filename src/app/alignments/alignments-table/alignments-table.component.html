@@ -9,7 +9,7 @@
                     <th>
                         {{'ALIGNMENTS.ALIGNMENTS'|translate}}
                         <button class="btn btn-xs btn-light ml-2" [ngClass]="{ active: showPercentage }" 
-                            (click)="showPercentage = !showPercentage" title="Show percentage">
+                            (click)="showPercentage = !showPercentage" [title]="'ALIGNMENTS.SHOW_PERCENTAGE'|translate">
                             <i class="fas fa-percent"></i>
                         </button>
                     </th>

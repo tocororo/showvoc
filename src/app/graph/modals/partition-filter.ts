@@ -9,10 +9,10 @@ import { ResViewPartition, ResViewUtils } from "../../models/ResourceView";
 import { ResourceUtils } from "../../utils/ResourceUtils";
 
 @Component({
-    selector: "rv-partition-filter",
-    templateUrl: "./res-view-partition-filter.html"
+    selector: "partition-filter",
+    templateUrl: "./partition-filter.html"
 })
-export class ResViewPartitionFilter {
+export class PartitionFilter {
 
     /**
      * When will be provided, this map will be retrieved throught a service call
@@ -114,7 +114,7 @@ export class ResViewPartitionFilter {
                 let showPartition: boolean = pref[role] == null || pref[role].indexOf(p) == -1;
                 partitionsStructs.push({ 
                     id: p,
-                    show: ResViewUtils.getResourceViewPartitionLabel(p),
+                    showTranslationKey: ResViewUtils.getResourceViewPartitionLabelTranslationKey(p),
                     checked: showPartition
                 });
             });
@@ -223,6 +223,6 @@ class RoleStruct {
 }
 class PartitionStruct {
     id: ResViewPartition;
-    show: string;
+    showTranslationKey: string;
     checked: boolean;
 }

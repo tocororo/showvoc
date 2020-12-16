@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConceptTreePreference, ConceptTreeVisualizationMode } from 'src/app/models/Properties';
+import { ConceptTreePreference, ConceptTreeVisualizationMode, VisualizationModeTranslation } from 'src/app/models/Properties';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 
@@ -13,9 +13,9 @@ export class ConceptTreeSettingsModal implements OnInit {
 	private pristineConcPref: ConceptTreePreference;
 
     visualization: ConceptTreeVisualizationMode;
-    visualizationModes: { label: string, value: ConceptTreeVisualizationMode }[] = [
-        { label: "Hierarchy based", value: ConceptTreeVisualizationMode.hierarchyBased },
-        { label: "Search based", value: ConceptTreeVisualizationMode.searchBased }
+    visualizationModes: { value: ConceptTreeVisualizationMode, labelTranslationKey: string }[] = [
+        { value: ConceptTreeVisualizationMode.hierarchyBased, labelTranslationKey: VisualizationModeTranslation.translationMap[ConceptTreeVisualizationMode.hierarchyBased] },
+        { value: ConceptTreeVisualizationMode.searchBased, labelTranslationKey: VisualizationModeTranslation.translationMap[ConceptTreeVisualizationMode.searchBased] }
     ]
     allowVisualizationChange: boolean;
 

@@ -27,7 +27,7 @@ export class LinksFilterModal {
             });
             if (predicates.length > 0) {
                 this.filters.push({
-                    partition: { id: <ResViewPartition>p, show: ResViewUtils.getResourceViewPartitionLabel(<ResViewPartition>p) },
+                    partition: { id: <ResViewPartition>p, showTranslationKey: ResViewUtils.getResourceViewPartitionLabelTranslationKey(<ResViewPartition>p) },
                     predicates: predicates }
                 );
             }
@@ -75,6 +75,6 @@ export class LinksFilterModal {
 }
 
 class LinkFilter {
-    partition: { id: ResViewPartition, show: string };
+    partition: { id: ResViewPartition, showTranslationKey: string };
     predicates: { res: AnnotatedValue<IRI>, checked: boolean, count: number }[];
 }

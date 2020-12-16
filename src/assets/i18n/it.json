@@ -121,6 +121,9 @@
                 "CONVERSION_REQUIRED": "Conversione necessari",
                 "CONVERSION_REQUIRED_INFO": "I dati richiedono la conversione da un formato non-RDF"
             },
+            "METADATA": {
+                "IDENTITY_INFO": "Se lasciato vuoto, un IRI verrà generato dal sistema"
+            },
             "STABLE": {
                 "IM_OWNER": "Sono il proprietario della risorsa",
                 "CONTRIBUTOR_IS_OWNER": "Il contributor è il propriertario della risorsa?"
@@ -222,6 +225,7 @@
             "SCHEMES": "Schemi"
         },
         "COMMONS": {
+            "CHANGE_RENDERING": "Cambia rendering",
             "VISUALIZATION_MODE": {
                 "MODE": "Modalità di visualizzazione",
                 "SEARCH_BASED": "Basata su ricerca",
@@ -244,7 +248,6 @@
         "FIX_NODES_POSITION": "Blocca posizione nodi",
         "SETTINGS": {
             "DATA_GRAPH_SETTINGS": "Impostazioni grafo Data-Oriented",
-            "PARTITION_FILTER_INFO": "Seleziona le partizioni della descrizione della risorsa che verranno mostrate quando si espande un nodo.",
             "HIDE_LITERAL_NODES": "Nascondi nodi literal",
             "HIDE_LITERAL_NODES_INFO": "Se spuntata, tutti i nodi literal saranno nascosti nel grafo"
         },
@@ -260,6 +263,15 @@
             "LINKS": "Link",
             "STRENGTH": "Forza",
             "LENGTH": "Lunghezza"
+        },
+        "PARTITIONS_FILTER": {
+            "PARTITIONS_FILTER": "Filtro partizioni",
+            "PARTITIONS_FILTER_INFO": "Seleziona le partizioni della descrizione della risorsa che verranno mostrate quando si espande un nodo.",
+            "RESOURCE_TYPES": "Tipi risorsa",
+            "PARTITIONS": "Partizioni",
+            "ALL_PARTITIONS_HIDDEN_WARN": "Se tutte le partizioni sono nascoste, l'espansione di un nodo non produrrà alcun effetto",
+            "CHECK_PARTITION_FOR_ALL_TYPES": "Rendi visibile la partizione selezionata per tutti i tipi",
+            "UNCHECK_PARTITION_FOR_ALL_TYPES": "Nascondi la partizione selezionata per tutti i tipi"
         },
         "RESOURCE_DETAILS": {
             "SHOW_THE_COMPLETE": "Mostra il completo"
@@ -301,6 +313,12 @@
             "PREDICATE": "Predicato",
             "RESOURCE": "Risorsa",
             "ROLE": "Ruolo"
+        },
+        "USER": {
+            "EMAIL_ADDRESS": "Indirizzo email",
+            "PASSWORD": "Password",
+            "GIVEN_NAME": "Nome",
+            "FAMILY_NAME": "Cognome"
         }
     },
     "PREFERENCES": {
@@ -310,7 +328,7 @@
                 "DESCRIPTION": "Seleziona le lingue (ed il loro ordine) usate per il rendering delle risorse"
             },
             "VALUE_FILTER": {
-                "VALUE_FILTER_LANGS": "Lingue Value-filter",
+                "VALUE_FILTER_LANGS": "Filtro valori per lingua",
                 "DESCRIPTION": "Seleziona le lingue che verranno mostrate quando si filtrano i valori literal nella descrizione delle risorse. Attiva il filtro in modo da nascondere i valori con le lingue non selezionate.",
                 "ENABLE_FILTER": "Abilita filtro"
             }
@@ -320,6 +338,37 @@
         "ACTIONS": {
             "SHOW_HIDE_INFERRED": "Mostra/nascondi informazioni inferite",
             "OPEN_GRAP": "Apri la rappresentazione a grafo"
+        },
+        "PARTITIONS": {
+            "BROADERS": "Broader",
+            "CLASS_AXIOMS": "Assiomi tra classi",
+            "CONSTRITUENST": "Costituenti",
+            "DATATYPE_DEFINITIONS": "Definizioni Datatype",
+            "DENOTATIONS": "Denotazioni",
+            "DISJOINT_PROPERTIES": "Proprietà disgiunte",
+            "DOMAINS": "Domini",
+            "EQUIVALENT_PROPERTIES": "Proprietà equivalenti",
+            "EVOKED_LEXICAL_CONCEPTS": "Concetti lessicali evocati",
+            "FACETS": "Aspetti",
+            "FORM_BASED_PREVIEW": "Anteprima Custom Form",
+            "FORM_PRESENTATIONS": "Form representations",
+            "IMPORTS": "Imports",
+            "LABEL_RELATIONS": "Relazioni tra Label",
+            "LEXICALIZATIONS": "Lessicalizzazioni",
+            "LEXICAL_FORMS": "Forme lessicali",
+            "LEXICAL_SENSES": "Sensi lessicali",
+            "MEMBERS": "Membri",
+            "MEMBERS_ORDERED": "Membri (ordered)",
+            "NOTES": "Note",
+            "PROPERTIES": "Altre proprietà",
+            "RANGES": "Codomini",
+            "RDFS_MEMBERS": "Membri RDFS",
+            "SCHEMES": "Schemi",
+            "SUBPROPERTY_CHAINS": "Subproperty chain axioms",
+            "SUBTERMS": "Sottotermini",
+            "SUPERPROPERTIES": "Super proprietà",
+            "TOP_CONCEPT_OF": "Top concept di",
+            "TYPES": "Tipi"
         },
         "SETTINGS": {
             "RES_VIEW_SETTINGS": "Impostazioni ResourceView"
@@ -358,10 +407,26 @@
             "CLS_INSTANCE_SEARCH": "Ricerca classi-istanze"
         }
     },
+    "USER": {
+        "LOG_INTO_PMKI": "Login in PMKI",
+        "LOGIN": "Log in",
+        "NO_USER_REGISTERED_MSG": "PMKI non ha rilevato alcun utente registrato. Al fine di usare la piattaforma, è necessario creare un account amministratore inserendo dati personali e credenziali d'accesso.",
+        "USER_DETAILS": "Dettagli utente",
+        "PASSWORD": {
+            "CHANGE_PASSWORD": "Cambia password",
+            "FORGOT_PASSWORD": "Password dimenticata?",
+            "RESET_PASSWORD": "Resetta password",
+            "OLD_PASSWORD": "Vecchia password",
+            "NEW_PASSWORD": "Nuova password",
+            "CONFIRM_PASSWORD": "Conferma password",
+            "CONFIRM_NEW_PASSWORD": "Conferma nuova password"
+        }
+    },
     "COMMONS": {
         "ACTIONS": {
             "ADD": "Aggiungi",
             "CANCEL": "Cancella",
+            "CHECK": "Seleziona",
             "CHECK_ALL": "Seleziona tutto",
             "CLOSE": "Chiudi",
             "CONFIRM": "Conferma",
@@ -373,13 +438,14 @@
             "RESET": "Reset",
             "SEARCH": "Cerca",
             "SUBMIT": "Invia",
+            "UNCHECK": "Deseleziona",
             "UNCHECK_ALL": "Deseleziona tutto"
         },
         "BOOLEAN": {
-            "FALSE": "False",
+            "FALSE": "Falso",
             "NO": "No",
-            "TRUE": "True",
-            "YES": "Yes"
+            "TRUE": "Vero",
+            "YES": "Sì"
         },
         "CONFIG": {
             "CONFIGURATION": "Configurazione",
