@@ -1,21 +1,21 @@
 <div class="card vbox">
     <div class="card-header">
-        <label>Contributions manager</label>
+        <label>{{'CONTRIBUTIONS.MANAGER.CONTRIBUTION_MANAGER'|translate}}</label>
     </div>
     <div class="card-body table-responsive">
         <table class="table table-sm table-bordered" style="font-size: .85rem;">
             <thead class="thead-light">
                 <tr>
-                    <th rowspan="2" class="text-center align-middle">Submitted</th>
-                    <th colspan="3" class="text-center">Contributor</th>
-                    <th colspan="2" class="text-center">Dataset</th>
-                    <th rowspan="2" class="text-center align-middle">Contribution type</th>
+                    <th rowspan="2" class="text-center align-middle">{{'CONTRIBUTIONS.MANAGER.SUBMITTED'|translate}}</th>
+                    <th colspan="3" class="text-center">{{'CONTRIBUTIONS.CONTRIBUTOR'|translate}}</th>
+                    <th colspan="2" class="text-center">{{'DATASETS.DATASET'|translate}}</th>
+                    <th rowspan="2" class="text-center align-middle">{{'CONTRIBUTIONS.MANAGER.CONTRIBUTION_TYPE'|translate}}</th>
                     <th rowspan="2" class="text-center align-middle">{{'COMMONS.DETAILS'|translate}}</th>
-                    <th rowspan="2" class="text-center align-middle">Approve</th>
+                    <th rowspan="2" class="text-center align-middle">{{'CONTRIBUTIONS.MANAGER.APPROVE'|translate}}</th>
                 </tr>
                 <tr>
                     <th class="text-center">{{'COMMONS.NAME'|translate}}</th>
-                    <th class="text-center" nowrap>Last Name</th>
+                    <th class="text-center" nowrap>{{'CONTRIBUTIONS.FORM.COMMONS.LAST_NAME'|translate}}</th>
                     <th class="text-center">Email</th>
                     <th class="text-center">{{'COMMONS.NAME'|translate}}</th>
                     <th class="text-center">{{'MODELS.PROJECT.BASE_URI'|translate}}</th>
@@ -36,10 +36,10 @@
                         </button>
                     </td>
                     <td class="text-center align-middle" style="white-space: nowrap;">
-                        <button class="btn btn-sm btn-success" style="width: 30px;" (click)="approveContribution(c)" title="Approve contribution" [disabled]="c.loading">
+                        <button class="btn btn-sm btn-success" style="width: 30px;" (click)="approveContribution(c)" [title]="'CONTRIBUTIONS.MANAGER.APPROVE_CONTRIBUTION'|translate" [disabled]="c.loading">
                             <span class="fas fa-check"></span>
                         </button>
-                        <button class="btn btn-sm btn-danger ml-1" style="width: 30px;" (click)="rejectContribution(c)" title="Reject contribution" [disabled]="c.loading">
+                        <button class="btn btn-sm btn-danger ml-1" style="width: 30px;" (click)="rejectContribution(c)" [title]="'CONTRIBUTIONS.MANAGER.REJECT_CONTRIBUTION'|translate" [disabled]="c.loading">
                             <span class="fas fa-times"></span>
                         </button>
                     </td>

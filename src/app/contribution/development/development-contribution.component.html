@@ -1,12 +1,12 @@
 <div class="form-group row">
     <label class="col-sm-2 col-form-label col-form-label-sm">
-        Conversion required
+        {{'CONTRIBUTIONS.FORM.DEV.CONVERSION_REQUIRED'|translate}}
     </label>
     <div class="col-sm-10">
         <div class="input-group input-group-sm">
             <div class="input-group-prepend">
                 <div class="input-group-text">
-                    <input type="checkbox" [(ngModel)]="conversionRequired" title="The data requires conversion from a non-RDF format">
+                    <input type="checkbox" [(ngModel)]="conversionRequired" [title]="'CONTRIBUTIONS.FORM.DEV.CONVERSION_REQUIRED_INFO'|translate">
                 </div>
             </div>
             <select class="form-control" [(ngModel)]="selectedFormat" [disabled]="!conversionRequired">
@@ -21,13 +21,13 @@
 <div class="form-group row">
     <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.NAME'|translate}}</label>
     <div class="col-sm-10">
-        <input class="form-control form-control-sm" [(ngModel)]="resourceName" placeholder="Resource name">
+        <input class="form-control form-control-sm" [(ngModel)]="resourceName" [placeholder]="'CONTRIBUTIONS.FORM.COMMONS.RESOURCE_NAME'|translate">
     </div>
 </div>
 <div class="form-group row">
-    <label class="col-sm-2 col-form-label col-form-label-sm">Home page <span>*</span></label>
+    <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.HOME_PAGE'|translate}} <span>*</span></label>
     <div class="col-sm-10">
-        <input class="form-control form-control-sm" [(ngModel)]="homepage" placeholder="Home page">
+        <input class="form-control form-control-sm" [(ngModel)]="homepage" [placeholder]="'CONTRIBUTIONS.FORM.COMMONS.HOME_PAGE'|translate">
     </div>
 </div>
 <div class="form-group row">

@@ -8,7 +8,7 @@
                 <thead>
                     <tr>
                         <th>{{sourceProject.getName()}}</th>
-                        <th>Predicate</th>
+                        <th>{{'MODELS.RESOURCE.PREDICATE'|translate}}</th>
                         <th>{{linkset.getTargetDatasetShow()}}</th>
                     </tr>
                 </thead>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div *ngIf="annotatedMappings?.length > 0" class="card-footer">
-        <span>Mappings: {{linkset.linkCount}}</span>
+        <span>{{'ALIGNMENTS.MAPPINGS'|translate}}: {{linkset.linkCount}}</span>
         <div class="btn-group btn-group-sm float-right">
             <div class="btn-group btn-group-sm mx-2">
                 <button class="btn btn-light" [title]="'COMMONS.PAGING.PREV_PAGE'|translate" (click)="prevPage()" [disabled]="page==0 || loading">

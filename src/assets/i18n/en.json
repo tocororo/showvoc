@@ -26,8 +26,6 @@
                     "REMOTE_ACCESS_CONFIG": "Remote access configuration",
                     "NO_CONFIG_FOUND": "No Remote Access Configuration found. Please, create a new one."
                 }
-                
-                
             },
             "SETTINGS": {
                 "DATASET_SETTINGS": "Dataset settings",
@@ -76,6 +74,14 @@
             }
         }
     },
+    "ALIGNMENTS": {
+        "ALIGNMENTS": "Alignments",
+        "SOURCE_DATASET": "Source dataset",
+        "REFRESH_DATASET_PROFILE": "Refresh dataset profile",
+        "SHOW_PERCENTAGE": "Show linkset percentage",
+        "MAPPINGS": "Mappings",
+        "METADATA_NOT_FOUND": "Unable to find metadata about the current dataset in the MetadataRegistry. Please profile the dataset by clicking the <i class=\"fas fa-chart-bar\"></i> button."
+    },
     "APP": {
         "NAVBAR": {
             "DATASETS": "Datasets",
@@ -95,7 +101,45 @@
         }
     },
     "CONTRIBUTIONS": {
-        "CONTRIBUTIONS": "Contributions"
+        "CONTRIBUTION": "Contribution",
+        "CONTRIBUTIONS": "Contributions",
+        "CONTRIBUTOR": "Contributor",
+        "FORM": {
+            "COMMONS": {
+                "LAST_NAME": "Last name",
+                "EMAIL_INFO": "This will be used to send you an email with the response of the contribution evaluation",
+                "RESOURCE_NAME": "Resource name",
+                "ORGANIZATION": "Organization",
+                "HOME_PAGE": "Home page",
+                "NO_AGGREGATION": "No aggregation",
+                "METADATA": "Metadata",
+                "DISCOVER": "Discover",
+                "SUBMIT_REQUEST": "Submit request"
+            },
+            "DEV": {
+                "CONVERSION_FROM": "Conversion from",
+                "CONVERSION_REQUIRED": "Conversion required",
+                "CONVERSION_REQUIRED_INFO": "The data requires conversion from a non-RDF format"
+            },
+            "STABLE": {
+                "IM_OWNER": "I'm the owner of the resource",
+                "CONTRIBUTOR_IS_OWNER": "The contributor is the owner of the resource?"
+            }
+        },
+        "LOAD": {
+            "EMAIL_ADDRESS": "Email address",
+            "EMAIL_ADDRESS_INFO": "The email address with which you submitted the contribution",
+            "DATASET_NAME": "Dataset name",
+            "DATASET_NAME_INFO": "The dataset name provided in the notification email of contribution approval"
+        },
+        "MANAGER": {
+            "CONTRIBUTION_MANAGER": "Contributions manager",
+            "SUBMITTED": "Submitted",
+            "CONTRIBUTION_TYPE": "Contribution type",
+            "APPROVE": "Approve",
+            "APPROVE_CONTRIBUTION": "Approve contribution",
+            "REJECT_CONTRIBUTION": "Reject contribution"
+        }
     },
     "DATA": {
         "CLASS": {
@@ -166,6 +210,7 @@
         }
     },
     "DATASETS": {
+        "DATASET": "Dataset",
         "DATASETS": "Datasets"
     },
     "HOME": {
@@ -181,6 +226,12 @@
         }
     },
     "MODELS": {
+        "DATASET": {
+            "IDENTITY": "Identity",
+            "DEREF_SYSTEM": "Dereferenciation System",
+            "SPARQL_ENDPOINT": "SPARQL Endpoint",
+            "URI_SPACE": "URI space"
+        },
         "PROJECT": {
             "BASE_URI": "Base URI",
             "LEXICALIZATION": "Lexicalization",
@@ -191,6 +242,13 @@
             "REPO_ACCESS": "Repository Access",
             "REPOSITORY_ID": "Repository ID",
             "DATA_REPO_ID": "Data Repository ID"
+        },
+        "RESOURCE": {
+            "DEPRECATED": "Deprecated",
+            "LABEL": "Label",
+            "PREDICATE": "Predicate",
+            "RESOURCE": "Resource",
+            "ROLE": "Role"
         }
     },
     "COMMONS": {
@@ -210,10 +268,17 @@
             "SUBMIT": "Submit",
             "UNCHECK_ALL": "Uncheck all"
         },
+        "BOOLEAN": {
+            "FALSE": "False",
+            "NO": "No",
+            "TRUE": "True",
+            "YES": "Yes"
+        },
         "CONFIG": {
             "CONFIGURATION": "Configuration",
             "CONFIGURE": "Configure",
             "LOAD_CONFIGURATION": "Load configuration",
+            "REPO_CONFIGURATION": "Repo Configuration",
             "SAVE_CONFIGURATION": "Save configuration",
             "SERVER_URL": "Server URL",
             "USERNAME": "Username",

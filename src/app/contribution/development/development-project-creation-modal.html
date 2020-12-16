@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Create dataset</h5>
+    <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.CREATE_DATASET'|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Repo Configuration</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.CONFIG.REPO_CONFIGURATION'|translate}}</label>
                 <div class="col-sm-10">
                     <extension-configurator #dataRepoConfigurator *ngIf="dataRepoExtensions"
                         [extensions]="dataRepoExtensions" [storeable]="false"

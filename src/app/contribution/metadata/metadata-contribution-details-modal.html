@@ -7,14 +7,14 @@
 <div class="modal-body scrollableContainer">
 
     <div class="card mb-3">
-        <div class="card-header">Contributor</div>
+        <div class="card-header">{{'CONTRIBUTIONS.CONTRIBUTOR'|translate}}</div>
         <div class="card-body">
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.NAME'|translate}}</label>
                 <div class="col-sm-4">
                     <input class="form-control form-control-sm" [ngModel]="contribution.contributorName" readonly>
                 </div>
-                <label class="col-sm-2 col-form-label col-form-label-sm">Last name</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.LAST_NAME'|translate}}</label>
                 <div class="col-sm-4">
                     <input class="form-control form-control-sm" [ngModel]="contribution.contributorLastName" readonly>
                 </div>
@@ -24,7 +24,7 @@
                 <div class="col-sm-4">
                     <input type="email" class="form-control form-control-sm" [ngModel]="contribution.contributorEmail" readonly>
                 </div>
-                <label class="col-sm-2 col-form-label col-form-label-sm">Organization</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.ORGANIZATION'|translate}}</label>
                 <div class="col-sm-4">
                     <input class="form-control form-control-sm" [ngModel]="contribution.contributorOrganization" readonly>
                 </div>
@@ -33,10 +33,10 @@
     </div>
 
     <div class="card">
-        <div class="card-header">Contribution</div>
+        <div class="card-header">{{'CONTRIBUTIONS.CONTRIBUTION'|translate}}</div>
         <div class="card-body">
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Resource name</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.RESOURCE_NAME'|translate}}</label>
                 <div class="col-sm-10">
                     <input class="form-control form-control-sm" [ngModel]="contribution.resourceName" readonly>
                 </div>
@@ -48,29 +48,29 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Identity</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.DATASET.IDENTITY'|translate}}</label>
                 <div class="col-sm-10">
                     <input class="form-control form-control-sm" [ngModel]="contribution.identity?.toNT()" readonly>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Dereferenciation system</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.DATASET.DEREF_SYSTEM'|translate}}</label>
                 <div class="col-sm-10">
                     <input class="form-control form-control-sm" [ngModel]="dereferenciationSystem" readonly>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Sparql endpoint</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.DATASET.SPARQL_ENDPOINT'|translate}}</label>
                 <div class="col-sm-10 d-flex">
                         <input class="form-control form-control-sm" [ngModel]="contribution.sparqlEndpoint?.toNT()" readonly>
                     <div class="form-check form-check-inline ml-2">
                         <input class="form-check-input" type="checkbox" [ngModel]="sparqlNoAggregation" disabled>
-                        <label class="form-check-label text-nowrap">No aggregation</label>
+                        <label class="form-check-label text-nowrap">{{'CONTRIBUTIONS.FORM.COMMONS.NO_AGGREGATION'|translate}}</label>
                     </div>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">URI space</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.DATASET.URI_SPACE'|translate}}</label>
                 <div class="col-sm-10">
                     <input class="form-control form-control-sm" [ngModel]="contribution.uriSpace" readonly>
                 </div>

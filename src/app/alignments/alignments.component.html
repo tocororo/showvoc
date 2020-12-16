@@ -1,14 +1,14 @@
 <div class="vbox my-3">
     <div class="container">
-        <h1>Alignments</h1>
+        <h1>{{'ALIGNMENTS.ALIGNMENTS'|translate}}</h1>
 
         <div class="mb-2">
             <div class="hbox" style="align-items: center;">
-                <label style="white-space: nowrap">Source dataset:</label>
+                <label style="white-space: nowrap">{{'ALIGNMENTS.SOURCE_DATASET'|translate}}:</label>
                 <select class="form-control form-control-sm mx-2" [(ngModel)]="selectedSourceProject" (ngModelChange)="onSourceProjectChange()" [disabled]="loading">
                     <option *ngFor="let p of sourceProjects" [ngValue]="p">{{p.getName()}}</option>
                 </select>
-                <button class="btn btn-sm btn-light" (click)="refreshProfile()" title="Refresh dataset profile" [disabled]="!selectedSourceProject || loading">
+                <button class="btn btn-sm btn-light" (click)="refreshProfile()" [title]="'ALIGNMENTS.REFRESH_DATASET_PROFILE'|translate" [disabled]="!selectedSourceProject || loading">
                     <i class="fas fa-chart-bar"></i>
                 </button>
             </div>

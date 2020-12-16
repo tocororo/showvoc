@@ -7,7 +7,7 @@
                 <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" (click)="rendering=!rendering" title="Rendering">
                     <i class="fas fa-font"></i>
                 </button>
-                <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: showPercentage}" (click)="showPercentage=!showPercentage" title="Show linkset percentage">
+                <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: showPercentage}" (click)="showPercentage=!showPercentage" [title]="'ALIGNMENTS.SHOW_PERCENTAGE'|translate">
                     <i class="fas fa-percent"></i>
                 </button>
                 <button class="btn btn-light btn-sm ml-1" (click)="snapshot()" title="Export a snapshot of the graph (.svg)">

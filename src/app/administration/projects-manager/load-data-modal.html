@@ -7,7 +7,7 @@
 <div class="modal-body">
 
     <div class="form-group row">
-        <label class="col-sm-1 col-form-label col-form-label-sm">Dataset</label>
+        <label class="col-sm-1 col-form-label col-form-label-sm">{{'DATASETS.DATASET'|translate}}</label>
         <div class="col-sm-11">
             <input class="form-control form-control-sm" [ngModel]="project.getName()" disabled>
         </div>
@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        <label class="col-sm-2 col-form-label col-form-label-sm">Resolve imports</label>
+        <label class="col-sm-2 col-form-label col-form-label-sm">{{'ADMINISTRATION.DATASETS.RESOLVE_IMPORTS'|translate}}</label>
         <div class="col-sm-4">
             <select class="form-control form-control-sm" [(ngModel)]="selectedImportAllowance">
                 <option *ngFor="let ia of importAllowances" [ngValue]="ia.allowance">{{ia.show}}</option>

@@ -6,27 +6,27 @@
                 <div class="col-sm-4">
                     <input class="form-control form-control-sm" [(ngModel)]="name" [placeholder]="'COMMONS.NAME'|translate">
                 </div>
-                <label class="col-sm-2 col-form-label col-form-label-sm">Last name</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.LAST_NAME'|translate}}</label>
                 <div class="col-sm-4">
-                    <input class="form-control form-control-sm" [(ngModel)]="lastName" placeholder="Last name">
+                    <input class="form-control form-control-sm" [(ngModel)]="lastName" [placeholder]="'CONTRIBUTIONS.FORM.COMMONS.LAST_NAME'|translate">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label col-form-label-sm">
                     Email
-                    <span class="fas fa-info-circle" title="This will be used to send you an email with the response of the contribution evaluation"></span>
+                    <span class="fas fa-info-circle" [title]="'CONTRIBUTIONS.FORM.COMMONS.EMAIL_INFO'|translate"></span>
                 </label>
                 <div class="col-sm-4">
                     <input type="email" class="form-control form-control-sm" [(ngModel)]="email" placeholder="Email">
                 </div>
-                <label class="col-sm-2 col-form-label col-form-label-sm">Organization <span>*</span></label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.ORGANIZATION'|translate}} <span>*</span></label>
                 <div class="col-sm-4">
-                    <input class="form-control form-control-sm" [(ngModel)]="organization" placeholder="Organization">
+                    <input class="form-control form-control-sm" [(ngModel)]="organization" [placeholder]="'CONTRIBUTIONS.FORM.COMMONS.ORGANIZATION'|translate">
                 </div>
             </div>
             <hr class="separator">
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Contribution</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.CONTRIBUTION'|translate}}</label>
                 <div class="form-group col-sm-10">
                     <select class="form-control form-control-sm" [(ngModel)]="selectedContribution">
                         <option *ngFor="let o of contributionOpts" [ngValue]="o.type">{{o.show}}</option>
@@ -46,7 +46,7 @@
         <div class="d-flex align-items-center mt-2">
             <small class="form-text text-muted" style="flex: 1;">(*) {{'COMMONS.OPTIONAL_FIELD'|translate}}</small>
             <button class="btn btn-info" (click)="submit()" [disabled]="!selectedContribution || loading">
-                Submit request
+                {{'CONTRIBUTIONS.FORM.COMMONS.SUBMIT_REQUEST'|translate}}
                 <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
             </button>
         </div>
