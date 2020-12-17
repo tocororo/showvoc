@@ -80,7 +80,7 @@ export class StableContributionComponent extends AbstractContributionComponent {
             },
             (err: Error) => { //in case discoverDataset throws an exception prevent to contribute metadata
                 if (err.name.endsWith("DeniedOperationException")) {
-                    this.basicModals.alert("Already existing dataset", "A dataset for the provided IRI " + baseUriIRI.toNT() + 
+                    this.basicModals.alert("DATASETS.STATUS.ALREADY_EXISTING_DATASET", "A dataset for the provided IRI " + baseUriIRI.toNT() + 
                         " is already in the metadata registry", ModalType.warning);
                 }
             }
@@ -106,7 +106,7 @@ export class StableContributionComponent extends AbstractContributionComponent {
             missingField = "Lexicalization model";
         }
         if (missingField != null) {
-            this.basicModals.alert("Incomplete form", "Missing mandatory field '" + missingField + "'", ModalType.warning);
+            this.basicModals.alert("COMMONS.STATUS.INCOMPLETE_FORM", "Missing mandatory field '" + missingField + "'", ModalType.warning);
             return;
         }
         let config: ConfigurationObject = {

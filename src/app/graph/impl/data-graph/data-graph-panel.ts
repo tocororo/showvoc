@@ -28,17 +28,17 @@ export class DataGraphPanel extends AbstractGraphPanel {
     addNode() {
         let browsePromise: Promise<AnnotatedValue<IRI>>;
         if (ResourceUtils.roleSubsumes(RDFResourceRolesEnum.property, this.role)) {
-            browsePromise = this.browsingModals.browsePropertyTree("Add node");
+            browsePromise = this.browsingModals.browsePropertyTree("GRAPHS.ACTIONS.ADD_NODE");
         } else if (this.role == RDFResourceRolesEnum.concept) {
-            browsePromise = this.browsingModals.browseConceptTree("Add node");
+            browsePromise = this.browsingModals.browseConceptTree("GRAPHS.ACTIONS.ADD_NODE");
         } else if (this.role == RDFResourceRolesEnum.conceptScheme) {
-            browsePromise = this.browsingModals.browseSchemeList("Add node");
+            browsePromise = this.browsingModals.browseSchemeList("GRAPHS.ACTIONS.ADD_NODE");
         } else if (this.role == RDFResourceRolesEnum.limeLexicon) {
-            browsePromise = this.browsingModals.browseLexiconList("Add node");
+            browsePromise = this.browsingModals.browseLexiconList("GRAPHS.ACTIONS.ADD_NODE");
         } else if (this.role == RDFResourceRolesEnum.ontolexLexicalEntry) {
-            browsePromise = this.browsingModals.browseLexicalEntryList("Add node");
+            browsePromise = this.browsingModals.browseLexicalEntryList("GRAPHS.ACTIONS.ADD_NODE");
         } else if (ResourceUtils.roleSubsumes(RDFResourceRolesEnum.skosCollection, this.role)) {
-            browsePromise = this.browsingModals.browseCollectionTree("Add node");
+            browsePromise = this.browsingModals.browseCollectionTree("GRAPHS.ACTIONS.ADD_NODE");
         }
         browsePromise.then(
             res => {

@@ -1,15 +1,15 @@
 <div class="form-signin" (keydown.enter)="login()">
     <h2 class="mb-3 font-weight-normal">{{'USER.LOG_INTO_PMKI'|translate}}</h2>
 
-    <label>{{'MODELS.USER.EMAIL_ADDRESS'|translate}}</label>
-    <input type="email" class="form-control" [(ngModel)]="email" [placeholder]="'MODELS.USER.EMAIL_ADDRESS'|translate">
+    <label>{{'USER.ATTR.EMAIL_ADDRESS'|translate}}</label>
+    <input type="email" class="form-control" [(ngModel)]="email" [placeholder]="'USER.ATTR.EMAIL_ADDRESS'|translate">
 
-    <label class="mt-1">{{'MODELS.USER.PASSWORD'|translate}}</label>
-    <password-input [(ngModel)]="password" [placeholder]="'MODELS.USER.PASSWORD'|translate"></password-input>
+    <label class="mt-1">{{'USER.ATTR.PASSWORD'|translate}}</label>
+    <password-input [(ngModel)]="password" [placeholder]="'USER.ATTR.PASSWORD'|translate"></password-input>
 
     <button class="btn btn-lg btn-info btn-block mt-3" (click)="login()">{{'USER.LOGIN'|translate}}</button>
 
     <div class="text-center mt-2" style="font-size: 1.125rem">
-        <a [routerLink]="" (click)="forgotPassword()">{{'USER.PASSWORD.FORGOT_PASSWORD'|translate}}</a>
+        <a [routerLink]="" (click)="forgotPassword()">{{'USER.PASSWORD.FORGOT_PASSWORD'|translate}}?</a>
     </div>
 </div>

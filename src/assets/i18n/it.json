@@ -1,27 +1,26 @@
 {
     "ADMINISTRATION": {
         "DATASETS": {
-            "CREATE_DATASET": "Crea dataset",
-            "LOAD_DATA": "Carica dati",
-            "USE_DATASET_BASEURI": "Usa il baseURI del dataset",
-            "RESOLVE_IMPORTS": "Risolvi import",
             "MANAGEMENT": {
                 "DATASET_MANAGER": "Gestione dataset",
-                "DATASET_NAME": "Nome dataset",
+                "LOAD_DATA": "Carica dati",
                 "OPEN_CLOSE": "Apri/Chiudi",
                 "MAKE_PUBLIC": "Rendi publico",
                 "MAKE_STAGING": "Rendi staging",
+                "CHANGE_STATUS": "Cambia stato",
+                "CREATE_INDEX": "Crea indice",
                 "CREATE_REFRESH_INDEX": "Crea/aggiorna indice",
                 "DELETE_INDEX": "Cancella indice",
-                "CREATE_REFRESH_METADATA": "Crea/aggiorna metadati dataset",
                 "EDIT_DESCRIPTION": "Modifica descrizione",
                 "EDIT_SETTINGS": "Modifica impostazioni",
-                "DELETE_DATASET": "Cancella dataset"
+                "RESOLVE_IMPORTS": "Risolvi import",
+                "USE_DATASET_BASEURI": "Usa il baseURI del dataset"
             },
             "REMOTE": {
                 "DELETE_REPO": "Cancella repository remoto",
                 "DELETE_REFERENCED_REPO_INFO": "Il progetto eliminato faceva riferimento ai seguenti repository. Seleziona i repository che vuoi eliminare.",
                 "REASON": "Motivo",
+                "SELECT_REMOTE_REPO": "Seleziona Repository dati remoto",
                 "CONFIG": {
                     "REMOTE_ACCESS_CONFIG": "Configurazione accesso remoto",
                     "NO_CONFIG_FOUND": "Nessuna configurazione per accesso remoto trovata. Creane una nuova."
@@ -44,6 +43,7 @@
             "EMAIL": {
                 "EMAIL_CONFIG": "Configurazione Email",
                 "EMAIL_CONFIG_INFO": "Configurazione del servizio e-mail di PMKI. Questo servizio sarà usato per inviare notifiche ai contributor<br><strong>Nota</strong>: se non opportunamente configurato, sarà impossibile inviare email ai contributor, pertanto non saranno in grado di portare a completamento il contributo.",
+                "EMAIL_CONFIG_TEST": "Test configurazione email",
                 "MAIL_SERVER_URL_INFO": "IP/URL del Mail Server SMTP",
                 "MAIL_SERVER_PORT_INFO": "Porta del Mail Server",
                 "CRYPTOGRAPHIC_PROTOCOL": "Protocollo crittografico",
@@ -64,6 +64,7 @@
             "VB_CONFIG": {
                 "VB_CONFIG": "Configurazione di VocBench",
                 "VB_CONFIG_INFO": "Configurazione dell'istanza di VocBench/SemanticTurkey dedicata allo sviluppo di risorse non stabili.<br><strong>Nota</strong>: se non opportunamente configurato, il portale PMKI non sarà in grado di connettersi a VocBench, pertanto sarà impossibile accettare contributi di risorse in sviluppo.",
+                "VB_CONFIG_TEST": "Test configurazione VocBench",
                 "VB_URL_INFO": "URL dell'istanza di VocBench accessibile dai contributor",
                 "ST_HOST_INFO": "URL completo (protocollo+hostname+porta) dell'host di SemanticTurkey",
                 "ADMIN_EMAIL_INFO": "Email dell'amministratore di VocBench/SemanticTurkey",
@@ -75,19 +76,16 @@
         }
     },
     "ALIGNMENTS": {
+        "ACTIONS": {
+            "REFRESH_DATASET_PROFILE": "Aggiorna profilo dataset",
+            "SHOW_PERCENTAGE": "Mostra percentuale linkset"
+        },
         "ALIGNMENTS": "Allineamenti",
         "SOURCE_DATASET": "Dataset sorgente",
-        "REFRESH_DATASET_PROFILE": "Aggiorna profilo dataset",
-        "SHOW_PERCENTAGE": "Mostra percentuale linkset",
         "MAPPINGS": "Mapping",
         "METADATA_NOT_FOUND": "Non sono presenti metadati riguardo il dataset corrente nel MetadataRegistry. Profila il dataset cliccando sul pulsante <i class=\"fas fa-chart-bar\"></i>."
     },
     "APP": {
-        "NAVBAR": {
-            "DATASETS": "Dataset",
-            "SEARCH": "Ricerca",
-            "ALIGNMENTS": "Allineamenti"
-        },
         "USER_MENU": {
             "ADMINISTRATION_DASHBOARD": "Dashboard di amministrazione",
             "LOGIN": "Login",
@@ -104,9 +102,14 @@
         "CONTRIBUTION": "Contributo",
         "CONTRIBUTIONS": "Contributi",
         "CONTRIBUTOR": "Contributor",
+        "ACTIONS": {
+            "APPROVE": "Approva",
+            "APPROVE_CONTRIBUTION": "Approva contributo",
+            "REJECT_CONTRIBUTION": "Rifiuta contributo",
+            "SUBMIT_REQUEST": "Invia richiesta"
+        },
         "FORM": {
             "COMMONS": {
-                "LAST_NAME": "Cognome",
                 "EMAIL_INFO": "Verrà usato per inviarti un email con l'esito della valutazione del contributo",
                 "RESOURCE_NAME": "Nome risorsa",
                 "ORGANIZATION": "Organizzazione",
@@ -114,7 +117,7 @@
                 "NO_AGGREGATION": "No aggregazione",
                 "METADATA": "Metadati",
                 "DISCOVER": "Scopri",
-                "SUBMIT_REQUEST": "Invia richiesta"
+                "REQUEST_SUBMITTED": "Richiesta inviata"
             },
             "DEV": {
                 "CONVERSION_FROM": "Conversione da",
@@ -138,16 +141,18 @@
         "MANAGER": {
             "CONTRIBUTION_MANAGER": "Gestore contributi",
             "SUBMITTED": "Inviato",
-            "CONTRIBUTION_TYPE": "Tipo contributo",
-            "APPROVE": "Approva",
-            "APPROVE_CONTRIBUTION": "Approva contributo",
-            "REJECT_CONTRIBUTION": "Rifiuta contributo"
+            "CONTRIBUTION_TYPE": "Tipo contributo"
         }
     },
     "DATA": {
+        "DATA": "Dati",
         "CLASS": {
             "CLASS": "Classe",
             "CLASSES": "Classi",
+            "ACTIONS": {
+                "SELECT_CLASS": "Seleziona classe",
+                "SELECT_ROOT_CLASS": "Seleziona classe root"
+            },
             "SETTINGS": {
                 "CLASS_TREE_SETTINGS": "Impostazioni albero delle classi",
                 "ROOT_CLASS": "Classe root",
@@ -183,7 +188,10 @@
         },
         "INSTANCE": {
             "INSTANCE": "Istanza",
-            "INSTANCES": "Istanze"
+            "INSTANCES": "Istanze",
+            "UNSAFE_WARN": {
+                "TOO_MUCH_INST": "Troppe istanze"
+            }
         },
         "LEX_ENTRY": {
             "LEX_ENTRY": "Lex.Entry",
@@ -192,12 +200,12 @@
             "UNSAFE_WARN": {
                 "ELEMENT_COUNT": "Questa lista di LexicalEntry ha una quantità di elementi ({{elemCount}}) che supera il limite impostato ({{safeToGoLimit}}).",
                 "PERFORMANCE_ISSUE": "Recuperarli tutti potrebbe essere un processo lungo, si potrebbero riscontrare rallentamenti delle prestazioni o si potrebbe addirittura bloccare il sistema.",
-                "IT_IS_RECOMMENDED": "Si consiglia di", 
+                "IT_IS_RECOMMENDED": "Si consiglia di",
                 "CHANGE_INDEX_LENGHT": "cambiare la dimensione dell'indice da 1 a 2 caratteri o",
                 "SWITCH_MODE": "passare dalla modialità di visualizzazione basata su indice a quella basata su ricerca tramite le",
                 "SETTINGS": "impostazioni",
                 "SELECT_LEXICON": "E' inoltre possibile ridurre la quantità di LexicalEntry selezionando un lessico dal pannello dedicato.",
-                "FORCE_INIT": "Se si desidera forzare l'inizializzazione della lista a proprio rischio, cliccare", 
+                "FORCE_INIT": "Se si desidera forzare l'inizializzazione della lista a proprio rischio, cliccare",
                 "HERE": "qui"
             },
             "SETTINGS": {
@@ -211,13 +219,17 @@
         "LEXICON": {
             "LEXICON": "Lessico",
             "LEXICONS": "Lessici",
-            "SELECT_LEXICON": "Seleziona lessico",
-            "CHANGE_LEXICON": "Cambia lessico"
+            "ACTIONS": {
+                "SELECT_LEXICON": "Seleziona lessico",
+                "CHANGE_LEXICON": "Cambia lessico"
+            }
         },
         "PROPERTY": {
             "PROPERTY": "Proprietà",
             "PROPERTIES": "Proprietà",
-            "SHOW_ALL": "Mostra tutte le proprietà"
+            "ACTIONS": {
+                "SHOW_ALL": "Mostra tutte le proprietà"
+            }
         },
         "SCHEME": {
             "CONCEPT_SCHEME": "Concept Scheme",
@@ -225,7 +237,9 @@
             "SCHEMES": "Schemi"
         },
         "COMMONS": {
-            "CHANGE_RENDERING": "Cambia rendering",
+            "ACTIONS": {
+                "CHANGE_RENDERING": "Cambia rendering"
+            },
             "VISUALIZATION_MODE": {
                 "MODE": "Modalità di visualizzazione",
                 "SEARCH_BASED": "Basata su ricerca",
@@ -235,17 +249,41 @@
         }
     },
     "DATASETS": {
+        "ACTIONS": {
+            "CREATE_DATASET": "Crea dataset",
+            "CREATE_METADATA": "Crea metadati dataset",
+            "CREATE_REFRESH_METADATA": "Crea/aggiorna metadati dataset",
+            "DELETE_DATASET": "Cancella dataset",
+            "PROFILE_DATASET": "Profila dataset"
+        },
+        "ATTR": {
+            "DATASET_NAME": "Nome dataset",
+            "DEREF_SYSTEM": "Sistema di dereferenziazione",
+            "IDENTITY": "Identity",
+            "IDENTITY_IRI": "IRI identity",
+            "SPARQL_ENDPOINT": "Endpoint SPARQL",
+            "SPARQL_ENDPOINT_URL": "URL Endpoint SPARQL",
+            "URI_SPACE": "URI space"
+        },
+        "STATUS": {
+            "ALREADY_EXISTING_DATASET": "Dataset già esistente",
+            "DATASET_CREATED": "Dataset creato",
+            "DATASET_NOT_FOUND": "Dataset non trovato",
+            "MISSING_DATASET_PROFILE": "Profilo metadati mancante"
+        },
         "DATASET": "Dataset",
         "DATASETS": "Dataset",
         "BROWSE_DATASETS": "Esplora dataset di {{instanceName}}",
         "DATASET_TYPE": "Tipo dataset",
-        "ONLY_OPEN": "Solo dataset aperti",
-        "DATA": "Dati"
+        "ONLY_OPEN": "Solo dataset aperti"
     },
     "GRAPHS": {
-        "ADD_NEW_NODE": "Aggiungi nuovo nodo",
-        "EXPORT_SNAPSHOT": "Esporta un'istantanea del grafo (.svg)",
-        "FIX_NODES_POSITION": "Blocca posizione nodi",
+        "ACTIONS": {
+            "ADD_NODE": "Aggiungi nuovo nodo",
+            "EXPAND_LINKSET": "Espandi linkset",
+            "EXPORT_SNAPSHOT": "Esporta un'istantanea del grafo (.svg)",
+            "FIX_NODES_POSITION": "Blocca posizione nodi"
+        },
         "SETTINGS": {
             "DATA_GRAPH_SETTINGS": "Impostazioni grafo Data-Oriented",
             "HIDE_LITERAL_NODES": "Nascondi nodi literal",
@@ -267,6 +305,7 @@
         "PARTITIONS_FILTER": {
             "PARTITIONS_FILTER": "Filtro partizioni",
             "PARTITIONS_FILTER_INFO": "Seleziona le partizioni della descrizione della risorsa che verranno mostrate quando si espande un nodo.",
+            "RESET_FILTER": "Resetta filtro",
             "RESOURCE_TYPES": "Tipi risorsa",
             "PARTITIONS": "Partizioni",
             "ALL_PARTITIONS_HIDDEN_WARN": "Se tutte le partizioni sono nascoste, l'espansione di un nodo non produrrà alcun effetto",
@@ -290,14 +329,6 @@
         }
     },
     "MODELS": {
-        "DATASET": {
-            "IDENTITY": "Identity",
-            "IDENTITY_IRI": "IRI identity",
-            "DEREF_SYSTEM": "Sistema di dereferenziazione",
-            "SPARQL_ENDPOINT": "Endpoint SPARQL",
-            "SPARQL_ENDPOINT_URL": "URL SPARQL endpoint",
-            "URI_SPACE": "URI space"
-        },
         "PROJECT": {
             "BASE_URI": "Base URI",
             "LEXICALIZATION": "Lessicalizzazione",
@@ -315,12 +346,6 @@
             "PREDICATE": "Predicato",
             "RESOURCE": "Risorsa",
             "ROLE": "Ruolo"
-        },
-        "USER": {
-            "EMAIL_ADDRESS": "Indirizzo email",
-            "PASSWORD": "Password",
-            "GIVEN_NAME": "Nome",
-            "FAMILY_NAME": "Cognome"
         }
     },
     "PREFERENCES": {
@@ -381,11 +406,18 @@
         }
     },
     "SEARCH": {
+        "SEARCH": "Ricerca",
+        "SEARCH_RESULTS": "Risultati di ricerca",
         "FILTERS": "Filtri",
+        "INDEX_NOT_FOUND": "Indice non trovato",
         "ONLY_OPEN": "Solo aperti",
         "ANY_LANGUAGE": "Qualsiasi lingua",
         "NO_RESOURCE_FOUND_FOR": "Nessuna risorsa trovata per",
-        "X_MATCHES_IN_N_DATASETS": ["trovato in", "dataset"],
+        "RESOURCE_NOT_REACHABLE": "Risorsa non raggiungibile",
+        "X_MATCHES_IN_N_DATASETS": [
+            "trovato in",
+            "dataset"
+        ],
         "EDIT_LANGS": {
             "EDIT_LANGS": "Cambia lingue",
             "LANG_TAG": "Tag lingua",
@@ -409,19 +441,32 @@
             "CLS_INSTANCE_SEARCH": "Ricerca classi-istanze"
         }
     },
+    "SPARQL": {
+        "ACTIONS": {
+            "EXPORT_RESULTS": "Esporta risultati SPARQL"
+        }
+    },
     "USER": {
         "LOG_INTO_PMKI": "Login in PMKI",
         "LOGIN": "Log in",
         "NO_USER_REGISTERED_MSG": "PMKI non ha rilevato alcun utente registrato. Al fine di usare la piattaforma, è necessario creare un account amministratore inserendo dati personali e credenziali d'accesso.",
+        "REGISTRATION_COMPLETE": "Registrazione completata",
         "USER_DETAILS": "Dettagli utente",
+        "ATTR": {
+            "EMAIL_ADDRESS": "Indirizzo email",
+            "PASSWORD": "Password",
+            "GIVEN_NAME": "Nome",
+            "FAMILY_NAME": "Cognome"
+        },
         "PASSWORD": {
             "CHANGE_PASSWORD": "Cambia password",
-            "FORGOT_PASSWORD": "Password dimenticata?",
+            "FORGOT_PASSWORD": "Password dimenticata",
             "RESET_PASSWORD": "Resetta password",
             "OLD_PASSWORD": "Vecchia password",
             "NEW_PASSWORD": "Nuova password",
             "CONFIRM_PASSWORD": "Conferma password",
-            "CONFIRM_NEW_PASSWORD": "Conferma nuova password"
+            "CONFIRM_NEW_PASSWORD": "Conferma nuova password",
+            "PASSWORD_CHANGED": "Password cambiata"
         }
     },
     "COMMONS": {
@@ -453,7 +498,9 @@
             "CONFIGURATION": "Configurazione",
             "CONFIGURATION_OF": "Configurazione di",
             "CONFIGURE": "Configura",
+            "DUPLICATED_CONFIGURATION": "Configurazione duplicata",
             "LOAD_CONFIGURATION": "Carica configurazione",
+            "MISSING_CONFIGURATION": "Configurazione mancante",
             "REPO_CONFIGURATION": "Configurazione repo",
             "SAVE_CONFIGURATION": "Salva configurazione",
             "SERVER_URL": "URL server",
@@ -473,8 +520,13 @@
         },
         "STATUS": {
             "ACTIVE": "Attivo",
-            "STATUS": "Stato"
+            "ERROR": "Errore",
+            "INCOMPLETE_FORM": "Form incompleto",
+            "INVALID_DATA": "Dati non validi",
+            "STATUS": "Stato",
+            "WARNING": "Attenzione"
         },
+        "DENIED_OPERATION": "Operazione negata",
         "DESCRIPTION": "Descrizione",
         "DETAILS": "Dettagli",
         "FILTER": "Filtro",

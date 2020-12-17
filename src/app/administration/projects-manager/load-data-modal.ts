@@ -107,7 +107,7 @@ export class LoadDataModal {
 
     ok() {
         if (this.baseURI == null || this.baseURI.trim() == "") {
-            this.basicModals.alert("Load Data", "BaseURI required", ModalType.warning);
+            this.basicModals.alert("ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA", "BaseURI required", ModalType.warning);
             return;
         }
 
@@ -116,7 +116,7 @@ export class LoadDataModal {
         }
         if (this.selectedLifterConfig != null) {
             if (this.selectedLifterConfig.requireConfiguration()) {
-                this.basicModals.alert("Missing configuration", "The Lifter needs to be configured", ModalType.warning);
+                this.basicModals.alert("COMMONS.CONFIG.MISSING_CONFIGURATION", "The Lifter needs to be configured", ModalType.warning);
                 return;
             }
             rdfLifterSpec.configType = this.selectedLifterConfig.type;
@@ -129,7 +129,7 @@ export class LoadDataModal {
             () => {
                 this.loading = false;
                 PMKIContext.removeTempProject();
-                this.basicModals.alert("Load data", "Data loaded successfully").then(
+                this.basicModals.alert("ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA", "Data loaded successfully").then(
                     () => this.activeModal.close()
                 )
             }

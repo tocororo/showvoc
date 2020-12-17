@@ -36,7 +36,7 @@ export class ChangePasswordModal {
     ok() {
         this.userService.changePassword(PMKIContext.getLoggedUser().getEmail(), this.oldPwd, this.newPwd).subscribe(
             () => {
-                this.basicModals.alert("Password changed", "Your password has been succesfully changed. Now you will be logged out.").then(
+                this.basicModals.alert("USER.PASSWORD.PASSWORD_CHANGED", "Your password has been succesfully changed. Now you will be logged out.").then(
                     () => {
                         this.authService.logout().subscribe(
                             () => {

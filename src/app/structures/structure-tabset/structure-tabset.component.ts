@@ -105,7 +105,7 @@ export class StructureTabsetComponent implements OnInit {
                 if (hideWarning) {
                     this.sharedModals.openResourceView(resource.getValue());
                 } else {
-                    this.basicModals.alert("Resource not reachable", annotatedIRI.getValue().getIRI() + " is not reachable in any tree or list. " +
+                    this.basicModals.alert("SEARCH.RESOURCE_NOT_REACHABLE", annotatedIRI.getValue().getIRI() + " is not reachable in any tree or list. " +
                         "It's ResourceView will be shown in a modal dialog", ModalType.warning, null, "Don't show again").then(
                             (dontShowAgain: boolean) => {
                                 if (dontShowAgain) {

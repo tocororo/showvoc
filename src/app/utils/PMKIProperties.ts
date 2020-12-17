@@ -95,7 +95,7 @@ export class PMKIProperties {
                     projectSettings.projectLanguagesSetting = <Language[]>JSON.parse(langsValue);
                     Languages.sortLanguages(projectSettings.projectLanguagesSetting);
                 } catch (err) {
-                    this.basicModals.alert("Error", "Project setting initialization has encountered a problem during parsing " +
+                    this.basicModals.alert("COMMONS.STATUS.ERROR", "Project setting initialization has encountered a problem during parsing " +
                         "languages settings. Default languages will be set for this project.", ModalType.error);
                     projectSettings.projectLanguagesSetting = [
                         { name: "German", tag: "de" }, { name: "English", tag: "en" }, { name: "Spanish", tag: "es" },

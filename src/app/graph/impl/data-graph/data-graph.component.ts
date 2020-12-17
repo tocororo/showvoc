@@ -43,7 +43,7 @@ export class DataGraphComponent extends AbstractGraph {
 
     addNode(res: AnnotatedValue<IRI>) {
         if (this.graph.getNode(res.getValue())) {
-            this.basicModals.alert("Add node", "Cannot add a new node for " + res.getShow() + " since a node for the same resource already exists", ModalType.warning);
+            this.basicModals.alert("GRAPHS.ACTIONS.ADD_NODE", "Cannot add a new node for " + res.getShow() + " since a node for the same resource already exists", ModalType.warning);
             return;
         }
 

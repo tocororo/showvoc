@@ -2,22 +2,22 @@
     <div class="container vbox">
         <div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.NAME'|translate}}</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'USER.ATTR.GIVEN_NAME'|translate}}</label>
                 <div class="col-sm-4">
-                    <input class="form-control form-control-sm" [(ngModel)]="name" [placeholder]="'COMMONS.NAME'|translate">
+                    <input class="form-control form-control-sm" [(ngModel)]="name" [placeholder]="'USER.ATTR.GIVEN_NAME'|translate">
                 </div>
-                <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.LAST_NAME'|translate}}</label>
+                <label class="col-sm-2 col-form-label col-form-label-sm">{{'USER.ATTR.FAMILY_NAME'|translate}}</label>
                 <div class="col-sm-4">
-                    <input class="form-control form-control-sm" [(ngModel)]="lastName" [placeholder]="'CONTRIBUTIONS.FORM.COMMONS.LAST_NAME'|translate">
+                    <input class="form-control form-control-sm" [(ngModel)]="lastName" [placeholder]="'USER.ATTR.FAMILY_NAME'|translate">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label col-form-label-sm">
-                    {{'MODELS.USER.EMAIL_ADDRESS'|translate}}
+                    {{'USER.ATTR.EMAIL_ADDRESS'|translate}}
                     <span class="fas fa-info-circle" [title]="'CONTRIBUTIONS.FORM.COMMONS.EMAIL_INFO'|translate"></span>
                 </label>
                 <div class="col-sm-4">
-                    <input type="email" class="form-control form-control-sm" [(ngModel)]="email" [placeholder]="'MODELS.USER.EMAIL_ADDRESS'|translate">
+                    <input type="email" class="form-control form-control-sm" [(ngModel)]="email" [placeholder]="'USER.ATTR.EMAIL_ADDRESS'|translate">
                 </div>
                 <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.ORGANIZATION'|translate}} <span>*</span></label>
                 <div class="col-sm-4">
@@ -46,7 +46,7 @@
         <div class="d-flex align-items-center mt-2">
             <small class="form-text text-muted" style="flex: 1;">(*) {{'COMMONS.OPTIONAL_FIELD'|translate}}</small>
             <button class="btn btn-info" (click)="submit()" [disabled]="!selectedContribution || loading">
-                {{'CONTRIBUTIONS.FORM.COMMONS.SUBMIT_REQUEST'|translate}}
+                {{'CONTRIBUTIONS.ACTIONS.SUBMIT_REQUEST'|translate}}
                 <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
             </button>
         </div>

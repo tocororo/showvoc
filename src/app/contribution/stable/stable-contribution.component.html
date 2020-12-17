@@ -57,13 +57,13 @@
 
     <div class="card-body">
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.DATASET.IDENTITY'|translate}} <span>*</span></label>
+            <label class="col-sm-2 col-form-label col-form-label-sm">{{'DATASETS.ATTR.IDENTITY'|translate}} <span>*</span></label>
             <div class="col-sm-10">
-                <input class="form-control form-control-sm" [(ngModel)]="identity" [placeholder]="'MODELS.DATASET.IDENTITY_IRI'|translate">
+                <input class="form-control form-control-sm" [(ngModel)]="identity" [placeholder]="'DATASETS.ATTR.IDENTITY_IRI'|translate">
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.DATASET.DEREF_SYSTEM'|translate}} <span>*</span></label>
+            <label class="col-sm-2 col-form-label col-form-label-sm">{{'DATASETS.ATTR.DEREF_SYSTEM'|translate}} <span>*</span></label>
             <div class="col-sm-10">
                 <select class="form-control form-control-sm" [(ngModel)]="dereferenciationSystem">
                     <option *ngFor="let opt of dereferenciationOpts" [ngValue]="opt.uri">{{opt.show}}</option>
@@ -71,9 +71,9 @@
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.DATASET.SPARQL_ENDPOINT'|translate}} <span>*</span></label>
+            <label class="col-sm-2 col-form-label col-form-label-sm">{{'DATASETS.ATTR.SPARQL_ENDPOINT'|translate}} <span>*</span></label>
             <div class="col-sm-10 d-flex">
-                <input class="form-control form-control-sm" [(ngModel)]="sparqlEndpoint" [placeholder]="'MODELS.DATASET.SPARQL_ENDPOINT_URL'|translate">
+                <input class="form-control form-control-sm" [(ngModel)]="sparqlEndpoint" [placeholder]="'DATASETS.ATTR.SPARQL_ENDPOINT_URL'|translate">
                 <div class="form-check form-check-inline ml-2">
                     <input class="form-check-input" type="checkbox" [(ngModel)]="sparqlNoAggregation" [disabled]="!sparqlEndpoint">
                     <label class="form-check-label text-nowrap">{{'CONTRIBUTIONS.FORM.COMMONS.NO_AGGREGATION'|translate}}</label>
@@ -81,9 +81,9 @@
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.DATASET.URI_SPACE'|translate}} <span>*</span></label>
+            <label class="col-sm-2 col-form-label col-form-label-sm">{{'DATASETS.ATTR.URI_SPACE'|translate}} <span>*</span></label>
             <div class="col-sm-10">
-                <input class="form-control form-control-sm" [(ngModel)]="uriSpace" [placeholder]="'MODELS.DATASET.URI_SPACE'|translate">
+                <input class="form-control form-control-sm" [(ngModel)]="uriSpace" [placeholder]="'DATASETS.ATTR.URI_SPACE'|translate">
             </div>
         </div>
     </div>

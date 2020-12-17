@@ -5,25 +5,25 @@
         </div>
         <div class="card-body p-3">
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">{{'MODELS.USER.GIVEN_NAME'|translate}}</label>
+                <label class="col-sm-2 col-form-label">{{'USER.ATTR.GIVEN_NAME'|translate}}</label>
                 <div class="col-sm-10">
                     <input-editable [value]="user.getGivenName()" size="md" (valueEdited)="updateGivenName($event)"></input-editable>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">{{'MODELS.USER.FAMILY_NAME'|translate}}</label>
+                <label class="col-sm-2 col-form-label">{{'USER.ATTR.FAMILY_NAME'|translate}}</label>
                 <div class="col-sm-10">
                     <input-editable [value]="user.getFamilyName()" size="md" (valueEdited)="updateFamilyName($event)"></input-editable>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">{{'MODELS.USER.EMAIL_ADDRESS'|translate}}</label>
+                <label class="col-sm-2 col-form-label">{{'USER.ATTR.EMAIL_ADDRESS'|translate}}</label>
                 <div class="col-sm-10">
                     <input-editable type="email" [value]="user.getEmail()" size="md" (valueEdited)="updateEmail($event)"></input-editable>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">{{'MODELS.USER.PASSWORD'|translate}}</label>
+                <label class="col-sm-2 col-form-label">{{'USER.ATTR.PASSWORD'|translate}}</label>
                 <div class="col-sm-10">
                     <div class="input-group">
                         <input type="password" class="form-control" [ngModel]="'xxxxxxxx'" readonly>

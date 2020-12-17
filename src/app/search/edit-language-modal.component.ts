@@ -21,11 +21,11 @@ export class EditLanguageModal implements OnInit {
 
     addLang() {
         if (this.languages.indexOf(this.newLang) != -1) {
-            this.basicModals.alert("Invalid language", "Language '" + this.newLang + "' is already in the list.", ModalType.warning);
+            this.basicModals.alert("COMMONS.STATUS.INVALID_DATA", "Language '" + this.newLang + "' is already in the list.", ModalType.warning);
             return;
         }
         if (!this.langRegexp.test(this.newLang)) {
-            this.basicModals.alert("Invalid language", "Language '" + this.newLang + "' is not a valid language tag.", ModalType.warning);
+            this.basicModals.alert("COMMONS.STATUS.INVALID_DATA", "Language '" + this.newLang + "' is not a valid language tag.", ModalType.warning);
             return;
         }
         this.languages.push(this.newLang);
@@ -42,14 +42,14 @@ export class EditLanguageModal implements OnInit {
         for (let i = 0; i < this.languages.length; i++) {
             let lang = this.languages[i];
             if (this.languages.indexOf(lang) != i) {
-                this.basicModals.alert("Invalid language", "Language '" + lang + "' is duplicated in the list.", ModalType.warning);
+                this.basicModals.alert("COMMONS.STATUS.INVALID_DATA", "Language '" + lang + "' is duplicated in the list.", ModalType.warning);
                 return;
             }
         }
         //check for invalid languages
         for (let l of this.languages) {
             if (!this.langRegexp.test(l)) {
-                this.basicModals.alert("Invalid language", "Language '" + l + "' is not a valid language tag.", ModalType.warning);
+                this.basicModals.alert("COMMONS.STATUS.INVALID_DATA", "Language '" + l + "' is not a valid language tag.", ModalType.warning);
                 return;
             }
         }

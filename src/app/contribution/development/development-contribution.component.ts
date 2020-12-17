@@ -63,11 +63,11 @@ export class DevelopmentContributionComponent extends AbstractContributionCompon
             missingField = "Lexicalization model";
         }
         if (missingField != null) {
-            this.basicModals.alert("Incomplete form", "Missing mandatory field '" + missingField + "'", ModalType.warning);
+            this.basicModals.alert("COMMONS.STATUS.INCOMPLETE_FORM", "Missing mandatory field '" + missingField + "'", ModalType.warning);
             return;
         }
         if (this.conversionRequired && this.selectedFormat == null) {
-            this.basicModals.alert("Incomplete form", "The 'Conversion required' is checked, but no format has been selected", ModalType.warning);
+            this.basicModals.alert("COMMONS.STATUS.INCOMPLETE_FORM", "The 'Conversion required' is checked, but no format has been selected", ModalType.warning);
             return;
         }
 

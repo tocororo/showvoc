@@ -80,7 +80,7 @@ export class ExtensionConfiguratorComponent {
     }
 
     private saveConfig() {
-        alert("TODO");
+        alert("TODO"); //currently there is no extension that allow to save configuration
         // let config: { [key: string]: any } = this.selectedConfiguration.getPropertiesAsMap();
         // this.sharedModals.storeConfiguration("Store configuration", this.selectedExtension.id, config).then(
         //     (relativeRef: string) => {
@@ -94,7 +94,7 @@ export class ExtensionConfiguratorComponent {
     }
 
     private loadConfig() {
-        alert("TODO");
+        alert("TODO"); //currently there is no extension that allow to load configuration
         // this.sharedModals.loadConfiguration("Load configuration", this.selectedExtension.id).then(
         //     (config: LoadConfigurationModalReturnData) => {
         //         for (var i = 0; i < this.selectedExtension.configurations.length; i++) {

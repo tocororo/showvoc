@@ -57,7 +57,7 @@ export class MetadataContributionComponent extends AbstractContributionComponent
             (err: Error) => {
                 //in case discoverDataset throws an exception prevent to contribute metadata
                 if (err.name.endsWith("DeniedOperationException")) {
-                    this.basicModals.alert("Already existing dataset", "A dataset for the provided IRI " + baseUriIRI.toNT() + " is already in the metadata registry", ModalType.warning);
+                    this.basicModals.alert("DATASETS.STATUS.ALREADY_EXISTING_DATASET", "A dataset for the provided IRI " + baseUriIRI.toNT() + " is already in the metadata registry", ModalType.warning);
                 }
             }
         );
@@ -65,7 +65,7 @@ export class MetadataContributionComponent extends AbstractContributionComponent
 
     getConfigurationImpl(): ConfigurationObject {
         if (this.resourceName == null) {
-            this.basicModals.alert("Incomplete form", "Missing mandatory field 'Resource name'", ModalType.warning);
+            this.basicModals.alert("COMMONS.STATUS.INCOMPLETE_FORM", "Missing mandatory field 'Resource name'", ModalType.warning);
             return;
         }
         let config: ConfigurationObject = {
@@ -85,7 +85,7 @@ export class MetadataContributionComponent extends AbstractContributionComponent
             }
         }
         if (emptyMetadata) {
-            this.basicModals.alert("Incomplete form", "No metadata has been provided", ModalType.warning);
+            this.basicModals.alert("COMMONS.STATUS.INCOMPLETE_FORM", "No metadata has been provided", ModalType.warning);
             return;
         }
         return config;

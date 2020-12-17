@@ -46,18 +46,18 @@ export class ContributionComponent {
         //check mandatory fields in the current page
         let missingField: string;
         if (this.name == null) {
-            missingField = "Name";
+            missingField = "Given name";
         } else if (this.lastName == null) {
-            missingField = "Last name";
+            missingField = "Family name";
         } else if (this.email == null) {
             missingField = "Email";
         }
         if (missingField != null) {
-            this.basicModals.alert("Incomplete form", "Missing mandatory field '" + missingField + "'", ModalType.warning);
+            this.basicModals.alert("COMMONS.STATUS.INCOMPLETE_FORM", "Missing mandatory field '" + missingField + "'", ModalType.warning);
             return;
         }
         if (!UserForm.isValidEmail(this.email)) {
-            this.basicModals.alert("Invalid email", this.email + " is not a valid email address.", ModalType.warning);
+            this.basicModals.alert("COMMONS.STATUS.INVALID_DATA", this.email + " is not a valid email address.", ModalType.warning);
             return;
         }
 
@@ -87,7 +87,7 @@ export class ContributionComponent {
             finalize(() => this.loading = false)
         ).subscribe(
             () => {
-                this.basicModals.alert("Request submitted", "Your contribution request has been succesfully submitted. " + 
+                this.basicModals.alert("CONTRIBUTIONS.FORM.EMAIL.COMMONS.REQUEST_SUBMITTED", "Your contribution request has been succesfully submitted. " + 
                     "It will be evaluated by the administrator and you will receive the response to the provided email").then(
                     () => {
                         this.router.navigate(["/home"]);

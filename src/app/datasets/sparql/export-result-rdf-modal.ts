@@ -43,7 +43,7 @@ export class ExportResultRdfModal {
             blob => {
                 this.loading = false;
                 var exportLink = window.URL.createObjectURL(blob);
-                this.basicModals.downloadLink("Export SPARQL results", null, exportLink, "sparql_export." + this.selectedExportFormat.defaultFileExtension);
+                this.basicModals.downloadLink("SPARQL.ACTIONS.EXPORT_RESULTS", null, exportLink, "sparql_export." + this.selectedExportFormat.defaultFileExtension);
             }
         );
 		this.activeModal.close();

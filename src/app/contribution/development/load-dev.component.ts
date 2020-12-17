@@ -129,7 +129,7 @@ export class LoadDevResourceComponent {
         }
         if (this.selectedLifterConfig != null) {
             if (this.selectedLifterConfig.requireConfiguration()) {
-                this.basicModals.alert("Missing configuration", "The Lifter needs to be configured", ModalType.warning);
+                this.basicModals.alert("COMMONS.CONFIG.MISSING_CONFIGURATION", "The Lifter needs to be configured", ModalType.warning);
                 return;
             }
             rdfLifterSpec.configType = this.selectedLifterConfig.type;
@@ -146,7 +146,7 @@ export class LoadDevResourceComponent {
                 if (this.conversionFormat != PmkiConversionFormat.EXCEL) {
                     message += ". You will soon recieve an email containing details for connecting to the VocBench"
                 }
-                this.basicModals.alert("Load data", message).then(
+                this.basicModals.alert("ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA", message).then(
                     () => {
                         this.router.navigate(["/home"]);
                     }

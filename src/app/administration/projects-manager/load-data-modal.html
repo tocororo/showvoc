@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">{{'ADMINISTRATION.DATASET.LOAD_DATA'|translate}}</h5>
+    <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA'|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
@@ -33,19 +33,19 @@
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-1 col-form-label col-form-label-sm">{{'MODELS.PROJECTS.BASE_URI'|translate}}</label>
+        <label class="col-sm-1 col-form-label col-form-label-sm">{{'MODELS.PROJECT.BASE_URI'|translate}}</label>
         <div class="col-sm-5">
             <div class="input-group input-group-sm">
                 <input class="form-control" [(ngModel)]="baseURI" [placeholder]="'MODELS.PROJECT.BASE_URI'|translate" [disabled]="useProjectBaseURI">
                 <div class="input-group-append">
-                    <button class="btn btn-info" (click)="changeUseProjectBaseUri()" [ngClass]="{ active: useProjectBaseURI }" [title]="'ADMINISTRATION.DATASET.USE_DATASET_BASEURI'|translate">
+                    <button class="btn btn-info" (click)="changeUseProjectBaseUri()" [ngClass]="{ active: useProjectBaseURI }" [title]="'ADMINISTRATION.DATASETS.MANAGEMENT.USE_DATASET_BASEURI'|translate">
                         <span *ngIf="useProjectBaseURI" class="fas fa-lock"></span>
                         <span *ngIf="!useProjectBaseURI" class="fas fa-unlock-alt"></span>
                     </button>
                 </div>
             </div>
         </div>
-        <label class="col-sm-2 col-form-label col-form-label-sm">{{'ADMINISTRATION.DATASETS.RESOLVE_IMPORTS'|translate}}</label>
+        <label class="col-sm-2 col-form-label col-form-label-sm">{{'ADMINISTRATION.DATASETS.MANAGEMENT.RESOLVE_IMPORTS'|translate}}</label>
         <div class="col-sm-4">
             <select class="form-control form-control-sm" [(ngModel)]="selectedImportAllowance">
                 <option *ngFor="let ia of importAllowances" [ngValue]="ia.allowance">{{ia.show}}</option>

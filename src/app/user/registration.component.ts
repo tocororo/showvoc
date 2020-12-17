@@ -38,12 +38,12 @@ export class RegistrationComponent implements OnInit {
 	submit() {
 		//check email
 		if (!UserForm.isValidEmail(this.userForm.email)) {
-			this.basicModals.alert("Invalid data", "Please enter a valid e-mail address", ModalType.warning);
+			this.basicModals.alert("COMMONS.STATUS.INVALID_DATA", "Please enter a valid e-mail address", ModalType.warning);
 			return;
 		}
 		//check password
 		if (!this.isConfirmPwdOk()) {
-			this.basicModals.alert("Invalid data", "Password and confirmed password are different.", ModalType.warning);
+			this.basicModals.alert("COMMONS.STATUS.INVALID_DATA", "Password and confirmed password are different.", ModalType.warning);
 			return;
 		}
 
@@ -61,7 +61,7 @@ export class RegistrationComponent implements OnInit {
 						this.pmkiService.initPMKI().subscribe();
 					}
 				);
-				this.basicModals.alert("Registration complete", "The administrator account has been created. " +
+				this.basicModals.alert("USER.REGISTRATION_COMPLETE", "The administrator account has been created. " +
 					"Now you will be automatically logged in with the email (" + this.userForm.email + ") and the password you provided").then(
 						() => {
 							this.router.navigate(["/sysconfig"]);

@@ -98,7 +98,7 @@ export class StableProjectCreationModal {
         //in case of remote repository access, set the configuration (retrieved from settings during the initlization)
         if (this.selectedRepositoryAccess == RepositoryAccessType.CreateRemote) {
             if (this.remoteAccessConfig == null || !this.remoteAccessConfig.serverURL == null || this.remoteAccessConfig.serverURL.trim() == "") {
-                this.basicModals.alert("Missing configuration", "The system has not been configured in order to create a remote repository. " +
+                this.basicModals.alert("COMMONS.CONFIG.MISSING_CONFIGURATION", "The system has not been configured in order to create a remote repository. " +
                     "Please provide a configuration to a remote triple store in the 'System configuration' page.", ModalType.warning);
                 return;
             }
@@ -107,7 +107,7 @@ export class StableProjectCreationModal {
 
         //check if data repository configuration needs to be configured
         if (this.selectedDataRepoConfig.requireConfiguration()) {
-            this.basicModals.alert("Missing configuration", "The data repository (" + this.selectedDataRepoConfig.shortName + ") requires to be configured", ModalType.warning);
+            this.basicModals.alert("COMMONS.CONFIG.MISSING_CONFIGURATION", "The data repository (" + this.selectedDataRepoConfig.shortName + ") requires to be configured", ModalType.warning);
             return;
         }
         let coreRepoSailConfigurerSpecification: PluginSpecification = {
@@ -122,7 +122,7 @@ export class StableProjectCreationModal {
                 finalize(() => this.loading = false)
             ).subscribe(
                 () => {
-                    this.basicModals.alert("Dataset created", "The contribution has been approved and the dataset has been successfully created");
+                    this.basicModals.alert("DATASETS.STATUS.DATASET_CREATED", "The contribution has been approved and the dataset has been successfully created");
                     this.activeModal.close();
                 }
             );

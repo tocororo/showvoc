@@ -181,7 +181,7 @@ export class ContributionsManagerComponent {
                 () => {}
             );
         } else if (contribution instanceof MetadataStoredContribution) {
-            this.basicModals.confirm("Approve contribution", "You are going to submit the proposed metadata into the Metadata Registry. Are you sure?", ModalType.warning).then(
+            this.basicModals.confirm("CONTRIBUTIONS.ACTIONS.APPROVE_CONTRIBUTION", "You are going to submit the proposed metadata into the Metadata Registry. Are you sure?", ModalType.warning).then(
                 () => {
                     contribution['loading'] = true;
                     this.pmkiServices.approveMetadataContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).pipe(
@@ -199,7 +199,7 @@ export class ContributionsManagerComponent {
     }
 
     rejectContribution(contribution: StoredContribution) {
-        this.basicModals.confirm("Reject contribution", "Are you sure to reject the contribution?", ModalType.warning).then(
+        this.basicModals.confirm("CONTRIBUTIONS.ACTIONS.REJECT_CONTRIBUTION", "Are you sure to reject the contribution?", ModalType.warning).then(
             () => {
                 contribution['loading'] = true;
                 this.pmkiServices.rejectContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).pipe(

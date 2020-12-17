@@ -34,7 +34,7 @@ export class CollectionTreePanelComponent extends AbstractTreePanel {
             this.openAt(results[0]);
         } else { //multiple results, ask the user which one select
             ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
-            this.basicModals.selectResource("Search results", results.length + " results found.", results, this.rendering).then(
+            this.basicModals.selectResource("SEARCH.SEARCH_RESULTS", results.length + " results found.", results, this.rendering).then(
                 (selectedResource: AnnotatedValue<IRI>) => {
                     this.openAt(selectedResource);
                 },

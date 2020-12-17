@@ -88,7 +88,7 @@ export class SearchComponent {
                     let results: GlobalSearchResult[] = this.groupedSearchResults[repoId];
                     computeResultsShowFunctions.push(this.getComputeResultsShowFn(results));
                 });
-                forkJoin(...computeResultsShowFunctions).pipe(
+                forkJoin(computeResultsShowFunctions).pipe(
                     finalize(() => PMKIContext.removeTempProject())
                 ).subscribe(() => {
                     //order results
@@ -102,7 +102,7 @@ export class SearchComponent {
             },
             (err: Error) => {
                 if (err.name.endsWith("IndexNotFoundException")) {
-                    this.basicModals.alert("Index not found", "Cannot find any index. Please create the index for at least one dataset, then retry.", ModalType.warning);
+                    this.basicModals.alert("SEARCH.INDEX_NOT_FOUND", "Cannot find any index. Please create the index for at least one dataset, then retry.", ModalType.warning);
                 }
             }
         )

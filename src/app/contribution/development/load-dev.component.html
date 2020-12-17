@@ -1,5 +1,5 @@
 <div class="container my-3">
-    <h1 class="mb-2">{{'ADMINISTRATION.DATASET.LOAD_DATA'|translate}}</h1>
+    <h1 class="mb-2">{{'ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA'|translate}}</h1>
 
     <div>
         <div class="form-group row">
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div *ngIf="allowImportAllowanceSelection()" class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-sm">{{'ADMINISTRATION.DATASETS.RESOLVE_IMPORTS'|translate}}</label>
+            <label class="col-sm-2 col-form-label col-form-label-sm">{{'ADMINISTRATION.DATASETS.MANAGEMENT.RESOLVE_IMPORTS'|translate}}</label>
             <div class="col-sm-10">
                 <select class="form-control form-control-sm" [(ngModel)]="selectedImportAllowance">
                     <option *ngFor="let ia of importAllowances" [ngValue]="ia.allowance">{{ia.show}}</option>

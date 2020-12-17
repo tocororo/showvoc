@@ -340,14 +340,14 @@ export class HttpManager {
         if (err instanceof HttpErrorResponse) { //error thrown by the angular HttpClient get() or post()
             if (err.error instanceof ErrorEvent) { //A client-side or network error occurred
                 let errorMsg = "An error occurred:" + err.error.message;
-                this.basicModals.alert("Client Error", errorMsg, ModalType.error);
+                this.basicModals.alert("COMMONS.STATUS.ERROR", errorMsg, ModalType.error);
                 error.name = "Client Error";
                 error.message = errorMsg;
             } else { //The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong.
                 let errorMsg: string;
                 if (!err.ok && err.status == 0 && err.statusText == "Unknown Error") { //attribute of error response in case of no backend response
                     errorMsg = "Connection with ST server (" + this.serverhost + ") has failed; please check your internet connection";
-                    this.basicModals.alert("Error", errorMsg, ModalType.error);
+                    this.basicModals.alert("COMMONS.STATUS.ERROR", errorMsg, ModalType.error);
                     error.name = "ConnectionError";
                     error.message = errorMsg;
                 } else { //backend error response
@@ -368,7 +368,7 @@ export class HttpManager {
                          * if error is 403
                          *  - show the alert as before
                          */
-                        this.basicModals.alert("Error", errorMsg, ModalType.error).then(
+                        this.basicModals.alert("COMMONS.STATUS.ERROR", errorMsg, ModalType.error).then(
                             confirm => {
                                 //in case user is not logged at all (probably session timedout), reset context and redirect to home
                                 if (err.status == 401) { 
@@ -384,7 +384,7 @@ export class HttpManager {
                         );
                     } else if (status == 500 || status == 404) { //server error (e.g. out of memory)
                         let errorMsg = (err.statusText != null ? err.statusText : "Unknown response from the server") + " (status: " + err.status + ")";
-                        this.basicModals.alert("Error", errorMsg, ModalType.error);
+                        this.basicModals.alert("COMMONS.STATUS.ERROR", errorMsg, ModalType.error);
                         error.name = "ServerError";
                         error.message = errorMsg;
                     }
@@ -399,7 +399,7 @@ export class HttpManager {
             ) { //if the alert should be shown
                 let errorMsg = error.message != null ? error.message : "Unknown response from the server";
                 let errorDetails = error.stack ? error.stack : error.name;
-                this.basicModals.alert("Error", errorMsg, ModalType.error, errorDetails);
+                this.basicModals.alert("COMMONS.STATUS.ERROR", errorMsg, ModalType.error, errorDetails);
             }
         }
         return throwError(error);

@@ -165,7 +165,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                 this.selectSearchedResource(results[0]);
             } else {
                 // choose among results
-                this.basicModals.selectResource("Search results", results.length + " results found.", results, this.rendering).then(
+                this.basicModals.selectResource("SEARCH.SEARCH_RESULTS", results.length + " results found.", results, this.rendering).then(
                     (selectedResource: AnnotatedValue<IRI>) => {
                         this.selectSearchedResource(selectedResource);
                     },
@@ -202,7 +202,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                     this.openAt(resource);
                 } else {
                     if (schemes.length == 0) { //searched concept doesn't belong to any scheme => ask switch to no-scheme mode
-                        this.basicModals.confirm("Search", "Searched concept '" + resource.getShow() + "' does not belong to any scheme. Do you want to switch to no-scheme mode?", ModalType.warning).then(
+                        this.basicModals.confirm("COMMONS.ACTIONS.SEARCH", "Searched concept '" + resource.getShow() + "' does not belong to any scheme. Do you want to switch to no-scheme mode?", ModalType.warning).then(
                             confirm => {
                                 this.pmkiProp.setActiveSchemes(PMKIContext.getProjectCtx(), []); //update the active schemes
                                 setTimeout(() => {
@@ -221,7 +221,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                         }
                         this.resourceService.getResourcesInfo(schemes).subscribe(
                             schemes => {
-                                this.basicModals.selectResource("Search", message, schemes, this.rendering).then(
+                                this.basicModals.selectResource("COMMONS.ACTIONS.SEARCH", message, schemes, this.rendering).then(
                                     (scheme: AnnotatedValue<IRI>) => {
                                         this.pmkiProp.setActiveSchemes(PMKIContext.getProjectCtx(), this.workingSchemes.concat(scheme.getValue())); //update the active schemes
                                         setTimeout(() => {

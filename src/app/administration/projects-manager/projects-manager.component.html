@@ -25,7 +25,7 @@
             </colgroup>
             <thead class="thead-light">
                 <tr>
-                    <th class="text-center">{{'ADMINISTRATION.DATASETS.MANAGEMENT.DATASET_NAME'|translate}}</th>
+                    <th class="text-center">{{'DATASETS.ATTR.DATASET_NAME'|translate}}</th>
                     <th class="text-center">{{'ADMINISTRATION.DATASETS.MANAGEMENT.OPEN_CLOSE'|translate}}</th>
                     <th class="text-center">{{'MODELS.PROJECT.MODEL'|translate}}</th>
                     <th class="text-center">{{'MODELS.PROJECT.LEXICALIZATION'|translate}}</th>
@@ -76,7 +76,7 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-sm" ngbDropdownMenu>
                                 <button class="dropdown-item" (click)="loadData(p)" [disabled]="!p.isOpen() || p.creatingIndex || p.opening">
-                                    {{'ADMINISTRATION.DATASETS.LOAD_DATA'|translate}}
+                                    {{'ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA'|translate}}
                                 </button>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item d-flex align-items-center" (click)="createIndex(p)" [disabled]="globalCreatingIndex || p.creatingIndex || p.opening">
@@ -88,7 +88,7 @@
                                 </button>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item d-flex align-items-center" (click)="createMapleMetadata(p)" [disabled]="p.creatingMetadata || p.opening">
-                                    <span style="flex: 1;">{{'ADMINISTRATION.DATASETS.MANAGEMENT.CREATE_REFRESH_METADATA'|translate}}</span>
+                                    <span style="flex: 1;">{{'DATASETS.ACTIONS.CREATE_REFRESH_METADATA'|translate}}</span>
                                     <span *ngIf="p.creatingMetadata" class="spinner-border spinner-border-sm ml-2"></span>
                                 </button>
                                 <div class="dropdown-divider"></div>
@@ -100,7 +100,7 @@
                                 </button>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item" (click)="deleteProject(p)" [disabled]="p.isOpen() || p.opening || p.creatingIndex || p.creatingMetadata">
-                                    {{'ADMINISTRATION.DATASETS.MANAGEMENT.DELETE_DATASET'|translate}}
+                                    {{'DATASETS.ACTIONS.DELETE_DATASET'|translate}}
                                 </button>
                             </div>
                         </div>

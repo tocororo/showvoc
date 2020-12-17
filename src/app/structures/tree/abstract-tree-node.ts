@@ -142,7 +142,7 @@ export abstract class AbstractTreeNode extends AbstractNode {
         if (!this.showDeprecated) {
             for (var i = 0; i < this.children.length; i++) {
                 if (this.children[i].getValue().equals(path[0].getValue()) && this.children[i].isDeprecated()) {
-                    this.basicModals.alert("Search", "Node " + path[path.length-1].getShow() + 
+                    this.basicModals.alert("COMMONS.ACTIONS.SEARCH", "Node " + path[path.length-1].getShow() + 
                         " is not reachable in the current tree since the path to reach it contains a deprecated node." +
                         " Enable the show of deprecated resources and repeat the search", ModalType.warning);
                     return;
@@ -160,7 +160,7 @@ export abstract class AbstractTreeNode extends AbstractNode {
         }
         //if this line is reached it means that the first node of the path has not been found
         if (this.context == TreeListContext.dataPanel) {
-            this.basicModals.confirm("Search", "Node " + path[path.length-1].getShow() + " is not reachable in the current tree. "
+            this.basicModals.confirm("COMMONS.ACTIONS.SEARCH", "Node " + path[path.length-1].getShow() + " is not reachable in the current tree. "
                 + "Do you want to open its ResourceView in a modal dialog?", ModalType.warning).then(
                 confirm => { 
                     this.sharedModals.openResourceView(path[path.length-1].getValue());
@@ -168,7 +168,7 @@ export abstract class AbstractTreeNode extends AbstractNode {
                 cancel => {}
             );
         } else {
-            this.basicModals.alert("Search", "Node " + path[path.length-1].getShow() + " is not reachable in the current tree.", ModalType.warning);
+            this.basicModals.alert("COMMONS.ACTIONS.SEARCH", "Node " + path[path.length-1].getShow() + " is not reachable in the current tree.", ModalType.warning);
         }
     }
 

@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">{{title}}</h5>
+    <h5 class="modal-title">{{title|translate}}</h5>
     <button class="close" (click)="close()">
         <span>&times;</span>
     </button>
@@ -8,9 +8,9 @@
 
     <div class="hbox align-items-center mb-1" style="flex: initial;">
         <label class="mr-1">{{'DATA.LEXICON.LEXICON'|translate}}:</label>
-        <button class="btn btn-light btn-sm" [title]="'DATA.LEXICON.CHANGE_LEXICON'|translate" (click)="changeLexicon()" [disabled]="!lexiconChangeable">
+        <button class="btn btn-light btn-sm" [title]="'DATA.LEXICON.ACTIONS.CHANGE_LEXICON'|translate" (click)="changeLexicon()" [disabled]="!lexiconChangeable">
             <rdf-resource *ngIf="activeLexicon" [resource]="activeLexicon"></rdf-resource>
-            <span *ngIf="!activeLexicon">{{'DATA.LEXICON.SELECT_LEXICON'|translate}}</span>
+            <span *ngIf="!activeLexicon">{{'DATA.LEXICON.ACTIONS.SELECT_LEXICON'|translate}}</span>
         </button>
     </div>
 

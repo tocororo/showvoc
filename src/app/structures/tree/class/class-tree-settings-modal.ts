@@ -72,7 +72,7 @@ export class ClassTreeSettingsModal implements OnInit {
      */
 
     changeClass() {
-        this.browsingModals.browseClassTree("Select root class", [RDFS.resource]).then(
+        this.browsingModals.browseClassTree("DATA.CLASS.ACTIONS.SELECT_ROOT_CLASS", [RDFS.resource]).then(
             (cls: AnnotatedValue<IRI>) => {
                 if (Cookie.getCookie(Cookie.WARNING_CUSTOM_ROOT) != "false") {
                     let model: string = PMKIContext.getWorkingProject().getModelType();
@@ -81,7 +81,7 @@ export class ClassTreeSettingsModal implements OnInit {
                     ) {
                         let message: string = "Selecting a specific class as a root could hide newly created classes " + 
                             "that are not subclasses of the chosen root.";
-                        this.basicModals.alert("Warning", message, ModalType.warning, null, "Don't show this again").then(
+                        this.basicModals.alert("COMMONS.STATUS.WARNING", message, ModalType.warning, null, "Don't show this again").then(
                             checked => {
                                 if (checked) {
                                     Cookie.setCookie(Cookie.WARNING_CUSTOM_ROOT, "false");
@@ -108,7 +108,7 @@ export class ClassTreeSettingsModal implements OnInit {
                 if (position.isLocal()) {
                     this.rootClass = cls;
                 } else {
-                    this.basicModals.alert("Error", "Wrong URI: no resource with URI " + cls.getValue().toNT() + " exists in the current project", ModalType.warning);
+                    this.basicModals.alert("COMMONS.STATUS.ERROR", "Wrong URI: no resource with URI " + cls.getValue().toNT() + " exists in the current project", ModalType.warning);
                     //temporarly reset the root class and the restore it (in order to trigger the change detection editable-input)
                     let oldRootClass = this.rootClass;
                     this.rootClass = null;
@@ -160,12 +160,12 @@ export class ClassTreeSettingsModal implements OnInit {
     }
 
     addFilter() {
-        this.browsingModals.browseClassTree("Select class", [RDFS.resource]).then(
+        this.browsingModals.browseClassTree("DATA.CLASS.ACTIONS.SELECT_CLASS", [RDFS.resource]).then(
             (cls: AnnotatedValue<IRI>) => {
                 if (this.getFilterMapEntry(cls) == null) {
                     this.filterMapRes.push({ cls: cls, subClasses: null });
                 } else {
-                    this.basicModals.alert("Error", "A filter for class " + cls.getShow() + " already exists.", ModalType.warning);
+                    this.basicModals.alert("COMMONS.STATUS.ERROR", "A filter for class " + cls.getShow() + " already exists.", ModalType.warning);
                 }
             },
             () => {}

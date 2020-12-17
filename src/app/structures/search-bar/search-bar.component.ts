@@ -63,7 +63,7 @@ export class SearchBarComponent {
             this.lastSearch = this.searchStr;
             this.doSearchImpl();
         } else {
-            this.basicModals.alert("Search", "Please enter a valid string to search", ModalType.warning);
+            this.basicModals.alert("COMMONS.ACTIONS.SEARCH", "Please enter a valid string to search", ModalType.warning);
         }
     }
 
@@ -110,7 +110,7 @@ export class SearchBarComponent {
         ).subscribe(
             searchResult => {
                 if (searchResult.length == 0) {
-                    this.basicModals.alert("Search", "No results found for '" + this.lastSearch + "'", ModalType.warning);
+                    this.basicModals.alert("COMMONS.ACTIONS.SEARCH", "No results found for '" + this.lastSearch + "'", ModalType.warning);
                 } else {
                     this.searchResults.emit(searchResult);
                 }

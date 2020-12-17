@@ -182,7 +182,7 @@ export class PartitionFilter {
      * Restore to visible all the partitions for all the roles
      */
     reset() {
-        this.basicModals.confirm("Reset filter", "The partition filter will be reset for all the available roles. Are you sure?", ModalType.warning).then(
+        this.basicModals.confirm("GRAPHS.PARTITIONS_FILTER.RESET_FILTER", "The partition filter will be reset for all the available roles. Are you sure?", ModalType.warning).then(
             confirm => {
                 this.rolePartitionsStructs.forEach(rps => {
                     rps.partitions.forEach(p => {

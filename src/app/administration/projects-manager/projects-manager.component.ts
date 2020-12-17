@@ -99,7 +99,7 @@ export class ProjectsManagerComponent {
 
     loadData(project: Project) {
         if (!project.isOpen()) {
-            this.basicModals.alert("Load data", "Cannot load data into a closed dataset. Please, open the dataset and then retry.", ModalType.warning);
+            this.basicModals.alert("ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA", "Cannot load data into a closed dataset. Please, open the dataset and then retry.", ModalType.warning);
             return;
         }
         const modalRef: NgbModalRef = this.modalService.open(LoadDataModal, new ModalOptions("lg"));
@@ -108,10 +108,10 @@ export class ProjectsManagerComponent {
 
     deleteProject(project: Project) {
         if (project.isOpen()) {
-            this.basicModals.alert("Delete dataset", "Cannot delete an open dataset. Please, close the dataset and then retry.", ModalType.warning);
+            this.basicModals.alert("DATASETS.ACTIONS.DELETE_DATASET", "Cannot delete an open dataset. Please, close the dataset and then retry.", ModalType.warning);
             return;
         }
-        this.basicModals.confirm("Delete dataset", "Attention, this operation will delete the dataset " +
+        this.basicModals.confirm("DATASETS.ACTIONS.DELETE_DATASET", "Attention, this operation will delete the dataset " +
             project.getName() + ". Are you sure to proceed?", ModalType.warning).then(
             () => {
                 //retrieve the remote repositories referenced by the deleting project (this must be done before the deletion in order to prevent errors)
@@ -178,7 +178,7 @@ export class ProjectsManagerComponent {
 
     createIndex(project: Project) {
         if (!project.isOpen()) {
-            this.basicModals.alert("Create index", "Cannot create the index of a closed dataset. Please, open the dataset and then retry.", ModalType.warning);
+            this.basicModals.alert("ADMINISTRATION.DATASETS.MANAGEMENT.CREATE_INDEX", "Cannot create the index of a closed dataset. Please, open the dataset and then retry.", ModalType.warning);
             return;
         }
         this.clearIndexImpl(project).subscribe(
@@ -224,7 +224,7 @@ export class ProjectsManagerComponent {
 
     createMapleMetadata(project: Project) {
         if (!project.isOpen()) {
-            this.basicModals.alert("Create dataset metadata", "Cannot create the metadata of a closed dataset. Please, open the dataset and then retry.", ModalType.warning);
+            this.basicModals.alert("DATASETS.ACTIONS.CREATE_METADATA", "Cannot create the metadata of a closed dataset. Please, open the dataset and then retry.", ModalType.warning);
             return;
         }
         this.createMapleMetadataImpl(project).subscribe();
@@ -274,7 +274,7 @@ export class ProjectsManagerComponent {
                 value: true,
             });
         }
-        this.basicModals.confirmCheck("Change status", confirmationMsg, confirmActionOpt, ModalType.warning).then(
+        this.basicModals.confirmCheck("ADMINISTRATION.DATASETS.MANAGEMENT.CHANGE_STATUS", confirmationMsg, confirmActionOpt, ModalType.warning).then(
             (checkboxOpts: ConfirmCheckOptions[]) => {
                 this.pmkiService.setProjectStatus(project.getName(), role).subscribe(
                     () => {
@@ -325,7 +325,7 @@ export class ProjectsManagerComponent {
     }
 
     editDescription(project: Project) {
-        this.basicModals.prompt("Edit dataset description", { value: "Description" }, null, project.getDescription(), null, true).then(
+        this.basicModals.prompt("ADMINISTRATION.DATASETS.MANAGEMENT.EDIT_DESCRIPTION", { value: "Description" }, null, project.getDescription(), null, true).then(
             descr => {
                 this.projectService.setProjectProperty(project, "description", descr).subscribe(
                     () => {

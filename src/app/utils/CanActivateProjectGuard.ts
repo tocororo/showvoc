@@ -57,7 +57,7 @@ export class ProjectGuard implements CanActivate {
                                         map(() => true)
                                     )
                                 } else { //project not found, redirect to home
-                                    this.basicModals.alert("Dataset not found", "The requested dateset (id: '" + paramProject +
+                                    this.basicModals.alert("DATASETS.STATUS.DATASET_NOT_FOUND", "The requested dateset (id: '" + paramProject +
                                         "') does not exist or is not open. You will be redirect to the home page.", ModalType.warning).then(
                                             () => { this.router.navigate(["/"]) }
                                         );

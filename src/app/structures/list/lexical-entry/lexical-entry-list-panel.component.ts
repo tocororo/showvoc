@@ -94,7 +94,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
                 this.openAt(results[0]);
             } else { //multiple results, ask the user which one select
                 ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
-                this.basicModals.selectResource("Search results", results.length + " results found.", results, this.rendering).then(
+                this.basicModals.selectResource("SEARCH.SEARCH_RESULTS", results.length + " results found.", results, this.rendering).then(
                     (selectedResource: AnnotatedValue<IRI>) => {
                         this.openAt(selectedResource);
                     },
@@ -121,7 +121,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
                     } else {
                         message += " lexicon. If you want to activate the lexicon and continue the search, please select it and press OK.";
                     }
-                    this.basicModals.selectResource("Search", message, lexicons, this.rendering).then(
+                    this.basicModals.selectResource("COMMONS.ACTIONS.SEARCH", message, lexicons, this.rendering).then(
                         (lexicon: AnnotatedValue<Resource>) => {
                             this.pmkiProp.setActiveLexicon(PMKIContext.getProjectCtx(), <IRI>lexicon.getValue()); //update the active lexicon
                             setTimeout(() => { //wait for a change detection round, since after the setActiveLexicon, the lex entry list is reset
