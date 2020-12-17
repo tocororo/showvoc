@@ -59,7 +59,7 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.DATASET.IDENTITY'|translate}} <span>*</span></label>
             <div class="col-sm-10">
-                <input class="form-control form-control-sm" [(ngModel)]="identity" placeholder="Identity IRI">
+                <input class="form-control form-control-sm" [(ngModel)]="identity" [placeholder]="'MODELS.DATASET.IDENTITY_IRI'|translate">
             </div>
         </div>
         <div class="form-group row">
@@ -73,7 +73,7 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.DATASET.SPARQL_ENDPOINT'|translate}} <span>*</span></label>
             <div class="col-sm-10 d-flex">
-                <input class="form-control form-control-sm" [(ngModel)]="sparqlEndpoint" placeholder="SPARQL endpoint URL">
+                <input class="form-control form-control-sm" [(ngModel)]="sparqlEndpoint" [placeholder]="'MODELS.DATASET.SPARQL_ENDPOINT_URL'|translate">
                 <div class="form-check form-check-inline ml-2">
                     <input class="form-check-input" type="checkbox" [(ngModel)]="sparqlNoAggregation" [disabled]="!sparqlEndpoint">
                     <label class="form-check-label text-nowrap">{{'CONTRIBUTIONS.FORM.COMMONS.NO_AGGREGATION'|translate}}</label>

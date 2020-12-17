@@ -39,8 +39,8 @@
         <tfoot>
             <tr>
                 <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.serverURL" placeholder="http://serverurl"></td>
-                <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.username" placeholder="username"></td>
-                <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.password" placeholder="password"></td>
+                <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.username" [placeholder]="'COMMONS.CONFIG.USERNAME'|translate"></td>
+                <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.password" [placeholder]="'COMMONS.CONFIG.PASSWORD'|translate"></td>
                 <td>
                     <button class="btn btn-sm btn-light" (click)="createConfiguration()" [disabled]="!newConfig.serverURL">
                         <span class="fas fa-plus"></span>

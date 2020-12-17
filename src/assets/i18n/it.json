@@ -292,8 +292,10 @@
     "MODELS": {
         "DATASET": {
             "IDENTITY": "Identity",
+            "IDENTITY_IRI": "IRI identity",
             "DEREF_SYSTEM": "Sistema di dereferenziazione",
             "SPARQL_ENDPOINT": "Endpoint SPARQL",
+            "SPARQL_ENDPOINT_URL": "URL SPARQL endpoint",
             "URI_SPACE": "URI space"
         },
         "PROJECT": {
