@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
@@ -56,7 +57,7 @@ export class StableContributionComponent extends AbstractContributionComponent {
         { uri: SemanticTurkey.noDereferenciation, show: "No" },
     ]
 
-    constructor(private metadataRegistryService: MetadataRegistryServices, private basicModals: BasicModalsServices) {
+    constructor(private metadataRegistryService: MetadataRegistryServices, private basicModals: BasicModalsServices, private translateService: TranslateService) {
         super();
     }
 
@@ -80,8 +81,7 @@ export class StableContributionComponent extends AbstractContributionComponent {
             },
             (err: Error) => { //in case discoverDataset throws an exception prevent to contribute metadata
                 if (err.name.endsWith("DeniedOperationException")) {
-                    this.basicModals.alert("DATASETS.STATUS.ALREADY_EXISTING_DATASET", "A dataset for the provided IRI " + baseUriIRI.toNT() + 
-                        " is already in the metadata registry", ModalType.warning);
+                    this.basicModals.alert({ key: "MESSAGES.DATASET_ALREADY_IN_METADATA_REGISTRY" }, ModalType.warning);
                 }
             }
         );
@@ -95,18 +95,18 @@ export class StableContributionComponent extends AbstractContributionComponent {
         //check mandatory fields
         let missingField: string;
         if (this.resourceName == null) {
-            missingField = "Resource name";
+            missingField = this.translateService.instant("CONTRIBUTIONS.FORM.COMMONS.RESOURCE_NAME");
         } else if (this.description == null) {
-            missingField = "Description";
+            missingField = this.translateService.instant("COMMONS.DESCRIPTION");
         } else if (this.baseURI == null) {
-            missingField = "Base URI";
+            missingField = this.translateService.instant("MODELS.PROJECT.BASE_URI");
         } else if (this.selectedSemModel == null) {
-            missingField = "Model";
+            missingField = this.translateService.instant("MODELS.PROJECT.MODEL");
         } else if (this.selectedLexModel == null) {
-            missingField = "Lexicalization model";
+            missingField = this.translateService.instant("MODELS.PROJECT.LEXICALIZATION");
         }
         if (missingField != null) {
-            this.basicModals.alert("COMMONS.STATUS.INCOMPLETE_FORM", "Missing mandatory field '" + missingField + "'", ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" }, { key: "MESSAGES.MISSING_MANDATORY_FIELD", params: { missingField: missingField } } , ModalType.warning);
             return;
         }
         let config: ConfigurationObject = {

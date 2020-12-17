@@ -1,5 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from "@ngx-translate/core";
 import { finalize } from 'rxjs/operators';
 import { PmkiConstants } from 'src/app/models/Pmki';
 import { Properties } from 'src/app/models/Properties';
@@ -29,7 +30,8 @@ export class CreateProjectModal {
 
     constructor(public activeModal: NgbActiveModal, private modalService: NgbModal, private projectService: ProjectsServices,
         private extensionsService: ExtensionsServices, private adminService: AdministrationServices,
-        private prefService: PreferencesSettingsServices, private basicModals: BasicModalsServices) { }
+        private prefService: PreferencesSettingsServices, private basicModals: BasicModalsServices,
+        private translateService: TranslateService) { }
 
     ngOnInit() {
         // init core repo extensions
@@ -156,12 +158,12 @@ export class CreateProjectModal {
 
     changeRemoteRepository() {
         if (this.selectedRemoteRepoConfig == null || this.selectedRemoteRepoConfig.serverURL == null) {
-            this.basicModals.alert("COMMONS.CONFIG.MISSING_CONFIGURATION", "The remote 'Repository Access' has not been configure.", ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.REMOTE_REPO_ACCESS_NOT_CONFIGURED"}, ModalType.warning);
             return;
         }
 
         const modalRef: NgbModalRef = this.modalService.open(RemoteRepoSelectionModal, new ModalOptions("lg"));
-        modalRef.componentInstance.title = "ADMINISTRATION.DATASETS.REMOTE.SELECT_REMOTE_REPO";
+        modalRef.componentInstance.title = this.translateService.instant("ADMINISTRATION.DATASETS.REMOTE.SELECT_REMOTE_REPO");
         modalRef.componentInstance.repoConfig = this.selectedRemoteRepoConfig;
         modalRef.result.then(
             (repo: Repository) => {
@@ -174,12 +176,12 @@ export class CreateProjectModal {
     ok() {
         //check project name
         if (!this.projectName || this.projectName.trim() == "") {
-            this.basicModals.alert("DATASETS.ACTIONS.CREATE_DATASET", "Dataset name is missing or not valid", ModalType.warning);
+            this.basicModals.alert({ key: "DATASETS.ACTIONS.CREATE_DATASET" }, {key:"MESSAGES.DATASET_NAME_MISSING"}, ModalType.warning);
             return;
         }
         //check baseURI
         if (this.baseURI.trim() == null || this.baseURI.trim() == "") {
-            this.basicModals.alert("DATASETS.ACTIONS.CREATE_DATASET", "BaseURI is missing or not valid", ModalType.warning);
+            this.basicModals.alert({ key: "DATASETS.ACTIONS.CREATE_DATASET" }, {key:"MESSAGES.BASEURI_MISSING"}, ModalType.warning);
             return;
         }
 
@@ -190,7 +192,7 @@ export class CreateProjectModal {
         //in case of remote repository access, set the configuration
         if (this.isRepoAccessRemote()) {
             if (this.selectedRemoteRepoConfig == null) {
-                this.basicModals.alert("COMMONS.CONFIG.MISSING_CONFIGURATION", "The remote 'Repository Access' has not been configure.", ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.REMOTE_REPO_ACCESS_NOT_CONFIGURED"}, ModalType.warning);
                 return;
             }
             repositoryAccess.setConfiguration(this.selectedRemoteRepoConfig);
@@ -198,7 +200,7 @@ export class CreateProjectModal {
 
         //check if data repository configuration needs to be configured
         if (this.selectedDataRepoConfig.requireConfiguration()) {
-            this.basicModals.alert("COMMONS.CONFIG.MISSING_CONFIGURATION", "The data repository (" + this.selectedDataRepoConfig.shortName + ") requires to be configured", ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.DATA_REPO_NOT_CONFIGURED"}, ModalType.warning);
             return;
         }
         let coreRepoSailConfigurerSpecification: PluginSpecification = {
@@ -227,7 +229,7 @@ export class CreateProjectModal {
                 this.adminService.addRolesToUser(this.projectName, PmkiConstants.visitorEmail, [PmkiConstants.roleStaging]).pipe(
                     finalize(() => this.loading = false)
                 ).subscribe(() => {
-                    this.basicModals.alert("DATASETS.STATUS.DATASET_CREATED", "The dataset has been successfully created");
+                    this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_CREATED" }, {key:"MESSAGES.DATASET_CREATED"});
                     this.activeModal.close();
                 })
             });

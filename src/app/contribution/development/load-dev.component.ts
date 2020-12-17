@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
@@ -50,7 +51,8 @@ export class LoadDevResourceComponent {
     selectedLifterConfig: Settings;
 
     constructor(private pmkiService: PmkiServices, private inputOutputService: InputOutputServices, private extensionService: ExtensionsServices,
-        private basicModals: BasicModalsServices, private activeRoute: ActivatedRoute, private router: Router) { }
+        private basicModals: BasicModalsServices, private activeRoute: ActivatedRoute, private router: Router,
+        private translateService: TranslateService) { }
 
     ngOnInit() {
         this.token = this.activeRoute.snapshot.params['token'];
@@ -129,7 +131,7 @@ export class LoadDevResourceComponent {
         }
         if (this.selectedLifterConfig != null) {
             if (this.selectedLifterConfig.requireConfiguration()) {
-                this.basicModals.alert("COMMONS.CONFIG.MISSING_CONFIGURATION", "The Lifter needs to be configured", ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.LIFTER_NOT_CONFIGURED"}, ModalType.warning);
                 return;
             }
             rdfLifterSpec.configType = this.selectedLifterConfig.type;
@@ -142,11 +144,11 @@ export class LoadDevResourceComponent {
             finalize(() => this.loading = false)
         ).subscribe(
             () => {
-                let message: string = "Data loaded successfully";
+                let message: string = this.translateService.instant("MESSAGES.DATA_LOADED");
                 if (this.conversionFormat != PmkiConversionFormat.EXCEL) {
-                    message += ". You will soon recieve an email containing details for connecting to the VocBench"
+                    message += " " + this.translateService.instant("MESSAGES.YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB");
                 }
-                this.basicModals.alert("ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA", message).then(
+                this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, message).then(
                     () => {
                         this.router.navigate(["/home"]);
                     }

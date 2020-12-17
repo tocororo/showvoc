@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
@@ -39,25 +40,25 @@ export class ContributionComponent {
     selectedContribution: ContributionType;
 
 
-    constructor(private configurationsService: ConfigurationsServices, private pmkiServices: PmkiServices,
-        private basicModals: BasicModalsServices, private router: Router) { }
+    constructor(private pmkiServices: PmkiServices, private basicModals: BasicModalsServices, private router: Router, 
+        private translateService: TranslateService) { }
 
     submit() {
         //check mandatory fields in the current page
         let missingField: string;
         if (this.name == null) {
-            missingField = "Given name";
+            missingField = this.translateService.instant("USER.ATTR.GIVEN_NAME");
         } else if (this.lastName == null) {
-            missingField = "Family name";
+            missingField = this.translateService.instant("USER.ATTR.FAMILY_NAME");
         } else if (this.email == null) {
-            missingField = "Email";
+            missingField = this.translateService.instant("USER.ATTR.EMAIL_ADDRESS");
         }
         if (missingField != null) {
-            this.basicModals.alert("COMMONS.STATUS.INCOMPLETE_FORM", "Missing mandatory field '" + missingField + "'", ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" }, { key: "MESSAGES.MISSING_MANDATORY_FIELD", params: { missingField: missingField } }, ModalType.warning);
             return;
         }
         if (!UserForm.isValidEmail(this.email)) {
-            this.basicModals.alert("COMMONS.STATUS.INVALID_DATA", this.email + " is not a valid email address.", ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.STATUS.INVALID_DATA" }, { key: "MESSAGES.INVALID_EMAIL", params: { email: this.email }}, ModalType.warning);
             return;
         }
 
@@ -87,8 +88,7 @@ export class ContributionComponent {
             finalize(() => this.loading = false)
         ).subscribe(
             () => {
-                this.basicModals.alert("CONTRIBUTIONS.FORM.EMAIL.COMMONS.REQUEST_SUBMITTED", "Your contribution request has been succesfully submitted. " + 
-                    "It will be evaluated by the administrator and you will receive the response to the provided email").then(
+                this.basicModals.alert({ key: "CONTRIBUTIONS.FORM.EMAIL.COMMONS.REQUEST_SUBMITTED" }, {key:"MESSAGES.CONTRIBUTION_SUBMITTED"}).then(
                     () => {
                         this.router.navigate(["/home"]);
                     }

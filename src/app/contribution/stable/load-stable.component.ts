@@ -113,7 +113,7 @@ export class LoadStableResourceComponent {
         }
         if (this.selectedLifterConfig != null) {
             if (this.selectedLifterConfig.requireConfiguration()) {
-                this.basicModals.alert("COMMONS.CONFIG.MISSING_CONFIGURATION", "The Lifter needs to be configured", ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.LIFTER_NOT_CONFIGURED"}, ModalType.warning);
                 return;
             }
             rdfLifterSpec.configType = this.selectedLifterConfig.type;
@@ -128,7 +128,7 @@ export class LoadStableResourceComponent {
             ).subscribe(
                 () => {
                     PMKIContext.removeTempProject();
-                    this.basicModals.alert("ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA", "Data loaded successfully.").then(
+                    this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, {key:"MESSAGES.DATA_LOADED"}).then(
                         () => {
                             this.router.navigate(["/home"]);
                         }

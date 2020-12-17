@@ -82,7 +82,7 @@ export class SparqlTabComponent implements OnInit {
     doQuery() {
 
         if (this.queryMode == QueryMode.update) {
-            this.basicModals.alert("COMMONS.DENIED_OPERATION", "Update query not allowed", ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.DENIED_OPERATION" }, {key:"MESSAGES.UPDATE_QUERY_NOT_ALLOWED"}, ModalType.warning);
             return;
         }
 
@@ -332,7 +332,7 @@ export class SparqlTabComponent implements OnInit {
             blob => {
                 this.exportInProgress = false;
                 var exportLink = window.URL.createObjectURL(blob);
-                this.basicModals.downloadLink("SPARQL.ACTIONS.EXPORT_RESULTS", null, exportLink, "sparql_export." + format);
+                this.basicModals.downloadLink({ key: "SPARQL.ACTIONS.EXPORT_RESULTS" }, null, exportLink, "sparql_export." + format);
             }
         );
     }
@@ -351,7 +351,7 @@ export class SparqlTabComponent implements OnInit {
         var data = new Blob([fileContent], { type: 'text/plain' });
         var textFile = window.URL.createObjectURL(data);
         var fileName = "result." + type;
-        this.basicModals.downloadLink("SPARQL.ACTIONS.EXPORT_RESULTS", null, textFile, fileName).then(
+        this.basicModals.downloadLink({ key: "SPARQL.ACTIONS.EXPORT_RESULTS" }, null, textFile, fileName).then(
             done => { window.URL.revokeObjectURL(textFile); },
             () => { }
         );

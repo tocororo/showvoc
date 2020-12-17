@@ -102,14 +102,13 @@ export class DevProjectCreationModal {
 
     ok() {
         if (this.vbConnectionConfig.stHost == null) {
-            this.basicModals.alert("COMMONS.CONFIG.MISSING_CONFIGURATION", "The system has not been configured in order to connect with a remote VocBench instance. " +
-                "Please provide a configuration in the 'System configuration' page.", ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION"}, ModalType.warning);
             return;
         }
 
         //check if data repository configuration needs to be configured
         if (this.selectedDataRepoConfig.requireConfiguration()) {
-            this.basicModals.alert("COMMONS.CONFIG.MISSING_CONFIGURATION", "The data repository (" + this.selectedDataRepoConfig.shortName + ") requires to be configured", ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.DATA_REPO_NOT_CONFIGURED"}, ModalType.warning);
             return;
         }
         let coreRepoSailConfigurerSpecification: PluginSpecification = {
@@ -124,7 +123,7 @@ export class DevProjectCreationModal {
                 finalize(() => this.loading = false)
             ).subscribe(
                 () => {
-                    this.basicModals.alert("DATASETS.STATUS.DATASET_CREATED", "The contribution has been approved and the dataset has been successfully created");
+                    this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_CREATED" }, {key:"MESSAGES.CONTRIBUTION_APPROVED_DATASET_CREATED"});
                     this.activeModal.close();
                 }
             );

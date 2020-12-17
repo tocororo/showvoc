@@ -7,6 +7,7 @@ import { MetadataRegistryServices } from 'src/app/services/metadata-registry.ser
 import { AbstractContributionComponent } from '../abstract-contribution.component';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { SemanticTurkey } from 'src/app/models/Vocabulary';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'metadata-contribution',
@@ -33,7 +34,7 @@ export class MetadataContributionComponent extends AbstractContributionComponent
         { uri: SemanticTurkey.noDereferenciation, show: "No" },
     ]
 
-    constructor(private metadataRegistryService: MetadataRegistryServices, private basicModals: BasicModalsServices) {
+    constructor(private metadataRegistryService: MetadataRegistryServices, private basicModals: BasicModalsServices, private translateService: TranslateService) {
         super();
     }
 
@@ -57,7 +58,7 @@ export class MetadataContributionComponent extends AbstractContributionComponent
             (err: Error) => {
                 //in case discoverDataset throws an exception prevent to contribute metadata
                 if (err.name.endsWith("DeniedOperationException")) {
-                    this.basicModals.alert("DATASETS.STATUS.ALREADY_EXISTING_DATASET", "A dataset for the provided IRI " + baseUriIRI.toNT() + " is already in the metadata registry", ModalType.warning);
+                    this.basicModals.alert({ key: "DATASETS.STATUS.ALREADY_EXISTING_DATASET" }, {key:"MESSAGES.DATASET_ALREADY_IN_METADATA_REGISTRY"}, ModalType.warning);
                 }
             }
         );
@@ -65,7 +66,9 @@ export class MetadataContributionComponent extends AbstractContributionComponent
 
     getConfigurationImpl(): ConfigurationObject {
         if (this.resourceName == null) {
-            this.basicModals.alert("COMMONS.STATUS.INCOMPLETE_FORM", "Missing mandatory field 'Resource name'", ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" }, 
+                { key: "MESSAGES.MISSING_MANDATORY_FIELD", params: { missingField: this.translateService.instant("CONTRIBUTIONS.FORM.COMMONS.RESOURCE_NAME") } },
+                ModalType.warning);
             return;
         }
         let config: ConfigurationObject = {
@@ -85,7 +88,7 @@ export class MetadataContributionComponent extends AbstractContributionComponent
             }
         }
         if (emptyMetadata) {
-            this.basicModals.alert("COMMONS.STATUS.INCOMPLETE_FORM", "No metadata has been provided", ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" }, {key:"MESSAGES.NO_METADATA_PROVIDED"}, ModalType.warning);
             return;
         }
         return config;

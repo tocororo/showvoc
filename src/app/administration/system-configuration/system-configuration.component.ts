@@ -122,11 +122,11 @@ export class SystemConfigurationComponent implements OnInit {
 
     testEmailConfig() {
         if (this.isEmailConfigChanged()) {
-            this.basicModals.alert("ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST", "Email configuration has been changed, you need first to submit the changes.", ModalType.warning);
+            this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST" }, {key:"MESSAGES.EMAIL_CONFIG_CHANGED"}, ModalType.warning);
             return;
         }
 
-        this.basicModals.prompt("ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST", { value: "Mail to" }, "This test will send an e-mail to the provided address in order to "
+        this.basicModals.prompt({ key: "ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST" }, { value: "Mail to" }, "This test will send an e-mail to the provided address in order to "
             + "check the e-mail configuration", PMKIContext.getLoggedUser().getEmail()).then(
             mailTo => {
                 this.testEmailConfigLoading = true;
@@ -134,7 +134,7 @@ export class SystemConfigurationComponent implements OnInit {
                     finalize(() => this.testEmailConfigLoading = false)
                 ).subscribe(
                     () => {
-                        this.basicModals.alert("ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST", "The configuration works fine. A test e-mail has been sent to " + mailTo + ".");
+                        this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST" }, {key:"MESSAGES.EMAIL_CONFIG_TEST_SUCCESS"});
                     }
                 );
             },
@@ -217,11 +217,11 @@ export class SystemConfigurationComponent implements OnInit {
             (!this.vbConnectionConfig.adminPassword || this.vbConnectionConfig.adminPassword.trim() == "") ||
             (!this.vbConnectionConfig.stHost || this.vbConnectionConfig.stHost.trim() == "")
         ) {
-            this.basicModals.alert("ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST", "VocBench configuration is incomplete. Please fill all the fields and retry.", ModalType.warning);
+            this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST" }, {key:"MESSAGES.VB_CONFIG_INCOMPLETE"}, ModalType.warning);
             return;
         }
         if (this.isVbConfigChanged()) {
-            this.basicModals.alert("ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST", "VocBench configuration has been changed, you need first to submit the changes.", ModalType.warning);
+            this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST" }, {key:"MESSAGES.VB_CONFIG_CHANGED"}, ModalType.warning);
             return;
         }
         this.testVbConfigLoading = true;
@@ -229,10 +229,10 @@ export class SystemConfigurationComponent implements OnInit {
             finalize(() => this.testVbConfigLoading = false)
         ).subscribe(
             () => {
-                this.basicModals.alert("ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST", "The configuration has been tested successfully");
+                this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST" }, {key:"MESSAGES.VB_CONFIG_TEST_SUCCESS"});
             },
             (error: Error) => {
-                this.basicModals.alert("ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST", "Test failed, the configuration provided is not correct.", ModalType.error, error.message);
+                this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST" }, {key:"MESSAGES.VB_CONFIG_TEST_FAIL"}, ModalType.error, error.message);
             }
         )
     }

@@ -32,7 +32,7 @@ export class ResetPasswordComponent implements OnInit {
             finalize(() => this.loading = false)
         ).subscribe(
             stResp => {
-                this.basicModals.alert("USER.PASSWORD.RESET_PASSWORD", "Password has been successfully reset. You will receive an e-mail with the new temporary password.").then(
+                this.basicModals.alert({ key: "USER.PASSWORD.RESET_PASSWORD" }, { key: "MESSAGES.PASSWORD_RESET_SUCCESS" }).then(
                     () => {
                         this.router.navigate(["/login"]);
                     }
