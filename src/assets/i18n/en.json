@@ -18,7 +18,6 @@
             },
             "REMOTE": {
                 "DELETE_REPO": "Delete remote repositories",
-                "DELETE_REFERENCED_REPO_INFO": "The following repositories was referenced by the deleted project. Select the repositories you want to delete.",
                 "REASON": "Reason",
                 "SELECT_REMOTE_REPO": "Select Remote Data Repository",
                 "CONFIG": {
@@ -39,10 +38,8 @@
             }
         },
         "SYSTEM": {
-            "INTRO": "In this section you can setup some core aspects of the system. This panel can be accessed also later from <i>Administration dashboard</i> > <i>Configuration</i>",
             "EMAIL": {
                 "EMAIL_CONFIG": "Email Configuration",
-                "EMAIL_CONFIG_INFO": "Configuration of the PMKI e-mail service. This service will be used to send notifications to the contributors<br><strong>Note</strong>: if this is not properly configured, it will be impossible to send email to contributors, so they will be not able to complete a contribution.",
                 "EMAIL_CONFIG_TEST": "Email Configuration test",
                 "MAIL_SERVER_URL_INFO": "SMTP Mail Server IP/URL",
                 "MAIL_SERVER_PORT_INFO": "Mail Server Port",
@@ -82,8 +79,7 @@
         },
         "ALIGNMENTS": "Alignments",
         "SOURCE_DATASET": "Source dataset",
-        "MAPPINGS": "Mappings",
-        "METADATA_NOT_FOUND": "Unable to find metadata about the current dataset in the MetadataRegistry. Please profile the dataset by clicking the <i class=\"fas fa-chart-bar\"></i> button."
+        "MAPPINGS": "Mappings"
     },
     "APP": {
         "USER_MENU": {
@@ -190,7 +186,8 @@
             "INSTANCE": "Instance",
             "INSTANCES": "Instances",
             "UNSAFE_WARN": {
-                "TOO_MUCH_INST": "Too much instances"
+                "TOO_MUCH_INST": "Too much instances",
+                "TOO_MUCH_INST_FORCE_INIT_CONFIRM": "Warning: the selected class ({{cls}}) has too many instances ({{elemCount}}). Retrieving them all could be a very long process and it may slow down the server. Do you want to continue anyway?"
             }
         },
         "LEX_ENTRY": {
@@ -449,7 +446,6 @@
     "USER": {
         "LOG_INTO_PMKI": "Log into PMKI",
         "LOGIN": "Log in",
-        "NO_USER_REGISTERED_MSG": "PMKI has detected that no user has yet registered. In order to use the platform, you need to create an administrator account by entering personal data and login credentials.",
         "REGISTRATION_COMPLETE": "Registration complete",
         "USER_DETAILS": "User details",
         "ATTR": {
@@ -540,6 +536,7 @@
         "VALUE": "Value"
     },
     "MESSAGES": {
+        "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "You are going to submit the proposed metadata into the Metadata Registry. Are you sure?",
         "ADMIN_CREATED": "The administrator account has been created. Now you will be automatically logged in with the email and the password you provided",
         "BASEURI_MISSING": "BaseURI is missing or not valid",
         "BASEURI_REQUIRED": "BaseURI required",
@@ -547,6 +544,7 @@
         "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "Cannot create the metadata of a closed dataset. Please, open the dataset and then retry.",
         "CANNOT_DELETE_OPEN_DATASET": "Cannot delete an open dataset. Please, close the dataset and then retry.",
         "CANNOT_LOAD_DATA_IN_CLOSED_DATASET": "Cannot load data into a closed dataset. Please, open the dataset and then retry.",
+        "CANNOT_PROFILE_CLOSED_DATASET": "A closed dataset cannot be profiled",
         "CLASS_FILTER_ALREADY_EXIST": "A filter for class {{cls}} already exists.",
         "CONTRIBUTION_APPROVED_DATASET_CREATED": "The contribution has been approved and the dataset has been successfully created",
         "CONTRIBUTION_SUBMITTED": "Your contribution request has been succesfully submitted. It will be evaluated by the administrator and you will receive the response to the provided email.",
@@ -560,8 +558,12 @@
         "DIFFERENT_CONFIRM_PASSWORD": "Password and confirmed password are different.",
         "DUPLICATED_SERVER_URL_CONFIG": "A configuration for the same server URL already exists",
         "EMAIL_CONFIG_CHANGED": "Email configuration has been changed, you need first to submit the changes.",
+        "EMAIL_CONFIG_INFO": "Configuration of the PMKI e-mail service. This service will be used to send notifications to the contributors<br><strong>Note</strong>: if this is not properly configured, it will be impossible to send email to contributors, so they will be not able to complete a contribution.",
+        "EMAIL_CONFIG_TEST_INFO": "This test will send an e-mail to the provided address in order to check the e-mail configuration",
         "EMAIL_CONFIG_TEST_SUCCESS": "The configuration works fine. A test e-mail has been sent to the provided email address.",
         "ENTER_VALID_EMAIL": "Please enter a valid e-mail address",
+        "INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET": "The index creation is not available for a closed dataset",
+        "INSERT_EMAIL_FOR_RESET_PASSWORD": "Insert the e-mail address of your account. You will receive an e-mail with the instructions for resetting the password",
         "INVALID_EMAIL": "{{email}} is not a valid email address.",
         "INVALID_SEARCH_STRING": "Please enter a valid string to search",
         "LANGUAGE_ALREAY_IN_LIST": "Language '{{lang}}' is already in the list.",
@@ -569,13 +571,21 @@
         "LANGUAGE_INVALID_TAG": "Language '{{lang}}' is not a valid language tag.",
         "LANGUAGE_SETTING_PARSING_ERROR": "Project setting initialization has encountered a problem during parsing languages settings. Default languages will be set for this project.",
         "LIFTER_NOT_CONFIGURED": "The Lifter needs to be configured",
+        "MAKE_DATASET_PUBLIC_CONFIRM": "You are going to make the dataset public, so it will be visible in the Datasets page and the content will be available to the visitors. Do you want to continue?",
+        "MAKE_DATASET_STAGING_CONFIRM": "You are going to make the dataset staging, so it will be no more visible in the Datasets page and the visitors will not be able to access its content. Contextually you can delete the index. Do you want to continue?",
+        "METADATA_NOT_FOUND_PROFILE_CONFIRM": "Unable to find metadata about the dataset '{{datasetName}}' in the MetadataRegistry. Do you want to profile the dataset? (required for the alignment feature)",
+        "METADATA_NOT_FOUND_PROFILE_DATASET": "Unable to find metadata about the current dataset in the MetadataRegistry. Please profile the dataset by clicking the <i class=\"fas fa-chart-bar\"></i> button.",
         "MISSING_MANDATORY_FIELD": "Missing mandatory field '{{missingField}}'",
         "NO_CONVERSION_FORMAT_SELECTED": "The 'Conversion required' is checked, but no format has been selected",
         "NO_METADATA_PROVIDED": "No metadata has been provided",
         "NO_SEARCH_RESULTS": "No results found for '{{searchedString}}'",
+        "NO_USER_REGISTERED": "PMKI has detected that no user has yet registered. In order to use the platform, you need to create an administrator account by entering personal data and login credentials.",
         "PASSWORD_CHANGED": "Your password has been succesfully changed. Now you will be logged out.",
         "PASSWORD_RESET_SUCCESS": "Password has been successfully reset. You will receive an e-mail with the new temporary password.",
+        "REFRESH_METADATA_CONFIRM": "You're going to refresh the metadata about the dataset '{{datasetName}}'. Are you sure?",
+        "REJECT_CONTRIBUTION_CONFIRM": "Are you sure to reject the contribution?",
         "REMOTE_REPO_ACCESS_NOT_CONFIGURED": "The remote 'Repository Access' has not been configured.",
+        "RESET_PARTITION_FILTER_CONFIRM": "The partition filter will be reset for all the available roles. Are you sure?",
         "RESET_PASSWORD_EMAIL_SENT": "An e-mail with the instructions for resetting password has been sent to the provided address.",
         "RESOURCE_ALREADY_IN_GRAPH": "Cannot add a node for the selected resource since a node for the same resource already exists",
         "RESOURCE_NOT_REACHABLE": "{{resource}} is not reachable in any tree or list. It's ResourceView will be shown in a modal dialog",
@@ -583,8 +593,12 @@
         "RES_NOT_REACHABLE_IN_TREE_DIALOG_RES_VIEW_CONFIRM": "Resource {{resource}} is not reachable in the current tree. Do you want to open its ResourceView in a modal dialog?",
         "RES_NOT_REACHABLE_IN_TREE_THROUGH_DEPRECATED": "Resource {{resource}} is not reachable in the current tree since the path to reach it contains a deprecated node. Enable the show of deprecated resources and repeat the search",
         "SEARCH_INDEX_NOT_FOUND": "Cannot find any index. Please create the index for at least one dataset, then retry.",
+        "SELECT_REFERENCED_REPO_TO_DELETE": "The following repositories was referenced by the deleted project. Select the repositories you want to delete.",
+        "SWITCH_NO_SCHEME_CONFIRM": "Searched concept '{{concept}}' does not belong to any scheme. Do you want to switch to no-scheme mode?",
+        "SYSTEM_CONFIG_INTRO": "In this section you can setup some core aspects of the system. This panel can be accessed also later from <i>Administration dashboard</i> > <i>Configuration</i>",
         "SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION": "The system has not been configured in order to connect with a remote VocBench instance. Please provide a configuration from the administrator dashboard.",
         "SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO": "The system has not been configured in order to create a remote repository. Please provide a configuration to a remote triple store from the administrator dashboard.",
+        "TOO_MUCH_LINKSETS_FILTER": "The expanded dataset has an high number of linksets ({{linksetCount}}). A performance decrease could be experienced with a growing amount of visual elements in the graph. You can filter only those linksets containing at least a given amount of links",
         "UNEXISTING_OR_CLOSED_DATASET": "The requested dateset (id: '{{datasetId}}') does not exist or is not open. You will be redirect to the home page.",
         "UNEXISTING_URI_IN_PROJECT": "Wrong URI: no resource with URI {{resUri}} exists in the current project",
         "UPDATE_QUERY_NOT_ALLOWED": "Update query not allowed",
@@ -594,6 +608,7 @@
         "VB_CONFIG_INCOMPLETE": "VocBench configuration is incomplete. Please fill all the fields and retry.",
         "VB_CONFIG_TEST_SUCCESS": "The configuration has been tested successfully.",
         "VB_CONFIG_TEST_FAIL": "Test failed, the configuration provided is not correct.",
+        "X_SEARCH_RESOURCES_FOUND": "{{results}} results found",
         "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "You will soon recieve an email containing details for connecting to the VocBench."
     }
 }

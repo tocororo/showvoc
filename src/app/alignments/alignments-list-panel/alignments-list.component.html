@@ -3,7 +3,7 @@
         <div #scrollableContainer class="scrollableContainer p-2">
             <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
 
-            <div *ngIf="missingProfile" class="alert alert-warning" [innerHTML]="'ALIGNMENTS.METADATA_NOT_FOUND'|translate"></div>
+            <div *ngIf="missingProfile" class="alert alert-warning" [innerHTML]="'MESSAGES.METADATA_NOT_FOUND_PROFILE_DATASET'|translate"></div>
 
             <div *ngFor="let l of linksets">
                 <div class="listItem" [ngClass]="{ selectedResource : l == selectedLinkset }" style="cursor: pointer;" (click)="selectLinkset(l)">

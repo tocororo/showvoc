@@ -110,8 +110,9 @@ export abstract class AbstractTree extends AbstractStruct {
 
     onTreeNodeNotReachable(node: AnnotatedValue<IRI>) {
         if (this.context == TreeListContext.dataPanel) {
-            this.basicModals.confirm({ key: "COMMONS.ACTIONS.SEARCH" }, "Node " + node.getShow() + " is not reachable in the current tree. "
-                + "Do you want to open its ResourceView in a modal dialog?", ModalType.warning).then(
+            this.basicModals.confirm({ key: "COMMONS.ACTIONS.SEARCH" }, 
+                { key: "MESSAGES.RES_NOT_REACHABLE_IN_TREE_DIALOG_RES_VIEW_CONFIRM", params: { resource: node.getShow() }},
+                ModalType.warning).then(
                 confirm => { 
                     this.sharedModals.openResourceView(node.getValue());
                 },

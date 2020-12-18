@@ -29,8 +29,9 @@ export class AlignmentsListPanelComponent {
     }
 
     refreshProfile() {
-        this.basicModals.confirm({ key: "DATASETS.ACTIONS.PROFILE_DATASET" }, "You're going to refresh the metadata about the dataset '" + PMKIContext.getWorkingProject().getName() + 
-            "'. Are you sure?", ModalType.info).then(
+        this.basicModals.confirm({ key: "DATASETS.ACTIONS.PROFILE_DATASET" }, 
+            { key: "MESSAGES.REFRESH_METADATA_CONFIRM", params: { datasetName: PMKIContext.getWorkingProject().getName() }},
+            ModalType.info).then(
             () => {
                 this.loadingProfile = true;
                 this.mapleService.profileProject().pipe(

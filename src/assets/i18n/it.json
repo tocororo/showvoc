@@ -18,7 +18,6 @@
             },
             "REMOTE": {
                 "DELETE_REPO": "Cancella repository remoto",
-                "DELETE_REFERENCED_REPO_INFO": "Il progetto eliminato faceva riferimento ai seguenti repository. Seleziona i repository che vuoi eliminare.",
                 "REASON": "Motivo",
                 "SELECT_REMOTE_REPO": "Seleziona Repository dati remoto",
                 "CONFIG": {
@@ -39,10 +38,8 @@
             }
         },
         "SYSTEM": {
-            "INTRO": "In questa sezione è possibile impostare alcuni aspetti principali del sistema. Questo pannello può essere acceduto anche più tardi da <i>Dashboard di amministrazione</i> > <i>Configurazione</i>",
             "EMAIL": {
                 "EMAIL_CONFIG": "Configurazione Email",
-                "EMAIL_CONFIG_INFO": "Configurazione del servizio e-mail di PMKI. Questo servizio sarà usato per inviare notifiche ai contributor<br><strong>Nota</strong>: se non opportunamente configurato, sarà impossibile inviare email ai contributor, pertanto non saranno in grado di portare a completamento il contributo.",
                 "EMAIL_CONFIG_TEST": "Test configurazione email",
                 "MAIL_SERVER_URL_INFO": "IP/URL del Mail Server SMTP",
                 "MAIL_SERVER_PORT_INFO": "Porta del Mail Server",
@@ -82,8 +79,7 @@
         },
         "ALIGNMENTS": "Allineamenti",
         "SOURCE_DATASET": "Dataset sorgente",
-        "MAPPINGS": "Mapping",
-        "METADATA_NOT_FOUND": "Non sono presenti metadati riguardo il dataset corrente nel MetadataRegistry. Profila il dataset cliccando sul pulsante <i class=\"fas fa-chart-bar\"></i>."
+        "MAPPINGS": "Mapping"
     },
     "APP": {
         "USER_MENU": {
@@ -190,7 +186,8 @@
             "INSTANCE": "Istanza",
             "INSTANCES": "Istanze",
             "UNSAFE_WARN": {
-                "TOO_MUCH_INST": "Troppe istanze"
+                "TOO_MUCH_INST": "Troppe istanze",
+                "TOO_MUCH_INST_FORCE_INIT_CONFIRM": "Attenzione: la classe selezionata ({{cls}}) ha molte istanze ({{elemCount}}). Recuperarle tutte potrebbe essere un processo lungo, si potrebbero riscontrare rallentamenti delle prestazioni o si potrebbe addirittura bloccare il sistema. Vuoi continuare lo stesso?"
             }
         },
         "LEX_ENTRY": {
@@ -449,7 +446,6 @@
     "USER": {
         "LOG_INTO_PMKI": "Login in PMKI",
         "LOGIN": "Log in",
-        "NO_USER_REGISTERED_MSG": "PMKI non ha rilevato alcun utente registrato. Al fine di usare la piattaforma, è necessario creare un account amministratore inserendo dati personali e credenziali d'accesso.",
         "REGISTRATION_COMPLETE": "Registrazione completata",
         "USER_DETAILS": "Dettagli utente",
         "ATTR": {
@@ -540,6 +536,7 @@
         "VALUE": "Valore"
     },
     "MESSAGES": {
+        "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Stai per inserire nel Metadata Registry i metadati proposti. Sei sicuro?",
         "ADMIN_CREATED": "L'account amministratore è stato creato. Verrai ora automaticamente loggato con l'email e la password fornite.",
         "BASEURI_MISSING": "BaseURI mancante o non valido",
         "BASEURI_REQUIRED": "BaseURI necessario",
@@ -547,6 +544,7 @@
         "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "Non è possibile creare i metadati di un dataset chiuso. Aprire il dataset e riprovare.",
         "CANNOT_DELETE_OPEN_DATASET": "Non è possibile eliminare un dataset aperto. Chiudere il dataset e riprovare.",
         "CANNOT_LOAD_DATA_IN_CLOSED_DATASET": "Non è possibile caricare dati in un dataset chiuso. Aprire il dataset e riprovare.",
+        "CANNOT_PROFILE_CLOSED_DATASET": "Un dataset chiuso non può essere profilato",
         "CLASS_FILTER_ALREADY_EXIST": "Un filtro per la classe {{cls}} già esiste.",
         "CONTRIBUTION_APPROVED_DATASET_CREATED": "Il contributo è stato approvato e il dataset è stato creato con successo",
         "CONTRIBUTION_SUBMITTED": "La tua richiesta di contributo è stata inviata con successo. Verrà valutata dall'amministratore e riceverai l'esito all'indirizzo email fornito.",
@@ -560,8 +558,12 @@
         "DIFFERENT_CONFIRM_PASSWORD": "Password e conferma passowrd sono differenti.",
         "DUPLICATED_SERVER_URL_CONFIG": "Una configurazione per lo stesso URL server già esiste",
         "EMAIL_CONFIG_CHANGED": "La configurazione email è stata modificata, è necessario prima confermare le modifiche.",
+        "EMAIL_CONFIG_INFO": "Configurazione del servizio e-mail di PMKI. Questo servizio sarà usato per inviare notifiche ai contributor<br><strong>Nota</strong>: se non opportunamente configurato, sarà impossibile inviare email ai contributor, pertanto non saranno in grado di portare a completamento il contributo.",
+        "EMAIL_CONFIG_TEST_INFO": "Questo test invierà una email all'indirizzo fornito al fine di verificare la configurazione",
         "EMAIL_CONFIG_TEST_SUCCESS": "La configurazione funziona correttamente. Una email di test è stata inviata all'indirizzo email fornito.",
         "ENTER_VALID_EMAIL": "Inserisci un indirizzo email valido",
+        "INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET": "La creazione dell'indice non è disponibile per un dataset chiuso",
+        "INSERT_EMAIL_FOR_RESET_PASSWORD": "Inserisci l'indirizzo email del tuo account. Riceverai una email con le istruzioni per resettare la password",
         "INVALID_EMAIL": "{{email}} non è un indirizzo email valido.",
         "INVALID_SEARCH_STRING": "Inserire una stringa valida",
         "LANGUAGE_ALREAY_IN_LIST": "La lingua '{{lang}}' è già nella lista.",
@@ -569,13 +571,21 @@
         "LANGUAGE_INVALID_TAG": "'{{lang}}' non è un language tag valido.",
         "LANGUAGE_SETTING_PARSING_ERROR": "L'inizializzazione delle impostazioni del progetto ha riscontrato un problema durante il parsing delle impostazioni sulle lingue. Verranno impostate delle lingue predefinite.",
         "LIFTER_NOT_CONFIGURED": "Il Lifter necessita di essere configurato",
+        "MAKE_DATASET_PUBLIC_CONFIRM": "Stai per rendere il dataset publico, pertanto sarà visibile nella pagina Dataset e il contenuto sarà consultabile dall'utente visitatore. Vuoi continuare?",
+        "MAKE_DATASET_STAGING_CONFIRM": "Stai per rendere il dataset staging, pertanto non sarà più visibile nella pagina Dataset e l'utente visitatore non sarà più in grado di accedere al contenuto. Contestualmente puoi eliminare l'indice. Vuoi continuare?",
+        "METADATA_NOT_FOUND_PROFILE_CONFIRM": "Non sono stati trovati metadati del dataset '{{datasetName}}' nel MetadataRegistry. Vuoi profilare il dataset? (necessario per la funzionalità di allineamento)",
+        "METADATA_NOT_FOUND_PROFILE_DATASET": "Non sono presenti metadati riguardo il dataset corrente nel MetadataRegistry. Profila il dataset cliccando sul pulsante <i class=\"fas fa-chart-bar\"></i>.",
         "MISSING_MANDATORY_FIELD": "Campo obbligatorio assente: '{{missingField}}'",
         "NO_CONVERSION_FORMAT_SELECTED": "L'opzione 'CConversione necessaria' è spuntata ma nessun formato è stato selezionato.",
         "NO_METADATA_PROVIDED": "Nessun metadato è stato fornito",
         "NO_SEARCH_RESULTS": "Nessun risultato trovato per '{{searchedString}}'",
+        "NO_USER_REGISTERED": "PMKI non ha rilevato alcun utente registrato. Al fine di usare la piattaforma, è necessario creare un account amministratore inserendo dati personali e credenziali d'accesso.",
         "PASSWORD_CHANGED": "La tua password è stata cambiata con successo. Verrai ora sloggato.",
         "PASSWORD_RESET_SUCCESS": "La password è stata correttamente resettata. Riceverai una email con una nuova password temporanea.",
+        "REFRESH_METADATA_CONFIRM": "Stai per aggiornare i metadati del dataset '{{datasetName}}'. Sei sicuro?",
+        "REJECT_CONTRIBUTION_CONFIRM": "Sei sicuro di voler rifiutare il contributo?",
         "REMOTE_REPO_ACCESS_NOT_CONFIGURED": "Il 'Repository Access' remoto non è stato configurato.",
+        "RESET_PARTITION_FILTER_CONFIRM": "Il filtro partizione verrà resettato per tutti i tipi di risorsa. Sei sicuro?",
         "RESET_PASSWORD_EMAIL_SENT": "Una email con le istruzioni per resettare la password è stata inviata all'indirizzo fornito.",
         "RESOURCE_ALREADY_IN_GRAPH": "Non è possibile aggiungere un nodo per la risorsa selezionata, un nodo per la stessa risorsa è già presente",
         "RESOURCE_NOT_REACHABLE": "{{resource}} non è raggiungibile in alcuna lista o albero. Il suo ResourceView verrà aperto in una finestra modale.",
@@ -583,8 +593,12 @@
         "RES_NOT_REACHABLE_IN_TREE_DIALOG_RES_VIEW_CONFIRM": "La risorsa {{resource}} non è raggiungibile nell'albero corrente. Vuoi aprire il suo ResourceView in una finestra?",
         "RES_NOT_REACHABLE_IN_TREE_THROUGH_DEPRECATED": "La risorsa {{resource}} non è raggiungibile nell'albero corrente dal momento che il path per raggiungerlo contiene una risorsa deprecata. Abilita la visualizzazione di risorse deprecate e ripeti la ricerca.",
         "SEARCH_INDEX_NOT_FOUND": "Indice non trovato. E' necessario creare l'indice per almeno un dataset, quindi riprovare.",
+        "SELECT_REFERENCED_REPO_TO_DELETE": "Il progetto eliminato faceva riferimento ai seguenti repository. Seleziona i repository che vuoi eliminare.",
+        "SWITCH_NO_SCHEME_CONFIRM": "Il concetto cercato '{{concept}}' non appartiene ad alcuno schema. Vuoi passare alla modalità no-scheme?",
+        "SYSTEM_CONFIG_INTRO": "In questa sezione è possibile impostare alcuni aspetti principali del sistema. Questo pannello può essere acceduto anche più tardi da <i>Dashboard di amministrazione</i> > <i>Configurazione</i>",
         "SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION": "Il sistema non è stato configurato per connettersi con un'istanza remota di VocBench. Si prega di fornire una configurazione tramite la dashboard di amministrazione.",
         "SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO": "Il sistema non è stato configurato per creare un repository remoto. Si prega di fornire una configurazione di un triple store remoto tramite la dashboard di amministrazione.",
+        "TOO_MUCH_LINKSETS_FILTER": "Il dataset che stai espandendo ha una grande quantità di linkset ({{linksetCount}}). Si potrebbero riscontrare rallentamenti delle prestazioni al crescere degli elementi visualizzati nel grafo. Puoi far sì che vengano visualizzati solo i linkset contenenti almeno un numero minimo di link",
         "UNEXISTING_OR_CLOSED_DATASET": "Il dateset richiesto (id: '{{datasetId}}') non esiste o non è aperto. Verrai rimandato alla home page.",
         "UNEXISTING_URI_IN_PROJECT": "URI sbagliato: non esiste alcuna risorsa con URI {{resUri}} nel progetto corrente",
         "UPDATE_QUERY_NOT_ALLOWED": "Query update non censentite",
@@ -594,7 +608,7 @@
         "VB_CONFIG_INCOMPLETE": "La configurazione di VocBench è incompleta. Riempi tutti i campi e riprova.",
         "VB_CONFIG_TEST_SUCCESS": "La configurazione è stata testata con successo.",
         "VB_CONFIG_TEST_FAIL": "Test fallito, la configurazione fornita non è corretta.",        
-        "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "Riceverai a breve una email contenente i dettagli per accedere a VocBench.",
-        "": ""
+        "X_SEARCH_RESOURCES_FOUND": "{{results}} risultati trovati",
+        "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "Riceverai a breve una email contenente i dettagli per accedere a VocBench."
     }
 }

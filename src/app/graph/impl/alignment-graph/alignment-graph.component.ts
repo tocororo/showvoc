@@ -63,9 +63,9 @@ export class AlignmentGraphComponent extends AbstractGraph {
             flatMap(linksets => {
                 if (linksets.length > this.linkLimit) {
                     return from(
-                        this.basicModals.promptNumber({ key: "GRAPHS.ACTIONS.EXPAND_LINKSET" }, "The expanded dataset has an high number of linksets (" + linksets.length + "). " +
-                            "A performance decrease could be experienced with a growing amount of visual elements in the graph. " +
-                            "You can filter only those linksets containing at least a given amount of links", treshold, 0, null, 1, ModalType.warning)
+                        this.basicModals.promptNumber({ key: "GRAPHS.ACTIONS.EXPAND_LINKSET" }, 
+                            { key: "MESSAGES.TOO_MUCH_LINKSETS_FILTER", params: { linksetCount: linksets.length } },
+                            treshold, 0, null, 1, ModalType.warning)
                     ).pipe(
                         flatMap(treshold => {
                             return this.getLinksets(node, treshold);

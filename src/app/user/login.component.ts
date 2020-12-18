@@ -36,8 +36,7 @@ export class LoginComponent {
     }
 
     forgotPassword() {
-        this.basicModals.prompt({ key: "USER.PASSWORD.FORGOT_PASSWORD" }, { value: "E-mail" }, "Insert the e-mail address of your account. " + 
-            "You will receive an e-mail with the instructions for resetting the password").then(
+        this.basicModals.prompt({ key: "USER.PASSWORD.FORGOT_PASSWORD" }, { value: "E-mail" }, { key: "MESSAGES.INSERT_EMAIL_FOR_RESET_PASSWORD" }).then(
             (email: string) => {
                 this.userService.forgotPassword(email).subscribe(
                     () => {

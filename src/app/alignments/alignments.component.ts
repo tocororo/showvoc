@@ -50,8 +50,9 @@ export class AlignmentsComponent implements OnInit {
             datasetIRI => {
                 this.datasetIRI = datasetIRI;
                 if (this.datasetIRI == null) { //missing IRI for project => initialize it
-                    this.basicModals.confirm({ key: "DATASETS.STAUTS.MISSING_DATASET_PROFILE" }, "Unable to find metadata about the dataset '" + this.selectedSourceProject.getName() +
-                        "' in the MetadataRegistry. Do you want to profile the dataset? (required for the alignment feature)", ModalType.warning).then(
+                    this.basicModals.confirm({ key: "DATASETS.STAUTS.MISSING_DATASET_PROFILE" }, 
+                        { key: "MESSAGES.METADATA_NOT_FOUND_PROFILE_CONFIRM", params: { datasetName: this.selectedSourceProject.getName() }}, 
+                        ModalType.warning).then(
                         () => { //confirmed
                             this.profileProject(this.selectedSourceProject).subscribe(
                                 () => {
@@ -95,8 +96,9 @@ export class AlignmentsComponent implements OnInit {
     }
 
     refreshProfile() {
-        this.basicModals.confirm({ key: "DATASETS.ACTIONS.PROFILE_DATASET" }, "You're going to refresh the metadata about the dataset '" + this.selectedSourceProject.getName() + 
-            "'. Are you sure?", ModalType.info).then(
+        this.basicModals.confirm({ key: "DATASETS.ACTIONS.PROFILE_DATASET" }, 
+            { key: "MESSAGES.REFRESH_METADATA_CONFIRM", params: { datasetName: this.selectedSourceProject.getName() }},
+            ModalType.info).then(
             () => {
                 this.datasetIRI = null;
                 this.profileProject(this.selectedSourceProject).subscribe(

@@ -26,7 +26,7 @@ export class SchemeListPanelComponent extends AbstractListPanel {
             this.openAt(results[0]);
         } else { //multiple results, ask the user which one select
             ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
-            this.basicModals.selectResource("SEARCH.SEARCH_RESULTS", results.length + " results found.", results, this.rendering).then(
+            this.basicModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
                 (selectedResource: AnnotatedValue<IRI>) => {
                     this.openAt(selectedResource);
                 },

@@ -126,8 +126,8 @@ export class SystemConfigurationComponent implements OnInit {
             return;
         }
 
-        this.basicModals.prompt({ key: "ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST" }, { value: "Mail to" }, "This test will send an e-mail to the provided address in order to "
-            + "check the e-mail configuration", PMKIContext.getLoggedUser().getEmail()).then(
+        this.basicModals.prompt({ key: "ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST" }, { value: "Mail to" }, { key: "MESSAGES.EMAIL_CONFIG_TEST_INFO"}, 
+            PMKIContext.getLoggedUser().getEmail()).then(
             mailTo => {
                 this.testEmailConfigLoading = true;
                 this.adminService.testEmailConfig(mailTo).pipe(

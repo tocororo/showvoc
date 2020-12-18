@@ -32,9 +32,9 @@ export class InstanceListComponent extends AbstractList {
             this.getNumberOfInstances(this.cls.getValue()).subscribe(
                 numInst => {
                     if (numInst > this.instanceLimit) {
-                        this.basicModals.confirm({ key: "DATA.INSTANCE.UNSAFE_WARN.TOO_MUCH_INST" }, "Warning: the selected class (" + this.cls.getShow() 
-                            + ") has too many instances (" + numInst + "). Retrieving them all could be a very long process "
-                            + "and it may slow down the server. Do you want to continue anyway?", ModalType.warning).then(
+                        this.basicModals.confirm({ key: "DATA.INSTANCE.UNSAFE_WARN.TOO_MUCH_INST" },
+                            { key: "MESSAGES.TOO_MUCH_INST_FORCE_INIT_CONFIRM", params: { cls: this.cls.getShow(), elemCount: numInst } },
+                            ModalType.warning).then(
                             () => {
                                 this.init();
                             },

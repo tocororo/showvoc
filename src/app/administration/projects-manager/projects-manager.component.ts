@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, from, Observable, Observer } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ConfirmCheckOptions } from 'src/app/modal-dialogs/basic-modals/confirm-modal/confirm-check-modal';
-import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
+import { ModalOptions, ModalType, TextOrTranslation } from 'src/app/modal-dialogs/Modals';
 import { PmkiConstants } from 'src/app/models/Pmki';
 import { ExceptionDAO, Project, RemoteRepositorySummary, RepositorySummary } from 'src/app/models/Project';
 import { GlobalSearchServices } from 'src/app/services/global-search.service';
@@ -50,7 +51,8 @@ export class ProjectsManagerComponent {
 
     constructor(private modalService: NgbModal, private projectService: ProjectsServices, private repositoriesService: RepositoriesServices,
         private pmkiService: PmkiServices, private globalSearchService: GlobalSearchServices,  private mapleService: MapleServices,
-        private basicModals: BasicModalsServices, private router: Router, private eventHandler: PMKIEventHandler) { }
+        private basicModals: BasicModalsServices, private router: Router, private eventHandler: PMKIEventHandler,
+        private translateService: TranslateService) { }
 
     ngOnInit() {
         this.initProjects();
@@ -245,29 +247,27 @@ export class ProjectsManagerComponent {
     }
 
     changeProjectStatus(project: Project, role: string) {
-        let confirmationMsg: string;
+        let confirmationMsg: TextOrTranslation;
         let confirmActionOpt: ConfirmCheckOptions[] = [];
-        let createIndexLabel: string = "Create index";
-        let deleteIndexLabel: string = "Delete index";
-        let createMetadataLabel: string = "Create dataset metadata";
+        let createIndexLabel: string = this.translateService.instant("ADMINISTRATION.DATASETS.MANAGEMENT.CREATE_INDEX");
+        let deleteIndexLabel: string = this.translateService.instant("ADMINISTRATION.DATASETS.MANAGEMENT.DELETE_INDEX");
+        let createMetadataLabel: string = this.translateService.instant("DATASETS.ACTIONS.CREATE_METADATA");
         if (role == PmkiConstants.rolePublic) { //from staging to public
-            confirmationMsg = "You are going to make the dataset public, so it will be visible in the Datasets page and the content will be " + 
-                "available to the visitors. Do you want to continue?";
+            confirmationMsg = { key: "MESSAGES.MAKE_DATASET_PUBLIC_CONFIRM"};
             confirmActionOpt.push({ 
                 label: createIndexLabel,
                 value: project.isOpen(),
                 disabled: !project.isOpen(),
-                warning: !project.isOpen() ? "The index creation is not available for a closed dataset" : null
+                warning: !project.isOpen() ? this.translateService.instant("MESSAGES.INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET") : null
             });
             confirmActionOpt.push({ 
                 label: createMetadataLabel,
                 value: project.isOpen(),
                 disabled: !project.isOpen(),
-                warning: !project.isOpen() ? "A closed dataset cannot be profiled" : null
+                warning: !project.isOpen() ? this.translateService.instant("MESSAGES.CANNOT_PROFILE_CLOSED_DATASET") : null
             })
         } else if (role == PmkiConstants.roleStaging) { //from public to staging
-            confirmationMsg = "You are going to make the dataset staging, so it will be no more visible in the Datasets page and the " + 
-                "visitors will not be able to access its content. Contextually you can delete the index. Do you want to continue?";
+            confirmationMsg = { key: "MESSAGES.MAKE_DATASET_STAGING_CONFIRM"};
             confirmActionOpt.push({ 
                 label: deleteIndexLabel,
                 value: true,

@@ -48,7 +48,7 @@ export class BasicModalsServices {
         let _options: ModalOptions = new ModalOptions().merge(options);
         const modalRef: NgbModalRef = this.modalService.open(ConfirmModal, _options);
         modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
-        modalRef.componentInstance.message = (typeof msg == "string") ? this.translateService.instant(msg) : this.translateService.instant(msg.key, msg.params);
+        modalRef.componentInstance.message = (typeof msg == "string") ? msg : this.translateService.instant(msg.key, msg.params);
         modalRef.componentInstance.type = type;
         return modalRef.result;
     }
@@ -67,7 +67,7 @@ export class BasicModalsServices {
         let _options: ModalOptions = new ModalOptions().merge(options);
         const modalRef: NgbModalRef = this.modalService.open(ConfirmCheckModal, _options);
         modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
-        modalRef.componentInstance.message = (typeof msg == "string") ? this.translateService.instant(msg) : this.translateService.instant(msg.key, msg.params);
+        modalRef.componentInstance.message = (typeof msg == "string") ? msg : this.translateService.instant(msg.key, msg.params);
         modalRef.componentInstance.checkOpts = checkOpts;
         modalRef.componentInstance.type = type;
         return modalRef.result;
@@ -89,14 +89,13 @@ export class BasicModalsServices {
         modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
         modalRef.componentInstance.label = label;
         if (msg != null) {
-            modalRef.componentInstance.message = (typeof msg == "string") ? this.translateService.instant(msg) : this.translateService.instant(msg.key, msg.params);
+            modalRef.componentInstance.message = (typeof msg == "string") ? msg : this.translateService.instant(msg.key, msg.params);
         }
         modalRef.componentInstance.value = value;
         modalRef.componentInstance.hideClose = hideClose;
         modalRef.componentInstance.inputOptional = inputOptional;
         return modalRef.result;
     }
-    ;
 
     /**
      * 
@@ -113,7 +112,7 @@ export class BasicModalsServices {
         let _options: ModalOptions = new ModalOptions().merge(options);
         const modalRef: NgbModalRef = this.modalService.open(PromptNumberModal, _options);
         modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
-        modalRef.componentInstance.message = (typeof msg == "string") ? this.translateService.instant(msg) : this.translateService.instant(msg.key, msg.params);
+        modalRef.componentInstance.message = (typeof msg == "string") ? msg : this.translateService.instant(msg.key, msg.params);
         modalRef.componentInstance.value = value;
         modalRef.componentInstance.min = min;
         modalRef.componentInstance.max = max;
@@ -134,7 +133,7 @@ export class BasicModalsServices {
         let _options: ModalOptions = new ModalOptions().merge(options);
         const modalRef: NgbModalRef = this.modalService.open(ResourceSelectionModal, _options);
         modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
-        modalRef.componentInstance.message = (typeof msg == "string") ? this.translateService.instant(msg) : this.translateService.instant(msg.key, msg.params);
+        modalRef.componentInstance.message = (typeof msg == "string") ? msg : this.translateService.instant(msg.key, msg.params);
         modalRef.componentInstance.resourceList = resourceList;
         modalRef.componentInstance.rendering = rendering;
         return modalRef.result;
@@ -151,7 +150,7 @@ export class BasicModalsServices {
         let _options: ModalOptions = new ModalOptions().merge(options);
         const modalRef: NgbModalRef = this.modalService.open(DownloadModal, _options);
         modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
-        modalRef.componentInstance.message = (typeof msg == "string") ? this.translateService.instant(msg) : this.translateService.instant(msg.key, msg.params);
+        modalRef.componentInstance.message = (typeof msg == "string") ? msg : this.translateService.instant(msg.key, msg.params);
         modalRef.componentInstance.downloadLink = downloadLink;
         modalRef.componentInstance.fileName = fileName;
         return modalRef.result;
