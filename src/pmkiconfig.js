@@ -37,3 +37,10 @@ var st_path;
  * If provided, the instance name will be visible in the Home and Datasets page.
  */
 // var pmki_instance_name = "PMKI";
+
+/**
+ * A list of i18n supported languages in addition to those already factory provided.
+ * In order to add the support for a language you need to add the <langTag>.json translation file to
+ * the folder assets/i18n and then add the same langTag to the following list
+ */
+var additional_i18n_langs = [];
