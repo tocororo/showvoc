@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TransitiveImportMethodAllowance } from '../models/Metadata';
 import { PluginSpecification } from '../models/Plugins';
-import { BackendTypesEnum, Project, RepositoryAccess, RepositorySummary } from '../models/Project';
+import { AccessLevel, BackendTypesEnum, Project, RepositoryAccess, RepositorySummary } from '../models/Project';
 import { IRI } from '../models/Resources';
 import { HttpManager } from '../utils/HttpManager';
 import { PMKIContext } from '../utils/PMKIContext';
@@ -213,6 +213,21 @@ export class ProjectsServices {
             params.excludeLocal = excludeLocal;
         }
         return this.httpMgr.doGet(this.serviceName, "getRepositories", params);
+    }
+
+    /**
+     * Grants the given access level from the given project to every consumer. 
+     * If the accessLevel is not provided, revokes any universal access level assigned to the given project
+     * @param project 
+     * @param consumer 
+     * @param accessLevel
+     */
+    updateUniversalProjectAccessLevel(project: Project, accessLevel?: AccessLevel) {
+        var params: any = {
+            projectName: project.getName(),
+            accessLevel: accessLevel
+        };
+        return this.httpMgr.doPost(this.serviceName, "updateUniversalProjectAccessLevel", params);
     }
 
 }

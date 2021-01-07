@@ -8,7 +8,7 @@ import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-mo
 import { ConfirmCheckOptions } from 'src/app/modal-dialogs/basic-modals/confirm-modal/confirm-check-modal';
 import { ModalOptions, ModalType, TextOrTranslation } from 'src/app/modal-dialogs/Modals';
 import { PmkiConstants } from 'src/app/models/Pmki';
-import { ExceptionDAO, Project, RemoteRepositorySummary, RepositorySummary } from 'src/app/models/Project';
+import { AccessLevel, ExceptionDAO, Project, RemoteRepositorySummary, RepositorySummary } from 'src/app/models/Project';
 import { GlobalSearchServices } from 'src/app/services/global-search.service';
 import { MapleServices } from 'src/app/services/maple.service';
 import { PmkiServices } from 'src/app/services/pmki.service';
@@ -290,6 +290,11 @@ export class ProjectsManagerComponent {
                                 this.createMapleMetadataImpl(project).subscribe();
                             }
                         });
+                        if (role == PmkiConstants.rolePublic) { //project set public => enable universal readability
+                            this.projectService.updateUniversalProjectAccessLevel(project, AccessLevel.R).subscribe();
+                        } else { //project set not publid => remove universal readability
+                            this.projectService.updateUniversalProjectAccessLevel(project).subscribe();
+                        }
                     }
                 );
             },

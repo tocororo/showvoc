@@ -204,3 +204,8 @@ export class ExceptionDAO {
     public type: string;
     public stacktrace: string;
 }
+
+export enum AccessLevel {
+    R = "R",
+    RW = "RW"
+}
