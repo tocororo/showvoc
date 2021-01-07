@@ -31,6 +31,7 @@
                 "ALLOW_VISUALIZATION_CHANGE": "Consenti modifica della visualizzazione",
                 "ALLOW_VISUALIZATION_CHANGE_INFO": "Indica se l'utente visitatore può modificare la modalità di visualizzazione per sè stesso",
                 "CONCEPT_VISUALIZATION_INFO": "Limita la modalità di visualizzazione dell'albero dei concetti per l'utente visitatore. L'amministratore sarà ancora in grado di modificare la visualizzazione per sè stesso.",
+                "INSTANCE_LIST_VISUALIZATION_INFO": "Limita la modalità di visualizzazione della lista delle istanze per l'utente visitatore. L'amministratore sarà ancora in grado di modificare la visualizzazione per sè stesso.",
                 "LEX_ENTRY_VISUALIZATION_INFO": "Limita la modalità di visualizzazione della lista delle Lexical Entry per l'utente visitatore. L'amministratore sarà ancora in grado di modificare la visualizzazione per sè stesso.",
                 "ALLOW_INDEX_CHANGE": "Consenti la modifica della dimensione dell'indice",
                 "ALLOW_INDEX_CHANGE_INFO": "Indica se l'utente visitatore può modificare la dimensione dell'indice per sè stesso",
@@ -185,9 +186,19 @@
         "INSTANCE": {
             "INSTANCE": "Istanza",
             "INSTANCES": "Istanze",
+            "USE_SEARCH_MSG": "Usa il campo di ricerca per recuperare le istanze",
+            "SETTINGS": {
+                "INSTANCE_LIST_SETTINGS": "Impostazione lista istanze",
+                "INSTANCES_LIMIT": "Limite istanze",
+                "INSTANCES_LIMIT_INFO": "Imposta la quantità massima di istanze visibili nella lista. Questo setting evita che venga inizializzata una lista che potrebbe causare problemi di performance"
+            },
             "UNSAFE_WARN": {
-                "TOO_MUCH_INST": "Troppe istanze",
-                "TOO_MUCH_INST_FORCE_INIT_CONFIRM": "Attenzione: la classe selezionata ({{cls}}) ha molte istanze ({{elemCount}}). Recuperarle tutte potrebbe essere un processo lungo, si potrebbero riscontrare rallentamenti delle prestazioni o si potrebbe addirittura bloccare il sistema. Vuoi continuare lo stesso?"
+                "ELEMENT_COUNT": "Questa lista di istanze contiene un numero di elementi ({{count}}) che eccede il limite impostato ({{safeToGoLimit}}).",
+                "PERFORMANCE_ISSUE": "Recuperarle tutte potrebbe essere un processo lungo, si potrebbero riscontrare rallentamenti delle prestazioni o si potrebbe addirittura bloccare il sistema.",
+                "SWITCH_MODE": "Si consiglia di passare alla visualizzazione basata su ricerca dalle",
+                "SETTINGS": "impostazioni",
+                "FORCE_INIT": "Se si desidera forzare l'inizializzazione della lista a proprio rischio, cliccare",
+                "HERE": "qui"
             }
         },
         "LEX_ENTRY": {
@@ -239,9 +250,10 @@
             },
             "VISUALIZATION_MODE": {
                 "MODE": "Modalità di visualizzazione",
-                "SEARCH_BASED": "Basata su ricerca",
+                "HIERARCHY_BASED": "Gerarchica",
                 "INDEX_BASED": "Basata su indice",
-                "HIERARCHY_BASED": "Gerarchica"
+                "SEARCH_BASED": "Basata su ricerca",
+                "STANDARD": "Standard"
             }
         }
     },

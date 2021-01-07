@@ -23,7 +23,7 @@
 			</select>
 		</div>
 
-		<div *ngIf="visualizationMode == 'searchBased' && !closedAlert" class="alert alert-info alert-dismissible mb-1">
+		<div *ngIf="visualizationMode == 'searchBased' && !closedAlert" class="alert alert-warning alert-dismissible mb-1">
 			{{'DATA.CONCEPT.USE_SEARCH_MSG'|translate}}
 			<button class="close" (click)="closedAlert=true">
 				<span>&times;</span>

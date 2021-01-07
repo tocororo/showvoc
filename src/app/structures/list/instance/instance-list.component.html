@@ -2,11 +2,28 @@
     <div class="card-body vbox">
         <div #scrollableContainer class="scrollableContainer p-2" (scroll)="onScroll()">
             <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
-            <ng-container *ngFor="let n of nodes; let idx = index;">
-                <list-node *ngIf="idx < nodesLimit && (!n.isDeprecated() || showDeprecated && n.isDeprecated())"
-                    [node]="n" [rendering]="rendering" [context]="context" (nodeSelected)="onNodeSelected($event)">
-                </list-node>
-            </ng-container>
+
+            <ng-container *ngIf="!safeToGo.safe && visualizationMode == 'standard'; then unsafetyBlock else safetyBlock"></ng-container>
+
+            <ng-template #safetyBlock>
+                <ng-container *ngFor="let n of nodes; let idx = index;">
+                    <list-node *ngIf="idx < nodesLimit && (!n.isDeprecated() || showDeprecated && n.isDeprecated())"
+                        [node]="n" [rendering]="rendering" [context]="context" (nodeSelected)="onNodeSelected($event)">
+                    </list-node>
+                </ng-container>
+            </ng-template>
+            <ng-template #unsafetyBlock>
+                <div class="alert alert-warning">
+                    {{'DATA.INSTANCE.UNSAFE_WARN.ELEMENT_COUNT'|translate:translationParam}}
+                    {{'DATA.INSTANCE.UNSAFE_WARN.PERFORMANCE_ISSUE'|translate}}
+                    {{'DATA.INSTANCE.UNSAFE_WARN.SWITCH_MODE'|translate}}
+                    <a href="javascript:void(0)" (click)="requireSettings.emit()">{{'DATA.INSTANCE.UNSAFE_WARN.SETTINGS'|translate}}</a>.<br>
+                    {{'DATA.INSTANCE.UNSAFE_WARN.FORCE_INIT'|translate}}
+                    <a href="javascript:void(0)" (click)="forceSafeness()">{{'DATA.INSTANCE.UNSAFE_WARN.HERE'|translate}}</a>.
+                </div>
+            </ng-template>
+
+
         </div>
     </div>
 </div>

@@ -221,7 +221,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                         }
                         this.resourceService.getResourcesInfo(schemes).subscribe(
                             schemes => {
-                                this.basicModals.selectResource("COMMONS.ACTIONS.SEARCH", message, schemes, this.rendering).then(
+                                this.basicModals.selectResource({key:"COMMONS.ACTIONS.SEARCH"}, message, schemes, this.rendering).then(
                                     (scheme: AnnotatedValue<IRI>) => {
                                         this.pmkiProp.setActiveSchemes(PMKIContext.getProjectCtx(), this.workingSchemes.concat(scheme.getValue())); //update the active schemes
                                         setTimeout(() => {

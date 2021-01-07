@@ -2,9 +2,10 @@ import { Component, Input } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExtensionPointID } from 'src/app/models/Plugins';
 import { Project } from 'src/app/models/Project';
-import { ConceptTreeVisualizationMode, LexEntryVisualizationMode, Properties } from 'src/app/models/Properties';
-import { OntoLex, SKOS } from 'src/app/models/Vocabulary';
+import { ConceptTreeVisualizationMode, InstanceListVisualizationMode, LexEntryVisualizationMode, Properties, VisualizationModeTranslation } from 'src/app/models/Properties';
+import { OntoLex, OWL, SKOS } from 'src/app/models/Vocabulary';
 import { PreferencesSettingsServices } from 'src/app/services/preferences-settings.service';
+import { InstanceListSettingsModal } from "src/app/structures/list/instance/instance-list-settings-modal";
 import { ProjectContext } from 'src/app/utils/PMKIContext';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 
@@ -19,23 +20,31 @@ export class ProjectSettingsModal {
 
     isOntolex: boolean; //useful to determine whether to show the settings about lexical entry list
     isSkos: boolean; //useful to determine whether to show the settings about concept tree
+    isOwl: boolean; //useful to determine whether to show the settings about the instance list
 
-    skosVisualizationModes: { label: string, value: ConceptTreeVisualizationMode }[] = [
-        { label: "Hierarchy based", value: ConceptTreeVisualizationMode.hierarchyBased },
-        { label: "Search based", value: ConceptTreeVisualizationMode.searchBased }
+
+    skosVisualizationModes: {value: ConceptTreeVisualizationMode, labelTranslationKey: string }[] = [
+        { value: ConceptTreeVisualizationMode.hierarchyBased, labelTranslationKey: VisualizationModeTranslation.translationMap[ConceptTreeVisualizationMode.hierarchyBased] },
+        { value: ConceptTreeVisualizationMode.searchBased, labelTranslationKey: VisualizationModeTranslation.translationMap[ConceptTreeVisualizationMode.searchBased] }
     ]
     selectedSkosMode: ConceptTreeVisualizationMode = this.skosVisualizationModes[0].value;
     skosAllowVisualizationChange: boolean;
 
-    ontolexVisualizationModes: { label: string, value: LexEntryVisualizationMode }[] = [
-        { label: "Index based", value: LexEntryVisualizationMode.indexBased },
-        { label: "Search based", value: LexEntryVisualizationMode.searchBased }
+    ontolexVisualizationModes: { value: LexEntryVisualizationMode, labelTranslationKey: string }[] = [
+        { value: LexEntryVisualizationMode.indexBased, labelTranslationKey: VisualizationModeTranslation.translationMap[LexEntryVisualizationMode.indexBased] },
+        { value: LexEntryVisualizationMode.searchBased, labelTranslationKey: VisualizationModeTranslation.translationMap[LexEntryVisualizationMode.searchBased] }
     ]
     selectedOntolexMode: LexEntryVisualizationMode = this.ontolexVisualizationModes[0].value;
     indexLength: number = 1;
     ontolexAllowVisualizationChange: boolean;
     ontolexAllowIndexLengthChange: boolean;
-    
+
+    instanceVisualizationModes: { value: InstanceListVisualizationMode, labelTranslationKey: string }[] = [
+        { value: InstanceListVisualizationMode.standard, labelTranslationKey: VisualizationModeTranslation.translationMap[InstanceListVisualizationMode.standard] },
+        { value: InstanceListVisualizationMode.searchBased, labelTranslationKey: VisualizationModeTranslation.translationMap[InstanceListVisualizationMode.searchBased] }
+    ]
+    selectedInstanceMode: InstanceListVisualizationMode = this.instanceVisualizationModes[0].value;
+    instanceAllowVisualizationChange: boolean;
     
     renderingLangs: string[];
 
@@ -44,6 +53,7 @@ export class ProjectSettingsModal {
     ngOnInit() {
         this.isOntolex = this.project.getModelType() == OntoLex.uri;
         this.isSkos = this.project.getModelType() == SKOS.uri;
+        this.isOwl = this.project.getModelType() == OWL.uri;
         
         this.projectCtx = new ProjectContext(this.project);
         this.pmkiProp.initProjectSettings(this.projectCtx).subscribe( //in order to get the languages of the project
@@ -52,8 +62,10 @@ export class ProjectSettingsModal {
             }
         );
 
-        if (this.isOntolex || this.isSkos) {
-            this.prefService.getPUSettings([Properties.pref_concept_tree_visualization, Properties.pref_concept_tree_allow_visualization_change,
+        if (this.isOntolex || this.isSkos || this.isOwl) {
+            this.prefService.getPUSettings([
+                Properties.pref_concept_tree_visualization, Properties.pref_concept_tree_allow_visualization_change,
+                Properties.pref_instance_list_visualization, Properties.pref_instance_list_allow_visualization_change,
                 Properties.pref_lex_entry_list_visualization, Properties.pref_lex_entry_allow_visualization_change, 
                 Properties.pref_lex_entry_list_index_length, Properties.pref_lex_entry_allow_index_length_change], 
                 this.project).subscribe(
@@ -72,6 +84,12 @@ export class ProjectSettingsModal {
                     this.ontolexAllowVisualizationChange = prefs[Properties.pref_lex_entry_allow_visualization_change] != "false";
                     this.ontolexAllowIndexLengthChange = prefs[Properties.pref_lex_entry_allow_index_length_change] != "false";
                     this.indexLength = prefs[Properties.pref_lex_entry_list_index_length] == "2" ? 2 : 1;
+                    //instance list
+                    let instanceListVisualizationPref: string = prefs[Properties.pref_instance_list_visualization];
+                    if (instanceListVisualizationPref == InstanceListVisualizationMode.searchBased) {
+                        this.selectedInstanceMode = instanceListVisualizationPref;
+                    }
+                    this.instanceAllowVisualizationChange = prefs[Properties.pref_instance_list_allow_visualization_change] != "false";
                 }
             );
         }
@@ -107,6 +125,16 @@ export class ProjectSettingsModal {
     changeSkosAllowVisualizationChange() {
         this.skosAllowVisualizationChange = !this.skosAllowVisualizationChange;
         this.prefService.setPUSettingProjectDefault(Properties.pref_concept_tree_allow_visualization_change, this.skosAllowVisualizationChange+"", this.project).subscribe();
+    }
+
+    //======== Owl settings handlers ======
+
+    changeInstanceVisualizationMode() {
+        this.prefService.setPUSettingProjectDefault(Properties.pref_instance_list_visualization, this.selectedInstanceMode, this.project).subscribe();
+    }
+    changeInstanceAllowVisualizationChange() {
+        this.instanceAllowVisualizationChange = !this.instanceAllowVisualizationChange;
+        this.prefService.setPUSettingProjectDefault(Properties.pref_instance_list_allow_visualization_change, this.instanceAllowVisualizationChange+"", this.project).subscribe();
     }
 
     //======== Ontolex settings handlers ======

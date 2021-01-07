@@ -26,7 +26,7 @@
                         </td>
                         <td>
                             <select class="form-control form-control-sm" [(ngModel)]="selectedSkosMode" (ngModelChange)="changeSkosVisualizationMode()">
-                                <option *ngFor="let vm of skosVisualizationModes" [value]="vm.value">{{vm.label}}</option>
+                                <option *ngFor="let vm of skosVisualizationModes" [value]="vm.value">{{vm.labelTranslationKey|translate}}</option>
                             </select>
                         </td>
                     </tr>
@@ -40,6 +40,50 @@
                         <td>
                             <div class="custom-control custom-switch" (click)="changeSkosAllowVisualizationChange()">
                                 <input type="checkbox" class="custom-control-input" [ngModel]="skosAllowVisualizationChange">
+                                <label class="custom-control-label">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div *ngIf="isOwl" class="card mb-2">
+        <div class="card-header">{{'DATA.INSTANCE.SETTINGS.INSTANCE_LIST_SETTINGS'|translate}}</div>
+        <div class="card-body">
+            <div class="alert alert-info mb-1">
+                {{'ADMINISTRATION.DATASETS.SETTINGS.INSTANCE_LIST_VISUALIZATION_INFO'|translate}}
+            </div>
+            <table class="table table-sm table-borderless">
+                <colgroup>
+                    <col style="width: 1%;">
+                    <col style="width: 1%;">
+                    <col>
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td nowrap>
+                            <label>{{'ADMINISTRATION.DATASETS.SETTINGS.DEFAULT_VISUALIZATION_MODE'|translate}}:</label>
+                        </td>
+                        <td>
+                            <select class="form-control form-control-sm" [(ngModel)]="selectedInstanceMode" (ngModelChange)="changeInstanceVisualizationMode()">
+                                <option *ngFor="let vm of instanceVisualizationModes" [value]="vm.value">{{vm.labelTranslationKey|translate}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="fas fa-info-circle" [title]="'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE_INFO'|translate"></span>
+                        </td>
+                        <td nowrap>
+                            <label>{{'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE'|translate}}:</label>
+                        </td>
+                        <td>
+                            <div class="custom-control custom-switch" (click)="changeInstanceAllowVisualizationChange()">
+                                <input type="checkbox" class="custom-control-input" [ngModel]="instanceAllowVisualizationChange">
                                 <label class="custom-control-label">
                                 </label>
                             </div>
@@ -70,7 +114,7 @@
                         </td>
                         <td>
                             <select class="form-control form-control-sm" [(ngModel)]="selectedOntolexMode" (ngModelChange)="changeOntolexVisualizationMode()">
-                                <option *ngFor="let vm of ontolexVisualizationModes" [value]="vm.value">{{vm.label}}</option>
+                                <option *ngFor="let vm of ontolexVisualizationModes" [value]="vm.value">{{vm.labelTranslationKey|translate}}</option>
                             </select>
                         </td>
                     </tr>

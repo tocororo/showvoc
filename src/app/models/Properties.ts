@@ -16,6 +16,10 @@ export class Properties {
     static pref_class_tree_show_instances: string = "class_tree.show_instances";
     static pref_class_tree_root: string = "class_tree.root";
     static pref_class_tree_filter: string = "class_tree.filter";
+
+    static pref_instance_list_visualization: string = "instance_list_visualization";
+    static pref_instance_list_safe_to_go_limit: string = "instance_list_safe_to_go_limit";s
+    static pref_instance_list_allow_visualization_change: string = "instance_list_allow_visualization_change";
     
     static pref_concept_tree_visualization: string = "concept_tree_visualization";
     static pref_concept_tree_safe_to_go_limit: string = "concept_tree_safe_to_go_limit";
@@ -88,6 +92,18 @@ export class ClassTreeFilter {
     }
 }
 
+export class InstanceListPreference {
+    visualization: InstanceListVisualizationMode = InstanceListVisualizationMode.standard;
+    allowVisualizationChange: boolean = true;
+    safeToGoLimit: number = 1000;
+    safeToGoMap: SafeToGoMap = {}; //this is not a preference, but it is cached with them since it is contextual to the project 
+}
+
+export enum InstanceListVisualizationMode {
+    searchBased = "searchBased",
+    standard = "standard"
+}
+
 export class ConceptTreePreference {
     visualization: ConceptTreeVisualizationMode = ConceptTreeVisualizationMode.hierarchyBased;
     allowVisualizationChange: boolean = true;
@@ -144,6 +160,7 @@ export class ProjectPreferences {
     projectThemeId: number = null;
 
     classTreePreferences: ClassTreePreference;
+    instanceListPreferences: InstanceListPreference;
     conceptTreePreferences: ConceptTreePreference;
     lexEntryListPreferences: LexicalEntryListPreference;
 
@@ -173,6 +190,8 @@ export class VisualizationModeTranslation {
     static translationMap: {[key: string]: string} = {
         [ConceptTreeVisualizationMode.hierarchyBased]: "DATA.COMMONS.VISUALIZATION_MODE.HIERARCHY_BASED",
         [ConceptTreeVisualizationMode.searchBased]: "DATA.COMMONS.VISUALIZATION_MODE.SEARCH_BASED",
+        [InstanceListVisualizationMode.searchBased]: "DATA.COMMONS.VISUALIZATION_MODE.SEARCH_BASED",
+        [InstanceListVisualizationMode.standard]: "DATA.COMMONS.VISUALIZATION_MODE.STANDARD",
         [LexEntryVisualizationMode.indexBased]: "DATA.COMMONS.VISUALIZATION_MODE.INDEX_BASED",
         [LexEntryVisualizationMode.searchBased]: "DATA.COMMONS.VISUALIZATION_MODE.SEARCH_BASED",
     }

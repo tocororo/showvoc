@@ -7,6 +7,7 @@ import { AlignmentsModule } from '../alignments/alignments.module';
 import { WidgetModule } from '../widget/widget.module';
 import { InstanceListPanelComponent } from './list/instance/instance-list-panel.component';
 import { InstanceListComponent } from './list/instance/instance-list.component';
+import { InstanceListSettingsModal } from './list/instance/instance-list-settings-modal';
 import { LexicalEntryListPanelComponent } from './list/lexical-entry/lexical-entry-list-panel.component';
 import { LexicalEntryListSettingsModal } from './list/lexical-entry/lexical-entry-list-settings-modal';
 import { LexicalEntryListComponent } from './list/lexical-entry/lexical-entry-list.component';
@@ -50,6 +51,7 @@ import { PropertyTreeComponent } from './tree/property/property-tree.component';
         ConceptTreeSettingsModal,
         InstanceListComponent,
         InstanceListPanelComponent,
+        InstanceListSettingsModal,
         LexiconListComponent,
         LexiconListPanelComponent,
         LexicalEntryListComponent,
@@ -89,6 +91,7 @@ import { PropertyTreeComponent } from './tree/property/property-tree.component';
     entryComponents: [
         ClassTreeSettingsModal,
         ConceptTreeSettingsModal,
+        InstanceListSettingsModal,
         LexicalEntryListSettingsModal,
         SearchSettingsModal
     ]

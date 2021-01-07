@@ -47,6 +47,9 @@ export class DatasetsComponent implements OnInit {
         this.initDatasets();
 
         this.instanceName = window['pmki_instance_name'];
+        if (this.instanceName == null) {
+            this.instanceName = "PMKI";
+        }
         this.translationParam = { instanceName: this.instanceName };
     }
 

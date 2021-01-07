@@ -1,11 +1,9 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, ResAttribute } from 'src/app/models/Resources';
+import { IndividualsServices } from 'src/app/services/individuals.service';
 import { TreeListContext } from 'src/app/utils/UIUtils';
 import { InstanceListPanelComponent } from '../../list/instance/instance-list-panel.component';
 import { ClassTreePanelComponent } from './class-tree-panel.component';
-import { IndividualsServices } from 'src/app/services/individuals.service';
-import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
-import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 
 /**
  * While classTreeComponent has as @Input rootClasses this componente cannot
@@ -33,21 +31,7 @@ export class ClassInstancePanelComponent {
 
     panelRole: RDFResourceRolesEnum[] = [RDFResourceRolesEnum.cls, RDFResourceRolesEnum.individual];
 
-    constructor(private individualService: IndividualsServices, private basicModals: BasicModalsServices) {}
-
-    handleSearchResults(results: AnnotatedValue<IRI>[]) {
-        if (results.length == 1) {
-            this.selectSearchedResource(results[0]);
-        } else { //multiple results, ask the user which one select
-            ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
-            this.basicModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
-                (selectedResource: AnnotatedValue<IRI>) => {
-                    this.selectSearchedResource(selectedResource);
-                },
-                () => {}
-            );
-        }
-    }
+    constructor(private individualService: IndividualsServices) {}
 
     /**
      * If resource is a class expands the class tree and select the resource,

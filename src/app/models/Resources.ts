@@ -286,6 +286,10 @@ export class AnnotatedValue<T extends Value> {
     isDeprecated(): boolean {
         return this.attributes[ResAttribute.DEPRECATED];
     }
+
+    equals(annValue: AnnotatedValue<T>): boolean {
+        return this.value != null && annValue.getValue() != null && this.value.equals(annValue.getValue());
+    }
 }
 
 export class PredicateObjects {

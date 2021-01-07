@@ -31,6 +31,7 @@
                 "ALLOW_VISUALIZATION_CHANGE": "Allow visualization change",
                 "ALLOW_VISUALIZATION_CHANGE_INFO": "Tells if visitor user can customize the visualization mode for itself",
                 "CONCEPT_VISUALIZATION_INFO": "Restricts the visualization of the Concept tree for the visitor user. Administrator user will still be able to customize the visualization for itself.",
+                "INSTANCE_LIST_VISUALIZATION_INFO": "Restricts the visualization of the instance list for the visitor user. Administrator user will still be able to customize the visualization for itself.",
                 "LEX_ENTRY_VISUALIZATION_INFO": "Restricts the visualization of the Lexical Entry list for the visitor user. Administrator user will still be able to customize the visualization for itself.",
                 "ALLOW_INDEX_CHANGE": "Allow index length change",
                 "ALLOW_INDEX_CHANGE_INFO": "Tells if visitor user can customize the index-length for itself",
@@ -185,9 +186,19 @@
         "INSTANCE": {
             "INSTANCE": "Instance",
             "INSTANCES": "Instances",
+            "USE_SEARCH_MSG": "Please use the search field to retrieve instances",
+            "SETTINGS": {
+                "INSTANCE_LIST_SETTINGS": "Instance list settings",
+                "INSTANCES_LIMIT": "Instances limit",
+                "INSTANCES_LIMIT_INFO": "Sets the maximum amount of instances visible in the list. This setting prevents the initialization of a list that might cause performance issues"
+            },
             "UNSAFE_WARN": {
-                "TOO_MUCH_INST": "Too much instances",
-                "TOO_MUCH_INST_FORCE_INIT_CONFIRM": "Warning: the selected class ({{cls}}) has too many instances ({{elemCount}}). Retrieving them all could be a very long process and it may slow down the server. Do you want to continue anyway?"
+                "ELEMENT_COUNT": "This instance list has an amount of elements ({{count}}) that exceeds the limit set in the settings ({{safeToGoLimit}}).",
+                "PERFORMANCE_ISSUE": "Retrieving them all could be a long process, you might experience performance decrease or it might even hang the system.",
+                "SWITCH_MODE": "It is recommended to switch the visualization to search-based mode from the",
+                "SETTINGS": "settings",
+                "FORCE_INIT": "If you want to force the instance list initialization at your own risk, click",
+                "HERE": "here"
             }
         },
         "LEX_ENTRY": {
@@ -239,9 +250,10 @@
             },
             "VISUALIZATION_MODE": {
                 "MODE": "Visualization mode",
-                "SEARCH_BASED": "Search based",
+                "HIERARCHY_BASED": "Hierarchy based",
                 "INDEX_BASED": "Index based",
-                "HIERARCHY_BASED": "Hierarchy based"
+                "SEARCH_BASED": "Search based",
+                "STANDARD": "Standard"
             }
         }
     },

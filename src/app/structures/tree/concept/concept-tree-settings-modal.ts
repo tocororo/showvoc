@@ -25,7 +25,7 @@ export class ConceptTreeSettingsModal implements OnInit {
 
     ngOnInit() {
         let conceptTreePref: ConceptTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
-        this.allowVisualizationChange = conceptTreePref.allowVisualizationChange;
+        this.allowVisualizationChange = conceptTreePref.allowVisualizationChange || PMKIContext.getLoggedUser().isAdmin();
         this.pristineConcPref = JSON.parse(JSON.stringify(conceptTreePref));
         
         this.visualization = conceptTreePref.visualization;

@@ -6,7 +6,7 @@ import { ModalType } from '../modal-dialogs/Modals';
 import { Language, Languages } from '../models/LanguagesCountries';
 import { ExtensionPointID } from '../models/Plugins';
 import { Project } from '../models/Project';
-import { ClassIndividualPanelSearchMode, ClassTreeFilter, ClassTreePreference, ConceptTreePreference, ConceptTreeVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, ProjectPreferences, ProjectSettings, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, ValueFilterLanguages } from '../models/Properties';
+import { ClassIndividualPanelSearchMode, ClassTreeFilter, ClassTreePreference, ConceptTreePreference, ConceptTreeVisualizationMode, InstanceListPreference, InstanceListVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, ProjectPreferences, ProjectSettings, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, ValueFilterLanguages } from '../models/Properties';
 import { IRI, RDFResourceRolesEnum } from '../models/Resources';
 import { ResViewPartition } from '../models/ResourceView';
 import { OWL, RDFS } from '../models/Vocabulary';
@@ -47,9 +47,12 @@ export class PMKIProperties {
                 projectPreferences.projectLanguagesPreference = prefs[Properties.pref_languages].split(",");
             })
         );
-        let structuresPrefs: string[] = [Properties.pref_concept_tree_visualization, Properties.pref_concept_tree_allow_visualization_change, 
+        let structuresPrefs: string[] = [
+            Properties.pref_concept_tree_visualization, Properties.pref_concept_tree_allow_visualization_change, 
+            Properties.pref_instance_list_visualization, Properties.pref_instance_list_allow_visualization_change,
             Properties.pref_lex_entry_list_visualization, Properties.pref_lex_entry_allow_visualization_change, 
-            Properties.pref_lex_entry_list_index_length, Properties.pref_lex_entry_allow_index_length_change];
+            Properties.pref_lex_entry_list_index_length, Properties.pref_lex_entry_allow_index_length_change
+        ];
         let initStructuresPrefFn = this.prefService.getPUSettings(structuresPrefs, null).pipe(
             map(prefs => {
                 //concept tree pref (initialized here, eventually overwritten later with cookie)
@@ -59,6 +62,14 @@ export class PMKIProperties {
                     projectPreferences.conceptTreePreferences.visualization = conceptTreeVisualizationPref;
                 }
                 projectPreferences.conceptTreePreferences.allowVisualizationChange = prefs[Properties.pref_concept_tree_allow_visualization_change] != "false";
+
+                //instance list pref (initialized here, eventually overwritten later with cookie)
+                projectPreferences.instanceListPreferences = new InstanceListPreference();
+                let instanceListVisualizationPref: string = prefs[Properties.pref_instance_list_visualization];
+                if (instanceListVisualizationPref == InstanceListVisualizationMode.searchBased) {
+                    projectPreferences.instanceListPreferences.visualization = instanceListVisualizationPref;
+                }
+                projectPreferences.instanceListPreferences.allowVisualizationChange = prefs[Properties.pref_instance_list_allow_visualization_change] != "false";
                 
                 //lex entry list pref (initialized here, eventually overwritten later with cookie)
                 projectPreferences.lexEntryListPreferences = new LexicalEntryListPreference();
@@ -154,6 +165,18 @@ export class PMKIProperties {
     setClassTreeShowInstances(show: boolean) {
         Cookie.setUserProjectCookiePref(Properties.pref_class_tree_show_instances, PMKIContext.getProjectCtx().getProject(), show);
         PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.showInstancesNumber = show;
+    }
+
+    //instance list settings
+    setInstanceListVisualization(mode: InstanceListVisualizationMode) {
+        Cookie.setUserProjectCookiePref(Properties.pref_instance_list_visualization, PMKIContext.getProjectCtx().getProject(), mode);
+        PMKIContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization = mode;
+    }
+    setInstanceLisSafeToGoLimit(limit: number) {
+        Cookie.setUserProjectCookiePref(Properties.pref_instance_list_safe_to_go_limit, PMKIContext.getProjectCtx().getProject(), limit+"");
+        let instanceListPref = PMKIContext.getProjectCtx().getProjectPreferences().instanceListPreferences;
+        instanceListPref.safeToGoLimit = limit;
+        instanceListPref.safeToGoMap = {}; //changing the limit invalidated the safe => reset the map
     }
 
     //concept tree settings
@@ -262,6 +285,22 @@ export class PMKIProperties {
             classTreePreferences.rootClassUri = classTreeRootPref;
         }
         projectPreferences.classTreePreferences = classTreePreferences;
+
+        //instance list preferences
+        let instanceListPreferences: InstanceListPreference = projectPreferences.instanceListPreferences;
+        //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin
+        if (PMKIContext.getLoggedUser().isAdmin() || instanceListPreferences.allowVisualizationChange) {
+            let instanceListVisualizationPref: string = Cookie.getUserProjectCookiePref(Properties.pref_instance_list_visualization, project);
+            if (instanceListVisualizationPref == InstanceListVisualizationMode.searchBased || instanceListVisualizationPref == InstanceListVisualizationMode.standard) {
+                //overwrite only if the cookie value is an admitted value
+                instanceListPreferences.visualization = instanceListVisualizationPref;
+            }
+        }
+        let instanceListSafeToGoLimitPref: string = Cookie.getUserProjectCookiePref(Properties.pref_instance_list_safe_to_go_limit, project);
+        if (instanceListSafeToGoLimitPref != null) {
+            instanceListPreferences.safeToGoLimit = parseInt(instanceListSafeToGoLimitPref);
+        }
+        projectPreferences.instanceListPreferences = instanceListPreferences;
 
         //concept tree preferences
         let conceptTreePref: ConceptTreePreference = projectPreferences.conceptTreePreferences;

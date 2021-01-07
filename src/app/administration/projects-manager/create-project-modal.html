@@ -46,7 +46,7 @@
                         <select class="form-control form-control-sm" [(ngModel)]="selectedRepositoryAccess">
                             <option *ngFor="let ra of repositoryAccessList">{{ra}}</option>
                         </select>
-                        <div class="input-group input-group-sm ml-1" style="width: 60%;">
+                        <div *ngIf="isRepoAccessRemote()" class="input-group input-group-sm ml-1" style="width: 60%;">
                             <select class="form-control form-control-sm" [(ngModel)]="selectedRemoteRepoConfig">
                                 <option *ngFor="let conf of remoteRepoConfigs" [ngValue]="conf">{{conf.serverURL}}</option>
                             </select>

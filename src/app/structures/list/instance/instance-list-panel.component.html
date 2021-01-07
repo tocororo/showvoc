@@ -7,15 +7,26 @@
             <button class="btn btn-light btn-sm ml-1" [title]="'COMMONS.ACTIONS.REFRESH'|translate" (click)="refresh()">
                 <span class="fas fa-sync"></span>
             </button>
+            <button class="btn btn-light btn-sm ml-1" [title]="'COMMONS.SETTINGS'|translate" (click)="settings()">
+                <span class="fas fa-cog"></span>
+            </button>
         </div>
     </div>
 
     <div class="card-body vbox">
-        <instance-list [cls]="cls" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context" (nodeSelected)="onNodeSelected($event)">
+        <div *ngIf="visualizationMode == 'searchBased' && !closedAlert" class="alert alert-warning alert-dismissible mb-1">
+            {{'DATA.INSTANCE.USE_SEARCH_MSG'|translate}}
+            <button class="close" (click)="closedAlert=true">
+                <span>&times;</span>
+            </button>
+        </div>
+        
+        <instance-list [cls]="cls" [rendering]="rendering" [showDeprecated]="showDeprecated" [context]="context"
+            (nodeSelected)="onNodeSelected($event)" (requireSettings)="settings()">
         </instance-list>
     </div>
 
     <div *ngIf="!hideSearch" class="card-footer">
-        <search-bar (searchResults)="handleSearchResults($event)" [roles]="[panelRole]" [cls]="cls?.getValue()"></search-bar>
+        <search-bar (searchResults)="handleSearchResults($event)" [roles]="[panelRole]" [cls]="cls?.getValue()" [disabled]="!cls"></search-bar>
     </div>
 </div>
