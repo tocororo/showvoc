@@ -258,16 +258,14 @@ export class ExtensionPointID {
     public static RDF_LIFTER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.rdflifter.RDFLifter";
     public static RDF_TRANSFORMERS_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.rdftransformer.RDFTransformer";
     public static REFORMATTING_EXPORTER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.reformattingexporter.ReformattingExporter";
-    public static RENDERING_ENGINE_ID: string = "it.uniroma2.art.semanticturkey.plugin.extpts.RenderingEngine";
-    // public static RENDERING_ENGINE_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.rendering.RenderingEngine";//NEW
+    public static RENDERING_ENGINE_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.rendering.RenderingEngine";//NEW
     public static REPO_IMPL_CONFIGURER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.repositoryimplconfigurer.RepositoryImplConfigurer";
     public static REPOSITORY_SOURCED_DEPLOYER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.deployer.RepositorySourcedDeployer";
     public static REPOSITORY_TARGETING_LOADER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.loader.RepositoryTargetingLoader";
     public static SEARCH_STRATEGY_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.search.SearchStrategy";
     public static STREAM_SOURCED_DEPLOYER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.deployer.StreamSourcedDeployer";
     public static STREAM_TARGETING_LOADER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.loader.StreamTargetingLoader";
-    public static URI_GENERATOR_ID: string = "it.uniroma2.art.semanticturkey.plugin.extpts.URIGenerator";
-    // public static URI_GENERATOR_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.urigen.URIGenerator";//NEW
+    public static URI_GENERATOR_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.urigen.URIGenerator";//NEW
 }
 
 export abstract class ExtensionFactory {
