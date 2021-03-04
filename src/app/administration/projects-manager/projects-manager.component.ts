@@ -106,6 +106,12 @@ export class ProjectsManagerComponent {
         }
         const modalRef: NgbModalRef = this.modalService.open(LoadDataModal, new ModalOptions("lg"));
         modalRef.componentInstance.project = project;
+        modalRef.result.then(
+            () => { //load data might update the project status => refresh the projects list
+                this.initProjects();
+            },
+            () => {}
+        )
     }
 
     deleteProject(project: Project) {
