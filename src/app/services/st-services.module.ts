@@ -18,13 +18,13 @@ import { MetadataRegistryServices } from './metadata-registry.service';
 import { MetadataServices } from './metadata.service';
 import { OntoLexLemonServices } from './ontolex-lemon.service';
 import { PmkiServices } from './pmki.service';
-import { PreferencesSettingsServices } from './preferences-settings.service';
 import { ProjectsServices } from './projects.service';
 import { PropertiesServices } from './properties.service';
 import { RepositoriesServices } from './repositories.service';
 import { ResourceViewServices } from './resource-view.service';
 import { ResourcesServices } from './resources.service';
 import { SearchServices } from './search.service';
+import { SettingsServices } from './settings.service';
 import { SkosServices } from './skos.service';
 import { SparqlServices } from './sparql.service';
 import { UserServices } from './user.service';
@@ -51,13 +51,13 @@ import { UserServices } from './user.service';
         MetadataRegistryServices,
         OntoLexLemonServices,
         PmkiServices,
-        PreferencesSettingsServices,
         ProjectsServices,
         PropertiesServices,
         RepositoriesServices,
         ResourcesServices,
         ResourceViewServices,
         SearchServices,
+        SettingsServices,
         SkosServices,
         SparqlServices,
         StMetadataRegistry,

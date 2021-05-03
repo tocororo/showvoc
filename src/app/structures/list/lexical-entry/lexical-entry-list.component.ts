@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { finalize, flatMap } from 'rxjs/operators';
-import { LexEntryVisualizationMode, LexicalEntryListPreference, SafeToGoMap, SafeToGo } from 'src/app/models/Properties';
+import { finalize, mergeMap } from 'rxjs/operators';
+import { LexEntryVisualizationMode, LexicalEntryListPreference, SafeToGo, SafeToGoMap } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
@@ -99,7 +99,7 @@ export class LexicalEntryListComponent extends AbstractList {
         } else { //never initialized => count
             this.loading = true;
             return this.ontolexService.countLexicalEntriesByAlphabeticIndex(this.index, this.lexicon).pipe(
-                flatMap(count => {
+                mergeMap(count => {
                     this.loading = false;
                     safeness = { safe: count < this.safeToGoLimit, count: count };
                     safeToGoMap[checksum] = safeness; //cache the safetyness

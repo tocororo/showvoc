@@ -1,4 +1,4 @@
-import { Settings, SettingsProp, Scope } from "./Plugins";
+import { Settings, STProperties, Scope } from "./Plugins";
 
 export class ConfigurationComponents {
     // static ADVANCED_GRAPH_APPLICATION_STORE = "it.uniroma2.art.semanticturkey.config.sheet2rdf.AdvancedGraphApplicationStore";
@@ -68,7 +68,7 @@ export class ConfigurationManager {
  */
 export class Configuration extends Settings {}
 
-export class ConfigurationProperty extends SettingsProp {}
+export class ConfigurationProperty extends STProperties {}
 
 /**
  * Object to provide to the storeConfiguration() service

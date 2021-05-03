@@ -2,17 +2,17 @@ import { Component, Input, ViewChild } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs/operators';
 import { DevResourceStoredContribution } from 'src/app/models/Contribution';
+import { SettingsServices } from "src/app/services/settings.service";
 import { ExtensionConfiguratorComponent } from 'src/app/widget/extensionConfigurator/extension-configurator.component';
 import { BasicModalsServices } from '../../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../../modal-dialogs/Modals';
-import { ConfigurableExtensionFactory, ExtensionPointID, PluginSpecification, Settings } from '../../models/Plugins';
-import { RemoteRepositoryAccessConfig, RepositoryAccessType, Project } from '../../models/Project';
-import { Properties } from '../../models/Properties';
+import { ConfigurableExtensionFactory, ExtensionPointID, PluginSpecification, Scope, Settings } from '../../models/Plugins';
+import { Project, RemoteRepositoryAccessConfig, RepositoryAccessType } from '../../models/Project';
+import { PmkiSettings, SettingsEnum, VocBenchConnectionPmkiSettings } from '../../models/Properties';
 import { IRI } from '../../models/Resources';
-import { OntoLex, RDFS, SKOS, SKOSXL, OWL } from '../../models/Vocabulary';
+import { OntoLex, OWL, RDFS, SKOS, SKOSXL } from '../../models/Vocabulary';
 import { ExtensionsServices } from '../../services/extensions.service';
 import { PmkiServices } from '../../services/pmki.service';
-import { PreferencesSettingsServices } from '../../services/preferences-settings.service';
 
 @Component({
     selector: "development-project-creation-modal",
@@ -51,12 +51,12 @@ export class DevProjectCreationModal {
 
     repositoryAccessType: RepositoryAccessType = RepositoryAccessType.CreateRemote;
 
-    vbConnectionConfig: VbConnectionConfig = {
+    vbConnectionConfig: VocBenchConnectionPmkiSettings = {
+        vbURL: null,
         stHost: null,
         adminEmail: null,
         adminPassword: ""
     }
-
 
     dataRepoExtensions: ConfigurableExtensionFactory[];
     private selectedDataRepoExtension: ConfigurableExtensionFactory;
@@ -67,7 +67,7 @@ export class DevProjectCreationModal {
 
     private remoteAccessConfig: RemoteRepositoryAccessConfig;
 
-    constructor(public activeModal: NgbActiveModal, private preferencesService: PreferencesSettingsServices,
+    constructor(public activeModal: NgbActiveModal, private settingsService: SettingsServices,
         private extensionsService: ExtensionsServices, private pmkiService: PmkiServices, private basicModals: BasicModalsServices) { }
 
     ngOnInit() {
@@ -77,14 +77,16 @@ export class DevProjectCreationModal {
         this.selectedSemModel = this.contribution.model.getIRI();
         this.selectedLexModel = this.contribution.lexicalizationModel.getIRI();
 
-        this.preferencesService.getSystemSettings([Properties.setting_vb_connection]).subscribe(
-            setting => {
-                let vb_conn_value: string = setting[Properties.setting_vb_connection];
-                if (vb_conn_value != null) {
-                    this.vbConnectionConfig = JSON.parse(vb_conn_value);
+        this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM).subscribe(
+            settings => {
+                let pmkiSettings: PmkiSettings = settings.getPropertyValue(SettingsEnum.pmki);
+                if (pmkiSettings != null && pmkiSettings.vbConnectionConfig != null) {
+                    this.vbConnectionConfig = pmkiSettings.vbConnectionConfig
+                } else {
+                    this.vbConnectionConfig = new VocBenchConnectionPmkiSettings();
                 }
             }
-        );
+        )
 
         // init core repo extensions
         this.extensionsService.getExtensions(ExtensionPointID.REPO_IMPL_CONFIGURER_ID).subscribe(

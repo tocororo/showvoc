@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { finalize, flatMap } from 'rxjs/operators';
+import { finalize, mergeMap } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
-import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { InstanceListPreference, InstanceListVisualizationMode, SafeToGo, SafeToGoMap } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, ResAttribute } from 'src/app/models/Resources';
 import { ClassesServices } from 'src/app/services/classes.service';
@@ -116,7 +115,7 @@ export class InstanceListComponent extends AbstractList {
             return of(null)
         } else { //never initialized => count
             return this.getNumberOfInstances(this.cls.getValue()).pipe(
-                flatMap(count => {
+                mergeMap(count => {
                     safeness = { safe: count < this.safeToGoLimit, count: count }; 
                     safeToGoMap[checksum] = safeness; //cache the safeness
                     this.safeToGo = safeness;

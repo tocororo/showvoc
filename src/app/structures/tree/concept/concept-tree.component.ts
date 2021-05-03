@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { finalize, flatMap } from 'rxjs/operators';
+import { finalize, mergeMap } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { ConceptTreePreference, ConceptTreeVisualizationMode, SafeToGo, SafeToGoMap } from 'src/app/models/Properties';
@@ -115,7 +115,7 @@ export class ConceptTreeComponent extends AbstractTree {
         } else { //never initialized => count
             this.loading = true;
             return this.skosService.countTopConcepts(this.schemes).pipe(
-                flatMap(count => {
+                mergeMap(count => {
                     this.loading = false;
                     safeness = { safe: count < this.safeToGoLimit, count: count };
                     safeToGoMap[checksum] = safeness; //cache the safetyness

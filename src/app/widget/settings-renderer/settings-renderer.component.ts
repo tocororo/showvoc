@@ -1,7 +1,7 @@
 import { Component, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Settings, SettingsProp, SettingsPropTypeConstraint } from '../../models/Plugins';
+import { Settings, STProperties, SettingsPropTypeConstraint } from '../../models/Plugins';
 import { Value, RDFResourceRolesEnum } from 'src/app/models/Resources';
 
 @Component({
@@ -21,12 +21,12 @@ export class SettingsRendererComponent {
         this.propagateChange(this.settings);
     }
 
-    private updateBoolean(prop: SettingsProp, value: boolean) {
+    private updateBoolean(prop: STProperties, value: boolean) {
         prop.value = value;
         this.propagateChange(this.settings);
     }
 
-    private updateValue(prop: SettingsProp, value: Value) {
+    private updateValue(prop: STProperties, value: Value) {
         if (value == null) {
             prop.value = null;
         } else {
@@ -35,17 +35,17 @@ export class SettingsRendererComponent {
         this.propagateChange(this.settings);
     }
 
-    private updateSetValue(prop: SettingsProp, value: any[]) {
+    private updateSetValue(prop: STProperties, value: any[]) {
         prop.value = value;
         this.propagateChange(this.settings);
     }
 
-    private updateMapValue(prop: SettingsProp, value: any[]) {
+    private updateMapValue(prop: STProperties, value: any[]) {
         prop.value = value;
         this.propagateChange(this.settings);
     }
 
-    private getIRIRoleConstraints(prop: SettingsProp): RDFResourceRolesEnum[] {
+    private getIRIRoleConstraints(prop: STProperties): RDFResourceRolesEnum[] {
         /**
          * use a cache mechanism to avoid to recreate a roles array each time getIRIRoleConstraints is called
          * (so prevent firing change detection in resource-picker)

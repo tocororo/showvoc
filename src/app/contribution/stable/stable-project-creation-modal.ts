@@ -2,17 +2,17 @@ import { Component, Input, ViewChild } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs/operators';
 import { StableResourceStoredContribution } from 'src/app/models/Contribution';
+import { SettingsServices } from "src/app/services/settings.service";
 import { ExtensionConfiguratorComponent } from 'src/app/widget/extensionConfigurator/extension-configurator.component';
 import { BasicModalsServices } from '../../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../../modal-dialogs/Modals';
-import { ConfigurableExtensionFactory, ExtensionPointID, PluginSpecification, Settings } from '../../models/Plugins';
+import { ConfigurableExtensionFactory, ExtensionPointID, PluginSpecification, Scope, Settings } from '../../models/Plugins';
 import { Project, RemoteRepositoryAccessConfig, RepositoryAccess, RepositoryAccessType } from '../../models/Project';
-import { Properties } from '../../models/Properties';
+import { SettingsEnum } from '../../models/Properties';
 import { IRI } from '../../models/Resources';
 import { OntoLex, OWL, RDFS, SKOS, SKOSXL } from '../../models/Vocabulary';
 import { ExtensionsServices } from '../../services/extensions.service';
 import { PmkiServices } from '../../services/pmki.service';
-import { PreferencesSettingsServices } from '../../services/preferences-settings.service';
 
 @Component({
     selector: "stable-project-creation-modal",
@@ -61,7 +61,7 @@ export class StableProjectCreationModal {
 
     private remoteAccessConfig: RemoteRepositoryAccessConfig;
 
-    constructor(public activeModal: NgbActiveModal, private preferencesService: PreferencesSettingsServices,
+    constructor(public activeModal: NgbActiveModal, private settingsService: SettingsServices,
         private extensionsService: ExtensionsServices, private pmkiService: PmkiServices, private basicModals: BasicModalsServices) { }
 
     ngOnInit() {
@@ -71,16 +71,14 @@ export class StableProjectCreationModal {
         this.selectedSemModel = this.contribution.model.getIRI();
         this.selectedLexModel = this.contribution.lexicalizationModel.getIRI();
 
-        this.preferencesService.getSystemSettings([Properties.setting_remote_configs]).subscribe(
-            stResp => {
-                if (stResp[Properties.setting_remote_configs] != null) {
-                    let remoteAccessConfigurations = <RemoteRepositoryAccessConfig[]>JSON.parse(stResp[Properties.setting_remote_configs]);
-                    if (remoteAccessConfigurations != null && remoteAccessConfigurations.length > 0) {
-                        this.remoteAccessConfig = remoteAccessConfigurations[0];
-                    }
+        this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM).subscribe(
+            settings => {
+                let remoteConfSetting: RemoteRepositoryAccessConfig[] = settings.getPropertyValue(SettingsEnum.remoteConfigs);
+                if (remoteConfSetting != null && remoteConfSetting.length > 0) {
+                    this.remoteAccessConfig = remoteConfSetting[0];
                 }
             }
-        );
+        )
 
         // init core repo extensions
         this.extensionsService.getExtensions(ExtensionPointID.REPO_IMPL_CONFIGURER_ID).subscribe(

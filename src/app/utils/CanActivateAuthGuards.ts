@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { PmkiConstants } from '../models/Pmki';
 import { AuthServices } from '../services/auth.service';
 import { UserServices } from '../services/user.service';
@@ -31,7 +31,7 @@ export class VisitorAuthGuard implements CanActivate {
             return of(true);
         } else { //visitor user not initialized => init
             return this.userService.getUser().pipe(
-                flatMap(user => {
+                mergeMap(user => {
                     if (user) {
                         PMKIContext.setLoggedUser(user);
                         return of(true);
@@ -63,7 +63,7 @@ export class AdminAuthGuard implements CanActivate {
             return of(loggedUser.isAdmin());
         } else { //logged user not initialized => init
             return this.userService.getUser().pipe(
-                flatMap(user => {
+                mergeMap(user => {
                     if (user && user.isAdmin()) {
                         return of(true);
                     } else { //no logged user (getUser returned null), or logged user is not admin

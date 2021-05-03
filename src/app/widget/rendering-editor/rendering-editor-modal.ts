@@ -28,7 +28,7 @@ export class RenderingEditorModal {
     initLanguages() {
         let cookieValue = Cookie.getUserProjectCookiePref(Properties.pref_languages, this.project);
         this.cookieLangs = (cookieValue != null) ? cookieValue.split(",") : null;
-        this.defaultPrefLangs = PMKIContext.getProjectCtx().getProjectPreferences().projectLanguagesPreference;
+        this.defaultPrefLangs = PMKIContext.getProjectCtx().getProjectPreferences().renderingLanguagesPreference;
         if (this.defaultPrefLangs.length == 1 && this.defaultPrefLangs[0] == "*") {
             this.defaultPrefLangs = null;
         }

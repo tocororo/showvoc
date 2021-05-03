@@ -3,15 +3,15 @@ import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { TranslateService } from "@ngx-translate/core";
 import { finalize } from 'rxjs/operators';
 import { PmkiConstants } from 'src/app/models/Pmki';
-import { Properties } from 'src/app/models/Properties';
+import { SettingsEnum } from 'src/app/models/Properties';
 import { IRI } from 'src/app/models/Resources';
 import { AdministrationServices } from 'src/app/services/administration.service';
-import { PreferencesSettingsServices } from 'src/app/services/preferences-settings.service';
 import { ProjectsServices } from 'src/app/services/projects.service';
+import { SettingsServices } from "src/app/services/settings.service";
 import { ExtensionConfiguratorComponent } from 'src/app/widget/extensionConfigurator/extension-configurator.component';
 import { BasicModalsServices } from '../../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions, ModalType } from '../../modal-dialogs/Modals';
-import { ConfigurableExtensionFactory, ExtensionPointID, PluginSpecification, Settings } from '../../models/Plugins';
+import { ConfigurableExtensionFactory, ExtensionPointID, PluginSpecification, Scope, Settings } from '../../models/Plugins';
 import { BackendTypesEnum, Project, RemoteRepositoryAccessConfig, Repository, RepositoryAccess, RepositoryAccessType } from '../../models/Project';
 import { OntoLex, OWL, RDFS, SKOS, SKOSXL } from '../../models/Vocabulary';
 import { ExtensionsServices } from '../../services/extensions.service';
@@ -29,9 +29,8 @@ export class CreateProjectModal {
     loading: boolean;
 
     constructor(public activeModal: NgbActiveModal, private modalService: NgbModal, private projectService: ProjectsServices,
-        private extensionsService: ExtensionsServices, private adminService: AdministrationServices,
-        private prefService: PreferencesSettingsServices, private basicModals: BasicModalsServices,
-        private translateService: TranslateService) { }
+        private extensionsService: ExtensionsServices, private adminService: AdministrationServices, private settingsService: SettingsServices,
+        private basicModals: BasicModalsServices, private translateService: TranslateService) { }
 
     ngOnInit() {
         // init core repo extensions
@@ -109,10 +108,11 @@ export class CreateProjectModal {
     private DEFAULT_REPO_CONFIG_TYPE = "it.uniroma2.art.semanticturkey.extension.impl.repositoryimplconfigurer.predefined.RDF4JNativeSailConfigurerConfiguration";
 
     private initRemoteConfigs() {
-        this.prefService.getSystemSettings([Properties.setting_remote_configs]).subscribe(
-            stResp => {
-                if (stResp[Properties.setting_remote_configs] != null) {
-                    this.remoteRepoConfigs = <RemoteRepositoryAccessConfig[]> JSON.parse(stResp[Properties.setting_remote_configs]);
+        this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM).subscribe(
+            settings => {
+                let remoteConfSetting: RemoteRepositoryAccessConfig[] = settings.getPropertyValue(SettingsEnum.remoteConfigs);
+                if (remoteConfSetting != null) {
+                    this.remoteRepoConfigs = remoteConfSetting;
                     //initialize the selected configuration
                     if (this.selectedRemoteRepoConfig != null) {
                         //if previously a config was already selected, select it again (deselected if not found, probably it has been deleted)
@@ -122,12 +122,13 @@ export class CreateProjectModal {
                             this.selectedRemoteRepoConfig = this.remoteRepoConfigs[0];
                         }
                     }
-                } else {
+                } else { 
+                    //the remote config are refreshed when admin changes it, so it might happend that he deleted the previously available configs 
                     this.remoteRepoConfigs = [];
                     this.selectedRemoteRepoConfig = null;
                 }
             }
-        );
+        )
     }
 
     /**

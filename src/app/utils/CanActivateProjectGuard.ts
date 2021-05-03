@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { forkJoin, Observable, of } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
 import { Project } from '../models/Project';
@@ -31,7 +31,7 @@ export class ProjectGuard implements CanActivate {
         return this.authGuard
             .canActivate(route, state)
             .pipe(
-                flatMap(() => {
+                mergeMap(() => {
                     let ctxProject: Project = PMKIContext.getWorkingProject(); //project set in the context, eventually from the dataset page
                     let paramProject = route.paramMap.get('id'); //project ID set as parameter url (e.g. /#/dataset/MyDataset/...)
             
@@ -44,7 +44,7 @@ export class ProjectGuard implements CanActivate {
                         PMKIContext.setProjectChanged(true);
             
                         return this.projectService.listProjects(null, true, true).pipe( //retrieve project with a service invocation
-                            flatMap(projects => {
+                            mergeMap(projects => {
                                 let p: Project = projects.find(p => p.getName() == paramProject);
                                 if (p != null) { //project fount
                                     PMKIContext.initProjectCtx(p);

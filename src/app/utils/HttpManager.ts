@@ -9,7 +9,7 @@ import { Project } from '../models/Project';
 import { Properties } from '../models/Properties';
 import { Value } from '../models/Resources';
 import { Cookie } from './Cookie';
-import { PMKIContext } from './PMKIContext';
+import { PMKIContext, ProjectContext } from './PMKIContext';
 import { STResponseUtils } from './STServicesUtils';
 
 @Injectable()
@@ -47,7 +47,7 @@ export class HttpManager {
 
     }
 
-    doGet(service: string, request: string, params: RequestParameters, options?: PMKIRequestOptions) {
+    doGet(service: string, request: string, params: STRequestParams, options?: PMKIRequestOptions) {
         options = this.defaultRequestOptions.merge(options);
 
         let url: string = this.getRequestBaseUrl(service, request);
@@ -73,7 +73,7 @@ export class HttpManager {
         );
     }
 
-    doPost(service: string, request: string, params: RequestParameters, options?: PMKIRequestOptions) {
+    doPost(service: string, request: string, params: STRequestParams, options?: PMKIRequestOptions) {
         options = this.defaultRequestOptions.merge(options);
         
         let url: string = this.getRequestBaseUrl(service, request);
@@ -205,9 +205,6 @@ export class HttpManager {
 
     }
 
-
-
-
     /**
      * Composes and returns the base part of the URL of a request.
      * "http://<serverhost>/<serverpath>/<groupId>/<artifactId>/<service>/<request>?...
@@ -219,52 +216,10 @@ export class HttpManager {
         return this.serverhost + "/" + this.serverpath + "/" + this.groupId + "/" + this.artifactId + "/" + service + "/" + request + "?";
     }
 
-
-    private getParametersForUrl(params: RequestParameters): string {
-        return this.getPostData(params) + "&"; //differs from getPostData simply for the ending & in order to append ctx parameters
-    }
-
-    private getPostData(params: RequestParameters): string {
-        let postData: any;
-        let strBuilder: string[] = [];
-        for (let paramName in params) {
-            let paramValue = params[paramName];
-            if (paramValue == null) continue;
-
-            if (Array.isArray(paramValue)) {
-                let stringArray: string[] = [];
-                for (let i = 0; i < paramValue.length; i++) {
-                    if (paramValue[i] instanceof Value) {
-                        stringArray.push((paramValue[i]).toNT());
-                    } else {
-                        stringArray.push(paramValue[i]);
-                    }
-                }
-                strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(stringArray.join(",")));
-            } else if (paramValue instanceof Map) {
-                let stringMap: { [key: string]: string } = {};
-                paramValue.forEach((value: any, key: string) => {
-                    if (value instanceof Value) {
-                        stringMap[key] = value.toNT();
-                    } else {
-                        stringMap[key] = value;
-                    }
-                })
-                strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(JSON.stringify(stringMap)));
-            } else if (paramValue instanceof Value) {
-                strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(paramValue.toNT()));
-            } else {
-                strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(paramValue));
-            }
-        }
-        postData = strBuilder.join("&");
-        return postData;
-    }
-
     /**
      * Returns the request context parameters.
      */
-    private getContextParametersForUrl(): string {
+     private getContextParametersForUrl(): string {
         let params: string = "";
 
         /**
@@ -307,6 +262,48 @@ export class HttpManager {
         }
         
         return params;
+    }
+
+
+    private getParametersForUrl(params: STRequestParams): string {
+        return this.getPostData(params) + "&"; //differs from getPostData simply for the ending & in order to append ctx parameters
+    }
+
+    private getPostData(params: STRequestParams): string {
+        let postData: any;
+        let strBuilder: string[] = [];
+        for (let paramName in params) {
+            let paramValue = params[paramName];
+            if (paramValue == null) continue;
+
+            if (Array.isArray(paramValue)) {
+                let stringArray: string[] = [];
+                for (let i = 0; i < paramValue.length; i++) {
+                    if (paramValue[i] instanceof Value) {
+                        stringArray.push((paramValue[i]).toNT());
+                    } else {
+                        stringArray.push(paramValue[i]);
+                    }
+                }
+                strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(stringArray.join(",")));
+            } else if (paramValue instanceof Map) {
+                let stringMap: { [key: string]: string } = {};
+                paramValue.forEach((value: any, key: string) => {
+                    if (value instanceof Value) {
+                        stringMap[key] = value.toNT();
+                    } else {
+                        stringMap[key] = value;
+                    }
+                })
+                strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(JSON.stringify(stringMap)));
+            } else if (paramValue instanceof Value) {
+                strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(paramValue.toNT()));
+            } else {
+                strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(paramValue));
+            }
+        }
+        postData = strBuilder.join("&");
+        return postData;
     }
 
     /**
@@ -360,16 +357,9 @@ export class HttpManager {
                         }
                         error.name = "UnauthorizedRequestError";
                         error.message = err.message;
-                        /**
-                         * TODO here I should:
-                         * if error is 401
-                         *  - in the login page => just reset context (so when user goes away from that page, the guard re-do the login)
-                         *  - in other pages => session timed out, repeat the login (and re-do the old request? how?)
-                         * if error is 403
-                         *  - show the alert as before
-                         */
+
                         this.basicModals.alert({ key: "COMMONS.STATUS.ERROR" }, errorMsg, ModalType.error).then(
-                            confirm => {
+                            () => {
                                 //in case user is not logged at all (probably session timedout), reset context and redirect to home
                                 if (err.status == 401) { 
                                     PMKIContext.resetContext();
@@ -494,7 +484,7 @@ export class HttpServiceContext {
     }
 }
 
-class RequestParameters { [key: string]: any }
+class STRequestParams { [key: string]: any }
 
 
 //inspired by angular RequestOptions
@@ -517,6 +507,7 @@ export class PMKIRequestOptions {
             errorAlertOpt: options && options.errorAlertOpt != null ? options.errorAlertOpt : this.errorAlertOpt
         });
     }
+
 }
 //inspired by angular RequestOptionsArgs
 interface PMKIRequestOptionsArgs {

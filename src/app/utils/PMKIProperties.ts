@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
-import { map, finalize } from 'rxjs/operators';
-import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
-import { ModalType } from '../modal-dialogs/Modals';
+import { forkJoin, Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
 import { Language, Languages } from '../models/LanguagesCountries';
-import { ExtensionPointID } from '../models/Plugins';
+import { ExtensionPointID, Scope } from '../models/Plugins';
 import { Project } from '../models/Project';
-import { ClassIndividualPanelSearchMode, ClassTreeFilter, ClassTreePreference, ConceptTreePreference, ConceptTreeVisualizationMode, InstanceListPreference, InstanceListVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, ProjectPreferences, ProjectSettings, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, ValueFilterLanguages } from '../models/Properties';
+import { ClassIndividualPanelSearchMode, ClassTreeFilter, ClassTreePreference, ConceptTreePreference, ConceptTreeVisualizationMode, InstanceListPreference, InstanceListVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, PreferencesUtils, ProjectPreferences, ProjectSettings, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, SettingsEnum, ValueFilterLanguages } from '../models/Properties';
 import { IRI, RDFResourceRolesEnum } from '../models/Resources';
 import { ResViewPartition } from '../models/ResourceView';
 import { OWL, RDFS } from '../models/Vocabulary';
-import { PreferencesSettingsServices } from '../services/preferences-settings.service';
+import { SettingsServices } from '../services/settings.service';
 import { Cookie } from './Cookie';
 import { PMKIContext, ProjectContext } from './PMKIContext';
 import { PMKIEventHandler } from './PMKIEventHandler';
@@ -19,7 +17,7 @@ import { ResourceUtils } from './ResourceUtils';
 @Injectable()
 export class PMKIProperties {
 
-    constructor(private prefService: PreferencesSettingsServices, private basicModals: BasicModalsServices, private eventHandler: PMKIEventHandler) {
+    constructor(private settingsService: SettingsServices, private eventHandler: PMKIEventHandler) {
     }
 
     /* =============================
@@ -42,49 +40,39 @@ export class PMKIProperties {
         PMKIContext.setTempProject(projectCtx.getProject());
 
         let projectPreferences = projectCtx.getProjectPreferences();
-        let initRenderingPrefFn = this.prefService.getPUSettings([Properties.pref_languages], null, ExtensionPointID.RENDERING_ENGINE_ID).pipe(
-            map(prefs => {
-                projectPreferences.projectLanguagesPreference = prefs[Properties.pref_languages].split(",");
+
+        let initRenderingPrefFn = this.settingsService.getSettings(ExtensionPointID.RENDERING_ENGINE_ID, Scope.PROJECT_USER).pipe(
+            map(settings => {
+                projectPreferences.renderingLanguagesPreference = settings.getPropertyValue(SettingsEnum.languages).split(",");
             })
         );
-        let structuresPrefs: string[] = [
-            Properties.pref_concept_tree_visualization, Properties.pref_concept_tree_allow_visualization_change, 
-            Properties.pref_instance_list_visualization, Properties.pref_instance_list_allow_visualization_change,
-            Properties.pref_lex_entry_list_visualization, Properties.pref_lex_entry_allow_visualization_change, 
-            Properties.pref_lex_entry_list_index_length, Properties.pref_lex_entry_allow_index_length_change
-        ];
-        let initStructuresPrefFn = this.prefService.getPUSettings(structuresPrefs, null).pipe(
-            map(prefs => {
+        
+        let initStructuresPrefFn = this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.PROJECT_USER).pipe(
+            map(settings => {
                 //concept tree pref (initialized here, eventually overwritten later with cookie)
                 projectPreferences.conceptTreePreferences = new ConceptTreePreference();
-                let conceptTreeVisualizationPref: string = prefs[Properties.pref_concept_tree_visualization];
-                if (conceptTreeVisualizationPref == ConceptTreeVisualizationMode.searchBased) {
-                    projectPreferences.conceptTreePreferences.visualization = conceptTreeVisualizationPref;
+                let concTreeSetting: ConceptTreePreference = settings.getPropertyValue(SettingsEnum.conceptTree);
+                if (concTreeSetting != null) {
+                    PreferencesUtils.mergePreference(projectPreferences.conceptTreePreferences, concTreeSetting);
                 }
-                projectPreferences.conceptTreePreferences.allowVisualizationChange = prefs[Properties.pref_concept_tree_allow_visualization_change] != "false";
 
                 //instance list pref (initialized here, eventually overwritten later with cookie)
                 projectPreferences.instanceListPreferences = new InstanceListPreference();
-                let instanceListVisualizationPref: string = prefs[Properties.pref_instance_list_visualization];
-                if (instanceListVisualizationPref == InstanceListVisualizationMode.searchBased) {
-                    projectPreferences.instanceListPreferences.visualization = instanceListVisualizationPref;
+                let instListSetting: InstanceListPreference = settings.getPropertyValue(SettingsEnum.instanceList);
+                if (instListSetting != null) {
+                    PreferencesUtils.mergePreference(projectPreferences.instanceListPreferences, instListSetting);
                 }
-                projectPreferences.instanceListPreferences.allowVisualizationChange = prefs[Properties.pref_instance_list_allow_visualization_change] != "false";
                 
                 //lex entry list pref (initialized here, eventually overwritten later with cookie)
                 projectPreferences.lexEntryListPreferences = new LexicalEntryListPreference();
-                let lexEntryListVisualizationPref: string = prefs[Properties.pref_lex_entry_list_visualization];
-                if (lexEntryListVisualizationPref == LexEntryVisualizationMode.searchBased) {
-                    projectPreferences.lexEntryListPreferences.visualization = lexEntryListVisualizationPref;
+                let lexEntrySetting: LexicalEntryListPreference = settings.getPropertyValue(SettingsEnum.lexEntryList);
+                if (lexEntrySetting != null) {
+                    PreferencesUtils.mergePreference(projectPreferences.lexEntryListPreferences, lexEntrySetting);
                 }
-                if (prefs[Properties.pref_lex_entry_list_index_length] == "2") {
-                    projectPreferences.lexEntryListPreferences.indexLength = 2;
-                }
-                projectPreferences.lexEntryListPreferences.allowVisualizationChange = prefs[Properties.pref_lex_entry_allow_visualization_change] != "false";
-                projectPreferences.lexEntryListPreferences.allowIndexLengthChange = prefs[Properties.pref_lex_entry_allow_index_length_change] != "false";
             })
         );
-        return forkJoin(initRenderingPrefFn, initStructuresPrefFn).pipe(
+
+        return forkJoin([initRenderingPrefFn, initStructuresPrefFn]).pipe(
             finalize(() => {
                 PMKIContext.removeTempProject()
             }),
@@ -96,24 +84,14 @@ export class PMKIProperties {
     }
 
     initProjectSettings(projectCtx: ProjectContext): Observable<void> {
-        var properties: string[] = [Properties.setting_languages];
-        return this.prefService.getProjectSettings(properties, projectCtx.getProject()).pipe(
+        let projectSettings: ProjectSettings = projectCtx.getProjectSettings();
+        return this.settingsService.getSettingsForProjectAdministration(ExtensionPointID.ST_CORE_ID, Scope.PROJECT, projectCtx.getProject()).pipe(
             map(settings => {
-                let projectSettings: ProjectSettings = projectCtx.getProjectSettings();
-                
-                let langsValue: string = settings[Properties.setting_languages];
-                try {
-                    projectSettings.projectLanguagesSetting = <Language[]>JSON.parse(langsValue);
-                    Languages.sortLanguages(projectSettings.projectLanguagesSetting);
-                } catch (err) {
-                    this.basicModals.alert({ key: "COMMONS.STATUS.ERROR" }, { key: "MESSAGES.LANGUAGE_SETTING_PARSING_ERROR" }, ModalType.error);
-                    projectSettings.projectLanguagesSetting = [
-                        { name: "German", tag: "de" }, { name: "English", tag: "en" }, { name: "Spanish", tag: "es" },
-                        { name: "French", tag: "fr" }, { name: "Italian", tag: "it" }
-                    ];
-                }
+                let langsValue: Language[] = settings.getPropertyValue(SettingsEnum.languages);
+                projectSettings.projectLanguagesSetting = langsValue;
+                Languages.sortLanguages(projectSettings.projectLanguagesSetting);
             })
-        );
+        )
     }
 
     setActiveSchemes(projectCtx: ProjectContext, schemes: IRI[]) {

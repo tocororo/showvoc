@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, SimpleChanges } from "@angular/core";
 import { from, Observable, of } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { LinksetMetadata } from 'src/app/models/Metadata';
@@ -60,14 +60,14 @@ export class AlignmentGraphComponent extends AbstractGraph {
 
     private getLinksets(node: Node, treshold?: number): Observable<LinksetMetadata[]> {
         return this.metadataRegistryService.getEmbeddedLinksets(<IRI>node.res.getValue(), treshold, true).pipe(
-            flatMap(linksets => {
+            mergeMap(linksets => {
                 if (linksets.length > this.linkLimit) {
                     return from(
                         this.basicModals.promptNumber({ key: "GRAPHS.ACTIONS.EXPAND_LINKSET" }, 
                             { key: "MESSAGES.TOO_MUCH_LINKSETS_FILTER", params: { linksetCount: linksets.length } },
                             treshold, 0, null, 1, ModalType.warning)
                     ).pipe(
-                        flatMap(treshold => {
+                        mergeMap(treshold => {
                             return this.getLinksets(node, treshold);
                         })
                     )

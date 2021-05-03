@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { ExtensionPointID, Scope } from 'src/app/models/Plugins';
 import { RemoteRepositoryAccessConfig } from 'src/app/models/Project';
-import { Properties } from 'src/app/models/Properties';
+import { PmkiSettings, SettingsEnum, VocBenchConnectionPmkiSettings } from 'src/app/models/Properties';
 import { AdministrationServices } from 'src/app/services/administration.service';
 import { PmkiServices } from 'src/app/services/pmki.service';
-import { PreferencesSettingsServices } from 'src/app/services/preferences-settings.service';
+import { SettingsServices } from 'src/app/services/settings.service';
 import { PMKIContext } from 'src/app/utils/PMKIContext';
 
 @Component({
@@ -17,18 +18,15 @@ import { PMKIContext } from 'src/app/utils/PMKIContext';
 export class SystemConfigurationComponent implements OnInit {
 
     /* ST+VB configuration */
-    vbConnectionConfig: VbConnectionConfig = {
-        vbUrl: null,
-        stHost: null,
-        adminEmail: null,
-        adminPassword: ""
-    }
-    private pristineVbConnConfig: VbConnectionConfig;
+    private pmkiSettings: PmkiSettings;
+    vbConnectionConfig: VocBenchConnectionPmkiSettings = new VocBenchConnectionPmkiSettings();
+    private pristineVbConnConfig: VocBenchConnectionPmkiSettings;
     
     testVbConfigLoading: boolean;
 
     /* Remote access configuration */
 
+    private remoteConfigsSetting: RemoteRepositoryAccessConfig[]; //on ST remote config is a list, here in PMKI it is shown just the first
     remoteAccessConfig: RemoteRepositoryAccessConfig = { serverURL: null, username: null, password: null };
     private pristineRemoteAccessConf: RemoteRepositoryAccessConfig;
 
@@ -54,7 +52,7 @@ export class SystemConfigurationComponent implements OnInit {
     closedAlert3: boolean;
 
     
-    constructor(private adminService: AdministrationServices, private pmkiService: PmkiServices, private preferenceService: PreferencesSettingsServices,
+    constructor(private adminService: AdministrationServices, private pmkiService: PmkiServices, private settingsService: SettingsServices,
         private basicModals: BasicModalsServices) { }
 
     ngOnInit() {
@@ -156,30 +154,28 @@ export class SystemConfigurationComponent implements OnInit {
      * ============================ */
 
     private initRemoteConfig() {
-        this.preferenceService.getSystemSettings([Properties.setting_remote_configs]).subscribe(
-            setting => {
-                let remoteConfSetting = setting[Properties.setting_remote_configs];
-                if (remoteConfSetting != null) {
-                    let remoteAccessConfigurations = <RemoteRepositoryAccessConfig[]>JSON.parse(remoteConfSetting);
-                    if (remoteAccessConfigurations.length > 0) {
-                        this.remoteAccessConfig = remoteAccessConfigurations[0];
-                    }
+        this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM).subscribe(
+            settings => {
+                this.remoteConfigsSetting = settings.getPropertyValue(SettingsEnum.remoteConfigs);
+                if (this.remoteConfigsSetting == null || this.remoteConfigsSetting.length == 0) {
+                    this.remoteConfigsSetting = [this.remoteAccessConfig];
                 }
+                this.remoteAccessConfig = this.remoteConfigsSetting[0];
                 this.pristineRemoteAccessConf = Object.assign({}, this.remoteAccessConfig);
             }
-        );
+        )
     }
 
     updateRemoteConfig() {
-        this.preferenceService.setSystemSetting(Properties.setting_remote_configs, JSON.stringify([this.remoteAccessConfig])).subscribe(
-            stResp => {
+        this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.remoteConfigs, this.remoteConfigsSetting).subscribe(
+            () => {
                 this.initRemoteConfig();
             }
         );
     }
 
     isRemoteConfigChanged() {
-        for (var key in this.pristineRemoteAccessConf) {
+        for (let key in this.pristineRemoteAccessConf) {
             if (this.pristineRemoteAccessConf[key] != this.remoteAccessConfig[key]) {
                 return true;
             }
@@ -192,23 +188,26 @@ export class SystemConfigurationComponent implements OnInit {
      * ============================ */
 
     private initVbConfig() {
-        this.preferenceService.getSystemSettings([Properties.setting_vb_connection]).subscribe(
-            setting => {
-                let vb_conn_value: string = setting[Properties.setting_vb_connection];
-                if (vb_conn_value != null) {
-                    this.vbConnectionConfig = JSON.parse(vb_conn_value);
+        this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM).subscribe(
+            settings => {
+                this.pmkiSettings = settings.getPropertyValue(SettingsEnum.pmki);
+                if (this.pmkiSettings != null && this.pmkiSettings.vbConnectionConfig != null) {
+                    this.vbConnectionConfig = this.pmkiSettings.vbConnectionConfig
+                } else {
+                    this.vbConnectionConfig;
                 }
                 this.pristineVbConnConfig = Object.assign({}, this.vbConnectionConfig);
             }
-        );
+        )
     }
 
     updateVbConfig() {
-        this.preferenceService.setSystemSetting(Properties.setting_vb_connection, JSON.stringify(this.vbConnectionConfig)).subscribe(
-            () => {
+        this.pmkiSettings.vbConnectionConfig = this.vbConnectionConfig;
+        this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.pmki, this.pmkiSettings).subscribe(
+            () =>{
                 this.initVbConfig();
             }
-        )
+        );
     }
 
     testVbConnection() {
@@ -257,11 +256,4 @@ class EmailConfig {
     public mailSmtpStarttlsEnable: boolean;
     public mailSmtpHost: string;
     public mailSmtpPort: string;
-}
-
-class VbConnectionConfig {
-    vbUrl: string;
-    stHost: string;
-    adminEmail: string;
-    adminPassword: string;
 }

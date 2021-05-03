@@ -1,14 +1,5 @@
-import { IRI } from "./Resources";
-
-/**
- * in the future this could have also a description field
- */
-export class Plugin {
-    public factoryID: string;
-    constructor(factoryID: string) {
-        this.factoryID = factoryID;
-    }
-}
+import { ResourceUtils } from "../utils/ResourceUtils";
+import { Literal, Value } from "./Resources";
 
 /**
  * Soon I will rename this class in STProperties (like server side) and Settings will extends STProperties
@@ -17,10 +8,10 @@ export class Settings {
     public shortName: string;
     public type: string;
     public editRequired: boolean;
-    public properties: SettingsProp[];
+    public properties: STProperties[];
     public htmlDescription?: string;
     public htmlWarning?: string;
-    constructor(shortName: string, type: string, editRequired: boolean, properties: SettingsProp[], htmlDescription?: string, htmlWaning?: string) {
+    constructor(shortName: string, type: string, editRequired: boolean, properties: STProperties[], htmlDescription?: string, htmlWaning?: string) {
         this.shortName = shortName;
         this.editRequired = editRequired;
         this.type = type;
@@ -30,18 +21,28 @@ export class Settings {
     }
 
     public clone(): Settings {
-        var properties: SettingsProp[] = [];
-        for (var i = 0; i < this.properties.length; i++) {
-            let p: SettingsProp = this.properties[i];
+        let properties: STProperties[] = [];
+        for (let i = 0; i < this.properties.length; i++) {
+            let p: STProperties = this.properties[i];
             properties.push(p.clone());
         }
         return new Settings(this.shortName, this.type, this.editRequired, properties, this.htmlDescription, this.htmlWarning);
     }
 
+    /**
+     * Tells if the setting needs to be configured
+     */
     public requireConfiguration(): boolean {
-        if (this.editRequired) {
-            for (var i = 0; i < this.properties.length; i++) {
-                if (this.properties[i].requireConfiguration()) {
+        if (this.editRequired) { //setting needs to be edited and one of its props require config
+            for (let p of this.properties) {
+                if (p.requireConfiguration()) {
+                    return true;
+                }
+            }
+        } else {
+            //if edit is not required, check if there is any properties which is an array is incomplete (with a nullish element)
+            for (let p of this.properties) {
+                if (p.value instanceof Array && p.value.some(v => SettingsProp.isNullish(v))) {
                     return true;
                 }
             }
@@ -49,23 +50,43 @@ export class Settings {
         return false;
     }
 
+    /**
+     * Returns the property with the given name. Returns null if none property with that name exists
+     * @param propName 
+     */
+    public getProperty(propName: string): STProperties {
+        return this.properties.find(p => p.name == propName);
+    }
+
+    /**
+     * Returns the value (if any) of the given property. Returns null if none property with that name exists.
+     * @param propName 
+     */
+    public getPropertyValue(propName: string): any {
+        let prop: STProperties = this.getProperty(propName);
+        if (prop != null) {
+            return prop.value;
+        }
+        return null;
+    }
+
     public getPropertiesAsMap(includeType?: boolean): { [key: string]: string } {
         let map: { [key: string]: string } = {};
         if (includeType) {
             map["@type"] = this.type;
         }
-        for (var i = 0; i < this.properties.length; i++) {
+        for (let i = 0; i < this.properties.length; i++) {
             let value = this.properties[i].value;
 
             if (value != null && typeof value === "string" && value == "") { //if user write then delete a value, the value is "", in this case "clear" the value
                 value = undefined;
-            } else if (value instanceof IRI) {
+            } else if (value instanceof Value) {
                 value = value.toNT();
             } else if (value instanceof Array) {
                 let serializedValues: any[] = [];
-                for (var j = 0; j < value.length; j++) {
+                for (let j = 0; j < value.length; j++) {
                     let v: any = value[j];
-                    if (v instanceof IRI) {
+                    if (v instanceof Value) {
                         serializedValues.push(v.toNT())
                     } else if(v instanceof Settings) {
                         serializedValues.push(v.getPropertiesAsMap());
@@ -81,28 +102,27 @@ export class Settings {
             } else if (value instanceof Settings) {
                 value = value.getPropertiesAsMap();
             } else if (typeof value == "object") { //object => probably a map (associative array object)
-                //don't do nothing
+                //don't do nothing except for empty map (clear the value)
+                if (Object.keys(value).length === 0) {
+                    value = undefined;
+                }
             }
-
             map[this.properties[i].name] = value;
         }
         return map;
     }
 
     public static parse(response: any): Settings {
-        let props: SettingsProp[] = [];
-        for (var i = 0; i < response.properties.length; i++) {
-            let name = response.properties[i].name;
-            let displayName = response.properties[i].displayName;
-            let description = response.properties[i].description;
-            let required = response.properties[i].required;
-            let value = response.properties[i].value;
-            let enumeration = response.properties[i].enumeration;
-            let type = SettingsPropType.parse(response.properties[i].type);
-            props.push(new SettingsProp(name, displayName, description, required, type, enumeration, value));
+        let shortName: string = response.shortName;
+        let type: string = response['@type'];
+        let editRequired: boolean = response.editRequired;
+        let htmlDescription: string = response.htmlDescription;
+        let htmlWarning: string = response.htmlWarning;
+        let props: STProperties[] = [];
+        for (let p of response.properties) {
+            props.push(STProperties.parse(p, type.includes("STPropertiesSchema")));
         }
-        let stProps = new Settings(response.shortName, response['@type'], response.editRequired, props, 
-            response.htmlDescription, response.htmlWarning);
+        let stProps = new Settings(shortName, type, editRequired, props, htmlDescription, htmlWarning);
         return stProps;
     }
 }
@@ -112,16 +132,15 @@ export class Enumeration {
     open: boolean;
 };
 
-export class SettingsProp {
+export class STProperties {
     public name: string;
-    public displayName: string;
-    public description: string;
+    public displayName: any;
+    public description: any;
     public required: boolean;
     public type: SettingsPropType;
     public value: any;
     public enumeration: Enumeration;
-
-    constructor (name: string, displayName: string, description: string, required: boolean, type: SettingsPropType, enumeration?: Enumeration, value?: string) {
+    constructor (name: string, displayName: any, description: any, required: boolean, type: SettingsPropType, enumeration?: Enumeration, value?: string) {
         this.name = name;
         this.displayName = displayName;
         this.description = description;
@@ -129,27 +148,6 @@ export class SettingsProp {
         this.value = value;
         this.enumeration = enumeration;
         this.type = type;
-    }
-
-    public clone(): SettingsProp {
-        let clonedValue = SettingsProp.cloneValue(this.value);
-        return new SettingsProp(this.name, this.displayName, this.description, this.required, this.type.clone(), this.enumeration, clonedValue);
-    }
-
-    private static cloneValue(value: any): any {
-        if (value === null || typeof value != "object" || value instanceof String) { // "primitive" values that don't need to be cloned
-            return value;
-        } else if (value instanceof Array) {
-            return value.map(v => SettingsProp.cloneValue(v));
-        } else {
-            let propValues = {};
-            for (let prop of Object.getOwnPropertyNames(value)) {
-                propValues[prop] = Object.getOwnPropertyDescriptor(value, prop);
-                propValues[prop].value = SettingsProp.cloneValue(propValues[prop].value);
-            }
-
-            return Object.create(Object.getPrototypeOf(value), propValues);
-        }
     }
 
     public requireConfiguration(): boolean {
@@ -162,7 +160,22 @@ export class SettingsProp {
         }
     }
 
-    private static isNullish(v: any): boolean {
+    protected static cloneValue(value: any): any {
+        if (value === null || typeof value != "object" || value instanceof String) { // "primitive" values that don't need to be cloned
+            return value;
+        } else if (value instanceof Array) {
+            return value.map(v => STProperties.cloneValue(v));
+        } else {
+            let propValues = {};
+            for (let prop of Object.getOwnPropertyNames(value)) {
+                propValues[prop] = Object.getOwnPropertyDescriptor(value, prop);
+                propValues[prop].value = STProperties.cloneValue(propValues[prop].value);
+            }
+            return Object.create(Object.getPrototypeOf(value), propValues);
+        }
+    }
+
+    public static isNullish(v: any): boolean {
         return v == null ||
             (typeof v == "string" && v.trim() == "") ||
             (v instanceof Settings && v.requireConfiguration()) ||
@@ -170,6 +183,79 @@ export class SettingsProp {
                 v.findIndex(SettingsProp.isNullish) != -1
             ))
     }
+
+    public clone(): STProperties {
+        let clonedValue = STProperties.cloneValue(this.value);
+        return new STProperties(this.name, this.displayName, this.description, this.required, this.type.clone(), this.enumeration, clonedValue);
+    }
+
+    public static parse(stProp: any, schema?: boolean): STProperties {
+        let name = stProp.name;
+        let required = stProp.required;
+        let enumeration = stProp.enumeration;
+        let type = SettingsPropType.parse(stProp.type);
+        let value: any = stProp.value;
+        if (stProp.value != null && schema) { //if the property belong to a schema, its value is a list of properties
+            let props: STProperties[] = [];
+            for (let v of stProp.value) {
+                props.push(STProperties.parse(v))
+            }
+            value = props;
+        }
+        let displayName = stProp.displayName;
+        let description = stProp.description;
+        if (displayName instanceof Array) { //properties are DynamicSettingProp
+            let displayNames: Literal[] = displayName.map(dn => ResourceUtils.parseLiteral(dn));
+            let descriptions: Literal[] = description.map(dn => ResourceUtils.parseLiteral(dn));
+            return new DynamicSettingProp(name, displayNames, descriptions, required, type, enumeration, value);
+        } else {
+            return new SettingsProp(name, displayName, description, required, type, enumeration, value)
+        }
+    }
+}
+
+export class SettingsProp extends STProperties {
+    public displayName: string;
+    public description: string;
+}
+
+export class DynamicSettingProp extends STProperties {
+    public displayName: Literal[];
+    public description: Literal[];
+
+    /**
+     * Return the display name in the given language.
+     * If no display name is provided for the given languge, returns the first one
+     * @param lang 
+     */
+    getDisplayName(lang: string): string {
+        let dn: string;
+        if (this.displayName.length > 0) {
+            let dnLit = this.displayName.find(d => d.getLanguage() == lang);
+            if (dnLit == null) {
+                dnLit = this.displayName[0];
+            }
+            dn = dnLit.getLabel();
+        }
+        return dn;
+    }
+    /**
+     * Return the description in the given language.
+     * If no description is provided for the given languge, returns the first one
+     * @param lang 
+     */
+    getDescription(lang: string) {
+        let d: string;
+        if (this.description.length != 1) {
+            let dnLit = this.description.find(d => d.getLanguage() == lang);
+            if (dnLit == null) {
+                dnLit = this.description[0];
+            }
+            d = dnLit.getLabel();
+        }
+        return d;
+    }
+
 }
 
 export class SettingsPropType {
@@ -192,7 +278,7 @@ export class SettingsPropType {
         let constraintsJson = jsonObject.constraints;
         if (constraintsJson) {
             constraints = [];
-            for (var i = 0; i < constraintsJson.length; i++) {
+            for (let i = 0; i < constraintsJson.length; i++) {
                 constraints.push({ type: constraintsJson[i]["@type"], value: constraintsJson[i].value });
             }
         }
@@ -201,7 +287,7 @@ export class SettingsPropType {
         let typeArgumentsJson = jsonObject.typeArguments;
         if (typeArgumentsJson) {
             typeArguments = [];
-            for (var i = 0; i < typeArgumentsJson.length; i++) {
+            for (let i = 0; i < typeArgumentsJson.length; i++) {
                 typeArguments.push(SettingsPropType.parse(typeArgumentsJson[i]));
             }
         }
@@ -218,14 +304,14 @@ export class SettingsPropType {
         let constraints: SettingsPropTypeConstraint[];
         if (this.constraints) {
             constraints = [];
-            for (var i = 0; i < this.constraints.length; i++) {
+            for (let i = 0; i < this.constraints.length; i++) {
                 constraints.push({ type: this.constraints[i].type, value: this.constraints[i].value });
             }
         }
         let typeArguments: SettingsPropType[];
         if (this.typeArguments) {
             typeArguments = [];
-            for (var i = 0; i < this.typeArguments.length; i++) {
+            for (let i = 0; i < this.typeArguments.length; i++) {
                 typeArguments.push(this.typeArguments[i].clone());
             }
         }
@@ -250,6 +336,9 @@ export class PluginSpecification {
 //Extension Point
 
 export class ExtensionPointID {
+
+    public static ST_CORE_ID: string = "it.uniroma2.art.semanticturkey.settings.core.SemanticTurkeyCoreSettingsManager";
+
     public static COLLABORATION_BACKEND_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.collaboration.CollaborationBackend";
     public static DATASET_CATALOG_CONNECTOR_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.datasetcatalog.DatasetCatalogConnector";
     public static DATASET_METADATA_EXPORTER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.datasetmetadata.DatasetMetadataExporter";
@@ -258,14 +347,14 @@ export class ExtensionPointID {
     public static RDF_LIFTER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.rdflifter.RDFLifter";
     public static RDF_TRANSFORMERS_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.rdftransformer.RDFTransformer";
     public static REFORMATTING_EXPORTER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.reformattingexporter.ReformattingExporter";
-    public static RENDERING_ENGINE_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.rendering.RenderingEngine";//NEW
+    public static RENDERING_ENGINE_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.rendering.RenderingEngine";
     public static REPO_IMPL_CONFIGURER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.repositoryimplconfigurer.RepositoryImplConfigurer";
     public static REPOSITORY_SOURCED_DEPLOYER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.deployer.RepositorySourcedDeployer";
     public static REPOSITORY_TARGETING_LOADER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.loader.RepositoryTargetingLoader";
     public static SEARCH_STRATEGY_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.search.SearchStrategy";
     public static STREAM_SOURCED_DEPLOYER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.deployer.StreamSourcedDeployer";
     public static STREAM_TARGETING_LOADER_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.loader.StreamTargetingLoader";
-    public static URI_GENERATOR_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.urigen.URIGenerator";//NEW
+    public static URI_GENERATOR_ID: string = "it.uniroma2.art.semanticturkey.extension.extpts.urigen.URIGenerator";
 }
 
 export abstract class ExtensionFactory {
@@ -317,18 +406,36 @@ export class NonConfigurableExtensionFactory extends ExtensionFactory {
 }
 
 export class ExtensionPoint {
-    scope: Scope;
-    interface: string;
     id: string;
+    interface?: string;
+    interfaces?: string[];
+    scope: Scope;
     settingsScopes?: Scope[];
     configurationScopes?: Scope[];
+
+    getShortId(): string {
+        return this.id.substring(this.id.lastIndexOf(".")+1);
+    }
+
+    static parse(json: any): ExtensionPoint {
+        let ep: ExtensionPoint = new ExtensionPoint();
+        ep.id = json.id;
+        ep.interface = json.interface;
+        ep.interfaces = json.interfaces;
+        ep.scope = json.scope;
+        ep.settingsScopes = json.settingsScopes;
+        ep.configurationScopes = json.configurationScopes;
+        return ep;
+    }
 }
 
 export enum Scope {
     SYSTEM = "SYSTEM",
     PROJECT = "PROJECT",
     USER = "USER",
-    PROJECT_USER = "PROJECT_USER"
+    PROJECT_USER = "PROJECT_USER",
+    PROJECT_GROUP = "PROJECT_GROUP",
+    FACTORY = "FACTORY"
 }
 
 export class ScopeUtils {
@@ -341,6 +448,8 @@ export class ScopeUtils {
             return "usr";
         } else if (scope == Scope.PROJECT_USER) {
             return "pu";
+        } else if (scope == Scope.PROJECT_GROUP) {
+            return "pg";
         }
     }
 
@@ -353,6 +462,8 @@ export class ScopeUtils {
             return Scope.USER;
         } else if (serialization == "pu") {
             return Scope.PROJECT_USER
+        }  else if (serialization == "factory") {
+            return Scope.FACTORY
         }
     }
 }

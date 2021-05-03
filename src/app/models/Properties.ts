@@ -3,6 +3,34 @@ import { IRI } from './Resources';
 import { ResViewPartition } from './ResourceView';
 import { OWL, RDF, RDFS } from './Vocabulary';
 
+/**
+ * Names of the property of the Settings (at every levels: system, project, user, project-user)
+ */
+ export enum SettingsEnum {
+    conceptTree = "conceptTree",
+    instanceList = "instanceList",
+    languages = "languages",
+    lexEntryList = "lexEntryList",
+    pmki = "pmki",
+    remoteConfigs = "remoteConfigs",
+}
+
+export class PreferencesUtils {
+    /**
+     * Merge the default preferences object with the one returned by the Settings.getSettings() service
+     * Useful to keep the default values to those properties not set and thus not returned by the above service.
+     * @param localPref 
+     * @param settingsProperty 
+     */
+    public static mergePreference(localPref: any, settingsProperty: any) {
+        Object.keys(localPref).forEach(prop => {
+            if (settingsProperty[prop] != null) {
+                localPref[prop] = settingsProperty[prop];
+            }
+        })
+    }
+}
+
 export class Properties {
 
     static pref_languages: string = "languages";
@@ -39,12 +67,6 @@ export class Properties {
     static pref_res_view_partition_filter: string = "res_view_partition_filter";
     static pref_hide_literal_graph_nodes: string = "hide_literal_graph_nodes";
 
-    //project
-    static setting_languages: string = "languages";
-
-    //system
-    static setting_remote_configs = "remote_configs";
-    static setting_vb_connection = "pmki.vb_connection_config";
 }
 
 export class SearchSettings {
@@ -150,7 +172,7 @@ export class ResViewPartitionFilterPreference {
  * Class that represents the user settings (preferences) of a Project 
  */
 export class ProjectPreferences {
-    projectLanguagesPreference: string[] = []; //languages that user has assigned for project (and ordered according his preferences)
+    renderingLanguagesPreference: string[] = []; //languages that user has assigned for project (and ordered according his preferences)
 
     filterValueLang: ValueFilterLanguages = new ValueFilterLanguages(); //languages visible in resource description (e.g. in ResourceView, Graph,...)
 
@@ -195,4 +217,15 @@ export class VisualizationModeTranslation {
         [LexEntryVisualizationMode.indexBased]: "DATA.COMMONS.VISUALIZATION_MODE.INDEX_BASED",
         [LexEntryVisualizationMode.searchBased]: "DATA.COMMONS.VISUALIZATION_MODE.SEARCH_BASED",
     }
+}
+
+export class PmkiSettings {
+    vbConnectionConfig: VocBenchConnectionPmkiSettings;
+}
+
+export class VocBenchConnectionPmkiSettings {
+    vbURL: string;
+	stHost: string;
+	adminEmail: string;
+	adminPassword: string = "";
 }

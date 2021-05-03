@@ -2,9 +2,10 @@ import { Component } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { ExtensionPointID, Scope } from "src/app/models/Plugins";
 import { RemoteRepositoryAccessConfig } from 'src/app/models/Project';
-import { Properties } from 'src/app/models/Properties';
-import { PreferencesSettingsServices } from 'src/app/services/preferences-settings.service';
+import { SettingsEnum } from 'src/app/models/Properties';
+import { SettingsServices } from "src/app/services/settings.service";
 
 @Component({
     selector: "remote-access-config-modal",
@@ -17,16 +18,17 @@ export class RemoteAccessConfigModal {
     newConfig: RemoteRepositoryAccessConfig = { serverURL: null, username: null, password: null };
 
 
-    constructor(public activeModal: NgbActiveModal, private prefService: PreferencesSettingsServices, private basicModals: BasicModalsServices) { }
+    constructor(public activeModal: NgbActiveModal, private settingsService: SettingsServices, private basicModals: BasicModalsServices) { }
 
     ngOnInit() {
-        this.prefService.getSystemSettings([Properties.setting_remote_configs]).subscribe(
-            stResp => {
-                if (stResp[Properties.setting_remote_configs] != null) {
-                    this.savedConfigs = <RemoteRepositoryAccessConfig[]> JSON.parse(stResp[Properties.setting_remote_configs]);
+        this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM).subscribe(
+            settings => {
+                let remoteConfSetting: RemoteRepositoryAccessConfig[] = settings.getPropertyValue(SettingsEnum.remoteConfigs);
+                if (remoteConfSetting != null) {
+                    this.savedConfigs = remoteConfSetting;
                 }
             }
-        );
+        )
     }
 
     createConfiguration() {
@@ -59,13 +61,7 @@ export class RemoteAccessConfigModal {
         this.updateConfigurations();
     }
     private updateConfigurations() {
-        let conf: string;
-        if (this.savedConfigs.length == 0) {
-            conf = null;
-        } else {
-            conf = JSON.stringify(this.savedConfigs);
-        }
-        this.prefService.setSystemSetting(Properties.setting_remote_configs, conf).subscribe();
+        this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.remoteConfigs, this.savedConfigs)
     }
 
     ok() {

@@ -1,11 +1,10 @@
 import { Component, Input } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ExtensionPointID } from 'src/app/models/Plugins';
+import { ExtensionPointID, Scope } from 'src/app/models/Plugins';
 import { Project } from 'src/app/models/Project';
-import { ConceptTreeVisualizationMode, InstanceListVisualizationMode, LexEntryVisualizationMode, Properties, VisualizationModeTranslation } from 'src/app/models/Properties';
+import { ConceptTreePreference, ConceptTreeVisualizationMode, InstanceListPreference, InstanceListVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, PreferencesUtils, SettingsEnum, VisualizationModeTranslation } from 'src/app/models/Properties';
 import { OntoLex, OWL, SKOS } from 'src/app/models/Vocabulary';
-import { PreferencesSettingsServices } from 'src/app/services/preferences-settings.service';
-import { InstanceListSettingsModal } from "src/app/structures/list/instance/instance-list-settings-modal";
+import { SettingsServices } from "src/app/services/settings.service";
 import { ProjectContext } from 'src/app/utils/PMKIContext';
 import { PMKIProperties } from 'src/app/utils/PMKIProperties';
 
@@ -23,6 +22,7 @@ export class ProjectSettingsModal {
     isOwl: boolean; //useful to determine whether to show the settings about the instance list
 
 
+    private concTreePref: ConceptTreePreference;
     skosVisualizationModes: {value: ConceptTreeVisualizationMode, labelTranslationKey: string }[] = [
         { value: ConceptTreeVisualizationMode.hierarchyBased, labelTranslationKey: VisualizationModeTranslation.translationMap[ConceptTreeVisualizationMode.hierarchyBased] },
         { value: ConceptTreeVisualizationMode.searchBased, labelTranslationKey: VisualizationModeTranslation.translationMap[ConceptTreeVisualizationMode.searchBased] }
@@ -30,6 +30,7 @@ export class ProjectSettingsModal {
     selectedSkosMode: ConceptTreeVisualizationMode = this.skosVisualizationModes[0].value;
     skosAllowVisualizationChange: boolean;
 
+    private lexEntryListPref: LexicalEntryListPreference;
     ontolexVisualizationModes: { value: LexEntryVisualizationMode, labelTranslationKey: string }[] = [
         { value: LexEntryVisualizationMode.indexBased, labelTranslationKey: VisualizationModeTranslation.translationMap[LexEntryVisualizationMode.indexBased] },
         { value: LexEntryVisualizationMode.searchBased, labelTranslationKey: VisualizationModeTranslation.translationMap[LexEntryVisualizationMode.searchBased] }
@@ -39,6 +40,7 @@ export class ProjectSettingsModal {
     ontolexAllowVisualizationChange: boolean;
     ontolexAllowIndexLengthChange: boolean;
 
+    private instListPref: InstanceListPreference;
     instanceVisualizationModes: { value: InstanceListVisualizationMode, labelTranslationKey: string }[] = [
         { value: InstanceListVisualizationMode.standard, labelTranslationKey: VisualizationModeTranslation.translationMap[InstanceListVisualizationMode.standard] },
         { value: InstanceListVisualizationMode.searchBased, labelTranslationKey: VisualizationModeTranslation.translationMap[InstanceListVisualizationMode.searchBased] }
@@ -48,7 +50,14 @@ export class ProjectSettingsModal {
     
     renderingLangs: string[];
 
-    constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties, private prefService: PreferencesSettingsServices) { }
+    constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties, private settingsService: SettingsServices) { }
+
+
+    /*
+    * Here the preferences are retrieved from the PU-settings (specific settings for the given p-u pair, in this case the user is the admin), 
+    * but it will be written as pu_default (default pu-setting at project level) so it will be applied for all the users (both admin and visitor).
+    * The getSettings in case the setting has not been set before, will fallback to the pu_default
+    */
 
     ngOnInit() {
         this.isOntolex = this.project.getModelType() == OntoLex.uri;
@@ -63,95 +72,98 @@ export class ProjectSettingsModal {
         );
 
         if (this.isOntolex || this.isSkos || this.isOwl) {
-            this.prefService.getPUSettings([
-                Properties.pref_concept_tree_visualization, Properties.pref_concept_tree_allow_visualization_change,
-                Properties.pref_instance_list_visualization, Properties.pref_instance_list_allow_visualization_change,
-                Properties.pref_lex_entry_list_visualization, Properties.pref_lex_entry_allow_visualization_change, 
-                Properties.pref_lex_entry_list_index_length, Properties.pref_lex_entry_allow_index_length_change], 
-                this.project).subscribe(
-                prefs => {
-                    //concept tree
-                    let conceptTreeVisualizationPref: string = prefs[Properties.pref_concept_tree_visualization];
-                    if (conceptTreeVisualizationPref == ConceptTreeVisualizationMode.searchBased) {
-                        this.selectedSkosMode = conceptTreeVisualizationPref;
+            this.settingsService.getSettingsForProjectAdministration(ExtensionPointID.ST_CORE_ID, Scope.PROJECT_USER, this.project).subscribe(
+                settings => {
+                    this.concTreePref = new ConceptTreePreference();
+                    let concTreeSetting: ConceptTreePreference = settings.getPropertyValue(SettingsEnum.conceptTree);
+                    if (concTreeSetting != null) {
+                        PreferencesUtils.mergePreference(this.concTreePref, concTreeSetting);
                     }
-                    this.skosAllowVisualizationChange = prefs[Properties.pref_concept_tree_allow_visualization_change] != "false";
-                    //lex entry list
-                    let lexEntryListVisualizationPref: string = prefs[Properties.pref_lex_entry_list_visualization];
-                    if (lexEntryListVisualizationPref == LexEntryVisualizationMode.searchBased) {
-                        this.selectedOntolexMode = lexEntryListVisualizationPref;
+                    this.selectedSkosMode = this.concTreePref.visualization;
+                    this.skosAllowVisualizationChange = this.concTreePref.allowVisualizationChange;
+
+                    this.instListPref = new InstanceListPreference();
+                    let instListSetting: InstanceListPreference = settings.getPropertyValue(SettingsEnum.instanceList);
+                    if (instListSetting != null) {
+                        PreferencesUtils.mergePreference(this.instListPref, instListSetting);
                     }
-                    this.ontolexAllowVisualizationChange = prefs[Properties.pref_lex_entry_allow_visualization_change] != "false";
-                    this.ontolexAllowIndexLengthChange = prefs[Properties.pref_lex_entry_allow_index_length_change] != "false";
-                    this.indexLength = prefs[Properties.pref_lex_entry_list_index_length] == "2" ? 2 : 1;
-                    //instance list
-                    let instanceListVisualizationPref: string = prefs[Properties.pref_instance_list_visualization];
-                    if (instanceListVisualizationPref == InstanceListVisualizationMode.searchBased) {
-                        this.selectedInstanceMode = instanceListVisualizationPref;
+                    this.selectedInstanceMode = this.instListPref.visualization;
+                    this.instanceAllowVisualizationChange = this.instListPref.allowVisualizationChange;
+                    
+                    this.lexEntryListPref = new LexicalEntryListPreference();
+                    let lexEntrySetting: LexicalEntryListPreference = settings.getPropertyValue(SettingsEnum.lexEntryList);
+                    if (lexEntrySetting != null) {
+                        PreferencesUtils.mergePreference(this.lexEntryListPref, lexEntrySetting);
                     }
-                    this.instanceAllowVisualizationChange = prefs[Properties.pref_instance_list_allow_visualization_change] != "false";
+                    this.selectedOntolexMode = this.lexEntryListPref.visualization;
+                    this.ontolexAllowVisualizationChange = this.lexEntryListPref.allowVisualizationChange;
+                    this.ontolexAllowIndexLengthChange = this.lexEntryListPref.allowIndexLengthChange;
                 }
-            );
+            )
         }
     }
 
     //======== Rendering settings handlers =======
 
     private initRenderingLanguages() {
-        /*
-         * The preference is retrieved from the PU-settings (specific settings for the given p-u pair, in this case the user is the admin), 
-         * but it will be written as pu_default (default pu-setting at project level) so it will be applied for all the users (both admin and visitor).
-         * The getPUSettings in case the setting has not been set before, will fallback to the pu_default
-         */
-        this.prefService.getPUSettings([Properties.pref_languages], this.project, ExtensionPointID.RENDERING_ENGINE_ID).subscribe(
-            prefs => {
+        this.settingsService.getSettingsForProjectAdministration(ExtensionPointID.RENDERING_ENGINE_ID, Scope.PROJECT_USER, this.project).subscribe(
+            settings => {
                 this.renderingLangs = ["*"];
-                if (prefs[Properties.pref_languages] != null) {
-                    this.renderingLangs = prefs[Properties.pref_languages].split(",");
+                let langSetting = settings.getPropertyValue(SettingsEnum.languages);
+                if (langSetting != null) {
+                    this.renderingLangs = langSetting.split(",");
                 }
             }
         );
     }
 
     onRenderingChange() {
-        this.prefService.setPUSettingProjectDefault(Properties.pref_languages, this.renderingLangs.join(","), this.project, ExtensionPointID.RENDERING_ENGINE_ID).subscribe();
+        this.settingsService.storePUSettingProjectDefault(ExtensionPointID.RENDERING_ENGINE_ID, this.project, SettingsEnum.languages, this.renderingLangs.join(",")).subscribe();
     }
 
     //======== Skos settings handlers ======
 
     changeSkosVisualizationMode() {
-        this.prefService.setPUSettingProjectDefault(Properties.pref_concept_tree_visualization, this.selectedSkosMode, this.project).subscribe();
+        this.concTreePref.visualization = this.selectedSkosMode;
+        this.settingsService.storePUSettingProjectDefault(ExtensionPointID.ST_CORE_ID, this.project, SettingsEnum.conceptTree, this.concTreePref).subscribe();
     }
     changeSkosAllowVisualizationChange() {
         this.skosAllowVisualizationChange = !this.skosAllowVisualizationChange;
-        this.prefService.setPUSettingProjectDefault(Properties.pref_concept_tree_allow_visualization_change, this.skosAllowVisualizationChange+"", this.project).subscribe();
+        this.concTreePref.allowVisualizationChange = this.skosAllowVisualizationChange;
+        this.settingsService.storePUSettingProjectDefault(ExtensionPointID.ST_CORE_ID, this.project, SettingsEnum.conceptTree, this.concTreePref).subscribe();
     }
 
     //======== Owl settings handlers ======
 
     changeInstanceVisualizationMode() {
-        this.prefService.setPUSettingProjectDefault(Properties.pref_instance_list_visualization, this.selectedInstanceMode, this.project).subscribe();
+        this.instListPref.visualization = this.selectedInstanceMode;
+        this.settingsService.storePUSettingProjectDefault(ExtensionPointID.ST_CORE_ID, this.project, SettingsEnum.instanceList, this.instListPref).subscribe();
     }
     changeInstanceAllowVisualizationChange() {
         this.instanceAllowVisualizationChange = !this.instanceAllowVisualizationChange;
-        this.prefService.setPUSettingProjectDefault(Properties.pref_instance_list_allow_visualization_change, this.instanceAllowVisualizationChange+"", this.project).subscribe();
+        this.instListPref.allowVisualizationChange = this.instanceAllowVisualizationChange;
+        this.settingsService.storePUSettingProjectDefault(ExtensionPointID.ST_CORE_ID, this.project, SettingsEnum.instanceList, this.instListPref).subscribe();
     }
 
     //======== Ontolex settings handlers ======
 
     changeOntolexVisualizationMode() {
-        this.prefService.setPUSettingProjectDefault(Properties.pref_lex_entry_list_visualization, this.selectedOntolexMode, this.project).subscribe();
+        this.lexEntryListPref.visualization = this.selectedOntolexMode;
+        this.settingsService.storePUSettingProjectDefault(ExtensionPointID.ST_CORE_ID, this.project, SettingsEnum.lexEntryList, this.lexEntryListPref).subscribe();
     }
     changeOntolexIndexLength() {
-        this.prefService.setPUSettingProjectDefault(Properties.pref_lex_entry_list_index_length, this.indexLength+"", this.project).subscribe();
+        this.lexEntryListPref.indexLength = this.indexLength;
+        this.settingsService.storePUSettingProjectDefault(ExtensionPointID.ST_CORE_ID, this.project, SettingsEnum.lexEntryList, this.lexEntryListPref).subscribe();
     }
     changeOntolexAllowVisualizationModeChage() {
         this.ontolexAllowVisualizationChange = !this.ontolexAllowVisualizationChange;
-        this.prefService.setPUSettingProjectDefault(Properties.pref_lex_entry_allow_visualization_change, this.ontolexAllowVisualizationChange+"", this.project).subscribe();
+        this.lexEntryListPref.allowVisualizationChange = this.ontolexAllowVisualizationChange;
+        this.settingsService.storePUSettingProjectDefault(ExtensionPointID.ST_CORE_ID, this.project, SettingsEnum.lexEntryList, this.lexEntryListPref).subscribe();
     }
     changeOntolexAllowIndexLengthChange() {
         this.ontolexAllowIndexLengthChange = !this.ontolexAllowIndexLengthChange;
-        this.prefService.setPUSettingProjectDefault(Properties.pref_lex_entry_allow_index_length_change, this.ontolexAllowIndexLengthChange+"", this.project).subscribe();
+        this.lexEntryListPref.allowIndexLengthChange = this.ontolexAllowIndexLengthChange;
+        this.settingsService.storePUSettingProjectDefault(ExtensionPointID.ST_CORE_ID, this.project, SettingsEnum.lexEntryList, this.lexEntryListPref).subscribe();
     }
 
     //==========================================
