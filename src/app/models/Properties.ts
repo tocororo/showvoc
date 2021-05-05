@@ -11,6 +11,7 @@ import { OWL, RDF, RDFS } from './Vocabulary';
     instanceList = "instanceList",
     languages = "languages",
     lexEntryList = "lexEntryList",
+    mail = "mail",
     pmki = "pmki",
     remoteConfigs = "remoteConfigs",
 }

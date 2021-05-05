@@ -7,7 +7,7 @@
             <div class="card-header">
                 <label>{{'ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG'|translate}}:</label>
             </div>
-            <div class="card-body">
+            <div *ngIf="emailSettings" class="card-body">
                 <div *ngIf="!closedAlert1" class="alert alert-info alert-dismissible mb-1">
                     <span [innerHTML]="'MESSAGES.EMAIL_CONFIG_INFO'|translate"></span>
                     <button class="close" (click)="closedAlert1=true"><span>&times;</span></button>
@@ -26,7 +26,7 @@
                             <td nowrap>
                                 <label>Mail SMTP host:</label>
                             </td>
-                            <td><input class="form-control form-control-sm" [(ngModel)]="emailConfig.mailSmtpHost"></td>
+                            <td><input class="form-control form-control-sm" [(ngModel)]="emailSettings.smtp.host"></td>
                         </tr>
                         <tr>
                             <td>
@@ -35,7 +35,7 @@
                             <td nowrap>
                                 <label>Mail SMTP port:</label>
                             </td>
-                            <td><input class="form-control form-control-sm" [(ngModel)]="emailConfig.mailSmtpPort"></td>
+                            <td><input class="form-control form-control-sm" [(ngModel)]="emailSettings.smtp.port"></td>
                         </tr>
 
                         <tr>
@@ -62,14 +62,13 @@
                             </td>
                             <td>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="authRadio" value="true" [(ngModel)]="emailConfig.mailSmtpAuth">
-                                    <label class="form-check-label">{{'COMMONS.BOOLEAN.YES'|translate}}</label>
+                                    <input class="form-check-input" id="authRadioTrue" type="radio" name="authRadio" [(ngModel)]="emailSettings.smtp.auth" [value]="true" >
+                                    <label class="form-check-label" for="authRadioTrue">{{'COMMONS.BOOLEAN.YES'|translate}}</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="authRadio" value="false" [(ngModel)]="emailConfig.mailSmtpAuth">
-                                    <label class="form-check-label">{{'COMMONS.BOOLEAN.NO'|translate}}</label>
+                                    <input class="form-check-input" id="authRadioFalse" type="radio" name="authRadio" [(ngModel)]="emailSettings.smtp.auth" [value]="false" >
+                                    <label class="form-check-label" for="authRadioFalse">{{'COMMONS.BOOLEAN.NO'|translate}}</label>
                                 </div>
-
                             </td>
                         </tr>
                         <tr>
@@ -79,7 +78,7 @@
                             <td nowrap>
                                 <label>Mail from address:</label>
                             </td>
-                            <td><input class="form-control form-control-sm" type="email" [(ngModel)]="emailConfig.mailFromAddress"></td>
+                            <td><input class="form-control form-control-sm" type="email" [(ngModel)]="emailSettings.from.address"></td>
                         </tr>
                         <tr>
                             <td>
@@ -89,10 +88,10 @@
                                 <label>Mail from password:</label>
                             </td>
                             <td>
-                                <input *ngIf="!emailConfig.mailSmtpAuth; else authBlock" class="form-control form-control-sm" disabled>
+                                <input *ngIf="!emailSettings.smtp.auth; else authBlock" class="form-control form-control-sm" disabled>
                                 <ng-template #authBlock>
                                     <div class="hbox" style="align-items: center;">
-                                        <password-input [(ngModel)]="emailConfig.mailFromPassword" size="sm" style="flex: 1;"></password-input>
+                                        <password-input [(ngModel)]="emailSettings.from.address" size="sm" style="flex: 1;"></password-input>
                                         <span class="fas fa-exclamation-triangle ml-2" [title]="'ADMINISTRATION.SYSTEM.COMMONS.MAIL_PASSWORD_WARN'|translate"></span>
                                     </div>
                                 </ng-template>
@@ -105,7 +104,7 @@
                             <td nowrap>
                                 <label>Mail from alias:</label>
                             </td>
-                            <td><input class="form-control form-control-sm" [(ngModel)]="emailConfig.mailFromAlias"></td>
+                            <td><input class="form-control form-control-sm" [(ngModel)]="emailSettings.from.alias"></td>
                         </tr>
                     </tbody>
                 </table>

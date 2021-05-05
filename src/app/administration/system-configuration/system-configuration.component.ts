@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
-import { ExtensionPointID, Scope } from 'src/app/models/Plugins';
+import { ExtensionPointID, Scope, Settings, STProperties } from 'src/app/models/Plugins';
 import { RemoteRepositoryAccessConfig } from 'src/app/models/Project';
 import { PmkiSettings, SettingsEnum, VocBenchConnectionPmkiSettings } from 'src/app/models/Properties';
 import { AdministrationServices } from 'src/app/services/administration.service';
@@ -16,6 +17,8 @@ import { PMKIContext } from 'src/app/utils/PMKIContext';
     host: { class: "vbox" }
 })
 export class SystemConfigurationComponent implements OnInit {
+
+    private getSystemCoreSettingsFn: Observable<Settings> = this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM);
 
     /* ST+VB configuration */
     private pmkiSettings: PmkiSettings;
@@ -32,17 +35,8 @@ export class SystemConfigurationComponent implements OnInit {
 
     /* E-mail configuration */
 
-    emailConfig: EmailConfig = {
-        mailFromAddress: null,
-        mailFromPassword: null,
-        mailFromAlias: null,
-        mailSmtpHost: null,
-        mailSmtpPort: null,
-        mailSmtpAuth: null,
-        mailSmtpSslEnable: false,
-        mailSmtpStarttlsEnable: false
-    };
-    private pristineEmailConfig: EmailConfig;
+    emailSettings: MailSettings;
+    private emailSettingsPristine: MailSettings;
     cryptoProtocol: string;
 
     testEmailConfigLoading: boolean;
@@ -56,9 +50,17 @@ export class SystemConfigurationComponent implements OnInit {
         private basicModals: BasicModalsServices) { }
 
     ngOnInit() {
-        this.initEmailConfig();
-        this.initRemoteConfig();
-        this.initVbConfig();
+        this.initAll()
+    }
+
+    private initAll() {
+        this.getSystemCoreSettingsFn.subscribe(
+            settings => {
+                this.initEmailConfigHanlder(settings);
+                this.initRemoteConfigHandler(settings);
+                this.initVbConfigHandler(settings);
+            }
+        )
     }
 
     /* ============================
@@ -66,52 +68,42 @@ export class SystemConfigurationComponent implements OnInit {
      * ============================ */
 
     private initEmailConfig() {
-        this.adminService.getAdministrationConfig().subscribe(
-            conf => {
-                this.emailConfig = {
-                    mailFromAddress: conf.mailFromAddress,
-                    mailFromPassword: conf.mailFromPassword,
-                    mailFromAlias: conf.mailFromAlias,
-                    mailSmtpHost: conf.mailSmtpHost,
-                    mailSmtpPort: conf.mailSmtpPort,
-                    mailSmtpAuth: conf.mailSmtpAuth,
-                    mailSmtpSslEnable: conf.mailSmtpSslEnable == "true",
-                    mailSmtpStarttlsEnable: conf.mailSmtpStarttlsEnable == "true"
-                }
-                this.pristineEmailConfig = Object.assign({}, this.emailConfig);
-
-                //init cryptoProtocol
-                this.cryptoProtocol = "None";
-                if (this.emailConfig.mailSmtpSslEnable) {
-                    this.cryptoProtocol = "SSL";
-                } else if (this.emailConfig.mailSmtpStarttlsEnable) {
-                    this.cryptoProtocol = "TLS";
-                }
+        this.getSystemCoreSettingsFn.subscribe(
+            settings => {
+                this.initEmailConfigHanlder(settings);
             }
-        );
+        )
+    }
+
+    private initEmailConfigHanlder(settings: Settings) {
+        let mailProp: STProperties = settings.getProperty(SettingsEnum.mail);
+        let mailPropCloned = mailProp.clone();
+        this.emailSettings = mailProp.value;
+        this.emailSettingsPristine = mailPropCloned.value;
+
+        this.cryptoProtocol = "None";
+        if (this.emailSettings.smtp.sslEnabled) {
+            this.cryptoProtocol = "SSL";
+        } else if (this.emailSettings.smtp.starttlsEnabled) {
+            this.cryptoProtocol = "TLS";
+        }
     }
 
     updateProtocol() {
         if (this.cryptoProtocol == "SSL") {
-            this.emailConfig.mailSmtpSslEnable = true;
-            this.emailConfig.mailSmtpStarttlsEnable = false;
+            this.emailSettings.smtp.sslEnabled = true;
+            this.emailSettings.smtp.starttlsEnabled = false;
         } else if (this.cryptoProtocol == "TLS") {
-            this.emailConfig.mailSmtpSslEnable = false;
-            this.emailConfig.mailSmtpStarttlsEnable = true;
+            this.emailSettings.smtp.sslEnabled = false;
+            this.emailSettings.smtp.starttlsEnabled = true;
         } else {
-            this.emailConfig.mailSmtpSslEnable = false;
-            this.emailConfig.mailSmtpStarttlsEnable = false;
+            this.emailSettings.smtp.sslEnabled = false;
+            this.emailSettings.smtp.starttlsEnabled = false;
         }
     }
     
     updateEmailConfig() {
-        let mailFromPwd: string = null;
-        if (this.emailConfig.mailSmtpAuth) {
-            mailFromPwd = this.emailConfig.mailFromPassword;
-        }
-        this.adminService.updateEmailConfig(this.emailConfig.mailSmtpHost, this.emailConfig.mailSmtpPort, this.emailConfig.mailSmtpAuth, 
-            this.emailConfig.mailSmtpSslEnable, this.emailConfig.mailSmtpStarttlsEnable,
-            this.emailConfig.mailFromAddress, this.emailConfig.mailFromAlias, mailFromPwd).subscribe(
+        this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.mail, this.emailSettings).subscribe(
             () => {
                 this.initEmailConfig();
             }
@@ -141,12 +133,7 @@ export class SystemConfigurationComponent implements OnInit {
     }
 
     isEmailConfigChanged(): boolean {
-        for (var key in this.pristineEmailConfig) {
-            if (this.pristineEmailConfig[key] != this.emailConfig[key]) {
-                return true;
-            }
-        }
-        return false;
+        return JSON.stringify(this.emailSettingsPristine) != JSON.stringify(this.emailSettings);
     }
 
     /* ============================
@@ -154,16 +141,20 @@ export class SystemConfigurationComponent implements OnInit {
      * ============================ */
 
     private initRemoteConfig() {
-        this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM).subscribe(
+        this.getSystemCoreSettingsFn.subscribe(
             settings => {
-                this.remoteConfigsSetting = settings.getPropertyValue(SettingsEnum.remoteConfigs);
-                if (this.remoteConfigsSetting == null || this.remoteConfigsSetting.length == 0) {
-                    this.remoteConfigsSetting = [this.remoteAccessConfig];
-                }
-                this.remoteAccessConfig = this.remoteConfigsSetting[0];
-                this.pristineRemoteAccessConf = Object.assign({}, this.remoteAccessConfig);
+                this.initRemoteConfigHandler(settings);
             }
         )
+    }
+
+    private initRemoteConfigHandler(settings: Settings) {
+        this.remoteConfigsSetting = settings.getPropertyValue(SettingsEnum.remoteConfigs);
+        if (this.remoteConfigsSetting == null || this.remoteConfigsSetting.length == 0) {
+            this.remoteConfigsSetting = [this.remoteAccessConfig];
+        }
+        this.remoteAccessConfig = this.remoteConfigsSetting[0];
+        this.pristineRemoteAccessConf = Object.assign({}, this.remoteAccessConfig);
     }
 
     updateRemoteConfig() {
@@ -188,17 +179,21 @@ export class SystemConfigurationComponent implements OnInit {
      * ============================ */
 
     private initVbConfig() {
-        this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM).subscribe(
+        this.getSystemCoreSettingsFn.subscribe(
             settings => {
-                this.pmkiSettings = settings.getPropertyValue(SettingsEnum.pmki);
-                if (this.pmkiSettings != null && this.pmkiSettings.vbConnectionConfig != null) {
-                    this.vbConnectionConfig = this.pmkiSettings.vbConnectionConfig
-                } else {
-                    this.vbConnectionConfig;
-                }
-                this.pristineVbConnConfig = Object.assign({}, this.vbConnectionConfig);
+                this.initVbConfigHandler(settings);
             }
         )
+    }
+
+    private initVbConfigHandler(settings: Settings) {
+        this.pmkiSettings = settings.getPropertyValue(SettingsEnum.pmki);
+        if (this.pmkiSettings != null && this.pmkiSettings.vbConnectionConfig != null) {
+            this.vbConnectionConfig = this.pmkiSettings.vbConnectionConfig
+        } else {
+            this.vbConnectionConfig;
+        }
+        this.pristineVbConnConfig = Object.assign({}, this.vbConnectionConfig);
     }
 
     updateVbConfig() {
@@ -247,13 +242,17 @@ export class SystemConfigurationComponent implements OnInit {
 
 }
 
-class EmailConfig {
-    public mailFromAddress: string;
-    public mailFromPassword: string;
-    public mailFromAlias: string;
-    public mailSmtpAuth: boolean;
-    public mailSmtpSslEnable: boolean;
-    public mailSmtpStarttlsEnable: boolean;
-    public mailSmtpHost: string;
-    public mailSmtpPort: string;
+class MailSettings {
+    smtp: {
+        auth: boolean,
+        host: string,
+        port: number,
+        sslEnabled: boolean,
+        starttlsEnabled: boolean
+    };
+    from: {
+        address: string,
+        password: string,
+        alias: string,
+    }
 }
