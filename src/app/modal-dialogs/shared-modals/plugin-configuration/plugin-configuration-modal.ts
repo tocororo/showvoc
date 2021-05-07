@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
 import { Settings } from 'src/app/models/Plugins';
 
 @Component({
@@ -9,6 +10,8 @@ import { Settings } from 'src/app/models/Plugins';
 export class PluginConfigurationModal {
 
     @Input() configuration: Settings;
+    @Input() handler: PluginSettingsHandler;
+    
     config: Settings;
 
     constructor(public activeModal: NgbActiveModal) {}
@@ -23,11 +26,21 @@ export class PluginConfigurationModal {
     }
 
     ok() {
-		this.activeModal.close(this.config);
+		if (this.handler) {
+            this.handler(this.config).subscribe(() => {
+                this.activeModal.close(this.config);
+            });
+        } else {
+            this.activeModal.close(this.config);
+        }
 	}
 
 	close() {
 		this.activeModal.dismiss();
 	}
 	
+}
+
+export interface PluginSettingsHandler {
+    (s: Settings): Observable<any>
 }

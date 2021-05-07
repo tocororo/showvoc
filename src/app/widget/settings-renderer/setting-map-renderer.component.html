@@ -14,21 +14,19 @@
                     <td><label>Key:</label></td>
                     <td>
                         <!-- At the moment, do not check the type of the key, consider it always as string -->
-                        <input class="form-control form-control-sm" [(ngModel)]="map[index].key" (ngModelChange)="onModelChange()">
+                        <input class="form-control form-control-sm" [(ngModel)]="map[index].key" (ngModelChange)="onModelChange()" [disabled]="disabled">
                     </td>
                     <td><label>{{'COMMONS.VALUE'|translate}}:</label></td>
                     <td>
-                        <!-- At the moment, do not check the type of the value, consider it always as string -->
-                        <textarea type="text" rows="1" class="form-control form-control-sm" style="resize: vertical" [(ngModel)]="map[index].value" (ngModelChange)="onModelChange()">
-                        </textarea>
+                        <setting-value [value]="map[index].value" [type]="types[1]" [disabled]="disabled" (valueChanged)="onValueChange(index, $event)"></setting-value>
                     </td>
                     <td>
-                        <button *ngIf="map.length > 1" class="btn btn-sm btn-light" (click)="delete(index)">
-                            <span class="fas fa-trash"></span>
+                        <button *ngIf="map.length > 1" class="btn btn-xs btn-light" (click)="delete(index)" [disabled]="disabled">
+                            <span class="far fa-trash-alt"></span>
                         </button>
                     </td>
                     <td>
-                        <button *ngIf="last" class="btn btn-sm btn-light" (click)="add(index)">
+                        <button *ngIf="last" class="btn btn-xs btn-light" (click)="add(index)" [disabled]="disabled">
                             <span class="fas fa-plus"></span>
                         </button>
                     </td>

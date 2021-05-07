@@ -3,11 +3,12 @@
     <div class="card-header d-flex align-items-center">
         <label style="flex: 1;">{{'ADMINISTRATION.DATASETS.MANAGEMENT.DATASET_MANAGER'|translate}}</label>
         <div class="btn-toolbar">
-            <div class="btn-group">
-                <button class="btn btn-light btn-sm" [title]="'COMMONS.ACTIONS.CREATE'|translate" (click)="createProject()">
-                    <span class="fas fa-plus"></span>
-                </button>
-            </div>
+            <button class="btn btn-light btn-sm" [title]="'COMMONS.ACTIONS.CREATE'|translate" (click)="createProject()">
+                <span class="fas fa-plus"></span>
+            </button>
+            <button class="btn btn-light btn-sm" [title]="'ADMINISTRATION.DATASETS.MANAGEMENT.CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS'|translate" (click)="editCustomFacetsSchema()">
+                <span class="fas fa-cog"></span>
+            </button>
         </div>
     </div>
 
@@ -94,6 +95,9 @@
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item" (click)="editDescription(p)">
                                     {{'ADMINISTRATION.DATASETS.MANAGEMENT.EDIT_DESCRIPTION'|translate}}
+                                </button>
+                                <button class="dropdown-item" (click)="editFacets(p)">
+                                    {{'ADMINISTRATION.DATASETS.MANAGEMENT.EDIT_FACETS'|translate}}
                                 </button>
                                 <button class="dropdown-item" (click)="editSettings(p)">
                                     {{'ADMINISTRATION.DATASETS.MANAGEMENT.EDIT_SETTINGS'|translate}}

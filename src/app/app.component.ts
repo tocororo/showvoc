@@ -4,6 +4,7 @@ import { User } from './models/User';
 import { AuthServices } from './services/auth.service';
 import { Cookie } from './utils/Cookie';
 import { PMKIContext } from './utils/PMKIContext';
+import { PMKIProperties } from './utils/PMKIProperties';
 
 @Component({
     selector: 'app-root',
@@ -23,7 +24,7 @@ export class AppComponent {
     translateLangs: string[];
     translateLang: string;
 
-    constructor(private authServices: AuthServices, private translate: TranslateService) {
+    constructor(private authServices: AuthServices, private pmkiProp: PMKIProperties, private translate: TranslateService) {
         //set the available factory-provided i18n languages
         translate.addLangs(['en', 'it']);
         //add additional supported i18n languages
@@ -45,6 +46,7 @@ export class AppComponent {
     ngOnInit() {
         this.translateLangs = this.translate.getLangs();
         this.translateLang = this.translate.currentLang;
+        this.pmkiProp.initStartupSystemSettings();
     }
 
     /**

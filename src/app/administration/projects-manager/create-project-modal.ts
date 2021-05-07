@@ -223,8 +223,7 @@ export class CreateProjectModal {
 
         this.loading = true;
         this.projectService.createProject(this.projectName, this.baseURI, new IRI(this.selectedSemModel), new IRI(this.selectedLexModel),
-            false, false, false, repositoryAccess, this.dataRepoId, this.supportRepoId, coreRepoSailConfigurerSpecification,
-            coreRepoBackendType, null, null, null, null, null, null, null, null, false, null, null, null).pipe(
+            false, false, false, repositoryAccess, this.dataRepoId, this.supportRepoId, coreRepoSailConfigurerSpecification, coreRepoBackendType).pipe(
                 finalize(() => this.loading = false)
             ).subscribe(() => {
                 this.adminService.addRolesToUser(this.projectName, PmkiConstants.visitorEmail, [PmkiConstants.roleStaging]).pipe(

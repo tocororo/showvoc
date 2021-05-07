@@ -1,4 +1,5 @@
-import { RDFS, OWL, SKOS, SKOSXL, OntoLex } from './Vocabulary';
+import { Settings } from './Plugins';
+import { OntoLex, OWL, RDFS, SKOS, SKOSXL } from './Vocabulary';
 
 export class Project {
     private name: string;
@@ -12,6 +13,7 @@ export class Project {
     private open: boolean;
     private repositoryLocation: { location: "remote" | "local", serverURL?: string };
     private status: { status: string, message?: string };
+    private facets: Settings;
     private description: string;
 
     constructor(name?: string) {
@@ -52,16 +54,16 @@ export class Project {
         return this.accessible;
     }
 
-    public setHistoryEnabled(historyEnabled: boolean) {
-        this.historyEnabled = historyEnabled;
+    public setHistoryEnabled(enabled: boolean) {
+        this.historyEnabled = enabled;
     }
 
     public isHistoryEnabled(): boolean {
         return this.historyEnabled;
     }
 
-    public setValidationEnabled(validationEnabled: boolean) {
-        this.validationEnabled = validationEnabled;
+    public setValidationEnabled(enabled: boolean) {
+        this.validationEnabled = enabled;
     }
 
     public isValidationEnabled(): boolean {
@@ -127,12 +129,30 @@ export class Project {
     }
 
     public setDescription(description: string) {
-        this.description = description
+        this.description = description;
     }
     public getDescription(): string {
         return this.description;
     }
 
+    public setFacets(facets: Settings) {
+        this.facets = facets;
+    }
+
+    public getFacets(): Settings {
+        return this.facets;
+    }
+}
+
+export enum BackendTypesEnum {
+    graphdb_FreeSail = "graphdb:FreeSail",
+    openrdf_NativeStore = "openrdf:NativeStore",
+    openrdf_MemoryStore = "openrdf:MemoryStore"
+}
+
+export enum AccessLevel {
+    R = "R",
+    RW = "RW"
 }
 
 export class Repository {
@@ -141,6 +161,24 @@ export class Repository {
     public description: string;
     public readable: boolean;
     public writable: boolean;
+}
+
+export class RepositorySummary {
+    public id: string;
+    public description: string;
+    public remoteRepoSummary: RemoteRepositorySummary
+}
+export class RemoteRepositorySummary {
+    public serverURL: string;
+    public repositoryId: string;
+    public username: string;
+    public password: string;
+}
+
+export enum RepositoryAccessType {
+    CreateLocal = "CreateLocal",
+    CreateRemote = "CreateRemote",
+    AccessExistingRemote = "AccessExistingRemote",
 }
 
 export class RepositoryAccess {
@@ -169,34 +207,10 @@ export class RepositoryAccess {
     }
 }
 
-export class RepositorySummary {
-    public id: string;
-    public description: string;
-    public remoteRepoSummary: RemoteRepositorySummary
-}
-export class RemoteRepositorySummary {
-    public serverURL: string;
-    public repositoryId: string;
-    public username: string;
-    public password: string;
-}
-
 export class RemoteRepositoryAccessConfig {
     public serverURL: string;
     public username: string;
     public password: string;
-}
-
-export enum RepositoryAccessType {
-    CreateLocal = "CreateLocal",
-    CreateRemote = "CreateRemote",
-    AccessExistingRemote = "AccessExistingRemote",
-}
-
-export enum BackendTypesEnum {
-    graphdb_FreeSail = "graphdb:FreeSail",
-    openrdf_NativeStore = "openrdf:NativeStore",
-    openrdf_MemoryStore = "openrdf:MemoryStore"
 }
 
 export class ExceptionDAO {
@@ -205,7 +219,10 @@ export class ExceptionDAO {
     public stacktrace: string;
 }
 
-export enum AccessLevel {
-    R = "R",
-    RW = "RW"
+export enum ProjectFacets {
+    dir = "dir",
+    prjHistoryEnabled = "prjHistoryEnabled",
+    prjLexModel = "prjLexModel",
+    prjModel = "prjModel",
+    prjValidationEnabled = "prjValidationEnabled",
 }

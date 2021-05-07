@@ -1,3 +1,5 @@
+import { PMKIContext } from "../utils/PMKIContext";
+
 export class Countries {
     
     static countryList = ["Afghanistan", "Aland Islands", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla",
@@ -35,17 +37,8 @@ export class Countries {
 
 export class Languages {
 
-    private static systemLanguages: Language[];
     static priorityLangs = ["en", "fr", "it", "es", "de"];
     
-    static setSystemLanguages(langs: Language[]) {
-        this.systemLanguages = langs;
-    }
-
-    static getSystemLanguages(): Language[] {
-        return this.systemLanguages;
-    }
-
     static sortLanguages(languages: Language[]) {
         languages.sort(
             function (l1: Language, l2: Language) {
@@ -114,11 +107,11 @@ export class Languages {
     }
 
     static getLanguageFromTag(tag: string): Language {
-        for (var i = 0; i < Languages.systemLanguages.length; i++) {
-            if (Languages.systemLanguages[i].tag == tag) {
-                return Languages.systemLanguages[i];
-            }
+        let l: Language = PMKIContext.getSystemSettings().languages.find(l => l.tag.toLocaleLowerCase() == tag.toLocaleLowerCase());
+        if (l == null) { //no language with the give tag found among the available
+            l = { name: tag, tag: tag };
         }
+        return l;
     }
 
 }

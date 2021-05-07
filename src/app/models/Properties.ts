@@ -14,6 +14,7 @@ import { OWL, RDF, RDFS } from './Vocabulary';
     mail = "mail",
     pmki = "pmki",
     remoteConfigs = "remoteConfigs",
+    showFlags = "showFlags",
 }
 
 export class PreferencesUtils {
@@ -207,6 +208,7 @@ export class ProjectSettings {
  */
 export class SystemSettings {
     showFlags: boolean = true;
+    languages: Language[];
 }
 
 export class VisualizationModeTranslation {

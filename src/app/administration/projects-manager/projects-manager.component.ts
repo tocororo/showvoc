@@ -7,6 +7,9 @@ import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ConfirmCheckOptions } from 'src/app/modal-dialogs/basic-modals/confirm-modal/confirm-check-modal';
 import { ModalOptions, ModalType, TextOrTranslation } from 'src/app/modal-dialogs/Modals';
+import { PluginSettingsHandler } from 'src/app/modal-dialogs/shared-modals/plugin-configuration/plugin-configuration-modal';
+import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
+import { Settings } from 'src/app/models/Plugins';
 import { PmkiConstants } from 'src/app/models/Pmki';
 import { AccessLevel, ExceptionDAO, Project, RemoteRepositorySummary, RepositorySummary } from 'src/app/models/Project';
 import { GlobalSearchServices } from 'src/app/services/global-search.service';
@@ -51,7 +54,7 @@ export class ProjectsManagerComponent {
 
     constructor(private modalService: NgbModal, private projectService: ProjectsServices, private repositoriesService: RepositoriesServices,
         private pmkiService: PmkiServices, private globalSearchService: GlobalSearchServices,  private mapleService: MapleServices,
-        private basicModals: BasicModalsServices, private router: Router, private eventHandler: PMKIEventHandler,
+        private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices, private router: Router, private eventHandler: PMKIEventHandler,
         private translateService: TranslateService) { }
 
     ngOnInit() {
@@ -345,6 +348,31 @@ export class ProjectsManagerComponent {
             },
             () => {}
         )
+    }
+
+    editFacets(project: Project) {
+        this.sharedModals.configurePlugin(project.getFacets()).then(
+            facets => {
+                this.projectService.setProjectFacets(project, facets).subscribe(
+                    () => {
+                        project.setFacets(facets); //update facets in project
+                    }
+                );
+            },
+            () => {}
+        );
+    }
+
+    editCustomFacetsSchema() {
+        let handler: PluginSettingsHandler = (facets: Settings) => this.projectService.setCustomProjectFacetsSchema(facets);
+        this.projectService.getCustomProjectFacetsSchema().subscribe(facetsSchema => {
+            this.sharedModals.configurePlugin(facetsSchema, handler).then(
+                () => { //changed settings
+                    this.initProjects(); 
+                },
+                () => {}  //nothing changed
+            );    
+        });
     }
 
     /* ============================== */

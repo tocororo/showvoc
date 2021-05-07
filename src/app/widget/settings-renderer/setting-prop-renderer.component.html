@@ -1,0 +1,100 @@
+<ng-container *ngIf="prop">
+
+    <ng-container  *ngIf="prop.enumeration; else notEnumerationBlock">
+        <select *ngIf="!prop.enumeration.open" class="form-control" [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled">
+            <option *ngFor="let enum of prop.enumeration.values" [value]="enum">{{enum}}</option>
+        </select>
+
+        <ng-container *ngIf="prop.enumeration.open">
+            <!-- Why attr.list? https://github.com/angular/angular/issues/12759#issuecomment-278940455 -->
+            <input class="form-control" [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled" [attr.list]="'datalist_' + prop.name">
+            <datalist [id]="'datalist_' + prop.name">
+                <option *ngFor="let enum of prop.enumeration.values" [value]="enum">
+            </datalist>
+        </ng-container>
+    </ng-container>
+    <ng-template #notEnumerationBlock>
+        <div [ngSwitch]="prop.type.name">
+            <div *ngSwitchCase="'boolean'" class="form-control text-center">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" (click)="updateBoolean(prop, true)" [name]="radioName" [checked]="prop.value==true" [disabled]="disabled">
+                    <label class="form-check-label">{{'COMMONS.BOOLEAN.TRUE'|translate}}</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" (click)="updateBoolean(prop, false)" [name]="radioName" [checked]="prop.value==false" [disabled]="disabled">
+                    <label class="form-check-label">{{'COMMONS.BOOLEAN.FALSE'|translate}}</label>
+                </div>
+            </div>
+
+            <!-- 
+            <resource-picker *ngSwitchCase="'IRI'" [resource]="prop.value" [config]="{ roles: getIRIRoleConstraints(prop) }" [editable]="true"
+                (resourceChanged)="updateValue(prop, $event)" [disabled]="disabled">
+            </resource-picker>
+            <resource-picker *ngSwitchCase="'Resource'" [resource]="prop.value" [config]="{ roles: getIRIRoleConstraints(prop) }" [editable]="true"
+                (resourceChanged)="updateValue(prop, $event)" [disabled]="disabled">
+            </resource-picker>
+            <value-picker *ngSwitchCase="'RDFValue'" [value]="prop.value" [editable]="true" (valueChanged)="updateValue(prop, $event)" [disabled]="disabled">
+            </value-picker>
+            <ng-container *ngSwitchCase="'Literal'">
+                <ng-container *ngIf="isLanguageTaggedString(prop) else notLanguageTaggedString">
+                    <lang-string-editor [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled"></lang-string-editor>
+                </ng-container>
+                <ng-template #notLanguageTaggedString>
+                    <literal-picker [literal]="prop.value" (literalChanged)="updateValue(prop, $event)" [disabled]="disabled">
+                    </literal-picker>
+                </ng-template>
+            </ng-container>
+             -->
+             
+            <lang-string-editor *ngSwitchCase="'Literal'" [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled"></lang-string-editor>
+
+            <setting-set *ngSwitchCase="'List'" [collapsable]="!prop.required" [value]="prop.value" [types]="prop.type.typeArguments" 
+                (valueChanged)="updateSetValue(prop, $event)" [disabled]="disabled"></setting-set>
+
+            <setting-set *ngSwitchCase="'Set'" [collapsable]="!prop.required" [value]="prop.value" [types]="prop.type.typeArguments" 
+                (valueChanged)="updateSetValue(prop, $event)" [disabled]="disabled"></setting-set>
+
+            <setting-map *ngSwitchCase="'Map'" [value]="prop.value" [types]="prop.type.typeArguments" 
+                (valueChanged)="updateMapValue(prop, $event)" [disabled]="disabled"></setting-map>
+
+            <ng-container *ngSwitchCase="'Properties'">
+                <ng-container *ngIf="prop.required || prop.value; else collapsedNestedSettings">
+                    <div class="d-flex align-items-center">
+                        <nested-settings-renderer style="flex: 1;" [(ngModel)]="prop.value" [schema]="prop.type.schema" [disabled]="disabled" (ngModelChange)="updatePropertiesValue($event)"></nested-settings-renderer>
+                        <button *ngIf="!prop.required" class="btn btn-sm btn-light ml-1" [title]="'WIDGETS.SETTINGS_RENDERER.DELETE_OPTIONAL_VALUE'|translate" (click)="deleteOptionalSettingsValue(prop)">
+                            <span class="far fa-trash-alt"></span>
+                        </button>  
+                    </div>    
+                </ng-container>
+                <ng-template #collapsedNestedSettings>
+                    <button class="btn btn-sm btn-light" [title]="'WIDGETS.SETTINGS_RENDERER.ADD_OPTIONAL_VALUE'|translate" (click)="addOptionalSettingsValue(prop)">
+                        <span class="fas fa-plus"></span>
+                    </button>
+                </ng-template>    
+            </ng-container>
+
+            <textarea *ngSwitchCase="'java.lang.String'" type="text" rows="1" class="form-control" style="resize: vertical" 
+                [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled">
+            </textarea>
+
+            <datasize-renderer *ngSwitchCase="'it.uniroma2.art.semanticturkey.properties.DataSize'" [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled">
+            </datasize-renderer>
+
+            <input *ngSwitchCase="'int'" type="number" class="form-control" step="1" [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled">
+            <input *ngSwitchCase="'integer'" type="number" class="form-control" step="1" [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled">
+            <input *ngSwitchCase="'long'" type="number" class="form-control" step="1" [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled">
+            <input *ngSwitchCase="'float'" type="number" class="form-control" step="0.01" [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled">
+            <input *ngSwitchCase="'double'" type="number" class="form-control" step="0.01" [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled">
+
+            <div *ngSwitchDefault class="hbox" style="align-items: center; position: relative;">
+                <textarea *ngSwitchDefault type="text" rows="1" class="form-control" style="resize: vertical;" 
+                    [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled">
+                </textarea>
+                <span class="fas fa-exclamation-triangle" style="position: absolute; top: 8px; right: 8px;"
+                    [title]="'WIDGETS.SETTINGS_RENDERER.UNKNOWN_TYPE_WARN'|translate:translationParam">
+                </span>
+            </div>
+        </div>
+    </ng-template>
+
+</ng-container>

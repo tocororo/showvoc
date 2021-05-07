@@ -2,6 +2,7 @@
     "ADMINISTRATION": {
         "DATASETS": {
             "MANAGEMENT": {
+                "CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS": "Impostazione dello schema della facets di progetto personalizzate",
                 "DATASET_MANAGER": "Gestione dataset",
                 "LOAD_DATA": "Carica dati",
                 "OPEN_CLOSE": "Apri/Chiudi",
@@ -12,6 +13,7 @@
                 "CREATE_REFRESH_INDEX": "Crea/aggiorna indice",
                 "DELETE_INDEX": "Cancella indice",
                 "EDIT_DESCRIPTION": "Modifica descrizione",
+                "EDIT_FACETS": "Modifica facets",
                 "EDIT_SETTINGS": "Modifica impostazioni",
                 "RESOLVE_IMPORTS": "Risolvi import",
                 "USE_DATASET_BASEURI": "Usa il baseURI del dataset"
@@ -475,6 +477,13 @@
             "CONFIRM_PASSWORD": "Conferma password",
             "CONFIRM_NEW_PASSWORD": "Conferma nuova password",
             "PASSWORD_CHANGED": "Password cambiata"
+        }
+    },
+    "WIDGETS": {
+        "SETTINGS_RENDERER": {
+            "ADD_OPTIONAL_VALUE": "Aggiungi valore opzionale",
+            "DELETE_OPTIONAL_VALUE": "Cancella valore opzionale",
+            "UNKNOWN_TYPE_WARN": "Questo parametro ha un tipo sconosciuto ({{propTypeName}}). Il valore inserito sarà interpretato come un valore JSON a basso livello"
         }
     },
     "COMMONS": {

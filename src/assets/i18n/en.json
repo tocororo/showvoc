@@ -2,6 +2,7 @@
     "ADMINISTRATION": {
         "DATASETS": {
             "MANAGEMENT": {
+                "CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS": "Custom project facets schema settings",
                 "DATASET_MANAGER": "Datasets manager",
                 "LOAD_DATA": "Load data",
                 "OPEN_CLOSE": "Open/Close",
@@ -12,6 +13,7 @@
                 "CREATE_REFRESH_INDEX": "Create/refresh index",
                 "DELETE_INDEX": "Delete index",
                 "EDIT_DESCRIPTION": "Edit description",
+                "EDIT_FACETS": "Edit facets",
                 "EDIT_SETTINGS": "Edit settings",
                 "RESOLVE_IMPORTS": "Resolve imports",
                 "USE_DATASET_BASEURI": "Use the baseURI of the dataset"
@@ -475,6 +477,13 @@
             "CONFIRM_PASSWORD": "Confirm password",
             "CONFIRM_NEW_PASSWORD": "Confirm new password",
             "PASSWORD_CHANGED": "Password changed"
+        }
+    },
+    "WIDGETS": {
+        "SETTINGS_RENDERER": {
+            "ADD_OPTIONAL_VALUE": "Add optional value",
+            "DELETE_OPTIONAL_VALUE": "Delete optional value",
+            "UNKNOWN_TYPE_WARN": "This parameter has an unknown type ({{propTypeName}}). The entered value will be interpreted as a low-level JSON value"
         }
     },
     "COMMONS": {

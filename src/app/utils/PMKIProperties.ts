@@ -4,7 +4,7 @@ import { finalize, map } from 'rxjs/operators';
 import { Language, Languages } from '../models/LanguagesCountries';
 import { ExtensionPointID, Scope } from '../models/Plugins';
 import { Project } from '../models/Project';
-import { ClassIndividualPanelSearchMode, ClassTreeFilter, ClassTreePreference, ConceptTreePreference, ConceptTreeVisualizationMode, InstanceListPreference, InstanceListVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, PreferencesUtils, ProjectPreferences, ProjectSettings, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, SettingsEnum, ValueFilterLanguages } from '../models/Properties';
+import { ClassIndividualPanelSearchMode, ClassTreeFilter, ClassTreePreference, ConceptTreePreference, ConceptTreeVisualizationMode, InstanceListPreference, InstanceListVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, PreferencesUtils, ProjectPreferences, ProjectSettings, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, SettingsEnum, SystemSettings, ValueFilterLanguages } from '../models/Properties';
 import { IRI, RDFResourceRolesEnum } from '../models/Resources';
 import { ResViewPartition } from '../models/ResourceView';
 import { OWL, RDFS } from '../models/Vocabulary';
@@ -386,9 +386,6 @@ export class PMKIProperties {
     }
 
 
-    // initSearchSettingsCookie(preferences: ProjectPreferences) {
-        
-    // }
     setSearchSettings(projectCtx: ProjectContext, settings: SearchSettings) {
         let projectPreferences: ProjectPreferences = projectCtx.getProjectPreferences();
         Cookie.setCookie(Cookie.SEARCH_STRING_MATCH_MODE, settings.stringMatchMode, 365 * 10);
@@ -405,6 +402,16 @@ export class PMKIProperties {
     }
 
 
-    
+    initStartupSystemSettings() {
+        this.settingsService.getStartupSettings().subscribe(
+            settings => {
+                let systemSettings: SystemSettings = PMKIContext.getSystemSettings();
+                systemSettings.showFlags = settings.getPropertyValue(SettingsEnum.showFlags);
+                let systemLanguages: Language[] = settings.getPropertyValue(SettingsEnum.languages);
+                Languages.sortLanguages(systemLanguages);
+                systemSettings.languages = systemLanguages;
+            }
+        )
+    }
 
 }

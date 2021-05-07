@@ -1,45 +1,64 @@
-import { Component, Input } from "@angular/core";
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { Component, Input, SimpleChanges } from "@angular/core";
+import { Subscription } from "rxjs";
+import { PMKIEventHandler } from "src/app/utils/PMKIEventHandler";
+import { PMKIProperties } from "src/app/utils/PMKIProperties";
 import { Language } from "../../models/LanguagesCountries";
 import { UIUtils } from "../../utils/UIUtils";
-import { Subscriber, Subscription } from 'rxjs';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
 
 @Component({
     selector: "lang-item",
-    templateUrl: "./language-item.component.html"
+    templateUrl: "./language-item.component.html",
+    styles: [`
+        :host { display: inline-block }
+        .flag-xs { zoom: 100%; }
+        .flag-sm { zoom: 130%; }
+        .flag-md { zoom: 150%; }
+        .flag-lg { zoom: 170%; }
+    `]
 })
 export class LanguageItemComponent {
     @Input() language: Language;
-    @Input() showTag: boolean;
+    @Input() showName: boolean = true; //tells whether to show the language name nearby the flag
+    @Input() showTag: boolean; //tells whether to show the language tag nearby the flag
     @Input() disabled: boolean;
+    @Input() size: "xs" | "sm" | "md" | "lg";
 
     flagImgSrc: string;
+    flagCls: string;
 
     eventSubscriptions: Subscription[] = [];
 
     constructor(private pmkiProp: PMKIProperties, private eventHandler: PMKIEventHandler) {
-        this.eventSubscriptions.push(eventHandler.showFlagChangedEvent.subscribe(
-            (showFlag: boolean) => this.initFlagImgSrc()));
+        this.eventSubscriptions.push(this.eventHandler.showFlagChangedEvent.subscribe(
+            () => this.initFlagImgSrc()));
     }
 
     ngOnInit() {
+        if (this.size == "sm" || this.size == "md" || this.size == "lg") {
+            this.flagCls = "flag-" + this.size;
+        } else {
+            this.flagCls = "flag-xs";
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
         this.initFlagImgSrc();
     }
 
     ngOnDestroy() {
-        this.eventHandler.unsubscribeAll(this.eventSubscriptions);
+        this.eventSubscriptions.forEach(s => s.unsubscribe);
     }
 
     private initFlagImgSrc() {
-        if (this.pmkiProp.getShowFlags()) {
-            this.flagImgSrc = UIUtils.getFlagImgSrc(this.language.tag);
+        if (this.language.tag == "--") {
+            this.flagImgSrc = "./assets/images/icons/res/string.png";
         } else {
-            this.flagImgSrc = UIUtils.getFlagImgSrc(null); //null makes return unknown flag => do not show flag
+            if (this.pmkiProp.getShowFlags()) {
+                this.flagImgSrc = UIUtils.getFlagImgSrc(this.language.tag);
+            } else {
+                this.flagImgSrc = UIUtils.getFlagImgSrc(null); //null makes return unknown flag => do not show flag
+            }
         }
     }
 
 }
-
-
-

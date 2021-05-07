@@ -21,6 +21,7 @@ import { LexicalEntryListModal } from './browsing-modals/lexical-entry-list-moda
 import { LexiconListModal } from './browsing-modals/lexicon-list-modal/lexicon-list-modal';
 import { PropertyTreeModal } from './browsing-modals/property-tree-modal/property-tree-modal';
 import { SchemeListModal } from './browsing-modals/scheme-list-modal/scheme-list-modal';
+import { LanguageSelectorModal } from './shared-modals/languages-selector-modal/languages-selector-modal';
 import { PluginConfigurationModal } from './shared-modals/plugin-configuration/plugin-configuration-modal';
 import { SharedModalsServices } from './shared-modals/shared-modal.service';
 
@@ -33,6 +34,7 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         ConfirmCheckModal,
         ConfirmModal,
         DownloadModal,
+        LanguageSelectorModal,
         LexicalEntryListModal,
         LexiconListModal,
         PluginConfigurationModal,
@@ -61,6 +63,7 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         ConfirmCheckModal,
         ConfirmModal,
         DownloadModal,
+        LanguageSelectorModal,
         LexicalEntryListModal,
         LexiconListModal,
         PluginConfigurationModal,

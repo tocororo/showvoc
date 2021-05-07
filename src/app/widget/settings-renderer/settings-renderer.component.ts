@@ -1,8 +1,6 @@
-import { Component, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Settings, STProperties, SettingsPropTypeConstraint } from '../../models/Plugins';
-import { Value, RDFResourceRolesEnum } from 'src/app/models/Resources';
+import { Component, forwardRef, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Settings } from '../../models/Plugins';
 
 @Component({
     selector: 'settings-renderer',
@@ -11,59 +9,17 @@ import { Value, RDFResourceRolesEnum } from 'src/app/models/Resources';
         provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SettingsRendererComponent), multi: true,
     }]
 })
-export class SettingsRendererComponent {
+export class SettingsRendererComponent implements ControlValueAccessor {
+
+    @Input() disabled: boolean = false;
+    @Input() preventHoverInheritance: boolean = false;
     
     settings: Settings;
 
-    constructor(public sanitizer: DomSanitizer) { }
+    constructor() { }
 
-    private onModelChanged() {
+    onModelChanged() {
         this.propagateChange(this.settings);
-    }
-
-    private updateBoolean(prop: STProperties, value: boolean) {
-        prop.value = value;
-        this.propagateChange(this.settings);
-    }
-
-    private updateValue(prop: STProperties, value: Value) {
-        if (value == null) {
-            prop.value = null;
-        } else {
-            prop.value = value.toNT();
-        }
-        this.propagateChange(this.settings);
-    }
-
-    private updateSetValue(prop: STProperties, value: any[]) {
-        prop.value = value;
-        this.propagateChange(this.settings);
-    }
-
-    private updateMapValue(prop: STProperties, value: any[]) {
-        prop.value = value;
-        this.propagateChange(this.settings);
-    }
-
-    private getIRIRoleConstraints(prop: STProperties): RDFResourceRolesEnum[] {
-        /**
-         * use a cache mechanism to avoid to recreate a roles array each time getIRIRoleConstraints is called
-         * (so prevent firing change detection in resource-picker)
-         */
-        if (prop.type['roles'] != null) { //cached?
-            return prop.type['roles'];
-        }
-        let roles: RDFResourceRolesEnum[] = [];
-        let constr: SettingsPropTypeConstraint[] = prop.type.constraints;
-        if (constr != null) {
-            for (var i = 0; i < constr.length; i++) {
-                if (constr[i].type.endsWith("HasRole")) {
-                    roles.push(<RDFResourceRolesEnum>constr[i].value);
-                }
-            }
-        }
-        prop.type['roles'] = roles;
-        return roles;
     }
 
     //---- method of ControlValueAccessor and Validator interfaces ----

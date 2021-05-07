@@ -112,21 +112,23 @@ rdf-resource > .rdfResourceText {
 
 .flagIcon {
     position: relative;
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 1;
 }
-.flagIcon > span{
+.flagIcon > span {
     position: absolute;
-    top: 6px;
+    top: 1px;
     left: 0px;
     width: 16px;
     margin: 0 auto;
-    font-family: monospace;
-    font-weight: bold;
-    font-size: 10px;
-    cursor: default;
     user-select: none;
     white-space: nowrap;
     overflow: hidden;
     text-align: center;
+    vertical-align: middle;
 }
 
 /* Ellipsis of the content of a rdf-resource in a card-header (heading of ResView) */
@@ -259,6 +261,11 @@ a.disabled {
     font-size: 11px;
     line-height: 1.5;
     border-radius: 3px;
+}
+
+/* when a table-hoverable is nested within another one, add the class table-hoverable-nested to avoid that selection is inherited by the inner table */
+.table-hoverable tbody tr:hover .table-hoverable.table-hoverable-nested td {
+    background-color: transparent !important;
 }
 
 .table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
