@@ -88,7 +88,7 @@ export class ContributionComponent {
             finalize(() => this.loading = false)
         ).subscribe(
             () => {
-                this.basicModals.alert({ key: "CONTRIBUTIONS.FORM.EMAIL.COMMONS.REQUEST_SUBMITTED" }, {key:"MESSAGES.CONTRIBUTION_SUBMITTED"}).then(
+                this.basicModals.alert({ key: "CONTRIBUTIONS.FORM.COMMONS.REQUEST_SUBMITTED" }, {key:"MESSAGES.CONTRIBUTION_SUBMITTED"}).then(
                     () => {
                         this.router.navigate(["/home"]);
                     }
