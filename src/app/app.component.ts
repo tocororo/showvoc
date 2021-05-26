@@ -3,8 +3,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { User } from './models/User';
 import { AuthServices } from './services/auth.service';
 import { Cookie } from './utils/Cookie';
-import { PMKIContext } from './utils/PMKIContext';
-import { PMKIProperties } from './utils/PMKIProperties';
+import { SVContext } from './utils/SVContext';
+import { SVProperties } from './utils/SVProperties';
 
 @Component({
     selector: 'app-root',
@@ -24,7 +24,7 @@ export class AppComponent {
     translateLangs: string[];
     translateLang: string;
 
-    constructor(private authServices: AuthServices, private pmkiProp: PMKIProperties, private translate: TranslateService) {
+    constructor(private authServices: AuthServices, private svProp: SVProperties, private translate: TranslateService) {
         //set the available factory-provided i18n languages
         translate.addLangs(['en', 'it']);
         //add additional supported i18n languages
@@ -46,14 +46,14 @@ export class AppComponent {
     ngOnInit() {
         this.translateLangs = this.translate.getLangs();
         this.translateLang = this.translate.currentLang;
-        this.pmkiProp.initStartupSystemSettings();
+        this.svProp.initStartupSystemSettings();
     }
 
     /**
      * Determines if the items in the navbar are available: they are available only if the admin or the visitor user is logged
      */
     isLogged(): boolean {
-        return PMKIContext.getLoggedUser() != null;
+        return SVContext.getLoggedUser() != null;
     }
 
     /**
@@ -62,7 +62,7 @@ export class AppComponent {
      * - the links for the admin dashboard should be visible only if the admin is logged (returns true)
      */
     isAdminLogged(): boolean {
-        this.currentUser = PMKIContext.getLoggedUser();
+        this.currentUser = SVContext.getLoggedUser();
         return this.currentUser != null && this.currentUser.isAdmin();
     }
 

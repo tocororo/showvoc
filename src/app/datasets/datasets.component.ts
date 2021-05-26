@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { PmkiConstants } from '../models/Pmki';
+import { ShowVocConstants } from '../models/ShowVoc';
 import { Project } from '../models/Project';
 import { OntoLex, OWL, RDFS, SKOS } from '../models/Vocabulary';
 import { ProjectsServices } from '../services/projects.service';
 import { Cookie } from '../utils/Cookie';
-import { PMKIEventHandler } from '../utils/PMKIEventHandler';
+import { SVEventHandler } from '../utils/SVEventHandler';
 
 @Component({
     selector: 'datasets-component',
@@ -36,7 +36,7 @@ export class DatasetsComponent implements OnInit {
 
     translationParam: { instanceName: string }
 
-    constructor(private router: Router, private projectService: ProjectsServices, private eventHandler: PMKIEventHandler) {
+    constructor(private router: Router, private projectService: ProjectsServices, private eventHandler: SVEventHandler) {
         this.eventSubscriptions.push(eventHandler.projectUpdatedEvent.subscribe(
             () => this.initDatasets())
         );
@@ -46,16 +46,16 @@ export class DatasetsComponent implements OnInit {
         this.initCookies();
         this.initDatasets();
 
-        this.instanceName = window['pmki_instance_name'];
+        this.instanceName = window['showvoc_instance_name'];
         if (this.instanceName == null) {
-            this.instanceName = "PMKI";
+            this.instanceName = "ShowVoc";
         }
         this.translationParam = { instanceName: this.instanceName };
     }
 
     initDatasets() {
         this.loading = true;
-        this.projectService.listProjectsPerRole(PmkiConstants.rolePublic).pipe(
+        this.projectService.listProjectsPerRole(ShowVocConstants.rolePublic).pipe(
             finalize(() => this.loading = false)
         ).subscribe(
             projects => {

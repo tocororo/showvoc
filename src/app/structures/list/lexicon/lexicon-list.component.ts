@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
+import { SVProperties } from 'src/app/utils/SVProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractList } from '../abstract-list';
 
@@ -19,7 +19,7 @@ export class LexiconListComponent extends AbstractList {
 
     private activeLexicon: AnnotatedValue<IRI>;
 
-    constructor(private ontolexService: OntoLexLemonServices, private pmkiProp: PMKIProperties, eventHandler: PMKIEventHandler) {
+    constructor(private ontolexService: OntoLexLemonServices, private svProp: SVProperties, eventHandler: SVEventHandler) {
         super(eventHandler);
         //handler when active lexicon is changed programmatically when a searched entry belong to a non active lexicon
         this.eventSubscriptions.push(eventHandler.lexiconChangedEvent.subscribe(
@@ -42,7 +42,7 @@ export class LexiconListComponent extends AbstractList {
                 let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
                 ResourceUtils.sortResources(lexicons, orderAttribute);
                 for (let l of lexicons) {
-                    let activeLexicon: IRI = PMKIContext.getProjectCtx().getProjectPreferences().activeLexicon;
+                    let activeLexicon: IRI = SVContext.getProjectCtx().getProjectPreferences().activeLexicon;
                     if (activeLexicon != null && activeLexicon.equals(l.getValue())) {
                         this.activeLexicon = l;
                         break;
@@ -60,7 +60,7 @@ export class LexiconListComponent extends AbstractList {
             this.activeLexicon = lexicon;
         }
         let activeLexiconIRI: IRI = this.activeLexicon != null ? this.activeLexicon.getValue() : null;
-        this.pmkiProp.setActiveLexicon(PMKIContext.getProjectCtx(), activeLexiconIRI);
+        this.svProp.setActiveLexicon(SVContext.getProjectCtx(), activeLexiconIRI);
     }
 
 }

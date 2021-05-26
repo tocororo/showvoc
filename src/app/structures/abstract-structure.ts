@@ -1,7 +1,7 @@
 import { EventEmitter, Input, OnInit, Output, ElementRef, ViewChild, Directive } from "@angular/core";
 import { Subscription } from 'rxjs';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, ResAttribute } from '../models/Resources';
-import { PMKIEventHandler } from '../utils/PMKIEventHandler';
+import { SVEventHandler } from '../utils/SVEventHandler';
 import { TreeListContext } from '../utils/UIUtils';
 
 @Directive()
@@ -30,8 +30,8 @@ export abstract class AbstractStruct implements OnInit {
     /**
      * CONSTRUCTOR
      */
-    protected eventHandler: PMKIEventHandler;
-    constructor(eventHandler: PMKIEventHandler) {
+    protected eventHandler: SVEventHandler;
+    constructor(eventHandler: SVEventHandler) {
         this.eventHandler = eventHandler;
     }
 

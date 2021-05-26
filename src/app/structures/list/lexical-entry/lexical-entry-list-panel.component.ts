@@ -5,9 +5,9 @@ import { ModalOptions } from 'src/app/modal-dialogs/Modals';
 import { LexEntryVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
 import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
+import { SVProperties } from 'src/app/utils/SVProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
 import { AbstractListPanel } from '../abstract-list-panel';
@@ -45,9 +45,9 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
 
     closedAlert: boolean;
 
-    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties, private ontolexService: OntoLexLemonServices,
+    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private ontolexService: OntoLexLemonServices,
         private modalService: NgbModal) {
-        super(basicModals, eventHandler, pmkiProp);
+        super(basicModals, eventHandler, svProp);
         this.eventSubscriptions.push(eventHandler.lexiconChangedEvent.subscribe(
             (lexicon: IRI) => this.onLexiconChanged(lexicon))
         );
@@ -63,7 +63,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
          */
         let activeLexicon: IRI;
         if (this.lexicon == undefined) { //if @Input is not provided, get the lexicon from the preferences
-            activeLexicon = PMKIContext.getProjectCtx().getProjectPreferences().activeLexicon;
+            activeLexicon = SVContext.getProjectCtx().getProjectPreferences().activeLexicon;
         } else { //if @Input lexicon is provided, initialize the tree with this lexicon
             activeLexicon = this.lexicon;
         }
@@ -79,7 +79,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
             this.workingLexicon = activeLexicon;
         }
 
-        let lexEntryListPrefs = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
+        let lexEntryListPrefs = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
         // settings modal di lex-entry list deve permettere il change di solo del setting permesso
         this.visualizationMode = lexEntryListPrefs.visualization;
         this.indexLenght = lexEntryListPrefs.indexLength;
@@ -88,7 +88,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
 
 
     handleSearchResults(results: AnnotatedValue<IRI>[]) {
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
         if (this.visualizationMode == LexEntryVisualizationMode.indexBased) {
             if (results.length == 1) {
                 this.openAt(results[0]);
@@ -123,7 +123,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
                     }
                     this.basicModals.selectResource({key: "COMMONS.ACTIONS.SEARCH"}, message, lexicons, this.rendering).then(
                         (lexicon: AnnotatedValue<Resource>) => {
-                            this.pmkiProp.setActiveLexicon(PMKIContext.getProjectCtx(), <IRI>lexicon.getValue()); //update the active lexicon
+                            this.svProp.setActiveLexicon(SVContext.getProjectCtx(), <IRI>lexicon.getValue()); //update the active lexicon
                             setTimeout(() => { //wait for a change detection round, since after the setActiveLexicon, the lex entry list is reset
                                 this.openAt(resource);
                             });
@@ -136,7 +136,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     }
 
     public openAt(node: AnnotatedValue<IRI>) {
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
         if (this.visualizationMode == LexEntryVisualizationMode.indexBased) {
             this.viewChildList.openListAt(node);
         } else { //search-based
@@ -148,7 +148,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     }
 
     refresh() {
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
         //reinit the list
         this.viewChildList.init();
         if (this.visualizationMode == LexEntryVisualizationMode.searchBased) {
@@ -161,12 +161,12 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
         const modalRef: NgbModalRef = this.modalService.open(LexicalEntryListSettingsModal, new ModalOptions());
         modalRef.result.then(
             () => {
-                this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
+                this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
                 if (this.visualizationMode == LexEntryVisualizationMode.searchBased) {
                     this.viewChildList.forceList([]);
                     this.refresh(); //refresh in order to update the visualization mode in the child list
                 } else {
-                    let newIndexLenght = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength;
+                    let newIndexLenght = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength;
                     if (newIndexLenght != this.indexLenght) {
                         //in this case should not be necessary to refresh since the index change triggers a re-init on the child list
                         this.indexLenght = newIndexLenght;
@@ -203,7 +203,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     private onLexiconChanged(lexicon: IRI) {
         this.workingLexicon = lexicon;
         //in case of visualization search based reset the list
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
         if (this.visualizationMode == LexEntryVisualizationMode.searchBased) {
             this.viewChildList.forceList([]);
         }

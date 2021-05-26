@@ -10,19 +10,19 @@ import { IRI } from '../models/Resources';
  */
 
 @Injectable()
-export class PMKIEventHandler {
+export class SVEventHandler {
 
-    public lexiconChangedEvent: EventEmitter<IRI> = new PMKIEventEmitter("lexiconChangedEvent");
-    public schemeChangedEvent: EventEmitter<IRI[]> = new PMKIEventEmitter("schemeChangedEvent");
+    public lexiconChangedEvent: EventEmitter<IRI> = new SVEventEmitter("lexiconChangedEvent");
+    public schemeChangedEvent: EventEmitter<IRI[]> = new SVEventEmitter("schemeChangedEvent");
 
     //PREFERENCES
-    public showDeprecatedChangedEvent: EventEmitter<boolean> = new PMKIEventEmitter("showDeprecatedChangedEvent");
-    public searchPrefsUpdatedEvent: EventEmitter<any> = new PMKIEventEmitter("searchPrefsUpdatedEvent");
-    public showFlagChangedEvent: EventEmitter<boolean> = new PMKIEventEmitter("showFlagChangedEvent");
-    public classFilterChangedEvent: EventEmitter<any> = new PMKIEventEmitter("classFilterChangedEvent");
+    public showDeprecatedChangedEvent: EventEmitter<boolean> = new SVEventEmitter("showDeprecatedChangedEvent");
+    public searchPrefsUpdatedEvent: EventEmitter<any> = new SVEventEmitter("searchPrefsUpdatedEvent");
+    public showFlagChangedEvent: EventEmitter<boolean> = new SVEventEmitter("showFlagChangedEvent");
+    public classFilterChangedEvent: EventEmitter<any> = new SVEventEmitter("classFilterChangedEvent");
 
     //when a project is created/deleted/open/closed/status-changed => trigger the update of projects in dataset page
-    public projectUpdatedEvent: EventEmitter<any> = new PMKIEventEmitter("projectUpdatedEvent");
+    public projectUpdatedEvent: EventEmitter<any> = new SVEventEmitter("projectUpdatedEvent");
 
     constructor() { }
 
@@ -37,7 +37,7 @@ export class PMKIEventHandler {
 
 }
 
-class PMKIEventEmitter<T> extends EventEmitter<T> {
+class SVEventEmitter<T> extends EventEmitter<T> {
     private eventName: string
 
     /**

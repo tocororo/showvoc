@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resource } from '../models/Resources';
-import { HttpManager, PMKIRequestOptions } from "../utils/HttpManager";
+import { HttpManager, SVRequestOptions } from "../utils/HttpManager";
 
 @Injectable()
 export class ResourceViewServices {
@@ -19,7 +19,7 @@ export class ResourceViewServices {
             includeInferred: includeInferred,
             resourcePosition: resourcePosition
         };
-        var options: PMKIRequestOptions = new PMKIRequestOptions({
+        var options: SVRequestOptions = new SVRequestOptions({
             errorAlertOpt: { 
                 show: true, exceptionsToSkip: ['java.net.UnknownHostException']
             } 

@@ -12,7 +12,7 @@ import { SettingsEnum } from '../../models/Properties';
 import { IRI } from '../../models/Resources';
 import { OntoLex, OWL, RDFS, SKOS, SKOSXL } from '../../models/Vocabulary';
 import { ExtensionsServices } from '../../services/extensions.service';
-import { PmkiServices } from '../../services/pmki.service';
+import { ShowVocServices } from '../../services/showvoc.service';
 
 @Component({
     selector: "stable-project-creation-modal",
@@ -62,7 +62,7 @@ export class StableProjectCreationModal {
     private remoteAccessConfig: RemoteRepositoryAccessConfig;
 
     constructor(public activeModal: NgbActiveModal, private settingsService: SettingsServices,
-        private extensionsService: ExtensionsServices, private pmkiService: PmkiServices, private basicModals: BasicModalsServices) { }
+        private extensionsService: ExtensionsServices, private svService: ShowVocServices, private basicModals: BasicModalsServices) { }
 
     ngOnInit() {
         this.projectName = this.contribution.resourceName;
@@ -114,7 +114,7 @@ export class StableProjectCreationModal {
         }
 
         this.loading = true;
-        this.pmkiService.approveStableContribution(this.projectName, new IRI(this.selectedSemModel), new IRI(this.selectedLexModel),
+        this.svService.approveStableContribution(this.projectName, new IRI(this.selectedSemModel), new IRI(this.selectedLexModel),
             this.baseURI, repositoryAccess, coreRepoSailConfigurerSpecification, this.contribution['relativeReference']).pipe(
                 finalize(() => this.loading = false)
             ).subscribe(

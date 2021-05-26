@@ -10,14 +10,14 @@ import { ResViewPartition } from '../models/ResourceView';
 import { OWL, RDFS } from '../models/Vocabulary';
 import { SettingsServices } from '../services/settings.service';
 import { Cookie } from './Cookie';
-import { PMKIContext, ProjectContext } from './PMKIContext';
-import { PMKIEventHandler } from './PMKIEventHandler';
+import { SVContext, ProjectContext } from './SVContext';
+import { SVEventHandler } from './SVEventHandler';
 import { ResourceUtils } from './ResourceUtils';
 
 @Injectable()
-export class PMKIProperties {
+export class SVProperties {
 
-    constructor(private settingsService: SettingsServices, private eventHandler: PMKIEventHandler) {
+    constructor(private settingsService: SettingsServices, private eventHandler: SVEventHandler) {
     }
 
     /* =============================
@@ -37,7 +37,7 @@ export class PMKIProperties {
      * (see the related handling in initPreferencesCookie())
      */
     initUserProjectPreferences(projectCtx: ProjectContext): Observable<void> {
-        PMKIContext.setTempProject(projectCtx.getProject());
+        SVContext.setTempProject(projectCtx.getProject());
 
         let projectPreferences = projectCtx.getProjectPreferences();
 
@@ -74,7 +74,7 @@ export class PMKIProperties {
 
         return forkJoin([initRenderingPrefFn, initStructuresPrefFn]).pipe(
             finalize(() => {
-                PMKIContext.removeTempProject()
+                SVContext.removeTempProject()
             }),
             map(() => {
                 //init also cookie-stored preferences
@@ -113,87 +113,87 @@ export class PMKIProperties {
     }
 
     getShowFlags(): boolean {
-        if (PMKIContext.getProjectCtx() != null) {
-            return PMKIContext.getProjectCtx().getProjectPreferences().showFlags;
+        if (SVContext.getProjectCtx() != null) {
+            return SVContext.getProjectCtx().getProjectPreferences().showFlags;
         } else {
-            return PMKIContext.getSystemSettings().showFlags;
+            return SVContext.getSystemSettings().showFlags;
         }
     }
     setShowFlags(show: boolean) {
-        PMKIContext.getProjectCtx().getProjectPreferences().showFlags = show;
+        SVContext.getProjectCtx().getProjectPreferences().showFlags = show;
         this.eventHandler.showFlagChangedEvent.emit(show);
-        Cookie.setUserProjectCookiePref(Properties.pref_show_flags, PMKIContext.getProjectCtx().getProject(), show);
+        Cookie.setUserProjectCookiePref(Properties.pref_show_flags, SVContext.getProjectCtx().getProject(), show);
     }
 
     setValueFilterLanguages(filter: ValueFilterLanguages) {
-        Cookie.setUserProjectCookiePref(Properties.pref_filter_value_languages, PMKIContext.getProjectCtx().getProject(), JSON.stringify(filter));
-        PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang = filter;
+        Cookie.setUserProjectCookiePref(Properties.pref_filter_value_languages, SVContext.getProjectCtx().getProject(), JSON.stringify(filter));
+        SVContext.getProjectCtx().getProjectPreferences().filterValueLang = filter;
     }
 
     //class tree settings
     setClassTreeFilter(filter: ClassTreeFilter) {
-        Cookie.setUserProjectCookiePref(Properties.pref_class_tree_filter, PMKIContext.getProjectCtx().getProject(), JSON.stringify(filter));
-        PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter = filter;
+        Cookie.setUserProjectCookiePref(Properties.pref_class_tree_filter, SVContext.getProjectCtx().getProject(), JSON.stringify(filter));
+        SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter = filter;
         this.eventHandler.classFilterChangedEvent.emit();
     }
     setClassTreeRoot(rootUri: string) {
-        Cookie.setUserProjectCookiePref(Properties.pref_class_tree_root, PMKIContext.getProjectCtx().getProject(), rootUri);
-        PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.rootClassUri = rootUri;
+        Cookie.setUserProjectCookiePref(Properties.pref_class_tree_root, SVContext.getProjectCtx().getProject(), rootUri);
+        SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.rootClassUri = rootUri;
     }
     setClassTreeShowInstances(show: boolean) {
-        Cookie.setUserProjectCookiePref(Properties.pref_class_tree_show_instances, PMKIContext.getProjectCtx().getProject(), show);
-        PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.showInstancesNumber = show;
+        Cookie.setUserProjectCookiePref(Properties.pref_class_tree_show_instances, SVContext.getProjectCtx().getProject(), show);
+        SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.showInstancesNumber = show;
     }
 
     //instance list settings
     setInstanceListVisualization(mode: InstanceListVisualizationMode) {
-        Cookie.setUserProjectCookiePref(Properties.pref_instance_list_visualization, PMKIContext.getProjectCtx().getProject(), mode);
-        PMKIContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization = mode;
+        Cookie.setUserProjectCookiePref(Properties.pref_instance_list_visualization, SVContext.getProjectCtx().getProject(), mode);
+        SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization = mode;
     }
     setInstanceLisSafeToGoLimit(limit: number) {
-        Cookie.setUserProjectCookiePref(Properties.pref_instance_list_safe_to_go_limit, PMKIContext.getProjectCtx().getProject(), limit+"");
-        let instanceListPref = PMKIContext.getProjectCtx().getProjectPreferences().instanceListPreferences;
+        Cookie.setUserProjectCookiePref(Properties.pref_instance_list_safe_to_go_limit, SVContext.getProjectCtx().getProject(), limit+"");
+        let instanceListPref = SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences;
         instanceListPref.safeToGoLimit = limit;
         instanceListPref.safeToGoMap = {}; //changing the limit invalidated the safe => reset the map
     }
 
     //concept tree settings
     setConceptTreeVisualization(mode: ConceptTreeVisualizationMode) {
-        Cookie.setUserProjectCookiePref(Properties.pref_concept_tree_visualization, PMKIContext.getProjectCtx().getProject(), mode);
-        PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization = mode;
+        Cookie.setUserProjectCookiePref(Properties.pref_concept_tree_visualization, SVContext.getProjectCtx().getProject(), mode);
+        SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization = mode;
     }
     setConceptTreeSafeToGoLimit(limit: number) {
-        Cookie.setUserProjectCookiePref(Properties.pref_concept_tree_safe_to_go_limit, PMKIContext.getProjectCtx().getProject(), limit);
-        let conceptTreePref = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences; 
+        Cookie.setUserProjectCookiePref(Properties.pref_concept_tree_safe_to_go_limit, SVContext.getProjectCtx().getProject(), limit);
+        let conceptTreePref = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences; 
         conceptTreePref.safeToGoLimit = limit;
         conceptTreePref.safeToGoMap = {}; //changing the limit invalidated the safe => reset the map
     }
 
     //lex entry list settings
     setLexicalEntryListVisualization(mode: LexEntryVisualizationMode) {
-        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_visualization, PMKIContext.getProjectCtx().getProject(), mode);
-        PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization = mode;
+        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_visualization, SVContext.getProjectCtx().getProject(), mode);
+        SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization = mode;
     }
     setLexicalEntryListIndexLenght(lenght: number) {
-        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_index_length, PMKIContext.getProjectCtx().getProject(), lenght);
-        PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength = lenght;
+        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_index_length, SVContext.getProjectCtx().getProject(), lenght);
+        SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength = lenght;
     }
     setLexicalEntryListSafeToGoLimit(limit: number) {
-        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_safe_to_go_limit, PMKIContext.getProjectCtx().getProject(), limit);
-        let lexEntryListPref = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
+        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_safe_to_go_limit, SVContext.getProjectCtx().getProject(), limit);
+        let lexEntryListPref = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
         lexEntryListPref.safeToGoLimit = limit;
         lexEntryListPref.safeToGoMap = {}; //changing the limit invalidated the safe => reset the map
     }
 
     //Graph settings
     setResourceViewPartitionFilter(pref: ResViewPartitionFilterPreference) {
-        Cookie.setUserProjectCookiePref(Properties.pref_res_view_partition_filter, PMKIContext.getProjectCtx().getProject(), JSON.stringify(pref));
-        PMKIContext.getProjectCtx().getProjectPreferences().resViewPartitionFilter = pref;
+        Cookie.setUserProjectCookiePref(Properties.pref_res_view_partition_filter, SVContext.getProjectCtx().getProject(), JSON.stringify(pref));
+        SVContext.getProjectCtx().getProjectPreferences().resViewPartitionFilter = pref;
     }
 
     setHideLiteralGraphNodes(show: boolean) {
-        PMKIContext.getProjectCtx().getProjectPreferences().hideLiteralGraphNodes = show;
-        Cookie.setUserProjectCookiePref(Properties.pref_filter_value_languages, PMKIContext.getProjectCtx().getProject(), show);
+        SVContext.getProjectCtx().getProjectPreferences().hideLiteralGraphNodes = show;
+        Cookie.setUserProjectCookiePref(Properties.pref_filter_value_languages, SVContext.getProjectCtx().getProject(), show);
     }
 
 
@@ -267,7 +267,7 @@ export class PMKIProperties {
         //instance list preferences
         let instanceListPreferences: InstanceListPreference = projectPreferences.instanceListPreferences;
         //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin
-        if (PMKIContext.getLoggedUser().isAdmin() || instanceListPreferences.allowVisualizationChange) {
+        if (SVContext.getLoggedUser().isAdmin() || instanceListPreferences.allowVisualizationChange) {
             let instanceListVisualizationPref: string = Cookie.getUserProjectCookiePref(Properties.pref_instance_list_visualization, project);
             if (instanceListVisualizationPref == InstanceListVisualizationMode.searchBased || instanceListVisualizationPref == InstanceListVisualizationMode.standard) {
                 //overwrite only if the cookie value is an admitted value
@@ -283,7 +283,7 @@ export class PMKIProperties {
         //concept tree preferences
         let conceptTreePref: ConceptTreePreference = projectPreferences.conceptTreePreferences;
         //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin
-        if (PMKIContext.getLoggedUser().isAdmin() || conceptTreePref.allowVisualizationChange) {
+        if (SVContext.getLoggedUser().isAdmin() || conceptTreePref.allowVisualizationChange) {
             let conceptTreeVisualizationPref: string = Cookie.getUserProjectCookiePref(Properties.pref_concept_tree_visualization, project);
             if (conceptTreeVisualizationPref == ConceptTreeVisualizationMode.searchBased || conceptTreeVisualizationPref == ConceptTreeVisualizationMode.hierarchyBased) {
                 //overwrite only if the cookie value is an admitted value
@@ -298,7 +298,7 @@ export class PMKIProperties {
         //lexical entry list preferences
         let lexEntryListPref: LexicalEntryListPreference = projectPreferences.lexEntryListPreferences;
         //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin
-        if (PMKIContext.getLoggedUser().isAdmin() || lexEntryListPref.allowVisualizationChange) {
+        if (SVContext.getLoggedUser().isAdmin() || lexEntryListPref.allowVisualizationChange) {
             let lexEntryListVisualizationPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_visualization, project);
             if (lexEntryListVisualizationPref == LexEntryVisualizationMode.searchBased || lexEntryListVisualizationPref == LexEntryVisualizationMode.indexBased) {
                 //overwrite only if the cookie value is an admitted value
@@ -306,7 +306,7 @@ export class PMKIProperties {
             }
         }
         //the index length is taken from cookie only if admin there isn't any restriction on it or if the user is the admin
-        if (PMKIContext.getLoggedUser().isAdmin() || lexEntryListPref.allowIndexLengthChange) {
+        if (SVContext.getLoggedUser().isAdmin() || lexEntryListPref.allowIndexLengthChange) {
             let lexEntryListIndexLenghtPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_index_length, project);
             if (lexEntryListIndexLenghtPref == "1" || lexEntryListIndexLenghtPref == "2") {
                 //overwrite only if the cookie value is an admitted value
@@ -405,7 +405,7 @@ export class PMKIProperties {
     initStartupSystemSettings() {
         this.settingsService.getStartupSettings().subscribe(
             settings => {
-                let systemSettings: SystemSettings = PMKIContext.getSystemSettings();
+                let systemSettings: SystemSettings = SVContext.getSystemSettings();
                 systemSettings.showFlags = settings.getPropertyValue(SettingsEnum.showFlags);
                 let systemLanguages: Language[] = settings.getPropertyValue(SettingsEnum.languages);
                 Languages.sortLanguages(systemLanguages);

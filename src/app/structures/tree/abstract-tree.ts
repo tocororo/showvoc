@@ -3,7 +3,7 @@ import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-mo
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { SearchServices } from 'src/app/services/search.service';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { TreeListContext } from 'src/app/utils/UIUtils';
 import { AnnotatedValue, IRI } from '../../models/Resources';
 import { AbstractStruct } from '../abstract-structure';
@@ -36,7 +36,7 @@ export abstract class AbstractTree extends AbstractStruct {
     protected searchService: SearchServices;
     protected basicModals: BasicModalsServices;
     protected sharedModals: SharedModalsServices;
-    constructor(eventHandler: PMKIEventHandler, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
+    constructor(eventHandler: SVEventHandler, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
         super(eventHandler);
         this.searchService = searchService;
         this.basicModals = basicModals;

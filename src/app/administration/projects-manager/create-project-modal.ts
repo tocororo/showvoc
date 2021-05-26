@@ -2,7 +2,7 @@ import { Component, ViewChild } from "@angular/core";
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from "@ngx-translate/core";
 import { finalize } from 'rxjs/operators';
-import { PmkiConstants } from 'src/app/models/Pmki';
+import { ShowVocConstants } from 'src/app/models/ShowVoc';
 import { SettingsEnum } from 'src/app/models/Properties';
 import { IRI } from 'src/app/models/Resources';
 import { AdministrationServices } from 'src/app/services/administration.service';
@@ -96,7 +96,7 @@ export class CreateProjectModal {
     remoteRepoConfigs: RemoteRepositoryAccessConfig[] = [];
     selectedRemoteRepoConfig: RemoteRepositoryAccessConfig;
 
-    private supportRepoId: string; //not used (since in PMKI the project creation doesn't support History nor Validation), but still necessary to the createProject()
+    private supportRepoId: string; //not used (since in ShowVoc the project creation doesn't support History nor Validation), but still necessary to the createProject()
 
 
     //backend types (when accessing an existing remote repository)
@@ -226,7 +226,7 @@ export class CreateProjectModal {
             false, false, false, repositoryAccess, this.dataRepoId, this.supportRepoId, coreRepoSailConfigurerSpecification, coreRepoBackendType).pipe(
                 finalize(() => this.loading = false)
             ).subscribe(() => {
-                this.adminService.addRolesToUser(this.projectName, PmkiConstants.visitorEmail, [PmkiConstants.roleStaging]).pipe(
+                this.adminService.addRolesToUser(this.projectName, ShowVocConstants.visitorEmail, [ShowVocConstants.roleStaging]).pipe(
                     finalize(() => this.loading = false)
                 ).subscribe(() => {
                     this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_CREATED" }, {key:"MESSAGES.DATASET_CREATED"});

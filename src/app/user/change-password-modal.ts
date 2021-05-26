@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { AuthServices } from '../services/auth.service';
 import { UserServices } from '../services/user.service';
-import { PMKIContext } from '../utils/PMKIContext';
+import { SVContext } from '../utils/SVContext';
 
 @Component({
     selector: "change-pwd-modal",
@@ -34,7 +34,7 @@ export class ChangePasswordModal {
 
 
     ok() {
-        this.userService.changePassword(PMKIContext.getLoggedUser().getEmail(), this.oldPwd, this.newPwd).subscribe(
+        this.userService.changePassword(SVContext.getLoggedUser().getEmail(), this.oldPwd, this.newPwd).subscribe(
             () => {
                 this.basicModals.alert({ key: "USER.PASSWORD.PASSWORD_CHANGED" }, { key: "MESSAGES.PASSWORD_CHANGED" }).then(
                     () => {

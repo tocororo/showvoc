@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AnnotatedValue, Resource, IRI } from '../models/Resources';
-import { HttpManager, PMKIRequestOptions } from "../utils/HttpManager";
+import { HttpManager, SVRequestOptions } from "../utils/HttpManager";
 import { ResourceDeserializer } from '../utils/ResourceUtils';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class IndividualsServices {
      * Returns the (explicit) named types of the given individual
      * @param individual
      */
-    getNamedTypes(individual: Resource, options?: PMKIRequestOptions): Observable<AnnotatedValue<IRI>[]> {
+    getNamedTypes(individual: Resource, options?: SVRequestOptions): Observable<AnnotatedValue<IRI>[]> {
         var params: any = {
             individual: individual
         };

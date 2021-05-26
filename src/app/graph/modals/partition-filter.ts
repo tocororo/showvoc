@@ -2,8 +2,8 @@ import { Component } from "@angular/core";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { RDFResourceRolesEnum } from 'src/app/models/Resources';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVProperties } from 'src/app/utils/SVProperties';
 import { ResViewPartitionFilterPreference } from "../../models/Properties";
 import { ResViewPartition, ResViewUtils } from "../../models/ResourceView";
 import { ResourceUtils } from "../../utils/ResourceUtils";
@@ -79,7 +79,7 @@ export class PartitionFilter {
     selectedRolePartitionsStruct: RolePartitionsStruct;
     selectedPartition: PartitionStruct;
 
-    constructor(private pmkiProp: PMKIProperties, private basicModals: BasicModalsServices) {}
+    constructor(private svProp: SVProperties, private basicModals: BasicModalsServices) {}
 
     ngOnInit() {
         /**
@@ -93,7 +93,7 @@ export class PartitionFilter {
             }
         }
 
-        this.convertPrefToRolePartitionsStruct(PMKIContext.getProjectCtx().getProjectPreferences().resViewPartitionFilter);
+        this.convertPrefToRolePartitionsStruct(SVContext.getProjectCtx().getProjectPreferences().resViewPartitionFilter);
         this.selectedRolePartitionsStruct = this.rolePartitionsStructs[0];
     }
 
@@ -208,7 +208,7 @@ export class PartitionFilter {
                 pref[rps.role.id+""] = partitionsPref;
             }
         });
-        this.pmkiProp.setResourceViewPartitionFilter(pref);
+        this.svProp.setResourceViewPartitionFilter(pref);
     }
 
 }

@@ -6,11 +6,11 @@ import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { SearchMode, SearchSettings, ClassIndividualPanelSearchMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
 import { SearchServices } from 'src/app/services/search.service';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
+import { SVProperties } from 'src/app/utils/SVProperties';
 import { SearchSettingsModal } from './search-settings-modal';
 import { finalize } from 'rxjs/operators';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { SVContext } from 'src/app/utils/SVContext';
 
 @Component({
     selector: "search-bar",
@@ -43,7 +43,7 @@ export class SearchBarComponent {
 
     private eventSubscriptions: Subscription[] = [];
 
-    constructor(private searchService: SearchServices, private pmkiProps: PMKIProperties, private eventHandler: PMKIEventHandler, 
+    constructor(private searchService: SearchServices, private pmkiProps: SVProperties, private eventHandler: SVEventHandler, 
         private basicModals: BasicModalsServices, private modalService: NgbModal) {
 
         this.eventSubscriptions.push(eventHandler.searchPrefsUpdatedEvent.subscribe(
@@ -51,7 +51,7 @@ export class SearchBarComponent {
     }
 
     ngOnInit() {
-        this.searchSettings = PMKIContext.getProjectCtx().getProjectPreferences().searchSettings;
+        this.searchSettings = SVContext.getProjectCtx().getProjectPreferences().searchSettings;
     }
 
     ngOnDestroy() {
@@ -127,14 +127,14 @@ export class SearchBarComponent {
     private updateSearchMode(mode: SearchMode, event: Event) {
         event.stopPropagation();
         this.searchSettings.stringMatchMode = mode;
-        this.pmkiProps.setSearchSettings(PMKIContext.getProjectCtx(), this.searchSettings);
+        this.pmkiProps.setSearchSettings(SVContext.getProjectCtx(), this.searchSettings);
     }
 
     /**
      * When the search settings is updated, updates the setting of the bar and the settings for the autocompleter
      */
     private updateSearchSettings() {
-        this.searchSettings = PMKIContext.getProjectCtx().getProjectPreferences().searchSettings;
+        this.searchSettings = SVContext.getProjectCtx().getProjectPreferences().searchSettings;
     }
 
 }

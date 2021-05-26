@@ -8,9 +8,9 @@ import { ExtensionsServices } from 'src/app/services/extensions.service';
 import { InputOutputServices } from 'src/app/services/input-output.service';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PmkiConstants } from "src/app/models/Pmki";
-import { PmkiServices } from "src/app/services/pmki.service";
+import { SVContext } from 'src/app/utils/SVContext';
+import { ShowVocConstants } from "src/app/models/ShowVoc";
+import { ShowVocServices } from "src/app/services/showvoc.service";
 
 @Component({
     selector: "load-data-modal",
@@ -45,7 +45,7 @@ export class LoadDataModal {
     selectedLifterConfig: Settings;
 
     constructor(public activeModal: NgbActiveModal, private extensionService: ExtensionsServices, private inputOutputService: InputOutputServices,
-        private pmkiService: PmkiServices, private basicModals: BasicModalsServices) { }
+        private svService: ShowVocServices, private basicModals: BasicModalsServices) { }
 
     ngOnInit() {
         this.baseURI = this.project.getBaseURI();
@@ -125,16 +125,16 @@ export class LoadDataModal {
             rdfLifterSpec.configuration = this.selectedLifterConfig.getPropertiesAsMap();
         }
 
-        PMKIContext.setTempProject(this.project);
+        SVContext.setTempProject(this.project);
         this.loading = true;
         this.inputOutputService.loadRDF(this.project.getBaseURI(), this.selectedImportAllowance, this.file, this.selectedInputFormat.name, null, rdfLifterSpec).subscribe(
             () => {
                 this.loading = false;
-                PMKIContext.removeTempProject();
+                SVContext.removeTempProject();
                 //If the data has been loaded into a pristine project, change its status to staging 
                 //(status change pristine->staging happens automatically only when data is loaded through loadStableContributionData() service)
-                if (this.project['role'] == PmkiConstants.rolePristine) { //role is an attribute attached in ProjectsManagerComponent, namely the component that opens this modal)
-                    this.pmkiService.setProjectStatus(this.project.getName(), PmkiConstants.roleStaging).subscribe();
+                if (this.project['role'] == ShowVocConstants.rolePristine) { //role is an attribute attached in ProjectsManagerComponent, namely the component that opens this modal)
+                    this.svService.setProjectStatus(this.project.getName(), ShowVocConstants.roleStaging).subscribe();
                 }
                 this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, {key:"MESSAGES.DATA_LOADED"}).then(
                     () => this.activeModal.close()

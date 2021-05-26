@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from "../models/User";
 import { HttpManager } from "../utils/HttpManager";
-import { PMKIContext } from '../utils/PMKIContext';
+import { SVContext } from '../utils/SVContext';
 
 @Injectable()
 export class UserServices {
@@ -42,7 +42,7 @@ export class UserServices {
                 if (stResp.user != null) { //user object in respnse => serialize it (it could be empty, so no user logged)
                     let user: User = User.createUser(stResp.user);
                     if (user != null) {
-                        PMKIContext.setLoggedUser(user);
+                        SVContext.setLoggedUser(user);
                     }
                     return user;
                 } else { //no user object in the response => there is no user registered

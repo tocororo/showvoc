@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { SVProperties } from 'src/app/utils/SVProperties';
+import { SVContext } from 'src/app/utils/SVContext';
 
 @Component({
     selector: "data-graph-settings-modal",
@@ -11,14 +11,14 @@ export class DataGraphSettingsModal {
 
     hideLiteralNodes: boolean;
 
-    constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties) { }
+    constructor(public activeModal: NgbActiveModal, private svProp: SVProperties) { }
 
     ngOnInit() {
-        this.hideLiteralNodes = PMKIContext.getProjectCtx().getProjectPreferences().hideLiteralGraphNodes;
+        this.hideLiteralNodes = SVContext.getProjectCtx().getProjectPreferences().hideLiteralGraphNodes;
     }
 
     onHideLiteralChange() {
-        this.pmkiProp.setHideLiteralGraphNodes(this.hideLiteralNodes);
+        this.svProp.setHideLiteralGraphNodes(this.hideLiteralNodes);
     }
 
     ok() {

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SearchMode } from "../models/Properties";
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from '../models/Resources';
-import { HttpManager, PMKIRequestOptions } from "../utils/HttpManager";
+import { HttpManager, SVRequestOptions } from "../utils/HttpManager";
 import { ResourceDeserializer } from '../utils/ResourceUtils';
 
 @Injectable()
@@ -87,7 +87,7 @@ export class SearchServices {
      * @return an array of resources
      */
     searchInstancesOfClass(cls: IRI, searchString: string, useLocalName: boolean, useURI: boolean, useNotes: boolean,
-        searchMode: SearchMode, langs?: string[], includeLocales?: boolean, options?: PMKIRequestOptions): Observable<AnnotatedValue<IRI>[]> {
+        searchMode: SearchMode, langs?: string[], includeLocales?: boolean, options?: SVRequestOptions): Observable<AnnotatedValue<IRI>[]> {
         var params: any = {
             cls: cls,
             searchString: searchString,

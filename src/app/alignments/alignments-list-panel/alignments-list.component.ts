@@ -6,7 +6,7 @@ import { Project } from 'src/app/models/Project';
 import { AnnotatedValue, IRI } from 'src/app/models/Resources';
 import { MapleServices } from 'src/app/services/maple.service';
 import { MetadataRegistryServices } from 'src/app/services/metadata-registry.service';
-import { PMKIContext } from '../../utils/PMKIContext';
+import { SVContext } from '../../utils/SVContext';
 
 @Component({
     selector: 'alignments-list',
@@ -28,7 +28,7 @@ export class AlignmentsListComponent {
     constructor(private metadataRegistryService: MetadataRegistryServices, private mapleService: MapleServices) { }
 
     ngOnInit() {
-        this.workingProject = PMKIContext.getWorkingProject();
+        this.workingProject = SVContext.getWorkingProject();
         this.init();
     }
 
@@ -60,10 +60,10 @@ export class AlignmentsListComponent {
 
     private profileProject(project: Project): Observable<void> {
         this.loading = true;
-        PMKIContext.setTempProject(project);
+        SVContext.setTempProject(project);
         return this.mapleService.profileProject().pipe(
             finalize(() => {
-                PMKIContext.removeTempProject();
+                SVContext.removeTempProject();
                 this.loading = false;
             })
         );

@@ -4,8 +4,8 @@ import { finalize, mergeMap } from 'rxjs/operators';
 import { LexEntryVisualizationMode, LexicalEntryListPreference, SafeToGo, SafeToGoMap } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractList } from '../abstract-list';
 
@@ -30,7 +30,7 @@ export class LexicalEntryListComponent extends AbstractList {
 
     translationParam: { elemCount: number, safeToGoLimit: number };
 
-    constructor(private ontolexService: OntoLexLemonServices, eventHandler: PMKIEventHandler) {
+    constructor(private ontolexService: OntoLexLemonServices, eventHandler: SVEventHandler) {
         super(eventHandler);
     }
 
@@ -41,7 +41,7 @@ export class LexicalEntryListComponent extends AbstractList {
     }
 
     initImpl() {
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
         if (this.visualizationMode == LexEntryVisualizationMode.indexBased && this.index != undefined) {
             this.checkInitializationSafe().subscribe(
                 () => {
@@ -73,7 +73,7 @@ export class LexicalEntryListComponent extends AbstractList {
      */
     forceSafeness() {
         this.safeToGo = { safe: true };
-        let lexEntryListPreference: LexicalEntryListPreference = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
+        let lexEntryListPreference: LexicalEntryListPreference = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
         let safeToGoMap: SafeToGoMap = lexEntryListPreference.safeToGoMap;
         let checksum = this.getInitRequestChecksum();
         safeToGoMap[checksum] = this.safeToGo;
@@ -85,7 +85,7 @@ export class LexicalEntryListComponent extends AbstractList {
      * Return true if the initialization is safe or if the user agreed to init the structure anyway
      */
     private checkInitializationSafe(): Observable<void> {
-        let lexEntryListPreference: LexicalEntryListPreference = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
+        let lexEntryListPreference: LexicalEntryListPreference = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
         let safeToGoMap: SafeToGoMap = lexEntryListPreference.safeToGoMap;
         this.safeToGoLimit = lexEntryListPreference.safeToGoLimit;
         this.unsafeIndexOneChar = lexEntryListPreference.indexLength == 1;

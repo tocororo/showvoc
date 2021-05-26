@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { SkosServices } from 'src/app/services/skos.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
+import { SVProperties } from 'src/app/utils/SVProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractList } from '../abstract-list';
 
@@ -17,7 +17,7 @@ export class SchemeListComponent extends AbstractList {
 
     structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.conceptScheme;
 
-    constructor(private skosService: SkosServices, private pmkiProp: PMKIProperties, eventHandler: PMKIEventHandler) {
+    constructor(private skosService: SkosServices, private svProp: SVProperties, eventHandler: SVEventHandler) {
         super(eventHandler);
         //handler when active schemes is changed programmatically when a searched concept belong to a non active scheme
         this.eventSubscriptions.push(eventHandler.schemeChangedEvent.subscribe(
@@ -36,7 +36,7 @@ export class SchemeListComponent extends AbstractList {
                 let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
                 ResourceUtils.sortResources(schemes, orderAttribute);
                 schemes.forEach(s => {
-                    let activeSchemes: IRI[] = PMKIContext.getProjectCtx().getProjectPreferences().activeSchemes;
+                    let activeSchemes: IRI[] = SVContext.getProjectCtx().getProjectPreferences().activeSchemes;
                     if (activeSchemes.some(as => as.equals(s.getValue()))) {
                         s['checked'] = true;
                     }
@@ -47,7 +47,7 @@ export class SchemeListComponent extends AbstractList {
     }
 
     updateActiveSchemesPref() {
-        this.pmkiProp.setActiveSchemes(PMKIContext.getProjectCtx(), this.collectCheckedSchemes())
+        this.svProp.setActiveSchemes(SVContext.getProjectCtx(), this.collectCheckedSchemes())
     }
 
     private collectCheckedSchemes(): IRI[] {

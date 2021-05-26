@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { ConfigurationComponents, ConfigurationObject } from 'src/app/models/Configuration';
-import { PmkiConversionFormat } from 'src/app/models/Pmki';
+import { ShowVocConversionFormat } from 'src/app/models/ShowVoc';
 import { Project } from 'src/app/models/Project';
 import { IRI } from 'src/app/models/Resources';
 import { OntoLex, OWL, RDFS, SKOS, SKOSXL } from 'src/app/models/Vocabulary';
@@ -18,8 +18,8 @@ export class DevelopmentContributionComponent extends AbstractContributionCompon
     storedConfigurationTypeId: string = ConfigurationComponents.CONTRIBUTION_STORE.CONFIG_IMPL.DEVELOPMENT;
 
     conversionRequired: boolean = false;
-    inputFormats: PmkiConversionFormat[] = [
-        PmkiConversionFormat.EXCEL, PmkiConversionFormat.TBX, PmkiConversionFormat.ZTHES
+    inputFormats: ShowVocConversionFormat[] = [
+        ShowVocConversionFormat.EXCEL, ShowVocConversionFormat.TBX, ShowVocConversionFormat.ZTHES
     ]
     selectedFormat: string;
 

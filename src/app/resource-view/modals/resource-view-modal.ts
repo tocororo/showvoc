@@ -2,7 +2,7 @@ import { Component, ElementRef, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Resource } from 'src/app/models/Resources';
 import { ResourceViewCtx } from 'src/app/models/ResourceView';
-import { ProjectContext } from 'src/app/utils/PMKIContext';
+import { ProjectContext } from 'src/app/utils/SVContext';
 import { UIUtils } from 'src/app/utils/UIUtils';
 
 @Component({

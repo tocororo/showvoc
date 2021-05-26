@@ -56,14 +56,14 @@
             },
             "REMOTE_ACCESS": {
                 "REMOTE_ACCESS_CONFIG": "Remote access configuration",
-                "REMOTE_ACCESS_CONFIG_INFO": "Configuration of the remote triple store that hosts the datasets in PMKI.<br><strong>Note</strong>: if this is not properly configured, the PMKI portal will not be able to create remotedatasets for hosting stable resources.",
+                "REMOTE_ACCESS_CONFIG_INFO": "Configuration of the remote triple store that hosts the datasets in ShowVoc.<br><strong>Note</strong>: if this is not properly configured, ShowVoc will not be able to create remotedatasets for hosting stable resources.",
                 "URL_INFO": "URL of the remote triple store",
                 "USERNAME_INFO": "Username of the remote triple store (if authentication is required)",
                 "PASSWORD_INFO": "Password of the remote triple store (if authentication is required)"
             },
             "VB_CONFIG": {
                 "VB_CONFIG": "VocBench configuration",
-                "VB_CONFIG_INFO": "Configuration of the VocBench/SemanticTurkey instance dedicated to the development of unstable resources.<br><strong>Note</strong>: if this is not properly configured, the PMKI portal will not be able to connect with VocBench, so it will be impossible to accept contribution of under-development resources.",
+                "VB_CONFIG_INFO": "Configuration of the VocBench/SemanticTurkey instance dedicated to the development of unstable resources.<br><strong>Note</strong>: if this is not properly configured, ShowVoc will not be able to connect with VocBench, so it will be impossible to accept contribution of under-development resources.",
                 "VB_CONFIG_TEST": "VocBench configuration test",
                 "VB_URL_INFO": "URL of the VocBench istance accessible by the contributors",
                 "ST_HOST_INFO": "Complete URL (protocol+hostname+port) of the SemanticTurkey host",
@@ -91,8 +91,8 @@
             "LOGOUT": "Logout"
         },
         "FOOTER": {
-            "ABOUT_PMKI": "About PMKI",
-            "PMKI_WEBSITE": "PMKI website",
+            "ABOUT_SHOWVOC": "About ShowVoc",
+            "SHOWVOC_WEBSITE": "ShowVoc website",
             "CONTACT_US": "Contact us",
             "SUPPORT": "Support"
         }
@@ -334,9 +334,9 @@
             "CONTRIBUTE_TO": "Contribute to {{instanceName}}"
         },
         "WELCOME_WO_INST_NAME": {
-            "WELCOME": "Welcome to PMKI!",
+            "WELCOME": "Welcome to ShowVoc!",
             "PMKI": "Public Multilingual Knowledge Infrastructure for the Digital Single Market",
-            "CONTRIBUTE_TO": "Contribute to PMKI"
+            "CONTRIBUTE_TO": "Contribute to ShowVoc"
         }
     },
     "MODELS": {
@@ -458,7 +458,7 @@
         }
     },
     "USER": {
-        "LOG_INTO_PMKI": "Log into PMKI",
+        "LOG_INTO_SHOWVOC": "Log into ShowVoc",
         "LOGIN": "Log in",
         "REGISTRATION_COMPLETE": "Registration complete",
         "USER_DETAILS": "User details",
@@ -579,7 +579,7 @@
         "DIFFERENT_CONFIRM_PASSWORD": "Password and confirmed password are different.",
         "DUPLICATED_SERVER_URL_CONFIG": "A configuration for the same server URL already exists",
         "EMAIL_CONFIG_CHANGED": "Email configuration has been changed, you need first to submit the changes.",
-        "EMAIL_CONFIG_INFO": "Configuration of the PMKI e-mail service. This service will be used to send notifications to the contributors<br><strong>Note</strong>: if this is not properly configured, it will be impossible to send email to contributors, so they will be not able to complete a contribution.",
+        "EMAIL_CONFIG_INFO": "Configuration of the ShowVoc e-mail service. This service will be used to send notifications to the contributors<br><strong>Note</strong>: if this is not properly configured, it will be impossible to send email to contributors, so they will be not able to complete a contribution.",
         "EMAIL_CONFIG_TEST_INFO": "This test will send an e-mail to the provided address in order to check the e-mail configuration",
         "EMAIL_CONFIG_TEST_SUCCESS": "The configuration works fine. A test e-mail has been sent to the provided email address.",
         "ENTER_VALID_EMAIL": "Please enter a valid e-mail address",
@@ -600,7 +600,7 @@
         "NO_CONVERSION_FORMAT_SELECTED": "The 'Conversion required' is checked, but no format has been selected",
         "NO_METADATA_PROVIDED": "No metadata has been provided",
         "NO_SEARCH_RESULTS": "No results found for '{{searchedString}}'",
-        "NO_USER_REGISTERED": "PMKI has detected that no user has yet registered. In order to use the platform, you need to create an administrator account by entering personal data and login credentials.",
+        "NO_USER_REGISTERED": "ShowVoc has detected that no user has yet registered. In order to use the platform, you need to create an administrator account by entering personal data and login credentials.",
         "PASSWORD_CHANGED": "Your password has been succesfully changed. Now you will be logged out.",
         "PASSWORD_RESET_SUCCESS": "Password has been successfully reset. You will receive an e-mail with the new temporary password.",
         "REFRESH_METADATA_CONFIRM": "You're going to refresh the metadata about the dataset '{{datasetName}}'. Are you sure?",

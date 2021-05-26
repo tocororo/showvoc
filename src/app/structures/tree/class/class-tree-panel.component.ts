@@ -1,12 +1,12 @@
 import { Component, ViewChild, Input } from "@angular/core";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
+import { SVProperties } from 'src/app/utils/SVProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTreePanel } from '../abstract-tree-panel';
 import { ClassTreeComponent } from './class-tree.component';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { SVContext } from 'src/app/utils/SVContext';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalOptions } from 'src/app/modal-dialogs/Modals';
 import { ClassTreeSettingsModal } from './class-tree-settings-modal';
@@ -26,13 +26,13 @@ export class ClassTreePanelComponent extends AbstractTreePanel {
 
     filterEnabled: boolean;
 
-	constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties, private modalService: NgbModal) {
-		super(basicModals, eventHandler, pmkiProp);
+	constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private modalService: NgbModal) {
+		super(basicModals, eventHandler, svProp);
     }
 
     ngOnInit() {
         super.ngOnInit();
-        this.filterEnabled = PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter.enabled;
+        this.filterEnabled = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter.enabled;
     }
 
     //top bar commands handlers
@@ -69,12 +69,12 @@ export class ClassTreePanelComponent extends AbstractTreePanel {
         const modalRef: NgbModalRef = this.modalService.open(ClassTreeSettingsModal, new ModalOptions());
         modalRef.result.then(
             () => { //changes done
-                this.filterEnabled = PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter.enabled;
+                this.filterEnabled = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter.enabled;
                 this.refresh();
             },
             () => {
                 //not done
-                this.filterEnabled = PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter.enabled;
+                this.filterEnabled = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter.enabled;
             }
         );
     }

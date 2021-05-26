@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Properties } from 'src/app/models/Properties';
 import { Cookie } from 'src/app/utils/Cookie';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { SVContext } from 'src/app/utils/SVContext';
 import { Project } from 'src/app/models/Project';
 
 @Component({
@@ -21,14 +21,14 @@ export class RenderingEditorModal {
     constructor(public activeModal: NgbActiveModal) { }
 
     ngOnInit() {
-        this.project = PMKIContext.getWorkingProject();
+        this.project = SVContext.getWorkingProject();
         this.initLanguages();
     }
 
     initLanguages() {
         let cookieValue = Cookie.getUserProjectCookiePref(Properties.pref_languages, this.project);
         this.cookieLangs = (cookieValue != null) ? cookieValue.split(",") : null;
-        this.defaultPrefLangs = PMKIContext.getProjectCtx().getProjectPreferences().renderingLanguagesPreference;
+        this.defaultPrefLangs = SVContext.getProjectCtx().getProjectPreferences().renderingLanguagesPreference;
         if (this.defaultPrefLangs.length == 1 && this.defaultPrefLangs[0] == "*") {
             this.defaultPrefLangs = null;
         }
@@ -44,7 +44,7 @@ export class RenderingEditorModal {
     }
 
     restoreDefault() {
-        Cookie.setUserProjectCookiePref(Properties.pref_languages, PMKIContext.getProjectCtx().getProject(), null); //delete cookie langs
+        Cookie.setUserProjectCookiePref(Properties.pref_languages, SVContext.getProjectCtx().getProject(), null); //delete cookie langs
         this.initLanguages();
     }
 

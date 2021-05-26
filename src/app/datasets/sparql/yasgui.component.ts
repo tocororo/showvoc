@@ -5,7 +5,7 @@ import { SearchMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI } from 'src/app/models/Resources';
 import { QueryChangedEvent } from 'src/app/models/Sparql';
 import { SearchServices } from 'src/app/services/search.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { SVContext } from 'src/app/utils/SVContext';
 import * as YASQE from 'yasgui-yasqe';
 
 @Component({
@@ -39,7 +39,7 @@ export class YasguiComponent {
         if (YASQE.defaults.autocompleters.indexOf(this.PREFIX_COMPLETER_NAME) == -1) {
             YASQE.registerAutocompleter(this.PREFIX_COMPLETER_NAME,
                 (yasqe: any) => {
-                    return this.customPrefixCompleter(yasqe, PMKIContext.getPrefixMappings(), this.fetchFromPrefixCheck);
+                    return this.customPrefixCompleter(yasqe, SVContext.getPrefixMappings(), this.fetchFromPrefixCheck);
                 }
             );
         }
@@ -108,7 +108,7 @@ export class YasguiComponent {
         this.yasqe.disableCompleter(this.PREFIX_COMPLETER_NAME);
         YASQE.registerAutocompleter(this.PREFIX_COMPLETER_NAME,
             (yasqe: any) => {
-                return this.customPrefixCompleter(yasqe, PMKIContext.getPrefixMappings(), this.fetchFromPrefixCheck);
+                return this.customPrefixCompleter(yasqe, SVContext.getPrefixMappings(), this.fetchFromPrefixCheck);
             }
         );
         this.yasqe.enableCompleter(this.PREFIX_COMPLETER_NAME);

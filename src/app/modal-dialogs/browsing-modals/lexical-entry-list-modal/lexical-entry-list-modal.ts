@@ -2,7 +2,7 @@ import { Component, ElementRef, Input } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AnnotatedValue, IRI } from 'src/app/models/Resources';
 import { ResourcesServices } from 'src/app/services/resources.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { SVContext } from 'src/app/utils/SVContext';
 import { ModalOptions } from '../../Modals';
 import { AbstractStructureModal } from '../abstract-structure-modal';
 import { LexiconListModal } from '../lexicon-list-modal/lexicon-list-modal';
@@ -25,7 +25,7 @@ export class LexicalEntryListModal extends AbstractStructureModal {
 
     ngOnInit() {
         if (this.lexicon == null) { //if no lexicon has been "forced", set the current active lexicon
-            this.lexicon = PMKIContext.getProjectCtx().getProjectPreferences().activeLexicon;
+            this.lexicon = SVContext.getProjectCtx().getProjectPreferences().activeLexicon;
         }
         if (this.lexicon != null) {
             this.resourceService.getResourceDescription(this.lexicon).subscribe(

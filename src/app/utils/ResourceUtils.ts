@@ -1,6 +1,6 @@
 import { AnnotatedValue, BNode, IRI, Literal, PredicateObjects, RDFResourceRolesEnum, ResAttribute, Resource, Value } from '../models/Resources';
 import { Lime, OntoLex, OWL, RDF, RDFS, SemanticTurkey, SKOS, SKOSXL } from '../models/Vocabulary';
-import { PMKIContext } from './PMKIContext';
+import { SVContext } from './SVContext';
 
 export class ResourceUtils {
 
@@ -462,7 +462,7 @@ export class ResourceDeserializer {
                  * explicit is true if the resource is defined in the main graph (but not in the remove-staging)
                  */
                 if (annotatedValue.getAttribute(ResAttribute.EXPLICIT) == null) {
-                    let baseURI = PMKIContext.getWorkingProject() ? PMKIContext.getWorkingProject().getBaseURI() : null;
+                    let baseURI = SVContext.getWorkingProject() ? SVContext.getWorkingProject().getBaseURI() : null;
                     let resGraphs: IRI[] = annotatedValue.getResourceGraphs();
                     let inMainGraph: boolean = false;
                     let inRemoveStagingGraph: boolean = false;

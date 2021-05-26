@@ -3,7 +3,7 @@ import { Project } from '../models/Project';
 import { ProjectPreferences, ProjectSettings, SystemSettings } from '../models/Properties';
 import { User } from '../models/User';
 
-export class PMKIContext {
+export class SVContext {
 
     private static workingProjectCtx: ProjectContext;
     private static projectChanged: boolean;

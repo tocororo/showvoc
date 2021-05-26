@@ -17,7 +17,7 @@ import { MapleServices } from './maple.service';
 import { MetadataRegistryServices } from './metadata-registry.service';
 import { MetadataServices } from './metadata.service';
 import { OntoLexLemonServices } from './ontolex-lemon.service';
-import { PmkiServices } from './pmki.service';
+import { ShowVocServices } from './showvoc.service';
 import { ProjectsServices } from './projects.service';
 import { PropertiesServices } from './properties.service';
 import { RepositoriesServices } from './repositories.service';
@@ -50,7 +50,7 @@ import { UserServices } from './user.service';
         MetadataServices,
         MetadataRegistryServices,
         OntoLexLemonServices,
-        PmkiServices,
+        ShowVocServices,
         ProjectsServices,
         PropertiesServices,
         RepositoriesServices,

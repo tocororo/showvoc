@@ -9,7 +9,7 @@ import { Project } from '../models/Project';
 import { Properties } from '../models/Properties';
 import { Value } from '../models/Resources';
 import { Cookie } from './Cookie';
-import { PMKIContext, ProjectContext } from './PMKIContext';
+import { SVContext, ProjectContext } from './SVContext';
 import { STResponseUtils } from './STServicesUtils';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class HttpManager {
     protected artifactId: string = "st-core-services";
 
     //default request options, to eventually override through options parameter in doGet, doPost, ...
-    private defaultRequestOptions: PMKIRequestOptions = new PMKIRequestOptions({
+    private defaultRequestOptions: SVRequestOptions = new SVRequestOptions({
         errorAlertOpt: { show: true, exceptionsToSkip: [] }
     });
 
@@ -47,7 +47,7 @@ export class HttpManager {
 
     }
 
-    doGet(service: string, request: string, params: STRequestParams, options?: PMKIRequestOptions) {
+    doGet(service: string, request: string, params: STRequestParams, options?: SVRequestOptions) {
         options = this.defaultRequestOptions.merge(options);
 
         let url: string = this.getRequestBaseUrl(service, request);
@@ -73,7 +73,7 @@ export class HttpManager {
         );
     }
 
-    doPost(service: string, request: string, params: STRequestParams, options?: PMKIRequestOptions) {
+    doPost(service: string, request: string, params: STRequestParams, options?: SVRequestOptions) {
         options = this.defaultRequestOptions.merge(options);
         
         let url: string = this.getRequestBaseUrl(service, request);
@@ -104,7 +104,7 @@ export class HttpManager {
     }
 
 
-    uploadFile(service: string, request: string, params: any, options?: PMKIRequestOptions) {
+    uploadFile(service: string, request: string, params: any, options?: SVRequestOptions) {
         options = this.defaultRequestOptions.merge(options);
 
         let url: string = this.getRequestBaseUrl(service, request);
@@ -151,7 +151,7 @@ export class HttpManager {
      * @param post tells if the download is done via post-request (e.g. Export.export() service)
      * @param options further options that overrides the default ones
      */
-    downloadFile(service: string, request: string, params: any, post?: boolean, options?: PMKIRequestOptions): Observable<Blob> {
+    downloadFile(service: string, request: string, params: any, post?: boolean, options?: SVRequestOptions): Observable<Blob> {
         options = this.defaultRequestOptions.merge(options);
         
         let url: string = this.getRequestBaseUrl(service, request);
@@ -224,25 +224,25 @@ export class HttpManager {
 
         /**
          * give priority to ctx_project in the following order:
-         * - PMKIContext.tempProject (in this case the consumer is omitted => consumer is SYSTEM by default)
+         * - SVContext.tempProject (in this case the consumer is omitted => consumer is SYSTEM by default)
          * - HttpServiceContext.ctxProject (in this case the working project is set as consumer)
-         * - PMKIContext.workingProject
+         * - SVContext.workingProject
          */
         let ctxProject: Project;
         let ctxConsumer: Project;
 
-        if (PMKIContext.getTempProject() != null) { //if provided get ctxProject from PMKIContext.tempProject
-            ctxProject = PMKIContext.getTempProject();
+        if (SVContext.getTempProject() != null) { //if provided get ctxProject from SVContext.tempProject
+            ctxProject = SVContext.getTempProject();
         } else if (HttpServiceContext.getContextProject() != null) { //otherwise get ctxProject from HttpServiceContext
             ctxProject = HttpServiceContext.getContextProject();
             //project provided in HttpServiceContext => set also the consumer
             if (HttpServiceContext.getConsumerProject() != null) {
                 ctxConsumer = HttpServiceContext.getConsumerProject();
             } else {
-                ctxConsumer = PMKIContext.getWorkingProject();
+                ctxConsumer = SVContext.getWorkingProject();
             }
-        } else { //project not provided in PMKIContext.tempProject or HttpServiceContext => get it from PMKIContext
-            ctxProject = PMKIContext.getWorkingProject();
+        } else { //project not provided in SVContext.tempProject or HttpServiceContext => get it from SVContext
+            ctxProject = SVContext.getWorkingProject();
         }
         //concat the url parameter
         if (ctxProject != null) {
@@ -253,7 +253,7 @@ export class HttpManager {
         }
 
         //language (if languages provided in cookies, override the preference stored server side through the ctx_langs param)
-        let proj = PMKIContext.getWorkingProject();
+        let proj = SVContext.getWorkingProject();
         if (proj != null && ctxProject != null && proj.getName() == ctxProject.getName()) {
             let langsCookie = Cookie.getUserProjectCookiePref(Properties.pref_languages, proj);
             if (langsCookie != null) {
@@ -362,7 +362,7 @@ export class HttpManager {
                             () => {
                                 //in case user is not logged at all (probably session timedout), reset context and redirect to home
                                 if (err.status == 401) { 
-                                    PMKIContext.resetContext();
+                                    SVContext.resetContext();
                                     HttpServiceContext.resetContext();
                                     if (this.router.url != "/login") {
                                         //redirect to home only if not in login page, since 401 is returned even at login failed
@@ -466,7 +466,7 @@ export class HttpServiceContext {
      * in order to avoid to show multiple error modals that report the errors when multiple services are invoked.
      * It is better instead to collect all the error and show just a unique report.
      * (This code is copied from the HttpManager of Vocbench, in that case it was useful for the multiple addition/edit. 
-     * Maybe here in PMKI portal it is not necessary. I keep it anyway)
+     * Maybe here in ShowVoc it is not necessary. I keep it anyway)
      */
     static isErrorInterceptionEnabled(): boolean {
         return this.interceptError;
@@ -488,29 +488,29 @@ class STRequestParams { [key: string]: any }
 
 
 //inspired by angular RequestOptions
-export class PMKIRequestOptions {
+export class SVRequestOptions {
 
     errorAlertOpt: ErrorAlertOptions;
     
-    constructor({ errorAlertOpt }: PMKIRequestOptionsArgs = {}) {
+    constructor({ errorAlertOpt }: SVRequestOptionsArgs = {}) {
         this.errorAlertOpt = errorAlertOpt != null ? errorAlertOpt : null;
     }
 
     /**
-     * Creates a copy of the `PMKIRequestOptions` instance, using the optional input as values to override existing values.
+     * Creates a copy of the `SVRequestOptions` instance, using the optional input as values to override existing values.
      * This method will not change the values of the instance on which it is being  called.
      * @param options 
      */
-    merge(options?: PMKIRequestOptions): PMKIRequestOptions {
+    merge(options?: SVRequestOptions): SVRequestOptions {
         //if options is provided and its parameters is not null, override the value of the current instance
-        return new PMKIRequestOptions({
+        return new SVRequestOptions({
             errorAlertOpt: options && options.errorAlertOpt != null ? options.errorAlertOpt : this.errorAlertOpt
         });
     }
 
 }
 //inspired by angular RequestOptionsArgs
-interface PMKIRequestOptionsArgs {
+interface SVRequestOptionsArgs {
     /**
      * To prevent an alert dialog to show up in case of error during requests.
      * Is useful to handle the error from the component that invokes the service.

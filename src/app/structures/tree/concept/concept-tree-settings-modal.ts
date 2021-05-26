@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConceptTreePreference, ConceptTreeVisualizationMode, VisualizationModeTranslation } from 'src/app/models/Properties';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVProperties } from 'src/app/utils/SVProperties';
 
 @Component({
 	selector: 'concept-tree-settings-modal',
@@ -21,11 +21,11 @@ export class ConceptTreeSettingsModal implements OnInit {
 
     private safeToGoLimit: number;
 
-    constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties) {}
+    constructor(public activeModal: NgbActiveModal, private svProp: SVProperties) {}
 
     ngOnInit() {
-        let conceptTreePref: ConceptTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
-        this.allowVisualizationChange = conceptTreePref.allowVisualizationChange || PMKIContext.getLoggedUser().isAdmin();
+        let conceptTreePref: ConceptTreePreference = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
+        this.allowVisualizationChange = conceptTreePref.allowVisualizationChange || SVContext.getLoggedUser().isAdmin();
         this.pristineConcPref = JSON.parse(JSON.stringify(conceptTreePref));
         
         this.visualization = conceptTreePref.visualization;
@@ -34,11 +34,11 @@ export class ConceptTreeSettingsModal implements OnInit {
 
 	ok() {
         if (this.pristineConcPref.visualization != this.visualization) {
-            this.pmkiProp.setConceptTreeVisualization(this.visualization);
+            this.svProp.setConceptTreeVisualization(this.visualization);
         }
         if (this.visualization == ConceptTreeVisualizationMode.hierarchyBased) {
             if (this.pristineConcPref.safeToGoLimit != this.safeToGoLimit) {
-                this.pmkiProp.setConceptTreeSafeToGoLimit(this.safeToGoLimit);
+                this.svProp.setConceptTreeSafeToGoLimit(this.safeToGoLimit);
             }
         }
 		this.activeModal.close();

@@ -2,8 +2,8 @@ import { Component, Input, ViewChild } from "@angular/core";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { SkosServices } from 'src/app/services/skos.service';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
+import { SVProperties } from 'src/app/utils/SVProperties';
 import { AbstractTreePanel } from '../abstract-tree-panel';
 import { PropertyTreeComponent } from './property-tree.component';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
@@ -23,8 +23,8 @@ export class PropertyTreePanelComponent extends AbstractTreePanel {
     panelRole: RDFResourceRolesEnum = RDFResourceRolesEnum.property;
     rendering: boolean = false; //override the value in AbstractPanel
 
-	constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties, private skosService: SkosServices) {
-		super(basicModals, eventHandler, pmkiProp);
+	constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private skosService: SkosServices) {
+		super(basicModals, eventHandler, svProp);
     }
 
     //top bar commands handlers

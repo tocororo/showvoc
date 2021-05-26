@@ -7,8 +7,8 @@ import { ConceptTreePreference, ConceptTreeVisualizationMode, SafeToGo, SafeToGo
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { SearchServices } from 'src/app/services/search.service';
 import { SkosServices } from 'src/app/services/skos.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTree } from '../abstract-tree';
 import { ConceptTreeNodeComponent } from './concept-tree-node.component';
@@ -37,7 +37,7 @@ export class ConceptTreeComponent extends AbstractTree {
     translationParam: { elemCount: number, safeToGoLimit: number };
 
     constructor(private skosService: SkosServices, searchService: SearchServices,
-        eventHandler: PMKIEventHandler, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
+        eventHandler: SVEventHandler, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
         super(eventHandler, searchService, basicModals, sharedModals);
     }
 
@@ -55,7 +55,7 @@ export class ConceptTreeComponent extends AbstractTree {
     }
 
     initImpl() {
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
         if (this.visualizationMode == ConceptTreeVisualizationMode.hierarchyBased) {
             this.checkInitializationSafe().subscribe(
                 () => {
@@ -90,7 +90,7 @@ export class ConceptTreeComponent extends AbstractTree {
      */
     forceSafeness() {
         this.safeToGo.safe = true;
-        let conceptTreePreference: ConceptTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
+        let conceptTreePreference: ConceptTreePreference = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
         let safeToGoMap: SafeToGoMap = conceptTreePreference.safeToGoMap;
         let checksum = this.getInitRequestChecksum();
         safeToGoMap[checksum] = this.safeToGo;
@@ -102,7 +102,7 @@ export class ConceptTreeComponent extends AbstractTree {
      * Return true if the initialization is safe or if the user agreed to init the structure anyway
      */
     private checkInitializationSafe(): Observable<void> {
-        let conceptTreePreference: ConceptTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
+        let conceptTreePreference: ConceptTreePreference = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
         let safeToGoMap: SafeToGoMap = conceptTreePreference.safeToGoMap;
         this.safeToGoLimit = conceptTreePreference.safeToGoLimit;
 

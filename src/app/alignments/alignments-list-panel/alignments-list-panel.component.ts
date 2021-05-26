@@ -4,7 +4,7 @@ import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-mo
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { LinksetMetadata } from 'src/app/models/Metadata';
 import { MapleServices } from 'src/app/services/maple.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { SVContext } from 'src/app/utils/SVContext';
 import { AlignmentsListComponent } from './alignments-list.component';
 
 @Component({
@@ -30,7 +30,7 @@ export class AlignmentsListPanelComponent {
 
     refreshProfile() {
         this.basicModals.confirm({ key: "DATASETS.ACTIONS.PROFILE_DATASET" }, 
-            { key: "MESSAGES.REFRESH_METADATA_CONFIRM", params: { datasetName: PMKIContext.getWorkingProject().getName() }},
+            { key: "MESSAGES.REFRESH_METADATA_CONFIRM", params: { datasetName: SVContext.getWorkingProject().getName() }},
             ModalType.info).then(
             () => {
                 this.loadingProfile = true;

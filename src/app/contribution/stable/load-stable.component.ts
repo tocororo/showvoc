@@ -5,8 +5,8 @@ import { TransitiveImportMethodAllowance } from 'src/app/models/Metadata';
 import { Project } from 'src/app/models/Project';
 import { RDFFormat, DataFormat } from 'src/app/models/RDFFormat';
 import { InputOutputServices } from 'src/app/services/input-output.service';
-import { PmkiServices } from 'src/app/services/pmki.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { ShowVocServices } from 'src/app/services/showvoc.service';
+import { SVContext } from 'src/app/utils/SVContext';
 import { ExtensionFactory, Settings, ExtensionPointID, PluginSpecification } from 'src/app/models/Plugins';
 import { ExtensionsServices } from 'src/app/services/extensions.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
@@ -48,7 +48,7 @@ export class LoadStableResourceComponent {
     selectedLifterConfig: Settings;
 
     constructor(private inputOutputService: InputOutputServices, private extensionService: ExtensionsServices,
-        private pmkiService: PmkiServices, private basicModals: BasicModalsServices,
+        private svService: ShowVocServices, private basicModals: BasicModalsServices,
         private activeRoute: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
@@ -121,13 +121,13 @@ export class LoadStableResourceComponent {
         }
 
         this.loading = true;
-        PMKIContext.setTempProject(new Project(this.projectName));
-        this.pmkiService.loadStableContributionData(this.token, this.projectName, this.contributorEmail, this.file,
+        SVContext.setTempProject(new Project(this.projectName));
+        this.svService.loadStableContributionData(this.token, this.projectName, this.contributorEmail, this.file,
             this.selectedInputFormat.name, rdfLifterSpec, this.selectedImportAllowance).pipe(
                 finalize(() => this.loading = false)
             ).subscribe(
                 () => {
-                    PMKIContext.removeTempProject();
+                    SVContext.removeTempProject();
                     this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, {key:"MESSAGES.DATA_LOADED"}).then(
                         () => {
                             this.router.navigate(["/home"]);

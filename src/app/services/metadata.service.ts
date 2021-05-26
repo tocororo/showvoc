@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpManager } from '../utils/HttpManager';
-import { PMKIEventHandler } from '../utils/PMKIEventHandler';
+import { SVEventHandler } from '../utils/SVEventHandler';
 import { Observable } from 'rxjs';
 import { PrefixMapping } from '../models/Metadata';
 import { map } from 'rxjs/operators';
-import { PMKIContext } from '../utils/PMKIContext';
+import { SVContext } from '../utils/SVContext';
 
 @Injectable()
 export class MetadataServices {
@@ -33,7 +33,7 @@ export class MetadataServices {
                     };
                     mappings.push(m);
                 }
-                PMKIContext.setPrefixMappings(mappings);
+                SVContext.setPrefixMappings(mappings);
                 return mappings;
             })
         );

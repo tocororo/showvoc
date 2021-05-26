@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SearchMode, SearchSettings, ClassIndividualPanelSearchMode } from 'src/app/models/Properties';
 import { RDFResourceRolesEnum } from 'src/app/models/Resources';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVProperties } from 'src/app/utils/SVProperties';
 
 @Component({
     selector: 'search-settings-modal',
@@ -49,13 +49,13 @@ export class SearchSettingsModal implements OnInit {
     ];
     activeClsIndSearchMode: ClassIndividualPanelSearchMode;
 
-    constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties) { }
+    constructor(public activeModal: NgbActiveModal, private svProp: SVProperties) { }
 
     ngOnInit() {
         this.settingsForConceptPanel = this.roles.length == 1 && this.roles[0] == RDFResourceRolesEnum.concept;
         this.settingsForClassInstancePanel = this.roles.indexOf(RDFResourceRolesEnum.cls) != -1 && this.roles.indexOf(RDFResourceRolesEnum.individual) != -1;
 
-        this.settings = PMKIContext.getProjectCtx().getProjectPreferences().searchSettings;
+        this.settings = SVContext.getProjectCtx().getProjectPreferences().searchSettings;
         this.activeStringMatchMode = this.settings.stringMatchMode;
         this.useURI = this.settings.useURI;
         this.useLocalName = this.settings.useLocalName;
@@ -79,8 +79,8 @@ export class SearchSettingsModal implements OnInit {
     // }
 
     updateSettings() {
-        this.pmkiProp.setSearchSettings(
-            PMKIContext.getProjectCtx(),
+        this.svProp.setSearchSettings(
+            SVContext.getProjectCtx(),
             {
                 stringMatchMode: this.activeStringMatchMode,
                 useURI: this.useURI,

@@ -23,8 +23,8 @@ import { STServicesModule } from './services/st-services.module';
 import { UserModule } from './user/user.module';
 import { AdminAuthGuard, VisitorAuthGuard } from './utils/CanActivateAuthGuards';
 import { ProjectGuard } from './utils/CanActivateProjectGuard';
-import { PMKIEventHandler } from './utils/PMKIEventHandler';
-import { PMKIProperties } from './utils/PMKIProperties';
+import { SVEventHandler } from './utils/SVEventHandler';
+import { SVProperties } from './utils/SVProperties';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, "./assets/i18n/");
@@ -60,7 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         UserModule
     ],
     providers: [
-        PMKIProperties, PMKIEventHandler,
+        SVProperties, SVEventHandler,
         VisitorAuthGuard, AdminAuthGuard, ProjectGuard,
         { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
 		/** Uses the HashLocationStrategy instead of the default "HTML 5 pushState" PathLocationStrategy.

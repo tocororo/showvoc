@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { LexEntryVisualizationMode, LexicalEntryListPreference, VisualizationModeTranslation } from 'src/app/models/Properties';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVProperties } from 'src/app/utils/SVProperties';
 
 @Component({
     selector: 'lexical-entry-list-settings-modal',
@@ -25,29 +25,29 @@ export class LexicalEntryListSettingsModal implements OnInit {
     lenghtChoices: number[] = [1, 2];
     allowIndexLengthChange: boolean;
 
-    constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties) {}
+    constructor(public activeModal: NgbActiveModal, private svProp: SVProperties) {}
 
     ngOnInit() {
-        let lexEntryPref: LexicalEntryListPreference = PMKIContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
+        let lexEntryPref: LexicalEntryListPreference = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
         this.pristineLexEntryPref = JSON.parse(JSON.stringify(lexEntryPref));
         this.visualization = lexEntryPref.visualization;
         this.indexLenght = lexEntryPref.indexLength;
         this.safeToGoLimit = lexEntryPref.safeToGoLimit;
 
-        this.allowVisualizationChange = lexEntryPref.allowVisualizationChange || PMKIContext.getLoggedUser().isAdmin();
-        this.allowIndexLengthChange = lexEntryPref.allowIndexLengthChange || PMKIContext.getLoggedUser().isAdmin();
+        this.allowVisualizationChange = lexEntryPref.allowVisualizationChange || SVContext.getLoggedUser().isAdmin();
+        this.allowIndexLengthChange = lexEntryPref.allowIndexLengthChange || SVContext.getLoggedUser().isAdmin();
     }
 
     ok() {
         if (this.pristineLexEntryPref.visualization != this.visualization) {
-            this.pmkiProp.setLexicalEntryListVisualization(this.visualization);
+            this.svProp.setLexicalEntryListVisualization(this.visualization);
         }
         if (this.visualization == LexEntryVisualizationMode.indexBased) {
             if (this.pristineLexEntryPref.safeToGoLimit != this.safeToGoLimit) {
-                this.pmkiProp.setLexicalEntryListSafeToGoLimit(this.safeToGoLimit);
+                this.svProp.setLexicalEntryListSafeToGoLimit(this.safeToGoLimit);
             }
             if (this.pristineLexEntryPref.indexLength != this.indexLenght) {
-                this.pmkiProp.setLexicalEntryListIndexLenght(this.indexLenght);
+                this.svProp.setLexicalEntryListIndexLenght(this.indexLenght);
             }
         }
         this.activeModal.close();

@@ -12,7 +12,7 @@ import { PmkiSettings, SettingsEnum, VocBenchConnectionPmkiSettings } from '../.
 import { IRI } from '../../models/Resources';
 import { OntoLex, OWL, RDFS, SKOS, SKOSXL } from '../../models/Vocabulary';
 import { ExtensionsServices } from '../../services/extensions.service';
-import { PmkiServices } from '../../services/pmki.service';
+import { ShowVocServices } from '../../services/showvoc.service';
 
 @Component({
     selector: "development-project-creation-modal",
@@ -68,7 +68,7 @@ export class DevProjectCreationModal {
     private remoteAccessConfig: RemoteRepositoryAccessConfig;
 
     constructor(public activeModal: NgbActiveModal, private settingsService: SettingsServices,
-        private extensionsService: ExtensionsServices, private pmkiService: PmkiServices, private basicModals: BasicModalsServices) { }
+        private extensionsService: ExtensionsServices, private svService: ShowVocServices, private basicModals: BasicModalsServices) { }
 
     ngOnInit() {
         this.projectName = this.contribution.resourceName;
@@ -120,7 +120,7 @@ export class DevProjectCreationModal {
         }
 
         this.loading = true;
-        this.pmkiService.approveDevelopmentContribution(this.projectName, new IRI(this.selectedSemModel), new IRI(this.selectedLexModel),
+        this.svService.approveDevelopmentContribution(this.projectName, new IRI(this.selectedSemModel), new IRI(this.selectedLexModel),
             this.baseURI, coreRepoSailConfigurerSpecification, this.contribution['relativeReference']).pipe(
                 finalize(() => this.loading = false)
             ).subscribe(

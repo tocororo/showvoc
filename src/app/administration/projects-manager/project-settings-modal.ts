@@ -5,8 +5,8 @@ import { Project } from 'src/app/models/Project';
 import { ConceptTreePreference, ConceptTreeVisualizationMode, InstanceListPreference, InstanceListVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, PreferencesUtils, SettingsEnum, VisualizationModeTranslation } from 'src/app/models/Properties';
 import { OntoLex, OWL, SKOS } from 'src/app/models/Vocabulary';
 import { SettingsServices } from "src/app/services/settings.service";
-import { ProjectContext } from 'src/app/utils/PMKIContext';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { ProjectContext } from 'src/app/utils/SVContext';
+import { SVProperties } from 'src/app/utils/SVProperties';
 
 @Component({
     selector: "project-settings-modal",
@@ -50,7 +50,7 @@ export class ProjectSettingsModal {
     
     renderingLangs: string[];
 
-    constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties, private settingsService: SettingsServices) { }
+    constructor(public activeModal: NgbActiveModal, private svProp: SVProperties, private settingsService: SettingsServices) { }
 
 
     /*
@@ -65,7 +65,7 @@ export class ProjectSettingsModal {
         this.isOwl = this.project.getModelType() == OWL.uri;
         
         this.projectCtx = new ProjectContext(this.project);
-        this.pmkiProp.initProjectSettings(this.projectCtx).subscribe( //in order to get the languages of the project
+        this.svProp.initProjectSettings(this.projectCtx).subscribe( //in order to get the languages of the project
             () => {
                 this.initRenderingLanguages();
             }

@@ -3,7 +3,7 @@ import { AnnotatedValue, Literal, RDFResourceRolesEnum, ResAttribute, Resource, 
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 import { UIUtils } from 'src/app/utils/UIUtils';
 import { XmlSchema } from 'src/app/models/Vocabulary';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVProperties } from 'src/app/utils/SVProperties';
 
 @Component({
     selector: 'rdf-resource',
@@ -26,7 +26,7 @@ export class RdfResourceComponent {
     imgSrc: string; //src of the image icon
     natureTooltip: string;
 
-    constructor(private pmkiProp: PMKIProperties) { }
+    constructor(private svProp: SVProperties) { }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['resource'] && changes['resource'].currentValue) {
@@ -159,7 +159,7 @@ export class RdfResourceComponent {
 	 * This method should be called only for resource with lang, so it should depend from isResourceWithLang
 	 */
     private isLangFlagAvailable(): boolean {
-        if (this.pmkiProp.getShowFlags()) {
+        if (this.svProp.getShowFlags()) {
             return !this.imgSrc.includes("unknown");
         } else {
             return false;

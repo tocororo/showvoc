@@ -3,7 +3,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { Settings } from 'src/app/models/Plugins';
 import { Resource } from 'src/app/models/Resources';
-import { ProjectContext } from 'src/app/utils/PMKIContext';
+import { ProjectContext } from 'src/app/utils/SVContext';
 import { ResourceViewModal } from '../../resource-view/modals/resource-view-modal';
 import { ModalOptions, TextOrTranslation } from '../Modals';
 import { LanguageSelectorModal } from './languages-selector-modal/languages-selector-modal';

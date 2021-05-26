@@ -1,5 +1,5 @@
 import { Directive, QueryList, ViewChildren } from '@angular/core';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { AnnotatedValue, IRI, ResAttribute } from '../../models/Resources';
 import { AbstractStruct } from '../abstract-structure';
 import { ListNodeComponent } from './list-node.component';
@@ -18,7 +18,7 @@ export abstract class AbstractList extends AbstractStruct {
     /**
      * CONSTRUCTOR
      */
-    constructor(eventHandler: PMKIEventHandler) {
+    constructor(eventHandler: SVEventHandler) {
         super(eventHandler);
     }
 

@@ -6,7 +6,7 @@ import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { PropertiesServices } from 'src/app/services/properties.service';
 import { SearchServices } from 'src/app/services/search.service';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTree } from '../abstract-tree';
 import { PropertyTreeNodeComponent } from './property-tree-node.component';
@@ -26,7 +26,7 @@ export class PropertyTreeComponent extends AbstractTree {
 
     structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.property;
 
-    constructor(private propertyService: PropertiesServices, eventHandler: PMKIEventHandler, searchService: SearchServices,
+    constructor(private propertyService: PropertiesServices, eventHandler: SVEventHandler, searchService: SearchServices,
         basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
         super(eventHandler, searchService, basicModals, sharedModals);
     }
@@ -61,7 +61,7 @@ export class PropertyTreeComponent extends AbstractTree {
                 }
             )
         } else if (this.resource) {
-            //at the moment I don't implement this part since it should not be necessary in PMKI since it is in readonly
+            //at the moment I don't implement this part since it should not be necessary in ShowVoc since it is in readonly
         } else {
             let getPropertiesFn: Observable<AnnotatedValue<IRI>[]>;
             if (this.type == RDFResourceRolesEnum.objectProperty) {

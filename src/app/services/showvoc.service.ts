@@ -5,13 +5,13 @@ import { ConfigurationObject, Reference } from '../models/Configuration';
 import { PluginSpecification } from '../models/Plugins';
 import { RepositoryAccess } from '../models/Project';
 import { IRI } from '../models/Resources';
-import { HttpManager, PMKIRequestOptions } from "../utils/HttpManager";
+import { HttpManager, SVRequestOptions } from "../utils/HttpManager";
 import { TransitiveImportMethodAllowance } from '../models/Metadata';
 
 @Injectable()
-export class PmkiServices {
+export class ShowVocServices {
 
-    private serviceName = "PMKI";
+    private serviceName = "ShowVoc";
 
     constructor(private httpMgr: HttpManager) { }
 
@@ -28,7 +28,7 @@ export class PmkiServices {
      */
     testVocbenchConfiguration(): Observable<void> {
         var params = {};
-        let options: PMKIRequestOptions = new PMKIRequestOptions({
+        let options: SVRequestOptions = new SVRequestOptions({
             errorAlertOpt: { 
                 show: false, //don't automatically show alert in case of error
             } 

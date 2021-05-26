@@ -5,8 +5,8 @@ import { AnnotatedValue, IRI, LocalResourcePosition, PredicateObjects, RemoteRes
 import { PropertyFacet, ResourceViewCtx, ResViewPartition } from '../models/ResourceView';
 import { SemanticTurkey } from '../models/Vocabulary';
 import { ResourceViewServices } from '../services/resource-view.service';
-import { PMKIContext, ProjectContext } from '../utils/PMKIContext';
-import { PMKIProperties } from '../utils/PMKIProperties';
+import { SVContext, ProjectContext } from '../utils/SVContext';
+import { SVProperties } from '../utils/SVProperties';
 import { ResourceDeserializer, ResourceUtils, SortAttribute } from '../utils/ResourceUtils';
 import { ResViewModalsServices } from './modals/resource-view-modal.service';
 
@@ -72,14 +72,14 @@ export class ResourceViewComponent {
     private topconceptofColl: PredicateObjects[] = null;
     private typesColl: PredicateObjects[] = null;
 
-    constructor(private resViewService: ResourceViewServices, private pmkiProp: PMKIProperties,
+    constructor(private resViewService: ResourceViewServices, private svProp: SVProperties,
         private resViewModals: ResViewModalsServices, private graphModals: GraphModalServices
     ) { }
 
 
     ngOnChanges(changes: SimpleChanges) {
-        this.showInferred = this.pmkiProp.getInferenceInResourceView();
-        this.rendering = this.pmkiProp.getRenderingInResourceView();
+        this.showInferred = this.svProp.getInferenceInResourceView();
+        this.rendering = this.svProp.getRenderingInResourceView();
         this.annotatedResource = new AnnotatedValue(this.resource);
 
         //graph available if RV is not in modal and has no projectCtx overriding the default
@@ -453,9 +453,9 @@ export class ResourceViewComponent {
 
     private filterValueLanguageFromPrefObjList(predObjList: PredicateObjects[]) {
         //even if already initialized, get each time the value of valueFilterLangEnabled in order to detect eventual changes of the pref
-        this.valueFilterLangEnabled = PMKIContext.getProjectCtx(this.projectCtx).getProjectPreferences().filterValueLang.enabled;
+        this.valueFilterLangEnabled = SVContext.getProjectCtx(this.projectCtx).getProjectPreferences().filterValueLang.enabled;
         if (this.valueFilterLangEnabled) {
-            let valueFilterLanguages = PMKIContext.getProjectCtx(this.projectCtx).getProjectPreferences().filterValueLang.languages;
+            let valueFilterLanguages = SVContext.getProjectCtx(this.projectCtx).getProjectPreferences().filterValueLang.languages;
             for (var i = 0; i < predObjList.length; i++) {
                 var objList: AnnotatedValue<Value>[] = predObjList[i].getObjects();
                 for (var j = 0; j < objList.length; j++) {
@@ -506,7 +506,7 @@ export class ResourceViewComponent {
 
     switchInferred() {
         this.showInferred = !this.showInferred;
-        this.pmkiProp.setInferenceInResourceView(this.showInferred);
+        this.svProp.setInferenceInResourceView(this.showInferred);
         if (!this.showInferredPristine) { //resource view has been initialized with showInferred to false, so repeat the request
             this.buildResourceView(this.resource);
         } else { //resource view has been initialized with showInferred to true, so there's no need to repeat the request
@@ -518,7 +518,7 @@ export class ResourceViewComponent {
 
     switchRendering() {
         this.rendering = !this.rendering;
-        this.pmkiProp.setRenderingInResourceView(this.rendering);
+        this.svProp.setRenderingInResourceView(this.rendering);
     }
 
     settings() {

@@ -6,7 +6,7 @@ import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared
 import { LinksetMetadata } from 'src/app/models/Metadata';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
 import { Cookie } from 'src/app/utils/Cookie';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { SVContext } from 'src/app/utils/SVContext';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 import { TreeListContext } from 'src/app/utils/UIUtils';
 import { RenderingEditorModal } from 'src/app/widget/rendering-editor/rendering-editor-modal';
@@ -45,7 +45,7 @@ export class StructureTabsetComponent implements OnInit {
     constructor(private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices, private modalService: NgbModal) { }
 
     ngOnInit() {
-        this.model = PMKIContext.getWorkingProject().getModelType(true);
+        this.model = SVContext.getWorkingProject().getModelType(true);
         if (this.model == "OntoLex") {
             this.initialActiveTab = RDFResourceRolesEnum.limeLexicon;
         } else if (this.model == "SKOS") {

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IRI, Literal } from '../models/Resources';
 import { GlobalSearchResult, SearchResultDetails } from '../models/Search';
-import { HttpManager, PMKIRequestOptions } from "../utils/HttpManager";
+import { HttpManager, SVRequestOptions } from "../utils/HttpManager";
 
 @Injectable()
 export class GlobalSearchServices {
@@ -31,7 +31,7 @@ export class GlobalSearchServices {
             maxResults: maxResults,
             searchInLocalName: searchInLocalName
         };
-        let options: PMKIRequestOptions = new PMKIRequestOptions({
+        let options: SVRequestOptions = new SVRequestOptions({
             errorAlertOpt: { 
                 show: true,
                 exceptionsToSkip: ['org.apache.lucene.index.IndexNotFoundException'] 

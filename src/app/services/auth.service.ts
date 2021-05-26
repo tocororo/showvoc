@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { map } from 'rxjs/operators';
 import { User } from '../models/User';
 import { HttpManager } from "../utils/HttpManager";
-import { PMKIContext } from '../utils/PMKIContext';
+import { SVContext } from '../utils/SVContext';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class AuthServices {
         return this.httpMgr.doPost(this.serviceName, "login", params).pipe(
             map(stResp => {
                 let user: User = User.createUser(stResp);
-                PMKIContext.setLoggedUser(user);
+                SVContext.setLoggedUser(user);
                 return user;
             })
         );
@@ -39,8 +39,8 @@ export class AuthServices {
         var params: any = {}
         return this.httpMgr.doGet(this.serviceName, "logout", params).pipe(
             map(stResp => {
-                PMKIContext.removeLoggedUser();
-                PMKIContext.resetContext();
+                SVContext.removeLoggedUser();
+                SVContext.resetContext();
                 this.router.navigate(["/"]);
                 return stResp;
             })

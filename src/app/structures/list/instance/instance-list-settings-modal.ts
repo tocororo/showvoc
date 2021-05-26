@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { PMKIContext } from "src/app/utils/PMKIContext";
-import { PMKIProperties } from "src/app/utils/PMKIProperties";
+import { SVContext } from "src/app/utils/SVContext";
+import { SVProperties } from "src/app/utils/SVProperties";
 import { InstanceListPreference, InstanceListVisualizationMode, VisualizationModeTranslation } from "../../../models/Properties";
 
 @Component({
@@ -21,11 +21,11 @@ export class InstanceListSettingsModal {
 
     private safeToGoLimit: number;
 
-    constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties) {}
+    constructor(public activeModal: NgbActiveModal, private svProp: SVProperties) {}
 
     ngOnInit() {
-        let instanceListPref: InstanceListPreference = PMKIContext.getProjectCtx().getProjectPreferences().instanceListPreferences;
-        this.allowVisualizationChange = instanceListPref.allowVisualizationChange || PMKIContext.getLoggedUser().isAdmin();
+        let instanceListPref: InstanceListPreference = SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences;
+        this.allowVisualizationChange = instanceListPref.allowVisualizationChange || SVContext.getLoggedUser().isAdmin();
         this.pristineInstancePref = JSON.parse(JSON.stringify(instanceListPref));
         this.visualization = instanceListPref.visualization;
         this.safeToGoLimit = instanceListPref.safeToGoLimit;
@@ -33,11 +33,11 @@ export class InstanceListSettingsModal {
 
     ok() {
         if (this.pristineInstancePref.visualization != this.visualization) {
-            this.pmkiProp.setInstanceListVisualization(this.visualization);
+            this.svProp.setInstanceListVisualization(this.visualization);
         }
         if (this.visualization == InstanceListVisualizationMode.standard) {
             if (this.pristineInstancePref.safeToGoLimit != this.safeToGoLimit) {
-                this.pmkiProp.setInstanceLisSafeToGoLimit(this.safeToGoLimit);
+                this.svProp.setInstanceLisSafeToGoLimit(this.safeToGoLimit);
             }
         }
         this.activeModal.close();

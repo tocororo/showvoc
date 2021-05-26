@@ -1,5 +1,5 @@
 {
-  "name": "pmki-portal",
+  "name": "showvoc",
   "version": "2.0.0-beta.0",
   "scripts": {
     "ng": "ng",
@@ -10,7 +10,7 @@
   "license": "BSD-3-Clause",
   "repository": {
     "type": "bitbucket",
-    "url": "https://bitbucket.org/art-uniroma2/pmki-portal.git"
+    "url": "https://bitbucket.org/art-uniroma2/showvoc.git"
   },
   "dependencies": {
     "@angular/animations": "^10.2.2",

@@ -3,7 +3,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalOptions } from '../modal-dialogs/Modals';
 import { User } from "../models/User";
 import { UserServices } from '../services/user.service';
-import { PMKIContext } from '../utils/PMKIContext';
+import { SVContext } from '../utils/SVContext';
 import { ChangePasswordModal } from './change-password-modal';
 
 @Component({
@@ -18,13 +18,13 @@ export class UserProfileComponent {
     constructor(private userService: UserServices, private modalService: NgbModal) { }
 
     ngOnInit() {
-        this.user = PMKIContext.getLoggedUser();
+        this.user = SVContext.getLoggedUser();
     }
 
     updateGivenName(newGivenName: string) {
         this.userService.updateUserGivenName(this.user.getEmail(), newGivenName).subscribe(
             user => {
-                PMKIContext.setLoggedUser(user);
+                SVContext.setLoggedUser(user);
             }
         )
     }
@@ -32,7 +32,7 @@ export class UserProfileComponent {
     updateFamilyName(newFamilyName: string) {
         this.userService.updateUserFamilyName(this.user.getEmail(), newFamilyName).subscribe(
             user => {
-                PMKIContext.setLoggedUser(user);
+                SVContext.setLoggedUser(user);
             }
         )
     }
@@ -40,7 +40,7 @@ export class UserProfileComponent {
     updateEmail(newEmail: string) {
         this.userService.updateUserEmail(this.user.getEmail(), newEmail).subscribe(
             user => {
-                PMKIContext.setLoggedUser(user);
+                SVContext.setLoggedUser(user);
             }
         )
     }

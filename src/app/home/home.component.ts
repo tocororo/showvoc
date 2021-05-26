@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 	constructor() { }
 
 	ngOnInit() {
-		this.instanceName = window['pmki_instance_name'];
+		this.instanceName = window['showvoc_instance_name'];
 		this.translationParam = { instanceName: this.instanceName };
 	}
 

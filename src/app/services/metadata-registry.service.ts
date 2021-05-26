@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { DatasetMetadata, LinksetMetadata, Target } from '../models/Metadata';
 import { Project } from '../models/Project';
 import { AnnotatedValue, IRI, Literal, ResourcePosition } from '../models/Resources';
-import { PMKIRequestOptions } from '../utils/HttpManager';
+import { SVRequestOptions } from '../utils/HttpManager';
 import { ResourceDeserializer, ResourceUtils } from '../utils/ResourceUtils';
 import { StMetadataRegistry } from '../utils/STMetadataRegistry';
 
@@ -139,7 +139,7 @@ export class MetadataRegistryServices {
         var params: any = {
             iri: iri
         }
-        let options: PMKIRequestOptions = new PMKIRequestOptions({
+        let options: SVRequestOptions = new SVRequestOptions({
             errorAlertOpt: { 
                 show: true,
                 exceptionsToSkip: ['it.uniroma2.art.semanticturkey.exceptions.DeniedOperationException'] 

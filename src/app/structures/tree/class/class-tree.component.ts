@@ -5,8 +5,8 @@ import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared
 import { IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { ClassesServices } from 'src/app/services/classes.service';
 import { SearchServices } from 'src/app/services/search.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTree } from '../abstract-tree';
 import { ClassTreeNodeComponent } from './class-tree-node.component';
@@ -24,7 +24,7 @@ export class ClassTreeComponent extends AbstractTree {
 
     structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.cls;
 
-    constructor(private clsService: ClassesServices, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: PMKIEventHandler) {
+    constructor(private clsService: ClassesServices, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: SVEventHandler) {
         super(eventHandler, searchService, basicModals, sharedModals);
     }
 
@@ -37,7 +37,7 @@ export class ClassTreeComponent extends AbstractTree {
     initImpl() {
         let clsTreeRoots: IRI[] = this.roots;
         if (clsTreeRoots == undefined || clsTreeRoots.length == 0) {
-            clsTreeRoots = [new IRI(PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.rootClassUri)];
+            clsTreeRoots = [new IRI(SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.rootClassUri)];
         }
 
         this.loading = true;

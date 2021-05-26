@@ -8,7 +8,7 @@ import { Project } from '../models/Project';
 import { AnnotatedValue, IRI, Triple } from '../models/Resources';
 import { AlignmentServices } from '../services/alignment.service';
 import { ResourcesServices } from '../services/resources.service';
-import { PMKIContext, ProjectContext } from '../utils/PMKIContext';
+import { SVContext, ProjectContext } from '../utils/SVContext';
 
 @Component({
     selector: 'alignments-view',
@@ -39,13 +39,13 @@ export class AlignmentsView {
 
     initAlignments() {
         if (this.context == AlignmentContext.local) {
-            this.sourceProject = PMKIContext.getProjectCtx().getProject();
+            this.sourceProject = SVContext.getProjectCtx().getProject();
         }
 
-        PMKIContext.setTempProject(this.sourceProject);
+        SVContext.setTempProject(this.sourceProject);
         this.alignmentService.getMappingCount(this.linkset.targetDataset.uriSpace, null, null, this.pageSize).subscribe(
             count => {
-                PMKIContext.removeTempProject();
+                SVContext.removeTempProject();
                 this.totPage = Math.floor(count/this.pageSize);
                 if (count % this.pageSize > 0) {
                     this.totPage++;
@@ -57,11 +57,11 @@ export class AlignmentsView {
 
     private listMappings() {
         this.loading = true;
-        PMKIContext.setTempProject(this.sourceProject);
+        SVContext.setTempProject(this.sourceProject);
         this.alignmentService.getMappings(this.linkset.targetDataset.uriSpace, this.page, this.pageSize).pipe(
             finalize(() => {
                 this.loading = false;
-                PMKIContext.removeTempProject();
+                SVContext.removeTempProject();
             })
         ).subscribe(
             mappings => {
@@ -83,10 +83,10 @@ export class AlignmentsView {
         });
         let annotateFunctions: Observable<void>[] = [];
         if (leftEntities.length > 0) {
-            PMKIContext.setTempProject(this.sourceProject);
+            SVContext.setTempProject(this.sourceProject);
             let annotateLeft: Observable<void> = this.resourcesService.getResourcesInfo(leftEntities).pipe(
                 finalize(() => {
-                    PMKIContext.removeTempProject();
+                    SVContext.removeTempProject();
                 }),
                 map(annotated => {
                     annotated.forEach(a => {
@@ -104,10 +104,10 @@ export class AlignmentsView {
 
         if (rightEntities.length > 0 && this.linkset.getTargetProject() != null) {
             let ctxProject: Project = this.linkset.getTargetProject();
-            PMKIContext.setTempProject(ctxProject);
+            SVContext.setTempProject(ctxProject);
             let annotateRight: Observable<void> = this.resourcesService.getResourcesInfo(rightEntities).pipe(
                 finalize(() => {
-                    PMKIContext.removeTempProject();
+                    SVContext.removeTempProject();
                 }),
                 map(annotated => {
                     annotated.forEach(a => {
@@ -129,10 +129,10 @@ export class AlignmentsView {
         if (this.context == AlignmentContext.local) {
             this.sharedModals.openResourceView(resource.getValue());
         } else { //global
-            PMKIContext.setTempProject(this.sourceProject);
+            SVContext.setTempProject(this.sourceProject);
             this.sharedModals.openResourceView(resource.getValue(), new ProjectContext(this.sourceProject)).then(
                 () => {
-                    PMKIContext.removeTempProject();
+                    SVContext.removeTempProject();
                 }
             );
         }
@@ -143,10 +143,10 @@ export class AlignmentsView {
         if (this.linkset.getTargetProject() != null) { //if target project is known, set it as context project
             ctxProject = this.linkset.getTargetProject();
         }
-        PMKIContext.setTempProject(ctxProject);
+        SVContext.setTempProject(ctxProject);
         this.sharedModals.openResourceView(resource.getValue(), new ProjectContext(ctxProject)).then(
             () => {
-                PMKIContext.removeTempProject();
+                SVContext.removeTempProject();
             }
         );
     }

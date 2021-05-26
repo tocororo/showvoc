@@ -6,11 +6,11 @@ import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-mo
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { TransitiveImportMethodAllowance } from 'src/app/models/Metadata';
 import { ExtensionFactory, ExtensionPointID, PluginSpecification, Settings } from 'src/app/models/Plugins';
-import { PmkiConversionFormat } from 'src/app/models/Pmki';
+import { ShowVocConversionFormat } from 'src/app/models/ShowVoc';
 import { DataFormat } from 'src/app/models/RDFFormat';
 import { ExtensionsServices } from 'src/app/services/extensions.service';
 import { InputOutputServices } from 'src/app/services/input-output.service';
-import { PmkiServices } from 'src/app/services/pmki.service';
+import { ShowVocServices } from 'src/app/services/showvoc.service';
 
 @Component({
     selector: 'load-dev',
@@ -50,7 +50,7 @@ export class LoadDevResourceComponent {
     selectedLifterExtension: ExtensionFactory;
     selectedLifterConfig: Settings;
 
-    constructor(private pmkiService: PmkiServices, private inputOutputService: InputOutputServices, private extensionService: ExtensionsServices,
+    constructor(private svService: ShowVocServices, private inputOutputService: InputOutputServices, private extensionService: ExtensionsServices,
         private basicModals: BasicModalsServices, private activeRoute: ActivatedRoute, private router: Router,
         private translateService: TranslateService) { }
 
@@ -63,11 +63,11 @@ export class LoadDevResourceComponent {
                 //allow only the lifter compliant with the conversionFormat
                 this.lifters = [];
                 let extensionToSelect: string;
-                if (this.conversionFormat == PmkiConversionFormat.RDF) {
+                if (this.conversionFormat == ShowVocConversionFormat.RDF) {
                     extensionToSelect = this.rdfExtensionId;
-                } else if (this.conversionFormat == PmkiConversionFormat.TBX) {
+                } else if (this.conversionFormat == ShowVocConversionFormat.TBX) {
                     extensionToSelect = this.tbxExtensionId;
-                } else if (this.conversionFormat == PmkiConversionFormat.ZTHES) {
+                } else if (this.conversionFormat == ShowVocConversionFormat.ZTHES) {
                     extensionToSelect = this.zThesExtensionId;
                 }
                 this.lifters = [extensions.find(e => e.id == extensionToSelect)];
@@ -105,7 +105,7 @@ export class LoadDevResourceComponent {
 
     fileChangeEvent(file: File) {
         this.file = file;
-        if (this.conversionFormat == PmkiConversionFormat.RDF) {
+        if (this.conversionFormat == ShowVocConversionFormat.RDF) {
             this.inputOutputService.getParserFormatForFileName(file.name).subscribe(
                 format => {
                     if (format != null) {
@@ -122,7 +122,7 @@ export class LoadDevResourceComponent {
     }
 
     allowImportAllowanceSelection(): boolean {
-        return this.conversionFormat == PmkiConversionFormat.RDF;
+        return this.conversionFormat == ShowVocConversionFormat.RDF;
     }
 
     load() {
@@ -139,13 +139,13 @@ export class LoadDevResourceComponent {
         }
 
         this.loading = true;
-        this.pmkiService.loadDevContributionData(this.token, this.projectName, this.contributorEmail, this.file, 
+        this.svService.loadDevContributionData(this.token, this.projectName, this.contributorEmail, this.file, 
             this.selectedInputFormat.name, rdfLifterSpec, this.selectedImportAllowance).pipe(
             finalize(() => this.loading = false)
         ).subscribe(
             () => {
                 let message: string = this.translateService.instant("MESSAGES.DATA_LOADED");
-                if (this.conversionFormat != PmkiConversionFormat.EXCEL) {
+                if (this.conversionFormat != ShowVocConversionFormat.EXCEL) {
                     message += " " + this.translateService.instant("MESSAGES.YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB");
                 }
                 this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, message).then(

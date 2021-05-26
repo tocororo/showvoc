@@ -1,7 +1,7 @@
 import { Component, Input, SimpleChanges } from "@angular/core";
 import { Subscription } from "rxjs";
-import { PMKIEventHandler } from "src/app/utils/PMKIEventHandler";
-import { PMKIProperties } from "src/app/utils/PMKIProperties";
+import { SVEventHandler } from "src/app/utils/SVEventHandler";
+import { SVProperties } from "src/app/utils/SVProperties";
 import { Language } from "../../models/LanguagesCountries";
 import { UIUtils } from "../../utils/UIUtils";
 
@@ -28,7 +28,7 @@ export class LanguageItemComponent {
 
     eventSubscriptions: Subscription[] = [];
 
-    constructor(private pmkiProp: PMKIProperties, private eventHandler: PMKIEventHandler) {
+    constructor(private svProp: SVProperties, private eventHandler: SVEventHandler) {
         this.eventSubscriptions.push(this.eventHandler.showFlagChangedEvent.subscribe(
             () => this.initFlagImgSrc()));
     }
@@ -53,7 +53,7 @@ export class LanguageItemComponent {
         if (this.language.tag == "--") {
             this.flagImgSrc = "./assets/images/icons/res/string.png";
         } else {
-            if (this.pmkiProp.getShowFlags()) {
+            if (this.svProp.getShowFlags()) {
                 this.flagImgSrc = UIUtils.getFlagImgSrc(this.language.tag);
             } else {
                 this.flagImgSrc = UIUtils.getFlagImgSrc(null); //null makes return unknown flag => do not show flag

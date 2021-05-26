@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Language } from "src/app/models/LanguagesCountries";
-import { PMKIContext, ProjectContext } from "src/app/utils/PMKIContext";
+import { SVContext, ProjectContext } from "src/app/utils/SVContext";
 
 @Component({
     selector: "lang-selector-modal",
@@ -22,9 +22,9 @@ export class LanguageSelectorModal {
         let languages: Language[];
         this.languageItems = [];
         if (this.projectAware) {
-            languages = PMKIContext.getProjectCtx(this.projectCtx).getProjectSettings().projectLanguagesSetting;
+            languages = SVContext.getProjectCtx(this.projectCtx).getProjectSettings().projectLanguagesSetting;
         } else {
-            languages = PMKIContext.getSystemSettings().languages;
+            languages = SVContext.getSystemSettings().languages;
         }
 
         let initiallySelectedLanguages = this.languages;

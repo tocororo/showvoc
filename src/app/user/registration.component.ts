@@ -4,7 +4,7 @@ import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.
 import { ModalType } from '../modal-dialogs/Modals';
 import { UserForm } from '../models/User';
 import { AuthServices } from '../services/auth.service';
-import { PmkiServices } from '../services/pmki.service';
+import { ShowVocServices } from '../services/showvoc.service';
 import { UserServices } from '../services/user.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class RegistrationComponent implements OnInit {
 
 	userForm: UserForm = new UserForm();
 
-	constructor(private userService: UserServices, private authService: AuthServices, private pmkiService: PmkiServices,
+	constructor(private userService: UserServices, private authService: AuthServices, private svService: ShowVocServices,
 		private basicModals: BasicModalsServices, private router: Router) { }
 
 	ngOnInit() { }
@@ -48,17 +48,17 @@ export class RegistrationComponent implements OnInit {
 		}
 
 		/**
-		 * Register the user, then immediately log-in and invoke the initialization of PMKI stuff (initPMKI()).
+		 * Register the user, then immediately log-in and invoke the initialization of ShowVoc stuff (initPMKI()).
 		 * The login is required since initPMKI can be invoked only by the admin.
 		 * Finally navigate to the system configuration page.
 		 * Note: even the message says "Now you will be automatically logged in", the login is performed immediately after the registration.
-		 * This is to prevent that the user closes the app after the registration and so skip the initialization of stuff needful for PMKI.
+		 * This is to prevent that the user closes the app after the registration and so skip the initialization of stuff needful for ShowVoc.
 		 */
 		this.userService.registerUser(this.userForm.email, this.userForm.password, this.userForm.givenName, this.userForm.familyName).subscribe(
 			() => {
 				this.authService.login(this.userForm.email, this.userForm.password).subscribe(
 					user => {
-						this.pmkiService.initPMKI().subscribe();
+						this.svService.initPMKI().subscribe();
 					}
 				);
 				this.basicModals.alert({ key: "USER.REGISTRATION_COMPLETE" }, { key: "MESSAGES.ADMIN_CREATED" }).then(

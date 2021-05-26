@@ -10,7 +10,7 @@ import { GlobalSearchResult } from '../models/Search';
 import { GlobalSearchServices } from '../services/global-search.service';
 import { ResourcesServices } from '../services/resources.service';
 import { Cookie } from '../utils/Cookie';
-import { PMKIContext } from '../utils/PMKIContext';
+import { SVContext } from '../utils/SVContext';
 import { EditLanguageModal } from './edit-language-modal.component';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 
@@ -89,7 +89,7 @@ export class SearchComponent {
                     computeResultsShowFunctions.push(this.getComputeResultsShowFn(results));
                 });
                 forkJoin(computeResultsShowFunctions).pipe(
-                    finalize(() => PMKIContext.removeTempProject())
+                    finalize(() => SVContext.removeTempProject())
                 ).subscribe(() => {
                     //order results
                     Object.keys(this.groupedSearchResults).forEach(repoId => {
@@ -126,7 +126,7 @@ export class SearchComponent {
                 resources.push(r.resource);
             });
 
-            PMKIContext.setTempProject(new Project(results[0].repository.id));
+            SVContext.setTempProject(new Project(results[0].repository.id));
             return this.resourcesService.getResourcesInfo(resources).pipe(
                 map(annotated => {
                     annotated.forEach(a => {

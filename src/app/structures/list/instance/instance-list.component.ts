@@ -5,8 +5,8 @@ import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-mo
 import { InstanceListPreference, InstanceListVisualizationMode, SafeToGo, SafeToGoMap } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, ResAttribute } from 'src/app/models/Resources';
 import { ClassesServices } from 'src/app/services/classes.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractList } from '../abstract-list';
 
@@ -30,7 +30,7 @@ export class InstanceListComponent extends AbstractList {
 
     translationParam: { count: number, safeToGoLimit: number };
 
-    constructor(private clsService: ClassesServices, private basicModals: BasicModalsServices, eventHandler: PMKIEventHandler) {
+    constructor(private clsService: ClassesServices, private basicModals: BasicModalsServices, eventHandler: SVEventHandler) {
         super(eventHandler);
     }
 
@@ -41,7 +41,7 @@ export class InstanceListComponent extends AbstractList {
     }
 
     initImpl() {
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization;
         if (this.cls != null) { //class provided => init list
             if (this.visualizationMode == InstanceListVisualizationMode.standard) {
                 this.checkInitializationSafe().subscribe(
@@ -82,7 +82,7 @@ export class InstanceListComponent extends AbstractList {
                 !this.pendingSearchCls //null if already checked that the pendingSearchCls is the current (see selectSearchedInstance)
             )
         ) {
-            if (PMKIContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization == InstanceListVisualizationMode.standard) {
+            if (SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization == InstanceListVisualizationMode.standard) {
                 this.openListAt(this.pendingSearchRes); //standard mode => simply open list (focus searched res)
             } else { //search mode => set the pending searched resource as only element of the list and then focus it
                 this.forceList([this.pendingSearchRes]);
@@ -103,7 +103,7 @@ export class InstanceListComponent extends AbstractList {
      * Return true if the initialization is safe or if the user agreed to init the structure anyway
      */
     private checkInitializationSafe(): Observable<void> {
-        let instListPreference: InstanceListPreference = PMKIContext.getProjectCtx().getProjectPreferences().instanceListPreferences;
+        let instListPreference: InstanceListPreference = SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences;
         let safeToGoMap: SafeToGoMap = instListPreference.safeToGoMap;
         this.safeToGoLimit = instListPreference.safeToGoLimit;
 
@@ -136,7 +136,7 @@ export class InstanceListComponent extends AbstractList {
      */
     private forceSafeness() {
         this.safeToGo = { safe: true };
-        let instListPreference: InstanceListPreference = PMKIContext.getProjectCtx().getProjectPreferences().instanceListPreferences;
+        let instListPreference: InstanceListPreference = SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences;
         let safeToGoMap: SafeToGoMap = instListPreference.safeToGoMap;
         let checksum = this.getInitRequestChecksum();
         safeToGoMap[checksum] = this.safeToGo;
@@ -149,7 +149,7 @@ export class InstanceListComponent extends AbstractList {
      * @param cls 
      */
     private getNumberOfInstances(cls: IRI): Observable<number> {
-        if (PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.showInstancesNumber) { //if num inst are already computed when building the tree...
+        if (SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.showInstancesNumber) { //if num inst are already computed when building the tree...
             return of(this.cls.getAttribute(ResAttribute.NUM_INST));
         } else { //otherwise call a service
             return this.clsService.getNumberOfInstances(cls);

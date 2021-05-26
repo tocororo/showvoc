@@ -8,7 +8,7 @@ import { PrefixMapping } from 'src/app/models/Metadata';
 import { BNode, IRI, Resource } from 'src/app/models/Resources';
 import { QueryChangedEvent, QueryMode, QueryResultBinding, ResultType } from 'src/app/models/Sparql';
 import { SparqlServices } from 'src/app/services/sparql.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { SVContext } from 'src/app/utils/SVContext';
 import { ExportResultRdfModal } from './export-result-rdf-modal';
 
 @Component({
@@ -46,7 +46,7 @@ export class SparqlTabComponent implements OnInit {
 
 	ngOnInit() {
         //collect the prefix namespace mappings
-        var mappings: PrefixMapping[] = PMKIContext.getPrefixMappings();
+        var mappings: PrefixMapping[] = SVContext.getPrefixMappings();
         var prefixImports: string = "";
         for (var i = 0; i < mappings.length; i++) {
             prefixImports += "PREFIX " + mappings[i].prefix + ": <" + mappings[i].namespace + ">\n";

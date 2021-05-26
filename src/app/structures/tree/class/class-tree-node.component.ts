@@ -6,8 +6,8 @@ import { ClassTreeFilter } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, ResAttribute } from 'src/app/models/Resources';
 import { OWL, RDFS } from 'src/app/models/Vocabulary';
 import { ClassesServices } from 'src/app/services/classes.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { TreeListContext } from 'src/app/utils/UIUtils';
 import { AbstractTreeNode } from '../abstract-tree-node';
@@ -26,7 +26,7 @@ export class ClassTreeNodeComponent extends AbstractTreeNode {
 
     showInstanceNumber: boolean = false;
 
-    constructor(private clsService: ClassesServices, private eventHandler: PMKIEventHandler,
+    constructor(private clsService: ClassesServices, private eventHandler: SVEventHandler,
         basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
         super(basicModals, sharedModals);
 
@@ -38,7 +38,7 @@ export class ClassTreeNodeComponent extends AbstractTreeNode {
     ngOnInit() {
         super.ngOnInit();
         //show instance number only if enabled in the preferences and if the node belongs to a tree in TreePanelComponent
-        this.showInstanceNumber = PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.showInstancesNumber && 
+        this.showInstanceNumber = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.showInstancesNumber && 
             (this.context == TreeListContext.dataPanel || this.context == TreeListContext.clsIndTree);
         //expand immediately the node if it is a root and if it is owl:Thing or rdfs:Resource
         if ((this.node.getValue().equals(OWL.thing) || this.node.getValue().equals(RDFS.resource)) && 
@@ -71,7 +71,7 @@ export class ClassTreeNodeComponent extends AbstractTreeNode {
      * the child is filtered by the class tree filter
      */
     private initFilter(children: AnnotatedValue<IRI>[]) {
-        let classTreePref = PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences;
+        let classTreePref = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences;
         children.forEach(c => {
             /* child filtered if:
              * - the filter is enabled
@@ -102,7 +102,7 @@ export class ClassTreeNodeComponent extends AbstractTreeNode {
         let more: boolean = this.node.getAttribute(ResAttribute.MORE);
         if (more) { //if the more attribute is true, doesn't implies that the button is visible, the node children could be all deprecated
             if (this.children.length > 0) {
-                let classTreeFilter: ClassTreeFilter = PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter;
+                let classTreeFilter: ClassTreeFilter = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter;
                 let childVisible: boolean = false;
                 /**
                  * childVisible if: 

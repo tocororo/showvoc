@@ -1,5 +1,5 @@
 import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle, OutletContext } from '@angular/router';
-import { PMKIContext } from './utils/PMKIContext';
+import { SVContext } from './utils/SVContext';
 import { ComponentRef } from '@angular/core';
 
 // https://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular
@@ -101,8 +101,8 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
          * - if the project was changed and the route to retrieve is project-dependant, do not retrieve the route and destroy it.
          * - otherwise returns the stored route
          */
-        if (this.stickyRoutes.indexOf(route.routeConfig.path) != -1 && PMKIContext.isProjectChanged()) {
-            PMKIContext.setProjectChanged(false); //reset projectChanged
+        if (this.stickyRoutes.indexOf(route.routeConfig.path) != -1 && SVContext.isProjectChanged()) {
+            SVContext.setProjectChanged(false); //reset projectChanged
             //destroy the routes project-dependant
             this.projectDependantRoutes.forEach(projDependantRoute => {
                 this.destroyRouteHandle(projDependantRoute);

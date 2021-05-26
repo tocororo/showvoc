@@ -4,9 +4,9 @@ import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-mo
 import { ModalOptions } from "src/app/modal-dialogs/Modals";
 import { InstanceListPreference, InstanceListVisualizationMode } from "src/app/models/Properties";
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
-import { PMKIContext } from "src/app/utils/PMKIContext";
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVContext } from "src/app/utils/SVContext";
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
+import { SVProperties } from 'src/app/utils/SVProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { SearchBarComponent } from "../../search-bar/search-bar.component";
 import { AbstractListPanel } from '../abstract-list-panel';
@@ -31,17 +31,17 @@ export class InstanceListPanelComponent extends AbstractListPanel {
 
     closedAlert: boolean;
 
-    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties, private modalService: NgbModal) {
-        super(basicModals, eventHandler, pmkiProp);
+    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private modalService: NgbModal) {
+        super(basicModals, eventHandler, svProp);
     }
 
     ngOnInit() {
         super.ngOnInit();
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization;
     }
 
     handleSearchResults(results: AnnotatedValue<IRI>[]) {
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization;
         if (this.visualizationMode == InstanceListVisualizationMode.standard) {
             if (results.length == 1) {
                 this.openAt(results[0]);
@@ -64,7 +64,7 @@ export class InstanceListPanelComponent extends AbstractListPanel {
         const modalRef: NgbModalRef = this.modalService.open(InstanceListSettingsModal, new ModalOptions());
         return modalRef.result.then(
             () => {
-                this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization;
+                this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization;
                 if (this.visualizationMode == InstanceListVisualizationMode.searchBased) {
                     this.viewChildList.forceList([]);
                 }
@@ -75,7 +75,7 @@ export class InstanceListPanelComponent extends AbstractListPanel {
     }
 
     refresh() {
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization;
         //reinit the list
         this.viewChildList.init();
         if (this.visualizationMode == InstanceListVisualizationMode.searchBased) {

@@ -1,8 +1,8 @@
 /**
  * IP address/logical host name of the machine hosting Semantic Turkey.
  * By default (variable left unspecified) the host is resolved dynamically by using the same address of the 
- * machine hosting the PMKI portal.
- * Thus if PMKI and Semantic Turkey are running on the same machine this variable can be left commented,
+ * machine hosting ShowVoc.
+ * Thus if ShowVoc and Semantic Turkey are running on the same machine this variable can be left commented,
  * otherwise uncomment the line and edit the value.
  */
 // var st_host = "127.0.0.1";
@@ -10,11 +10,11 @@
 /**
  * Port of the container hosting Semantic Turkey.
  * By default (variable left unspecified) the port is resolved dynamically by using the same port of the 
- * container hosting the PMKI portal.
- * Thus if PMKI and Semantic Turkey are running on the same container this variable can be left commented,
+ * container hosting ShowVoc.
+ * Thus if ShowVoc and Semantic Turkey are running on the same container this variable can be left commented,
  * otherwise uncomment the line and edit the value.
  */
-//var st_port = "1979";
+// var st_port = "1979";
 
 /**   
  * Path where SemanticTurkey server is listening. If omitted, the sole host is considered.
@@ -28,15 +28,15 @@ var st_path;
 /**
  * Protocol - either http or https.
  * By default (variable left unspecified) the protocol is resolved dynamically by using the same one of the
- * container hosting the PMKI portal.
+ * container hosting ShowVoc.
  */
 // var st_protocol = "http";
 
 /**
- * A custom name for the current PMKI instance. 
+ * A custom name for the current ShowVoc instance. 
  * If provided, the instance name will be visible in the Home and Datasets page.
  */
-// var pmki_instance_name = "PMKI";
+// var showvoc_instance_name = "ShowVoc";
 
 /**
  * A list of i18n supported languages in addition to those already factory provided.

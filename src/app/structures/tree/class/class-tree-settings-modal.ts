@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClassTreePreference } from 'src/app/models/Properties';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { SVProperties } from 'src/app/utils/SVProperties';
+import { SVContext } from 'src/app/utils/SVContext';
 import { AnnotatedValue, IRI, ResAttribute, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { ResourcesServices } from 'src/app/services/resources.service';
 import { ClassesServices } from 'src/app/services/classes.service';
@@ -32,12 +32,12 @@ export class ClassTreeSettingsModal implements OnInit {
 
     showInstances: boolean;
 
-    constructor(public activeModal: NgbActiveModal, private pmkiProp: PMKIProperties,
+    constructor(public activeModal: NgbActiveModal, private svProp: SVProperties,
         private clsService: ClassesServices, private resourceService: ResourcesServices, 
         private basicModals: BasicModalsServices, private browsingModals: BrowsingModalsServices) {}
 
     ngOnInit() {
-        let classTreePref: ClassTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences;
+        let classTreePref: ClassTreePreference = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences;
         this.pristinePref = JSON.parse(JSON.stringify(classTreePref));
 
         //init root class
@@ -75,7 +75,7 @@ export class ClassTreeSettingsModal implements OnInit {
         this.browsingModals.browseClassTree({ key: "DATA.CLASS.ACTIONS.SELECT_ROOT_CLASS" }, [RDFS.resource]).then(
             (cls: AnnotatedValue<IRI>) => {
                 if (Cookie.getCookie(Cookie.WARNING_CUSTOM_ROOT) != "false") {
-                    let model: string = PMKIContext.getWorkingProject().getModelType();
+                    let model: string = SVContext.getWorkingProject().getModelType();
                     if ((model == RDFS.uri && !cls.getValue().equals(RDFS.resource)) ||
                         (!cls.getValue().equals(RDFS.resource) && !cls.getValue().equals(OWL.thing)) //OWL or RDFS model
                     ) {
@@ -128,7 +128,7 @@ export class ClassTreeSettingsModal implements OnInit {
             this.clsService.getSubClasses(this.selectedFilteredClass.getValue(), false).subscribe(
                 classes => {
                     ResourceUtils.sortResources(classes, SortAttribute.show);
-                    let clsTreePref: ClassTreePreference = PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences;
+                    let clsTreePref: ClassTreePreference = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences;
                     let filteredSubClssPref = clsTreePref.filter.map[this.selectedFilteredClass.getValue().getIRI()];
     
                     filterMapEntry.subClasses = [];
@@ -206,7 +206,7 @@ export class ClassTreeSettingsModal implements OnInit {
             let filteredSubClasses: string[] = [];
             if (f.subClasses == null) {
                 //subClasses in filterMapRes not yet initialized => get it from the preference
-                filteredSubClasses = PMKIContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter.map[f.cls.getValue().getIRI()];
+                filteredSubClasses = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter.map[f.cls.getValue().getIRI()];
             } else {
                 for (var i = 0; i < f.subClasses.length; i++) {
                     if (!f.subClasses[i].checked) {
@@ -222,15 +222,15 @@ export class ClassTreeSettingsModal implements OnInit {
             JSON.stringify(this.pristinePref.filter.map) != JSON.stringify(filterMap) ||
             this.pristinePref.filter.enabled != this.filterEnabled
         ) {
-            this.pmkiProp.setClassTreeFilter({ map: filterMap, enabled: this.filterEnabled })
+            this.svProp.setClassTreeFilter({ map: filterMap, enabled: this.filterEnabled })
         }
 
         if (this.pristinePref.rootClassUri != this.rootClass.getValue().getIRI()) {
-            this.pmkiProp.setClassTreeRoot(this.rootClass.getValue().getIRI());
+            this.svProp.setClassTreeRoot(this.rootClass.getValue().getIRI());
         }
 
         if (this.pristinePref.showInstancesNumber != this.showInstances) {
-            this.pmkiProp.setClassTreeShowInstances(this.showInstances);
+            this.svProp.setClassTreeShowInstances(this.showInstances);
         }
 
         //only if the root class changed close the dialog (so that the class tree refresh)

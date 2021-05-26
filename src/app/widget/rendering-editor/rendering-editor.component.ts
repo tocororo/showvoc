@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Language } from 'src/app/models/LanguagesCountries';
-import { PMKIContext, ProjectContext } from 'src/app/utils/PMKIContext';
+import { SVContext, ProjectContext } from 'src/app/utils/SVContext';
 
 @Component({
     selector: "rendering-editor",
@@ -13,7 +13,7 @@ import { PMKIContext, ProjectContext } from 'src/app/utils/PMKIContext';
 })
 export class RenderingEditor implements ControlValueAccessor {
 
-    @Input() projectCtx: ProjectContext; //if provided, retrieve the project languages from it (not from the PMKI context project)
+    @Input() projectCtx: ProjectContext; //if provided, retrieve the project languages from it (not from the SVContext project)
     @Input() alert: string; //if provided, show an alert containing the given message
 
     projectLanguages: Language[];
@@ -27,7 +27,7 @@ export class RenderingEditor implements ControlValueAccessor {
         if (this.projectCtx != null) {
             this.projectLanguages = this.projectCtx.getProjectSettings().projectLanguagesSetting;
         } else {
-            this.projectLanguages = PMKIContext.getProjectCtx().getProjectSettings().projectLanguagesSetting;
+            this.projectLanguages = SVContext.getProjectCtx().getProjectSettings().projectLanguagesSetting;
         }
     }
 

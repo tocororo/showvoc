@@ -7,7 +7,7 @@ import { ModalType } from '../modal-dialogs/Modals';
 import { ContributionType } from '../models/Contribution';
 import { UserForm } from '../models/User';
 import { ConfigurationsServices } from '../services/configuration.service';
-import { PmkiServices } from '../services/pmki.service';
+import { ShowVocServices } from '../services/showvoc.service';
 import { AbstractContributionComponent } from './abstract-contribution.component';
 import { DevelopmentContributionComponent } from './development/development-contribution.component';
 import { MetadataContributionComponent } from './metadata/metadata-contribution.component';
@@ -40,7 +40,7 @@ export class ContributionComponent {
     selectedContribution: ContributionType;
 
 
-    constructor(private pmkiServices: PmkiServices, private basicModals: BasicModalsServices, private router: Router, 
+    constructor(private pmkiServices: ShowVocServices, private basicModals: BasicModalsServices, private router: Router, 
         private translateService: TranslateService) { }
 
     submit() {

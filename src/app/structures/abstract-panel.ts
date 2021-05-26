@@ -2,8 +2,8 @@ import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from '../models/Resources';
-import { PMKIEventHandler } from '../utils/PMKIEventHandler';
-import { PMKIProperties } from '../utils/PMKIProperties';
+import { SVEventHandler } from '../utils/SVEventHandler';
+import { SVProperties } from '../utils/SVProperties';
 import { TreeListContext } from '../utils/UIUtils';
 
 @Directive()
@@ -33,12 +33,12 @@ export abstract class AbstractPanel {
      * CONSTRUCTOR
      */
     protected basicModals: BasicModalsServices;
-    protected eventHandler: PMKIEventHandler;
-    protected pmkiProp: PMKIProperties;
-    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties) {
+    protected eventHandler: SVEventHandler;
+    protected svProp: SVProperties;
+    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties) {
         this.basicModals = basicModals;
         this.eventHandler = eventHandler;
-        this.pmkiProp = pmkiProp;
+        this.svProp = svProp;
 
         this.eventSubscriptions.push(eventHandler.showDeprecatedChangedEvent.subscribe(
             (showDeprecated: boolean) => this.showDeprecated = showDeprecated));
@@ -49,7 +49,7 @@ export abstract class AbstractPanel {
      */
 
     ngOnInit() {
-        this.showDeprecated = this.pmkiProp.getShowDeprecated();
+        this.showDeprecated = this.svProp.getShowDeprecated();
     }
 
     ngOnDestroy() {

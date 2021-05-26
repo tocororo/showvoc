@@ -7,9 +7,9 @@ import { ExtensionPointID, Scope, Settings, STProperties } from 'src/app/models/
 import { RemoteRepositoryAccessConfig } from 'src/app/models/Project';
 import { PmkiSettings, SettingsEnum, VocBenchConnectionPmkiSettings } from 'src/app/models/Properties';
 import { AdministrationServices } from 'src/app/services/administration.service';
-import { PmkiServices } from 'src/app/services/pmki.service';
+import { ShowVocServices } from 'src/app/services/showvoc.service';
 import { SettingsServices } from 'src/app/services/settings.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { SVContext } from 'src/app/utils/SVContext';
 
 @Component({
     selector: 'system-config',
@@ -29,7 +29,7 @@ export class SystemConfigurationComponent implements OnInit {
 
     /* Remote access configuration */
 
-    private remoteConfigsSetting: RemoteRepositoryAccessConfig[]; //on ST remote config is a list, here in PMKI it is shown just the first
+    private remoteConfigsSetting: RemoteRepositoryAccessConfig[]; //on ST remote config is a list, here in ShowVoc it is shown just the first
     remoteAccessConfig: RemoteRepositoryAccessConfig = { serverURL: null, username: null, password: null };
     private pristineRemoteAccessConf: RemoteRepositoryAccessConfig;
 
@@ -46,7 +46,7 @@ export class SystemConfigurationComponent implements OnInit {
     closedAlert3: boolean;
 
     
-    constructor(private adminService: AdministrationServices, private pmkiService: PmkiServices, private settingsService: SettingsServices,
+    constructor(private adminService: AdministrationServices, private svService: ShowVocServices, private settingsService: SettingsServices,
         private basicModals: BasicModalsServices) { }
 
     ngOnInit() {
@@ -117,7 +117,7 @@ export class SystemConfigurationComponent implements OnInit {
         }
 
         this.basicModals.prompt({ key: "ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST" }, { value: "Mail to" }, { key: "MESSAGES.EMAIL_CONFIG_TEST_INFO"}, 
-            PMKIContext.getLoggedUser().getEmail()).then(
+            SVContext.getLoggedUser().getEmail()).then(
             mailTo => {
                 this.testEmailConfigLoading = true;
                 this.adminService.testEmailConfig(mailTo).pipe(
@@ -219,7 +219,7 @@ export class SystemConfigurationComponent implements OnInit {
             return;
         }
         this.testVbConfigLoading = true;
-        this.pmkiService.testVocbenchConfiguration().pipe(
+        this.svService.testVocbenchConfiguration().pipe(
             finalize(() => this.testVbConfigLoading = false)
         ).subscribe(
             () => {

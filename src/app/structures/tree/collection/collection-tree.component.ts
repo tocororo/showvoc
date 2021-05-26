@@ -5,7 +5,7 @@ import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared
 import { RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { SearchServices } from 'src/app/services/search.service';
 import { SkosServices } from 'src/app/services/skos.service';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTree } from '../abstract-tree';
 import { CollectionTreeNodeComponent } from './collection-tree-node.component';
@@ -21,7 +21,7 @@ export class CollectionTreeComponent extends AbstractTree {
 
     structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.skosCollection;
 
-    constructor(private skosService: SkosServices, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: PMKIEventHandler) {
+    constructor(private skosService: SkosServices, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: SVEventHandler) {
         super(eventHandler, searchService, basicModals, sharedModals);
     }
 

@@ -3,14 +3,14 @@ import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
-import { PmkiConstants } from '../models/Pmki';
+import { ShowVocConstants } from '../models/ShowVoc';
 import { Project } from '../models/Project';
 import { AnnotatedValue, IRI } from '../models/Resources';
 import { OntoLex, SKOS } from '../models/Vocabulary';
 import { MapleServices } from '../services/maple.service';
 import { MetadataRegistryServices } from '../services/metadata-registry.service';
 import { ProjectsServices } from '../services/projects.service';
-import { PMKIContext } from '../utils/PMKIContext';
+import { SVContext } from '../utils/SVContext';
 
 @Component({
     selector: 'alignments-component',
@@ -36,7 +36,7 @@ export class AlignmentsComponent implements OnInit {
 
     ngOnInit() {
         this.sourceProjects = [];
-        this.projectService.listProjectsPerRole(PmkiConstants.rolePublic, null, true).subscribe(
+        this.projectService.listProjectsPerRole(ShowVocConstants.rolePublic, null, true).subscribe(
             projects => {
                 this.sourceProjects = projects;
             }
@@ -86,10 +86,10 @@ export class AlignmentsComponent implements OnInit {
 
     private profileProject(project: Project): Observable<void> {
         this.loading = true;
-        PMKIContext.setTempProject(project);
+        SVContext.setTempProject(project);
         return this.mapleService.profileProject().pipe(
             finalize(() => {
-                PMKIContext.removeTempProject();
+                SVContext.removeTempProject();
                 this.loading = false;
             })
         );

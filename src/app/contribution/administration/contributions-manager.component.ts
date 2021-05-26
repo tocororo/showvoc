@@ -7,7 +7,7 @@ import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { Configuration, ConfigurationComponents, ConfigurationProperty } from 'src/app/models/Configuration';
 import { DevResourceStoredContribution, MetadataStoredContribution, StableResourceStoredContribution, StoredContribution } from 'src/app/models/Contribution';
 import { ConfigurationsServices } from 'src/app/services/configuration.service';
-import { PmkiServices } from 'src/app/services/pmki.service';
+import { ShowVocServices } from 'src/app/services/showvoc.service';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 import { DevelopmentContributionDetailsModal } from '../development/development-contribution-details-modal';
 import { DevProjectCreationModal } from '../development/development-project-creation-modal';
@@ -26,7 +26,7 @@ export class ContributionsManagerComponent {
 
     contributions: StoredContribution[];
 
-    constructor(private pmkiServices: PmkiServices, private configurationServices: ConfigurationsServices,
+    constructor(private pmkiServices: ShowVocServices, private configurationServices: ConfigurationsServices,
         private basicModals: BasicModalsServices, private modalService: NgbModal) {}
 
     ngOnInit() {

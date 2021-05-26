@@ -10,15 +10,15 @@ import { ModalOptions, ModalType, TextOrTranslation } from 'src/app/modal-dialog
 import { PluginSettingsHandler } from 'src/app/modal-dialogs/shared-modals/plugin-configuration/plugin-configuration-modal';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { Settings } from 'src/app/models/Plugins';
-import { PmkiConstants } from 'src/app/models/Pmki';
+import { ShowVocConstants } from 'src/app/models/ShowVoc';
 import { AccessLevel, ExceptionDAO, Project, RemoteRepositorySummary, RepositorySummary } from 'src/app/models/Project';
 import { GlobalSearchServices } from 'src/app/services/global-search.service';
 import { MapleServices } from 'src/app/services/maple.service';
-import { PmkiServices } from 'src/app/services/pmki.service';
+import { ShowVocServices } from 'src/app/services/showvoc.service';
 import { ProjectsServices } from 'src/app/services/projects.service';
 import { RepositoriesServices } from 'src/app/services/repositories.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { CreateProjectModal } from './create-project-modal';
 import { LoadDataModal } from './load-data-modal';
 import { ProjectSettingsModal } from './project-settings-modal';
@@ -32,9 +32,9 @@ import { DeleteRemoteRepoReportModal } from './remote-repositories/delete-remote
 })
 export class ProjectsManagerComponent {
 
-    private readonly rolePristine: string = PmkiConstants.rolePristine;
-    private readonly roleStaging: string = PmkiConstants.roleStaging;
-    private readonly rolePublic: string = PmkiConstants.rolePublic;
+    private readonly rolePristine: string = ShowVocConstants.rolePristine;
+    private readonly roleStaging: string = ShowVocConstants.roleStaging;
+    private readonly rolePublic: string = ShowVocConstants.rolePublic;
 
     projectList: Project[];
     //usefuld attributes to set in the Project objects
@@ -53,8 +53,8 @@ export class ProjectsManagerComponent {
 
 
     constructor(private modalService: NgbModal, private projectService: ProjectsServices, private repositoriesService: RepositoriesServices,
-        private pmkiService: PmkiServices, private globalSearchService: GlobalSearchServices,  private mapleService: MapleServices,
-        private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices, private router: Router, private eventHandler: PMKIEventHandler,
+        private svService: ShowVocServices, private globalSearchService: GlobalSearchServices,  private mapleService: MapleServices,
+        private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices, private router: Router, private eventHandler: SVEventHandler,
         private translateService: TranslateService) { }
 
     ngOnInit() {
@@ -203,12 +203,12 @@ export class ProjectsManagerComponent {
 
     private createIndexImpl(project: Project): Observable<void> {
         return new Observable((observer: Observer<void>) => {
-            PMKIContext.setTempProject(project);
+            SVContext.setTempProject(project);
             project[this.creatingIndexAttr] = true;
             this.globalCreatingIndex = true;
             this.globalSearchService.createIndex().pipe(
                 finalize(() => {
-                    PMKIContext.removeTempProject();
+                    SVContext.removeTempProject();
                     project[this.creatingIndexAttr] = false;
                     this.globalCreatingIndex = false;
                 })
@@ -242,11 +242,11 @@ export class ProjectsManagerComponent {
 
     private createMapleMetadataImpl(project: Project): Observable<void> {
         return new Observable((observer: Observer<void>) => {
-            PMKIContext.setTempProject(project);
+            SVContext.setTempProject(project);
             project[this.creatingMetadataAttr] = true;
             this.mapleService.profileProject().pipe(
                 finalize(() => {
-                    PMKIContext.removeTempProject();
+                    SVContext.removeTempProject();
                     project[this.creatingMetadataAttr] = false;
                 })
             ).subscribe(
@@ -261,7 +261,7 @@ export class ProjectsManagerComponent {
         let createIndexLabel: string = this.translateService.instant("ADMINISTRATION.DATASETS.MANAGEMENT.CREATE_INDEX");
         let deleteIndexLabel: string = this.translateService.instant("ADMINISTRATION.DATASETS.MANAGEMENT.DELETE_INDEX");
         let createMetadataLabel: string = this.translateService.instant("DATASETS.ACTIONS.CREATE_METADATA");
-        if (role == PmkiConstants.rolePublic) { //from staging to public
+        if (role == ShowVocConstants.rolePublic) { //from staging to public
             confirmationMsg = { key: "MESSAGES.MAKE_DATASET_PUBLIC_CONFIRM"};
             confirmActionOpt.push({ 
                 label: createIndexLabel,
@@ -275,7 +275,7 @@ export class ProjectsManagerComponent {
                 disabled: !project.isOpen(),
                 warning: !project.isOpen() ? this.translateService.instant("MESSAGES.CANNOT_PROFILE_CLOSED_DATASET") : null
             })
-        } else if (role == PmkiConstants.roleStaging) { //from public to staging
+        } else if (role == ShowVocConstants.roleStaging) { //from public to staging
             confirmationMsg = { key: "MESSAGES.MAKE_DATASET_STAGING_CONFIRM"};
             confirmActionOpt.push({ 
                 label: deleteIndexLabel,
@@ -284,7 +284,7 @@ export class ProjectsManagerComponent {
         }
         this.basicModals.confirmCheck({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.CHANGE_STATUS" }, confirmationMsg, confirmActionOpt, ModalType.warning).then(
             (checkboxOpts: ConfirmCheckOptions[]) => {
-                this.pmkiService.setProjectStatus(project.getName(), role).subscribe(
+                this.svService.setProjectStatus(project.getName(), role).subscribe(
                     () => {
                         this.eventHandler.projectUpdatedEvent.emit();
                         project[this.roleAttr] = role;
@@ -299,7 +299,7 @@ export class ProjectsManagerComponent {
                                 this.createMapleMetadataImpl(project).subscribe();
                             }
                         });
-                        if (role == PmkiConstants.rolePublic) { //project set public => enable universal readability
+                        if (role == ShowVocConstants.rolePublic) { //project set public => enable universal readability
                             this.projectService.updateUniversalProjectAccessLevel(project, AccessLevel.R).subscribe();
                         } else { //project set not publid => remove universal readability
                             this.projectService.updateUniversalProjectAccessLevel(project).subscribe();

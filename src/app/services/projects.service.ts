@@ -7,7 +7,7 @@ import { AccessLevel, BackendTypesEnum, Project, RepositoryAccess, RepositorySum
 import { IRI, Literal, RDFResourceRolesEnum } from '../models/Resources';
 import { Pair } from '../models/Shared';
 import { HttpManager } from '../utils/HttpManager';
-import { PMKIContext } from '../utils/PMKIContext';
+import { SVContext } from '../utils/SVContext';
 
 @Injectable()
 export class ProjectsServices {
@@ -98,8 +98,8 @@ export class ProjectsServices {
     disconnectFromProject(project: Project) {
         //if the closing project is the working, remove it from context
         //but is not a "perfect" solution, since it remove the working project from the ctx before it is effectively closed
-        if (PMKIContext.getWorkingProject() != undefined && PMKIContext.getWorkingProject().getName() == project.getName()) {
-            PMKIContext.removeWorkingProject();
+        if (SVContext.getWorkingProject() != undefined && SVContext.getWorkingProject().getName() == project.getName()) {
+            SVContext.removeWorkingProject();
         }
         let params = {
             consumer: "SYSTEM",

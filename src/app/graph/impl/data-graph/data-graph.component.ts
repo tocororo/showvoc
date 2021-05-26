@@ -7,7 +7,7 @@ import { AnnotatedValue, IRI, Literal, PredicateObjects, ResAttribute, Resource,
 import { ResViewPartition, ResViewUtils } from 'src/app/models/ResourceView';
 import { GraphServices } from 'src/app/services/graph.service';
 import { ResourceViewServices } from 'src/app/services/resource-view.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { SVContext } from 'src/app/utils/SVContext';
 import { ResourceDeserializer } from 'src/app/utils/ResourceUtils';
 import { AbstractGraph, GraphMode } from '../../abstract-graph';
 import { D3Service } from '../../d3/d3.service';
@@ -78,7 +78,7 @@ export class DataGraphComponent extends AbstractGraph {
         if (value instanceof Resource) {
             this.resViewService.getResourceView(value).subscribe(
                 rv => {
-                    let filteredPartitions: ResViewPartition[] = PMKIContext.getProjectCtx().getProjectPreferences().resViewPartitionFilter[(node.res).getRole()];
+                    let filteredPartitions: ResViewPartition[] = SVContext.getProjectCtx().getProjectPreferences().resViewPartitionFilter[(node.res).getRole()];
                     //create the predicate-object lists for each partition (skip the filtered partition)
                     let predObjListMap: { [partition: string]: PredicateObjects[] } = {};
                     this.rvPartitions.forEach(partition => {
@@ -204,7 +204,7 @@ export class DataGraphComponent extends AbstractGraph {
      * @param predicatesToHide 
      */
     private convertPredObjListMapToLinks(sourceNode: Node, predObjListMap: { [partition: string]: PredicateObjects[] }, predicatesToHide: IRI[]): DataLink[] {
-        let hideLiteralNodes: boolean = PMKIContext.getProjectCtx().getProjectPreferences().hideLiteralGraphNodes;
+        let hideLiteralNodes: boolean = SVContext.getProjectCtx().getProjectPreferences().hideLiteralGraphNodes;
         let links: DataLink[] = [];
         for (let partition in predObjListMap) {
             predObjListMap[partition].forEach(pol => { //for each pol of a partition
@@ -242,7 +242,7 @@ export class DataGraphComponent extends AbstractGraph {
      * @param predObjList 
      */
     private filterValueLanguageFromPrefObjList(predObjList: PredicateObjects[]) {
-        let valueFilterLanguage: ValueFilterLanguages = PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang;
+        let valueFilterLanguage: ValueFilterLanguages = SVContext.getProjectCtx().getProjectPreferences().filterValueLang;
         if (valueFilterLanguage.enabled) {
             let valueFilterLanguages = valueFilterLanguage.languages;
             for (var i = 0; i < predObjList.length; i++) {

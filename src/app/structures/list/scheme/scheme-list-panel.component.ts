@@ -1,8 +1,8 @@
 import { Component, ViewChild } from "@angular/core";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
+import { SVProperties } from 'src/app/utils/SVProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractListPanel } from '../abstract-list-panel';
 import { SchemeListComponent } from './scheme-list.component';
@@ -17,8 +17,8 @@ export class SchemeListPanelComponent extends AbstractListPanel {
 
     panelRole: RDFResourceRolesEnum = RDFResourceRolesEnum.conceptScheme;
 
-    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties) {
-        super(basicModals, eventHandler, pmkiProp);
+    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties) {
+        super(basicModals, eventHandler, svProp);
     }
 
     handleSearchResults(results: AnnotatedValue<IRI>[]) {

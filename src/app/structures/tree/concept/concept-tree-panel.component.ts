@@ -8,9 +8,9 @@ import { ConceptTreeVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, ResAttribute } from 'src/app/models/Resources';
 import { ResourcesServices } from 'src/app/services/resources.service';
 import { SkosServices } from 'src/app/services/skos.service';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIEventHandler } from 'src/app/utils/PMKIEventHandler';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
+import { SVProperties } from 'src/app/utils/SVProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
 import { AbstractTreePanel } from '../abstract-tree-panel';
@@ -47,9 +47,9 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
 
     closedAlert: boolean;
 
-    constructor(basicModals: BasicModalsServices, eventHandler: PMKIEventHandler, pmkiProp: PMKIProperties,
+    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties,
         private skosService: SkosServices, private resourceService: ResourcesServices, private modalService: NgbModal) {
-        super(basicModals, eventHandler, pmkiProp);
+        super(basicModals, eventHandler, svProp);
         this.eventSubscriptions.push(eventHandler.schemeChangedEvent.subscribe(
             (schemes: IRI[]) => this.onSchemeChanged(schemes)));
     }
@@ -57,11 +57,11 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     ngOnInit() {
         super.ngOnInit();
 
-        let prefs = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
+        let prefs = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
         this.visualizationMode = prefs.visualization;
 
         if (this.inputSchemes === undefined) { //if @Input is not provided at all, get the scheme from the preferences
-            this.workingSchemes = PMKIContext.getProjectCtx().getProjectPreferences().activeSchemes;
+            this.workingSchemes = SVContext.getProjectCtx().getProjectPreferences().activeSchemes;
         } else { //if @Input schemes is provided (it could be null => no scheme-mode), initialize the tree with this scheme
             if (this.schemeChangeable) {
                 if (this.inputSchemes.length > 0) {
@@ -88,7 +88,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     //top bar commands handlers
 
     refresh() {
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
         //reinit the tree
         this.viewChildTree.init();
         if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
@@ -101,7 +101,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
         const modalRef: NgbModalRef = this.modalService.open(ConceptTreeSettingsModal, new ModalOptions());
         modalRef.result.then(
             () => {
-                this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
+                this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
                 if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
                     this.viewChildTree.forceList([]);
                 }
@@ -159,7 +159,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     }
 
     handleSearchResults(results: AnnotatedValue<IRI>[]) {
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
         if (this.visualizationMode == ConceptTreeVisualizationMode.hierarchyBased) {
             if (results.length == 1) { //only one result => select in the tree
                 this.selectSearchedResource(results[0]);
@@ -204,7 +204,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                     if (schemes.length == 0) { //searched concept doesn't belong to any scheme => ask switch to no-scheme mode
                         this.basicModals.confirm({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.SWITCH_NO_SCHEME_CONFIRM", params: { concept: resource.getShow() }}, ModalType.warning).then(
                             confirm => {
-                                this.pmkiProp.setActiveSchemes(PMKIContext.getProjectCtx(), []); //update the active schemes
+                                this.svProp.setActiveSchemes(SVContext.getProjectCtx(), []); //update the active schemes
                                 setTimeout(() => {
                                     this.openAt(resource); //then open the tree on the searched resource
                                 });
@@ -223,7 +223,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                             schemes => {
                                 this.basicModals.selectResource({key:"COMMONS.ACTIONS.SEARCH"}, message, schemes, this.rendering).then(
                                     (scheme: AnnotatedValue<IRI>) => {
-                                        this.pmkiProp.setActiveSchemes(PMKIContext.getProjectCtx(), this.workingSchemes.concat(scheme.getValue())); //update the active schemes
+                                        this.svProp.setActiveSchemes(SVContext.getProjectCtx(), this.workingSchemes.concat(scheme.getValue())); //update the active schemes
                                         setTimeout(() => {
                                             this.openAt(resource); //then open the tree on the searched resource
                                         });
@@ -256,7 +256,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     }
 
     openAt(node: AnnotatedValue<IRI>) {
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
         if (this.visualizationMode == ConceptTreeVisualizationMode.hierarchyBased) {
             this.viewChildTree.openTreeAt(node, this.workingSchemes);
         } else { //search-based
@@ -272,7 +272,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     private onSchemeChanged(schemes: IRI[]) {
         this.workingSchemes = schemes;
         //in case of visualization search based reset the list
-        this.visualizationMode = PMKIContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
+        this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
         if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
             this.viewChildTree.forceList([]);
         }

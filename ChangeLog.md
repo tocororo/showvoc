@@ -1,5 +1,5 @@
 # Reference to Semantic Turkey Change Log
-This changelog is limited to changes brought exclusively to the PMKI client application.
+This changelog is limited to changes brought exclusively to the ShowVoc client application.
 The full changelog of the platform includes also changes brought to the Semantic Turkey backend:
 
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
@@ -8,7 +8,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
   * Enabled deletion of remote repositories referred by a deleted dataset
   * Improved management of Remote Repository configurations
   * Introduced project facets
-  * Enabled possibility to customize PMKI instance name
+  * Enabled possibility to customize ShowVoc instance name
   * Adopted the new Settings services
   * Fixed missing error message in case of exception during the project creation
   * Updated the settings rendering widgets to deal with non-backward compatible changes in their representation returned by the server

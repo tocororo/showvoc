@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Project } from 'src/app/models/Project';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
+import { SVContext } from 'src/app/utils/SVContext';
 
 @Component({
     selector: 'dataset-view',
@@ -18,7 +18,7 @@ export class DatasetViewComponent {
     constructor() { }
 
     ngOnInit() {
-        this.project = PMKIContext.getWorkingProject();
+        this.project = SVContext.getWorkingProject();
     }
 
 }

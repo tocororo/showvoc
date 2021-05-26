@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Language } from 'src/app/models/LanguagesCountries';
-import { PMKIContext } from 'src/app/utils/PMKIContext';
-import { PMKIProperties } from 'src/app/utils/PMKIProperties';
+import { SVContext } from 'src/app/utils/SVContext';
+import { SVProperties } from 'src/app/utils/SVProperties';
 
 
 @Component({
@@ -15,12 +15,12 @@ export class LanguageValueFilterComponent {
     filterLanguages: LanguageItem[] = [];
     filterEnabled: boolean = false;
 
-    constructor(private pmkiProp: PMKIProperties) { }
+    constructor(private svProp: SVProperties) { }
 
     ngOnInit() {
-        let projectLanguages: Language[] = PMKIContext.getProjectCtx().getProjectSettings().projectLanguagesSetting;
+        let projectLanguages: Language[] = SVContext.getProjectCtx().getProjectSettings().projectLanguagesSetting;
 
-        let preferenceLangs: string[] = PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang.languages;
+        let preferenceLangs: string[] = SVContext.getProjectCtx().getProjectPreferences().filterValueLang.languages;
 
         if (preferenceLangs.length == 1 && preferenceLangs[0] == "*") { //"*" stands for all languages
             //set as active all the available langs
@@ -40,7 +40,7 @@ export class LanguageValueFilterComponent {
             }
         }
 
-        this.filterEnabled = PMKIContext.getProjectCtx().getProjectPreferences().filterValueLang.enabled;
+        this.filterEnabled = SVContext.getProjectCtx().getProjectPreferences().filterValueLang.enabled;
     }
 
     toggleFilter() {
@@ -62,7 +62,7 @@ export class LanguageValueFilterComponent {
         activeLangs.forEach(l => {
             preferenceLangs.push(l.lang.tag);
         });
-        this.pmkiProp.setValueFilterLanguages({ languages: preferenceLangs, enabled: this.filterEnabled });
+        this.svProp.setValueFilterLanguages({ languages: preferenceLangs, enabled: this.filterEnabled });
     }
     
     changeIsocodeOrder() {

@@ -1,4 +1,4 @@
-import { PMKIContext } from "../utils/PMKIContext";
+import { SVContext } from "../utils/SVContext";
 
 export class Countries {
     
@@ -107,7 +107,7 @@ export class Languages {
     }
 
     static getLanguageFromTag(tag: string): Language {
-        let l: Language = PMKIContext.getSystemSettings().languages.find(l => l.tag.toLocaleLowerCase() == tag.toLocaleLowerCase());
+        let l: Language = SVContext.getSystemSettings().languages.find(l => l.tag.toLocaleLowerCase() == tag.toLocaleLowerCase());
         if (l == null) { //no language with the give tag found among the available
             l = { name: tag, tag: tag };
         }

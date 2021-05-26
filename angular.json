@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "pmki-portal": {
+    "showvoc": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -40,7 +40,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/pmki",
+            "outputPath": "dist/showvoc",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -49,7 +49,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/pmkiconfig.js"
+              "src/svconfig.js"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -98,22 +98,22 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "pmki-portal:build"
+            "browserTarget": "showvoc:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "pmki-portal:build:production"
+              "browserTarget": "showvoc:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "pmki-portal:build"
+            "browserTarget": "showvoc:build"
           }
         }
       }
     }
   },
-  "defaultProject": "pmki-portal"
+  "defaultProject": "showvoc"
 }
