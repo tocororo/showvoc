@@ -18,9 +18,9 @@ export class ShowVocServices {
     /**
      * 
      */
-    initPMKI(): Observable<void> {
+    initShowVoc(): Observable<void> {
         var params = {};
-        return this.httpMgr.doPost(this.serviceName, "initPmki", params);
+        return this.httpMgr.doPost(this.serviceName, "initShowVoc", params);
     }
 
     /**
@@ -96,7 +96,7 @@ export class ShowVocServices {
             repositoryAccess: repositoryAccess.stringify(),
             coreRepoSailConfigurerSpecification: JSON.stringify(coreRepoSailConfigurerSpecification),
             configurationReference: configurationReference,
-            pmkiHostAddress: location.protocol+"//"+location.hostname+((location.port !="") ? ":"+location.port : "")+location.pathname
+            showvocHostAddress: location.protocol+"//"+location.hostname+((location.port !="") ? ":"+location.port : "")+location.pathname
         };
         return this.httpMgr.doPost(this.serviceName, "approveStableContribution", params);
     }
@@ -119,7 +119,7 @@ export class ShowVocServices {
             baseURI: baseURI,
             coreRepoSailConfigurerSpecification: JSON.stringify(coreRepoSailConfigurerSpecification),
             configurationReference: configurationReference,
-            pmkiHostAddress: location.protocol+"//"+location.hostname+((location.port !="") ? ":"+location.port : "")+location.pathname
+            showvocHostAddress: location.protocol+"//"+location.hostname+((location.port !="") ? ":"+location.port : "")+location.pathname
         };
         return this.httpMgr.doPost(this.serviceName, "approveDevelopmentContribution", params);
     }

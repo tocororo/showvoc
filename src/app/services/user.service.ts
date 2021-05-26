@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ShowVocConstants } from '../models/ShowVoc';
 import { User } from "../models/User";
 import { HttpManager } from "../utils/HttpManager";
 import { SVContext } from '../utils/SVContext';
@@ -111,7 +112,7 @@ export class UserServices {
         var params: any = {
             email: email,
             vbHostAddress: location.protocol+"//"+location.hostname+((location.port !="") ? ":"+location.port : "")+location.pathname,
-            appCtx: "PMKI"
+            appCtx: ShowVocConstants.appCtx
         }
         return this.httpMgr.doPost(this.serviceName, "forgotPassword", params);
     }
@@ -124,7 +125,7 @@ export class UserServices {
         var params: any = {
             email: email,
             token: token,
-            appCtx: "PMKI"
+            appCtx: ShowVocConstants.appCtx
         }
         return this.httpMgr.doPost(this.serviceName, "resetPassword", params);
     }

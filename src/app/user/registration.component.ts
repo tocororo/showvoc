@@ -48,8 +48,8 @@ export class RegistrationComponent implements OnInit {
 		}
 
 		/**
-		 * Register the user, then immediately log-in and invoke the initialization of ShowVoc stuff (initPMKI()).
-		 * The login is required since initPMKI can be invoked only by the admin.
+		 * Register the user, then immediately log-in and invoke the initialization of ShowVoc stuff (initShowVoc()).
+		 * The login is required since initShowVoc can be invoked only by the admin.
 		 * Finally navigate to the system configuration page.
 		 * Note: even the message says "Now you will be automatically logged in", the login is performed immediately after the registration.
 		 * This is to prevent that the user closes the app after the registration and so skip the initialization of stuff needful for ShowVoc.
@@ -58,7 +58,7 @@ export class RegistrationComponent implements OnInit {
 			() => {
 				this.authService.login(this.userForm.email, this.userForm.password).subscribe(
 					user => {
-						this.svService.initPMKI().subscribe();
+						this.svService.initShowVoc().subscribe();
 					}
 				);
 				this.basicModals.alert({ key: "USER.REGISTRATION_COMPLETE" }, { key: "MESSAGES.ADMIN_CREATED" }).then(

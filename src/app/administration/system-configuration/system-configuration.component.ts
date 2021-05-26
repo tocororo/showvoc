@@ -5,7 +5,7 @@ import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-mo
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { ExtensionPointID, Scope, Settings, STProperties } from 'src/app/models/Plugins';
 import { RemoteRepositoryAccessConfig } from 'src/app/models/Project';
-import { PmkiSettings, SettingsEnum, VocBenchConnectionPmkiSettings } from 'src/app/models/Properties';
+import { ShowVocSettings, SettingsEnum, VocBenchConnectionShowVocSettings } from 'src/app/models/Properties';
 import { AdministrationServices } from 'src/app/services/administration.service';
 import { ShowVocServices } from 'src/app/services/showvoc.service';
 import { SettingsServices } from 'src/app/services/settings.service';
@@ -21,9 +21,9 @@ export class SystemConfigurationComponent implements OnInit {
     private getSystemCoreSettingsFn: Observable<Settings> = this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM);
 
     /* ST+VB configuration */
-    private pmkiSettings: PmkiSettings;
-    vbConnectionConfig: VocBenchConnectionPmkiSettings = new VocBenchConnectionPmkiSettings();
-    private pristineVbConnConfig: VocBenchConnectionPmkiSettings;
+    private showVocSettings: ShowVocSettings;
+    vbConnectionConfig: VocBenchConnectionShowVocSettings = new VocBenchConnectionShowVocSettings();
+    private pristineVbConnConfig: VocBenchConnectionShowVocSettings;
     
     testVbConfigLoading: boolean;
 
@@ -187,9 +187,9 @@ export class SystemConfigurationComponent implements OnInit {
     }
 
     private initVbConfigHandler(settings: Settings) {
-        this.pmkiSettings = settings.getPropertyValue(SettingsEnum.pmki);
-        if (this.pmkiSettings != null && this.pmkiSettings.vbConnectionConfig != null) {
-            this.vbConnectionConfig = this.pmkiSettings.vbConnectionConfig
+        this.showVocSettings = settings.getPropertyValue(SettingsEnum.showvoc);
+        if (this.showVocSettings != null && this.showVocSettings.vbConnectionConfig != null) {
+            this.vbConnectionConfig = this.showVocSettings.vbConnectionConfig
         } else {
             this.vbConnectionConfig;
         }
@@ -197,8 +197,8 @@ export class SystemConfigurationComponent implements OnInit {
     }
 
     updateVbConfig() {
-        this.pmkiSettings.vbConnectionConfig = this.vbConnectionConfig;
-        this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.pmki, this.pmkiSettings).subscribe(
+        this.showVocSettings.vbConnectionConfig = this.vbConnectionConfig;
+        this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.showvoc, this.showVocSettings).subscribe(
             () =>{
                 this.initVbConfig();
             }

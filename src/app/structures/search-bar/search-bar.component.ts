@@ -43,7 +43,7 @@ export class SearchBarComponent {
 
     private eventSubscriptions: Subscription[] = [];
 
-    constructor(private searchService: SearchServices, private pmkiProps: SVProperties, private eventHandler: SVEventHandler, 
+    constructor(private searchService: SearchServices, private svProps: SVProperties, private eventHandler: SVEventHandler, 
         private basicModals: BasicModalsServices, private modalService: NgbModal) {
 
         this.eventSubscriptions.push(eventHandler.searchPrefsUpdatedEvent.subscribe(
@@ -127,7 +127,7 @@ export class SearchBarComponent {
     private updateSearchMode(mode: SearchMode, event: Event) {
         event.stopPropagation();
         this.searchSettings.stringMatchMode = mode;
-        this.pmkiProps.setSearchSettings(SVContext.getProjectCtx(), this.searchSettings);
+        this.svProps.setSearchSettings(SVContext.getProjectCtx(), this.searchSettings);
     }
 
     /**

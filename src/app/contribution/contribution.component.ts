@@ -40,7 +40,7 @@ export class ContributionComponent {
     selectedContribution: ContributionType;
 
 
-    constructor(private pmkiServices: ShowVocServices, private basicModals: BasicModalsServices, private router: Router, 
+    constructor(private svService: ShowVocServices, private basicModals: BasicModalsServices, private router: Router, 
         private translateService: TranslateService) { }
 
     submit() {
@@ -84,7 +84,7 @@ export class ContributionComponent {
         config = { ...config, ...contributionImplConfig }; //merge
         
         this.loading = true;
-        this.pmkiServices.submitContribution(config).pipe(
+        this.svService.submitContribution(config).pipe(
             finalize(() => this.loading = false)
         ).subscribe(
             () => {

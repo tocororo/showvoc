@@ -26,7 +26,7 @@ export class ContributionsManagerComponent {
 
     contributions: StoredContribution[];
 
-    constructor(private pmkiServices: ShowVocServices, private configurationServices: ConfigurationsServices,
+    constructor(private svService: ShowVocServices, private configurationServices: ConfigurationsServices,
         private basicModals: BasicModalsServices, private modalService: NgbModal) {}
 
     ngOnInit() {
@@ -35,7 +35,7 @@ export class ContributionsManagerComponent {
 
     private initContributions() {
         this.loading = true;
-        this.pmkiServices.getContributionReferences().subscribe(
+        this.svService.getContributionReferences().subscribe(
             references => {
                 let getConfigFn: Observable<void>[] = [];
                 references.forEach(ref => {
@@ -184,7 +184,7 @@ export class ContributionsManagerComponent {
             this.basicModals.confirm({ key: "CONTRIBUTIONS.ACTIONS.APPROVE_CONTRIBUTION" }, { key: "MESSAGES.ACCEPT_METADATA_CONTRIBUTION_CONFIRM" }, ModalType.warning).then(
                 () => {
                     contribution['loading'] = true;
-                    this.pmkiServices.approveMetadataContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).pipe(
+                    this.svService.approveMetadataContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).pipe(
                         finalize(() => contribution['loading'] = false)
                     ).subscribe(
                         () => {
@@ -202,7 +202,7 @@ export class ContributionsManagerComponent {
         this.basicModals.confirm({ key: "CONTRIBUTIONS.ACTIONS.REJECT_CONTRIBUTION" }, { key: "MESSAGES.REJECT_CONTRIBUTION_CONFIRM" }, ModalType.warning).then(
             () => {
                 contribution['loading'] = true;
-                this.pmkiServices.rejectContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).pipe(
+                this.svService.rejectContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).pipe(
                     finalize(() => contribution['loading'] = false)
                 ).subscribe(
                     () => {

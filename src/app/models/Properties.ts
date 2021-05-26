@@ -12,7 +12,7 @@ import { OWL, RDF, RDFS } from './Vocabulary';
     languages = "languages",
     lexEntryList = "lexEntryList",
     mail = "mail",
-    pmki = "pmki",
+    showvoc = "showvoc",
     remoteConfigs = "remoteConfigs",
     showFlags = "showFlags",
 }
@@ -222,11 +222,11 @@ export class VisualizationModeTranslation {
     }
 }
 
-export class PmkiSettings {
-    vbConnectionConfig: VocBenchConnectionPmkiSettings;
+export class ShowVocSettings {
+    vbConnectionConfig: VocBenchConnectionShowVocSettings;
 }
 
-export class VocBenchConnectionPmkiSettings {
+export class VocBenchConnectionShowVocSettings {
     vbURL: string;
 	stHost: string;
 	adminEmail: string;

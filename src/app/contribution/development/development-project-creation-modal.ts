@@ -8,7 +8,7 @@ import { BasicModalsServices } from '../../modal-dialogs/basic-modals/basic-moda
 import { ModalType } from '../../modal-dialogs/Modals';
 import { ConfigurableExtensionFactory, ExtensionPointID, PluginSpecification, Scope, Settings } from '../../models/Plugins';
 import { Project, RemoteRepositoryAccessConfig, RepositoryAccessType } from '../../models/Project';
-import { PmkiSettings, SettingsEnum, VocBenchConnectionPmkiSettings } from '../../models/Properties';
+import { ShowVocSettings, SettingsEnum, VocBenchConnectionShowVocSettings } from '../../models/Properties';
 import { IRI } from '../../models/Resources';
 import { OntoLex, OWL, RDFS, SKOS, SKOSXL } from '../../models/Vocabulary';
 import { ExtensionsServices } from '../../services/extensions.service';
@@ -51,7 +51,7 @@ export class DevProjectCreationModal {
 
     repositoryAccessType: RepositoryAccessType = RepositoryAccessType.CreateRemote;
 
-    vbConnectionConfig: VocBenchConnectionPmkiSettings = {
+    vbConnectionConfig: VocBenchConnectionShowVocSettings = {
         vbURL: null,
         stHost: null,
         adminEmail: null,
@@ -79,11 +79,11 @@ export class DevProjectCreationModal {
 
         this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM).subscribe(
             settings => {
-                let pmkiSettings: PmkiSettings = settings.getPropertyValue(SettingsEnum.pmki);
-                if (pmkiSettings != null && pmkiSettings.vbConnectionConfig != null) {
-                    this.vbConnectionConfig = pmkiSettings.vbConnectionConfig
+                let showVocSettings: ShowVocSettings = settings.getPropertyValue(SettingsEnum.showvoc);
+                if (showVocSettings != null && showVocSettings.vbConnectionConfig != null) {
+                    this.vbConnectionConfig = showVocSettings.vbConnectionConfig
                 } else {
-                    this.vbConnectionConfig = new VocBenchConnectionPmkiSettings();
+                    this.vbConnectionConfig = new VocBenchConnectionShowVocSettings();
                 }
             }
         )

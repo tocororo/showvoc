@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ShowVocConstants } from '../models/ShowVoc';
 import { HttpManager } from "../utils/HttpManager";
 
 @Injectable()
@@ -15,7 +16,7 @@ export class AdministrationServices {
     testEmailConfig(mailTo: string) {
         var params: any = {
             mailTo: mailTo,
-            appCtx: "PMKI"
+            appCtx: ShowVocConstants.appCtx
         }
         return this.httpMgr.doGet(this.serviceName, "testEmailConfig", params);
     }
