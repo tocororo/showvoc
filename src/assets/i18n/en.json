@@ -330,12 +330,11 @@
     "HOME": {
         "WELCOME_W_INST_NAME": {
             "WELCOME": "Welcome to {{instanceName}} dataset browser!",
-            "POWERED_BY": "{{instanceName}} is powered by the Public Multilingual Knowledge Infrastructure",
+            "POWERED_BY": "{{instanceName}} is powered by",
             "CONTRIBUTE_TO": "Contribute to {{instanceName}}"
         },
         "WELCOME_WO_INST_NAME": {
             "WELCOME": "Welcome to ShowVoc!",
-            "PMKI": "Public Multilingual Knowledge Infrastructure for the Digital Single Market",
             "CONTRIBUTE_TO": "Contribute to ShowVoc"
         }
     },

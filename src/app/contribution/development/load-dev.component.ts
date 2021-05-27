@@ -24,7 +24,7 @@ export class LoadDevResourceComponent {
 
     private readonly zThesExtensionId: string = "it.uniroma2.art.semanticturkey.extension.impl.rdflifter.zthesdeserializer.ZthesDeserializingLifter";
     private readonly rdfExtensionId: string = "it.uniroma2.art.semanticturkey.extension.impl.rdflifter.rdfdeserializer.RDFDeserializingLifter";
-    private readonly tbxExtensionId: string = "it.uniroma2.art.pmki.tbx.TBXRDFLifter";
+    private readonly tbxExtensionId: string = "it.uniroma2.art.showvoc.tbx.TBXRDFLifter";
 
     loading: boolean = false;
 
