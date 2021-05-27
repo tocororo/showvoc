@@ -27,7 +27,7 @@ import { SVEventHandler } from './utils/SVEventHandler';
 import { SVProperties } from './utils/SVProperties';
 
 export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, "./assets/i18n/");
+	return new TranslateHttpLoader(http, "./assets/l10n/");
 }
 
 @NgModule({
