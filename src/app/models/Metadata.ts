@@ -16,6 +16,9 @@ export class LinksetMetadata {
     linkPercentage?: number;
     linkPredicate?: IRI;
 
+    sourceDatasetProject?: Project; //this is not included in the linkset returned by the services, 
+        //this is added manually since it is useful when describing mapping from the Alignment tree
+
     /**
      * Returns in order (with fallback):
      * - the first registeredTargets with project name

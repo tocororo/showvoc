@@ -52,7 +52,7 @@
             <li [ngbNavItem]="'alignments'">
                 <a ngbNavLink>{{'ALIGNMENTS.ALIGNMENTS'|translate}}</a>
                 <ng-template ngbNavContent>
-                    <alignments-list-panel (linksetSelected)="onLinksetSelected($event)"></alignments-list-panel>
+                    <alignments-tree-panel (linksetSelected)="onLinksetSelected($event)"></alignments-tree-panel>
                 </ng-template>
             </li>
         </ul>

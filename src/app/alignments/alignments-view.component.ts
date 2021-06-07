@@ -2,7 +2,6 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { SharedModalsServices } from '../modal-dialogs/shared-modals/shared-modal.service';
-import { AlignmentContext } from '../models/Alignments';
 import { LinksetMetadata } from '../models/Metadata';
 import { Project } from '../models/Project';
 import { AnnotatedValue, IRI, Triple } from '../models/Resources';
@@ -17,7 +16,6 @@ import { SVContext, ProjectContext } from '../utils/SVContext';
 })
 export class AlignmentsView {
 
-    @Input() context: AlignmentContext;
     @Input() sourceProject: Project;
     @Input() linkset: LinksetMetadata;
 
@@ -38,7 +36,7 @@ export class AlignmentsView {
     }
 
     initAlignments() {
-        if (this.context == AlignmentContext.local) {
+        if (this.sourceProject == null) { //get the current project if no source project is provided
             this.sourceProject = SVContext.getProjectCtx().getProject();
         }
 
@@ -122,20 +120,16 @@ export class AlignmentsView {
             );
             annotateFunctions.push(annotateRight);
         }
-        forkJoin(...annotateFunctions).subscribe();
+        forkJoin(annotateFunctions).subscribe();
     }
 
     openSourceResource(resource: AnnotatedValue<IRI>) {
-        if (this.context == AlignmentContext.local) {
-            this.sharedModals.openResourceView(resource.getValue());
-        } else { //global
-            SVContext.setTempProject(this.sourceProject);
-            this.sharedModals.openResourceView(resource.getValue(), new ProjectContext(this.sourceProject)).then(
-                () => {
-                    SVContext.removeTempProject();
-                }
-            );
-        }
+        SVContext.setTempProject(this.sourceProject);
+        this.sharedModals.openResourceView(resource.getValue(), new ProjectContext(this.sourceProject)).then(
+            () => {
+                SVContext.removeTempProject();
+            }
+        );
     }
 
     openTargetResource(resource: AnnotatedValue<IRI>) {

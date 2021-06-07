@@ -9,11 +9,11 @@ import { MetadataRegistryServices } from 'src/app/services/metadata-registry.ser
 import { SVContext } from '../../utils/SVContext';
 
 @Component({
-    selector: 'alignments-list',
-    templateUrl: './alignments-list.component.html',
+    selector: 'alignments-tree',
+    templateUrl: './alignments-tree.component.html',
     host: { class: "structureComponent" }
 })
-export class AlignmentsListComponent {
+export class AlignmentsTreeComponent {
     @Input() showPercentage: boolean;
     @Output() linksetSelected = new EventEmitter<LinksetMetadata>();
 
@@ -58,7 +58,7 @@ export class AlignmentsListComponent {
         );
     }
 
-    private profileProject(project: Project): Observable<void> {
+    profileProject(project: Project): Observable<void> {
         this.loading = true;
         SVContext.setTempProject(project);
         return this.mapleService.profileProject().pipe(
@@ -79,13 +79,19 @@ export class AlignmentsListComponent {
                 this.linksets.sort((l1: LinksetMetadata, l2: LinksetMetadata) => {
                     return l1.getTargetDatasetShow().localeCompare(l2.getTargetDatasetShow());
                 });
+                //set the source dataset project, useful for retrieving the mappings
+                this.linksets.forEach(l => l.sourceDatasetProject = this.workingProject);
             }
         )
     }
 
 
     selectLinkset(linkset: LinksetMetadata) {
+        if (this.selectedLinkset != null) {
+            this.selectedLinkset['selected'] = false;
+        }
         this.selectedLinkset = linkset;
+        this.selectedLinkset['selected'] = true;
         this.linksetSelected.emit(linkset);
     }
 

@@ -18,7 +18,8 @@
     </div>
     
     <div class="card-body vbox">
-        <alignments-list [showPercentage]="showPercentage" (linksetSelected)="onLinksetSelected($event)"></alignments-list>
+        <!-- <alignments-list [showPercentage]="showPercentage" (linksetSelected)="onLinksetSelected($event)"></alignments-list> -->
+        <alignments-tree [showPercentage]="showPercentage" (linksetSelected)="onLinksetSelected($event)"></alignments-tree>
     </div>
 
 </div>

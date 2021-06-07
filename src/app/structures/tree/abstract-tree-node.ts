@@ -101,7 +101,7 @@ export abstract class AbstractTreeNode extends AbstractNode {
     /**
    	 * Collapse the subtree div.
    	 */
-    private collapseNode() {
+    collapseNode() {
         this.open = false;
         this.children = [];
     }
@@ -173,7 +173,7 @@ export abstract class AbstractTreeNode extends AbstractNode {
     /**
      * Listener to the nodeSelected @Output event, called when a node in the subTree is clicked
      */
-    private onNodeSelected(node: AnnotatedValue<IRI>) {
+    onNodeSelected(node: AnnotatedValue<IRI>) {
         this.nodeSelected.emit(node);
     }
 

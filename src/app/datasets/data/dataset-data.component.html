@@ -2,6 +2,6 @@
     <structure-tabset main (nodeSelected)="onNodeSelected($event)" (linksetSelected)="onLinksetSelected($event)"></structure-tabset>
     <ng-container secondary>
         <resource-view *ngIf="selectedResource" [resource]="selectedResource.getValue()" (dblclickObj)="objectDblClick($event)"></resource-view>
-        <alignments-view *ngIf="selectedLinkset" [context]="alignmentCtx" [linkset]="selectedLinkset"></alignments-view>
+        <alignments-view *ngIf="selectedLinkset" [linkset]="selectedLinkset" [sourceProject]="selectedLinkset.sourceDatasetProject"></alignments-view>
     </ng-container>
 </resizable-layout>

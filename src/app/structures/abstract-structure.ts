@@ -57,7 +57,7 @@ export abstract class AbstractStruct implements OnInit {
         this.nodesLimit = this.initialNodes;
     }
 
-    private onNodeSelected(node: AnnotatedValue<IRI>) {
+    onNodeSelected(node: AnnotatedValue<IRI>) {
         if (this.selectedNode != undefined) {
             this.selectedNode.deleteAttribute(ResAttribute.SELECTED);
         }

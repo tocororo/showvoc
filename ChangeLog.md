@@ -8,6 +8,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
   * Enabled deletion of remote repositories referred by a deleted dataset
   * Improved management of Remote Repository configurations
   * Introduced project facets
+  * Converted alignment list to a tree
   * Enabled possibility to customize ShowVoc instance name
   * Adopted the new Settings services
   * Fixed missing error message in case of exception during the project creation

@@ -5,16 +5,16 @@ import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { LinksetMetadata } from 'src/app/models/Metadata';
 import { MapleServices } from 'src/app/services/maple.service';
 import { SVContext } from 'src/app/utils/SVContext';
-import { AlignmentsListComponent } from './alignments-list.component';
+import { AlignmentsTreeComponent } from './alignments-tree.component';
 
 @Component({
-    selector: 'alignments-list-panel',
-    templateUrl: './alignments-list-panel.component.html',
+    selector: 'alignments-tree-panel',
+    templateUrl: './alignments-tree-panel.component.html',
     host: { class: "vbox" }
 })
-export class AlignmentsListPanelComponent {
+export class AlignmentsTreePanelComponent {
 
-    @ViewChild(AlignmentsListComponent) viewChildList: AlignmentsListComponent;
+    @ViewChild(AlignmentsTreeComponent) viewChildTree: AlignmentsTreeComponent;
     @Output() linksetSelected = new EventEmitter<LinksetMetadata>();
 
     selectedLinkset: LinksetMetadata;
@@ -25,13 +25,12 @@ export class AlignmentsListPanelComponent {
     constructor(private mapleService: MapleServices, private basicModals: BasicModalsServices) { }
 
     refresh() {
-        this.viewChildList.init();
+        this.viewChildTree.init();
     }
 
     refreshProfile() {
         this.basicModals.confirm({ key: "DATASETS.ACTIONS.PROFILE_DATASET" }, 
-            { key: "MESSAGES.REFRESH_METADATA_CONFIRM", params: { datasetName: SVContext.getWorkingProject().getName() }},
-            ModalType.info).then(
+            { key: "MESSAGES.REFRESH_METADATA_CONFIRM", params: { datasetName: SVContext.getWorkingProject().getName() }}, ModalType.info).then(
             () => {
                 this.loadingProfile = true;
                 this.mapleService.profileProject().pipe(

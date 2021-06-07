@@ -1,6 +1,5 @@
 import { Component, ElementRef, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AlignmentContext } from 'src/app/models/Alignments';
 import { LinksetMetadata } from 'src/app/models/Metadata';
 import { UIUtils } from 'src/app/utils/UIUtils';
 import { Project } from '../../models/Project';
@@ -13,8 +12,6 @@ export class AlignmentsModal {
 
     @Input() sourceProject: Project;
     @Input() linkset: LinksetMetadata;
-
-    alignmentCtx: AlignmentContext = AlignmentContext.global;
 
     constructor(public activeModal: NgbActiveModal, private elementRef: ElementRef) { }
 

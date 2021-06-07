@@ -1,0 +1,13 @@
+<div class="card vbox">
+    <div class="card-body vbox">
+        <div #scrollableContainer class="scrollableContainer p-2">
+            <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
+
+            <div *ngIf="missingProfile" class="alert alert-warning" [innerHTML]="'MESSAGES.METADATA_NOT_FOUND_PROFILE_DATASET'|translate"></div>
+
+            <alignment-tree-node *ngFor="let l of linksets" [linkset]="l" [showPercentage]="showPercentage" (nodeSelected)="selectLinkset($event)">
+            </alignment-tree-node>
+
+        </div>
+    </div>
+</div>

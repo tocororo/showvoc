@@ -1,0 +1,24 @@
+<div class="treeNode" #treeNodeElement>
+    <div class="expandCollapseBtnContainer">
+        <ng-container *ngIf="showExpandCollapseBtn">
+            <img *ngIf="!open" src="./assets/images/icons/arrow.png" class="arrow-right" (click)="expandNode()">
+            <img *ngIf="open" src="./assets/images/icons/arrow.png" (click)="collapseNode()">
+        </ng-container>
+    </div>
+    <div (click)="onNodeSelected(linkset)" [ngClass]="{ selectedResource : linkset['selected'] }" 
+        style="display: inline-flex; flex: 1; align-items: center; border-radius: 2px; padding: 1px 2px; cursor: pointer;">
+        <span style="flex: 1">{{linkset.getTargetDatasetShow()}}</span>
+        <span class="badge badge-info ml-2">
+            <ng-container *ngIf="!showPercentage">{{linkset.linkCount}}</ng-container>
+            <ng-container *ngIf="showPercentage">{{linkset.linkPercentage}}%</ng-container>
+        </span>
+    </div>
+</div>
+
+<div class="subTree">
+    <div *ngIf="loading" class="spinner-border spinner-border-sm text-info"></div>
+    <ng-container *ngFor="let n of children">
+        <alignment-tree-node [linkset]="n" [showPercentage]="showPercentage" (nodeSelected)="onNodeSelected($event)">
+        </alignment-tree-node>
+    </ng-container>
+</div>

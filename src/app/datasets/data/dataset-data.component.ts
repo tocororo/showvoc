@@ -1,7 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlignmentContext } from 'src/app/models/Alignments';
 import { LinksetMetadata } from 'src/app/models/Metadata';
 import { AnnotatedValue, IRI, Resource } from 'src/app/models/Resources';
 import { ResourcesServices } from 'src/app/services/resources.service';
@@ -17,8 +16,8 @@ export class DatasetDataComponent implements OnInit {
     @ViewChild(StructureTabsetComponent) viewChildStructureTabset: StructureTabsetComponent;
 
     selectedResource: AnnotatedValue<IRI> = null;
+
     selectedLinkset: LinksetMetadata;
-    alignmentCtx: AlignmentContext = AlignmentContext.local;
 
     constructor(private activatedRoute: ActivatedRoute, private router: Router, private location: Location, private resourcesService: ResourcesServices) { }
 
