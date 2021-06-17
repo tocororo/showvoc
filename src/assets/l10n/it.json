@@ -54,6 +54,10 @@
                 "MAIL_PASSWORD_WARN": "La password viene salvata in chiaro sul server",
                 "MAIL_ALIAS_INFO": "Alias mostrato nelle email di amministrazione"
             },
+            "OTHER": {
+                "OTHER_SETTINGS": "Altre impostazioni",
+                "DISABLE_CONTRIBUTION": "Disattiva la possibilità di contribuire a ShowVoc"
+            },
             "REMOTE_ACCESS": {
                 "REMOTE_ACCESS_CONFIG": "Configurazione accesso remoto",
                 "REMOTE_ACCESS_CONFIG_INFO": "Configurazione del Triple Store remoto che hosta i dataset in ShowVoc.<br><strong>Nota</strong>: se non opportunamente configurato, il sistema non sarà in grado di creare dataset remoti per hostare risorse stabili.",

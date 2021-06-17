@@ -8,6 +8,7 @@ import { OWL, RDF, RDFS } from './Vocabulary';
  */
  export enum SettingsEnum {
     conceptTree = "conceptTree",
+    disableContributions = "disableContributions",
     instanceList = "instanceList",
     languages = "languages",
     lexEntryList = "lexEntryList",
@@ -209,6 +210,7 @@ export class ProjectSettings {
 export class SystemSettings {
     showFlags: boolean = true;
     languages: Language[];
+    disableContributions: boolean = false;
 }
 
 export class VisualizationModeTranslation {
@@ -224,6 +226,7 @@ export class VisualizationModeTranslation {
 
 export class ShowVocSettings {
     vbConnectionConfig: VocBenchConnectionShowVocSettings;
+    disableContributions: boolean;
 }
 
 export class VocBenchConnectionShowVocSettings {

@@ -54,6 +54,10 @@
                 "MAIL_PASSWORD_WARN": "Password is stored wihtout encryption on the server",
                 "MAIL_ALIAS_INFO": "Alias name shown in the administration emails"
             },
+            "OTHER": {
+                "OTHER_SETTINGS": "Other settings",
+                "DISABLE_CONTRIBUTION": "Deactivate the \"contribute to ShowVoc\" option"
+            },
             "REMOTE_ACCESS": {
                 "REMOTE_ACCESS_CONFIG": "Remote access configuration",
                 "REMOTE_ACCESS_CONFIG_INFO": "Configuration of the remote triple store that hosts the datasets in ShowVoc.<br><strong>Note</strong>: if this is not properly configured, ShowVoc will not be able to create remotedatasets for hosting stable resources.",

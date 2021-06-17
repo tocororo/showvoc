@@ -6,14 +6,18 @@
 			<p class="lead">
 				{{'HOME.WELCOME_W_INST_NAME.POWERED_BY'|translate:translationParam}} (<a href="http://vocbench.uniroma2.it/pmki/">ShowVoc</a>)
 			</p>
-			<hr class="my-4">
-			<a class="btn btn-info" [routerLink]="['/contribution']" role="button">{{'HOME.WELCOME_W_INST_NAME.CONTRIBUTE_TO'|translate:translationParam}}</a>
+			<ng-container *ngIf="showContribution">
+				<hr class="my-4">
+				<a class="btn btn-info" [routerLink]="['/contribution']" role="button">{{'HOME.WELCOME_W_INST_NAME.CONTRIBUTE_TO'|translate:translationParam}}</a>
+			</ng-container>
 		</ng-container>
 
 		<ng-container *ngIf="!instanceName">
 			<h1 class="display-4">{{'HOME.WELCOME_WO_INST_NAME.WELCOME'|translate}}</h1>
-			<hr class="my-4">
-			<a class="btn btn-info" [routerLink]="['/contribution']" role="button">{{'HOME.WELCOME_WO_INST_NAME.CONTRIBUTE_TO'|translate}}</a>
+			<ng-container *ngIf="showContribution">
+				<hr class="my-4">
+				<a class="btn btn-info" [routerLink]="['/contribution']" role="button">{{'HOME.WELCOME_WO_INST_NAME.CONTRIBUTE_TO'|translate}}</a>
+			</ng-container>
 		</ng-container>
 
 	</div>

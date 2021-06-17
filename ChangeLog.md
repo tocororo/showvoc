@@ -10,6 +10,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
   * Introduced project facets
   * Converted alignment list to a tree
   * Enabled possibility to customize ShowVoc instance name
+  * Enabled possibility to deactivate users contributions
   * Adopted the new Settings services
   * Fixed missing error message in case of exception during the project creation
   * Updated the settings rendering widgets to deal with non-backward compatible changes in their representation returned by the server

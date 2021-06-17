@@ -410,6 +410,7 @@ export class SVProperties {
                 let systemLanguages: Language[] = settings.getPropertyValue(SettingsEnum.languages);
                 Languages.sortLanguages(systemLanguages);
                 systemSettings.languages = systemLanguages;
+                systemSettings.disableContributions = settings.getPropertyValue(SettingsEnum.disableContributions);
             }
         )
     }

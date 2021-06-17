@@ -41,9 +41,8 @@ export class SystemConfigurationComponent implements OnInit {
 
     testEmailConfigLoading: boolean;
 
-    closedAlert1: boolean;
-    closedAlert2: boolean;
-    closedAlert3: boolean;
+    /* Other */
+    disableContributions: boolean;
 
     
     constructor(private adminService: AdministrationServices, private svService: ShowVocServices, private settingsService: SettingsServices,
@@ -59,6 +58,7 @@ export class SystemConfigurationComponent implements OnInit {
                 this.initEmailConfigHanlder(settings);
                 this.initRemoteConfigHandler(settings);
                 this.initVbConfigHandler(settings);
+                this.initOtherConfig(settings);
             }
         )
     }
@@ -238,6 +238,21 @@ export class SystemConfigurationComponent implements OnInit {
             }
         }
         return false;
+    }
+
+    /* ============================
+     * Others
+     * ============================ */
+
+    private initOtherConfig(settings: Settings) {
+        let svSettings: ShowVocSettings = settings.getPropertyValue(SettingsEnum.showvoc);
+        this.disableContributions = svSettings.disableContributions;
+    }
+
+    updateDisableContributions() {
+        SVContext.getSystemSettings().disableContributions = this.disableContributions;
+        this.showVocSettings.disableContributions = this.disableContributions;
+        this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.showvoc, this.showVocSettings).subscribe();
     }
 
 }
