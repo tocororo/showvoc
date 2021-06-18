@@ -28,12 +28,12 @@ export class SearchBarComponent {
     loading: boolean = false;
 
     //search mode startsWith/contains/endsWith
-    stringMatchModes: { show: string, value: SearchMode, symbol: string }[] = [
-        { show: "Starts with", value: SearchMode.startsWith, symbol: "α.." },
-        { show: "Contains", value: SearchMode.contains, symbol: ".α." },
-        { show: "Ends with", value: SearchMode.endsWith, symbol: "..α" },
-        { show: "Exact", value: SearchMode.exact, symbol: "α" },
-        { show: "Fuzzy", value: SearchMode.fuzzy, symbol: "~α" }
+    stringMatchModes: { labelTranslationKey: string, value: SearchMode, symbol: string }[] = [
+        { labelTranslationKey: "SEARCH.SETTINGS.STARTS_WITH", value: SearchMode.startsWith, symbol: "α.." },
+        { labelTranslationKey: "SEARCH.SETTINGS.CONTAINS", value: SearchMode.contains, symbol: ".α." },
+        { labelTranslationKey: "SEARCH.SETTINGS.ENDS_WITH", value: SearchMode.endsWith, symbol: "..α" },
+        { labelTranslationKey: "SEARCH.SETTINGS.EXACT", value: SearchMode.exact, symbol: "α" },
+        { labelTranslationKey: "SEARCH.SETTINGS.FUZZY", value: SearchMode.fuzzy, symbol: "~α" }
     ];
 
     searchSettings: SearchSettings;
@@ -72,10 +72,6 @@ export class SearchBarComponent {
 
         let searchLangs: string[];
         let includeLocales: boolean;
-        // if (this.searchSettings.restrictLang) {
-        //     searchLangs = this.searchSettings.languages;
-        //     includeLocales = this.searchSettings.includeLocales;
-        // }
         let searchingScheme: IRI[] = [];
         if (this.roles.length == 1 && this.roles[0] == RDFResourceRolesEnum.concept && this.searchSettings.restrictActiveScheme) {
             searchingScheme = this.schemes;
@@ -119,12 +115,12 @@ export class SearchBarComponent {
     }
 
     settings() {
-		const modalRef: NgbModalRef = this.modalService.open(SearchSettingsModal, new ModalOptions() );
+		const modalRef: NgbModalRef = this.modalService.open(SearchSettingsModal, new ModalOptions());
         modalRef.componentInstance.roles = this.roles;
         return modalRef.result;
     }
 
-    private updateSearchMode(mode: SearchMode, event: Event) {
+    updateSearchMode(mode: SearchMode, event: Event) {
         event.stopPropagation();
         this.searchSettings.stringMatchMode = mode;
         this.svProps.setSearchSettings(SVContext.getProjectCtx(), this.searchSettings);

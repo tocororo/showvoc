@@ -86,7 +86,13 @@
         },
         "ALIGNMENTS": "Alignments",
         "SOURCE_DATASET": "Source dataset",
-        "MAPPINGS": "Mappings"
+        "MAPPINGS": "Mappings",
+        "SEARCH": {
+            "MODE_BOTH": "Both",
+            "MODE_ONLY_SOURCE": "Only source dataset",
+            "SOURCE_DATASET_MATCHES": "Source dataset search matches",
+            "TARGET_DATASET_MATCHES": "Target dataset search matches"
+        }
     },
     "APP": {
         "USER_MENU": {

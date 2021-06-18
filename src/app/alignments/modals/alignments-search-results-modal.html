@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h5 class="modal-title">{{'SEARCH.SEARCH_RESULTS'|translate}}</h5>
+    <button class="close" (click)="close()">
+        <span>&times;</span>
+    </button>
+</div>
+<div class="modal-body vbox">
+
+    <div *ngIf="sourceResults" class="card vbox">
+        <div class="card-header">
+            <label>{{'ALIGNMENTS.SEARCH.SOURCE_DATASET_MATCHES'|translate}}</label>
+        </div>
+        <div class="card-body scrollableContainer">
+            <div *ngFor="let r of sourceResults">
+                <div class="listItem">
+                    <rdf-resource [resource]="r" (click)="openSourceResource(r)" style="cursor: pointer;"></rdf-resource>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="targetResults" class="card vbox mt-2">
+        <div class="card-header">
+            <label>{{'ALIGNMENTS.SEARCH.TARGET_DATASET_MATCHES'|translate}}</label>
+        </div>
+        <div class="card-body scrollableContainer">
+            <div *ngFor="let r of targetResults">
+                <div class="listItem">
+                    <rdf-resource [resource]="r" (click)="openTargetResource(r)" style="cursor: pointer;"></rdf-resource>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
+</div>

@@ -24,6 +24,8 @@ export class Cookie {
     public static SEARCH_INCLUDE_LOCALES = "search.include_locales";
     public static SEARCH_USE_AUTOMOMPLETION = "search.use_autocompletion";
 
+    public static ALIGNMENT_SEARCH_DATASET_MODE = "alignment.search.dataset_mode";
+
     public static DATASETS_FACETS_TYPE_KOS = "datasets.facets.type.kos";
     public static DATASETS_FACETS_TYPE_LEXICON = "datasets.facets.type.lexicon";
     public static DATASETS_FACETS_TYPE_ONTOLOGY = "datasets.facets.type.ontology";

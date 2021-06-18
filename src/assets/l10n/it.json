@@ -86,7 +86,13 @@
         },
         "ALIGNMENTS": "Allineamenti",
         "SOURCE_DATASET": "Dataset sorgente",
-        "MAPPINGS": "Mapping"
+        "MAPPINGS": "Mapping",
+        "SEARCH": {
+            "MODE_BOTH": "Entrambi",
+            "MODE_ONLY_SOURCE": "Solo dataset sorgente",
+            "SOURCE_DATASET_MATCHES": "Match nel dataset sorgente",
+            "TARGET_DATASET_MATCHES": "Match nel dataset target"
+        }
     },
     "APP": {
         "USER_MENU": {

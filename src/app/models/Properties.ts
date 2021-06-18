@@ -93,6 +93,14 @@ export enum SearchMode {
     fuzzy = "fuzzy"
 }
 
+export enum StatusFilter {
+    NOT_DEPRECATED = "NOT_DEPRECATED",
+    ONLY_DEPRECATED = "ONLY_DEPRECATED",
+    UNDER_VALIDATION = "UNDER_VALIDATION",
+    UNDER_VALIDATION_FOR_DEPRECATION = "UNDER_VALIDATION_FOR_DEPRECATION",
+    ANYTHING = "ANYTHING",
+} 
+
 export enum ClassIndividualPanelSearchMode {
     onlyClasses = "onlyClasses",
     onlyInstances = "onlyInstances",

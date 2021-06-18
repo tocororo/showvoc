@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SearchMode, SearchSettings, ClassIndividualPanelSearchMode } from 'src/app/models/Properties';
 import { RDFResourceRolesEnum } from 'src/app/models/Resources';
-import { SVContext } from 'src/app/utils/SVContext';
+import { ProjectContext, SVContext } from 'src/app/utils/SVContext';
 import { SVProperties } from 'src/app/utils/SVProperties';
 
 @Component({
@@ -12,6 +12,7 @@ import { SVProperties } from 'src/app/utils/SVProperties';
 export class SearchSettingsModal implements OnInit {
 
     @Input() roles: RDFResourceRolesEnum[];
+    @Input() projectCtx: ProjectContext;
 
     private settings: SearchSettings;
 
@@ -55,7 +56,10 @@ export class SearchSettingsModal implements OnInit {
         this.settingsForConceptPanel = this.roles.length == 1 && this.roles[0] == RDFResourceRolesEnum.concept;
         this.settingsForClassInstancePanel = this.roles.indexOf(RDFResourceRolesEnum.cls) != -1 && this.roles.indexOf(RDFResourceRolesEnum.individual) != -1;
 
-        this.settings = SVContext.getProjectCtx().getProjectPreferences().searchSettings;
+        if (this.projectCtx == null) {
+            this.projectCtx = SVContext.getProjectCtx();
+        }
+        this.settings = this.projectCtx.getProjectPreferences().searchSettings;
         this.activeStringMatchMode = this.settings.stringMatchMode;
         this.useURI = this.settings.useURI;
         this.useLocalName = this.settings.useLocalName;
@@ -68,19 +72,9 @@ export class SearchSettingsModal implements OnInit {
         this.activeClsIndSearchMode = this.settings.classIndividualSearchMode;
     }
 
-    // private selectRestrictionLanguages() {
-    //     this.sharedModals.selectLanguages("Language restrictions", this.languages, true).then(
-    //         (langs: string[]) => {
-    //             this.languages = langs;
-    //             this.updateSettings();
-    //         },
-    //         () => {}
-    //     );
-    // }
-
     updateSettings() {
         this.svProp.setSearchSettings(
-            SVContext.getProjectCtx(),
+            this.projectCtx,
             {
                 stringMatchMode: this.activeStringMatchMode,
                 useURI: this.useURI,

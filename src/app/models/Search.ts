@@ -1,3 +1,4 @@
+import { SearchMode } from './Properties';
 import { Literal, IRI, RDFResourceRolesEnum } from './Resources';
 
 export class GlobalSearchResult {
@@ -16,4 +17,10 @@ export class SearchResultDetails {
     matchedValue: Literal;
     predicate: IRI;
     type: "note" | "label";
+}
+
+export class TripleForSearch { 
+    predicate: IRI;
+    searchString: string;
+    mode: SearchMode;
 }

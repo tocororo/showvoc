@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SearchMode } from "../models/Properties";
-import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from '../models/Resources';
+import { SearchMode, StatusFilter } from "../models/Properties";
+import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource, Value } from '../models/Resources';
+import { TripleForSearch } from '../models/Search';
 import { HttpManager, SVRequestOptions } from "../utils/HttpManager";
 import { ResourceDeserializer } from '../utils/ResourceUtils';
 
@@ -27,7 +28,7 @@ export class SearchServices {
      */
     searchResource(searchString: string, rolesArray: string[], useLocalName: boolean, useURI: boolean, useNotes: boolean,
         searchMode: SearchMode, langs?: string[], includeLocales?: boolean, schemes?: IRI[]): Observable<AnnotatedValue<Resource>[]> {
-        var params: any = {
+        let params: any = {
             searchString: searchString,
             rolesArray: rolesArray,
             useLocalName: useLocalName,
@@ -58,7 +59,7 @@ export class SearchServices {
      */
     searchLexicalEntry(searchString: string, useLocalName: boolean, useURI: boolean, useNotes: boolean, searchMode: SearchMode, 
         lexicons?: IRI[], langs?: string[], includeLocales?: boolean): Observable<AnnotatedValue<IRI>[]> {
-        var params: any = {
+        let params: any = {
             searchString: searchString,
             useLocalName: useLocalName,
             useURI: useURI,
@@ -88,7 +89,7 @@ export class SearchServices {
      */
     searchInstancesOfClass(cls: IRI, searchString: string, useLocalName: boolean, useURI: boolean, useNotes: boolean,
         searchMode: SearchMode, langs?: string[], includeLocales?: boolean, options?: SVRequestOptions): Observable<AnnotatedValue<IRI>[]> {
-        var params: any = {
+        let params: any = {
             cls: cls,
             searchString: searchString,
             useLocalName: useLocalName,
@@ -118,7 +119,7 @@ export class SearchServices {
      * @return an array of resources
      */
     getPathFromRoot(resource: IRI, role: RDFResourceRolesEnum, schemes?: IRI[], root?: IRI) {
-        var params: any = {
+        let params: any = {
             role: role,
             resourceURI: resource,
             schemesIRI: schemes,
@@ -126,9 +127,9 @@ export class SearchServices {
         };
         return this.httpMgr.doGet(this.serviceName, "getPathFromRoot", params).pipe(
             map(stResp => {
-                var shortestPath: AnnotatedValue<IRI>[] = [];
-                var paths: AnnotatedValue<IRI>[] = ResourceDeserializer.createIRIArray(stResp);
-                for (var i = 0; i < paths.length; i++) {
+                let shortestPath: AnnotatedValue<IRI>[] = [];
+                let paths: AnnotatedValue<IRI>[] = ResourceDeserializer.createIRIArray(stResp);
+                for (let i = 0; i < paths.length; i++) {
                     shortestPath.push(paths[i]);
                     if (paths[i].getValue().equals(resource)) {
                         break;
@@ -150,7 +151,7 @@ export class SearchServices {
      */
     searchStringList(searchString: string, rolesArray: string[], useLocalName: boolean, searchMode: SearchMode, 
             langs?: string[], includeLocales?: boolean, schemes?: IRI[], cls?: IRI): Observable<string[]> {
-        var params: any = {
+        let params: any = {
             searchString: searchString,
             rolesArray: rolesArray,
             useLocalName: useLocalName,
@@ -161,6 +162,136 @@ export class SearchServices {
             cls: cls
         };
         return this.httpMgr.doGet(this.serviceName, "searchStringList", params);
+    }
+
+
+    /**
+     * 
+     * @param searchString 
+     * @param useLocalName 
+     * @param useURI 
+     * @param useNotes 
+     * @param searchMode 
+     * @param statusFilter 
+     * @param langs 
+     * @param includeLocales 
+     * @param types 
+     * @param schemes 
+     * @param ingoingLinks 
+     * @param outgoingLinks 
+     * @param outgoingSearch 
+     * @returns 
+     */
+    advancedSearch(searchString: string, useLocalName: boolean, useURI: boolean, useNotes: boolean, searchMode: SearchMode, statusFilter: StatusFilter,
+        langs?: string[], includeLocales?: boolean, types?: IRI[][], schemes?: IRI[][],
+        ingoingLinks?: { first: IRI, second: Value[] }[], outgoingLinks?: { first: IRI, second: Value[] }[],
+        outgoingSearch?: TripleForSearch[]): Observable<AnnotatedValue<Resource>[]> {
+
+        let params: any = {
+            statusFilter: statusFilter,
+            searchMode: searchMode
+        };
+        if (searchString != null) {
+            params.searchString = searchString;
+            params.useLocalName = useLocalName;
+            params.useURI = useURI;
+            params.useNotes = useNotes;
+        }
+        if (langs != null) {
+            params.langs = langs;
+        }
+        if (includeLocales != null) {
+            params.includeLocales = includeLocales;
+        }
+        if (types != null) {
+            params.types = this.serializeListOfList(types);
+        }
+        if (schemes != null) {
+            params.schemes = this.serializeListOfList(schemes);
+        }
+        if (ingoingLinks != null) {
+            params.ingoingLinks = this.serializeLinks(ingoingLinks);
+        }
+        if (outgoingLinks != null) {
+            params.outgoingLinks = this.serializeLinks(outgoingLinks);
+        }
+        if (outgoingSearch != null) {
+            params.outgoingSearch = this.serializeSearchLinks(outgoingSearch);
+        }
+        return this.httpMgr.doPost(this.serviceName, "advancedSearch", params).pipe(
+            map(stResp => {
+                return ResourceDeserializer.createResourceArray(stResp);
+            })
+        );
+    }
+
+    private serializeListOfList(lists: IRI[][]): string {
+        let listSerialization: string[][] = [];
+        lists.forEach((list: IRI[]) => {
+            let l: string[] = []
+            list.forEach((res: IRI) => {
+                l.push(res.toNT());
+            })
+            listSerialization.push(l);
+        });
+        return JSON.stringify(listSerialization);
+    }
+
+    private serializeLinks(links: { first: IRI, second: Value[] }[]): string {
+        /**
+         * list of list, the 2nd list has length 2:
+         * 1- first element is a string (serialization of predicate),
+         * 2- second element is a list of string (list of serialization of the values)
+         */
+        let linksSerialization: (string | string[])[][] = [];
+        links.forEach((link: { first: IRI, second: Value[] }) => {
+            let secondSerialization: string[] = [];
+            link.second.forEach((res: Value) => {
+                secondSerialization.push(res.toNT());
+            })
+            linksSerialization.push([link.first.toNT(), secondSerialization]);
+        });
+        return JSON.stringify(linksSerialization);
+    }
+
+    private serializeSearchLinks(outgoingSearch: TripleForSearch[]) {
+        /**
+         * list of list, the 2nd list has length 3:
+         * 1- first element is a string (serialization of predicate)
+         * 2- second element is a string (searchString)
+         * 3- third element is a SearchMode
+         */
+        let serialization: (string | SearchMode)[][] = [];
+        outgoingSearch.forEach((link: TripleForSearch) => {
+            serialization.push([
+                link.predicate ? link.predicate.toNT() : null,
+                link.searchString,
+                link.mode
+            ]);
+        });
+        return JSON.stringify(serialization);
+    }
+
+
+    searchAlignedResources(searchString: string, useLocalName: boolean, useURI: boolean, searchMode: SearchMode,
+        useNotes?: boolean, langs?: string[], includeLocales?: boolean,
+        predList?: IRI[], maxNumOfResPerQuery?: number): Observable<AnnotatedValue<Resource>[]> {
+        let params: any = {
+            searchString: searchString,
+            useLocalName: useLocalName,
+            useURI: useURI,
+            searchMode: searchMode,
+            useNotes: useNotes,
+            langs: langs,
+            includeLocales: includeLocales,
+            predList: predList,
+            maxNumOfResPerQuery: maxNumOfResPerQuery
+        };
+        return this.httpMgr.doGet(this.serviceName, "searchAlignedResources", params).pipe(
+            map(stResp => {
+                return ResourceDeserializer.createResourceArray(stResp);
+            })
+        );
     }
 
 }

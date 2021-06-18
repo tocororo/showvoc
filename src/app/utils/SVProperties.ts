@@ -10,9 +10,9 @@ import { ResViewPartition } from '../models/ResourceView';
 import { OWL, RDFS } from '../models/Vocabulary';
 import { SettingsServices } from '../services/settings.service';
 import { Cookie } from './Cookie';
-import { SVContext, ProjectContext } from './SVContext';
-import { SVEventHandler } from './SVEventHandler';
 import { ResourceUtils } from './ResourceUtils';
+import { ProjectContext, SVContext } from './SVContext';
+import { SVEventHandler } from './SVEventHandler';
 
 @Injectable()
 export class SVProperties {
@@ -388,11 +388,11 @@ export class SVProperties {
 
     setSearchSettings(projectCtx: ProjectContext, settings: SearchSettings) {
         let projectPreferences: ProjectPreferences = projectCtx.getProjectPreferences();
-        Cookie.setCookie(Cookie.SEARCH_STRING_MATCH_MODE, settings.stringMatchMode, 365 * 10);
-        Cookie.setCookie(Cookie.SEARCH_USE_URI, settings.useURI + "", 365 * 10);
-        Cookie.setCookie(Cookie.SEARCH_USE_LOCAL_NAME, settings.useLocalName + "", 365 * 10);
-        Cookie.setCookie(Cookie.SEARCH_USE_NOTES, settings.useNotes + "", 365 * 10);
-        Cookie.setCookie(Cookie.SEARCH_CONCEPT_SCHEME_RESTRICTION, settings.restrictActiveScheme + "", 365 * 10);
+        Cookie.setCookie(Cookie.SEARCH_STRING_MATCH_MODE, settings.stringMatchMode);
+        Cookie.setCookie(Cookie.SEARCH_USE_URI, settings.useURI + "");
+        Cookie.setCookie(Cookie.SEARCH_USE_LOCAL_NAME, settings.useLocalName + "");
+        Cookie.setCookie(Cookie.SEARCH_USE_NOTES, settings.useNotes + "");
+        Cookie.setCookie(Cookie.SEARCH_CONCEPT_SCHEME_RESTRICTION, settings.restrictActiveScheme + "");
         Cookie.setCookie(Cookie.SEARCH_LANGUAGES, JSON.stringify(settings.languages));
         Cookie.setCookie(Cookie.SEARCH_RESTRICT_LANG, settings.restrictLang+"");
         Cookie.setCookie(Cookie.SEARCH_INCLUDE_LOCALES, settings.includeLocales+"");
@@ -400,7 +400,6 @@ export class SVProperties {
         projectPreferences.searchSettings = settings;
         this.eventHandler.searchPrefsUpdatedEvent.emit();
     }
-
 
     initStartupSystemSettings() {
         this.settingsService.getStartupSettings().subscribe(

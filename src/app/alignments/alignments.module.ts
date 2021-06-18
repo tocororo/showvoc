@@ -12,11 +12,14 @@ import { AlignmentsView } from './alignments-view.component';
 import { AlignmentsComponent } from './alignments.component';
 import { AlignmentsModal } from './modals/alignments-modal';
 import { AlignmentsModalsServices } from './modals/alignments-modal.service';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { AlignmentsSearchResultsModal } from './modals/alignments-search-results-modal';
 
 @NgModule({
     declarations: [
         AlignmentsComponent,
         AlignmentsModal,
+        AlignmentsSearchResultsModal,
         AlignmentsTreePanelComponent,
         AlignmentsTableComponent,
         AlignmentsTreeComponent,
@@ -27,6 +30,7 @@ import { AlignmentsModalsServices } from './modals/alignments-modal.service';
         CommonModule,
         FormsModule,
         GraphModule,
+        NgbDropdownModule,
         TranslateModule,
         WidgetModule
     ],
@@ -38,7 +42,8 @@ import { AlignmentsModalsServices } from './modals/alignments-modal.service';
         AlignmentsModalsServices
     ],
     entryComponents: [
-        AlignmentsModal
+        AlignmentsModal,
+        AlignmentsSearchResultsModal,
     ]
 })
 export class AlignmentsModule { }
