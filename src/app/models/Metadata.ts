@@ -44,9 +44,9 @@ export class LinksetMetadata {
      * If specified in the registered targets, returns the first target with the projectName, otherwise returns null.
      */
     getTargetProject(): Project {
-        for (let i = 0; i < this.registeredTargets.length; i++) {
-            if (this.registeredTargets[i].projectName != null) {
-                return new Project(this.registeredTargets[i].projectName);
+        for (let t of this.registeredTargets) {
+            if (t.projectName != null) {
+                return new Project(t.projectName);
             }
         }
         return null;

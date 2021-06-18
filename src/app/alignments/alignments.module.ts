@@ -14,11 +14,13 @@ import { AlignmentsModal } from './modals/alignments-modal';
 import { AlignmentsModalsServices } from './modals/alignments-modal.service';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AlignmentsSearchResultsModal } from './modals/alignments-search-results-modal';
+import { AlignmentsSearchbar } from './alignments-searchbar.component';
 
 @NgModule({
     declarations: [
         AlignmentsComponent,
         AlignmentsModal,
+        AlignmentsSearchbar,
         AlignmentsSearchResultsModal,
         AlignmentsTreePanelComponent,
         AlignmentsTableComponent,

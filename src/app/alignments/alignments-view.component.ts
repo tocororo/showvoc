@@ -1,23 +1,15 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { concat, forkJoin, Observable } from 'rxjs';
 import { finalize, map, toArray } from 'rxjs/operators';
-import { ModalOptions } from '../modal-dialogs/Modals';
 import { SharedModalsServices } from '../modal-dialogs/shared-modals/shared-modal.service';
 import { LinksetMetadata } from '../models/Metadata';
 import { Project } from '../models/Project';
-import { SearchMode, SearchSettings, StatusFilter } from '../models/Properties';
-import { AnnotatedValue, IRI, Resource, Triple } from '../models/Resources';
-import { TripleForSearch } from '../models/Search';
+import { AnnotatedValue, IRI, Triple } from '../models/Resources';
 import { AlignmentServices } from '../services/alignment.service';
 import { ResourcesServices } from '../services/resources.service';
-import { SearchServices } from '../services/search.service';
-import { SearchSettingsModal } from '../structures/search-bar/search-settings-modal';
-import { Cookie } from '../utils/Cookie';
 import { HttpServiceContext } from '../utils/HttpManager';
-import { SVContext, ProjectContext } from '../utils/SVContext';
+import { ProjectContext, SVContext } from '../utils/SVContext';
 import { SVProperties } from '../utils/SVProperties';
-import { AlignmentsSearchResultsModal } from './modals/alignments-search-results-modal';
 
 @Component({
     selector: 'alignments-view',
@@ -26,10 +18,11 @@ import { AlignmentsSearchResultsModal } from './modals/alignments-search-results
 })
 export class AlignmentsView {
 
-    @Input() sourceProject: Project;
+    @Input() sourceProject: Project; //source project of the alignment, if not provided it is taken from the SVContext
     @Input() linkset: LinksetMetadata;
 
-    projectCtx: ProjectContext;
+    sourceCtx: ProjectContext;
+    targetCtx: ProjectContext;
 
     loading: boolean = false;
     annotatedMappings: Triple<AnnotatedValue<IRI>>[];
@@ -39,70 +32,36 @@ export class AlignmentsView {
     totPage: number;
     pageSize: number = 50;
 
-    //search
-    searchLoading: boolean;
-    searchStr: string;
-    searchSettings: SearchSettings;
-    stringMatchModes: { labelTranslationKey: string, value: SearchMode, symbol: string }[] = [
-        { labelTranslationKey: "SEARCH.SETTINGS.STARTS_WITH", value: SearchMode.startsWith, symbol: "α.." },
-        { labelTranslationKey: "SEARCH.SETTINGS.CONTAINS", value: SearchMode.contains, symbol: ".α." },
-        { labelTranslationKey: "SEARCH.SETTINGS.ENDS_WITH", value: SearchMode.endsWith, symbol: "..α" },
-        { labelTranslationKey: "SEARCH.SETTINGS.EXACT", value: SearchMode.exact, symbol: "α" },
-        { labelTranslationKey: "SEARCH.SETTINGS.FUZZY", value: SearchMode.fuzzy, symbol: "~α" }
-    ];
-
-    targetDatasetAvailable: boolean; //tells if the target dataset has a related project (useful to enable/disable search on target dataset)
-    datasetSearchModes: { labelTranslationKey: string, value: DatasetSearchMode, symbol: string }[] = [
-        { labelTranslationKey: "ALIGNMENTS.SEARCH.MODE_ONLY_SOURCE", value: DatasetSearchMode.onlySource, symbol: "fas fa-long-arrow-alt-left" },
-        { labelTranslationKey: "ALIGNMENTS.SEARCH.MODE_BOTH", value: DatasetSearchMode.both, symbol: "fas fa-arrows-alt-h" },
-    ];
-    datasetSearchMode: DatasetSearchMode;
-
-    constructor(private alignmentService: AlignmentServices, private resourcesService: ResourcesServices, private searchService: SearchServices,
-        private svProps: SVProperties, private sharedModals: SharedModalsServices, private modalService: NgbModal) { }
+    constructor(private alignmentService: AlignmentServices, private resourcesService: ResourcesServices, private svProps: SVProperties,
+        private sharedModals: SharedModalsServices) { }
 
     ngOnInit() {
-        let searchDatasetModeCookie = Cookie.getCookie(Cookie.ALIGNMENT_SEARCH_DATASET_MODE);
-        if (searchDatasetModeCookie in DatasetSearchMode) {
-            this.datasetSearchMode = <DatasetSearchMode>searchDatasetModeCookie;
-        } else {
-            this.datasetSearchMode = DatasetSearchMode.onlySource;
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['linkset']) {
             this.initAlignments();
         }
-        if (changes['sourceProject']) {
-            /*
-            Init the search settings:
-            If a project is accessed (stored in SVContext), it means that the project context has been already initialized and the search settings can be retrieved from SVContext.
-            Otherwise, create the context and init the project preferences.
-            */
-            if (SVContext.getWorkingProject() != null) {
-                this.searchSettings = SVContext.getProjectCtx().getProjectPreferences().searchSettings;
-            } else {
-                this.projectCtx = new ProjectContext(this.sourceProject);
-                this.searchSettings = new SearchSettings(); //init it temporarly, just to prevent error on UI
-                this.svProps.initUserProjectPreferences(this.projectCtx).subscribe(
-                    () => {
-                        this.searchSettings = this.projectCtx.getProjectPreferences().searchSettings;
-                    }
-                )
-            }
-
-            //check if target dataset has a project in ShowVoc. If not, lock the dataset search mode to "OnlySource"
-            this.targetDatasetAvailable = this.linkset.getTargetProject() != null;
-            if (!this.targetDatasetAvailable) {
-                this.datasetSearchMode = DatasetSearchMode.onlySource;
-            }
-        }
     }
 
     initAlignments() {
         if (this.sourceProject == null) { //get the current project if no source project is provided
             this.sourceProject = SVContext.getProjectCtx().getProject();
+        }
+
+        /* init the two dataset context */
+        //- source (context is taken from SVContext if the sourceProject is the currently accessed, otherwise is initialized)
+        if (SVContext.getProjectCtx() != null && SVContext.getProjectCtx().getProject().getName() == this.sourceProject.getName()) {
+            this.sourceCtx = SVContext.getProjectCtx();
+        } else {
+            this.sourceCtx = new ProjectContext(this.sourceProject);
+            this.svProps.initUserProjectPreferences(this.sourceCtx).subscribe();
+        }
+        //- target
+        let targetProject: Project = this.linkset.getTargetProject();
+        if (targetProject != null) { //this means that target resources belong to a project hosted on showvoc
+            this.targetCtx = new ProjectContext(targetProject);
+            this.svProps.initUserProjectPreferences(this.targetCtx).subscribe();
         }
 
         SVContext.setTempProject(this.sourceProject);
@@ -124,10 +83,10 @@ export class AlignmentsView {
         this.alignmentService.getMappings(this.linkset.targetDataset.uriSpace, this.page, this.pageSize).pipe(
             finalize(() => {
                 this.loading = false;
-                SVContext.removeTempProject();
             })
         ).subscribe(
             mappings => {
+                SVContext.removeTempProject();
                 this.annotatedMappings = [];
                 mappings.forEach(m => {
                     this.annotatedMappings.push(new Triple(new AnnotatedValue(m.getLeft()), new AnnotatedValue(m.getMiddle()), new AnnotatedValue(m.getRight())));
@@ -145,11 +104,13 @@ export class AlignmentsView {
             rightEntities.push(m.getRight().getValue());
         });
         let annotateFunctions: Observable<void>[] = [];
+
+        //annotate left
         if (leftEntities.length > 0) {
-            SVContext.setTempProject(this.sourceProject);
+            HttpServiceContext.setContextProject(this.sourceProject);
             let annotateLeft: Observable<void> = this.resourcesService.getResourcesInfo(leftEntities).pipe(
                 finalize(() => {
-                    SVContext.removeTempProject();
+                    HttpServiceContext.resetContext();
                 }),
                 map(annotated => {
                     annotated.forEach(a => {
@@ -165,12 +126,12 @@ export class AlignmentsView {
             annotateFunctions.push(annotateLeft);
         }
 
-        if (rightEntities.length > 0 && this.linkset.getTargetProject() != null) {
-            let ctxProject: Project = this.linkset.getTargetProject();
-            SVContext.setTempProject(ctxProject);
+        //annotate right (only if right project is available)
+        if (rightEntities.length > 0 && this.targetCtx != null) {
+            HttpServiceContext.setContextProject(this.targetCtx.getProject());
             let annotateRight: Observable<void> = this.resourcesService.getResourcesInfo(rightEntities).pipe(
                 finalize(() => {
-                    SVContext.removeTempProject();
+                    HttpServiceContext.resetContext();
                 }),
                 map(annotated => {
                     annotated.forEach(a => {
@@ -185,7 +146,9 @@ export class AlignmentsView {
             );
             annotateFunctions.push(annotateRight);
         }
-        forkJoin(annotateFunctions).subscribe();
+        concat(...annotateFunctions).pipe(
+            toArray()
+        ).subscribe();
     }
 
     openSourceResource(resource: AnnotatedValue<IRI>) {
@@ -224,91 +187,4 @@ export class AlignmentsView {
         this.listMappings();
     }
 
-    /* ==========================
-     * Search 
-     * ========================== */
-
-    openSearchSettings() {
-		const modalRef: NgbModalRef = this.modalService.open(SearchSettingsModal, new ModalOptions());
-        modalRef.componentInstance.projectCtx = this.projectCtx;
-        modalRef.componentInstance.roles = [];
-        return modalRef.result;
-    }
-    
-    doSearch() {
-        if (this.searchStr == null || this.searchStr.trim() == "") return;
-
-        let inTarget: boolean = this.datasetSearchMode == DatasetSearchMode.both;
-        let sourceDatasetResults: AnnotatedValue<Resource>[];
-        let targetDatasetResults: AnnotatedValue<Resource>[];
-
-        let searchFn: Observable<void>[] = [];
-
-        searchFn.push(this.searchInSource().pipe(
-            map(results => {
-                sourceDatasetResults = results;
-            })
-        ))
-        if (inTarget) {
-            searchFn.push(this.searchInTarget().pipe(
-                map(results => {
-                    targetDatasetResults = results;
-                })
-            ))
-        }
-
-        this.searchLoading = true;
-        concat(...searchFn).pipe(
-            toArray(),
-            finalize(() => this.searchLoading = false)
-        ).subscribe(() => {
-            const modalRef: NgbModalRef = this.modalService.open(AlignmentsSearchResultsModal, new ModalOptions('lg'));
-            modalRef.componentInstance.sourceProject = this.sourceProject;
-            modalRef.componentInstance.targetProject = this.linkset.getTargetProject();
-            modalRef.componentInstance.sourceResults = sourceDatasetResults;
-            modalRef.componentInstance.targetResults = targetDatasetResults;
-        })
-    }
-
-    private searchInSource(): Observable<AnnotatedValue<Resource>[]> {
-        let outgoingSearch: TripleForSearch = { predicate: null, searchString: this.linkset.targetDataset.uriSpace, mode: SearchMode.startsWith };
-        HttpServiceContext.setContextProject(this.sourceProject);
-        return this.searchService.advancedSearch(this.searchStr, this.searchSettings.useLocalName, this.searchSettings.useURI,
-            this.searchSettings.useNotes, this.searchSettings.stringMatchMode, StatusFilter.ANYTHING, null, null, null, null, null, null, [outgoingSearch]).pipe(
-            finalize(() => {
-                HttpServiceContext.removeContextProject();
-            })
-        );
-    }
-
-    private searchInTarget(): Observable<AnnotatedValue<Resource>[]> {
-        let targetProj: Project = this.linkset.getTargetProject();
-        HttpServiceContext.setConsumerProject(this.sourceProject);
-        HttpServiceContext.setContextProject(targetProj);
-        return this.searchService.searchAlignedResources(this.searchStr, this.searchSettings.useLocalName, this.searchSettings.useURI, this.searchSettings.stringMatchMode,
-            this.searchSettings.useNotes).pipe(
-            finalize(() => {
-                HttpServiceContext.removeConsumerProject();
-                HttpServiceContext.removeContextProject();
-            })
-        )
-    }
-
-    updateSearchMode(mode: SearchMode, event: Event) {
-        event.stopPropagation();
-        this.searchSettings.stringMatchMode = mode;
-        this.svProps.setSearchSettings(this.projectCtx, this.searchSettings);
-    }
-
-    updateDatasetSearchMode(mode: DatasetSearchMode, event: Event) {
-        event.stopPropagation();
-        this.datasetSearchMode = mode;
-        Cookie.setCookie(Cookie.ALIGNMENT_SEARCH_DATASET_MODE, mode);
-    }
-    
-}
-
-enum DatasetSearchMode {
-    onlySource = "onlySource",
-    both = "both"
 }

@@ -1,0 +1,45 @@
+<div class="d-flex align-items-center" style="flex: 1">
+    <input type="text" class="form-control form-control-sm" [(ngModel)]="searchStr" (keydown.enter)="doSearch()" [placeholder]="'COMMONS.ACTIONS.SEARCH'|translate">
+
+    <div class="btn-toolbar ml-1" style="flex-wrap: nowrap">
+        <button class="btn btn-info btn-sm" (click)="doSearch()" [disabled]="searchLoading">
+            <i *ngIf="!searchLoading" class="fas fa-search"></i>
+            <div *ngIf="searchLoading" class="spinner-border spinner-border-sm"></div>
+        </button>
+        <div class="btn-group btn-group-sm ml-1">
+            <div class="btn-group btn-group-sm dropup" ngbDropdown placement="top-right">
+                <button class="btn btn-outline-info dropdown-toggle dropdown-no-arrow" data-toggle="dropdown" ngbDropdownToggle>
+                    <b *ngIf="searchSettings.stringMatchMode == 'startsWith'">&#945;..</b>
+                    <b *ngIf="searchSettings.stringMatchMode == 'contains'">.&#945;.</b>
+                    <b *ngIf="searchSettings.stringMatchMode == 'endsWith'">..&#945;</b>
+                    <b *ngIf="searchSettings.stringMatchMode == 'exact'">&#945;</b>
+                    <b *ngIf="searchSettings.stringMatchMode == 'fuzzy'">~&#945;</b>
+                </button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <button *ngFor="let mode of stringMatchModes" class="dropdown-item" (click)="updateSearchMode(mode.value, $event)">
+                        <b class="mr-2" style="display: inline-block; width: 24px;">{{mode.symbol}}</b>
+                        <span>{{mode.labelTranslationKey|translate}}</span>
+                        <span *ngIf="searchSettings.stringMatchMode == mode.value" class="fas fa-check ml-2"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="btn-group btn-group-sm dropup" ngbDropdown placement="top-right">
+                <button class="btn btn-outline-info dropdown-toggle dropdown-no-arrow" style="width: 32px;" data-toggle="dropdown" ngbDropdownToggle>
+                    <span *ngIf="datasetSearchMode == 'onlySource'" class="fas fa-long-arrow-alt-left"></span>
+                    <span *ngIf="datasetSearchMode == 'both'" class="fas fa-arrows-alt-h"></span>
+                </button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <button *ngFor="let mode of datasetSearchModes" class="dropdown-item" (click)="updateDatasetSearchMode(mode.value, $event)" [disabled]="mode.value == 'both' && !targetDatasetAvailable">
+                        <span [class]="'mr-2 ' + mode.symbol"></span>
+                        <span>{{mode.labelTranslationKey|translate}}</span>
+                        <span *ngIf="datasetSearchMode == mode.value" class="fas fa-check ml-2"></span>
+                    </button>
+                </div>
+            </div>
+
+            <button class="btn btn-outline-info" (click)="openSearchSettings()">
+                <i class="fas fa-cog"></i>
+            </button>
+        </div>
+    </div>
+</div>

@@ -253,9 +253,15 @@ export class HttpManager {
         }
 
         //language (if languages provided in cookies, override the preference stored server side through the ctx_langs param)
-        let proj = SVContext.getWorkingProject();
-        if (proj != null && ctxProject != null && proj.getName() == ctxProject.getName()) {
-            let langsCookie = Cookie.getUserProjectCookiePref(Properties.pref_languages, proj);
+        // let proj = SVContext.getWorkingProject();
+        // if (proj != null && ctxProject != null && proj.getName() == ctxProject.getName()) {
+        //     let langsCookie = Cookie.getUserProjectCookiePref(Properties.pref_languages, proj);
+        //     if (langsCookie != null) {
+        //         params += "ctx_langs=" + langsCookie + "&";
+        //     }
+        // }
+        if (ctxProject != null) {
+            let langsCookie = Cookie.getUserProjectCookiePref(Properties.pref_languages, ctxProject);
             if (langsCookie != null) {
                 params += "ctx_langs=" + langsCookie + "&";
             }
