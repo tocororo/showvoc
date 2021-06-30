@@ -26,7 +26,7 @@ export class AppComponent {
 
     constructor(private authServices: AuthServices, private svProp: SVProperties, private translate: TranslateService) {
         //set the available factory-provided l10n languages
-        translate.addLangs(['en', 'it']);
+        translate.addLangs(['de', 'en', 'it']);
         //add additional supported l10n languages
         let additionalLangs: string[] = window['additional_l10n_langs'];
         if (additionalLangs.length > 0) {

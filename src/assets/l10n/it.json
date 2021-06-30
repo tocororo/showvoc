@@ -2,80 +2,80 @@
     "ADMINISTRATION": {
         "DATASETS": {
             "MANAGEMENT": {
-                "CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS": "Impostazione dello schema della facets di progetto personalizzate",
-                "DATASET_MANAGER": "Gestione dataset",
-                "LOAD_DATA": "Carica dati",
-                "OPEN_CLOSE": "Apri/Chiudi",
-                "MAKE_PUBLIC": "Rendi publico",
-                "MAKE_STAGING": "Rendi staging",
                 "CHANGE_STATUS": "Cambia stato",
                 "CREATE_INDEX": "Crea indice",
                 "CREATE_REFRESH_INDEX": "Crea/aggiorna indice",
+                "CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS": "Impostazione dello schema della facets di progetto personalizzate",
+                "DATASET_MANAGER": "Gestione dataset",
                 "DELETE_INDEX": "Cancella indice",
                 "EDIT_DESCRIPTION": "Modifica descrizione",
                 "EDIT_FACETS": "Modifica facets",
                 "EDIT_SETTINGS": "Modifica impostazioni",
+                "LOAD_DATA": "Carica dati",
+                "MAKE_PUBLIC": "Rendi publico",
+                "MAKE_STAGING": "Rendi staging",
+                "OPEN_CLOSE": "Apri/Chiudi",
                 "RESOLVE_IMPORTS": "Risolvi import",
                 "USE_DATASET_BASEURI": "Usa il baseURI del dataset"
             },
             "REMOTE": {
+                "CONFIG": {
+                    "NO_CONFIG_FOUND": "Nessuna configurazione per accesso remoto trovata. Creane una nuova.",
+                    "REMOTE_ACCESS_CONFIG": "Configurazione accesso remoto"
+                },
                 "DELETE_REPO": "Cancella repository remoto",
                 "REASON": "Motivo",
-                "SELECT_REMOTE_REPO": "Seleziona Repository dati remoto",
-                "CONFIG": {
-                    "REMOTE_ACCESS_CONFIG": "Configurazione accesso remoto",
-                    "NO_CONFIG_FOUND": "Nessuna configurazione per accesso remoto trovata. Creane una nuova."
-                }
+                "SELECT_REMOTE_REPO": "Seleziona Repository dati remoto"
             },
             "SETTINGS": {
-                "DATASET_SETTINGS": "Impostazioni dataset",
-                "DEFAULT_VISUALIZATION_MODE": "Modalità di visualizzazione di default",
+                "ALLOW_INDEX_CHANGE": "Consenti la modifica della dimensione dell'indice",
+                "ALLOW_INDEX_CHANGE_INFO": "Indica se l'utente visitatore può modificare la dimensione dell'indice per sè stesso",
                 "ALLOW_VISUALIZATION_CHANGE": "Consenti modifica della visualizzazione",
                 "ALLOW_VISUALIZATION_CHANGE_INFO": "Indica se l'utente visitatore può modificare la modalità di visualizzazione per sè stesso",
                 "CONCEPT_VISUALIZATION_INFO": "Limita la modalità di visualizzazione dell'albero dei concetti per l'utente visitatore. L'amministratore sarà ancora in grado di modificare la visualizzazione per sè stesso.",
+                "DATASET_SETTINGS": "Impostazioni dataset",
+                "DEFAULT_VISUALIZATION_MODE": "Modalità di visualizzazione di default",
                 "INSTANCE_LIST_VISUALIZATION_INFO": "Limita la modalità di visualizzazione della lista delle istanze per l'utente visitatore. L'amministratore sarà ancora in grado di modificare la visualizzazione per sè stesso.",
                 "LEX_ENTRY_VISUALIZATION_INFO": "Limita la modalità di visualizzazione della lista delle Lexical Entry per l'utente visitatore. L'amministratore sarà ancora in grado di modificare la visualizzazione per sè stesso.",
-                "ALLOW_INDEX_CHANGE": "Consenti la modifica della dimensione dell'indice",
-                "ALLOW_INDEX_CHANGE_INFO": "Indica se l'utente visitatore può modificare la dimensione dell'indice per sè stesso",
                 "RENDERING_LANG_INFO": "Imposta le lingue di default usate per renderizzare le risorse"
             }
         },
         "SYSTEM": {
+            "COMMONS": {
+                "MAIL_PASSWORD_WARN": "La password è salvata in chiaro sul server"
+            },
             "EMAIL": {
-                "EMAIL_CONFIG": "Configurazione Email",
-                "EMAIL_CONFIG_TEST": "Test configurazione email",
-                "MAIL_SERVER_URL_INFO": "IP/URL del Mail Server SMTP",
-                "MAIL_SERVER_PORT_INFO": "Porta del Mail Server",
-                "CRYPTOGRAPHIC_PROTOCOL": "Protocollo crittografico",
                 "AUTHENTICATION": "Autenticazione",
                 "AUTHENTICATION_INFO": "Indica se il server SMTP richiede l'autenticazione",
+                "CRYPTOGRAPHIC_PROTOCOL": "Protocollo crittografico",
+                "EMAIL_CONFIG": "Configurazione Email",
+                "EMAIL_CONFIG_TEST": "Test configurazione email",
+                "MAIL_ALIAS_INFO": "Alias mostrato nelle email di amministrazione",
                 "MAIL_FROM_INFO": "Indirizzo email usato per inviare email di amministrazione",
                 "MAIL_PASSWORD_INFO": "Password del suddetto indirizzo email",
                 "MAIL_PASSWORD_WARN": "La password viene salvata in chiaro sul server",
-                "MAIL_ALIAS_INFO": "Alias mostrato nelle email di amministrazione"
+                "MAIL_SERVER_PORT_INFO": "Porta del Mail Server",
+                "MAIL_SERVER_URL_INFO": "IP/URL del Mail Server SMTP"
             },
             "OTHER": {
-                "OTHER_SETTINGS": "Altre impostazioni",
-                "DISABLE_CONTRIBUTION": "Disattiva la possibilità di contribuire a ShowVoc"
+                "DISABLE_CONTRIBUTION": "Disattiva la possibilità di contribuire a ShowVoc",
+                "OTHER_SETTINGS": "Altre impostazioni"
             },
             "REMOTE_ACCESS": {
+                "PASSWORD_INFO": "Password del Triple Store remoto (se è richiesta l'autenticazione)",
                 "REMOTE_ACCESS_CONFIG": "Configurazione accesso remoto",
                 "REMOTE_ACCESS_CONFIG_INFO": "Configurazione del Triple Store remoto che hosta i dataset in ShowVoc.<br><strong>Nota</strong>: se non opportunamente configurato, il sistema non sarà in grado di creare dataset remoti per hostare risorse stabili.",
                 "URL_INFO": "URL del Triple Store remoto",
-                "USERNAME_INFO": "Username del Triple Store remoto (se è richiesta l'autenticazione)",
-                "PASSWORD_INFO": "Password del Triple Store remoto (se è richiesta l'autenticazione)"
+                "USERNAME_INFO": "Username del Triple Store remoto (se è richiesta l'autenticazione)"
             },
             "VB_CONFIG": {
+                "ADMIN_EMAIL_INFO": "Email dell'amministratore di VocBench/SemanticTurkey",
+                "ADMIN_PASSWORD_INFO": "Password dell'amministratore di VocBench/SemanticTurkey",
+                "ST_HOST_INFO": "URL completo (protocollo+hostname+porta) dell'host di SemanticTurkey",
                 "VB_CONFIG": "Configurazione di VocBench",
                 "VB_CONFIG_INFO": "Configurazione dell'istanza di VocBench/SemanticTurkey dedicata allo sviluppo di risorse non stabili.<br><strong>Nota</strong>: se non opportunamente configurato, ShowVoc non sarà in grado di connettersi a VocBench, pertanto sarà impossibile accettare contributi di risorse in sviluppo.",
                 "VB_CONFIG_TEST": "Test configurazione VocBench",
-                "VB_URL_INFO": "URL dell'istanza di VocBench accessibile dai contributor",
-                "ST_HOST_INFO": "URL completo (protocollo+hostname+porta) dell'host di SemanticTurkey",
-                "ADMIN_EMAIL_INFO": "Email dell'amministratore di VocBench/SemanticTurkey",
-                "ADMIN_PASSWORD_INFO": "Password dell'amministratore di VocBench/SemanticTurkey"
-            },
-            "COMMONS": {
-                "MAIL_PASSWORD_WARN": "La password è salvata in chiaro sul server"
+                "VB_URL_INFO": "URL dell'istanza di VocBench accessibile dai contributor"
             }
         }
     },
@@ -85,414 +85,26 @@
             "SHOW_PERCENTAGE": "Mostra percentuale linkset"
         },
         "ALIGNMENTS": "Allineamenti",
-        "SOURCE_DATASET": "Dataset sorgente",
         "MAPPINGS": "Mapping",
         "SEARCH": {
             "MODE_BOTH": "Entrambi",
             "MODE_ONLY_SOURCE": "Solo dataset sorgente",
             "SOURCE_DATASET_MATCHES": "Match nel dataset sorgente",
             "TARGET_DATASET_MATCHES": "Match nel dataset target"
-        }
+        },
+        "SOURCE_DATASET": "Dataset sorgente"
     },
     "APP": {
+        "FOOTER": {
+            "ABOUT_SHOWVOC": "About ShowVoc",
+            "CONTACT_US": "Contattaci",
+            "SHOWVOC_WEBSITE": "ShowVoc website",
+            "SUPPORT": "Supporto"
+        },
         "USER_MENU": {
             "ADMINISTRATION_DASHBOARD": "Dashboard di amministrazione",
             "LOGIN": "Login",
             "LOGOUT": "Logout"
-        },
-        "FOOTER": {
-            "ABOUT_SHOWVOC": "About ShowVoc",
-            "SHOWVOC_WEBSITE": "ShowVoc website",
-            "CONTACT_US": "Contattaci",
-            "SUPPORT": "Supporto"
-        }
-    },
-    "CONTRIBUTIONS": {
-        "CONTRIBUTION": "Contributo",
-        "CONTRIBUTIONS": "Contributi",
-        "CONTRIBUTOR": "Contributor",
-        "ACTIONS": {
-            "APPROVE": "Approva",
-            "APPROVE_CONTRIBUTION": "Approva contributo",
-            "REJECT_CONTRIBUTION": "Rifiuta contributo",
-            "SUBMIT_REQUEST": "Invia richiesta"
-        },
-        "FORM": {
-            "COMMONS": {
-                "EMAIL_INFO": "Verrà usato per inviarti un email con l'esito della valutazione del contributo",
-                "RESOURCE_NAME": "Nome risorsa",
-                "ORGANIZATION": "Organizzazione",
-                "HOME_PAGE": "Home page",
-                "NO_AGGREGATION": "No aggregazione",
-                "METADATA": "Metadati",
-                "DISCOVER": "Scopri",
-                "REQUEST_SUBMITTED": "Richiesta inviata"
-            },
-            "DEV": {
-                "CONVERSION_FROM": "Conversione da",
-                "CONVERSION_REQUIRED": "Conversione necessaria",
-                "CONVERSION_REQUIRED_INFO": "I dati richiedono la conversione da un formato non-RDF"
-            },
-            "METADATA": {
-                "IDENTITY_INFO": "Se lasciato vuoto, un IRI verrà generato dal sistema"
-            },
-            "STABLE": {
-                "IM_OWNER": "Sono il proprietario della risorsa",
-                "CONTRIBUTOR_IS_OWNER": "Il contributor è il propriertario della risorsa?"
-            }
-        },
-        "LOAD": {
-            "EMAIL_ADDRESS": "Indirizzo email",
-            "EMAIL_ADDRESS_INFO": "L'indirizzo email che hai usato per sottomettere il contributo",
-            "DATASET_NAME": "Nome dataset",
-            "DATASET_NAME_INFO": "Il nome del dataset fornito nell'email di notifica per l'approvazione del contributo"
-        },
-        "MANAGER": {
-            "CONTRIBUTION_MANAGER": "Gestore contributi",
-            "SUBMITTED": "Inviato",
-            "CONTRIBUTION_TYPE": "Tipo contributo"
-        }
-    },
-    "DATA": {
-        "DATA": "Dati",
-        "CLASS": {
-            "CLASS": "Classe",
-            "CLASSES": "Classi",
-            "ACTIONS": {
-                "SELECT_CLASS": "Seleziona classe",
-                "SELECT_ROOT_CLASS": "Seleziona classe root"
-            },
-            "SETTINGS": {
-                "CLASS_TREE_SETTINGS": "Impostazioni albero delle classi",
-                "ROOT_CLASS": "Classe root",
-                "SUBCLASS_FILTER": "Filtro sotto-classi",
-                "FILTER_ENABLED": "Filtro abilitato",
-                "SUBCLASS_FILTER_INFO": "Da qui è possibile crare filtri in modo da nascondere le sottoclassi di classi",
-                "FILTERED_SUBCLASSES": "Sottoclassi filtrate",
-                "SHOW_INSTANCES_NUMBER": "Mostra numero istanze"
-            }
-        },
-        "COLLECTION": {
-            "COLLECTION": "Collezione",
-            "COLLECTIONS": "Collezioni"
-        },
-        "CONCEPT": {
-            "CONCEPT": "Concetto",
-            "CONCEPTS": "Concetti",
-            "USE_SEARCH_MSG": "Usa il campo di ricerca per recuperare concetti",
-            "UNSAFE_WARN": {
-                "ELEMENT_COUNT": "Questo albero dei concetti ha una quantità di top concept ({{elemCount}}) che supera il limite impostato ({{safeToGoLimit}}).",
-                "PERFORMANCE_ISSUE": "Recuperarli tutti potrebbe essere un processo lungo, si potrebbero riscontrare rallentamenti delle prestazioni o si potrebbe addirittura bloccare il sistema.",
-                "SWITCH_MODE": "Si consiglia di passare dalla visualizzazione gerarchica a quella basata sulla ricerca tramite le",
-                "SETTINGS": "impostazioni",
-                "SELECT_SCHEME": "E' inoltre possibile ridurre la quantità di top concept selezionando uno schema dal pannello dedicato.",
-                "FORCE_INIT": "Se si desidera forzare l'inizializzazione dell'albero a proprio rischio, cliccare",
-                "HERE": "qui"
-            },
-            "SETTINGS": {
-                "CONCEPT_TREE_SETTINGS": "Impostazioni albero dei concetti",
-                "TOP_CONCEPTS_LIMIT": "Limite top concept",
-                "TOP_CONCEPTS_LIMIT_INFO": "Imposta la quantità massima di top concept visibili nell'albero. Questo setting evita che venga inizializzato un albero che potrebbe causare problemi di performance"
-            }
-        },
-        "INSTANCE": {
-            "INSTANCE": "Istanza",
-            "INSTANCES": "Istanze",
-            "USE_SEARCH_MSG": "Usa il campo di ricerca per recuperare le istanze",
-            "SETTINGS": {
-                "INSTANCE_LIST_SETTINGS": "Impostazione lista istanze",
-                "INSTANCES_LIMIT": "Limite istanze",
-                "INSTANCES_LIMIT_INFO": "Imposta la quantità massima di istanze visibili nella lista. Questo setting evita che venga inizializzata una lista che potrebbe causare problemi di performance"
-            },
-            "UNSAFE_WARN": {
-                "ELEMENT_COUNT": "Questa lista di istanze contiene un numero di elementi ({{count}}) che eccede il limite impostato ({{safeToGoLimit}}).",
-                "PERFORMANCE_ISSUE": "Recuperarle tutte potrebbe essere un processo lungo, si potrebbero riscontrare rallentamenti delle prestazioni o si potrebbe addirittura bloccare il sistema.",
-                "SWITCH_MODE": "Si consiglia di passare alla visualizzazione basata su ricerca dalle",
-                "SETTINGS": "impostazioni",
-                "FORCE_INIT": "Se si desidera forzare l'inizializzazione della lista a proprio rischio, cliccare",
-                "HERE": "qui"
-            }
-        },
-        "LEX_ENTRY": {
-            "LEX_ENTRY": "Lex.Entry",
-            "LEX_ENTRIES": "Lex.Entries",
-            "USE_SEARCH_MSG": "Usa il campo di ricerca per recuperare le lexical entry",
-            "UNSAFE_WARN": {
-                "ELEMENT_COUNT": "Questa lista di LexicalEntry ha una quantità di elementi ({{elemCount}}) che supera il limite impostato ({{safeToGoLimit}}).",
-                "PERFORMANCE_ISSUE": "Recuperarli tutti potrebbe essere un processo lungo, si potrebbero riscontrare rallentamenti delle prestazioni o si potrebbe addirittura bloccare il sistema.",
-                "IT_IS_RECOMMENDED": "Si consiglia di",
-                "CHANGE_INDEX_LENGHT": "cambiare la dimensione dell'indice da 1 a 2 caratteri o",
-                "SWITCH_MODE": "passare dalla modialità di visualizzazione basata su indice a quella basata su ricerca tramite le",
-                "SETTINGS": "impostazioni",
-                "SELECT_LEXICON": "E' inoltre possibile ridurre la quantità di LexicalEntry selezionando un lessico dal pannello dedicato.",
-                "FORCE_INIT": "Se si desidera forzare l'inizializzazione della lista a proprio rischio, cliccare",
-                "HERE": "qui"
-            },
-            "SETTINGS": {
-                "LEX_ENTRY_SETTINGS": "Impostazioni lista lexical entry",
-                "LEX_ENTRIES_LIMIT": "Limite lexical entry",
-                "LEX_ENTRIES_LIMIT_INFO": "Imposta la quantità massima di lexical entry visibili nella lista. Questo setting evita che venga inizializzata una lista che potrebbe causare problemi di performance",
-                "INDEX_LENGHT": "Dimensione indice",
-                "INDEX_LENGHT_INFO": "Indica se l'indice per filtrare le Lexical Entry è di 1 o 2 caratteri"
-            }
-        },
-        "LEXICON": {
-            "LEXICON": "Lessico",
-            "LEXICONS": "Lessici",
-            "ACTIONS": {
-                "SELECT_LEXICON": "Seleziona lessico",
-                "CHANGE_LEXICON": "Cambia lessico"
-            }
-        },
-        "PROPERTY": {
-            "PROPERTY": "Proprietà",
-            "PROPERTIES": "Proprietà",
-            "ACTIONS": {
-                "SHOW_ALL": "Mostra tutte le proprietà"
-            }
-        },
-        "SCHEME": {
-            "CONCEPT_SCHEME": "Concept Scheme",
-            "SCHEME": "Schema",
-            "SCHEMES": "Schemi"
-        },
-        "COMMONS": {
-            "ACTIONS": {
-                "CHANGE_RENDERING": "Cambia rendering"
-            },
-            "VISUALIZATION_MODE": {
-                "MODE": "Modalità di visualizzazione",
-                "HIERARCHY_BASED": "Gerarchica",
-                "INDEX_BASED": "Basata su indice",
-                "SEARCH_BASED": "Basata su ricerca",
-                "STANDARD": "Standard"
-            }
-        }
-    },
-    "DATASETS": {
-        "ACTIONS": {
-            "CREATE_DATASET": "Crea dataset",
-            "CREATE_METADATA": "Crea metadati dataset",
-            "CREATE_REFRESH_METADATA": "Crea/aggiorna metadati dataset",
-            "DELETE_DATASET": "Cancella dataset",
-            "PROFILE_DATASET": "Profila dataset"
-        },
-        "ATTR": {
-            "DATASET_NAME": "Nome dataset",
-            "DEREF_SYSTEM": "Sistema di dereferenziazione",
-            "IDENTITY": "Identity",
-            "IDENTITY_IRI": "IRI identity",
-            "SPARQL_ENDPOINT": "Endpoint SPARQL",
-            "SPARQL_ENDPOINT_URL": "URL Endpoint SPARQL",
-            "URI_SPACE": "URI space"
-        },
-        "STATUS": {
-            "ALREADY_EXISTING_DATASET": "Dataset già esistente",
-            "DATASET_CREATED": "Dataset creato",
-            "DATASET_NOT_FOUND": "Dataset non trovato",
-            "MISSING_DATASET_PROFILE": "Profilo metadati mancante"
-        },
-        "DATASET": "Dataset",
-        "DATASETS": "Dataset",
-        "BROWSE_DATASETS": "Esplora dataset di {{instanceName}}",
-        "DATASET_TYPE": "Tipo dataset",
-        "ONLY_OPEN": "Solo dataset aperti"
-    },
-    "GRAPHS": {
-        "ACTIONS": {
-            "ADD_NODE": "Aggiungi nuovo nodo",
-            "EXPAND_LINKSET": "Espandi linkset",
-            "EXPORT_SNAPSHOT": "Esporta un'istantanea del grafo (.svg)",
-            "FIX_NODES_POSITION": "Blocca posizione nodi"
-        },
-        "SETTINGS": {
-            "DATA_GRAPH_SETTINGS": "Impostazioni grafo Data-Oriented",
-            "HIDE_LITERAL_NODES": "Nascondi nodi literal",
-            "HIDE_LITERAL_NODES_INFO": "Se spuntata, tutti i nodi literal saranno nascosti nel grafo"
-        },
-        "LINKS_FILTER": {
-            "EXPAND_NODE": "Espandi nodo",
-            "TOO_MUCH_RELATIONS_WARNING": "La risorsa che stai espandendo ha una grande quantità di relazioni, ciò produrrebbe molti link e nodi che potrebbero rendere confusa la visualizzazione del grafo. E' consigliabile filtrare alcune relazioni in modo da limitare le dimensioni del grafo.",
-            "VISIBLE_X_OUT_OF_Y": [
-                "Visibili",
-                "di"
-            ]
-        },
-        "FORCE_CONTROL": {
-            "LINKS": "Link",
-            "STRENGTH": "Forza",
-            "LENGTH": "Lunghezza"
-        },
-        "PARTITIONS_FILTER": {
-            "PARTITIONS_FILTER": "Filtro partizioni",
-            "PARTITIONS_FILTER_INFO": "Seleziona le partizioni della descrizione della risorsa che verranno mostrate quando si espande un nodo.",
-            "RESET_FILTER": "Resetta filtro",
-            "RESOURCE_TYPES": "Tipi risorsa",
-            "PARTITIONS": "Partizioni",
-            "ALL_PARTITIONS_HIDDEN_WARN": "Se tutte le partizioni sono nascoste, l'espansione di un nodo non produrrà alcun effetto",
-            "CHECK_PARTITION_FOR_ALL_TYPES": "Rendi visibile la partizione selezionata per tutti i tipi",
-            "UNCHECK_PARTITION_FOR_ALL_TYPES": "Nascondi la partizione selezionata per tutti i tipi"
-        },
-        "RESOURCE_DETAILS": {
-            "SHOW_THE_COMPLETE": "Mostra il completo"
-        }
-    },
-    "HOME": {
-        "WELCOME_W_INST_NAME": {
-            "WELCOME": "Benvenuto nel dataset browser {{instanceName}}!",
-            "POWERED_BY": "{{instanceName}} é fornito da",
-            "CONTRIBUTE_TO": "Contribuisci a {{instanceName}}"
-        },
-        "WELCOME_WO_INST_NAME": {
-            "WELCOME": "Benvenuto in ShowVoc!",
-            "CONTRIBUTE_TO": "Contribuisci a ShowVoc"
-        }
-    },
-    "MODELS": {
-        "PROJECT": {
-            "BASE_URI": "Base URI",
-            "LEXICALIZATION": "Lessicalizzazione",
-            "LEXICALIZATION_MODEL": "Modello di lessicalizzazione",
-            "MODEL": "Modello",
-            "LOCATION": "Posizione",
-            "BACKEND_TYPE": "Tipo backend",
-            "REPO_ACCESS": "Repository Access",
-            "REPOSITORY_ID": "ID repository",
-            "DATA_REPO_ID": "ID repository dati"
-        },
-        "RESOURCE": {
-            "DEPRECATED": "Deprecato",
-            "LABEL": "Etichetta",
-            "PREDICATE": "Predicato",
-            "RESOURCE": "Risorsa",
-            "ROLE": "Ruolo"
-        }
-    },
-    "PREFERENCES": {
-        "LANG": {
-            "RENDERING": {
-                "RENDERING_LANGS": "Lingue di rendering",
-                "DESCRIPTION": "Seleziona le lingue (ed il loro ordine) usate per il rendering delle risorse"
-            },
-            "VALUE_FILTER": {
-                "VALUE_FILTER_LANGS": "Filtro valori per lingua",
-                "DESCRIPTION": "Seleziona le lingue che verranno mostrate quando si filtrano i valori literal nella descrizione delle risorse. Attiva il filtro in modo da nascondere i valori con le lingue non selezionate.",
-                "ENABLE_FILTER": "Abilita filtro"
-            }
-        }
-    },
-    "RESOURCE_VIEW": {
-        "ACTIONS": {
-            "SHOW_HIDE_INFERRED": "Mostra/nascondi informazioni inferite",
-            "OPEN_GRAP": "Apri la rappresentazione a grafo"
-        },
-        "PARTITIONS": {
-            "BROADERS": "Broader",
-            "CLASS_AXIOMS": "Assiomi tra classi",
-            "CONSTRITUENST": "Costituenti",
-            "DATATYPE_DEFINITIONS": "Definizioni Datatype",
-            "DENOTATIONS": "Denotazioni",
-            "DISJOINT_PROPERTIES": "Proprietà disgiunte",
-            "DOMAINS": "Domini",
-            "EQUIVALENT_PROPERTIES": "Proprietà equivalenti",
-            "EVOKED_LEXICAL_CONCEPTS": "Concetti lessicali evocati",
-            "FACETS": "Aspetti",
-            "FORM_BASED_PREVIEW": "Anteprima Custom Form",
-            "FORM_PRESENTATIONS": "Form representations",
-            "IMPORTS": "Imports",
-            "LABEL_RELATIONS": "Relazioni tra Label",
-            "LEXICALIZATIONS": "Lessicalizzazioni",
-            "LEXICAL_FORMS": "Forme lessicali",
-            "LEXICAL_SENSES": "Sensi lessicali",
-            "MEMBERS": "Membri",
-            "MEMBERS_ORDERED": "Membri (ordered)",
-            "NOTES": "Note",
-            "PROPERTIES": "Altre proprietà",
-            "RANGES": "Codomini",
-            "RDFS_MEMBERS": "Membri RDFS",
-            "SCHEMES": "Schemi",
-            "SUBPROPERTY_CHAINS": "Subproperty chain axioms",
-            "SUBTERMS": "Sottotermini",
-            "SUPERPROPERTIES": "Super proprietà",
-            "TOP_CONCEPT_OF": "Top concept di",
-            "TYPES": "Tipi"
-        },
-        "SETTINGS": {
-            "RES_VIEW_SETTINGS": "Impostazioni ResourceView"
-        },
-        "STATUS": {
-            "RESOURCE_NOT_EXISTING": "Questa risorsa non è disponibile nel progetto corrente",
-            "RESOURCE_UNKNOWN_HOST": "Questa risorsa non è disponibile o accessibile in progetti locali nè può essere raggiungibile sul Web"
-        }
-    },
-    "SEARCH": {
-        "SEARCH": "Ricerca",
-        "SEARCH_RESULTS": "Risultati di ricerca",
-        "FILTERS": "Filtri",
-        "INDEX_NOT_FOUND": "Indice non trovato",
-        "ONLY_OPEN": "Solo aperti",
-        "ANY_LANGUAGE": "Qualsiasi lingua",
-        "NO_RESOURCE_FOUND_FOR": "Nessuna risorsa trovata per",
-        "RESOURCE_NOT_REACHABLE": "Risorsa non raggiungibile",
-        "X_MATCHES_IN_N_DATASETS": [
-            "trovato in",
-            "dataset"
-        ],
-        "EDIT_LANGS": {
-            "EDIT_LANGS": "Cambia lingue",
-            "LANG_TAG": "Tag lingua",
-            "ADD_LANG": "Aggiungi lingua"
-        },
-        "SETTINGS": {
-            "SEARCH_SETTINGS": "Impostazioni ricerca",
-            "STRING_MATCH_MODE": "Modalità di string match",
-            "STARTS_WITH": "Comincia per",
-            "CONTAINS": "Contiene",
-            "ENDS_WITH": "Finisce con",
-            "EXACT": "Esatta",
-            "FUZZY": "Fuzzy",
-            "SEARCH_MODE": "Modalità di ricerca",
-            "SEARCH_MODE_INFO": "La ricerca viene sempre effettuata nelle lessicalizzazioni",
-            "SEARCH_IN_URI": "Cerca nell'URI",
-            "SEARCH_IN_LOCAL_NAME": "Cerca nel local name",
-            "SEARCH_IN_NOTES": "Cerca nelle note",
-            "CONCEPTS_SEARCH": "Ricerca concetti",
-            "RESTRICT_TO_SCHEME": "Restringi la ricerca agli skos:ConceptScheme attivi",
-            "CLS_INSTANCE_SEARCH": "Ricerca classi-istanze"
-        }
-    },
-    "SPARQL": {
-        "ACTIONS": {
-            "EXPORT_RESULTS": "Esporta risultati SPARQL"
-        }
-    },
-    "USER": {
-        "LOG_INTO_SHOWVOC": "Login in ShowVoc",
-        "LOGIN": "Log in",
-        "REGISTRATION_COMPLETE": "Registrazione completata",
-        "USER_DETAILS": "Dettagli utente",
-        "ATTR": {
-            "EMAIL_ADDRESS": "Indirizzo email",
-            "PASSWORD": "Password",
-            "GIVEN_NAME": "Nome",
-            "FAMILY_NAME": "Cognome"
-        },
-        "PASSWORD": {
-            "CHANGE_PASSWORD": "Cambia password",
-            "FORGOT_PASSWORD": "Password dimenticata",
-            "RESET_PASSWORD": "Resetta password",
-            "OLD_PASSWORD": "Vecchia password",
-            "NEW_PASSWORD": "Nuova password",
-            "CONFIRM_PASSWORD": "Conferma password",
-            "CONFIRM_NEW_PASSWORD": "Conferma nuova password",
-            "PASSWORD_CHANGED": "Password cambiata"
-        }
-    },
-    "WIDGETS": {
-        "SETTINGS_RENDERER": {
-            "ADD_OPTIONAL_VALUE": "Aggiungi valore opzionale",
-            "DELETE_OPTIONAL_VALUE": "Cancella valore opzionale",
-            "UNKNOWN_TYPE_WARN": "Questo parametro ha un tipo sconosciuto ({{propTypeName}}). Il valore inserito sarà interpretato come un valore JSON a basso livello"
         }
     },
     "COMMONS": {
@@ -527,23 +139,33 @@
             "DUPLICATED_CONFIGURATION": "Configurazione duplicata",
             "LOAD_CONFIGURATION": "Carica configurazione",
             "MISSING_CONFIGURATION": "Configurazione mancante",
+            "PASSWORD": "Password",
             "REPO_CONFIGURATION": "Configurazione repo",
             "SAVE_CONFIGURATION": "Salva configurazione",
             "SERVER_URL": "URL server",
-            "USERNAME": "Username",
-            "PASSWORD": "Password"
+            "USERNAME": "Username"
         },
+        "DENIED_OPERATION": "Operazione negata",
+        "DESCRIPTION": "Descrizione",
+        "DETAILS": "Dettagli",
+        "FILTER": "Filtro",
+        "FORMAT": "Formato",
         "LANGUAGE": {
+            "ISO_CODE": "Codice ISO",
             "LANGUAGE": "Lingua",
             "LANGUAGES": "Lingue",
-            "ISO_CODE": "Codice ISO",
             "NO_LANG_INFO": "Nessuna lingua selezionata implica tutte le lingue"
         },
+        "MANDATORY_FIELD": "Campo obbligatorio",
+        "NAME": "Nome",
+        "OPTIONAL_FIELD": "Campo opzionale",
         "PAGING": {
+            "NEXT_PAGE": "Pagina successiva",
             "PAGE_OF_TOT": "di",
-            "PREV_PAGE": "Pagina precedente",
-            "NEXT_PAGE": "Pagina successiva"
+            "PREV_PAGE": "Pagina precedente"
         },
+        "POSITION": "Posizione",
+        "SETTINGS": "Impostazioni",
         "STATUS": {
             "ACTIVE": "Attivo",
             "ERROR": "Errore",
@@ -552,18 +174,249 @@
             "STATUS": "Stato",
             "WARNING": "Attenzione"
         },
-        "DENIED_OPERATION": "Operazione negata",
-        "DESCRIPTION": "Descrizione",
-        "DETAILS": "Dettagli",
-        "FILTER": "Filtro",
-        "FORMAT": "Formato",
-        "MANDATORY_FIELD": "Campo obbligatorio",
-        "NAME": "Nome",
-        "OPTIONAL_FIELD": "Campo opzionale",
-        "POSITION": "Posizione",
-        "SETTINGS": "Impostazioni",
         "TITLE": "Titolo",
         "VALUE": "Valore"
+    },
+    "CONTRIBUTIONS": {
+        "ACTIONS": {
+            "APPROVE": "Approva",
+            "APPROVE_CONTRIBUTION": "Approva contributo",
+            "REJECT_CONTRIBUTION": "Rifiuta contributo",
+            "SUBMIT_REQUEST": "Invia richiesta"
+        },
+        "CONTRIBUTION": "Contributo",
+        "CONTRIBUTIONS": "Contributi",
+        "CONTRIBUTOR": "Contributor",
+        "FORM": {
+            "COMMONS": {
+                "DISCOVER": "Scopri",
+                "EMAIL_INFO": "Verrà usato per inviarti un email con l'esito della valutazione del contributo",
+                "HOME_PAGE": "Home page",
+                "METADATA": "Metadati",
+                "NO_AGGREGATION": "No aggregazione",
+                "ORGANIZATION": "Organizzazione",
+                "REQUEST_SUBMITTED": "Richiesta inviata",
+                "RESOURCE_NAME": "Nome risorsa"
+            },
+            "DEV": {
+                "CONVERSION_FROM": "Conversione da",
+                "CONVERSION_REQUIRED": "Conversione necessaria",
+                "CONVERSION_REQUIRED_INFO": "I dati richiedono la conversione da un formato non-RDF"
+            },
+            "METADATA": {
+                "IDENTITY_INFO": "Se lasciato vuoto, un IRI verrà generato dal sistema"
+            },
+            "STABLE": {
+                "CONTRIBUTOR_IS_OWNER": "Il contributor è il propriertario della risorsa?",
+                "IM_OWNER": "Sono il proprietario della risorsa"
+            }
+        },
+        "LOAD": {
+            "DATASET_NAME": "Nome dataset",
+            "DATASET_NAME_INFO": "Il nome del dataset fornito nell'email di notifica per l'approvazione del contributo",
+            "EMAIL_ADDRESS": "Indirizzo email",
+            "EMAIL_ADDRESS_INFO": "L'indirizzo email che hai usato per sottomettere il contributo"
+        },
+        "MANAGER": {
+            "CONTRIBUTION_MANAGER": "Gestore contributi",
+            "CONTRIBUTION_TYPE": "Tipo contributo",
+            "SUBMITTED": "Inviato"
+        }
+    },
+    "DATA": {
+        "CLASS": {
+            "ACTIONS": {
+                "SELECT_CLASS": "Seleziona classe",
+                "SELECT_ROOT_CLASS": "Seleziona classe root"
+            },
+            "CLASS": "Classe",
+            "CLASSES": "Classi",
+            "SETTINGS": {
+                "CLASS_TREE_SETTINGS": "Impostazioni albero delle classi",
+                "FILTERED_SUBCLASSES": "Sottoclassi filtrate",
+                "FILTER_ENABLED": "Filtro abilitato",
+                "ROOT_CLASS": "Classe root",
+                "SHOW_INSTANCES_NUMBER": "Mostra numero istanze",
+                "SUBCLASS_FILTER": "Filtro sotto-classi",
+                "SUBCLASS_FILTER_INFO": "Da qui è possibile crare filtri in modo da nascondere le sottoclassi di classi"
+            }
+        },
+        "COLLECTION": {
+            "COLLECTION": "Collezione",
+            "COLLECTIONS": "Collezioni"
+        },
+        "COMMONS": {
+            "ACTIONS": {
+                "CHANGE_RENDERING": "Cambia rendering"
+            },
+            "VISUALIZATION_MODE": {
+                "HIERARCHY_BASED": "Gerarchica",
+                "INDEX_BASED": "Basata su indice",
+                "MODE": "Modalità di visualizzazione",
+                "SEARCH_BASED": "Basata su ricerca",
+                "STANDARD": "Standard"
+            }
+        },
+        "CONCEPT": {
+            "CONCEPT": "Concetto",
+            "CONCEPTS": "Concetti",
+            "SETTINGS": {
+                "CONCEPT_TREE_SETTINGS": "Impostazioni albero dei concetti",
+                "TOP_CONCEPTS_LIMIT": "Limite top concept",
+                "TOP_CONCEPTS_LIMIT_INFO": "Imposta la quantità massima di top concept visibili nell'albero. Questo setting evita che venga inizializzato un albero che potrebbe causare problemi di performance"
+            },
+            "UNSAFE_WARN": {
+                "ELEMENT_COUNT": "Questo albero dei concetti ha una quantità di top concept ({{elemCount}}) che supera il limite impostato ({{safeToGoLimit}}).",
+                "FORCE_INIT": "Se si desidera forzare l'inizializzazione dell'albero a proprio rischio, cliccare",
+                "HERE": "qui",
+                "PERFORMANCE_ISSUE": "Recuperarli tutti potrebbe essere un processo lungo, si potrebbero riscontrare rallentamenti delle prestazioni o si potrebbe addirittura bloccare il sistema.",
+                "SELECT_SCHEME": "E' inoltre possibile ridurre la quantità di top concept selezionando uno schema dal pannello dedicato.",
+                "SETTINGS": "impostazioni",
+                "SWITCH_MODE": "Si consiglia di passare dalla visualizzazione gerarchica a quella basata sulla ricerca tramite le"
+            },
+            "USE_SEARCH_MSG": "Usa il campo di ricerca per recuperare concetti"
+        },
+        "DATA": "Dati",
+        "INSTANCE": {
+            "INSTANCE": "Istanza",
+            "INSTANCES": "Istanze",
+            "SETTINGS": {
+                "INSTANCES_LIMIT": "Limite istanze",
+                "INSTANCES_LIMIT_INFO": "Imposta la quantità massima di istanze visibili nella lista. Questo setting evita che venga inizializzata una lista che potrebbe causare problemi di performance",
+                "INSTANCE_LIST_SETTINGS": "Impostazione lista istanze"
+            },
+            "UNSAFE_WARN": {
+                "ELEMENT_COUNT": "Questa lista di istanze contiene un numero di elementi ({{count}}) che eccede il limite impostato ({{safeToGoLimit}}).",
+                "FORCE_INIT": "Se si desidera forzare l'inizializzazione della lista a proprio rischio, cliccare",
+                "HERE": "qui",
+                "PERFORMANCE_ISSUE": "Recuperarle tutte potrebbe essere un processo lungo, si potrebbero riscontrare rallentamenti delle prestazioni o si potrebbe addirittura bloccare il sistema.",
+                "SETTINGS": "impostazioni",
+                "SWITCH_MODE": "Si consiglia di passare alla visualizzazione basata su ricerca dalle"
+            },
+            "USE_SEARCH_MSG": "Usa il campo di ricerca per recuperare le istanze"
+        },
+        "LEXICON": {
+            "ACTIONS": {
+                "CHANGE_LEXICON": "Cambia lessico",
+                "SELECT_LEXICON": "Seleziona lessico"
+            },
+            "LEXICON": "Lessico",
+            "LEXICONS": "Lessici"
+        },
+        "LEX_ENTRY": {
+            "LEX_ENTRIES": "Lex.Entries",
+            "LEX_ENTRY": "Lex.Entry",
+            "SETTINGS": {
+                "INDEX_LENGHT": "Dimensione indice",
+                "INDEX_LENGHT_INFO": "Indica se l'indice per filtrare le Lexical Entry è di 1 o 2 caratteri",
+                "LEX_ENTRIES_LIMIT": "Limite lexical entry",
+                "LEX_ENTRIES_LIMIT_INFO": "Imposta la quantità massima di lexical entry visibili nella lista. Questo setting evita che venga inizializzata una lista che potrebbe causare problemi di performance",
+                "LEX_ENTRY_SETTINGS": "Impostazioni lista lexical entry"
+            },
+            "UNSAFE_WARN": {
+                "CHANGE_INDEX_LENGHT": "cambiare la dimensione dell'indice da 1 a 2 caratteri o",
+                "ELEMENT_COUNT": "Questa lista di LexicalEntry ha una quantità di elementi ({{elemCount}}) che supera il limite impostato ({{safeToGoLimit}}).",
+                "FORCE_INIT": "Se si desidera forzare l'inizializzazione della lista a proprio rischio, cliccare",
+                "HERE": "qui",
+                "IT_IS_RECOMMENDED": "Si consiglia di",
+                "PERFORMANCE_ISSUE": "Recuperarli tutti potrebbe essere un processo lungo, si potrebbero riscontrare rallentamenti delle prestazioni o si potrebbe addirittura bloccare il sistema.",
+                "SELECT_LEXICON": "E' inoltre possibile ridurre la quantità di LexicalEntry selezionando un lessico dal pannello dedicato.",
+                "SETTINGS": "impostazioni",
+                "SWITCH_MODE": "passare dalla modialità di visualizzazione basata su indice a quella basata su ricerca tramite le"
+            },
+            "USE_SEARCH_MSG": "Usa il campo di ricerca per recuperare le lexical entry"
+        },
+        "PROPERTY": {
+            "ACTIONS": {
+                "SHOW_ALL": "Mostra tutte le proprietà"
+            },
+            "PROPERTIES": "Proprietà",
+            "PROPERTY": "Proprietà"
+        },
+        "SCHEME": {
+            "CONCEPT_SCHEME": "Concept Scheme",
+            "SCHEME": "Schema",
+            "SCHEMES": "Schemi"
+        }
+    },
+    "DATASETS": {
+        "ACTIONS": {
+            "CREATE_DATASET": "Crea dataset",
+            "CREATE_METADATA": "Crea metadati dataset",
+            "CREATE_REFRESH_METADATA": "Crea/aggiorna metadati dataset",
+            "DELETE_DATASET": "Cancella dataset",
+            "PROFILE_DATASET": "Profila dataset"
+        },
+        "ATTR": {
+            "DATASET_NAME": "Nome dataset",
+            "DEREF_SYSTEM": "Sistema di dereferenziazione",
+            "IDENTITY": "Identity",
+            "IDENTITY_IRI": "IRI identity",
+            "SPARQL_ENDPOINT": "Endpoint SPARQL",
+            "SPARQL_ENDPOINT_URL": "URL Endpoint SPARQL",
+            "URI_SPACE": "URI space"
+        },
+        "BROWSE_DATASETS": "Esplora dataset di {{instanceName}}",
+        "DATASET": "Dataset",
+        "DATASETS": "Dataset",
+        "DATASET_TYPE": "Tipo dataset",
+        "ONLY_OPEN": "Solo dataset aperti",
+        "STATUS": {
+            "ALREADY_EXISTING_DATASET": "Dataset già esistente",
+            "DATASET_CREATED": "Dataset creato",
+            "DATASET_NOT_FOUND": "Dataset non trovato",
+            "MISSING_DATASET_PROFILE": "Profilo metadati mancante"
+        }
+    },
+    "GRAPHS": {
+        "ACTIONS": {
+            "ADD_NODE": "Aggiungi nuovo nodo",
+            "EXPAND_LINKSET": "Espandi linkset",
+            "EXPORT_SNAPSHOT": "Esporta un'istantanea del grafo (.svg)",
+            "FIX_NODE_POSITION": "Blocca posizione nodo"
+        },
+        "FORCE_CONTROL": {
+            "LENGTH": "Lunghezza",
+            "LINKS": "Link",
+            "STRENGTH": "Forza"
+        },
+        "LINKS_FILTER": {
+            "EXPAND_NODE": "Espandi nodo",
+            "TOO_MUCH_RELATIONS_WARNING": "La risorsa che stai espandendo ha una grande quantità di relazioni, ciò produrrebbe molti link e nodi che potrebbero rendere confusa la visualizzazione del grafo. E' consigliabile filtrare alcune relazioni in modo da limitare le dimensioni del grafo.",
+            "VISIBLE_X_OUT_OF_Y": [
+                "Visibili",
+                "di"
+            ]
+        },
+        "PARTITIONS_FILTER": {
+            "ALL_PARTITIONS_HIDDEN_WARN": "Se tutte le partizioni sono nascoste, l'espansione di un nodo non produrrà alcun effetto",
+            "CHECK_PARTITION_FOR_ALL_TYPES": "Rendi visibile la partizione selezionata per tutti i tipi",
+            "PARTITIONS": "Partizioni",
+            "PARTITIONS_FILTER": "Filtro partizioni",
+            "PARTITIONS_FILTER_INFO": "Seleziona le partizioni della descrizione della risorsa che verranno mostrate quando si espande un nodo.",
+            "RESET_FILTER": "Resetta filtro",
+            "RESOURCE_TYPES": "Tipi risorsa",
+            "UNCHECK_PARTITION_FOR_ALL_TYPES": "Nascondi la partizione selezionata per tutti i tipi"
+        },
+        "RESOURCE_DETAILS": {
+            "SHOW_THE_COMPLETE": "Mostra il completo"
+        },
+        "SETTINGS": {
+            "DATA_GRAPH_SETTINGS": "Impostazioni grafo Data-Oriented",
+            "HIDE_LITERAL_NODES": "Nascondi nodi literal",
+            "HIDE_LITERAL_NODES_INFO": "Se spuntata, tutti i nodi literal saranno nascosti nel grafo"
+        }
+    },
+    "HOME": {
+        "WELCOME_WO_INST_NAME": {
+            "CONTRIBUTE_TO": "Contribuisci a ShowVoc",
+            "WELCOME": "Benvenuto in ShowVoc!"
+        },
+        "WELCOME_W_INST_NAME": {
+            "CONTRIBUTE_TO": "Contribuisci a {{instanceName}}",
+            "POWERED_BY": "{{instanceName}} é fornito da",
+            "WELCOME": "Benvenuto nel dataset browser {{instanceName}}!"
+        }
     },
     "MESSAGES": {
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Stai per inserire nel Metadata Registry i metadati proposti. Sei sicuro?",
@@ -579,11 +432,11 @@
         "CONTRIBUTION_APPROVED_DATASET_CREATED": "Il contributo è stato approvato e il dataset è stato creato con successo",
         "CONTRIBUTION_SUBMITTED": "La tua richiesta di contributo è stata inviata con successo. Verrà valutata dall'amministratore e riceverai l'esito all'indirizzo email fornito.",
         "CUSTOM_ROOT_WARN": "Selezionando una specifica classe come root potrebbe nascondere altre classi che non sono sotto-classi di quella scelta come root.",
-        "DATA_LOADED": "Dati caricati con successo",
-        "DATA_REPO_NOT_CONFIGURED": "Il repository dati deve essere configurato",
         "DATASET_ALREADY_IN_METADATA_REGISTRY": "Nel metadata registry è già presente un dataset per l'IRI fornito",
         "DATASET_CREATED": "Il dataset è stato creato con successo",
         "DATASET_NAME_MISSING": "Nome dataset mancante o non valido",
+        "DATA_LOADED": "Dati caricati con successo",
+        "DATA_REPO_NOT_CONFIGURED": "Il repository dati deve essere configurato",
         "DELETE_DATASET_CONFIRM_WARN": "Attenzione, questa operazione eliminerà il dataset. Vuoi procedere?",
         "DIFFERENT_CONFIRM_PASSWORD": "Password e conferma passowrd sono differenti.",
         "DUPLICATED_SERVER_URL_CONFIG": "Una configurazione per lo stesso URL server già esiste",
@@ -626,8 +479,8 @@
         "SELECT_REFERENCED_REPO_TO_DELETE": "Il progetto eliminato faceva riferimento ai seguenti repository. Seleziona i repository che vuoi eliminare.",
         "SWITCH_NO_SCHEME_CONFIRM": "Il concetto cercato '{{concept}}' non appartiene ad alcuno schema. Vuoi passare alla modalità no-scheme?",
         "SYSTEM_CONFIG_INTRO": "In questa sezione è possibile impostare alcuni aspetti principali del sistema. Questo pannello può essere acceduto anche più tardi da <i>Dashboard di amministrazione</i> > <i>Configurazione</i>",
-        "SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION": "Il sistema non è stato configurato per connettersi con un'istanza remota di VocBench. Si prega di fornire una configurazione tramite la dashboard di amministrazione.",
         "SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO": "Il sistema non è stato configurato per creare un repository remoto. Si prega di fornire una configurazione di un triple store remoto tramite la dashboard di amministrazione.",
+        "SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION": "Il sistema non è stato configurato per connettersi con un'istanza remota di VocBench. Si prega di fornire una configurazione tramite la dashboard di amministrazione.",
         "TOO_MUCH_LINKSETS_FILTER": "Il dataset che stai espandendo ha una grande quantità di linkset ({{linksetCount}}). Si potrebbero riscontrare rallentamenti delle prestazioni al crescere degli elementi visualizzati nel grafo. Puoi far sì che vengano visualizzati solo i linkset contenenti almeno un numero minimo di link",
         "UNEXISTING_OR_CLOSED_DATASET": "Il dateset richiesto (id: '{{datasetId}}') non esiste o non è aperto. Verrai rimandato alla home page.",
         "UNEXISTING_URI_IN_PROJECT": "URI sbagliato: non esiste alcuna risorsa con URI {{resUri}} nel progetto corrente",
@@ -636,9 +489,156 @@
         "VALUE_INVALID": "Il valore inserito non è valido. Verificare e riprovare.",
         "VB_CONFIG_CHANGED": "La configurazione di VocBench è stata modificata, è necessario prima confermare le modifiche.",
         "VB_CONFIG_INCOMPLETE": "La configurazione di VocBench è incompleta. Riempi tutti i campi e riprova.",
+        "VB_CONFIG_TEST_FAIL": "Test fallito, la configurazione fornita non è corretta.",
         "VB_CONFIG_TEST_SUCCESS": "La configurazione è stata testata con successo.",
-        "VB_CONFIG_TEST_FAIL": "Test fallito, la configurazione fornita non è corretta.",        
         "X_SEARCH_RESOURCES_FOUND": "{{results}} risultati trovati",
         "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "Riceverai a breve una email contenente i dettagli per accedere a VocBench."
+    },
+    "MODELS": {
+        "PROJECT": {
+            "BACKEND_TYPE": "Tipo backend",
+            "BASE_URI": "Base URI",
+            "DATA_REPO_ID": "ID repository dati",
+            "LEXICALIZATION": "Lessicalizzazione",
+            "LEXICALIZATION_MODEL": "Modello di lessicalizzazione",
+            "LOCATION": "Posizione",
+            "MODEL": "Modello",
+            "REPOSITORY_ID": "ID repository",
+            "REPO_ACCESS": "Repository Access"
+        },
+        "RESOURCE": {
+            "DEPRECATED": "Deprecato",
+            "LABEL": "Etichetta",
+            "PREDICATE": "Predicato",
+            "RESOURCE": "Risorsa",
+            "ROLE": "Ruolo"
+        }
+    },
+    "PREFERENCES": {
+        "LANG": {
+            "RENDERING": {
+                "DESCRIPTION": "Seleziona le lingue (ed il loro ordine) usate per il rendering delle risorse",
+                "RENDERING_LANGS": "Lingue di rendering"
+            },
+            "VALUE_FILTER": {
+                "DESCRIPTION": "Seleziona le lingue che verranno mostrate quando si filtrano i valori literal nella descrizione delle risorse. Attiva il filtro in modo da nascondere i valori con le lingue non selezionate.",
+                "ENABLE_FILTER": "Abilita filtro",
+                "VALUE_FILTER_LANGS": "Filtro valori per lingua"
+            }
+        }
+    },
+    "RESOURCE_VIEW": {
+        "ACTIONS": {
+            "OPEN_GRAP": "Apri la rappresentazione a grafo",
+            "SHOW_HIDE_INFERRED": "Mostra/nascondi informazioni inferite"
+        },
+        "PARTITIONS": {
+            "BROADERS": "Broader",
+            "CLASS_AXIOMS": "Assiomi tra classi",
+            "CONSTRITUENST": "Costituenti",
+            "DATATYPE_DEFINITIONS": "Definizioni Datatype",
+            "DENOTATIONS": "Denotazioni",
+            "DISJOINT_PROPERTIES": "Proprietà disgiunte",
+            "DOMAINS": "Domini",
+            "EQUIVALENT_PROPERTIES": "Proprietà equivalenti",
+            "EVOKED_LEXICAL_CONCEPTS": "Concetti lessicali evocati",
+            "FACETS": "Aspetti",
+            "FORM_BASED_PREVIEW": "Anteprima Custom Form",
+            "FORM_PRESENTATIONS": "Form representations",
+            "IMPORTS": "Imports",
+            "LABEL_RELATIONS": "Relazioni tra Label",
+            "LEXICALIZATIONS": "Lessicalizzazioni",
+            "LEXICAL_FORMS": "Forme lessicali",
+            "LEXICAL_SENSES": "Sensi lessicali",
+            "MEMBERS": "Membri",
+            "MEMBERS_ORDERED": "Membri (ordered)",
+            "NOTES": "Note",
+            "PROPERTIES": "Altre proprietà",
+            "RANGES": "Codomini",
+            "RDFS_MEMBERS": "Membri RDFS",
+            "SCHEMES": "Schemi",
+            "SUBPROPERTY_CHAINS": "Subproperty chain axioms",
+            "SUBTERMS": "Sottotermini",
+            "SUPERPROPERTIES": "Super proprietà",
+            "TOP_CONCEPT_OF": "Top concept di",
+            "TYPES": "Tipi"
+        },
+        "SETTINGS": {
+            "RES_VIEW_SETTINGS": "Impostazioni ResourceView"
+        },
+        "STATUS": {
+            "RESOURCE_NOT_EXISTING": "Questa risorsa non è disponibile nel progetto corrente",
+            "RESOURCE_UNKNOWN_HOST": "Questa risorsa non è disponibile o accessibile in progetti locali nè può essere raggiungibile sul Web"
+        }
+    },
+    "SEARCH": {
+        "ANY_LANGUAGE": "Qualsiasi lingua",
+        "EDIT_LANGS": {
+            "ADD_LANG": "Aggiungi lingua",
+            "EDIT_LANGS": "Cambia lingue",
+            "LANG_TAG": "Tag lingua"
+        },
+        "FILTERS": "Filtri",
+        "INDEX_NOT_FOUND": "Indice non trovato",
+        "NO_RESOURCE_FOUND_FOR": "Nessuna risorsa trovata per",
+        "ONLY_OPEN": "Solo aperti",
+        "RESOURCE_NOT_REACHABLE": "Risorsa non raggiungibile",
+        "SEARCH": "Ricerca",
+        "SEARCH_RESULTS": "Risultati di ricerca",
+        "SETTINGS": {
+            "CLS_INSTANCE_SEARCH": "Ricerca classi-istanze",
+            "CONCEPTS_SEARCH": "Ricerca concetti",
+            "CONTAINS": "Contiene",
+            "ENDS_WITH": "Finisce con",
+            "EXACT": "Esatta",
+            "FUZZY": "Fuzzy",
+            "RESTRICT_TO_SCHEME": "Restringi la ricerca agli skos:ConceptScheme attivi",
+            "SEARCH_IN_LOCAL_NAME": "Cerca nel local name",
+            "SEARCH_IN_NOTES": "Cerca nelle note",
+            "SEARCH_IN_URI": "Cerca nell'URI",
+            "SEARCH_MODE": "Modalità di ricerca",
+            "SEARCH_MODE_INFO": "La ricerca viene sempre effettuata nelle lessicalizzazioni",
+            "SEARCH_SETTINGS": "Impostazioni ricerca",
+            "STARTS_WITH": "Comincia per",
+            "STRING_MATCH_MODE": "Modalità di string match"
+        },
+        "X_MATCHES_IN_N_DATASETS": [
+            "trovato in",
+            "dataset"
+        ]
+    },
+    "SPARQL": {
+        "ACTIONS": {
+            "EXPORT_RESULTS": "Esporta risultati SPARQL"
+        }
+    },
+    "USER": {
+        "ATTR": {
+            "EMAIL_ADDRESS": "Indirizzo email",
+            "FAMILY_NAME": "Cognome",
+            "GIVEN_NAME": "Nome",
+            "PASSWORD": "Password"
+        },
+        "LOGIN": "Log in",
+        "LOG_INTO_SHOWVOC": "Login in ShowVoc",
+        "PASSWORD": {
+            "CHANGE_PASSWORD": "Cambia password",
+            "CONFIRM_NEW_PASSWORD": "Conferma nuova password",
+            "CONFIRM_PASSWORD": "Conferma password",
+            "FORGOT_PASSWORD": "Password dimenticata",
+            "NEW_PASSWORD": "Nuova password",
+            "OLD_PASSWORD": "Vecchia password",
+            "PASSWORD_CHANGED": "Password cambiata",
+            "RESET_PASSWORD": "Resetta password"
+        },
+        "REGISTRATION_COMPLETE": "Registrazione completata",
+        "USER_DETAILS": "Dettagli utente"
+    },
+    "WIDGETS": {
+        "SETTINGS_RENDERER": {
+            "ADD_OPTIONAL_VALUE": "Aggiungi valore opzionale",
+            "DELETE_OPTIONAL_VALUE": "Cancella valore opzionale",
+            "UNKNOWN_TYPE_WARN": "Questo parametro ha un tipo sconosciuto ({{propTypeName}}). Il valore inserito sarà interpretato come un valore JSON a basso livello"
+        }
     }
 }

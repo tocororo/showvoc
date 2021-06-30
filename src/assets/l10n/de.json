@@ -1,0 +1,644 @@
+{
+    "ADMINISTRATION": {
+        "DATASETS": {
+            "MANAGEMENT": {
+                "CHANGE_STATUS": "Status ändern",
+                "CREATE_INDEX": "Index erstellen",
+                "CREATE_REFRESH_INDEX": "Index erstellen/aktualisieren",
+                "CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS": "Benutzerdefinierte Einstellungen des Schemas für Projektfacetten",
+                "DATASET_MANAGER": "Datensätze-Manager",
+                "DELETE_INDEX": "Index löschen",
+                "EDIT_DESCRIPTION": "Beschreibung bearbeiten",
+                "EDIT_FACETS": "Facetten bearbeiten",
+                "EDIT_SETTINGS": "Einstellungen bearbeiten",
+                "LOAD_DATA": "Daten laden",
+                "MAKE_PUBLIC": "Status ändern zu 'Öffentlich' ",
+                "MAKE_STAGING": "Status ändern zu 'Staging' ",
+                "OPEN_CLOSE": "Öffnen/Schließen",
+                "RESOLVE_IMPORTS": "Importe auflösen",
+                "USE_DATASET_BASEURI": "Base-URI des Datasets verwenden"
+            },
+            "REMOTE": {
+                "CONFIG": {
+                    "NO_CONFIG_FOUND": "Keine Remote-Access-Konfiguration gefunden. Bitte neue Konfiguration erstellen.",
+                    "REMOTE_ACCESS_CONFIG": "Konfiguration des Fernzugriffs"
+                },
+                "DELETE_REPO": "Remote-Repositorys löschen",
+                "REASON": "Reasoning",
+                "SELECT_REMOTE_REPO": "Externes Daten-Repository auswählen"
+            },
+            "SETTINGS": {
+                "ALLOW_INDEX_CHANGE": "Änderung der Indexlänge zulassen",
+                "ALLOW_INDEX_CHANGE_INFO": "Gibt an, ob der Benutzer des Besuchers die Indexlänge für sich selbst anpassen kann",
+                "ALLOW_VISUALIZATION_CHANGE": "Änderung der Visualisierung zulassen",
+                "ALLOW_VISUALIZATION_CHANGE_INFO": "Gibt an, ob der Besucher den Visualisierungsmodus für sich selbst anpassen kann",
+                "CONCEPT_VISUALIZATION_INFO": "Schränkt die Visualisierung des Begriffsbaums für den Besucher-Benutzer ein. Der Administrator-Benutzer kann die Visualisierung weiterhin für sich selbst anpassen.",
+                "DATASET_SETTINGS": "Datensatz-Einstellungen",
+                "DEFAULT_VISUALIZATION_MODE": "Standard-Visualisierungsmodus",
+                "INSTANCE_LIST_VISUALIZATION_INFO": "Schränkt die Visualisierung der Instanzliste für den Besucher-Benutzer ein. Der Administrator-Benutzer kann die Visualisierung weiterhin für sich selbst anpassen.",
+                "LEX_ENTRY_VISUALIZATION_INFO": "Schränkt die Visualisierung der Liste der lexikalischen Einträge für den Besucher-Benutzer ein. Der Administrator-Benutzer kann die Visualisierung weiterhin für sich selbst anpassen.",
+                "RENDERING_LANG_INFO": "Einstellen der Standardsprache(n), die zum Rendern der Ressourcen verwendet werden"
+            }
+        },
+        "SYSTEM": {
+            "COMMONS": {
+                "MAIL_PASSWORD_WARN": "Passwort wird unverschlüsselt auf dem Server gespeichert"
+            },
+            "EMAIL": {
+                "AUTHENTICATION": "Authentifizierung",
+                "AUTHENTICATION_INFO": "Gibt an, ob für den SMTP-Server eine Authentifizierung erforderlich ist",
+                "CRYPTOGRAPHIC_PROTOCOL": "Verschlüsselungsprotokoll",
+                "EMAIL_CONFIG": "E-Mail-Konfiguration",
+                "EMAIL_CONFIG_TEST": "E-Mail-Konfigurationstest",
+                "MAIL_ALIAS_INFO": "Aliasname, der in den Administrations-E-Mails angezeigt wird",
+                "MAIL_FROM_INFO": "E-Mail-Adresse zum Versand von Administrations-E-Mails",
+                "MAIL_PASSWORD_INFO": "Passwort der oben genannten E-Mail-Adresse",
+                "MAIL_PASSWORD_WARN": "Passwort wird unverschlüsselt auf dem Server gespeichert",
+                "MAIL_SERVER_PORT_INFO": "Mailserver-Port",
+                "MAIL_SERVER_URL_INFO": "SMTP Mail Server IP/URL"
+            },
+            "OTHER": {
+                "DISABLE_CONTRIBUTION": "Option \"zu ShowVoc beitragen\" deaktivieren",
+                "OTHER_SETTINGS": "Weitere Einstellungen"
+            },
+            "REMOTE_ACCESS": {
+                "PASSWORD_INFO": "Passwort des externen Triple-Stores (wenn Authentifizierung erforderlich ist)",
+                "REMOTE_ACCESS_CONFIG": "Konfiguration des Fernzugriffs",
+                "REMOTE_ACCESS_CONFIG_INFO": "Konfiguration des externen Triple-Stores, der die Datensätze in ShowVoc hostet.<br><strong>Hinweis</strong>: Wenn dieser nicht richtig konfiguriert ist, kann ShowVoc keine Remote-Datensätze für das Hosting stabiler Ressourcen erstellen.",
+                "URL_INFO": "URL des externen Triple-Stores",
+                "USERNAME_INFO": "Benutzername für die Anmeldung beim externen Triple-Store (wenn Authentifizierung erforderlich ist)"
+            },
+            "VB_CONFIG": {
+                "ADMIN_EMAIL_INFO": "E-Mail des Administrators von VocBench/SemanticTurkey",
+                "ADMIN_PASSWORD_INFO": "Passwort des Administrators von VocBench/SemanticTurkey",
+                "ST_HOST_INFO": "Vollständige URL (Protokoll+Hostname+Port) des SemanticTurkey-Hosts",
+                "VB_CONFIG": "VocBench-Konfiguration",
+                "VB_CONFIG_INFO": "Konfiguration der VocBench-/SemanticTurkey-Instanz, die für die Entwicklung instabiler Ressourcen bestimmt ist.<br><strong>Hinweis</strong>: wenn diese nicht korrekt konfiguriert ist, kann ShowVoc keine Verbindung mit VocBench herstellen, so dass es unmöglich ist, Beiträge von in Entwicklung befindlichen Ressourcen anzunehmen.",
+                "VB_CONFIG_TEST": "VocBench Konfigurationstest",
+                "VB_URL_INFO": "URL der VocBench-Instanz, auf die Mitwirkende zugreifen können\n\n\n"
+            }
+        }
+    },
+    "ALIGNMENTS": {
+        "ACTIONS": {
+            "REFRESH_DATASET_PROFILE": "Datensatzprofil aktualisieren",
+            "SHOW_PERCENTAGE": "Linkset-Prozentsatz anzeigen"
+        },
+        "ALIGNMENTS": "Alignments",
+        "MAPPINGS": "Mappings",
+        "SEARCH": {
+            "MODE_BOTH": "Beide",
+            "MODE_ONLY_SOURCE": "Nur Quelldatensatz",
+            "SOURCE_DATASET_MATCHES": "Quelldatensatz-Suchtreffer",
+            "TARGET_DATASET_MATCHES": "Ziel-Datensatz-Suchtreffer"
+        },
+        "SOURCE_DATASET": "Quell-Datensatz"
+    },
+    "APP": {
+        "FOOTER": {
+            "ABOUT_SHOWVOC": "Über ShowVoc",
+            "CONTACT_US": "Kontakt",
+            "SHOWVOC_WEBSITE": "ShowVoc-Website",
+            "SUPPORT": "Support"
+        },
+        "USER_MENU": {
+            "ADMINISTRATION_DASHBOARD": "Verwaltungs-Dashboard",
+            "LOGIN": "Anmelden",
+            "LOGOUT": "Abmelden"
+        }
+    },
+    "COMMONS": {
+        "ACTIONS": {
+            "ADD": "Hinzufügen",
+            "CANCEL": "Abbrechen",
+            "CHECK": "Prüfen",
+            "CHECK_ALL": "Alle markieren",
+            "CLOSE": "Schließen",
+            "CONFIRM": "Bestätigen",
+            "CREATE": "Erstellen",
+            "EDIT": "Bearbeiten",
+            "LOAD": "Laden",
+            "REFRESH": "Aktualisieren",
+            "REMOVE": "Entfernen",
+            "RESET": "Zurücksetzen",
+            "SEARCH": "Suche",
+            "SUBMIT": "Abschicken",
+            "UNCHECK": "Deaktivieren",
+            "UNCHECK_ALL": "Alle Markierungen entfernen"
+        },
+        "BOOLEAN": {
+            "FALSE": "Falsch",
+            "NO": "Nein",
+            "TRUE": "Wahr",
+            "YES": "Ja"
+        },
+        "CONFIG": {
+            "CONFIGURATION": "Konfiguration",
+            "CONFIGURATION_OF": "Konfiguration von",
+            "CONFIGURE": "Konfigurieren",
+            "DUPLICATED_CONFIGURATION": "Duplizierte Konfiguration",
+            "LOAD_CONFIGURATION": "Konfiguration laden",
+            "MISSING_CONFIGURATION": "Fehlende Konfiguration",
+            "PASSWORD": "Passwort",
+            "REPO_CONFIGURATION": "Repo-Konfiguration",
+            "SAVE_CONFIGURATION": "Konfiguration speichern",
+            "SERVER_URL": "Server-URL",
+            "USERNAME": "Nutzername"
+        },
+        "DENIED_OPERATION": "Ausführung verweigert",
+        "DESCRIPTION": "Beschreibung",
+        "DETAILS": "Details",
+        "FILTER": "Filter",
+        "FORMAT": "Format",
+        "LANGUAGE": {
+            "ISO_CODE": "ISO-Code",
+            "LANGUAGE": "Sprache",
+            "LANGUAGES": "Sprachen",
+            "NO_LANG_INFO": "Keine ausgewählte Sprache bedeutet alle Sprachen"
+        },
+        "MANDATORY_FIELD": "Pflichtfeld",
+        "NAME": "Name",
+        "OPTIONAL_FIELD": "Optionales Feld",
+        "PAGING": {
+            "NEXT_PAGE": "Nächste Seite",
+            "PAGE_OF_TOT": "von",
+            "PREV_PAGE": "Vorherige Seite"
+        },
+        "POSITION": "Position",
+        "SETTINGS": "Einstellungen",
+        "STATUS": {
+            "ACTIVE": "Aktiv",
+            "ERROR": "Fehler",
+            "INCOMPLETE_FORM": "Unvollständiges Formular",
+            "INVALID_DATA": "Ungültige Daten",
+            "STATUS": "Status",
+            "WARNING": "Warnung"
+        },
+        "TITLE": "Titel",
+        "VALUE": "Wert"
+    },
+    "CONTRIBUTIONS": {
+        "ACTIONS": {
+            "APPROVE": "Genehmigen",
+            "APPROVE_CONTRIBUTION": "Beitrag genehmigen",
+            "REJECT_CONTRIBUTION": "Beitrag ablehnen",
+            "SUBMIT_REQUEST": "Anfrage abschicken"
+        },
+        "CONTRIBUTION": "Beitrag",
+        "CONTRIBUTIONS": "Beiträge",
+        "CONTRIBUTOR": "Mitwirkende",
+        "FORM": {
+            "COMMONS": {
+                "DISCOVER": "Entdecken",
+                "EMAIL_INFO": "Wird verwendet, um Ihnen eine E-Mail mit dem Ergebnis der Bewertung des Beitrags zu senden",
+                "HOME_PAGE": "Homepage",
+                "METADATA": "Metadaten",
+                "NO_AGGREGATION": "Keine Aggregation",
+                "ORGANIZATION": "Organisation",
+                "REQUEST_SUBMITTED": "Anfrage eingereicht",
+                "RESOURCE_NAME": "Name der Ressource"
+            },
+            "DEV": {
+                "CONVERSION_FROM": "Konvertierung von",
+                "CONVERSION_REQUIRED": "Konvertierung erforderlich",
+                "CONVERSION_REQUIRED_INFO": "Die Daten müssen aus einem Nicht-RDF-Format konvertiert werden"
+            },
+            "METADATA": {
+                "IDENTITY_INFO": "Wenn leer gelassen, wird ein IRI vom System generiert"
+            },
+            "STABLE": {
+                "CONTRIBUTOR_IS_OWNER": "Der Kontributor ist der Eigentümer der Ressource?",
+                "IM_OWNER": "Ich bin der Eigentümer der Ressource"
+            }
+        },
+        "LOAD": {
+            "DATASET_NAME": "Name des Datensatzes",
+            "DATASET_NAME_INFO": "Der in der Benachrichtigungs-E-Mail über die Beitragsfreigabe angegebene Datensatzname",
+            "EMAIL_ADDRESS": "E-Mail-Adresse",
+            "EMAIL_ADDRESS_INFO": "Die E-Mail-Adresse, mit der Sie den Beitrag eingereicht haben"
+        },
+        "MANAGER": {
+            "CONTRIBUTION_MANAGER": "Beiträge-Manager",
+            "CONTRIBUTION_TYPE": "Beitragstyp",
+            "SUBMITTED": "Eingereicht"
+        }
+    },
+    "DATA": {
+        "CLASS": {
+            "ACTIONS": {
+                "SELECT_CLASS": "Klasse auswählen",
+                "SELECT_ROOT_CLASS": "Wurzelklasse auswählen"
+            },
+            "CLASS": "Klasse",
+            "CLASSES": "Klassen",
+            "SETTINGS": {
+                "CLASS_TREE_SETTINGS": "Klassenbaumeinstellungen",
+                "FILTERED_SUBCLASSES": "Gefilterte Unterklassen",
+                "FILTER_ENABLED": "Filter aktiviert",
+                "ROOT_CLASS": "Wurzelklasse",
+                "SHOW_INSTANCES_NUMBER": "Anzahl Instanzen anzeigen",
+                "SUBCLASS_FILTER": "Filter für Unterklassen",
+                "SUBCLASS_FILTER_INFO": "Hier können Sie Filter erstellen, um Unterklassen von Klassen auszublenden"
+            }
+        },
+        "COLLECTION": {
+            "COLLECTION": "Sammlung",
+            "COLLECTIONS": "Sammlungen"
+        },
+        "COMMONS": {
+            "ACTIONS": {
+                "CHANGE_RENDERING": "Rendering ändern"
+            },
+            "VISUALIZATION_MODE": {
+                "HIERARCHY_BASED": "Hierarchiebasiert",
+                "INDEX_BASED": "Indexbasiert",
+                "MODE": "Visualisierungsmodus",
+                "SEARCH_BASED": "Suchbasiert",
+                "STANDARD": "Standard"
+            }
+        },
+        "CONCEPT": {
+            "CONCEPT": "Begriff",
+            "CONCEPTS": "Begriffe",
+            "SETTINGS": {
+                "CONCEPT_TREE_SETTINGS": "Begriffsbaum-Einstellungen",
+                "TOP_CONCEPTS_LIMIT": "Begrenzung der Top-Konzepte",
+                "TOP_CONCEPTS_LIMIT_INFO": "Legt die maximale Anzahl der im Baum sichtbaren Top-Konzepte fest. Diese Einstellung verhindert die Initialisierung eines Baums, der Performanzrobleme verursachen kann."
+            },
+            "UNSAFE_WARN": {
+                "ELEMENT_COUNT": "Dieser Begriffsbaum enthält zu viele ({{count}}) Top-Konzepte; der in den Einstellungen festgelegte Grenzwert ({{safeToGoLimit}}) wird überschritten.",
+                "FORCE_INIT": "Wenn Sie die Initialisierung des Begriffsbaums auf eigenes Risiko erzwingen möchten, klicken Sie",
+                "HERE": "hier",
+                "PERFORMANCE_ISSUE": "Das Abrufen aller Daten könnte ein langer Prozess sein, es kann zu Leistungseinbußen kommen oder das System kann hängen bleiben.",
+                "SELECT_SCHEME": "Sie können auch die Anzahl der Top-Konzepte reduzieren, indem Sie ein Schema auswählen.",
+                "SETTINGS": "Einstellungen",
+                "SWITCH_MODE": "in den Visualisierungsmodus \"Suchbasiert\" zu wechseln"
+            },
+            "USE_SEARCH_MSG": "Bitte benutzen Sie das Suchfeld, um Begriffe abzurufen"
+        },
+        "DATA": "Daten",
+        "INSTANCE": {
+            "INSTANCE": "Instanz",
+            "INSTANCES": "Instanzen",
+            "SETTINGS": {
+                "INSTANCES_LIMIT": "Instanzen begrenzen",
+                "INSTANCES_LIMIT_INFO": "Legt die maximale Anzahl der in der Liste sichtbaren Instanzen fest. Diese Einstellung verhindert die Initialisierung einer Liste, die Performanzprobleme verursachen kann.",
+                "INSTANCE_LIST_SETTINGS": "Instanzlisteneinstellungen"
+            },
+            "UNSAFE_WARN": {
+                "ELEMENT_COUNT": "Diese Instanzliste enthält eine Anzahl von Elementen ({{count}}), die den in den Einstellungen  festgelegten Grenzwert ({{safeToGoLimit}}) überschreitet.",
+                "FORCE_INIT": "Wenn Sie die Initialisierung der Instanzliste auf eigenes Risiko erzwingen möchten, klicken Sie",
+                "HERE": "hier",
+                "PERFORMANCE_ISSUE": "Das Abrufen aller Daten kann ein langer Prozess sein, es kann zu Leistungseinbußen kommen oder das System kann hängen bleiben.",
+                "SETTINGS": "Einstellungen",
+                "SWITCH_MODE": "in den Visualisierungsmodus \"Suchbasiert\" zu wechseln"
+            },
+            "USE_SEARCH_MSG": "Bitte benutzen Sie das Suchfeld, um Instanzen abzurufen"
+        },
+        "LEXICON": {
+            "ACTIONS": {
+                "CHANGE_LEXICON": "Lexikon ändern",
+                "SELECT_LEXICON": "Lexikon auswählen"
+            },
+            "LEXICON": "Lexikon",
+            "LEXICONS": "Lexika"
+        },
+        "LEX_ENTRY": {
+            "LEX_ENTRIES": "Lex.Einträge",
+            "LEX_ENTRY": "Lex.Eintrag",
+            "SETTINGS": {
+                "INDEX_LENGHT": "Indexlänge",
+                "INDEX_LENGHT_INFO": "Gibt an, ob der Index der Lexikalischen Einträge 1 oder 2 Zeichen umfasst.",
+                "LEX_ENTRIES_LIMIT": "Limit für Lexikalische Einträge",
+                "LEX_ENTRIES_LIMIT_INFO": "Legt die maximale Anzahl der in der Liste sichtbaren lexikalischen Einträge fest. Diese Einstellung verhindert die Initialisierung einer Liste, die Performanzprobleme verursachen könnte.",
+                "LEX_ENTRY_SETTINGS": "Einstellungen für die Liste der lexikalischen Einträge"
+            },
+            "UNSAFE_WARN": {
+                "CHANGE_INDEX_LENGHT": "Indexlänge auf 2 Zeichen ändern",
+                "ELEMENT_COUNT": "Die Anzahl Lexikalischer Einträge in dieser Liste ({{count}}) überschreitet den in den Einstellungen  festgelegten Grenzwert ({{safeToGoLimit}}).",
+                "FORCE_INIT": "Wenn Sie die Initialisierung der lexikalischen Eintragsliste auf eigenes Risiko erzwingen möchten, klicken Sie",
+                "HERE": "hier",
+                "IT_IS_RECOMMENDED": "Es wird empfohlen,",
+                "PERFORMANCE_ISSUE": "Das Abrufen aller Daten kann ein langer Prozess sein, es kann zu Leistungseinbußen kommen oder das System kann hängen bleiben.",
+                "SELECT_LEXICON": "Sie können die Anzahl der lexikalischen Einträge auch reduzieren, indem Sie ein Lexikon auswählen.",
+                "SETTINGS": "Einstellungen",
+                "SWITCH_MODE": "in den Visualisierungsmodus \"Suchbasiert\" zu wechseln"
+            },
+            "USE_SEARCH_MSG": "Bitte benutzen Sie das Suchfeld, um lexikalische Einträge abzurufen"
+        },
+        "PROPERTY": {
+            "ACTIONS": {
+                "SHOW_ALL": "Alle Eigenschaften anzeigen"
+            },
+            "PROPERTIES": "Eigenschaften",
+            "PROPERTY": "Eigenschaft"
+        },
+        "SCHEME": {
+            "CONCEPT_SCHEME": "Begriffsschema",
+            "SCHEME": "Schema",
+            "SCHEMES": "Schemata"
+        }
+    },
+    "DATASETS": {
+        "ACTIONS": {
+            "CREATE_DATASET": "Datensatz erstellen",
+            "CREATE_METADATA": "Datensatz-Metadaten erstellen",
+            "CREATE_REFRESH_METADATA": "Metadaten des Datensatzes erstellen/aktualisieren",
+            "DELETE_DATASET": "Datensatz löschen",
+            "PROFILE_DATASET": "Profil-Datensatz"
+        },
+        "ATTR": {
+            "DATASET_NAME": "Name des Datensatzes",
+            "DEREF_SYSTEM": "Dereferenzierungssystem",
+            "IDENTITY": "Identität",
+            "IDENTITY_IRI": "Identitäts-IRI",
+            "SPARQL_ENDPOINT": "SPARQL-Endpunkt",
+            "SPARQL_ENDPOINT_URL": "SPARQL-Endpunkt-URL",
+            "URI_SPACE": "URI Space"
+        },
+        "BROWSE_DATASETS": " {{instanceName}} Datensätze durchsuchen",
+        "DATASET": "Datensatz",
+        "DATASETS": "Datensätze",
+        "DATASET_TYPE": "Datensatz-Typ",
+        "ONLY_OPEN": "Nur offene Datensätze",
+        "STATUS": {
+            "ALREADY_EXISTING_DATASET": "Bereits vorhandener Datensatz",
+            "DATASET_CREATED": "Datensatz erstellt",
+            "DATASET_NOT_FOUND": "Datensatz nicht gefunden",
+            "MISSING_DATASET_PROFILE": "Fehlendes Datensatzprofil"
+        }
+    },
+    "GRAPHS": {
+        "ACTIONS": {
+            "ADD_NODE": "Knoten hinzufügen",
+            "EXPAND_LINKSET": "Linkset aufklappen",
+            "EXPORT_SNAPSHOT": "Schnappschuss des Diagramms exportieren (.svg)",
+            "FIX_NODE_POSITION": "Knotenposition fixieren"
+        },
+        "FORCE_CONTROL": {
+            "LENGTH": "Länge",
+            "LINKS": "Verbindungslinien",
+            "STRENGTH": "Stärke"
+        },
+        "LINKS_FILTER": {
+            "EXPAND_NODE": "Knoten erweitern",
+            "TOO_MUCH_RELATIONS_WARNING": "Die Ressource, die Sie erweitern, weist eine große Anzahl von Beziehungen auf, sodass viele Links und Knoten generiert werden, die die Visualisierung unüberischtlich machen könnten. Daher wird dringend empfohlen, einige Beziehungen herauszufiltern, um den Umfang des Graphs zu begrenzen.",
+            "VISIBLE_X_OUT_OF_Y": [
+                "Sichtbar",
+                "von"
+            ]
+        },
+        "PARTITIONS_FILTER": {
+            "ALL_PARTITIONS_HIDDEN_WARN": "Wenn alle Partitionen ausgeblendet sind, hat die Erweiterung eines Knotens keine Auswirkung",
+            "CHECK_PARTITION_FOR_ALL_TYPES": "Ausgewählte Partition in allen Rollen aktivieren",
+            "PARTITIONS": "Abschnitte",
+            "PARTITIONS_FILTER": "Partitionsfilter",
+            "PARTITIONS_FILTER_INFO": "Wählen Sie die Abschnitte der Ressourcenbeschreibung aus, die beim Erweitern eines Knotens angezeigt werden sollen.",
+            "RESET_FILTER": "Filter zurücksetzen",
+            "RESOURCE_TYPES": "Ressourcentypen",
+            "UNCHECK_PARTITION_FOR_ALL_TYPES": "Markierte Partition in allen Rollen deaktivieren"
+        },
+        "RESOURCE_DETAILS": {
+            "SHOW_THE_COMPLETE": "Vollständig anzeigen"
+        },
+        "SETTINGS": {
+            "DATA_GRAPH_SETTINGS": "Einstellungen für datenorientiertes Diagramm",
+            "HIDE_LITERAL_NODES": "Literale Knoten ausblenden",
+            "HIDE_LITERAL_NODES_INFO": "Wenn diese Option aktiviert ist, werden alle Literalknoten im Diagramm ausgeblendet."
+        }
+    },
+    "HOME": {
+        "WELCOME_WO_INST_NAME": {
+            "CONTRIBUTE_TO": "Zu ShowVoc beitragen",
+            "WELCOME": "Willkommen bei ShowVoc!"
+        },
+        "WELCOME_W_INST_NAME": {
+            "CONTRIBUTE_TO": "Beitragen zu {{instanceName}}",
+            "POWERED_BY": "{{instanceName}} wird bereitgestellt von",
+            "WELCOME": "Willkommen beim {{instanceName}} Datensatz-Browser!"
+        }
+    },
+    "MESSAGES": {
+        "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Sie sind dabei, die vorgeschlagenen Metadaten in das Metadatenregister zu übertragen. Sind Sie sicher?",
+        "ADMIN_CREATED": "Das Administratorkonto wurde angelegt. Jetzt werden Sie automatisch mit der E-Mail und dem Passwort, das Sie angegeben haben, eingeloggt.",
+        "BASEURI_MISSING": "BaseURI fehlt oder ist ungültig",
+        "BASEURI_REQUIRED": "BaseURI erforderlich",
+        "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "Für einen geschlossenen Datensatz kann kein Index erstellt werden. Bitte Datensatz öffnen und noch einmal versuchen.",
+        "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "Für einen geschlossenen Datensatz können keine Metadaten erstellt werden. Bitte Datensatz öffnen und noch einmal versuchen.",
+        "CANNOT_DELETE_OPEN_DATASET": "Ein geöffneter Datensatz kann nicht gelöscht werden. Bitte Datensatz schließen und noch einmal versuchen.",
+        "CANNOT_LOAD_DATA_IN_CLOSED_DATASET": "In einen geschlossenen Datensatz können keine Daten geladen werden. Bitte Datensatz öffnen und noch einmal versuchen.",
+        "CANNOT_PROFILE_CLOSED_DATASET": "Ein geschlossener Datensatz kann nicht profiliert werden",
+        "CLASS_FILTER_ALREADY_EXIST": "Es existiert bereits ein Filter für die Klasse {{cls}} .",
+        "CONTRIBUTION_APPROVED_DATASET_CREATED": "Der Beitrag wurde genehmigt und der Datensatz wurde erfolgreich erstellt",
+        "CONTRIBUTION_SUBMITTED": "Ihr Beitragsantrag wurde erfolgreich eingereicht. Er wird vom Administrator bewertet und Sie erhalten eine Antwort an die angegebene E-Mail-Adresse.",
+        "CUSTOM_ROOT_WARN": "Die Auswahl einer bestimmten Klasse als Wurzel könnte andere Klassen ausblenden, die keine Unterklassen der gewählten Wurzel sind.",
+        "DATASET_ALREADY_IN_METADATA_REGISTRY": "Für die angegebene IRI ist bereits ein Datensatz in der Metadaten-Registry vorhanden",
+        "DATASET_CREATED": "Das Dataset wurde erfolgreich erstellt",
+        "DATASET_NAME_MISSING": "Datensatzname fehlt oder ist nicht gültig",
+        "DATA_LOADED": "Daten erfolgreich geladen",
+        "DATA_REPO_NOT_CONFIGURED": "Das Daten-Repository muss konfiguriert werden",
+        "DELETE_DATASET_CONFIRM_WARN": "Achtung, dieser Vorgang löscht den Datensatz. Sind Sie sicher, dass Sie fortfahren wollen?",
+        "DIFFERENT_CONFIRM_PASSWORD": "Passwort und bestätigtes Passwort sind unterschiedlich.",
+        "DUPLICATED_SERVER_URL_CONFIG": "Für diese Server-URL existiert bereits eine Konfiguration.",
+        "EMAIL_CONFIG_CHANGED": "Die E-Mail-Konfiguration wurde geändert. Bitte Änderungen bestätigen.",
+        "EMAIL_CONFIG_INFO": "Konfiguration des ShowVoc-E-Mail-Dienstes. Dieser Dienst wird verwendet, um Benachrichtigungen an die Mitwirkenden zu senden<br><strong>Hinweis</strong>: Wenn die Konfiguration nicht korrekt ist, können keine E-Mails an Mitwirkende versandt werden, so dass diese nicht in der Lage sind, einen Beitrag abzuschließen.",
+        "EMAIL_CONFIG_TEST_INFO": "Dieser Test sendet eine E-Mail an die angegebene Adresse, um die E-Mail-Konfiguration zu überprüfen.",
+        "EMAIL_CONFIG_TEST_SUCCESS": "Die Konfiguration funktioniert. Eine Test-E-Mail wurde an die angegebene E-Mail-Adresse gesendet.",
+        "ENTER_VALID_EMAIL": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+        "INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET": "Die Indexerstellung ist bei einem geschlossenen Dataset nicht verfügbar",
+        "INSERT_EMAIL_FOR_RESET_PASSWORD": "Geben Sie die E-Mail-Adresse Ihres Kontos ein. Sie erhalten eine E-Mail mit den Anweisungen zum Zurücksetzen des Passworts.",
+        "INVALID_EMAIL": "{{email}} ist keine gültige E-Mail Adresse.",
+        "INVALID_SEARCH_STRING": "Bitte geben Sie eine gültige Zeichenfolge für die Suche ein",
+        "LANGUAGE_ALREAY_IN_LIST": "Die Sprache '{{lang}}' ist bereits in der Liste enthalten.",
+        "LANGUAGE_DUPLICATED": "Die Sprache '{{lang}}' ist in der Liste doppelt vorhanden.",
+        "LANGUAGE_INVALID_TAG": "Sprache '{{lang}}' ist kein gültiges Sprach-Tag.",
+        "LANGUAGE_SETTING_PARSING_ERROR": "Bei der Initialisierung der Projekteinstellungen ist beim Parsen der Spracheinstellungen ein Problem aufgetreten. Für dieses Projekt werden Standardsprachen festgelegt.",
+        "LIFTER_NOT_CONFIGURED": "Der Lifter muss konfiguriert werden.",
+        "MAKE_DATASET_PUBLIC_CONFIRM": "Sie sind dabie, den Datensatz öffentlich zu machen, so dass er auf der Seite \"Datensätze\" sichtbar wird und der Inhalt für die Besucher verfügbar ist. Möchten Sie fortfahren?",
+        "MAKE_DATASET_STAGING_CONFIRM": "Sie sind dabei, den Status des Datensatzes in 'Staging' zu ändern, so dass er auf der Seite Datensätze nicht mehr sichtbar ist und die Besucher nicht auf seinen Inhalt zugreifen können. Danach können Sie den Index löschen. Möchten Sie fortfahren?",
+        "METADATA_NOT_FOUND_PROFILE_CONFIRM": "Es wurden keine Metadaten zum Datensatz '{{datasetName}}' in der MetadataRegistry gefunden. Möchten Sie ein Profil des Datensatzes erstellen? (Das ist für die Alignment-Funktionalität erforderlich.)",
+        "METADATA_NOT_FOUND_PROFILE_DATASET": "Es wurden keine Metadaten über den aktuellen Datensatz in der MetadataRegistry gefunden. Bitte erstellen Sie ein Profil des Datensatzes, indem Sie auf die Schaltfläche <i class=\"fas fa-chart-bar\"></i> klicken.",
+        "MISSING_MANDATORY_FIELD": "Fehlendes Pflichtfeld '{{missingField}}'",
+        "NO_CONVERSION_FORMAT_SELECTED": "Das Häkchen bei \"Konvertierung erforderlich\" ist gesetzt, aber es wurde kein Format ausgewählt",
+        "NO_METADATA_PROVIDED": "Es sind keine Metadaten vorhanden",
+        "NO_SEARCH_RESULTS": "Keine Ergebnisse gefunden für '{{searchedString}}'",
+        "NO_USER_REGISTERED": "ShowVoc hat festgestellt, dass sich noch kein Benutzer registriert hat. Um die Plattform nutzen zu können, müssen Sie ein Administratorkonto anlegen, indem Sie persönliche Daten und Anmeldedaten eingeben.",
+        "PASSWORD_CHANGED": "Das Passwort wurde erfolgreich geändert.",
+        "PASSWORD_RESET_SUCCESS": "Das Passwort wurde erfolgreich zurückgesetzt. Sie erhalten eine E-Mail mit dem neuen temporären Passwort.",
+        "REFRESH_METADATA_CONFIRM": "Sie sind dabei, die Metadaten des Datensatzes '{{datasetName}}' zu aktualisieren. Sind Sie sicher?",
+        "REJECT_CONTRIBUTION_CONFIRM": "Sind Sie sicher, dass Sie den Beitrag ablehnen wollen?",
+        "REMOTE_REPO_ACCESS_NOT_CONFIGURED": "Der Zugang zum externen Repository wurde nicht konfiguriert.",
+        "RESET_PARTITION_FILTER_CONFIRM": "Der Partitionsfilter wird für alle verfügbaren Rollen zurückgesetzt. Sind Sie sicher?",
+        "RESET_PASSWORD_EMAIL_SENT": "Eine E-Mail mit den Anweisungen zum Zurücksetzen des Passworts wurde an die angegebene Adresse gesendet.",
+        "RESOURCE_ALREADY_IN_GRAPH": "Kann keinen Knoten für die ausgewählte Ressource hinzufügen, da bereits ein Knoten für diese Ressource existiert",
+        "RESOURCE_NOT_REACHABLE": "{{resource}} ist in dem Baum oder in der Liste nicht erreichbar. Die Ressourcenansicht wird in einem modalen Dialog angezeigt.",
+        "RES_NOT_REACHABLE_IN_TREE": "Die Ressource {{resource}} ist im aktuellen Baum nicht erreichbar.",
+        "RES_NOT_REACHABLE_IN_TREE_DIALOG_RES_VIEW_CONFIRM": "Die Ressource {{resource}} ist im aktuellen Baum nicht erreichbar. Möchten Sie die ResourceView in einem modalen Dialog öffnen?",
+        "RES_NOT_REACHABLE_IN_TREE_THROUGH_DEPRECATED": "Die Ressource {{resource}} ist im aktuellen Baum nicht erreichbar, da der Pfad zu ihr einen veralteten Knoten enthält. Aktivieren Sie die Anzeige veralteter Ressourcen und wiederholen Sie die Suche.",
+        "SEARCH_INDEX_NOT_FOUND": "Es kann kein Index gefunden werden. Bitte erstellen Sie den Index für mindestens ein Dataset und versuchen Sie es dann erneut.",
+        "SELECT_REFERENCED_REPO_TO_DELETE": "Die folgenden Repositorys wurden vom gelöschten Projekt referenziert. Wählen Sie die Repositorys aus, die Sie löschen möchten.",
+        "SWITCH_NO_SCHEME_CONFIRM": "Gesuchtes Konzept '{{concept}}' gehört zu keinem Schema. Möchten Sie in den schemalosen Modus wechseln?",
+        "SYSTEM_CONFIG_INTRO": "In diesem Bereich können Sie einige Kernaspekte des Systems einrichten. Auf diese Seite kann auch später über <i>Verwaltungs-Dashboard</i> > <i>Konfiguration</i> zugegriffen werden.",
+        "SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO": "Das System wurde nicht so konfiguriert, dass ein externes Repository erstellt werden kann. Bitte erstellen Sie über das Administrator-Dashboard eine Konfiguration für einen externen Triplestore.",
+        "SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION": "Das System wurde nicht so konfiguriert, dass es sich mit einer externen VocBench-Instanz verbinden kann. Bitte erstellen Sie eine Konfiguration über das Administrator-Dashboard.",
+        "TOO_MUCH_LINKSETS_FILTER": "Der erweiterte Datensatz hat eine hohe Anzahl von Linksets ({{linksetCount}}). Mit einer wachsenden Anzahl visueller Elemente im Diagramm kann es zu einem Leistungsabfall kommen. Sie können nur die Linksets filtern, die mindestens eine bestimmte Anzahl von Links enthalten",
+        "UNEXISTING_OR_CLOSED_DATASET": "Der angeforderte Datensatz (id: '{{datasetId}}') existiert nicht oder ist nicht geöffnet. Sie werden auf die Startseite weitergeleitet.",
+        "UNEXISTING_URI_IN_PROJECT": "Falscher URI: Im aktuellen Projekt existiert keine Ressource mit URI {{resUri}} ",
+        "UPDATE_QUERY_NOT_ALLOWED": "Update-Operation nicht erlaubt",
+        "VALUE_EMPTY_OR_INVALID": "Der eingefügte Wert ist leer oder ungültig. Bitte überprüfen und noch einmal versuchen.",
+        "VALUE_INVALID": "Der eingegebene Wert ist nicht gültig. Bitte prüfen und noch einmal versuchen.",
+        "VB_CONFIG_CHANGED": "VocBench-Konfiguration wurde geändert, sie müssen erst die Änderungen übermitteln.",
+        "VB_CONFIG_INCOMPLETE": "Die VocBench-Konfiguration ist unvollständig. Bitte alle Felder ausfüllen und noch einmal versuchen.",
+        "VB_CONFIG_TEST_FAIL": "Test fehlgeschlagen, die angegebene Konfiguration ist nicht korrekt.",
+        "VB_CONFIG_TEST_SUCCESS": "Die Konfiguration wurde erfolgreich getestet.",
+        "X_SEARCH_RESOURCES_FOUND": "{{results}} Ergebnisse gefunden",
+        "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "Sie erhalten in Kürze eine E-Mail mit Ihren Zugangsdaten zu VocBench."
+    },
+    "MODELS": {
+        "PROJECT": {
+            "BACKEND_TYPE": "Backend-Typ",
+            "BASE_URI": "Basis-URI",
+            "DATA_REPO_ID": "Daten-Repository-ID",
+            "LEXICALIZATION": "Lexikalisierung",
+            "LEXICALIZATION_MODEL": "Lexikalisierungsmodell",
+            "LOCATION": "Position",
+            "MODEL": "Modell",
+            "REPOSITORY_ID": "Repository-ID",
+            "REPO_ACCESS": "Repository-Zugriff"
+        },
+        "RESOURCE": {
+            "DEPRECATED": "Veraltet",
+            "LABEL": "Label",
+            "PREDICATE": "Prädikat",
+            "RESOURCE": "Ressource",
+            "ROLE": "Rolle"
+        }
+    },
+    "PREFERENCES": {
+        "LANG": {
+            "RENDERING": {
+                "DESCRIPTION": "Wählen Sie die Sprachen (und deren Reihenfolge) aus, die zum Rendern der Ressourcen verwendet werden",
+                "RENDERING_LANGS": "Sprachen rendern"
+            },
+            "VALUE_FILTER": {
+                "DESCRIPTION": "Wählen Sie die Sprachen aus, die beim Filtern von Literalwerten in Ressourcenbeschreibungen angezeigt werden. Schalten Sie den Filter um, um die Werte in den nicht ausgewählten Sprachen auszublenden.",
+                "ENABLE_FILTER": "Filter aktivieren",
+                "VALUE_FILTER_LANGS": "Werte-Filter Sprachen"
+            }
+        }
+    },
+    "RESOURCE_VIEW": {
+        "ACTIONS": {
+            "OPEN_GRAP": "Grafikdarstellung öffnen",
+            "SHOW_HIDE_INFERRED": "Abgeleitete Informationen ein- / ausblenden"
+        },
+        "PARTITIONS": {
+            "BROADERS": "Oberbegriffe",
+            "CLASS_AXIOMS": "Klassenaxiome",
+            "CONSTRITUENST": "Bestandteile",
+            "DATATYPE_DEFINITIONS": "Datentypdefinitionen",
+            "DENOTATIONS": "Denotationen",
+            "DISJOINT_PROPERTIES": "Disjunkte Eigenschaften",
+            "DOMAINS": "Domänen",
+            "EQUIVALENT_PROPERTIES": "Äquivalente Eigenschaften",
+            "EVOKED_LEXICAL_CONCEPTS": "Evozierte lexikalische Konzepte",
+            "FACETS": "Facetten",
+            "FORM_BASED_PREVIEW": "Vorschau des benutzerdefinierten Formulars",
+            "FORM_PRESENTATIONS": "Formdarstellungen",
+            "IMPORTS": "Importe",
+            "LABEL_RELATIONS": "Label-Beziehungen",
+            "LEXICALIZATIONS": "Lexikalisierungen",
+            "LEXICAL_FORMS": "Lexikalische Formen",
+            "LEXICAL_SENSES": "Lexikalische Bedeutungen",
+            "MEMBERS": "Mitglieder",
+            "MEMBERS_ORDERED": "Mitglieder (geordnet)",
+            "NOTES": "Anmerkungen",
+            "PROPERTIES": "Sonstige Eigenschaften",
+            "RANGES": "Wertebereiche",
+            "RDFS_MEMBERS": "RDFS-Mitglieder",
+            "SCHEMES": "Schemata",
+            "SUBPROPERTY_CHAINS": "Subproperty-Chain-Axiome",
+            "SUBTERMS": "Subterms",
+            "SUPERPROPERTIES": "Übergeordnete Eigenschaften",
+            "TOP_CONCEPT_OF": "Top-Konzept von",
+            "TYPES": "Typen"
+        },
+        "SETTINGS": {
+            "RES_VIEW_SETTINGS": "Ressourcenansicht-Einstellungen"
+        },
+        "STATUS": {
+            "RESOURCE_NOT_EXISTING": "Diese Ressource ist im aktuellen Projekt nicht verfügbar",
+            "RESOURCE_UNKNOWN_HOST": "Diese Ressource ist weder für zugängliche lokale Projekte verfügbar noch im Web erreichbar"
+        }
+    },
+    "SEARCH": {
+        "ANY_LANGUAGE": "Beliebige Sprache",
+        "EDIT_LANGS": {
+            "ADD_LANG": "Sprache hinzufügen",
+            "EDIT_LANGS": "Sprachen bearbeiten",
+            "LANG_TAG": "Sprach-Tag"
+        },
+        "FILTERS": "Filter",
+        "INDEX_NOT_FOUND": "Index nicht gefunden",
+        "NO_RESOURCE_FOUND_FOR": "Keine Ressource gefunden für",
+        "ONLY_OPEN": "Nur offen",
+        "RESOURCE_NOT_REACHABLE": "Ressource nicht erreichbar",
+        "SEARCH": "Suche",
+        "SEARCH_RESULTS": "Suchergebnisse",
+        "SETTINGS": {
+            "CLS_INSTANCE_SEARCH": "Klassen-/Instanzensuche",
+            "CONCEPTS_SEARCH": "Begriffssuche",
+            "CONTAINS": "Enthält",
+            "ENDS_WITH": "endet mit",
+            "EXACT": "Genau",
+            "FUZZY": "Fuzzy",
+            "RESTRICT_TO_SCHEME": "Suche auf die aktiven skos:ConceptScheme(s) beschränken",
+            "SEARCH_IN_LOCAL_NAME": "Suche in lokalen Namen",
+            "SEARCH_IN_NOTES": "Suche in Notizen",
+            "SEARCH_IN_URI": "Suche in URI",
+            "SEARCH_MODE": "Suchmodus",
+            "SEARCH_MODE_INFO": "Die Suche sucht immer nach der Eingabezeichenfolge unter den Lexikalisierungen",
+            "SEARCH_SETTINGS": "Sucheinstellungen",
+            "STARTS_WITH": "Beginnt mit",
+            "STRING_MATCH_MODE": "String-Match-Modus"
+        },
+        "X_MATCHES_IN_N_DATASETS": [
+            "Treffer in",
+            "Datensätze"
+        ]
+    },
+    "SPARQL": {
+        "ACTIONS": {
+            "EXPORT_RESULTS": "SPARQL-Ergebnisse exportieren"
+        }
+    },
+    "USER": {
+        "ATTR": {
+            "EMAIL_ADDRESS": "E-Mail-Adresse",
+            "FAMILY_NAME": "Nachname",
+            "GIVEN_NAME": "Vorname",
+            "PASSWORD": "Passwort"
+        },
+        "LOGIN": "Anmelden",
+        "LOG_INTO_SHOWVOC": "Bei ShowVoc anmelden",
+        "PASSWORD": {
+            "CHANGE_PASSWORD": "Passwort ändern",
+            "CONFIRM_NEW_PASSWORD": "Neues Passwort bestätigen",
+            "CONFIRM_PASSWORD": "Passwort bestätigen",
+            "FORGOT_PASSWORD": "Passwort vergessen",
+            "NEW_PASSWORD": "Neues Passwort",
+            "OLD_PASSWORD": "Altes Passwort",
+            "PASSWORD_CHANGED": "Passwort geändert",
+            "RESET_PASSWORD": "Passwort zurücksetzen"
+        },
+        "REGISTRATION_COMPLETE": "Registrierung abgeschlossen",
+        "USER_DETAILS": "Nutzerdetails"
+    },
+    "WIDGETS": {
+        "SETTINGS_RENDERER": {
+            "ADD_OPTIONAL_VALUE": "Optionalen Wert hinzufügen",
+            "DELETE_OPTIONAL_VALUE": "Optionalen Wert löschen",
+            "UNKNOWN_TYPE_WARN": "Dieser Parameter hat einen unbekannten Typ ({{propTypeName}}). Der eingegebene Wert wird als low-level JSON-Wert interpretiert"
+        }
+    }
+}

@@ -2,80 +2,80 @@
     "ADMINISTRATION": {
         "DATASETS": {
             "MANAGEMENT": {
-                "CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS": "Custom project facets schema settings",
-                "DATASET_MANAGER": "Datasets manager",
-                "LOAD_DATA": "Load data",
-                "OPEN_CLOSE": "Open/Close",
-                "MAKE_PUBLIC": "Make public",
-                "MAKE_STAGING": "Make staging",
                 "CHANGE_STATUS": "Change status",
                 "CREATE_INDEX": "Create index",
                 "CREATE_REFRESH_INDEX": "Create/refresh index",
+                "CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS": "Custom project facets schema settings",
+                "DATASET_MANAGER": "Datasets manager",
                 "DELETE_INDEX": "Delete index",
                 "EDIT_DESCRIPTION": "Edit description",
                 "EDIT_FACETS": "Edit facets",
                 "EDIT_SETTINGS": "Edit settings",
+                "LOAD_DATA": "Load data",
+                "MAKE_PUBLIC": "Make public",
+                "MAKE_STAGING": "Make staging",
+                "OPEN_CLOSE": "Open/Close",
                 "RESOLVE_IMPORTS": "Resolve imports",
                 "USE_DATASET_BASEURI": "Use the baseURI of the dataset"
             },
             "REMOTE": {
+                "CONFIG": {
+                    "NO_CONFIG_FOUND": "No Remote Access Configuration found. Please, create a new one.",
+                    "REMOTE_ACCESS_CONFIG": "Remote access configuration"
+                },
                 "DELETE_REPO": "Delete remote repositories",
                 "REASON": "Reason",
-                "SELECT_REMOTE_REPO": "Select Remote Data Repository",
-                "CONFIG": {
-                    "REMOTE_ACCESS_CONFIG": "Remote access configuration",
-                    "NO_CONFIG_FOUND": "No Remote Access Configuration found. Please, create a new one."
-                }
+                "SELECT_REMOTE_REPO": "Select Remote Data Repository"
             },
             "SETTINGS": {
-                "DATASET_SETTINGS": "Dataset settings",
-                "DEFAULT_VISUALIZATION_MODE": "Default visualization mode",
+                "ALLOW_INDEX_CHANGE": "Allow index length change",
+                "ALLOW_INDEX_CHANGE_INFO": "Tells if visitor user can customize the index-length for itself",
                 "ALLOW_VISUALIZATION_CHANGE": "Allow visualization change",
                 "ALLOW_VISUALIZATION_CHANGE_INFO": "Tells if visitor user can customize the visualization mode for itself",
                 "CONCEPT_VISUALIZATION_INFO": "Restricts the visualization of the Concept tree for the visitor user. Administrator user will still be able to customize the visualization for itself.",
+                "DATASET_SETTINGS": "Dataset settings",
+                "DEFAULT_VISUALIZATION_MODE": "Default visualization mode",
                 "INSTANCE_LIST_VISUALIZATION_INFO": "Restricts the visualization of the instance list for the visitor user. Administrator user will still be able to customize the visualization for itself.",
                 "LEX_ENTRY_VISUALIZATION_INFO": "Restricts the visualization of the Lexical Entry list for the visitor user. Administrator user will still be able to customize the visualization for itself.",
-                "ALLOW_INDEX_CHANGE": "Allow index length change",
-                "ALLOW_INDEX_CHANGE_INFO": "Tells if visitor user can customize the index-length for itself",
                 "RENDERING_LANG_INFO": "Set the default language(s) used for rendering the resources"
             }
         },
         "SYSTEM": {
+            "COMMONS": {
+                "MAIL_PASSWORD_WARN": "Password is stored wihtout encryption on the server"
+            },
             "EMAIL": {
-                "EMAIL_CONFIG": "Email Configuration",
-                "EMAIL_CONFIG_TEST": "Email Configuration test",
-                "MAIL_SERVER_URL_INFO": "SMTP Mail Server IP/URL",
-                "MAIL_SERVER_PORT_INFO": "Mail Server Port",
-                "CRYPTOGRAPHIC_PROTOCOL": "Cryptographic protocol",
                 "AUTHENTICATION": "Authentication",
                 "AUTHENTICATION_INFO": "Tells if SMTP server requires authentication",
+                "CRYPTOGRAPHIC_PROTOCOL": "Cryptographic protocol",
+                "EMAIL_CONFIG": "Email Configuration",
+                "EMAIL_CONFIG_TEST": "Email Configuration test",
+                "MAIL_ALIAS_INFO": "Alias name shown in the administration emails",
                 "MAIL_FROM_INFO": "Email address used to send administration emails",
                 "MAIL_PASSWORD_INFO": "Password of the above email address",
                 "MAIL_PASSWORD_WARN": "Password is stored wihtout encryption on the server",
-                "MAIL_ALIAS_INFO": "Alias name shown in the administration emails"
+                "MAIL_SERVER_PORT_INFO": "Mail Server Port",
+                "MAIL_SERVER_URL_INFO": "SMTP Mail Server IP/URL"
             },
             "OTHER": {
-                "OTHER_SETTINGS": "Other settings",
-                "DISABLE_CONTRIBUTION": "Deactivate the \"contribute to ShowVoc\" option"
+                "DISABLE_CONTRIBUTION": "Deactivate the \"contribute to ShowVoc\" option",
+                "OTHER_SETTINGS": "Other settings"
             },
             "REMOTE_ACCESS": {
+                "PASSWORD_INFO": "Password of the remote triple store (if authentication is required)",
                 "REMOTE_ACCESS_CONFIG": "Remote access configuration",
                 "REMOTE_ACCESS_CONFIG_INFO": "Configuration of the remote triple store that hosts the datasets in ShowVoc.<br><strong>Note</strong>: if this is not properly configured, ShowVoc will not be able to create remotedatasets for hosting stable resources.",
                 "URL_INFO": "URL of the remote triple store",
-                "USERNAME_INFO": "Username of the remote triple store (if authentication is required)",
-                "PASSWORD_INFO": "Password of the remote triple store (if authentication is required)"
+                "USERNAME_INFO": "Username of the remote triple store (if authentication is required)"
             },
             "VB_CONFIG": {
+                "ADMIN_EMAIL_INFO": "Email of the administrator of VocBench/SemanticTurkey",
+                "ADMIN_PASSWORD_INFO": "Password of the administrator of VocBench/SemanticTurkey",
+                "ST_HOST_INFO": "Complete URL (protocol+hostname+port) of the SemanticTurkey host",
                 "VB_CONFIG": "VocBench configuration",
                 "VB_CONFIG_INFO": "Configuration of the VocBench/SemanticTurkey instance dedicated to the development of unstable resources.<br><strong>Note</strong>: if this is not properly configured, ShowVoc will not be able to connect with VocBench, so it will be impossible to accept contribution of under-development resources.",
                 "VB_CONFIG_TEST": "VocBench configuration test",
-                "VB_URL_INFO": "URL of the VocBench istance accessible by the contributors",
-                "ST_HOST_INFO": "Complete URL (protocol+hostname+port) of the SemanticTurkey host",
-                "ADMIN_EMAIL_INFO": "Email of the administrator of VocBench/SemanticTurkey",
-                "ADMIN_PASSWORD_INFO": "Password of the administrator of VocBench/SemanticTurkey"
-            },
-            "COMMONS": {
-                "MAIL_PASSWORD_WARN": "Password is stored wihtout encryption on the server"
+                "VB_URL_INFO": "URL of the VocBench istance accessible by the contributors"
             }
         }
     },
@@ -85,414 +85,26 @@
             "SHOW_PERCENTAGE": "Show linkset percentage"
         },
         "ALIGNMENTS": "Alignments",
-        "SOURCE_DATASET": "Source dataset",
         "MAPPINGS": "Mappings",
         "SEARCH": {
             "MODE_BOTH": "Both",
             "MODE_ONLY_SOURCE": "Only source dataset",
             "SOURCE_DATASET_MATCHES": "Source dataset search matches",
             "TARGET_DATASET_MATCHES": "Target dataset search matches"
-        }
+        },
+        "SOURCE_DATASET": "Source dataset"
     },
     "APP": {
+        "FOOTER": {
+            "ABOUT_SHOWVOC": "About ShowVoc",
+            "CONTACT_US": "Contact us",
+            "SHOWVOC_WEBSITE": "ShowVoc website",
+            "SUPPORT": "Support"
+        },
         "USER_MENU": {
             "ADMINISTRATION_DASHBOARD": "Administration dashboard",
             "LOGIN": "Login",
             "LOGOUT": "Logout"
-        },
-        "FOOTER": {
-            "ABOUT_SHOWVOC": "About ShowVoc",
-            "SHOWVOC_WEBSITE": "ShowVoc website",
-            "CONTACT_US": "Contact us",
-            "SUPPORT": "Support"
-        }
-    },
-    "CONTRIBUTIONS": {
-        "CONTRIBUTION": "Contribution",
-        "CONTRIBUTIONS": "Contributions",
-        "CONTRIBUTOR": "Contributor",
-        "ACTIONS": {
-            "APPROVE": "Approve",
-            "APPROVE_CONTRIBUTION": "Approve contribution",
-            "REJECT_CONTRIBUTION": "Reject contribution",
-            "SUBMIT_REQUEST": "Submit request"
-        },
-        "FORM": {
-            "COMMONS": {
-                "EMAIL_INFO": "This will be used to send you an email with the response of the contribution evaluation",
-                "RESOURCE_NAME": "Resource name",
-                "ORGANIZATION": "Organization",
-                "HOME_PAGE": "Home page",
-                "NO_AGGREGATION": "No aggregation",
-                "METADATA": "Metadata",
-                "DISCOVER": "Discover",
-                "REQUEST_SUBMITTED": "Request submitted"
-            },
-            "DEV": {
-                "CONVERSION_FROM": "Conversion from",
-                "CONVERSION_REQUIRED": "Conversion required",
-                "CONVERSION_REQUIRED_INFO": "The data requires conversion from a non-RDF format"
-            },
-            "METADATA": {
-                "IDENTITY_INFO": "If left empty, an IRI will be generated by the system"
-            },
-            "STABLE": {
-                "IM_OWNER": "I'm the owner of the resource",
-                "CONTRIBUTOR_IS_OWNER": "The contributor is the owner of the resource?"
-            }
-        },
-        "LOAD": {
-            "EMAIL_ADDRESS": "Email address",
-            "EMAIL_ADDRESS_INFO": "The email address with which you submitted the contribution",
-            "DATASET_NAME": "Dataset name",
-            "DATASET_NAME_INFO": "The dataset name provided in the notification email of contribution approval"
-        },
-        "MANAGER": {
-            "CONTRIBUTION_MANAGER": "Contributions manager",
-            "SUBMITTED": "Submitted",
-            "CONTRIBUTION_TYPE": "Contribution type"
-        }
-    },
-    "DATA": {
-        "DATA": "Data",
-        "CLASS": {
-            "CLASS": "Class",
-            "CLASSES": "Classes",
-            "ACTIONS": {
-                "SELECT_CLASS": "Select class",
-                "SELECT_ROOT_CLASS": "Select root class"
-            },
-            "SETTINGS": {
-                "CLASS_TREE_SETTINGS": "Class tree settings",
-                "ROOT_CLASS": "Root class",
-                "SUBCLASS_FILTER": "SubClasses filter",
-                "FILTER_ENABLED": "Filter enabled",
-                "SUBCLASS_FILTER_INFO": "Here you can create filters in order to hide subClasses of classes",
-                "FILTERED_SUBCLASSES": "Filtered subClasses",
-                "SHOW_INSTANCES_NUMBER": "Show instances number"
-            }
-        },
-        "COLLECTION": {
-            "COLLECTION": "Collection",
-            "COLLECTIONS": "Collections"
-        },
-        "CONCEPT": {
-            "CONCEPT": "Concept",
-            "CONCEPTS": "Concepts",
-            "USE_SEARCH_MSG": "Please use the search field to retrieve concepts",
-            "UNSAFE_WARN": {
-                "ELEMENT_COUNT": "This Concept tree has an amount of top concepts ({{elemCount}}) that exceeds the limit set in the settings ({{safeToGoLimit}}).",
-                "PERFORMANCE_ISSUE": "Retrieving them all could be a long process, you might experience performance decrease or it might even hang the system.",
-                "SWITCH_MODE": "It is recommended to switch from 'Hierarchy based' to 'Search based' visualization mode from the",
-                "SETTINGS": "settings",
-                "SELECT_SCHEME": "You can also reduce the amount of top concepts by selecting a scheme from the 'Scheme' panel.",
-                "FORCE_INIT": "If you want to force the Concept tree initialization at your own risk, click",
-                "HERE": "here"
-            },
-            "SETTINGS": {
-                "CONCEPT_TREE_SETTINGS": "Concept tree settings",
-                "TOP_CONCEPTS_LIMIT": "Top concepts limitation",
-                "TOP_CONCEPTS_LIMIT_INFO": "Sets the maximum amount of top concepts visible in the tree. This setting prevents the initialization of a tree that might cause performance issues"
-            }
-        },
-        "INSTANCE": {
-            "INSTANCE": "Instance",
-            "INSTANCES": "Instances",
-            "USE_SEARCH_MSG": "Please use the search field to retrieve instances",
-            "SETTINGS": {
-                "INSTANCE_LIST_SETTINGS": "Instance list settings",
-                "INSTANCES_LIMIT": "Instances limit",
-                "INSTANCES_LIMIT_INFO": "Sets the maximum amount of instances visible in the list. This setting prevents the initialization of a list that might cause performance issues"
-            },
-            "UNSAFE_WARN": {
-                "ELEMENT_COUNT": "This instance list has an amount of elements ({{count}}) that exceeds the limit set in the settings ({{safeToGoLimit}}).",
-                "PERFORMANCE_ISSUE": "Retrieving them all could be a long process, you might experience performance decrease or it might even hang the system.",
-                "SWITCH_MODE": "It is recommended to switch the visualization to search-based mode from the",
-                "SETTINGS": "settings",
-                "FORCE_INIT": "If you want to force the instance list initialization at your own risk, click",
-                "HERE": "here"
-            }
-        },
-        "LEX_ENTRY": {
-            "LEX_ENTRY": "Lex.Entry",
-            "LEX_ENTRIES": "Lex.Entries",
-            "USE_SEARCH_MSG": "Please use the search field to retrieve lexical entries",
-            "UNSAFE_WARN": {
-                "ELEMENT_COUNT": "This LexicalEntry list has an amount of elements ({{elemCount}}) that exceeds the limit set in the settings ({{safeToGoLimit}}).",
-                "PERFORMANCE_ISSUE": "Retrieving them all could be a long process, you might experience performance decrease or it might even hang the system.",
-                "IT_IS_RECOMMENDED": "It is recommended",
-                "CHANGE_INDEX_LENGHT": "to change the index lenght from 1-char to 2-char or",
-                "SWITCH_MODE": "to switch from 'Index based' to 'Search based' visualization mode from the",
-                "SETTINGS": "settings",
-                "SELECT_LEXICON": "You can also reduce the amount of lexical entries by selecting a lexicon from the 'Lexicon' panel.",
-                "FORCE_INIT": "If you want to force the lexical entry list initialization at your own risk, click",
-                "HERE": "here"
-            },
-            "SETTINGS": {
-                "LEX_ENTRY_SETTINGS": "Lexical Entry list settings",
-                "LEX_ENTRIES_LIMIT": "Lexical entries limitation",
-                "LEX_ENTRIES_LIMIT_INFO": "Sets the maximum amount of lexical entries visible in the list. This setting prevents the initialization of a list that might cause performance issues",
-                "INDEX_LENGHT": "Index lenght",
-                "INDEX_LENGHT_INFO": "Tells if the Lexical Entry index is 1-char or 2-char based"
-            }
-        },
-        "LEXICON": {
-            "LEXICON": "Lexicon",
-            "LEXICONS": "Lexicons",
-            "ACTIONS": {
-                "SELECT_LEXICON": "Select Lexicon",
-                "CHANGE_LEXICON": "Change Lexicon"
-            }
-        },
-        "PROPERTY": {
-            "PROPERTY": "Property",
-            "PROPERTIES": "Properties",
-            "ACTIONS": {
-                "SHOW_ALL": "Show all properties"
-            }
-        },
-        "SCHEME": {
-            "CONCEPT_SCHEME": "Concept Scheme",
-            "SCHEME": "Scheme",
-            "SCHEMES": "Schemes"
-        },
-        "COMMONS": {
-            "ACTIONS": {
-                "CHANGE_RENDERING": "Change rendering"
-            },
-            "VISUALIZATION_MODE": {
-                "MODE": "Visualization mode",
-                "HIERARCHY_BASED": "Hierarchy based",
-                "INDEX_BASED": "Index based",
-                "SEARCH_BASED": "Search based",
-                "STANDARD": "Standard"
-            }
-        }
-    },
-    "DATASETS": {
-        "ACTIONS": {
-            "CREATE_DATASET": "Create dataset",
-            "CREATE_METADATA": "Create dataset metadata",
-            "CREATE_REFRESH_METADATA": "Create/refresh dataset metadata",
-            "DELETE_DATASET": "Delete dataset",
-            "PROFILE_DATASET": "Profile dataset"
-        },
-        "ATTR": {
-            "DATASET_NAME": "Dataset Name",
-            "DEREF_SYSTEM": "Dereferenciation System",
-            "IDENTITY": "Identity",
-            "IDENTITY_IRI": "Identity IRI",
-            "SPARQL_ENDPOINT": "SPARQL Endpoint",
-            "SPARQL_ENDPOINT_URL": "SPARQL Endpoint URL",
-            "URI_SPACE": "URI space"
-        },
-        "STATUS": {
-            "ALREADY_EXISTING_DATASET": "Already existing dataset",
-            "DATASET_CREATED": "Dataset created",
-            "DATASET_NOT_FOUND": "Dataset not found",
-            "MISSING_DATASET_PROFILE": "Missing dataset profile"
-        },
-        "DATASET": "Dataset",
-        "DATASETS": "Datasets",
-        "BROWSE_DATASETS": "Browse {{instanceName}} datasets",
-        "DATASET_TYPE": "Dataset type",
-        "ONLY_OPEN": "Only open datasets"
-    },
-    "GRAPHS": {
-        "ACTIONS": {
-            "ADD_NODE": "Add node",
-            "EXPAND_LINKSET": "Expand linkset",
-            "EXPORT_SNAPSHOT": "Export a snapshot of the graph (.svg)",
-            "FIX_NODE_POSITION": "Fix node position"
-        },
-        "SETTINGS": {
-            "DATA_GRAPH_SETTINGS": "Data-Oriented Graph settings",
-            "HIDE_LITERAL_NODES": "Hide literal nodes",
-            "HIDE_LITERAL_NODES_INFO": "If checked, all the literal nodes will be hidden in the graph"
-        },
-        "LINKS_FILTER": {
-            "EXPAND_NODE": "Expand node",
-            "TOO_MUCH_RELATIONS_WARNING": "The resource you are expanding has a big amount of relations, thus it would generate a lot of links and nodes that could confuse the graph visualization. It is highly recommended to filter out some relations in order to limit the graph size.",
-            "VISIBLE_X_OUT_OF_Y": [
-                "Visible",
-                "out of"
-            ]
-        },
-        "FORCE_CONTROL": {
-            "LINKS": "Links",
-            "STRENGTH": "Strength",
-            "LENGTH": "Length"
-        },
-        "PARTITIONS_FILTER": {
-            "PARTITIONS_FILTER": "Partitions filter",
-            "PARTITIONS_FILTER_INFO": "Select the partitions of the resource description that will be shown when expanding a node.",
-            "RESET_FILTER": "Reset filter",
-            "RESOURCE_TYPES": "Resource types",
-            "PARTITIONS": "Partitions",
-            "ALL_PARTITIONS_HIDDEN_WARN": "If all the partitions are hidden the expansion of a node will not produce any effect",
-            "CHECK_PARTITION_FOR_ALL_TYPES": "Check selected partition in all roles",
-            "UNCHECK_PARTITION_FOR_ALL_TYPES": "Uncheck selected partition in all roles"
-        },
-        "RESOURCE_DETAILS": {
-            "SHOW_THE_COMPLETE": "Show the complete"
-        }
-    },
-    "HOME": {
-        "WELCOME_W_INST_NAME": {
-            "WELCOME": "Welcome to {{instanceName}} dataset browser!",
-            "POWERED_BY": "{{instanceName}} is powered by",
-            "CONTRIBUTE_TO": "Contribute to {{instanceName}}"
-        },
-        "WELCOME_WO_INST_NAME": {
-            "WELCOME": "Welcome to ShowVoc!",
-            "CONTRIBUTE_TO": "Contribute to ShowVoc"
-        }
-    },
-    "MODELS": {
-        "PROJECT": {
-            "BASE_URI": "Base URI",
-            "LEXICALIZATION": "Lexicalization",
-            "LEXICALIZATION_MODEL": "Lexicalization Model",
-            "MODEL": "Model",
-            "LOCATION": "Location",
-            "BACKEND_TYPE": "Backend type",
-            "REPO_ACCESS": "Repository Access",
-            "REPOSITORY_ID": "Repository ID",
-            "DATA_REPO_ID": "Data Repository ID"
-        },
-        "RESOURCE": {
-            "DEPRECATED": "Deprecated",
-            "LABEL": "Label",
-            "PREDICATE": "Predicate",
-            "RESOURCE": "Resource",
-            "ROLE": "Role"
-        }
-    },
-    "PREFERENCES": {
-        "LANG": {
-            "RENDERING": {
-                "RENDERING_LANGS": "Rendering Languages",
-                "DESCRIPTION": "Select the languages (and their order) used for rendering the resources"
-            },
-            "VALUE_FILTER": {
-                "VALUE_FILTER_LANGS": "Value-filter Languages",
-                "DESCRIPTION": "Select the languages that will be shown when filtering literal values in resource descriptions. Toggle the filter in order to hide the values with the unselected languages.",
-                "ENABLE_FILTER": "Enable filter"
-            }
-        }
-    },
-    "RESOURCE_VIEW": {
-        "ACTIONS": {
-            "SHOW_HIDE_INFERRED": "Show/hide inferred information",
-            "OPEN_GRAP": "Open graph representation"
-        },
-        "PARTITIONS": {
-            "BROADERS": "Broaders",
-            "CLASS_AXIOMS": "Class axioms",
-            "CONSTRITUENST": "Constituents",
-            "DATATYPE_DEFINITIONS": "Datatype definitions",
-            "DENOTATIONS": "Denotations",
-            "DISJOINT_PROPERTIES": "Disjoint properties",
-            "DOMAINS": "Domains",
-            "EQUIVALENT_PROPERTIES": "Equivalent properties",
-            "EVOKED_LEXICAL_CONCEPTS": "Evoked lexical concepts",
-            "FACETS": "Facets",
-            "FORM_BASED_PREVIEW": "Custom Form preview",
-            "FORM_PRESENTATIONS": "Form representations",
-            "IMPORTS": "Imports",
-            "LABEL_RELATIONS": "Label relations",
-            "LEXICALIZATIONS": "Lexicalizations",
-            "LEXICAL_FORMS": "Lexical forms",
-            "LEXICAL_SENSES": "Lexical senses",
-            "MEMBERS": "Members",
-            "MEMBERS_ORDERED": "Members (ordered)",
-            "NOTES": "Notes",
-            "PROPERTIES": "Other properties",
-            "RANGES": "Ranges",
-            "RDFS_MEMBERS": "RDFS members",
-            "SCHEMES": "Schemes",
-            "SUBPROPERTY_CHAINS": "Subproperty chain axioms",
-            "SUBTERMS": "Subterms",
-            "SUPERPROPERTIES": "Superproperties",
-            "TOP_CONCEPT_OF": "Top concept of",
-            "TYPES": "Types"
-        },
-        "SETTINGS": {
-            "RES_VIEW_SETTINGS": "ResourceView settings"
-        },
-        "STATUS": {
-            "RESOURCE_NOT_EXISTING": "This resource is not available in the current project",
-            "RESOURCE_UNKNOWN_HOST": "This resource is not available on accessible local projects nor can be reached on the Web"
-        }
-    },
-    "SEARCH": {
-        "SEARCH": "Search",
-        "SEARCH_RESULTS": "Search results",
-        "FILTERS": "Filters",
-        "INDEX_NOT_FOUND": "Index not found",
-        "ONLY_OPEN": "Only open",
-        "ANY_LANGUAGE": "Any language",
-        "NO_RESOURCE_FOUND_FOR": "No resource found for",
-        "RESOURCE_NOT_REACHABLE": "Resource not reachable",
-        "X_MATCHES_IN_N_DATASETS": [
-            "matches in",
-            "datasets"
-        ],
-        "EDIT_LANGS": {
-            "EDIT_LANGS": "Edit languages",
-            "LANG_TAG": "Language tag",
-            "ADD_LANG": "Add language"
-        },
-        "SETTINGS": {
-            "SEARCH_SETTINGS": "Search settings",
-            "STRING_MATCH_MODE": "String match mode",
-            "STARTS_WITH": "Starts with",
-            "CONTAINS": "Contains",
-            "ENDS_WITH": "Ends with",
-            "EXACT": "Exact",
-            "FUZZY": "Fuzzy",
-            "SEARCH_MODE": "Search mode",
-            "SEARCH_MODE_INFO": "Search always looks for the input string among the lexicalizations",
-            "SEARCH_IN_URI": "Search in URI",
-            "SEARCH_IN_LOCAL_NAME": "Search in local name",
-            "SEARCH_IN_NOTES": "Search in notes",
-            "CONCEPTS_SEARCH": "Concept search",
-            "RESTRICT_TO_SCHEME": "Restrict the search to the active skos:ConceptScheme(s)",
-            "CLS_INSTANCE_SEARCH": "Classes-Instances search"
-        }
-    },
-    "SPARQL": {
-        "ACTIONS": {
-            "EXPORT_RESULTS": "Export SPARQL results"
-        }
-    },
-    "USER": {
-        "LOG_INTO_SHOWVOC": "Log into ShowVoc",
-        "LOGIN": "Log in",
-        "REGISTRATION_COMPLETE": "Registration complete",
-        "USER_DETAILS": "User details",
-        "ATTR": {
-            "EMAIL_ADDRESS": "Email address",
-            "PASSWORD": "Password",
-            "GIVEN_NAME": "Given name",
-            "FAMILY_NAME": "Family name"
-        },
-        "PASSWORD": {
-            "CHANGE_PASSWORD": "Change password",
-            "FORGOT_PASSWORD": "Forgot password",
-            "RESET_PASSWORD": "Reset password",
-            "OLD_PASSWORD": "Old password",
-            "NEW_PASSWORD": "New password",
-            "CONFIRM_PASSWORD": "Confirm password",
-            "CONFIRM_NEW_PASSWORD": "Confirm new password",
-            "PASSWORD_CHANGED": "Password changed"
-        }
-    },
-    "WIDGETS": {
-        "SETTINGS_RENDERER": {
-            "ADD_OPTIONAL_VALUE": "Add optional value",
-            "DELETE_OPTIONAL_VALUE": "Delete optional value",
-            "UNKNOWN_TYPE_WARN": "This parameter has an unknown type ({{propTypeName}}). The entered value will be interpreted as a low-level JSON value"
         }
     },
     "COMMONS": {
@@ -527,23 +139,33 @@
             "DUPLICATED_CONFIGURATION": "Duplicated configuration",
             "LOAD_CONFIGURATION": "Load configuration",
             "MISSING_CONFIGURATION": "Missing configuration",
+            "PASSWORD": "Password",
             "REPO_CONFIGURATION": "Repo Configuration",
             "SAVE_CONFIGURATION": "Save configuration",
             "SERVER_URL": "Server URL",
-            "USERNAME": "Username",
-            "PASSWORD": "Password"
+            "USERNAME": "Username"
         },
+        "DENIED_OPERATION": "Denied operation",
+        "DESCRIPTION": "Description",
+        "DETAILS": "Details",
+        "FILTER": "Filter",
+        "FORMAT": "Format",
         "LANGUAGE": {
+            "ISO_CODE": "ISO code",
             "LANGUAGE": "Language",
             "LANGUAGES": "Languages",
-            "ISO_CODE": "ISO code",
             "NO_LANG_INFO": "No language selected implicitly means all languages"
         },
+        "MANDATORY_FIELD": "Mandatory field",
+        "NAME": "Name",
+        "OPTIONAL_FIELD": "Optional field",
         "PAGING": {
+            "NEXT_PAGE": "Next page",
             "PAGE_OF_TOT": "of",
-            "PREV_PAGE": "Previous page",
-            "NEXT_PAGE": "Next page"
+            "PREV_PAGE": "Previous page"
         },
+        "POSITION": "Position",
+        "SETTINGS": "Settings",
         "STATUS": {
             "ACTIVE": "Active",
             "ERROR": "Error",
@@ -552,18 +174,249 @@
             "STATUS": "Status",
             "WARNING": "Warning"
         },
-        "DENIED_OPERATION": "Denied operation",
-        "DESCRIPTION": "Description",
-        "DETAILS": "Details",
-        "FILTER": "Filter",
-        "FORMAT": "Format",
-        "MANDATORY_FIELD": "Mandatory field",
-        "NAME": "Name",
-        "OPTIONAL_FIELD": "Optional field",
-        "POSITION": "Position",
-        "SETTINGS": "Settings",
         "TITLE": "Title",
         "VALUE": "Value"
+    },
+    "CONTRIBUTIONS": {
+        "ACTIONS": {
+            "APPROVE": "Approve",
+            "APPROVE_CONTRIBUTION": "Approve contribution",
+            "REJECT_CONTRIBUTION": "Reject contribution",
+            "SUBMIT_REQUEST": "Submit request"
+        },
+        "CONTRIBUTION": "Contribution",
+        "CONTRIBUTIONS": "Contributions",
+        "CONTRIBUTOR": "Contributor",
+        "FORM": {
+            "COMMONS": {
+                "DISCOVER": "Discover",
+                "EMAIL_INFO": "This will be used to send you an email with the response of the contribution evaluation",
+                "HOME_PAGE": "Home page",
+                "METADATA": "Metadata",
+                "NO_AGGREGATION": "No aggregation",
+                "ORGANIZATION": "Organization",
+                "REQUEST_SUBMITTED": "Request submitted",
+                "RESOURCE_NAME": "Resource name"
+            },
+            "DEV": {
+                "CONVERSION_FROM": "Conversion from",
+                "CONVERSION_REQUIRED": "Conversion required",
+                "CONVERSION_REQUIRED_INFO": "The data requires conversion from a non-RDF format"
+            },
+            "METADATA": {
+                "IDENTITY_INFO": "If left empty, an IRI will be generated by the system"
+            },
+            "STABLE": {
+                "CONTRIBUTOR_IS_OWNER": "The contributor is the owner of the resource?",
+                "IM_OWNER": "I'm the owner of the resource"
+            }
+        },
+        "LOAD": {
+            "DATASET_NAME": "Dataset name",
+            "DATASET_NAME_INFO": "The dataset name provided in the notification email of contribution approval",
+            "EMAIL_ADDRESS": "Email address",
+            "EMAIL_ADDRESS_INFO": "The email address with which you submitted the contribution"
+        },
+        "MANAGER": {
+            "CONTRIBUTION_MANAGER": "Contributions manager",
+            "CONTRIBUTION_TYPE": "Contribution type",
+            "SUBMITTED": "Submitted"
+        }
+    },
+    "DATA": {
+        "CLASS": {
+            "ACTIONS": {
+                "SELECT_CLASS": "Select class",
+                "SELECT_ROOT_CLASS": "Select root class"
+            },
+            "CLASS": "Class",
+            "CLASSES": "Classes",
+            "SETTINGS": {
+                "CLASS_TREE_SETTINGS": "Class tree settings",
+                "FILTERED_SUBCLASSES": "Filtered subClasses",
+                "FILTER_ENABLED": "Filter enabled",
+                "ROOT_CLASS": "Root class",
+                "SHOW_INSTANCES_NUMBER": "Show instances number",
+                "SUBCLASS_FILTER": "SubClasses filter",
+                "SUBCLASS_FILTER_INFO": "Here you can create filters in order to hide subClasses of classes"
+            }
+        },
+        "COLLECTION": {
+            "COLLECTION": "Collection",
+            "COLLECTIONS": "Collections"
+        },
+        "COMMONS": {
+            "ACTIONS": {
+                "CHANGE_RENDERING": "Change rendering"
+            },
+            "VISUALIZATION_MODE": {
+                "HIERARCHY_BASED": "Hierarchy based",
+                "INDEX_BASED": "Index based",
+                "MODE": "Visualization mode",
+                "SEARCH_BASED": "Search based",
+                "STANDARD": "Standard"
+            }
+        },
+        "CONCEPT": {
+            "CONCEPT": "Concept",
+            "CONCEPTS": "Concepts",
+            "SETTINGS": {
+                "CONCEPT_TREE_SETTINGS": "Concept tree settings",
+                "TOP_CONCEPTS_LIMIT": "Top concepts limitation",
+                "TOP_CONCEPTS_LIMIT_INFO": "Sets the maximum amount of top concepts visible in the tree. This setting prevents the initialization of a tree that might cause performance issues"
+            },
+            "UNSAFE_WARN": {
+                "ELEMENT_COUNT": "This Concept tree has an amount of top concepts ({{elemCount}}) that exceeds the limit set in the settings ({{safeToGoLimit}}).",
+                "FORCE_INIT": "If you want to force the Concept tree initialization at your own risk, click",
+                "HERE": "here",
+                "PERFORMANCE_ISSUE": "Retrieving them all could be a long process, you might experience performance decrease or it might even hang the system.",
+                "SELECT_SCHEME": "You can also reduce the amount of top concepts by selecting a scheme from the 'Scheme' panel.",
+                "SETTINGS": "settings",
+                "SWITCH_MODE": "It is recommended to switch from 'Hierarchy based' to 'Search based' visualization mode from the"
+            },
+            "USE_SEARCH_MSG": "Please use the search field to retrieve concepts"
+        },
+        "DATA": "Data",
+        "INSTANCE": {
+            "INSTANCE": "Instance",
+            "INSTANCES": "Instances",
+            "SETTINGS": {
+                "INSTANCES_LIMIT": "Instances limit",
+                "INSTANCES_LIMIT_INFO": "Sets the maximum amount of instances visible in the list. This setting prevents the initialization of a list that might cause performance issues",
+                "INSTANCE_LIST_SETTINGS": "Instance list settings"
+            },
+            "UNSAFE_WARN": {
+                "ELEMENT_COUNT": "This instance list has an amount of elements ({{count}}) that exceeds the limit set in the settings ({{safeToGoLimit}}).",
+                "FORCE_INIT": "If you want to force the instance list initialization at your own risk, click",
+                "HERE": "here",
+                "PERFORMANCE_ISSUE": "Retrieving them all could be a long process, you might experience performance decrease or it might even hang the system.",
+                "SETTINGS": "settings",
+                "SWITCH_MODE": "It is recommended to switch the visualization to search-based mode from the"
+            },
+            "USE_SEARCH_MSG": "Please use the search field to retrieve instances"
+        },
+        "LEXICON": {
+            "ACTIONS": {
+                "CHANGE_LEXICON": "Change Lexicon",
+                "SELECT_LEXICON": "Select Lexicon"
+            },
+            "LEXICON": "Lexicon",
+            "LEXICONS": "Lexicons"
+        },
+        "LEX_ENTRY": {
+            "LEX_ENTRIES": "Lex.Entries",
+            "LEX_ENTRY": "Lex.Entry",
+            "SETTINGS": {
+                "INDEX_LENGHT": "Index lenght",
+                "INDEX_LENGHT_INFO": "Tells if the Lexical Entry index is 1-char or 2-char based",
+                "LEX_ENTRIES_LIMIT": "Lexical entries limitation",
+                "LEX_ENTRIES_LIMIT_INFO": "Sets the maximum amount of lexical entries visible in the list. This setting prevents the initialization of a list that might cause performance issues",
+                "LEX_ENTRY_SETTINGS": "Lexical Entry list settings"
+            },
+            "UNSAFE_WARN": {
+                "CHANGE_INDEX_LENGHT": "to change the index lenght from 1-char to 2-char or",
+                "ELEMENT_COUNT": "This LexicalEntry list has an amount of elements ({{elemCount}}) that exceeds the limit set in the settings ({{safeToGoLimit}}).",
+                "FORCE_INIT": "If you want to force the lexical entry list initialization at your own risk, click",
+                "HERE": "here",
+                "IT_IS_RECOMMENDED": "It is recommended",
+                "PERFORMANCE_ISSUE": "Retrieving them all could be a long process, you might experience performance decrease or it might even hang the system.",
+                "SELECT_LEXICON": "You can also reduce the amount of lexical entries by selecting a lexicon from the 'Lexicon' panel.",
+                "SETTINGS": "settings",
+                "SWITCH_MODE": "to switch from 'Index based' to 'Search based' visualization mode from the"
+            },
+            "USE_SEARCH_MSG": "Please use the search field to retrieve lexical entries"
+        },
+        "PROPERTY": {
+            "ACTIONS": {
+                "SHOW_ALL": "Show all properties"
+            },
+            "PROPERTIES": "Properties",
+            "PROPERTY": "Property"
+        },
+        "SCHEME": {
+            "CONCEPT_SCHEME": "Concept Scheme",
+            "SCHEME": "Scheme",
+            "SCHEMES": "Schemes"
+        }
+    },
+    "DATASETS": {
+        "ACTIONS": {
+            "CREATE_DATASET": "Create dataset",
+            "CREATE_METADATA": "Create dataset metadata",
+            "CREATE_REFRESH_METADATA": "Create/refresh dataset metadata",
+            "DELETE_DATASET": "Delete dataset",
+            "PROFILE_DATASET": "Profile dataset"
+        },
+        "ATTR": {
+            "DATASET_NAME": "Dataset Name",
+            "DEREF_SYSTEM": "Dereferenciation System",
+            "IDENTITY": "Identity",
+            "IDENTITY_IRI": "Identity IRI",
+            "SPARQL_ENDPOINT": "SPARQL Endpoint",
+            "SPARQL_ENDPOINT_URL": "SPARQL Endpoint URL",
+            "URI_SPACE": "URI space"
+        },
+        "BROWSE_DATASETS": "Browse {{instanceName}} datasets",
+        "DATASET": "Dataset",
+        "DATASETS": "Datasets",
+        "DATASET_TYPE": "Dataset type",
+        "ONLY_OPEN": "Only open datasets",
+        "STATUS": {
+            "ALREADY_EXISTING_DATASET": "Already existing dataset",
+            "DATASET_CREATED": "Dataset created",
+            "DATASET_NOT_FOUND": "Dataset not found",
+            "MISSING_DATASET_PROFILE": "Missing dataset profile"
+        }
+    },
+    "GRAPHS": {
+        "ACTIONS": {
+            "ADD_NODE": "Add node",
+            "EXPAND_LINKSET": "Expand linkset",
+            "EXPORT_SNAPSHOT": "Export a snapshot of the graph (.svg)",
+            "FIX_NODE_POSITION": "Fix node position"
+        },
+        "FORCE_CONTROL": {
+            "LENGTH": "Length",
+            "LINKS": "Links",
+            "STRENGTH": "Strength"
+        },
+        "LINKS_FILTER": {
+            "EXPAND_NODE": "Expand node",
+            "TOO_MUCH_RELATIONS_WARNING": "The resource you are expanding has a big amount of relations, thus it would generate a lot of links and nodes that could confuse the graph visualization. It is highly recommended to filter out some relations in order to limit the graph size.",
+            "VISIBLE_X_OUT_OF_Y": [
+                "Visible",
+                "out of"
+            ]
+        },
+        "PARTITIONS_FILTER": {
+            "ALL_PARTITIONS_HIDDEN_WARN": "If all the partitions are hidden the expansion of a node will not produce any effect",
+            "CHECK_PARTITION_FOR_ALL_TYPES": "Check selected partition in all roles",
+            "PARTITIONS": "Partitions",
+            "PARTITIONS_FILTER": "Partitions filter",
+            "PARTITIONS_FILTER_INFO": "Select the partitions of the resource description that will be shown when expanding a node.",
+            "RESET_FILTER": "Reset filter",
+            "RESOURCE_TYPES": "Resource types",
+            "UNCHECK_PARTITION_FOR_ALL_TYPES": "Uncheck selected partition in all roles"
+        },
+        "RESOURCE_DETAILS": {
+            "SHOW_THE_COMPLETE": "Show the complete"
+        },
+        "SETTINGS": {
+            "DATA_GRAPH_SETTINGS": "Data-Oriented Graph settings",
+            "HIDE_LITERAL_NODES": "Hide literal nodes",
+            "HIDE_LITERAL_NODES_INFO": "If checked, all the literal nodes will be hidden in the graph"
+        }
+    },
+    "HOME": {
+        "WELCOME_WO_INST_NAME": {
+            "CONTRIBUTE_TO": "Contribute to ShowVoc",
+            "WELCOME": "Welcome to ShowVoc!"
+        },
+        "WELCOME_W_INST_NAME": {
+            "CONTRIBUTE_TO": "Contribute to {{instanceName}}",
+            "POWERED_BY": "{{instanceName}} is powered by",
+            "WELCOME": "Welcome to {{instanceName}} dataset browser!"
+        }
     },
     "MESSAGES": {
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "You are going to submit the proposed metadata into the Metadata Registry. Are you sure?",
@@ -579,11 +432,11 @@
         "CONTRIBUTION_APPROVED_DATASET_CREATED": "The contribution has been approved and the dataset has been successfully created",
         "CONTRIBUTION_SUBMITTED": "Your contribution request has been succesfully submitted. It will be evaluated by the administrator and you will receive the response to the provided email.",
         "CUSTOM_ROOT_WARN": "Selecting a specific class as a root could hide other classes that are not subclasses of the chosen root.",
-        "DATA_LOADED": "Data loaded successfully",
-        "DATA_REPO_NOT_CONFIGURED": "The data repository requires to be configured",
         "DATASET_ALREADY_IN_METADATA_REGISTRY": "A dataset for the provided IRI is already in the metadata registry",
         "DATASET_CREATED": "The dataset has been successfully created",
         "DATASET_NAME_MISSING": "Dataset name is missing or not valid",
+        "DATA_LOADED": "Data loaded successfully",
+        "DATA_REPO_NOT_CONFIGURED": "The data repository requires to be configured",
         "DELETE_DATASET_CONFIRM_WARN": "Attention, this operation will delete the dataset. Are you sure to proceed?",
         "DIFFERENT_CONFIRM_PASSWORD": "Password and confirmed password are different.",
         "DUPLICATED_SERVER_URL_CONFIG": "A configuration for the same server URL already exists",
@@ -626,8 +479,8 @@
         "SELECT_REFERENCED_REPO_TO_DELETE": "The following repositories was referenced by the deleted project. Select the repositories you want to delete.",
         "SWITCH_NO_SCHEME_CONFIRM": "Searched concept '{{concept}}' does not belong to any scheme. Do you want to switch to no-scheme mode?",
         "SYSTEM_CONFIG_INTRO": "In this section you can setup some core aspects of the system. This panel can be accessed also later from <i>Administration dashboard</i> > <i>Configuration</i>",
-        "SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION": "The system has not been configured in order to connect with a remote VocBench instance. Please provide a configuration from the administrator dashboard.",
         "SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO": "The system has not been configured in order to create a remote repository. Please provide a configuration to a remote triple store from the administrator dashboard.",
+        "SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION": "The system has not been configured in order to connect with a remote VocBench instance. Please provide a configuration from the administrator dashboard.",
         "TOO_MUCH_LINKSETS_FILTER": "The expanded dataset has an high number of linksets ({{linksetCount}}). A performance decrease could be experienced with a growing amount of visual elements in the graph. You can filter only those linksets containing at least a given amount of links",
         "UNEXISTING_OR_CLOSED_DATASET": "The requested dateset (id: '{{datasetId}}') does not exist or is not open. You will be redirect to the home page.",
         "UNEXISTING_URI_IN_PROJECT": "Wrong URI: no resource with URI {{resUri}} exists in the current project",
@@ -636,9 +489,156 @@
         "VALUE_INVALID": "The inserted value is not valid. Please check and retry.",
         "VB_CONFIG_CHANGED": "VocBench configuration has been changed, you need first to submit the changes.",
         "VB_CONFIG_INCOMPLETE": "VocBench configuration is incomplete. Please fill all the fields and retry.",
-        "VB_CONFIG_TEST_SUCCESS": "The configuration has been tested successfully.",
         "VB_CONFIG_TEST_FAIL": "Test failed, the configuration provided is not correct.",
+        "VB_CONFIG_TEST_SUCCESS": "The configuration has been tested successfully.",
         "X_SEARCH_RESOURCES_FOUND": "{{results}} results found",
         "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "You will soon recieve an email containing details for connecting to the VocBench."
+    },
+    "MODELS": {
+        "PROJECT": {
+            "BACKEND_TYPE": "Backend type",
+            "BASE_URI": "Base URI",
+            "DATA_REPO_ID": "Data Repository ID",
+            "LEXICALIZATION": "Lexicalization",
+            "LEXICALIZATION_MODEL": "Lexicalization Model",
+            "LOCATION": "Location",
+            "MODEL": "Model",
+            "REPOSITORY_ID": "Repository ID",
+            "REPO_ACCESS": "Repository Access"
+        },
+        "RESOURCE": {
+            "DEPRECATED": "Deprecated",
+            "LABEL": "Label",
+            "PREDICATE": "Predicate",
+            "RESOURCE": "Resource",
+            "ROLE": "Role"
+        }
+    },
+    "PREFERENCES": {
+        "LANG": {
+            "RENDERING": {
+                "DESCRIPTION": "Select the languages (and their order) used for rendering the resources",
+                "RENDERING_LANGS": "Rendering Languages"
+            },
+            "VALUE_FILTER": {
+                "DESCRIPTION": "Select the languages that will be shown when filtering literal values in resource descriptions. Toggle the filter in order to hide the values with the unselected languages.",
+                "ENABLE_FILTER": "Enable filter",
+                "VALUE_FILTER_LANGS": "Value-filter Languages"
+            }
+        }
+    },
+    "RESOURCE_VIEW": {
+        "ACTIONS": {
+            "OPEN_GRAP": "Open graph representation",
+            "SHOW_HIDE_INFERRED": "Show/hide inferred information"
+        },
+        "PARTITIONS": {
+            "BROADERS": "Broaders",
+            "CLASS_AXIOMS": "Class axioms",
+            "CONSTRITUENST": "Constituents",
+            "DATATYPE_DEFINITIONS": "Datatype definitions",
+            "DENOTATIONS": "Denotations",
+            "DISJOINT_PROPERTIES": "Disjoint properties",
+            "DOMAINS": "Domains",
+            "EQUIVALENT_PROPERTIES": "Equivalent properties",
+            "EVOKED_LEXICAL_CONCEPTS": "Evoked lexical concepts",
+            "FACETS": "Facets",
+            "FORM_BASED_PREVIEW": "Custom Form preview",
+            "FORM_PRESENTATIONS": "Form representations",
+            "IMPORTS": "Imports",
+            "LABEL_RELATIONS": "Label relations",
+            "LEXICALIZATIONS": "Lexicalizations",
+            "LEXICAL_FORMS": "Lexical forms",
+            "LEXICAL_SENSES": "Lexical senses",
+            "MEMBERS": "Members",
+            "MEMBERS_ORDERED": "Members (ordered)",
+            "NOTES": "Notes",
+            "PROPERTIES": "Other properties",
+            "RANGES": "Ranges",
+            "RDFS_MEMBERS": "RDFS members",
+            "SCHEMES": "Schemes",
+            "SUBPROPERTY_CHAINS": "Subproperty chain axioms",
+            "SUBTERMS": "Subterms",
+            "SUPERPROPERTIES": "Superproperties",
+            "TOP_CONCEPT_OF": "Top concept of",
+            "TYPES": "Types"
+        },
+        "SETTINGS": {
+            "RES_VIEW_SETTINGS": "ResourceView settings"
+        },
+        "STATUS": {
+            "RESOURCE_NOT_EXISTING": "This resource is not available in the current project",
+            "RESOURCE_UNKNOWN_HOST": "This resource is not available on accessible local projects nor can be reached on the Web"
+        }
+    },
+    "SEARCH": {
+        "ANY_LANGUAGE": "Any language",
+        "EDIT_LANGS": {
+            "ADD_LANG": "Add language",
+            "EDIT_LANGS": "Edit languages",
+            "LANG_TAG": "Language tag"
+        },
+        "FILTERS": "Filters",
+        "INDEX_NOT_FOUND": "Index not found",
+        "NO_RESOURCE_FOUND_FOR": "No resource found for",
+        "ONLY_OPEN": "Only open",
+        "RESOURCE_NOT_REACHABLE": "Resource not reachable",
+        "SEARCH": "Search",
+        "SEARCH_RESULTS": "Search results",
+        "SETTINGS": {
+            "CLS_INSTANCE_SEARCH": "Classes-Instances search",
+            "CONCEPTS_SEARCH": "Concept search",
+            "CONTAINS": "Contains",
+            "ENDS_WITH": "Ends with",
+            "EXACT": "Exact",
+            "FUZZY": "Fuzzy",
+            "RESTRICT_TO_SCHEME": "Restrict the search to the active skos:ConceptScheme(s)",
+            "SEARCH_IN_LOCAL_NAME": "Search in local name",
+            "SEARCH_IN_NOTES": "Search in notes",
+            "SEARCH_IN_URI": "Search in URI",
+            "SEARCH_MODE": "Search mode",
+            "SEARCH_MODE_INFO": "Search always looks for the input string among the lexicalizations",
+            "SEARCH_SETTINGS": "Search settings",
+            "STARTS_WITH": "Starts with",
+            "STRING_MATCH_MODE": "String match mode"
+        },
+        "X_MATCHES_IN_N_DATASETS": [
+            "matches in",
+            "datasets"
+        ]
+    },
+    "SPARQL": {
+        "ACTIONS": {
+            "EXPORT_RESULTS": "Export SPARQL results"
+        }
+    },
+    "USER": {
+        "ATTR": {
+            "EMAIL_ADDRESS": "Email address",
+            "FAMILY_NAME": "Family name",
+            "GIVEN_NAME": "Given name",
+            "PASSWORD": "Password"
+        },
+        "LOGIN": "Log in",
+        "LOG_INTO_SHOWVOC": "Log into ShowVoc",
+        "PASSWORD": {
+            "CHANGE_PASSWORD": "Change password",
+            "CONFIRM_NEW_PASSWORD": "Confirm new password",
+            "CONFIRM_PASSWORD": "Confirm password",
+            "FORGOT_PASSWORD": "Forgot password",
+            "NEW_PASSWORD": "New password",
+            "OLD_PASSWORD": "Old password",
+            "PASSWORD_CHANGED": "Password changed",
+            "RESET_PASSWORD": "Reset password"
+        },
+        "REGISTRATION_COMPLETE": "Registration complete",
+        "USER_DETAILS": "User details"
+    },
+    "WIDGETS": {
+        "SETTINGS_RENDERER": {
+            "ADD_OPTIONAL_VALUE": "Add optional value",
+            "DELETE_OPTIONAL_VALUE": "Delete optional value",
+            "UNKNOWN_TYPE_WARN": "This parameter has an unknown type ({{propTypeName}}). The entered value will be interpreted as a low-level JSON value"
+        }
     }
 }
