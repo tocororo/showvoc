@@ -12,6 +12,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
   * Enabled possibility to customize ShowVoc instance name
   * Enabled possibility to deactivate users contributions
   * Adopted the new Settings services
+  * Added german l10n
   * Fixed missing error message in case of exception during the project creation
   * Updated the settings rendering widgets to deal with non-backward compatible changes in their representation returned by the server
   * Updated Angular cli to version 10.2.0 and Angular version to ^10.2.2

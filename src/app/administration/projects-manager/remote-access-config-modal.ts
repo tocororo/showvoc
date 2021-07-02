@@ -61,7 +61,7 @@ export class RemoteAccessConfigModal {
         this.updateConfigurations();
     }
     private updateConfigurations() {
-        this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.remoteConfigs, this.savedConfigs)
+        this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.remoteConfigs, this.savedConfigs).subscribe();
     }
 
     ok() {
