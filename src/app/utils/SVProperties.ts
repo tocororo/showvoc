@@ -85,7 +85,8 @@ export class SVProperties {
 
     initProjectSettings(projectCtx: ProjectContext): Observable<void> {
         let projectSettings: ProjectSettings = projectCtx.getProjectSettings();
-        return this.settingsService.getSettingsForProjectAdministration(ExtensionPointID.ST_CORE_ID, Scope.PROJECT, projectCtx.getProject()).pipe(
+        return this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.PROJECT).pipe(
+        // return this.settingsService.getSettingsForProjectAdministration(ExtensionPointID.ST_CORE_ID, Scope.PROJECT, projectCtx.getProject()).pipe(
             map(settings => {
                 let langsValue: Language[] = settings.getPropertyValue(SettingsEnum.languages);
                 projectSettings.projectLanguagesSetting = langsValue;
