@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { SanitizerDirective } from './directives/sanitizer.directive';
 import { ExtensionConfiguratorComponent } from './extensionConfigurator/extension-configurator.component';
@@ -22,8 +23,16 @@ import { SettingSetRendererComponent } from './settings-renderer/setting-set-ren
 import { SettingValueRendererComponent } from './settings-renderer/setting-value-renderer.component';
 import { SettingsRendererPanelComponent } from './settings-renderer/settings-renderer-panel.component';
 import { SettingsRendererComponent } from './settings-renderer/settings-renderer.component';
+import { ToastsContainer } from './toast/toast-container';
+import { ToastService } from './toast/toast-service';
 
 @NgModule({
+    imports: [
+        CommonModule,
+        FormsModule,
+        NgbToastModule,
+        TranslateModule,
+    ],
     declarations: [
         DataSizeRenderer,
         ExtensionConfiguratorComponent,
@@ -45,11 +54,7 @@ import { SettingsRendererComponent } from './settings-renderer/settings-renderer
         SettingsRendererPanelComponent,
         SettingsRendererComponent,
         SettingValueRendererComponent,
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        TranslateModule
+        ToastsContainer
     ],
     exports: [
         DataSizeRenderer,
@@ -69,9 +74,13 @@ import { SettingsRendererComponent } from './settings-renderer/settings-renderer
         SettingSetRendererComponent,
         SettingsRendererPanelComponent,
         SettingsRendererComponent,
+        ToastsContainer
     ],
     entryComponents: [
         RenderingEditorModal
+    ],
+    providers: [
+        ToastService
     ]
 })
 export class WidgetModule { }

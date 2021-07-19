@@ -99,7 +99,9 @@
             "ABOUT_SHOWVOC": "About ShowVoc",
             "CONTACT_US": "Contact us",
             "SHOWVOC_WEBSITE": "ShowVoc website",
-            "SUPPORT": "Support"
+            "SUPPORT": "Support",
+            "WEB_API": "Copy Web API base URL",
+            "WEB_API_COPIED": "Web API base URL copied to the clipboard"
         },
         "USER_MENU": {
             "ADMINISTRATION_DASHBOARD": "Administration dashboard",

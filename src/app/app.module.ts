@@ -25,6 +25,7 @@ import { AdminAuthGuard, VisitorAuthGuard } from './utils/CanActivateAuthGuards'
 import { ProjectGuard } from './utils/CanActivateProjectGuard';
 import { SVEventHandler } from './utils/SVEventHandler';
 import { SVProperties } from './utils/SVProperties';
+import { WidgetModule } from './widget/widget.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, "./assets/l10n/");
@@ -57,7 +58,8 @@ export function HttpLoaderFactory(http: HttpClient) {
                 deps: [HttpClient]
             }
         }),
-        UserModule
+        UserModule,
+        WidgetModule
     ],
     providers: [
         SVProperties, SVEventHandler,

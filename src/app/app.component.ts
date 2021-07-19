@@ -3,8 +3,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { User } from './models/User';
 import { AuthServices } from './services/auth.service';
 import { Cookie } from './utils/Cookie';
+import { HttpManager } from './utils/HttpManager';
 import { SVContext } from './utils/SVContext';
 import { SVProperties } from './utils/SVProperties';
+import { ToastService } from './widget/toast/toast-service';
 
 @Component({
     selector: 'app-root',
@@ -24,7 +26,8 @@ export class AppComponent {
     translateLangs: string[];
     translateLang: string;
 
-    constructor(private authServices: AuthServices, private svProp: SVProperties, private translate: TranslateService) {
+    constructor(private authServices: AuthServices, private svProp: SVProperties, private translate: TranslateService,
+        private toastService: ToastService) {
         //set the available factory-provided l10n languages
         translate.addLangs(['de', 'en', 'it']);
         //add additional supported l10n languages
@@ -74,6 +77,14 @@ export class AppComponent {
         this.translateLang = lang;
         this.translate.use(this.translateLang);
         Cookie.setCookie(Cookie.TRANSLATE_LANG, this.translateLang);
+    }
+
+    copyWebApiUrl() {
+        let baseUrl = HttpManager.getServerHost() + "/" + HttpManager.serverpath + "/" + 
+            HttpManager.groupId + "/" + HttpManager.artifactId + "/";
+        navigator.clipboard.writeText(baseUrl).then(() => {
+            this.toastService.show(null, { key: "APP.FOOTER.WEB_API_COPIED" }, { toastClass: "bg-dark", textClass: "text-white" });
+        }, function (err) {});
     }
 
 }

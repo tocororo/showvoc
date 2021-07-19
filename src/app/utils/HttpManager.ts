@@ -15,10 +15,12 @@ import { STResponseUtils } from './STServicesUtils';
 @Injectable()
 export class HttpManager {
 
+    //services url parts
+    static readonly serverpath: string = "semanticturkey";
+    static readonly groupId: string = "it.uniroma2.art.semanticturkey";
+    static readonly artifactId: string = "st-core-services";
+
     private serverhost: string;
-    private serverpath: string = "semanticturkey";
-    private groupId: string = "it.uniroma2.art.semanticturkey";
-    protected artifactId: string = "st-core-services";
 
     //default request options, to eventually override through options parameter in doGet, doPost, ...
     private defaultRequestOptions: SVRequestOptions = new SVRequestOptions({
@@ -26,25 +28,7 @@ export class HttpManager {
     });
 
     constructor(private http: HttpClient, private router: Router, private basicModals: BasicModalsServices) {
-
-
-        let st_protocol: string = window['st_protocol']; //protocol (http/https)
-        let protocol: string = st_protocol ? st_protocol : location.protocol;
-        if (!protocol.endsWith(":")) protocol += ":"; //protocol from location includes ending ":", st_protocol variable could not include ":"
-
-        let st_host: string = window['st_host'];
-        let host: string = st_host ? st_host : location.hostname;
-
-        let st_port: string = window['st_port'];
-        let port: string = st_port ? st_port : location.port;
-
-        let st_path: string = window['st_path']; //url path (optional)
-        
-        this.serverhost = protocol + "//" + host + ":" + port;
-        if (st_path != null) {
-            this.serverhost += "/" + st_path;
-        }
-
+        this.serverhost = HttpManager.getServerHost();
     }
 
     doGet(service: string, request: string, params: STRequestParams, options?: SVRequestOptions) {
@@ -63,9 +47,10 @@ export class HttpManager {
             withCredentials: true
         };
 
+        //execute request
         return this.http.get(url, httpOptions).pipe(
-            map(resp => {
-                return this.handleOkOrErrorResponse(resp);
+            map(res => { 
+                return this.handleOkOrErrorResponse(res); 
             }),
             catchError(error => {
                 return this.handleError(error, options.errorAlertOpt);
@@ -94,8 +79,8 @@ export class HttpManager {
 
         //execute request
         return this.http.post(url, postData, httpOptions).pipe(
-            map(resp => {
-                return this.handleOkOrErrorResponse(resp);
+            map(res => { 
+                return this.handleOkOrErrorResponse(res); 
             }),
             catchError(error => {
                 return this.handleError(error, options.errorAlertOpt);
@@ -104,7 +89,7 @@ export class HttpManager {
     }
 
 
-    uploadFile(service: string, request: string, params: any, options?: SVRequestOptions) {
+    uploadFile(service: string, request: string, params: STRequestParams, options?: SVRequestOptions) {
         options = this.defaultRequestOptions.merge(options);
 
         let url: string = this.getRequestBaseUrl(service, request);
@@ -129,8 +114,8 @@ export class HttpManager {
 
         //execute request
         return this.http.post(url, formData, httpOptions).pipe(
-            map(resp => {
-                return this.handleOkOrErrorResponse(resp);
+            map(res => { 
+                return this.handleOkOrErrorResponse(res); 
             }),
             catchError(error => {
                 return this.handleError(error, options.errorAlertOpt);
@@ -151,7 +136,7 @@ export class HttpManager {
      * @param post tells if the download is done via post-request (e.g. Export.export() service)
      * @param options further options that overrides the default ones
      */
-    downloadFile(service: string, request: string, params: any, post?: boolean, options?: SVRequestOptions): Observable<Blob> {
+    downloadFile(service: string, request: string, params: STRequestParams, post?: boolean, options?: SVRequestOptions): Observable<Blob> {
         options = this.defaultRequestOptions.merge(options);
         
         let url: string = this.getRequestBaseUrl(service, request);
@@ -173,10 +158,10 @@ export class HttpManager {
             };
 
             return this.http.post(url, postData, httpOptions).pipe(
-                map(resp => {
-                    return this.arrayBufferRespHandler(resp);
+                map(res => { 
+                    return this.arrayBufferRespHandler(res); 
                 }),
-                catchError(error => {
+                catchError(error => { 
                     return this.handleError(error, options.errorAlertOpt);
                 })
             );
@@ -194,8 +179,8 @@ export class HttpManager {
 
             //execute request
             return this.http.get(url, httpOptions).pipe(
-                map(resp => {
-                    return this.arrayBufferRespHandler(resp);
+                map(res => { 
+                    return this.arrayBufferRespHandler(res);
                 }),
                 catchError(error => {
                     return this.handleError(error, options.errorAlertOpt);
@@ -213,7 +198,7 @@ export class HttpManager {
      * 
      */
     private getRequestBaseUrl(service: string, request: string): string {
-        return this.serverhost + "/" + this.serverpath + "/" + this.groupId + "/" + this.artifactId + "/" + service + "/" + request + "?";
+        return this.serverhost + "/" + HttpManager.serverpath + "/" + HttpManager.groupId + "/" + HttpManager.artifactId + "/" + service + "/" + request + "?";
     }
 
     /**
@@ -432,6 +417,26 @@ export class HttpManager {
         }
     }
 
+    static getServerHost(): string {
+        let st_protocol: string = window['st_protocol']; //protocol (http/https)
+        let protocol: string = st_protocol ? st_protocol : location.protocol;
+        if (!protocol.endsWith(":")) protocol += ":"; //protocol from location includes ending ":", st_protocol variable could not include ":"
+
+        let st_host: string = window['st_host'];
+        let host: string = st_host ? st_host : location.hostname;
+
+        let st_port: string = window['st_port'];
+        let port: string = st_port ? st_port : location.port;
+
+        let st_path: string = window['st_path']; //url path (optional)
+        
+        let serverhost = protocol + "//" + host + ":" + port;
+        if (st_path != null) {
+            serverhost += "/" + st_path;
+        }
+        return serverhost;
+    }
+
 }
 
 export class HttpServiceContext {
@@ -490,8 +495,6 @@ export class HttpServiceContext {
     }
 }
 
-class STRequestParams { [key: string]: any }
-
 
 //inspired by angular RequestOptions
 export class SVRequestOptions {
@@ -527,3 +530,5 @@ class ErrorAlertOptions {
     show: boolean; //if true HttpManager show the error alert in case of error response, skip the show alert otherwise
     exceptionsToSkip?: string[]; //if provided, tells for which exceptions the alert should be skipped (useful only if show is true)
 }
+
+export class STRequestParams { [key: string]: any }
