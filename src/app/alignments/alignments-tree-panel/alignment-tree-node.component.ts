@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import { LinksetMetadata } from 'src/app/models/Metadata';
 import { Project } from 'src/app/models/Project';
 import { MetadataRegistryServices } from 'src/app/services/metadata-registry.service';
@@ -31,7 +32,12 @@ export class AlignmentTreeNodeComponent {
      * Implementation of the expansion. It calls the  service for getting the child of a node in the given tree
      */
     expandNode() {
-        this.metadataRegistryService.getEmbeddedLinksets(this.linkset.getRelevantTargetDataset().dataset).subscribe(
+        this.loading = true;
+        this.metadataRegistryService.getEmbeddedLinksets(this.linkset.getRelevantTargetDataset().dataset).pipe(
+            finalize(() => {
+                this.loading = false;
+            })
+        ).subscribe(
             linkset => {
                 this.children = linkset;
                 this.children.forEach(l => {
