@@ -55,7 +55,9 @@
                 "MAIL_PASSWORD_INFO": "Password del suddetto indirizzo email",
                 "MAIL_PASSWORD_WARN": "La password viene salvata in chiaro sul server",
                 "MAIL_SERVER_PORT_INFO": "Porta del Mail Server",
-                "MAIL_SERVER_URL_INFO": "IP/URL del Mail Server SMTP"
+                "MAIL_SERVER_URL_INFO": "IP/URL del Mail Server SMTP",
+                "SSL_PROTOCOLS": "Protocolli SSL",
+                "SSL_PROTOCOLS_INFO": "Specifica i protocolli SSL protocols abilitati per la connessione SSL"
             },
             "OTHER": {
                 "DISABLE_CONTRIBUTION": "Disattiva la possibilità di contribuire a ShowVoc",

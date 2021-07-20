@@ -264,6 +264,7 @@ class MailSettings {
         port: number,
         sslEnabled: boolean,
         starttlsEnabled: boolean
+        sslProtocols: string,
     };
     from: {
         address: string,

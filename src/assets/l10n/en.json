@@ -55,7 +55,9 @@
                 "MAIL_PASSWORD_INFO": "Password of the above email address",
                 "MAIL_PASSWORD_WARN": "Password is stored wihtout encryption on the server",
                 "MAIL_SERVER_PORT_INFO": "Mail Server Port",
-                "MAIL_SERVER_URL_INFO": "SMTP Mail Server IP/URL"
+                "MAIL_SERVER_URL_INFO": "SMTP Mail Server IP/URL",
+                "SSL_PROTOCOLS": "SSL protocols",
+                "SSL_PROTOCOLS_INFO": "Specifies the SSL protocols that will be enabled for SSL connections"
             },
             "OTHER": {
                 "DISABLE_CONTRIBUTION": "Deactivate the \"contribute to ShowVoc\" option",

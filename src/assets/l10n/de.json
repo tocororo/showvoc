@@ -55,7 +55,9 @@
                 "MAIL_PASSWORD_INFO": "Passwort der oben genannten E-Mail-Adresse",
                 "MAIL_PASSWORD_WARN": "Passwort wird unverschlüsselt auf dem Server gespeichert",
                 "MAIL_SERVER_PORT_INFO": "Mailserver-Port",
-                "MAIL_SERVER_URL_INFO": "SMTP Mail Server IP/URL"
+                "MAIL_SERVER_URL_INFO": "SMTP Mail Server IP/URL",
+                "SSL_PROTOCOLS": "SSL-Protokolle",
+                "SSL_PROTOCOLS_INFO": "Gibt die SSL-Protokolle an, die für SSL-Verbindungen aktiviert werden sollen"
             },
             "OTHER": {
                 "DISABLE_CONTRIBUTION": "Option \"zu ShowVoc beitragen\" deaktivieren",
