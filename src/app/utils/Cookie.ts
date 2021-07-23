@@ -3,6 +3,7 @@
 
 import { Project } from '../models/Project';
 import { Value } from '../models/Resources';
+import { User } from '../models/User';
 
 export class Cookie {
 
@@ -38,16 +39,14 @@ export class Cookie {
 
     public static WARNING_CUSTOM_ROOT = "ui.tree.cls.warnings.customroot";
 
-	/**
-	 * Retrieves a single cookie by it's name
-	 * @param  {string} name Identification of the Cookie
-	 * @param  {string} userIri IRI of the user useful to contextualize the cookie
-	 * @returns The Cookie's value 
-	 */
-    public static getCookie(name: string, userIri?: string): string {
-        if (userIri) {
-            name += ":" + userIri;
+    public static getCookie(name: string, project?: Project, user?: User): string {
+        if (project) {
+            name += ".P." + project.getName();
         }
+        if (user) {
+            name += ".U." + user.getIri();
+        }
+
         let myWindow: any = window;
         name = myWindow.escape(name);
         let regexp = new RegExp('(?:^' + name + '|;\\s*' + name + ')=(.*?)(?:;|$)', 'g');
@@ -56,65 +55,53 @@ export class Cookie {
         return value;
     }
 
-	/**
-	 * Save the Cookie
-	 * @param  {string} name Cookie's identification
-	 * @param  {string} value Cookie's value
-	 * @param  {number} expires Cookie's expiration date in days from now. If it's undefined the cookie has a duration of 10 years
-	 * @param  {string} userIri IRI of the user useful to contextualize the cookie
-	 */
-    public static setCookie(name: string, value: string, expires?: number, userIri?: string) {
+     /**
+      * Save the Cookie
+      * @param name 
+      * @param value 
+      * @param attrs 
+      */
+      public static setCookie(name: string, value: any, project?: Project, user?: User, attrs?: CookieAttr) {
+        value = this.convertValueToString(value);
+
         if (value == null) {
-            this.deleteCookie(name, userIri);
+            this.deleteCookie(name, project, user);
             return;
         }
-        if (userIri) {
-            name += ":" + userIri;
+
+        if (project) {
+            name += ".P." + project.getName();
         }
+        if (user) {
+            name += ".U." + user.getIri();
+        }
+
         let myWindow: any = window;
         let cookieStr = myWindow.escape(name) + '=' + myWindow.escape(value) + ';';
 
-        if (!expires) {
-            expires = 365*10;
-        }
+        let expires = (attrs && attrs.expires) ? attrs.expires : 365 * 10; //default 10 years
         let dtExpires = new Date(new Date().getTime() + expires * 1000 * 60 * 60 * 24);
         cookieStr += 'expires=' + dtExpires.toUTCString() + ';';
+        
+        let path: string = (attrs && attrs.path) ? attrs.path : null;
+        if (path) {
+            cookieStr += "path=" + path + ";";
+        }
+
         document.cookie = cookieStr;
     }
 
-	/**
-	 * Removes specified Cookie
-	 * @param  {string} name Cookie's identification
-	 * @param  {string} userIri IRI of the user useful to contextualize the cookie
-	 */
-    public static deleteCookie(name: string, userIri?: string) {
+    /**
+     * Removes specified Cookie
+     */
+    public static deleteCookie(name: string, project?: Project, user?: User) {
         // If the cookie exists
-        if (Cookie.getCookie(name)) {
-            Cookie.setCookie(name, '', -1, userIri);
+        if (Cookie.getCookie(name, project, user)) {
+            Cookie.setCookie(name, '', project, user, { expires: -1 });
         }
     }
 
-
-
-    /**
-     * Gets a preference for the given project stored as cookie
-     * @param pref 
-     * @param project 
-     */
-    public static getUserProjectCookiePref(pref: string, project: Project): string {
-        let value = Cookie.getCookie(pref + "." + project.getName());
-        if (value != null || value != "") {
-            return value;
-        }
-        return null;
-    }
-    /**
-     * Stores in cookie a preference for a given project
-     * @param pref 
-     * @param project 
-     * @param value 
-     */
-    public static setUserProjectCookiePref(pref: string, project: Project, value: any) {
+    private static convertValueToString(value: any): string {
         let valueAsString: string;
         if (Array.isArray(value)) {
             if (value.length > 0) {
@@ -145,7 +132,17 @@ export class Cookie {
         } else if (value != null) {
             valueAsString = value;
         }
-        Cookie.setCookie(pref + "." + project.getName(), valueAsString);
+        return valueAsString;
     }
 
+}
+
+
+/**
+ * Note: path is useful for the translate.lang cookie which if it is set for http://<hostname>/vocbench3 
+ * is blocked by the browser for requests toward http://<hostname>/semanticturkey since they have different path
+ */
+ export interface CookieAttr {
+    expires?: number;
+    path?: string; 
 }

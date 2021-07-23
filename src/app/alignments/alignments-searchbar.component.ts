@@ -24,7 +24,7 @@ export class AlignmentsSearchbar {
     @Input() sourceCtx: ProjectContext;
     @Input() targetCtx: ProjectContext;
 
-    @Input() targetNs: string; //namespace of the target dataset
+    @Input() targetNs: string; //namespace of the target dataset (useful for the search: resources in source dataset aligned with resources startingWith such ns)
 
     //search
     searchLoading: boolean;
@@ -48,7 +48,7 @@ export class AlignmentsSearchbar {
     constructor(private searchService: SearchServices, private svProps: SVProperties, private modalService: NgbModal) { }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['sourceCtx'] || changes['targetCtx'] || changes['targetNs']) {
+        if (changes['sourceCtx'] || changes['targetCtx']) {
             this.initSearch();
         }
     }

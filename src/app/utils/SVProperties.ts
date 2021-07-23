@@ -103,14 +103,14 @@ export class SVProperties {
             projPref.activeSchemes = schemes;
         }
         this.eventHandler.schemeChangedEvent.emit(projPref.activeSchemes);
-        Cookie.setUserProjectCookiePref(Properties.pref_active_schemes, projectCtx.getProject(), projPref.activeSchemes);
+        Cookie.setCookie(Properties.pref_active_schemes, projPref.activeSchemes, projectCtx.getProject());
     }
 
     setActiveLexicon(projectCtx: ProjectContext, lexicon: IRI) {
         let projPref: ProjectPreferences = projectCtx.getProjectPreferences();
         projPref.activeLexicon = lexicon;
         this.eventHandler.lexiconChangedEvent.emit(projPref.activeLexicon);
-        Cookie.setUserProjectCookiePref(Properties.pref_active_lexicon, projectCtx.getProject(), projPref.activeLexicon);
+        Cookie.setCookie(Properties.pref_active_lexicon, projPref.activeLexicon, projectCtx.getProject());
     }
 
     getShowFlags(): boolean {
@@ -123,36 +123,36 @@ export class SVProperties {
     setShowFlags(show: boolean) {
         SVContext.getProjectCtx().getProjectPreferences().showFlags = show;
         this.eventHandler.showFlagChangedEvent.emit(show);
-        Cookie.setUserProjectCookiePref(Properties.pref_show_flags, SVContext.getProjectCtx().getProject(), show);
+        Cookie.setCookie(Properties.pref_show_flags, show, SVContext.getProjectCtx().getProject());
     }
 
     setValueFilterLanguages(filter: ValueFilterLanguages) {
-        Cookie.setUserProjectCookiePref(Properties.pref_filter_value_languages, SVContext.getProjectCtx().getProject(), JSON.stringify(filter));
+        Cookie.setCookie(Properties.pref_filter_value_languages, JSON.stringify(filter), SVContext.getProjectCtx().getProject());
         SVContext.getProjectCtx().getProjectPreferences().filterValueLang = filter;
     }
 
     //class tree settings
     setClassTreeFilter(filter: ClassTreeFilter) {
-        Cookie.setUserProjectCookiePref(Properties.pref_class_tree_filter, SVContext.getProjectCtx().getProject(), JSON.stringify(filter));
+        Cookie.setCookie(Properties.pref_class_tree_filter, JSON.stringify(filter), SVContext.getProjectCtx().getProject());
         SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter = filter;
         this.eventHandler.classFilterChangedEvent.emit();
     }
     setClassTreeRoot(rootUri: string) {
-        Cookie.setUserProjectCookiePref(Properties.pref_class_tree_root, SVContext.getProjectCtx().getProject(), rootUri);
+        Cookie.setCookie(Properties.pref_class_tree_root, rootUri, SVContext.getProjectCtx().getProject());
         SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.rootClassUri = rootUri;
     }
     setClassTreeShowInstances(show: boolean) {
-        Cookie.setUserProjectCookiePref(Properties.pref_class_tree_show_instances, SVContext.getProjectCtx().getProject(), show);
+        Cookie.setCookie(Properties.pref_class_tree_show_instances, show, SVContext.getProjectCtx().getProject());
         SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.showInstancesNumber = show;
     }
 
     //instance list settings
     setInstanceListVisualization(mode: InstanceListVisualizationMode) {
-        Cookie.setUserProjectCookiePref(Properties.pref_instance_list_visualization, SVContext.getProjectCtx().getProject(), mode);
+        Cookie.setCookie(Properties.pref_instance_list_visualization, mode, SVContext.getProjectCtx().getProject());
         SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization = mode;
     }
     setInstanceLisSafeToGoLimit(limit: number) {
-        Cookie.setUserProjectCookiePref(Properties.pref_instance_list_safe_to_go_limit, SVContext.getProjectCtx().getProject(), limit+"");
+        Cookie.setCookie(Properties.pref_instance_list_safe_to_go_limit, limit+"", SVContext.getProjectCtx().getProject());
         let instanceListPref = SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences;
         instanceListPref.safeToGoLimit = limit;
         instanceListPref.safeToGoMap = {}; //changing the limit invalidated the safe => reset the map
@@ -160,11 +160,11 @@ export class SVProperties {
 
     //concept tree settings
     setConceptTreeVisualization(mode: ConceptTreeVisualizationMode) {
-        Cookie.setUserProjectCookiePref(Properties.pref_concept_tree_visualization, SVContext.getProjectCtx().getProject(), mode);
+        Cookie.setCookie(Properties.pref_concept_tree_visualization, mode, SVContext.getProjectCtx().getProject());
         SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization = mode;
     }
     setConceptTreeSafeToGoLimit(limit: number) {
-        Cookie.setUserProjectCookiePref(Properties.pref_concept_tree_safe_to_go_limit, SVContext.getProjectCtx().getProject(), limit);
+        Cookie.setCookie(Properties.pref_concept_tree_safe_to_go_limit, limit, SVContext.getProjectCtx().getProject());
         let conceptTreePref = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences; 
         conceptTreePref.safeToGoLimit = limit;
         conceptTreePref.safeToGoMap = {}; //changing the limit invalidated the safe => reset the map
@@ -172,15 +172,15 @@ export class SVProperties {
 
     //lex entry list settings
     setLexicalEntryListVisualization(mode: LexEntryVisualizationMode) {
-        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_visualization, SVContext.getProjectCtx().getProject(), mode);
+        Cookie.setCookie(Properties.pref_lex_entry_list_visualization, mode, SVContext.getProjectCtx().getProject());
         SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization = mode;
     }
     setLexicalEntryListIndexLenght(lenght: number) {
-        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_index_length, SVContext.getProjectCtx().getProject(), lenght);
+        Cookie.setCookie(Properties.pref_lex_entry_list_index_length, lenght, SVContext.getProjectCtx().getProject());
         SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.indexLength = lenght;
     }
     setLexicalEntryListSafeToGoLimit(limit: number) {
-        Cookie.setUserProjectCookiePref(Properties.pref_lex_entry_list_safe_to_go_limit, SVContext.getProjectCtx().getProject(), limit);
+        Cookie.setCookie(Properties.pref_lex_entry_list_safe_to_go_limit, limit, SVContext.getProjectCtx().getProject());
         let lexEntryListPref = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences;
         lexEntryListPref.safeToGoLimit = limit;
         lexEntryListPref.safeToGoMap = {}; //changing the limit invalidated the safe => reset the map
@@ -188,13 +188,13 @@ export class SVProperties {
 
     //Graph settings
     setResourceViewPartitionFilter(pref: ResViewPartitionFilterPreference) {
-        Cookie.setUserProjectCookiePref(Properties.pref_res_view_partition_filter, SVContext.getProjectCtx().getProject(), JSON.stringify(pref));
+        Cookie.setCookie(Properties.pref_res_view_partition_filter, JSON.stringify(pref), SVContext.getProjectCtx().getProject());
         SVContext.getProjectCtx().getProjectPreferences().resViewPartitionFilter = pref;
     }
 
     setHideLiteralGraphNodes(show: boolean) {
         SVContext.getProjectCtx().getProjectPreferences().hideLiteralGraphNodes = show;
-        Cookie.setUserProjectCookiePref(Properties.pref_filter_value_languages, SVContext.getProjectCtx().getProject(), show);
+        Cookie.setCookie(Properties.pref_filter_value_languages, show, SVContext.getProjectCtx().getProject());
     }
 
 
@@ -208,7 +208,7 @@ export class SVProperties {
 
         //active scheme
         let activeSchemes = [];
-        let activeSchemesPref: string = Cookie.getUserProjectCookiePref(Properties.pref_active_schemes, project);
+        let activeSchemesPref: string = Cookie.getCookie(Properties.pref_active_schemes, project);
         if (activeSchemesPref != null) {
             let skSplitted: string[] = activeSchemesPref.split(",");
             for (var i = 0; i < skSplitted.length; i++) {
@@ -219,17 +219,17 @@ export class SVProperties {
 
         //active lexicon
         let activeLexicon = null;
-        let activeLexiconPref: string = Cookie.getUserProjectCookiePref(Properties.pref_active_lexicon, project);
+        let activeLexiconPref: string = Cookie.getCookie(Properties.pref_active_lexicon, project);
         if (activeLexiconPref != null) {
             activeLexicon = ResourceUtils.parseIRI(activeLexiconPref);
             this.setActiveLexicon(projectCtx, activeLexicon);
         }
 
         //show flag
-        projectPreferences.showFlags = Cookie.getUserProjectCookiePref(Properties.pref_show_flags, project) != "false";
+        projectPreferences.showFlags = Cookie.getCookie(Properties.pref_show_flags, project) != "false";
         
         //graph & resView pref: filter value lang
-        let filterValueLangPref = Cookie.getUserProjectCookiePref(Properties.pref_filter_value_languages, project);
+        let filterValueLangPref = Cookie.getCookie(Properties.pref_filter_value_languages, project);
         if (filterValueLangPref == null) {
             projectPreferences.filterValueLang = { languages: [], enabled: false }; //default
         } else {
@@ -237,7 +237,7 @@ export class SVProperties {
         }
 
         //graph preferences
-        let rvPartitionFilterPref = Cookie.getUserProjectCookiePref(Properties.pref_res_view_partition_filter, project);
+        let rvPartitionFilterPref = Cookie.getCookie(Properties.pref_res_view_partition_filter, project);
         if (rvPartitionFilterPref != null) {
             projectPreferences.resViewPartitionFilter = JSON.parse(rvPartitionFilterPref);
         } else {
@@ -247,19 +247,19 @@ export class SVProperties {
             }
             projectPreferences.resViewPartitionFilter = resViewPartitionFilter;
         }
-        projectPreferences.hideLiteralGraphNodes = Cookie.getUserProjectCookiePref(Properties.pref_hide_literal_graph_nodes, project) != "false";
+        projectPreferences.hideLiteralGraphNodes = Cookie.getCookie(Properties.pref_hide_literal_graph_nodes, project) != "false";
 
         //cls tree preferences
         let classTreePreferences: ClassTreePreference = { 
-            showInstancesNumber: Cookie.getUserProjectCookiePref(Properties.pref_class_tree_show_instances, project) == "true",
+            showInstancesNumber: Cookie.getCookie(Properties.pref_class_tree_show_instances, project) == "true",
             rootClassUri: (projectCtx.getProject().getModelType() == RDFS.uri) ? RDFS.resource.getIRI() : OWL.thing.getIRI(),
             filter: new ClassTreeFilter()
         };
-        let classTreeFilterPref: string = Cookie.getUserProjectCookiePref(Properties.pref_class_tree_filter, project);
+        let classTreeFilterPref: string = Cookie.getCookie(Properties.pref_class_tree_filter, project);
         if (classTreeFilterPref != null) {
             classTreePreferences.filter = JSON.parse(classTreeFilterPref);
         }
-        let classTreeRootPref: string = Cookie.getUserProjectCookiePref(Properties.pref_class_tree_root, project);
+        let classTreeRootPref: string = Cookie.getCookie(Properties.pref_class_tree_root, project);
         if (classTreeRootPref != null) {
             classTreePreferences.rootClassUri = classTreeRootPref;
         }
@@ -269,13 +269,13 @@ export class SVProperties {
         let instanceListPreferences: InstanceListPreference = projectPreferences.instanceListPreferences;
         //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin
         if (SVContext.getLoggedUser().isAdmin() || instanceListPreferences.allowVisualizationChange) {
-            let instanceListVisualizationPref: string = Cookie.getUserProjectCookiePref(Properties.pref_instance_list_visualization, project);
+            let instanceListVisualizationPref: string = Cookie.getCookie(Properties.pref_instance_list_visualization, project);
             if (instanceListVisualizationPref == InstanceListVisualizationMode.searchBased || instanceListVisualizationPref == InstanceListVisualizationMode.standard) {
                 //overwrite only if the cookie value is an admitted value
                 instanceListPreferences.visualization = instanceListVisualizationPref;
             }
         }
-        let instanceListSafeToGoLimitPref: string = Cookie.getUserProjectCookiePref(Properties.pref_instance_list_safe_to_go_limit, project);
+        let instanceListSafeToGoLimitPref: string = Cookie.getCookie(Properties.pref_instance_list_safe_to_go_limit, project);
         if (instanceListSafeToGoLimitPref != null) {
             instanceListPreferences.safeToGoLimit = parseInt(instanceListSafeToGoLimitPref);
         }
@@ -285,13 +285,13 @@ export class SVProperties {
         let conceptTreePref: ConceptTreePreference = projectPreferences.conceptTreePreferences;
         //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin
         if (SVContext.getLoggedUser().isAdmin() || conceptTreePref.allowVisualizationChange) {
-            let conceptTreeVisualizationPref: string = Cookie.getUserProjectCookiePref(Properties.pref_concept_tree_visualization, project);
+            let conceptTreeVisualizationPref: string = Cookie.getCookie(Properties.pref_concept_tree_visualization, project);
             if (conceptTreeVisualizationPref == ConceptTreeVisualizationMode.searchBased || conceptTreeVisualizationPref == ConceptTreeVisualizationMode.hierarchyBased) {
                 //overwrite only if the cookie value is an admitted value
                 conceptTreePref.visualization = conceptTreeVisualizationPref;
             }
         }
-        let conceptTreeSafeToGoLimitPref: string = Cookie.getUserProjectCookiePref(Properties.pref_concept_tree_safe_to_go_limit, project);
+        let conceptTreeSafeToGoLimitPref: string = Cookie.getCookie(Properties.pref_concept_tree_safe_to_go_limit, project);
         if (conceptTreeSafeToGoLimitPref != null) {
             conceptTreePref.safeToGoLimit = parseInt(conceptTreeSafeToGoLimitPref);
         }
@@ -300,7 +300,7 @@ export class SVProperties {
         let lexEntryListPref: LexicalEntryListPreference = projectPreferences.lexEntryListPreferences;
         //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin
         if (SVContext.getLoggedUser().isAdmin() || lexEntryListPref.allowVisualizationChange) {
-            let lexEntryListVisualizationPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_visualization, project);
+            let lexEntryListVisualizationPref: string = Cookie.getCookie(Properties.pref_lex_entry_list_visualization, project);
             if (lexEntryListVisualizationPref == LexEntryVisualizationMode.searchBased || lexEntryListVisualizationPref == LexEntryVisualizationMode.indexBased) {
                 //overwrite only if the cookie value is an admitted value
                 lexEntryListPref.visualization = lexEntryListVisualizationPref;
@@ -308,13 +308,13 @@ export class SVProperties {
         }
         //the index length is taken from cookie only if admin there isn't any restriction on it or if the user is the admin
         if (SVContext.getLoggedUser().isAdmin() || lexEntryListPref.allowIndexLengthChange) {
-            let lexEntryListIndexLenghtPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_index_length, project);
+            let lexEntryListIndexLenghtPref: string = Cookie.getCookie(Properties.pref_lex_entry_list_index_length, project);
             if (lexEntryListIndexLenghtPref == "1" || lexEntryListIndexLenghtPref == "2") {
                 //overwrite only if the cookie value is an admitted value
                 lexEntryListPref.indexLength = parseInt(lexEntryListIndexLenghtPref);
             }
         }
-        let lexEntryListSafeToGoLimitPref: string = Cookie.getUserProjectCookiePref(Properties.pref_lex_entry_list_safe_to_go_limit, project);
+        let lexEntryListSafeToGoLimitPref: string = Cookie.getCookie(Properties.pref_lex_entry_list_safe_to_go_limit, project);
         if (lexEntryListSafeToGoLimitPref != null) {
             lexEntryListPref.safeToGoLimit = parseInt(lexEntryListSafeToGoLimitPref);
         }
@@ -348,7 +348,7 @@ export class SVProperties {
      * Sets the preference to show or hide the inferred information in resource view
      */
     setInferenceInResourceView(showInferred: boolean) {
-        Cookie.setCookie(Cookie.RES_VIEW_INCLUDE_INFERENCE, showInferred + "", 365 * 10);
+        Cookie.setCookie(Cookie.RES_VIEW_INCLUDE_INFERENCE, showInferred + "");
     }
     /**
      * Gets the preference to show or hide the inferred information in resource view
@@ -361,7 +361,7 @@ export class SVProperties {
      * Sets the preference to show the URI or the rendering of resources in resource view
      */
     setRenderingInResourceView(rendering: boolean) {
-        Cookie.setCookie(Cookie.RES_VIEW_RENDERING, rendering + "", 365 * 10);
+        Cookie.setCookie(Cookie.RES_VIEW_RENDERING, rendering + "");
     }
     /**
      * Gets the preference to show the URI or the rendering of resources in resource view
@@ -376,7 +376,7 @@ export class SVProperties {
      * @param showDeprecated 
      */
     setShowDeprecated(showDeprecated: boolean) {
-        Cookie.setCookie(Cookie.SHOW_DEPRECATED, showDeprecated + "", 365 * 10);
+        Cookie.setCookie(Cookie.SHOW_DEPRECATED, showDeprecated + "");
     }
     /**
      * Gets the preference to show the deprecated resources in the trees/lists

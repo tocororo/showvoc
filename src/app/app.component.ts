@@ -38,12 +38,11 @@ export class AppComponent {
         //fallback when a translation isn't found in the current language
         translate.setDefaultLang('en');
         //restore the lang to use, check first the cookies, if not found, set english by default
-        let langCookie: string = Cookie.getCookie(Cookie.TRANSLATE_LANG);
-        if (langCookie != null && translate.getLangs().includes(langCookie)) {
-            translate.use(langCookie);
-        } else {
-            translate.use('en');
+        let transLang: string = Cookie.getCookie(Cookie.TRANSLATE_LANG);
+        if (transLang == null || !translate.getLangs().includes(transLang)) {
+            transLang = "en";
         }
+        this.changeLang(transLang);
     }
 
     ngOnInit() {
@@ -76,7 +75,7 @@ export class AppComponent {
     changeLang(lang: string) {
         this.translateLang = lang;
         this.translate.use(this.translateLang);
-        Cookie.setCookie(Cookie.TRANSLATE_LANG, this.translateLang);
+        Cookie.setCookie(Cookie.TRANSLATE_LANG, this.translateLang, null, null, { path: "/" });
     }
 
     copyWebApiUrl() {

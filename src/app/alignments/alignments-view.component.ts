@@ -54,14 +54,23 @@ export class AlignmentsView {
         if (SVContext.getProjectCtx() != null && SVContext.getProjectCtx().getProject().getName() == this.sourceProject.getName()) {
             this.sourceCtx = SVContext.getProjectCtx();
         } else {
-            this.sourceCtx = new ProjectContext(this.sourceProject);
-            this.svProps.initUserProjectPreferences(this.sourceCtx).subscribe();
+            //use a temp context, so bound sourceCtx only when its preferences are initialized (preventing error il alignment-searchbar that expects settings into the ctx)
+            let tempCtx = new ProjectContext(this.sourceProject);
+            this.svProps.initUserProjectPreferences(tempCtx).subscribe(
+                () => {
+                    this.sourceCtx = tempCtx;
+                }
+            );
         }
         //- target
         let targetProject: Project = this.linkset.getTargetProject();
         if (targetProject != null) { //this means that target resources belong to a project hosted on showvoc
-            this.targetCtx = new ProjectContext(targetProject);
-            this.svProps.initUserProjectPreferences(this.targetCtx).subscribe();
+            let tempCtx = new ProjectContext(targetProject);
+            this.svProps.initUserProjectPreferences(tempCtx).subscribe(
+                () => {
+                    this.targetCtx = tempCtx;
+                }
+            );
         }
 
         SVContext.setTempProject(this.sourceProject);

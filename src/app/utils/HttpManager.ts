@@ -246,7 +246,7 @@ export class HttpManager {
         //     }
         // }
         if (ctxProject != null) {
-            let langsCookie = Cookie.getUserProjectCookiePref(Properties.pref_languages, ctxProject);
+            let langsCookie = Cookie.getCookie(Properties.pref_languages, ctxProject);
             if (langsCookie != null) {
                 params += "ctx_langs=" + langsCookie + "&";
             }

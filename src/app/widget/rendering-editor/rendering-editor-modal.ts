@@ -26,7 +26,7 @@ export class RenderingEditorModal {
     }
 
     initLanguages() {
-        let cookieValue = Cookie.getUserProjectCookiePref(Properties.pref_languages, this.project);
+        let cookieValue = Cookie.getCookie(Properties.pref_languages, this.project);
         this.cookieLangs = (cookieValue != null) ? cookieValue.split(",") : null;
         this.defaultPrefLangs = SVContext.getProjectCtx().getProjectPreferences().renderingLanguagesPreference;
         if (this.defaultPrefLangs.length == 1 && this.defaultPrefLangs[0] == "*") {
@@ -39,12 +39,12 @@ export class RenderingEditorModal {
     onRenderingChange() {
         //changes made from this modal affects only the languages stored in cookie
         let value: string = (this.renderingLangs.length == 0) ? "*" : this.renderingLangs.join(",");
-        Cookie.setUserProjectCookiePref(Properties.pref_languages, this.project, value);
+        Cookie.setCookie(Properties.pref_languages, value, this.project);
         this.initLanguages();
     }
 
     restoreDefault() {
-        Cookie.setUserProjectCookiePref(Properties.pref_languages, SVContext.getProjectCtx().getProject(), null); //delete cookie langs
+        Cookie.deleteCookie(Properties.pref_languages, SVContext.getProjectCtx().getProject()); //delete cookie langs
         this.initLanguages();
     }
 
