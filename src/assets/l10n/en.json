@@ -3,6 +3,7 @@
         "DATASETS": {
             "MANAGEMENT": {
                 "CHANGE_STATUS": "Change status",
+                "CLEAR_DATA": "Clear data",
                 "CREATE_INDEX": "Create index",
                 "CREATE_REFRESH_INDEX": "Create/refresh index",
                 "CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS": "Custom project facets schema settings",
@@ -433,12 +434,14 @@
         "CANNOT_LOAD_DATA_IN_CLOSED_DATASET": "Cannot load data into a closed dataset. Please, open the dataset and then retry.",
         "CANNOT_PROFILE_CLOSED_DATASET": "A closed dataset cannot be profiled",
         "CLASS_FILTER_ALREADY_EXIST": "A filter for class {{cls}} already exists.",
+        "CLEAR_DATA_CONFIRM": "This operation will clear data from dataset '{{datasetName}}'. Do you want to continue?",
         "CONTRIBUTION_APPROVED_DATASET_CREATED": "The contribution has been approved and the dataset has been successfully created",
         "CONTRIBUTION_SUBMITTED": "Your contribution request has been succesfully submitted. It will be evaluated by the administrator and you will receive the response to the provided email.",
         "CUSTOM_ROOT_WARN": "Selecting a specific class as a root could hide other classes that are not subclasses of the chosen root.",
         "DATASET_ALREADY_IN_METADATA_REGISTRY": "A dataset for the provided IRI is already in the metadata registry",
         "DATASET_CREATED": "The dataset has been successfully created",
         "DATASET_NAME_MISSING": "Dataset name is missing or not valid",
+        "DATA_CLEARED": "Data cleared successfully from dataset '{{datasetName}}'",
         "DATA_LOADED": "Data loaded successfully",
         "DATA_REPO_NOT_CONFIGURED": "The data repository requires to be configured",
         "DELETE_DATASET_CONFIRM_WARN": "Attention, this operation will delete the dataset. Are you sure to proceed?",

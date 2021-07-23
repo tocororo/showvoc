@@ -24,6 +24,7 @@ import { LoadDataModal } from './load-data-modal';
 import { ProjectSettingsModal } from './project-settings-modal';
 import { DeleteRemoteRepoModal } from './remote-repositories/delete-remote-repo-modal';
 import { DeleteRemoteRepoReportModal } from './remote-repositories/delete-remote-repo-report-modal';
+import { InputOutputServices } from 'src/app/services/input-output.service';
 
 @Component({
     selector: 'projects-manager',
@@ -42,6 +43,7 @@ export class ProjectsManagerComponent {
     private readonly creatingIndexAttr: string = "creatingIndex"; //stores a boolean that tells if the system is creating the index for the project
     private readonly creatingMetadataAttr: string = "creatingMetadata"; //stores a boolean that tells if the system is creating the metadata for the project
     private readonly openingAttr: string = "opening"; //stores a boolean that tells if the system is creating the index for the project
+    private readonly clearingDataAttr: string = "clearingData"; //stores a boolean that tells if the system is clearing the data of project
 
     private readonly roleStatusMap: { [role: string]: string } = {
         [this.rolePristine]: "Pristine",
@@ -53,7 +55,7 @@ export class ProjectsManagerComponent {
 
 
     constructor(private modalService: NgbModal, private projectService: ProjectsServices, private repositoriesService: RepositoriesServices,
-        private svService: ShowVocServices, private globalSearchService: GlobalSearchServices,  private mapleService: MapleServices,
+        private inputOutputService: InputOutputServices, private svService: ShowVocServices, private globalSearchService: GlobalSearchServices, private mapleService: MapleServices,
         private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices, private router: Router, private eventHandler: SVEventHandler,
         private translateService: TranslateService) { }
 
@@ -112,6 +114,26 @@ export class ProjectsManagerComponent {
         modalRef.result.then(
             () => { //load data might update the project status => refresh the projects list
                 this.initProjects();
+            },
+            () => {}
+        )
+    }
+
+    clearData(project: Project) {
+        this.basicModals.confirm({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.CLEAR_DATA" }, { key: "MESSAGES.CLEAR_DATA_CONFIRM", params: { datasetName: project.getName() } }, ModalType.warning).then(
+            () => {
+                SVContext.setTempProject(project);
+                project[this.clearingDataAttr] = true;
+                this.inputOutputService.clearData().pipe(
+                    finalize(() => {
+                        SVContext.removeTempProject();
+                        project[this.clearingDataAttr] = false;
+                    })
+                ).subscribe(
+                    () => {
+                        this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, {key:"MESSAGES.DATA_CLEARED", params: { datasetName: project.getName() }});
+                    }
+                )
             },
             () => {}
         )

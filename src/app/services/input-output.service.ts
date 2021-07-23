@@ -26,7 +26,7 @@ export class InputOutputServices {
      */
     loadRDF(baseURI: string, transitiveImportAllowance: TransitiveImportMethodAllowance, inputFile?: File, format?: string, 
         loaderSpec?: PluginSpecification, rdfLifterSpec?: PluginSpecification, transformationPipeline?: string, validateImplicitly?: boolean) {
-        var data: any = {
+        let data: any = {
             baseURI: baseURI,
             transitiveImportAllowance: transitiveImportAllowance,
         }
@@ -51,13 +51,17 @@ export class InputOutputServices {
         return this.httpMgr.uploadFile(this.serviceName, "loadRDF", data);
     }
 
+    clearData() {
+        let params: any = {};
+        return this.httpMgr.doPost(this.serviceName, "clearData", params);
+    }
 
     getInputRDFFormats(): Observable<RDFFormat[]> {
-        var params = {};
+        let params = {};
         return this.httpMgr.doGet(this.serviceName, "getInputRDFFormats", params).pipe(
             map(stResp => {
-                var formats: RDFFormat[] = [];
-                for (var i = 0; i < stResp.length; i++) {
+                let formats: RDFFormat[] = [];
+                for (let i = 0; i < stResp.length; i++) {
                     let name = stResp[i].name;
                     let charset = stResp[i].charset;
                     let fileExtensions = stResp[i].fileExtensions;
@@ -81,13 +85,13 @@ export class InputOutputServices {
     }
 
     getSupportedFormats(extensionID: string): Observable<DataFormat[]> {
-        var params = {
+        let params = {
             extensionID: extensionID
         };
         return this.httpMgr.doGet(this.serviceName, "getSupportedFormats", params).pipe(
             map(stResp => {
                 let formats: DataFormat[] = [];
-                for (var i = 0; i < stResp.length; i++) {
+                for (let i = 0; i < stResp.length; i++) {
                     formats.push(new DataFormat(stResp[i].name, stResp[i].defaultMimeType, stResp[i].defaultFileExtension));
                 }
                 //sort by name
@@ -108,7 +112,7 @@ export class InputOutputServices {
      * @param fileName 
      */
     getParserFormatForFileName(fileName: string): Observable<string> {
-        var params: any = {
+        let params: any = {
             fileName: fileName
         }
         return this.httpMgr.doGet(this.serviceName, "getParserFormatForFileName", params);
