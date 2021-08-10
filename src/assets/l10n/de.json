@@ -3,6 +3,7 @@
         "DATASETS": {
             "MANAGEMENT": {
                 "CHANGE_STATUS": "Status ändern",
+                "CLEAR_DATA": "Daten löschen",
                 "CREATE_INDEX": "Index erstellen",
                 "CREATE_REFRESH_INDEX": "Index erstellen/aktualisieren",
                 "CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS": "Benutzerdefinierte Einstellungen des Schemas für Projektfacetten",
@@ -101,7 +102,9 @@
             "ABOUT_SHOWVOC": "Über ShowVoc",
             "CONTACT_US": "Kontakt",
             "SHOWVOC_WEBSITE": "ShowVoc-Website",
-            "SUPPORT": "Support"
+            "SUPPORT": "Support",
+            "WEB_API": "Web-API-Basis-URL kopieren",
+            "WEB_API_COPIED": "Web-API-Basis-URL in die Zwischenablage kopiert"
         },
         "USER_MENU": {
             "ADMINISTRATION_DASHBOARD": "Verwaltungs-Dashboard",
@@ -431,12 +434,14 @@
         "CANNOT_LOAD_DATA_IN_CLOSED_DATASET": "In einen geschlossenen Datensatz können keine Daten geladen werden. Bitte Datensatz öffnen und noch einmal versuchen.",
         "CANNOT_PROFILE_CLOSED_DATASET": "Ein geschlossener Datensatz kann nicht profiliert werden",
         "CLASS_FILTER_ALREADY_EXIST": "Es existiert bereits ein Filter für die Klasse {{cls}} .",
+        "CLEAR_DATA_CONFIRM": "Dieser Vorgang löscht Daten aus dem Datensatz '{{datasetName}}'. Möchten Sie fortfahren?",
         "CONTRIBUTION_APPROVED_DATASET_CREATED": "Der Beitrag wurde genehmigt und der Datensatz wurde erfolgreich erstellt",
         "CONTRIBUTION_SUBMITTED": "Ihr Beitragsantrag wurde erfolgreich eingereicht. Er wird vom Administrator bewertet und Sie erhalten eine Antwort an die angegebene E-Mail-Adresse.",
         "CUSTOM_ROOT_WARN": "Die Auswahl einer bestimmten Klasse als Wurzel könnte andere Klassen ausblenden, die keine Unterklassen der gewählten Wurzel sind.",
         "DATASET_ALREADY_IN_METADATA_REGISTRY": "Für die angegebene IRI ist bereits ein Datensatz in der Metadaten-Registry vorhanden",
         "DATASET_CREATED": "Das Dataset wurde erfolgreich erstellt",
         "DATASET_NAME_MISSING": "Datensatzname fehlt oder ist nicht gültig",
+        "DATA_CLEARED": "Daten erfolgreich aus dem Datensatz '{{datasetName}}' gelöscht",
         "DATA_LOADED": "Daten erfolgreich geladen",
         "DATA_REPO_NOT_CONFIGURED": "Das Daten-Repository muss konfiguriert werden",
         "DELETE_DATASET_CONFIRM_WARN": "Achtung, dieser Vorgang löscht den Datensatz. Sind Sie sicher, dass Sie fortfahren wollen?",
