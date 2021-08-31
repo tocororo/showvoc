@@ -5,10 +5,10 @@ import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-mo
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { ExtensionPointID, Scope, Settings, STProperties } from 'src/app/models/Plugins';
 import { RemoteRepositoryAccessConfig } from 'src/app/models/Project';
-import { ShowVocSettings, SettingsEnum, VocBenchConnectionShowVocSettings } from 'src/app/models/Properties';
+import { SettingsEnum, ShowVocSettings, VocBenchConnectionShowVocSettings } from 'src/app/models/Properties';
 import { AdministrationServices } from 'src/app/services/administration.service';
-import { ShowVocServices } from 'src/app/services/showvoc.service';
 import { SettingsServices } from 'src/app/services/settings.service';
+import { ShowVocServices } from 'src/app/services/showvoc.service';
 import { SVContext } from 'src/app/utils/SVContext';
 
 @Component({
@@ -187,11 +187,13 @@ export class SystemConfigurationComponent implements OnInit {
     }
 
     private initVbConfigHandler(settings: Settings) {
-        this.showVocSettings = settings.getPropertyValue(SettingsEnum.showvoc);
-        if (this.showVocSettings != null && this.showVocSettings.vbConnectionConfig != null) {
+        this.showVocSettings = settings.getPropertyValue(SettingsEnum.showvoc)
+        if (this.showVocSettings == null) {
+            this.showVocSettings = new ShowVocSettings()
+        }
+
+        if (this.showVocSettings.vbConnectionConfig != null) {
             this.vbConnectionConfig = this.showVocSettings.vbConnectionConfig
-        } else {
-            this.vbConnectionConfig;
         }
         this.pristineVbConnConfig = Object.assign({}, this.vbConnectionConfig);
     }
@@ -245,8 +247,7 @@ export class SystemConfigurationComponent implements OnInit {
      * ============================ */
 
     private initOtherConfig(settings: Settings) {
-        let svSettings: ShowVocSettings = settings.getPropertyValue(SettingsEnum.showvoc);
-        this.disableContributions = svSettings.disableContributions;
+        this.disableContributions = this.showVocSettings.disableContributions; //showVocSettings is already initialized in initVbConfigHandler which is invoked before initOtherConfig in initAll
     }
 
     updateDisableContributions() {

@@ -5,7 +5,7 @@ The full changelog of the platform includes also changes brought to the Semantic
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
 # 1.0.1 (dd-mm-yyyy)
-  *
+  * Minor bugfixes
 
 # 1.0.0 (02-08-2021)
   * Enabled deletion of remote repositories referred by a deleted dataset

@@ -8,7 +8,7 @@ import { BasicModalsServices } from '../../modal-dialogs/basic-modals/basic-moda
 import { ModalType } from '../../modal-dialogs/Modals';
 import { ConfigurableExtensionFactory, ExtensionPointID, PluginSpecification, Scope, Settings } from '../../models/Plugins';
 import { Project, RemoteRepositoryAccessConfig, RepositoryAccessType } from '../../models/Project';
-import { ShowVocSettings, SettingsEnum, VocBenchConnectionShowVocSettings } from '../../models/Properties';
+import { SettingsEnum, ShowVocSettings, VocBenchConnectionShowVocSettings } from '../../models/Properties';
 import { IRI } from '../../models/Resources';
 import { OntoLex, OWL, RDFS, SKOS, SKOSXL } from '../../models/Vocabulary';
 import { ExtensionsServices } from '../../services/extensions.service';
