@@ -402,16 +402,16 @@ export class SVProperties {
         this.eventHandler.searchPrefsUpdatedEvent.emit();
     }
 
-    initStartupSystemSettings() {
-        this.settingsService.getStartupSettings().subscribe(
-            settings => {
+    initStartupSystemSettings(): Observable<void> {
+        return this.settingsService.getStartupSettings().pipe(
+            map(settings => {
                 let systemSettings: SystemSettings = SVContext.getSystemSettings();
                 systemSettings.showFlags = settings.getPropertyValue(SettingsEnum.showFlags);
                 let systemLanguages: Language[] = settings.getPropertyValue(SettingsEnum.languages);
                 Languages.sortLanguages(systemLanguages);
                 systemSettings.languages = systemLanguages;
                 systemSettings.disableContributions = settings.getPropertyValue(SettingsEnum.disableContributions);
-            }
+            })
         )
     }
 

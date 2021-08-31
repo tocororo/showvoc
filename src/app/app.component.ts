@@ -48,7 +48,6 @@ export class AppComponent {
     ngOnInit() {
         this.translateLangs = this.translate.getLangs();
         this.translateLang = this.translate.currentLang;
-        this.svProp.initStartupSystemSettings();
     }
 
     /**

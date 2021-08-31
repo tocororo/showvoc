@@ -21,8 +21,7 @@ import { PreferencesModule } from './preferences/preferences.module';
 import { SearchModule } from './search/search.module';
 import { STServicesModule } from './services/st-services.module';
 import { UserModule } from './user/user.module';
-import { AdminAuthGuard, VisitorAuthGuard } from './utils/CanActivateAuthGuards';
-import { ProjectGuard } from './utils/CanActivateProjectGuard';
+import { GUARD_PROVIDERS } from './utils/CanActivateGuards';
 import { SVEventHandler } from './utils/SVEventHandler';
 import { SVProperties } from './utils/SVProperties';
 import { WidgetModule } from './widget/widget.module';
@@ -63,7 +62,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
     providers: [
         SVProperties, SVEventHandler,
-        VisitorAuthGuard, AdminAuthGuard, ProjectGuard,
+        GUARD_PROVIDERS,
         { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
 		/** Uses the HashLocationStrategy instead of the default "HTML 5 pushState" PathLocationStrategy.
 		 * This solves the 404 error problem when reloading a page in a production server
