@@ -23,37 +23,39 @@ import { UserProfileComponent } from './user/user-profile.component';
 import { AdminAuthGuard, ProjectGuard, SystemSettingsGuard, VisitorAuthGuard } from './utils/CanActivateGuards';
 
 const routes: Routes = [
-    { path: '', redirectTo: "/home", pathMatch: 'full' },
-    { path: "home", component: HomeComponent, canActivate: [SystemSettingsGuard, VisitorAuthGuard], runGuardsAndResolvers: 'always' }, //VisitorAuthGuard needed in order to redirect to the registration page if no user is registered
-    { path: "login", component: LoginComponent },
-    { path: "registration", component: RegistrationComponent },
-    { path: "profile", component: UserProfileComponent, canActivate: [AdminAuthGuard] },
-    {
-        path: 'admin', component: AdminDashboardComponent, canActivate: [AdminAuthGuard],
-        children: [
-            { path: '', redirectTo: "projects", pathMatch: 'full' },
-            { path: 'projects', component: ProjectsManagerComponent },
-            { path: 'contributions', component: ContributionsManagerComponent },
-            { path: 'config', component: SystemConfigurationComponent }
-        ]
-    },
-    { path: "sysconfig", component: InitialConfigurationComponent, canActivate: [AdminAuthGuard] },
-    { path: "contribution", component: ContributionComponent, canActivate: [VisitorAuthGuard] },
-    { path: "load/stable/:token", component: LoadStableResourceComponent, canActivate: [VisitorAuthGuard] },
-    { path: "load/dev/:format/:token", component: LoadDevResourceComponent, canActivate: [VisitorAuthGuard] },
-    { path: "ResetPassword/:token", component: ResetPasswordComponent },
-    { path: 'datasets', component: DatasetsComponent, canActivate: [VisitorAuthGuard] },
-    {
-        path: 'datasets/:id', component: DatasetViewComponent, canActivate: [ProjectGuard], //ProjectGuard implicitly requires VisitorAuthGuard
-        children: [
-            { path: '', redirectTo: "data", pathMatch: 'full' },
-            { path: 'data', component: DatasetDataComponent },
-            { path: 'sparql', component: SparqlComponent }
-        ]
-    },
-    { path: 'search', component: SearchComponent, canActivate: [VisitorAuthGuard] },
-    { path: 'alignments', component: AlignmentsComponent, canActivate: [VisitorAuthGuard] },
-    { path: '**', component: NotFoundComponent },
+    { path: '', canActivate: [SystemSettingsGuard], children: [ //this empty parent route is needed in order to apply the SystemSettingsGuard to the whole application
+        { path: '', redirectTo: "/home", pathMatch: 'full' },
+        { path: "home", component: HomeComponent, canActivate: [VisitorAuthGuard], runGuardsAndResolvers: 'always' }, //VisitorAuthGuard needed in order to redirect to the registration page if no user is registered
+        { path: "login", component: LoginComponent },
+        { path: "registration", component: RegistrationComponent },
+        { path: "profile", component: UserProfileComponent, canActivate: [AdminAuthGuard] },
+        {
+            path: 'admin', component: AdminDashboardComponent, canActivate: [AdminAuthGuard],
+            children: [
+                { path: '', redirectTo: "projects", pathMatch: 'full' },
+                { path: 'projects', component: ProjectsManagerComponent },
+                { path: 'contributions', component: ContributionsManagerComponent },
+                { path: 'config', component: SystemConfigurationComponent }
+            ]
+        },
+        { path: "sysconfig", component: InitialConfigurationComponent, canActivate: [AdminAuthGuard] },
+        { path: "contribution", component: ContributionComponent, canActivate: [VisitorAuthGuard] },
+        { path: "load/stable/:token", component: LoadStableResourceComponent, canActivate: [VisitorAuthGuard] },
+        { path: "load/dev/:format/:token", component: LoadDevResourceComponent, canActivate: [VisitorAuthGuard] },
+        { path: "ResetPassword/:token", component: ResetPasswordComponent },
+        { path: 'datasets', component: DatasetsComponent, canActivate: [VisitorAuthGuard] },
+        {
+            path: 'datasets/:id', component: DatasetViewComponent, canActivate: [ProjectGuard], //ProjectGuard implicitly requires VisitorAuthGuard
+            children: [
+                { path: '', redirectTo: "data", pathMatch: 'full' },
+                { path: 'data', component: DatasetDataComponent },
+                { path: 'sparql', component: SparqlComponent }
+            ]
+        },
+        { path: 'search', component: SearchComponent, canActivate: [VisitorAuthGuard] },
+        { path: 'alignments', component: AlignmentsComponent, canActivate: [VisitorAuthGuard] },
+        { path: '**', component: NotFoundComponent },
+    ]}
 ];
 
 @NgModule({

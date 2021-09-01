@@ -405,12 +405,13 @@ export class SVProperties {
     initStartupSystemSettings(): Observable<void> {
         return this.settingsService.getStartupSettings().pipe(
             map(settings => {
-                let systemSettings: SystemSettings = SVContext.getSystemSettings();
+                let systemSettings: SystemSettings = new SystemSettings();
                 systemSettings.showFlags = settings.getPropertyValue(SettingsEnum.showFlags);
                 let systemLanguages: Language[] = settings.getPropertyValue(SettingsEnum.languages);
                 Languages.sortLanguages(systemLanguages);
                 systemSettings.languages = systemLanguages;
                 systemSettings.disableContributions = settings.getPropertyValue(SettingsEnum.disableContributions);
+                SVContext.setSystemSettings(systemSettings);
             })
         )
     }

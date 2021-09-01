@@ -10,7 +10,7 @@ export class SVContext {
     private static tempProject: Project; //project that could be temporarly set in order to execute request within its context 
         //(and there is no need to init preferences and to set a consumer)
 
-    private static systemSettings: SystemSettings = new SystemSettings();
+    private static systemSettings: SystemSettings;
 
     private static loggedUser: User;
 
@@ -63,6 +63,10 @@ export class SVContext {
     }
     static getPrefixMappings(): PrefixMapping[] {
         return this.workingProjectCtx.getPrefixMappings();
+    }
+
+    static setSystemSettings(systemSettings): void {
+        this.systemSettings = systemSettings;
     }
 
     static getSystemSettings(): SystemSettings {
