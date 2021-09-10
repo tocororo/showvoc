@@ -357,7 +357,7 @@ export class HttpManager {
                                     HttpServiceContext.resetContext();
                                     if (this.router.url != "/login") {
                                         //redirect to home only if not in login page, since 401 is returned even at login failed
-                                        this.router.navigate(['/home']);
+                                        this.router.navigate(['/home'], { queryParamsHandling: "merge" });
                                     }
                                 };
                             },

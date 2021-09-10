@@ -14,3 +14,8 @@ export enum ShowVocConversionFormat {
     TBX = "TBX",
     ZTHES = "ZTHES"
 }
+
+export enum ShowVocUrlParams {
+    hideNav = "hideNav",
+    resId = "resId"
+}

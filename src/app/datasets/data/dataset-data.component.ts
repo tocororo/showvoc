@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LinksetMetadata } from 'src/app/models/Metadata';
 import { AnnotatedValue, IRI, Resource } from 'src/app/models/Resources';
+import { ShowVocUrlParams } from 'src/app/models/ShowVoc';
 import { ResourcesServices } from 'src/app/services/resources.service';
 import { StructureTabsetComponent } from 'src/app/structures/structure-tabset/structure-tabset.component';
 
@@ -28,7 +29,7 @@ export class DatasetDataComponent implements OnInit {
          */
         this.activatedRoute.queryParams.subscribe(
             params => {
-                let resId: string = params['resId'];
+                let resId: string = params[ShowVocUrlParams.resId];
                 if (resId != null) {
                     this.resourcesService.getResourceDescription(new IRI(resId)).subscribe(
                         (annotatedRes: AnnotatedValue<IRI>) => {
@@ -51,7 +52,7 @@ export class DatasetDataComponent implements OnInit {
          * (see code in ngOnInit())
          */
         const urlTree = this.router.createUrlTree([], {
-            queryParams: { resId: node.getValue().getIRI() },
+            queryParams: { [ShowVocUrlParams.resId]: node.getValue().getIRI() },
             queryParamsHandling: 'merge',
             preserveFragment: true 
         });

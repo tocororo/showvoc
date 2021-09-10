@@ -5,7 +5,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
 import { Project } from '../models/Project';
-import { ShowVocConstants } from '../models/ShowVoc';
+import { ShowVocConstants, ShowVocUrlParams } from '../models/ShowVoc';
 import { AuthServices } from '../services/auth.service';
 import { MetadataServices } from '../services/metadata.service';
 import { ProjectsServices } from '../services/projects.service';
@@ -130,7 +130,15 @@ export class ProjectGuard implements CanActivate {
                                     )
                                 } else { //project not found, redirect to home
                                     this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_NOT_FOUND" }, { key: "MESSAGES.UNEXISTING_OR_CLOSED_DATASET", params: { datasetId: paramProject } }, ModalType.warning).then(
-                                        () => { this.router.navigate(["/"]) }
+                                        () => {
+                                            /* queryParamsHandling doesn't work in canActivate (https://stackoverflow.com/a/45843291/5805661)
+                                            in order to preserve hideNav param I need to set it manually */
+                                            let queryParams = {};
+                                            if (route.queryParams[ShowVocUrlParams.hideNav] != null) {
+                                                queryParams[ShowVocUrlParams.hideNav] = route.queryParams[ShowVocUrlParams.hideNav];
+                                            }
+                                            this.router.navigate(["/home"], { queryParams: queryParams });
+                                        }
                                     );
                                     return of(false);
                                 }

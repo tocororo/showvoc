@@ -13,6 +13,7 @@ import { Cookie } from '../utils/Cookie';
 import { SVContext } from '../utils/SVContext';
 import { EditLanguageModal } from './edit-language-modal.component';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
+import { ShowVocUrlParams } from '../models/ShowVoc';
 
 @Component({
     selector: 'search-component',
@@ -145,7 +146,7 @@ export class SearchComponent {
 
 
     private goToResource(result: GlobalSearchResult) {
-        this.router.navigate(["/datasets/" + result.repository.id], { queryParams: { resId: result.resource.getIRI() } });
+        this.router.navigate(["/datasets/" + result.repository.id], { queryParams: { [ShowVocUrlParams.resId]: result.resource.getIRI() } });
     }
 
     private goToDataset(repoId: string) {

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav *ngIf="isNavVisible()" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand text-info" [routerLink]="['/home']" style="font-weight: bold">ShowVoc</a>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#mainNavbar" aria-controls="navbarSupportedContent"
         aria-expanded="false" aria-label="Toggle navigation" (click)="navbarCollapsed = !navbarCollapsed">

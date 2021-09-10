@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { ShowVocUrlParams } from './models/ShowVoc';
 import { User } from './models/User';
 import { AuthServices } from './services/auth.service';
 import { Cookie } from './utils/Cookie';
@@ -26,8 +28,15 @@ export class AppComponent {
     translateLangs: string[];
     translateLang: string;
 
-    constructor(private authServices: AuthServices, private svProp: SVProperties, private translate: TranslateService,
-        private toastService: ToastService) {
+    hideNav: boolean
+
+    constructor(private authServices: AuthServices, private translate: TranslateService, private toastService: ToastService, private activatedRoute: ActivatedRoute) {
+        this.activatedRoute.queryParams.subscribe(
+            params => {
+                this.hideNav = params[ShowVocUrlParams.hideNav] == "true";
+            }
+        );
+
         //set the available factory-provided l10n languages
         translate.addLangs(['de', 'en', 'it']);
         //add additional supported l10n languages
@@ -48,6 +57,10 @@ export class AppComponent {
     ngOnInit() {
         this.translateLangs = this.translate.getLangs();
         this.translateLang = this.translate.currentLang;
+    }
+
+    isNavVisible(): boolean {
+        return this.isAdminLogged() || !this.hideNav;
     }
 
     /**
