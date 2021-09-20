@@ -19,7 +19,7 @@ import { ToastService } from './widget/toast/toast-service';
 })
 export class AppComponent {
 
-    // appVersion = require('../../package.json').version;
+    appVersion = require('../../package.json').version;
 
     navbarCollapsed: boolean = true;
 

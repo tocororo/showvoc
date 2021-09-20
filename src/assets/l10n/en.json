@@ -78,7 +78,7 @@
                 "VB_CONFIG": "VocBench configuration",
                 "VB_CONFIG_INFO": "Configuration of the VocBench/SemanticTurkey instance dedicated to the development of unstable resources.<br><strong>Note</strong>: if this is not properly configured, ShowVoc will not be able to connect with VocBench, so it will be impossible to accept contribution of under-development resources.",
                 "VB_CONFIG_TEST": "VocBench configuration test",
-                "VB_URL_INFO": "URL of the VocBench istance accessible by the contributors"
+                "VB_URL_INFO": "URL of the VocBench instance accessible by the contributors"
             }
         }
     },
