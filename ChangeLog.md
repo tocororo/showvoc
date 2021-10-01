@@ -5,7 +5,7 @@ The full changelog of the platform includes also changes brought to the Semantic
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
 # 1.0.2 (dd-mm-yyyy)
-  * added localization for French
+  * added localization for French, thanks to Nathalie Vedovotto for the contribution!
 
 # 1.0.1 (21-09-2021)
   * Added possibility to hide the top navigation bar to visitor users through the URL parameter "hideNav"
@@ -22,7 +22,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
   * Enabled possibility to customize ShowVoc instance name
   * Enabled possibility to deactivate users contributions
   * Adopted the new Settings services
-  * Added german l10n
+  * Added german l10n, thanks to Roland Wingerter for the contribution!
   * Fixed missing error message in case of exception during the project creation
   * Updated the settings rendering widgets to deal with non-backward compatible changes in their representation returned by the server
   * Updated Angular cli to version 10.2.0 and Angular version to ^10.2.2
