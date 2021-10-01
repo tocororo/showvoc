@@ -5,7 +5,7 @@ The full changelog of the platform includes also changes brought to the Semantic
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
 # 1.0.2 (dd-mm-yyyy)
-  * 
+  * added localization for French
 
 # 1.0.1 (21-09-2021)
   * Added possibility to hide the top navigation bar to visitor users through the URL parameter "hideNav"
