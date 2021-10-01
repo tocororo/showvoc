@@ -1,0 +1,651 @@
+{
+    "ADMINISTRATION": {
+        "DATASETS": {
+            "MANAGEMENT": {
+                "CHANGE_STATUS": "Changer le statut",
+                "CLEAR_DATA": "Nettoyer les données",
+                "CREATE_INDEX": "Créer un index",
+                "CREATE_REFRESH_INDEX": "Créer/Rafraîchir l'index",
+                "CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS": "Paramétrages du schéma des facettes du projet personnalisé",
+                "DATASET_MANAGER": "Gestionnaire de jeux de données",
+                "DELETE_INDEX": "Supprimer l'index",
+                "EDIT_DESCRIPTION": "Éditer la description",
+                "EDIT_FACETS": "Éditer les facettes",
+                "EDIT_SETTINGS": "Éditer les paramétrages",
+                "LOAD_DATA": "Charger des données",
+                "MAKE_PUBLIC": "Rendre public",
+                "MAKE_STAGING": "Rendre privé",
+                "OPEN_CLOSE": "Ouvrir/Fermer",
+                "RESOLVE_IMPORTS": "Résoudre les imports",
+                "USE_DATASET_BASEURI": "Utiliser l'URI de base du jeu de données"
+            },
+            "REMOTE": {
+                "CONFIG": {
+                    "NO_CONFIG_FOUND": "Aucune configuration d'accès distant n'a été trouvée, Veuillez en créer une",
+                    "REMOTE_ACCESS_CONFIG": "Configuration d'accès distant"
+                },
+                "DELETE_REPO": "Supprimer les entrepôts distants",
+                "REASON": "Raison",
+                "SELECT_REMOTE_REPO": "Sélectionner un entrepôt distant"
+            },
+            "SETTINGS": {
+                "ALLOW_INDEX_CHANGE": "Autoriser la modification de la longueur de l'index",
+                "ALLOW_INDEX_CHANGE_INFO": "Indique si un utilisateur visiteur peut personnaliser la longueur de l'index pour lui-même ",
+                "ALLOW_VISUALIZATION_CHANGE": "Autoriser la modification de la visualisation",
+                "ALLOW_VISUALIZATION_CHANGE_INFO": "Indique si un utilisateur visiteur peut personnaliser le mode de visualisation pour lui-même",
+                "CONCEPT_VISUALIZATION_INFO": "Restreint la visualisation de l'arbre des concepts pour un utilisateur visiteur. Un utilisateur administrateur sera toujours autorisé à personnaliser la visualisation pour lui-même.",
+                "DATASET_SETTINGS": "Réglages du jeu de données",
+                "DEFAULT_VISUALIZATION_MODE": "Mode de visualisation par défaut",
+                "INSTANCE_LIST_VISUALIZATION_INFO": "Restreint la visualisation de la liste des instances pour un utilisateur visiteur. Un utilisateur administrateur sera toujours autorisé à personnaliser la visualisation pour lui-même.",
+                "LEX_ENTRY_VISUALIZATION_INFO": "Restreint la visualisation de la liste des entrées lexicales pour un utilisateur visiteur. Un utilisateur administrateur sera toujours autorisé à personnaliser la visualisation pour lui-même.",
+                "RENDERING_LANG_INFO": "Définir la(les) langue(s) par défaut utilisée(s) pour afficher les ressources"
+            }
+        },
+        "SYSTEM": {
+            "COMMONS": {
+                "MAIL_PASSWORD_WARN": "Le mot de passe est stockée sans cryptage sur le serveur"
+            },
+            "EMAIL": {
+                "AUTHENTICATION": "Authentification",
+                "AUTHENTICATION_INFO": "Indique si le serveur SMTP demande une authentification",
+                "CRYPTOGRAPHIC_PROTOCOL": "Protocole de cryptographie",
+                "EMAIL_CONFIG": "Configuration de l'e-mail",
+                "EMAIL_CONFIG_TEST": "Test de configuration de l'e-mail",
+                "MAIL_ALIAS_INFO": "Nom d'alias affiché dans les e-mails d'administration",
+                "MAIL_FROM_INFO": "Adresse e-mail utilisée pour l'envoi des e-mails d'administration",
+                "MAIL_PASSWORD_INFO": "Mot de passe de l'adresse e-mail ci-dessus",
+                "MAIL_PASSWORD_WARN": "Le mot de passe est stocké sans cryptage sur le serveur",
+                "MAIL_SERVER_PORT_INFO": "Port du serveur d'e-mails",
+                "MAIL_SERVER_URL_INFO": "IP/URL du serveur d'e-mails SMTP",
+                "SSL_PROTOCOLS": "Protocoles SSL",
+                "SSL_PROTOCOLS_INFO": "Spécifie les protocoles SSL qui seront autorisés pour les connexions SSL"
+            },
+            "OTHER": {
+                "DISABLE_CONTRIBUTION": "Désactiver l'option \"contribuer à ShowVoc\"",
+                "OTHER_SETTINGS": "Autres réglages"
+            },
+            "REMOTE_ACCESS": {
+                "PASSWORD_INFO": "Mot de passe du triple store distant (si une authentification est nécessaire)",
+                "REMOTE_ACCESS_CONFIG": "Configuration de l'accès distant",
+                "REMOTE_ACCESS_CONFIG_INFO": "Configuration du triple store distant qui héberge les jeux de données dans ShowVoc.<br><strong>À noter</strong> : en cas de configuration incorrecte, ShowVoc ne pourra pas créer des jeux de données distants pour héberger des ressources stables.",
+                "URL_INFO": "URL du triple store distant",
+                "USERNAME_INFO": "Nom d'utilisateur du triple store distant (si une authentification est nécessaire)"
+            },
+            "VB_CONFIG": {
+                "ADMIN_EMAIL_INFO": "E-mail de l'administrateur de VocBench/SemanticTurkey",
+                "ADMIN_PASSWORD_INFO": "Mot de passe de l'administrateur de VocBench/SemanticTurkey",
+                "ST_HOST_INFO": "URL complet (protocole+nom d'hôte+port) de l'hôte SemanticTurkey",
+                "VB_CONFIG": "Configuration de VocBench",
+                "VB_CONFIG_INFO": "Configuration de l'instance de VocBench/SemanticTurkey dédiée au développement de ressources non stables.<br><strong>À noter</strong> : en cas de configuration incorrecte, ShowVoc ne pourra pas se connecter à VocBench et il sera impossible d'accepter des contributions provenant de ressources en cours de développement.",
+                "VB_CONFIG_TEST": "Test de configuration VocBench",
+                "VB_URL_INFO": "URL de l'instance VocBench accessible aux contributeurs"
+            }
+        }
+    },
+    "ALIGNMENTS": {
+        "ACTIONS": {
+            "REFRESH_DATASET_PROFILE": "Rafraîchir le profil du jeu de données",
+            "SHOW_PERCENTAGE": "Montrer le pourcentage du jeu de liens"
+        },
+        "ALIGNMENTS": "Alignements",
+        "MAPPINGS": "Correspondances",
+        "SEARCH": {
+            "MODE_BOTH": "Les deux",
+            "MODE_ONLY_SOURCE": "Uniquement le jeu de données source",
+            "SOURCE_DATASET_MATCHES": "Appariements dans le jeu de données source",
+            "TARGET_DATASET_MATCHES": "Appariements dans le jeu de données cible"
+        },
+        "SOURCE_DATASET": "jeu de données source"
+    },
+    "APP": {
+        "FOOTER": {
+            "ABOUT_SHOWVOC": "À propos de ShowVoc",
+            "CONTACT_US": "Contactez-nous",
+            "SHOWVOC_WEBSITE": "Site web de ShowVoc",
+            "SUPPORT": "Support",
+            "WEB_API": "Copier l'URL de base de l'API web",
+            "WEB_API_COPIED": "URL de base de l'API web copié dans le presse-papier"
+        },
+        "USER_MENU": {
+            "ADMINISTRATION_DASHBOARD": "Panneau de contrôle d'administration",
+            "LOGIN": "Se connecter",
+            "LOGOUT": "Se déconnecter"
+        }
+    },
+    "COMMONS": {
+        "ACTIONS": {
+            "ADD": "Ajouter",
+            "CANCEL": "Effacer",
+            "CHECK": "Vérifier",
+            "CHECK_ALL": "Tout vérifier",
+            "CLOSE": "Fermer",
+            "CONFIRM": "Confirmer",
+            "CREATE": "Créer",
+            "EDIT": "Éditer",
+            "LOAD": "Charger",
+            "REFRESH": "Rafraîchir",
+            "REMOVE": "Enlever",
+            "RESET": "Réinitialiser",
+            "SEARCH": "Rechercher",
+            "SUBMIT": "Soumettre",
+            "UNCHECK": "Désélectionner",
+            "UNCHECK_ALL": "Tout désélectionner"
+        },
+        "BOOLEAN": {
+            "FALSE": "Faux",
+            "NO": "Non",
+            "TRUE": "Vrai",
+            "YES": "Oui"
+        },
+        "CONFIG": {
+            "CONFIGURATION": "Configuration",
+            "CONFIGURATION_OF": "Configuration de",
+            "CONFIGURE": "Configurer",
+            "DUPLICATED_CONFIGURATION": "Configuration dupliquée",
+            "LOAD_CONFIGURATION": "Charger la configuration",
+            "MISSING_CONFIGURATION": "Configuration manquante",
+            "PASSWORD": "Mot de passe",
+            "REPO_CONFIGURATION": "Configuration de l'entrepôt",
+            "SAVE_CONFIGURATION": "Sauvegarder la configuration",
+            "SERVER_URL": "URL du serveur",
+            "USERNAME": "Nom d'utilisateur"
+        },
+        "DENIED_OPERATION": "Opération refusée",
+        "DESCRIPTION": "Description",
+        "DETAILS": "Détails",
+        "FILTER": "Filtrer",
+        "FORMAT": "Format",
+        "LANGUAGE": {
+            "ISO_CODE": "Code ISO",
+            "LANGUAGE": "Langue",
+            "LANGUAGES": "Langues",
+            "NO_LANG_INFO": "Aucune langue sélectionnée équivaut implicitement à toutes les langues"
+        },
+        "MANDATORY_FIELD": "Champ obligatoire",
+        "NAME": "Nom",
+        "OPTIONAL_FIELD": "Champ facultatif",
+        "PAGING": {
+            "NEXT_PAGE": "Page suivante",
+            "PAGE_OF_TOT": "sur",
+            "PREV_PAGE": "Page précédente"
+        },
+        "POSITION": "Position",
+        "SETTINGS": "Réglages",
+        "STATUS": {
+            "ACTIVE": "Actif",
+            "ERROR": "Erreur",
+            "INCOMPLETE_FORM": "Formulaire incomplet",
+            "INVALID_DATA": "Donnée non valide",
+            "STATUS": "Statut",
+            "WARNING": "Avertissement"
+        },
+        "TITLE": "Titre",
+        "VALUE": "Valeur"
+    },
+    "CONTRIBUTIONS": {
+        "ACTIONS": {
+            "APPROVE": "Approuver",
+            "APPROVE_CONTRIBUTION": "Approuver la contribution",
+            "REJECT_CONTRIBUTION": "Rejeter la contribution",
+            "SUBMIT_REQUEST": "Soumettre une demande"
+        },
+        "CONTRIBUTION": "Contribution",
+        "CONTRIBUTIONS": "Contributions",
+        "CONTRIBUTOR": "Contributeur",
+        "FORM": {
+            "COMMONS": {
+                "DISCOVER": "Découvrir",
+                "EMAIL_INFO": "Sera utilisé pour vous envoyer un e-mail contenant la réponse à l'évaluation de la contribution",
+                "HOME_PAGE": "Page d'accueil",
+                "METADATA": "Métadonnées",
+                "NO_AGGREGATION": "Pas d'agrégation",
+                "ORGANIZATION": "Organisation",
+                "REQUEST_SUBMITTED": "Requête soumise",
+                "RESOURCE_NAME": "Nom de la ressource"
+            },
+            "DEV": {
+                "CONVERSION_FROM": "Conversion depuis",
+                "CONVERSION_REQUIRED": "Conversion nécessaire",
+                "CONVERSION_REQUIRED_INFO": "Les données nécessitent une conversion depuis un format non RDF"
+            },
+            "METADATA": {
+                "IDENTITY_INFO": "Si le champ est laissé vide, un IRI sera généré par le système"
+            },
+            "STABLE": {
+                "CONTRIBUTOR_IS_OWNER": "Le contributeur est-il le propriétaire de la ressource ?",
+                "IM_OWNER": "Je suis le propriétaire de la ressource"
+            }
+        },
+        "LOAD": {
+            "DATASET_NAME": "Nom du jeu de données",
+            "DATASET_NAME_INFO": "Le nom du jeu de données fourni dans l'e-mail de notification de l'approbation de la contribution",
+            "EMAIL_ADDRESS": "Adresse électronique",
+            "EMAIL_ADDRESS_INFO": "L'adresse électronique à partir de laquelle vous soumettez la contribution"
+        },
+        "MANAGER": {
+            "CONTRIBUTION_MANAGER": "Gestionnaire de contributions",
+            "CONTRIBUTION_TYPE": "Type de contribution",
+            "SUBMITTED": "Soumis"
+        }
+    },
+    "DATA": {
+        "CLASS": {
+            "ACTIONS": {
+                "SELECT_CLASS": "Sélectionner une classe",
+                "SELECT_ROOT_CLASS": "Sélectionner la classe racine"
+            },
+            "CLASS": "Classe",
+            "CLASSES": "Classes",
+            "SETTINGS": {
+                "CLASS_TREE_SETTINGS": "Réglages de l'arbre des classes",
+                "FILTERED_SUBCLASSES": "Sous-classes filtrées",
+                "FILTER_ENABLED": "Filtre activé",
+                "ROOT_CLASS": "Classe racine",
+                "SHOW_INSTANCES_NUMBER": "Montrer le nombre d'instances",
+                "SUBCLASS_FILTER": "Filtre des sous-classes",
+                "SUBCLASS_FILTER_INFO": "Ici vous pouvez créer des filtres afin de masquer les sous-classes de classes"
+            }
+        },
+        "COLLECTION": {
+            "COLLECTION": "Collection",
+            "COLLECTIONS": "Collections"
+        },
+        "COMMONS": {
+            "ACTIONS": {
+                "CHANGE_RENDERING": "Changer le rendu"
+            },
+            "VISUALIZATION_MODE": {
+                "HIERARCHY_BASED": "Hiérarchique",
+                "INDEX_BASED": "Fondé sur l'index",
+                "MODE": "Mode de visualisation",
+                "SEARCH_BASED": "Fondé sur la recherche",
+                "STANDARD": "Standard"
+            }
+        },
+        "CONCEPT": {
+            "CONCEPT": "Concept",
+            "CONCEPTS": "Concepts",
+            "SETTINGS": {
+                "CONCEPT_TREE_SETTINGS": "Réglages de l'arbre des concepts",
+                "TOP_CONCEPTS_LIMIT": "Limitation des concepts de premier niveau",
+                "TOP_CONCEPTS_LIMIT_INFO": "Définit le nombre maximum de concepts de premier niveau visibles dans l'arbre. Ce réglage évite l'initialisation d'un arbre susceptible de provoquer des problèmes de performances"
+            },
+            "UNSAFE_WARN": {
+                "ELEMENT_COUNT": "Cet arbre de concepts possède un nombre de concepts de premier niveau ({{elemCount}}) qui dépasse la limite fixée dans les réglages ({{safeToGoLimit}}).",
+                "FORCE_INIT": "Cliquer pour forcer l'initialisation de l'arbre des concepts, à vos propres risques",
+                "HERE": "ici",
+                "PERFORMANCE_ISSUE": "Les récupérer tous peut prendre un certain temps, vous pourrez constater des baisses de performance voire un blocage du système.",
+                "SELECT_SCHEME": "Vous pouvez également réduire le nombre de concepts de premier niveau en sélectionnant un schéma à partir du panneau 'Schéma'",
+                "SETTINGS": "réglages",
+                "SWITCH_MODE": "Il est recommandé de passer de la 'visualisation hiérarchique' à la visualisation 'fondée sur la recherche' depuis les"
+            },
+            "USE_SEARCH_MSG": "Veuillez utiliser la zone de recherche pour retrouver les concepts"
+        },
+        "DATA": "Données",
+        "INSTANCE": {
+            "INSTANCE": "Instance",
+            "INSTANCES": "Instances",
+            "SETTINGS": {
+                "INSTANCES_LIMIT": "Limite des instances",
+                "INSTANCES_LIMIT_INFO": "Définit le nombre maximum d'instances visibles dans la liste. Ce réglage évite l'initialisation d'une liste susceptible de provoquer des problèmes de performances",
+                "INSTANCE_LIST_SETTINGS": "Réglages de la liste d'instances"
+            },
+            "UNSAFE_WARN": {
+                "ELEMENT_COUNT": "Cette liste d'instances possède un nombre d'éléments ({{count}}) qui dépasse la limite fixée dans les réglages ({{safeToGoLimit}}).",
+                "FORCE_INIT": "Cliquer pour forcer l'initialisation de la liste d'instances, à vos propres risques",
+                "HERE": "ici",
+                "PERFORMANCE_ISSUE": "Les récupérer tous peut prendre un certain temps, vous pourrez constater des baisses de performance voire un blocage du système.",
+                "SETTINGS": "réglages",
+                "SWITCH_MODE": "Il est recommandé de passer à la visualisation fondée sur la recherche depuis les"
+            },
+            "USE_SEARCH_MSG": "Veuillez utiliser la zone de recherche pour retrouver les instances"
+        },
+        "LEXICON": {
+            "ACTIONS": {
+                "CHANGE_LEXICON": "Changer de lexique",
+                "SELECT_LEXICON": "Sélectionner un lexique"
+            },
+            "LEXICON": "Lexique",
+            "LEXICONS": "Lexiques"
+        },
+        "LEX_ENTRY": {
+            "LEX_ENTRIES": "Lex.Entries",
+            "LEX_ENTRY": "Lex.Entry",
+            "SETTINGS": {
+                "INDEX_LENGHT": "Longueur de l'index",
+                "INDEX_LENGHT_INFO": "Indique si l'index des entrées lexicale est sur 1 ou 2 caractères",
+                "LEX_ENTRIES_LIMIT": "Limitation des entrées lexicales",
+                "LEX_ENTRIES_LIMIT_INFO": "Définit le nombre maximum d'entrées lexicales visibles dans la liste. Ce réglage évite l'initialisation d'une liste susceptible de provoquer des problèmes de performances",
+                "LEX_ENTRY_SETTINGS": "Réglages de la liste des entrées lexicales"
+            },
+            "UNSAFE_WARN": {
+                "CHANGE_INDEX_LENGHT": "pour passer la longueur de l'index de 1 à 2 caractères ou",
+                "ELEMENT_COUNT": "Cette liste d'entrées lexicales possède un nombre d'éléments ({{elemCount}}) qui dépasse la limite fixée dans les réglages ({{safeToGoLimit}}).",
+                "FORCE_INIT": "Cliquer pour forcer l'initialisation de la liste des entrées lexicales, à vos propres risques",
+                "HERE": "ici",
+                "IT_IS_RECOMMENDED": "Il est recommandé",
+                "PERFORMANCE_ISSUE": "Les récupérer tous peut prendre un certain temps, vous pourrez constater des baisses de performance voire un blocage du système.",
+                "SELECT_LEXICON": "Vous pouvez également réduire le nombre d'entrées lexicales en sélectionnant un lexique à partir du panneau 'Lexique'.",
+                "SETTINGS": "réglages",
+                "SWITCH_MODE": "pour passer le mode de visualisation de 'Fondé sur l'index' à 'Fondé sur la recherche' depuis les"
+            },
+            "USE_SEARCH_MSG": "Veuillez utiliser la zone de recherche pour retrouver des entrées lexicales"
+        },
+        "PROPERTY": {
+            "ACTIONS": {
+                "SHOW_ALL": "Montrer toutes les propriétés"
+            },
+            "PROPERTIES": "Propriétés",
+            "PROPERTY": "Propriété"
+        },
+        "SCHEME": {
+            "CONCEPT_SCHEME": "Schéma de concepts",
+            "SCHEME": "Schéma",
+            "SCHEMES": "Schémas"
+        }
+    },
+    "DATASETS": {
+        "ACTIONS": {
+            "CREATE_DATASET": "Créer un jeu de données",
+            "CREATE_METADATA": "Créer les métadonnées d'un jeu de données",
+            "CREATE_REFRESH_METADATA": "Créer/rafraîchir les métadonnées d'un jeu de données",
+            "DELETE_DATASET": "Supprimer un jeu de données",
+            "PROFILE_DATASET": "Profiler un jeu de données"
+        },
+        "ATTR": {
+            "DATASET_NAME": "Nom du jeu de données",
+            "DEREF_SYSTEM": "Système de déréférencement",
+            "IDENTITY": "Identité",
+            "IDENTITY_IRI": "IRI d'identité",
+            "SPARQL_ENDPOINT": "SPARQL Endpoint",
+            "SPARQL_ENDPOINT_URL": "URL du SPARQL Endpoint",
+            "URI_SPACE": "Espace d'URI"
+        },
+        "BROWSE_DATASETS": "Explorer le jeu de données de {{instanceName}}",
+        "DATASET": "Jeu de données",
+        "DATASETS": "Jeux de données",
+        "DATASET_TYPE": "Type de jeu de données",
+        "ONLY_OPEN": "Uniquement les jeux de données ouverts",
+        "STATUS": {
+            "ALREADY_EXISTING_DATASET": "Jeu de données déjà existant",
+            "DATASET_CREATED": "Jeu de données créé",
+            "DATASET_NOT_FOUND": "Jeu de données non trouvé",
+            "MISSING_DATASET_PROFILE": "Profil de jeu de données manquant"
+        }
+    },
+    "GRAPHS": {
+        "ACTIONS": {
+            "ADD_NODE": "Ajouter un nœud",
+            "EXPAND_LINKSET": "Développer le jeu de liens",
+            "EXPORT_SNAPSHOT": "Exporter une image instantanée du graphe (.svg)",
+            "FIX_NODE_POSITION": "Fixer la position du nœud"
+        },
+        "FORCE_CONTROL": {
+            "LENGTH": "Longueur",
+            "LINKS": "Liens",
+            "STRENGTH": "Force"
+        },
+        "LINKS_FILTER": {
+            "EXPAND_NODE": "Développer le nœud",
+            "TOO_MUCH_RELATIONS_WARNING": "La ressource que vous développez possède un grand nombre de relations, ce qui va générer un nombre important de liens et de nœuds et peut rendre la visualisation du graphe confuse. Il est fortement recommandé de filtrer certaines des relations afin de limiter la taille du graphe.",
+            "VISIBLE_X_OUT_OF_Y": [
+                "Visible",
+                "parmi"
+            ]
+        },
+        "PARTITIONS_FILTER": {
+            "ALL_PARTITIONS_HIDDEN_WARN": "Si toutes les partitions sont masquées l'expansion d'un nœud sera sans effet",
+            "CHECK_PARTITION_FOR_ALL_TYPES": "Rendre visible la partition sélectionnée pour tous les types",
+            "PARTITIONS": "Partitions",
+            "PARTITIONS_FILTER": "Filtre de partitions",
+            "PARTITIONS_FILTER_INFO": "Sélectionner les partitions de la description de la ressource qui seront montrées lors de l'expansion d'un nœud.",
+            "RESET_FILTER": "Réinitialiser le filtre",
+            "RESOURCE_TYPES": "Types de ressource",
+            "UNCHECK_PARTITION_FOR_ALL_TYPES": "Masquer la partition sélectionnée pour tous les types"
+        },
+        "RESOURCE_DETAILS": {
+            "SHOW_THE_COMPLETE": "Montrer l'intégralité"
+        },
+        "SETTINGS": {
+            "DATA_GRAPH_SETTINGS": "Réglages du graphe orienté-données",
+            "HIDE_LITERAL_NODES": "Masquer les nœuds littéraux",
+            "HIDE_LITERAL_NODES_INFO": "Si l'option est activée, tous les nœuds littéraux seront masqués"
+        }
+    },
+    "HOME": {
+        "WELCOME_WO_INST_NAME": {
+            "CONTRIBUTE_TO": "Contribuer à ShowVoc",
+            "WELCOME": "Bienvenue dans ShowVoc !"
+        },
+        "WELCOME_W_INST_NAME": {
+            "CONTRIBUTE_TO": "Contribuer à {{instanceName}}",
+            "POWERED_BY": "{{instanceName}} est propulsé par",
+            "WELCOME": "Bienvenue dans l'explorateur de jeux de données {{instanceName}} !"
+        }
+    },
+    "MESSAGES": {
+        "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Vous êtes sur le point de soumettre les métadonnées proposées dans le répertoire des métadonnées. Êtes-vous certain ?",
+        "ADMIN_CREATED": "Le compte administrateur a été créé. Vous serez désormais automatiquement connecté avec l'adresse e-mail et le mot de passe que vous avez fournis",
+        "BASEURI_MISSING": "L'URI de base est manquante ou non valide",
+        "BASEURI_REQUIRED": "URI de base nécessaire",
+        "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "Impossible de créer l'index d'un jeu de données fermé. Veuillez ouvrir le jeu de données et réessayer.",
+        "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "Impossible de créer les métadonnées d'un jeu de données fermé. Veuillez ouvrir le jeu de données et réessayer.",
+        "CANNOT_DELETE_OPEN_DATASET": "Impossible de supprimer un jeu de données ouvert. Veuillez fermer le jeu de données et réessayer.",
+        "CANNOT_LOAD_DATA_IN_CLOSED_DATASET": "Impossible de charger des données dans un jeu de données fermé. Veuillez ouvrir le jeu de données et réessayer.",
+        "CANNOT_PROFILE_CLOSED_DATASET": "Un jeu de données fermé ne peut être profilé",
+        "CLASS_FILTER_ALREADY_EXIST": "Un filtre existe déjà pour la classe {{cls}}.",
+        "CLEAR_DATA_CONFIRM": "Cette opération va supprimer toutes les données du jeu de données '{{datasetName}}'. Voulez-vous poursuivre ?",
+        "CONTRIBUTION_APPROVED_DATASET_CREATED": "La contribution a été approuvée et le jeu de données a été créé avec succès",
+        "CONTRIBUTION_SUBMITTED": "Votre demande de contribution a été soumise avec succès. Elle sera évaluée par l'administrateur et vous recevrez la réponse à l'adresse e-mail fournie.",
+        "CUSTOM_ROOT_WARN": "Sélectionner une classe spécifique en tant que racine peut masquer d'autres classes qui ne sont pas des sous-classes de la racine choisie.",
+        "DATASET_ALREADY_IN_METADATA_REGISTRY": "Un jeu de données pour l'IRI fournie existe déjà dans le registre des métadonnées",
+        "DATASET_CREATED": "Le jeu de données a été créé avec succès",
+        "DATASET_NAME_MISSING": "Le nom du jeu de données est manquant ou non valide",
+        "DATA_CLEARED": "Les données ont été supprimées avec succès du jeu de données '{{datasetName}}'",
+        "DATA_LOADED": "Les données ont été chargées avec succès",
+        "DATA_REPO_NOT_CONFIGURED": "L'entrepôt de données doit être configuré",
+        "DELETE_DATASET_CONFIRM_WARN": "Attention, cette opération va supprimer le jeu de données. Voulez-vous poursuivre ?",
+        "DIFFERENT_CONFIRM_PASSWORD": "Le mot de passe et sa confirmation sont différents.",
+        "DUPLICATED_SERVER_URL_CONFIG": "Une configuration existe déjà pour le même URL de serveur",
+        "EMAIL_CONFIG_CHANGED": "La configuration de l'e-mail a été modifiée, vous devez au préalable soumettre les modifications.",
+        "EMAIL_CONFIG_INFO": "Configuration du service d'e-mails de ShowVoc. Ce service sera utilisé pour envoyer des notifications aux contributeurs.<br><strong>À noter</strong> : s'il n'est pas correctement configuré, il sera impossible d'envoyer des e-mails aux contributeurs, qui seront donc dans l'incapacité de compléter leur contribution.",
+        "EMAIL_CONFIG_TEST_INFO": "Ce test va envoyer un e-mail à l'adresse électronique fournie, afin de vérifier la configuration de l'e-mail",
+        "EMAIL_CONFIG_TEST_SUCCESS": "La configuration est opérationnelle. Un e-mail test a été envoyé à l'adresse électronique fournie.",
+        "ENTER_VALID_EMAIL": "Veuillez saisir une adresse électronique valide",
+        "INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET": "La création d'un index n'est pas disponible pour un jeu de données fermé",
+        "INSERT_EMAIL_FOR_RESET_PASSWORD": "Indiquez l'adresse électronique de votre compte. Vous recevrez un e-mail comportant les instructions de réinitialisation de votre mot de passe",
+        "INVALID_EMAIL": "{{email}} n'est pas une adresse électronique valide.",
+        "INVALID_SEARCH_STRING": "Veuillez saisir une chaîne de caractères valide pour la recherche" ,
+        "LANGUAGE_ALREAY_IN_LIST": "La langue '{{lang}}' figure déjà dans la liste.",
+        "LANGUAGE_DUPLICATED": "La langue '{{lang}}' figure en double dans la liste.",
+        "LANGUAGE_INVALID_TAG": "'{{lang}}' n'est pas une étiquette de langue valide.",
+        "LANGUAGE_SETTING_PARSING_ERROR": "L'initialisation des réglages du projet a rencontré un problème lors du parsage des réglages des langues. Les langues par défaut seront appliquées à ce projet.",
+        "LIFTER_NOT_CONFIGURED": "Le Lifter doit être configuré",
+        "MAKE_DATASET_PUBLIC_CONFIRM": "Vous êtes sur le point de rendre le jeu de données public, il sera donc visible dans la page des jeux de données et son contenu sera accessible aux visiteurs. Voulez-vous poursuivre ?",
+        "MAKE_DATASET_STAGING_CONFIRM": "Vous êtes sur le point de rendre le jeu de données privé, il ne sera donc plus visible dans la page des jeux de données et son contenu ne sera pas accessible aux visiteurs. Contextuellement, vous pouvez supprimer l'index. Voulez-vous poursuivre ?",
+        "METADATA_NOT_FOUND_PROFILE_CONFIRM": "Impossible de trouver les métadonnées du jeu de données '{{datasetName}}' dans le registre des métadonnées. Voulez-vous profiler le jeu de données ? (nécessaire pour les fonctionnalités d'alignement)",
+        "METADATA_NOT_FOUND_PROFILE_DATASET": "Impossible de trouver les métadonnées du jeu de données courant dans le registre des métadonnées. Veuillez profiler le jeu de données en cliquant sur le bouton <i class=\"fas fa-chart-bar\"></i>.",
+        "MISSING_MANDATORY_FIELD": "Le champ obligatoire '{{missingField}}' est manquant",
+        "NO_CONVERSION_FORMAT_SELECTED": "L'option 'Conversion demandée' est cochée, mais aucun format n'a été sélectionné",
+        "NO_METADATA_PROVIDED": "Aucune métadonné n'a été fournie",
+        "NO_SEARCH_RESULTS": "La recherche de '{{searchedString}}' n'a ramené aucun résultat",
+        "NO_USER_REGISTERED": "ShowVoc n'a détecté aucun utilisateur enregistré. Afin d'utiliser la plateforme, vous devez créer un compte administrateur en fournissant des données personnelles et des informations de connexion.",
+        "PASSWORD_CHANGED": "Votre mot de passe a été modifié avec succès. Vous allez être déconnecté.",
+        "PASSWORD_RESET_SUCCESS": "Le mot de passe a été réinitialisé avec succès. Vous allez recevoir un e-mail comportant le nouveau mot de passe temporaire.",
+        "REFRESH_METADATA_CONFIRM": "Vous êtes sur le point de rafraîchir les métadonnées du jeu de données '{{datasetName}}'. Êtes-vous certain ?",
+        "REJECT_CONTRIBUTION_CONFIRM": "Êtes-vous certain de vouloir rejeter la contribution ?",
+        "REMOTE_REPO_ACCESS_NOT_CONFIGURED": "L'accès à l'entrepôt distant n'a pas été configuré.",
+        "RESET_PARTITION_FILTER_CONFIRM": "Le filtre des partitions va être réinitialisé pour tous les rôles disponibles. Êtes-vous certain ?",
+        "RESET_PASSWORD_EMAIL_SENT": "Un e-mail comportant les instructions de réinitialisation du mot de passe a été envoyé à l'adresse électronique fournie.",
+        "RESOURCE_ALREADY_IN_GRAPH": "Impossible d'ajouter un nœud à la ressource sélectionnée car un nœud existe déjà pour cette même ressource",
+        "RESOURCE_NOT_REACHABLE": "La ressource {{resource}} n'est accessible depuis aucun arbre ni liste. Sa vue sera affichée dans une fenêtre modale" ,
+        "RES_NOT_REACHABLE_IN_TREE": "La ressource {{resource}} n'est accessible dans l'arbre courant.",
+        "RES_NOT_REACHABLE_IN_TREE_DIALOG_RES_VIEW_CONFIRM": "La ressource {{resource}} n'est accessible dans l'arbre courant. Voulez-vous ouvrir sa vue dans une fenêtre modale ?",
+        "RES_NOT_REACHABLE_IN_TREE_THROUGH_DEPRECATED": "La ressource {{resource}} n'est accessible dans l'arbre courant car son chemin comporte un nœud déprécié. Autorisez l'affichage des ressources dépréciées et renouvelez votre recherche",
+        "SEARCH_INDEX_NOT_FOUND": "Impossible de trouver un index. Veuillez créer l'index pour au moins un jeu de données, puis réessayer.",
+        "SELECT_REFERENCED_REPO_TO_DELETE": "Les entrepôts suivants étaient référencés par le projet supprimé. Sélectionnez les entrepôts que vous voulez supprimer.",
+        "SWITCH_NO_SCHEME_CONFIRM": "Le concept partagé '{{concept}}' n'appartient à aucun schéma. Voulez-vous passer au mode sans-schéma ?",
+        "SYSTEM_CONFIG_INTRO": "Dans cette section vous pouvez configurer certains aspects centraux du système. Ce panneau sera également accessible plus tard, depuis <i>Tableau de bord d'administration</i> > <i>Configuration</i>",
+        "SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO": "Le système n'a pas été configuré pour créer un entrepôt distant. Veuillez fournir une configuration vers un triple store distant depuis le tableau de bord d'administration.",
+        "SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION": "Le système n'a pas été configuré pour se connecter à une instance VocBench distante. Veuillez fournir une configuration depuis le tableau de bord d'administration",
+        "TOO_MUCH_LINKSETS_FILTER": "Le jeu de données que vous voulez développer possède un grand nombre de jeux de liens ({{linksetCount}}). Une baisse des performances peut être constatée lorsque le nombre d'éléments visuels du graphe augmente. Vous pouvez filtrer pour n'afficher que les jeux de liens contenant un nombre minimum de liens",
+        "UNEXISTING_OR_CLOSED_DATASET": "Le jeu de données demandé (id : '{{datasetId}}') n'existe pas ou n'est pas ouvert. Vous allez être redirigé vers la page d'accueil.",
+        "UNEXISTING_URI_IN_PROJECT": "URI erroné : aucune ressource d'URI {{resUri}} n'existe dans le projet courant",
+        "UPDATE_QUERY_NOT_ALLOWED": "La mise à jour de la requête n'est pas autorisée",
+        "VALUE_EMPTY_OR_INVALID": "La valeur saisie est vide ou non valide. Veuillez vérifier et réessayer.",
+        "VALUE_INVALID": "La valeur saisie est non valide. Veuillez vérifier et réessayer.",
+        "VB_CONFIG_CHANGED": "La configuration de VocBench a été modifiée, vous devez soumettre au préalable les modifications.",
+        "VB_CONFIG_INCOMPLETE": "La configuration de VocBench est incomplète. Veuillez remplir tous les champs et réessayer.",
+        "VB_CONFIG_TEST_FAIL": "Le test a échoué, la configuration fournie est incorrecte.",
+        "VB_CONFIG_TEST_SUCCESS": "La configuration a été testée avec succès.",
+        "X_SEARCH_RESOURCES_FOUND": "{{results}} resultats trouvés",
+        "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "Vous allez recevoir un e-mail contenant les informations de connexion à VocBench."
+    },
+    "MODELS": {
+        "PROJECT": {
+            "BACKEND_TYPE": "Type de back-end",
+            "BASE_URI": "URI de base",
+            "DATA_REPO_ID": "ID de l'entrepôt de données",
+            "LEXICALIZATION": "Lexicalisation",
+            "LEXICALIZATION_MODEL": "Modèle de lexicalisation",
+            "LOCATION": "Position",
+            "MODEL": "Modèle",
+            "REPOSITORY_ID": "ID de l'entrepôt",
+            "REPO_ACCESS": "Accès à l'entrepôt"
+        },
+        "RESOURCE": {
+            "DEPRECATED": "Déprécié",
+            "LABEL": "Étiquette",
+            "PREDICATE": "Prédicat",
+            "RESOURCE": "Ressource",
+            "ROLE": "Rôle"
+        }
+    },
+    "PREFERENCES": {
+        "LANG": {
+            "RENDERING": {
+                "DESCRIPTION": "Sélectionner les langues utilisées dans le rendu des ressources (et leur ordre)",
+                "RENDERING_LANGS": "Langues de rendu"
+            },
+            "VALUE_FILTER": {
+                "DESCRIPTION": "Sélectionner les langues affichées pour filtrer les valeurs littérales dans les descriptions des ressources. Utiliser le filtre pour masquer les valeurs dans les langues non sélectionnées.",
+                "ENABLE_FILTER": "Activer le filtre",
+                "VALUE_FILTER_LANGS": "Langues du filtre de valeur"
+            }
+        }
+    },
+    "RESOURCE_VIEW": {
+        "ACTIONS": {
+            "OPEN_GRAP": "Ouvrir la représentation sous forme de graphe",
+            "SHOW_HIDE_INFERRED": "Montrer/cacher les informations inférées"
+        },
+        "PARTITIONS": {
+            "BROADERS": "Génériques",
+            "CLASS_AXIOMS": "Axiomes de classes",
+            "CONSTRITUENST": "Constituants",
+            "DATATYPE_DEFINITIONS": "Définitions des types de données",
+            "DENOTATIONS": "Dénotations",
+            "DISJOINT_PROPERTIES": "Propriétés disjointes",
+            "DOMAINS": "Domaines",
+            "EQUIVALENT_PROPERTIES": "Propriétés équivalentes",
+            "EVOKED_LEXICAL_CONCEPTS": "Concepts lexicaux évoqués",
+            "FACETS": "Facettes",
+            "FORM_BASED_PREVIEW": "Prévisualisation du formulaire personnalisé",
+            "FORM_PRESENTATIONS": "Representations en formulaire",
+            "IMPORTS": "Imports",
+            "LABEL_RELATIONS": "Relations entre étiquettes",
+            "LEXICALIZATIONS": "Lexicalisations",
+            "LEXICAL_FORMS": "Formes lexicales",
+            "LEXICAL_SENSES": "Sens lexicaux",
+            "MEMBERS": "Membres",
+            "MEMBERS_ORDERED": "Membres (liste ordonnée)",
+            "NOTES": "Notes",
+            "PROPERTIES": "Autres propriétés",
+            "RANGES": "Rangs",
+            "RDFS_MEMBERS": "Membres RDFS",
+            "SCHEMES": "Schémas",
+            "SUBPROPERTY_CHAINS": "Axiomes de chaîne de sous-propriétés",
+            "SUBTERMS": "Sous-termes",
+            "SUPERPROPERTIES": "Super-propriétés",
+            "TOP_CONCEPT_OF": "Concept de premier niveau de",
+            "TYPES": "Types"
+        },
+        "SETTINGS": {
+            "RES_VIEW_SETTINGS": "Réglages de la vue ressource"
+        },
+        "STATUS": {
+            "RESOURCE_NOT_EXISTING": "Cette ressource n'est pas disponible dans le projet en cours",
+            "RESOURCE_UNKNOWN_HOST": "Cette ressource n'est pas disponible dans les projets en cours ni accessible sur le web"
+        }
+    },
+    "SEARCH": {
+        "ANY_LANGUAGE": "N'importe quelle langue",
+        "EDIT_LANGS": {
+            "ADD_LANG": "Ajouter une langue",
+            "EDIT_LANGS": "Éditer les langues",
+            "LANG_TAG": "Étiquette de langue"
+        },
+        "FILTERS": "Filtres",
+        "INDEX_NOT_FOUND": "Index non trouvé",
+        "NO_RESOURCE_FOUND_FOR": "Aucune ressource trouvée pour",
+        "ONLY_OPEN": "Uniquement les ouverts",
+        "RESOURCE_NOT_REACHABLE": "Ressource non accessible",
+        "SEARCH": "Rechercher",
+        "SEARCH_RESULTS": "Résultats de recherche",
+        "SETTINGS": {
+            "CLS_INSTANCE_SEARCH": "Recherche de classes-instances",
+            "CONCEPTS_SEARCH": "Recherche de concepts",
+            "CONTAINS": "Contiens",
+            "ENDS_WITH": "Se termine par",
+            "EXACT": "Exact",
+            "FUZZY": "Approchant",
+            "RESTRICT_TO_SCHEME": "Restreindre la recherche au(x) skos:ConceptScheme(s) actif(s)",
+            "SEARCH_IN_LOCAL_NAME": "Rechercher dans le nom local",
+            "SEARCH_IN_NOTES": "Rechercher dans les notes",
+            "SEARCH_IN_URI": "Rechercher dans l'URI",
+            "SEARCH_MODE": "Mode de recherche",
+            "SEARCH_MODE_INFO": "La recherche est toujours lancée parmi les lexicalisations",
+            "SEARCH_SETTINGS": "Paramétrages de la recherche",
+            "STARTS_WITH": "Commence par",
+            "STRING_MATCH_MODE": "Mode d'appariement de la chaîne"
+        },
+        "X_MATCHES_IN_N_DATASETS": [
+            "correspondances dans",
+            "jeux de données"
+        ]
+    },
+    "SPARQL": {
+        "ACTIONS": {
+            "EXPORT_RESULTS": "Exporter les résultats SPARQL"
+        }
+    },
+    "USER": {
+        "ATTR": {
+            "EMAIL_ADDRESS": "Adresse électronique",
+            "FAMILY_NAME": "Nom de famille",
+            "GIVEN_NAME": "Prénom",
+            "PASSWORD": "Mot de passe"
+        },
+        "LOGIN": "Se connecter",
+        "LOG_INTO_SHOWVOC": "Se connecter à ShowVoc",
+        "PASSWORD": {
+            "CHANGE_PASSWORD": "Changer de mot de passe",
+            "CONFIRM_NEW_PASSWORD": "Confirmer le nouveau mot de passe",
+            "CONFIRM_PASSWORD": "Confirmer le mot de passe",
+            "FORGOT_PASSWORD": "Mot de passe oublié",
+            "NEW_PASSWORD": "Nouveau mot de passe",
+            "OLD_PASSWORD": "Ancien mot de passe",
+            "PASSWORD_CHANGED": "Mot de passe modifié",
+            "RESET_PASSWORD": "Réinitialiser le mot de passe"
+        },
+        "REGISTRATION_COMPLETE": "Enregistrement complet",
+        "USER_DETAILS": "Informations utilisateurs"
+    },
+    "WIDGETS": {
+        "SETTINGS_RENDERER": {
+            "ADD_OPTIONAL_VALUE": "Ajouter une valeur optionnelle",
+            "DELETE_OPTIONAL_VALUE": "Supprimer une valeur optionnelle",
+            "UNKNOWN_TYPE_WARN": "Ce paramètre possède une type ({{propTypeName}}) inconnu. La valeur saisie sera interprétée comme une valeur JSON de bas niveau"
+        }
+    }
+}
