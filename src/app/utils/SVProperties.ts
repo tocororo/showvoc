@@ -86,7 +86,26 @@ export class SVProperties {
     initProjectSettings(projectCtx: ProjectContext): Observable<void> {
         let projectSettings: ProjectSettings = projectCtx.getProjectSettings();
         return this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.PROJECT).pipe(
-        // return this.settingsService.getSettingsForProjectAdministration(ExtensionPointID.ST_CORE_ID, Scope.PROJECT, projectCtx.getProject()).pipe(
+            map(settings => {
+                let langsValue: Language[] = settings.getPropertyValue(SettingsEnum.languages);
+                projectSettings.projectLanguagesSetting = langsValue;
+                Languages.sortLanguages(projectSettings.projectLanguagesSetting);
+            })
+        )
+    }
+
+    /**
+     * This differs from the previous (initProjectSettings) for the service invokation used:
+     * - The previous uses getSettings() which is useful for any user for initializing the project settings when accessing a project (so the project is set in the SVContext).
+     * - The current one uses getSettingsForProjectAdministration which is used for initializing project settings when editing them from the administration dashboard. 
+     *  Such service doesn't uses the project set in SVContext but explicitly specifies the project with a request parameter. 
+     *  Moreover it requires administrator capabilities that the previous doesn't require
+     * @param projectCtx 
+     * @returns 
+     */
+    initProjectSettingsForAdministration(projectCtx: ProjectContext): Observable<void> {
+        let projectSettings: ProjectSettings = projectCtx.getProjectSettings();
+        return this.settingsService.getSettingsForProjectAdministration(ExtensionPointID.ST_CORE_ID, Scope.PROJECT, projectCtx.getProject()).pipe(
             map(settings => {
                 let langsValue: Language[] = settings.getPropertyValue(SettingsEnum.languages);
                 projectSettings.projectLanguagesSetting = langsValue;

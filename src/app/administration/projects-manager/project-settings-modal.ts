@@ -65,7 +65,8 @@ export class ProjectSettingsModal {
         this.isOwl = this.project.getModelType() == OWL.uri;
         
         this.projectCtx = new ProjectContext(this.project);
-        this.svProp.initProjectSettings(this.projectCtx).subscribe( //in order to get the languages of the project
+
+        this.svProp.initProjectSettingsForAdministration(this.projectCtx).subscribe( //in order to get the languages of the project
             () => {
                 this.initRenderingLanguages();
             }
