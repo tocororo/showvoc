@@ -15,7 +15,7 @@
 			</div>
 			<ng-container *ngIf="showContribution">
 				<hr class="my-4">
-				<a class="btn btn-info" [routerLink]="['/contribution']" role="button">{{'HOME.WELCOME_W_INST_NAME.CONTRIBUTE_TO'|translate:translationParam}}</a>
+				<a class="btn btn-info" [routerLink]="['/contribution']" queryParamsHandling="merge">{{'HOME.WELCOME_W_INST_NAME.CONTRIBUTE_TO'|translate:translationParam}}</a>
 			</ng-container>
 		</ng-container>
 
@@ -28,7 +28,7 @@
 			</div>
 			<ng-container *ngIf="showContribution">
 				<hr class="my-4">
-				<a class="btn btn-info" [routerLink]="['/contribution']" role="button">{{'HOME.WELCOME_WO_INST_NAME.CONTRIBUTE_TO'|translate}}</a>
+				<a class="btn btn-info" [routerLink]="['/contribution']" queryParamsHandling="merge">{{'HOME.WELCOME_WO_INST_NAME.CONTRIBUTE_TO'|translate}}</a>
 			</ng-container>
 		</ng-container>
 
