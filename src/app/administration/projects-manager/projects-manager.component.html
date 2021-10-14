@@ -71,7 +71,7 @@
                         </div>
                     </td>
                     <td>
-                        <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right top-right" display="dynamic">
+                        <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right top-right" container="body" display="dynamic">
                             <button class="btn btn-light" [ngClass]="{'dropdown-toggle': !p.creatingIndex && !p.creatingMetadata}" style="width: 32px;" data-toggle="dropdown" ngbDropdownToggle>
                                 <div *ngIf="p.creatingIndex || p.creatingMetadata || p.clearingData" class="spinner-border spinner-border-sm"></div>
                             </button>
