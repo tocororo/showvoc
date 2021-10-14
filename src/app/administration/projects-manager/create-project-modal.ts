@@ -181,7 +181,7 @@ export class CreateProjectModal {
             return;
         }
         //check baseURI
-        if (this.baseURI.trim() == null || this.baseURI.trim() == "") {
+        if (this.baseURI == null || this.baseURI.trim() == "") {
             this.basicModals.alert({ key: "DATASETS.ACTIONS.CREATE_DATASET" }, {key:"MESSAGES.BASEURI_MISSING"}, ModalType.warning);
             return;
         }
