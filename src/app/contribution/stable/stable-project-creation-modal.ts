@@ -1,16 +1,14 @@
-import { Component, Input, ViewChild } from "@angular/core";
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input } from "@angular/core";
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs/operators';
+import { AbstractProjectCreationModal } from "src/app/administration/projects-manager/abstract-project-creation-modal";
 import { StableResourceStoredContribution } from 'src/app/models/Contribution';
 import { SettingsServices } from "src/app/services/settings.service";
-import { ExtensionConfiguratorComponent } from 'src/app/widget/extensionConfigurator/extension-configurator.component';
 import { BasicModalsServices } from '../../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../../modal-dialogs/Modals';
-import { ConfigurableExtensionFactory, ExtensionPointID, PluginSpecification, Scope, Settings } from '../../models/Plugins';
-import { Project, RemoteRepositoryAccessConfig, RepositoryAccess, RepositoryAccessType } from '../../models/Project';
-import { SettingsEnum } from '../../models/Properties';
+import { PluginSpecification } from '../../models/Plugins';
+import { RepositoryAccess, RepositoryAccessType } from '../../models/Project';
 import { IRI } from '../../models/Resources';
-import { OntoLex, OWL, RDFS, SKOS, SKOSXL } from '../../models/Vocabulary';
 import { ExtensionsServices } from '../../services/extensions.service';
 import { ShowVocServices } from '../../services/showvoc.service';
 
@@ -18,51 +16,22 @@ import { ShowVocServices } from '../../services/showvoc.service';
     selector: "stable-project-creation-modal",
     templateUrl: "./stable-project-creation-modal.html",
 })
-export class StableProjectCreationModal {
+export class StableProjectCreationModal extends AbstractProjectCreationModal {
 
     @Input() contribution: StableResourceStoredContribution;
-
-    @ViewChild("dataRepoConfigurator") dataRepoConfigurator: ExtensionConfiguratorComponent;
-
-    loading: boolean;
-
-    projectName: string;
-    baseURI: string;
-
-    semanticModels: { uri: string, show: string }[] = [
-        { uri: RDFS.uri, show: Project.getPrettyPrintModelType(RDFS.uri) },
-        { uri: OWL.uri, show:  Project.getPrettyPrintModelType(OWL.uri) },
-        { uri: SKOS.uri, show: Project.getPrettyPrintModelType(SKOS.uri) },
-        { uri: OntoLex.uri, show: Project.getPrettyPrintModelType(OntoLex.uri) }
-    ];
-    selectedSemModel: string;
-
-    lexicalizationModels: { uri: string, show: string }[] = [
-        { uri: RDFS.uri, show: Project.getPrettyPrintModelType(RDFS.uri) },
-        { uri: SKOS.uri, show: Project.getPrettyPrintModelType(SKOS.uri) },
-        { uri: SKOSXL.uri, show: Project.getPrettyPrintModelType(SKOSXL.uri) },
-        { uri: OntoLex.uri, show: Project.getPrettyPrintModelType(OntoLex.uri) }
-    ];
-    selectedLexModel: string;
 
     formLocked: boolean = true;
     lockTooltip: string = "The form has been partially pre-filled with the information contained in the contribution request. " +
         "It is strongly recommended to leave them as they are. If you desire to change them anyway, you can unlock the field with the following switch."
 
+    //@Override access existing is not allowed when approving a contribution
     repositoryAccessList: RepositoryAccessType[] = [RepositoryAccessType.CreateLocal, RepositoryAccessType.CreateRemote]
-    selectedRepositoryAccess: RepositoryAccessType = this.repositoryAccessList[1];
 
-    dataRepoExtensions: ConfigurableExtensionFactory[];
-    private selectedDataRepoExtension: ConfigurableExtensionFactory;
-    private selectedDataRepoConfig: Settings;
 
-    private DEFAULT_REPO_EXTENSION_ID = "it.uniroma2.art.semanticturkey.extension.impl.repositoryimplconfigurer.predefined.PredefinedRepositoryConfigurer";
-    private DEFAULT_REPO_CONFIG_TYPE = "it.uniroma2.art.semanticturkey.extension.impl.repositoryimplconfigurer.predefined.RDF4JNativeSailConfiguration";
-
-    private remoteAccessConfig: RemoteRepositoryAccessConfig;
-
-    constructor(public activeModal: NgbActiveModal, private settingsService: SettingsServices,
-        private extensionsService: ExtensionsServices, private svService: ShowVocServices, private basicModals: BasicModalsServices) { }
+    constructor(activeModal: NgbActiveModal, settingsService: SettingsServices, extensionsService: ExtensionsServices, modalService: NgbModal, 
+        private svService: ShowVocServices, private basicModals: BasicModalsServices, ) {
+            super(activeModal, modalService, extensionsService, settingsService);
+        }
 
     ngOnInit() {
         this.projectName = this.contribution.resourceName;
@@ -71,40 +40,25 @@ export class StableProjectCreationModal {
         this.selectedSemModel = this.contribution.model.getIRI();
         this.selectedLexModel = this.contribution.lexicalizationModel.getIRI();
 
-        this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM).subscribe(
-            settings => {
-                let remoteConfSetting: RemoteRepositoryAccessConfig[] = settings.getPropertyValue(SettingsEnum.remoteConfigs);
-                if (remoteConfSetting != null && remoteConfSetting.length > 0) {
-                    this.remoteAccessConfig = remoteConfSetting[0];
-                }
-            }
-        )
+        this.initCoreRepoExtensions();
 
-        // init core repo extensions
-        this.extensionsService.getExtensions(ExtensionPointID.REPO_IMPL_CONFIGURER_ID).subscribe(
-            extensions => {
-                this.dataRepoExtensions = <ConfigurableExtensionFactory[]>extensions;
-                setTimeout(() => { //let the dataRepoConfigurator component to be initialized (due to *ngIf="dataRepoExtensions")
-                    this.dataRepoConfigurator.selectExtensionAndConfiguration(this.DEFAULT_REPO_EXTENSION_ID, this.DEFAULT_REPO_CONFIG_TYPE);
-                });
-            }
-        );
+        this.initRemoteConfigs();
     }
 
     ok() {
         let repositoryAccess: RepositoryAccess = new RepositoryAccess(this.selectedRepositoryAccess);
-        //in case of remote repository access, set the configuration (retrieved from settings during the initlization)
-        if (this.selectedRepositoryAccess == RepositoryAccessType.CreateRemote) {
-            if (this.remoteAccessConfig == null || !this.remoteAccessConfig.serverURL == null || this.remoteAccessConfig.serverURL.trim() == "") {
-                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO"}, ModalType.warning);
+        //in case of remote repository access, set the configuration
+        if (this.isRepoAccessRemote()) {
+            if (this.selectedRemoteRepoConfig == null) {
+                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.REMOTE_REPO_ACCESS_NOT_CONFIGURED"}, ModalType.warning);
                 return;
             }
-            repositoryAccess.setConfiguration(this.remoteAccessConfig);
+            repositoryAccess.setConfiguration(this.selectedRemoteRepoConfig);
         }
 
         //check if data repository configuration needs to be configured
         if (this.selectedDataRepoConfig.requireConfiguration()) {
-            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.DATA_REPO_NOT_CONFIGURED"}, ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, { key: "MESSAGES.DATA_REPO_NOT_CONFIGURED" }, ModalType.warning);
             return;
         }
         let coreRepoSailConfigurerSpecification: PluginSpecification = {
@@ -119,14 +73,10 @@ export class StableProjectCreationModal {
                 finalize(() => this.loading = false)
             ).subscribe(
                 () => {
-                    this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_CREATED" }, {key:"MESSAGES.CONTRIBUTION_APPROVED_DATASET_CREATED"});
+                    this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_CREATED" }, { key: "MESSAGES.CONTRIBUTION_APPROVED_DATASET_CREATED" });
                     this.activeModal.close();
                 }
             );
-    }
-
-    close() {
-        this.activeModal.dismiss();
     }
 
 }

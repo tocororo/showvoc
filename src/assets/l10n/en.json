@@ -67,7 +67,7 @@
             "REMOTE_ACCESS": {
                 "PASSWORD_INFO": "Password of the remote triple store (if authentication is required)",
                 "REMOTE_ACCESS_CONFIG": "Remote access configuration",
-                "REMOTE_ACCESS_CONFIG_INFO": "Configuration of the remote triple store that hosts the datasets in ShowVoc.<br><strong>Note</strong>: if this is not properly configured, ShowVoc will not be able to create remotedatasets for hosting stable resources.",
+                "REMOTE_ACCESS_CONFIG_INFO": "Configuration of the remote triple store that hosts the datasets in ShowVoc.<br><strong>Note</strong>: if this is not properly configured, ShowVoc will not be able to create remote datasets for hosting stable resources.",
                 "URL_INFO": "URL of the remote triple store",
                 "USERNAME_INFO": "Username of the remote triple store (if authentication is required)"
             },
