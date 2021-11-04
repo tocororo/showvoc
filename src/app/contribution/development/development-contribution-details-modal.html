@@ -1,85 +1,87 @@
-<div class="modal-header">
-    <h5 class="modal-title">{{'COMMONS.DETAILS'|translate}}</h5>
-    <button class="close" (click)="close()">
-        <span>&times;</span>
-    </button>
-</div>
-<div class="modal-body scrollableContainer">
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{'COMMONS.DETAILS'|translate}}</h5>
+        <button class="close" (click)="close()">
+            <span>&times;</span>
+        </button>
+    </div>
+    <div class="modal-body scrollableContainer">
 
-    <div class="card mb-3">
-        <div class="card-header">{{'CONTRIBUTIONS.CONTRIBUTOR'|translate}}</div>
-        <div class="card-body">
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">{{'USER.ATTR.GIVEN_NAME'|translate}}</label>
-                <div class="col-sm-4">
-                    <input class="form-control form-control-sm" [ngModel]="contribution.contributorName" readonly>
+        <div class="card mb-3">
+            <div class="card-header">{{'CONTRIBUTIONS.CONTRIBUTOR'|translate}}</div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label col-form-label-sm">{{'USER.ATTR.GIVEN_NAME'|translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control form-control-sm" [ngModel]="contribution.contributorName" readonly>
+                    </div>
+                    <label class="col-sm-2 col-form-label col-form-label-sm">{{'USER.ATTR.FAMILY_NAME'|translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control form-control-sm" [ngModel]="contribution.contributorLastName" readonly>
+                    </div>
                 </div>
-                <label class="col-sm-2 col-form-label col-form-label-sm">{{'USER.ATTR.FAMILY_NAME'|translate}}</label>
-                <div class="col-sm-4">
-                    <input class="form-control form-control-sm" [ngModel]="contribution.contributorLastName" readonly>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Email</label>
-                <div class="col-sm-4">
-                    <input type="email" class="form-control form-control-sm" [ngModel]="contribution.contributorEmail" readonly>
-                </div>
-                <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.ORGANIZATION'|translate}}</label>
-                <div class="col-sm-4">
-                    <input class="form-control form-control-sm" [ngModel]="contribution.contributorOrganization" readonly>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label col-form-label-sm">Email</label>
+                    <div class="col-sm-4">
+                        <input type="email" class="form-control form-control-sm" [ngModel]="contribution.contributorEmail" readonly>
+                    </div>
+                    <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.ORGANIZATION'|translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control form-control-sm" [ngModel]="contribution.contributorOrganization" readonly>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="card">
-        <div class="card-header">{{'CONTRIBUTIONS.CONTRIBUTION'|translate}}</div>
-        <div class="card-body">
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.RESOURCE_NAME'|translate}}</label>
-                <div class="col-sm-10">
-                    <input class="form-control form-control-sm" [ngModel]="contribution.resourceName" readonly>
+        <div class="card">
+            <div class="card-header">{{'CONTRIBUTIONS.CONTRIBUTION'|translate}}</div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.RESOURCE_NAME'|translate}}</label>
+                    <div class="col-sm-10">
+                        <input class="form-control form-control-sm" [ngModel]="contribution.resourceName" readonly>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.HOME_PAGE'|translate}}</label>
-                <div class="col-sm-10">
-                    <input class="form-control form-control-sm" [ngModel]="contribution.homepage" readonly>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.COMMONS.HOME_PAGE'|translate}}</label>
+                    <div class="col-sm-10">
+                        <input class="form-control form-control-sm" [ngModel]="contribution.homepage" readonly>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.DESCRIPTION'|translate}}</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control form-control-sm" [ngModel]="contribution.description" readonly></textarea>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.DESCRIPTION'|translate}}</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control form-control-sm" [ngModel]="contribution.description" readonly></textarea>
+                    </div>
                 </div>
-            </div>
-            <div *ngIf="contribution.format" class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.DEV.CONVERSION_FROM'|translate}}</label>
-                <div class="col-sm-10">
-                    <input class="form-control form-control-sm" [ngModel]="contribution.format" readonly>
+                <div *ngIf="contribution.format" class="form-group row">
+                    <label class="col-sm-2 col-form-label col-form-label-sm">{{'CONTRIBUTIONS.FORM.DEV.CONVERSION_FROM'|translate}}</label>
+                    <div class="col-sm-10">
+                        <input class="form-control form-control-sm" [ngModel]="contribution.format" readonly>
+                    </div>
                 </div>
-            </div>
-            <hr class="separator">
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.BASE_URI'|translate}}</label>
-                <div class="col-sm-10">
-                    <input class="form-control form-control-sm" [ngModel]="contribution.baseURI.toNT()" readonly>
+                <hr class="separator">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.BASE_URI'|translate}}</label>
+                    <div class="col-sm-10">
+                        <input class="form-control form-control-sm" [ngModel]="contribution.baseURI.toNT()" readonly>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.MODEL'|translate}}</label>
-                <div class="col-sm-4">
-                    <input class="form-control form-control-sm" [ngModel]="modelsLabelMap[contribution.model.getIRI()]" readonly>
-                </div>
-                <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.LEXICALIZATION'|translate}}</label>
-                <div class="col-sm-4">
-                    <input class="form-control form-control-sm" [ngModel]="modelsLabelMap[contribution.lexicalizationModel.getIRI()]" readonly>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.MODEL'|translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control form-control-sm" [ngModel]="modelsLabelMap[contribution.model.getIRI()]" readonly>
+                    </div>
+                    <label class="col-sm-2 col-form-label col-form-label-sm">{{'MODELS.PROJECT.LEXICALIZATION'|translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control form-control-sm" [ngModel]="modelsLabelMap[contribution.lexicalizationModel.getIRI()]" readonly>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-</div>
-<div class="modal-footer">
-    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
+    </div>
 </div>

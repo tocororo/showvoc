@@ -34,6 +34,7 @@ import { ConceptTreeComponent } from './tree/concept/concept-tree.component';
 import { PropertyTreeNodeComponent } from './tree/property/property-tree-node.component';
 import { PropertyTreePanelComponent } from './tree/property/property-tree-panel.component';
 import { PropertyTreeComponent } from './tree/property/property-tree.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
     declarations: [
@@ -70,6 +71,7 @@ import { PropertyTreeComponent } from './tree/property/property-tree.component';
     ],
     imports: [
         AlignmentsModule,
+        DragDropModule,
         CommonModule,
         FormsModule,
         NgbDropdownModule,

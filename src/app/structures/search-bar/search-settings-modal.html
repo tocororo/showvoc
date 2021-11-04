@@ -1,80 +1,82 @@
-<div class="modal-header">
-    <h5 class="modal-title">{{'SEARCH.SETTINGS.SEARCH_SETTINGS'|translate}}</h5>
-    <button class="close" (click)="close()">
-        <span>&times;</span>
-    </button>
-</div>
-<div class="modal-body scrollableContainer">
-        <div class="card">
-            <div class="card-header">
-                <label>{{'SEARCH.SETTINGS.STRING_MATCH_MODE'|translate}}</label>
-            </div>
-            <div class="card-body">
-                <div *ngFor="let mode of stringMatchModes" class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="searchMode" [value]="mode.value"
-                            [(ngModel)]="activeStringMatchMode" (ngModelChange)="updateSettings()"> {{mode.show}}
-                    </label>
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{'SEARCH.SETTINGS.SEARCH_SETTINGS'|translate}}</h5>
+        <button class="close" (click)="close()">
+            <span>&times;</span>
+        </button>
+    </div>
+    <div class="modal-body scrollableContainer">
+            <div class="card">
+                <div class="card-header">
+                    <label>{{'SEARCH.SETTINGS.STRING_MATCH_MODE'|translate}}</label>
+                </div>
+                <div class="card-body">
+                    <div *ngFor="let mode of stringMatchModes" class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="searchMode" [value]="mode.value"
+                                [(ngModel)]="activeStringMatchMode" (ngModelChange)="updateSettings()"> {{mode.show}}
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
-    
-        <div class="card mt-1">
-            <div class="card-header">
-                <label>{{'SEARCH.SETTINGS.SEARCH_MODE'|translate}}</label>
-                <i class="fas fa-info-circle float-right" [title]="'SEARCH.SETTINGS.SEARCH_MODE_INFO'|translate"></i>
-            </div>
-            <div class="card-body">
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" [(ngModel)]="useURI" (ngModelChange)="updateSettings()">
-                        {{'SEARCH.SETTINGS.SEARCH_IN_URI'|translate}}
-                    </label>
+        
+            <div class="card mt-1">
+                <div class="card-header">
+                    <label>{{'SEARCH.SETTINGS.SEARCH_MODE'|translate}}</label>
+                    <i class="fas fa-info-circle float-right" [title]="'SEARCH.SETTINGS.SEARCH_MODE_INFO'|translate"></i>
                 </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" [(ngModel)]="useLocalName" (ngModelChange)="updateSettings()">
-                        {{'SEARCH.SETTINGS.SEARCH_IN_LOCAL_NAME'|translate}}
-                    </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" [(ngModel)]="useNotes" (ngModelChange)="updateSettings()">
-                        {{'SEARCH.SETTINGS.SEARCH_IN_NOTES'|translate}}
-                    </label>
-                </div>
-            </div>
-        </div>
-    
-        <div *ngIf="settingsForConceptPanel" class="card mt-1">
-            <div class="card-header">
-                <label>{{'SEARCH.SETTINGS.CONCEPTS_SEARCH'|translate}}</label>
-            </div>
-            <div class="card-body">
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" [(ngModel)]="restrictConceptSchemes" (ngModelChange)="updateSettings()">
-                        {{'SEARCH.SETTINGS.RESTRICT_TO_SCHEME'|translate}}
-                    </label>
+                <div class="card-body">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" [(ngModel)]="useURI" (ngModelChange)="updateSettings()">
+                            {{'SEARCH.SETTINGS.SEARCH_IN_URI'|translate}}
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" [(ngModel)]="useLocalName" (ngModelChange)="updateSettings()">
+                            {{'SEARCH.SETTINGS.SEARCH_IN_LOCAL_NAME'|translate}}
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" [(ngModel)]="useNotes" (ngModelChange)="updateSettings()">
+                            {{'SEARCH.SETTINGS.SEARCH_IN_NOTES'|translate}}
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
+        
+            <div *ngIf="settingsForConceptPanel" class="card mt-1">
+                <div class="card-header">
+                    <label>{{'SEARCH.SETTINGS.CONCEPTS_SEARCH'|translate}}</label>
+                </div>
+                <div class="card-body">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" [(ngModel)]="restrictConceptSchemes" (ngModelChange)="updateSettings()">
+                            {{'SEARCH.SETTINGS.RESTRICT_TO_SCHEME'|translate}}
+                        </label>
+                    </div>
+                </div>
+            </div>
 
-        <div *ngIf="settingsForClassInstancePanel" class="card mt-1">
-            <div class="card-header">
-                <label>{{'SEARCH.SETTINGS.CLS_INSTANCE_SEARCH'|translate}}</label>
-            </div>
-            <div class="card-body">
-                <div *ngFor="let mode of clsIndSearchMode" class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="clsIndSearchMode" [value]="mode.value"
-                            [(ngModel)]="activeClsIndSearchMode" (ngModelChange)="updateSettings()">{{mode.show}}
-                    </label>
+            <div *ngIf="settingsForClassInstancePanel" class="card mt-1">
+                <div class="card-header">
+                    <label>{{'SEARCH.SETTINGS.CLS_INSTANCE_SEARCH'|translate}}</label>
+                </div>
+                <div class="card-body">
+                    <div *ngFor="let mode of clsIndSearchMode" class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="clsIndSearchMode" [value]="mode.value"
+                                [(ngModel)]="activeClsIndSearchMode" (ngModelChange)="updateSettings()">{{mode.show}}
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
-    
-</div>
-<div class="modal-footer">
-    <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
+        
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
+    </div>
 </div>

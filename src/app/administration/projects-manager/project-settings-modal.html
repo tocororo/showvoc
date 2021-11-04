@@ -1,179 +1,181 @@
-<div class="modal-header">
-    <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.SETTINGS.DATASET_SETTINGS'|translate}}</h5>
-    <button class="close" (click)="close()">
-        <span>&times;</span>
-    </button>
-</div>
-<div class="modal-body scrollableContainer">
-
-    <div *ngIf="isSkos || isOntolex" class="card mb-2">
-        <div class="card-header">{{'DATA.CONCEPT.SETTINGS.CONCEPT_TREE_SETTINGS'|translate}}</div>
-        <div class="card-body">
-            <div class="alert alert-info mb-1">
-                {{'ADMINISTRATION.DATASETS.SETTINGS.CONCEPT_VISUALIZATION_INFO'|translate}}
-            </div>
-            <table class="table table-sm table-borderless">
-                <colgroup>
-                    <col style="width: 1%;">
-                    <col style="width: 1%;">
-                    <col>
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td nowrap>
-                            <label>{{'ADMINISTRATION.DATASETS.SETTINGS.DEFAULT_VISUALIZATION_MODE'|translate}}:</label>
-                        </td>
-                        <td>
-                            <select class="form-control form-control-sm" [(ngModel)]="selectedSkosMode" (ngModelChange)="changeSkosVisualizationMode()">
-                                <option *ngFor="let vm of skosVisualizationModes" [value]="vm.value">{{vm.labelTranslationKey|translate}}</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="fas fa-info-circle" [title]="'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE_INFO'|translate"></span>
-                        </td>
-                        <td nowrap>
-                            <label>{{'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE'|translate}}:</label>
-                        </td>
-                        <td>
-                            <div class="custom-control custom-switch" (click)="changeSkosAllowVisualizationChange()">
-                                <input type="checkbox" class="custom-control-input" [ngModel]="skosAllowVisualizationChange">
-                                <label class="custom-control-label">
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.SETTINGS.DATASET_SETTINGS'|translate}}</h5>
+        <button class="close" (click)="close()">
+            <span>&times;</span>
+        </button>
     </div>
+    <div class="modal-body scrollableContainer">
 
-    <div *ngIf="isOwl" class="card mb-2">
-        <div class="card-header">{{'DATA.INSTANCE.SETTINGS.INSTANCE_LIST_SETTINGS'|translate}}</div>
-        <div class="card-body">
-            <div class="alert alert-info mb-1">
-                {{'ADMINISTRATION.DATASETS.SETTINGS.INSTANCE_LIST_VISUALIZATION_INFO'|translate}}
-            </div>
-            <table class="table table-sm table-borderless">
-                <colgroup>
-                    <col style="width: 1%;">
-                    <col style="width: 1%;">
-                    <col>
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td nowrap>
-                            <label>{{'ADMINISTRATION.DATASETS.SETTINGS.DEFAULT_VISUALIZATION_MODE'|translate}}:</label>
-                        </td>
-                        <td>
-                            <select class="form-control form-control-sm" [(ngModel)]="selectedInstanceMode" (ngModelChange)="changeInstanceVisualizationMode()">
-                                <option *ngFor="let vm of instanceVisualizationModes" [value]="vm.value">{{vm.labelTranslationKey|translate}}</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="fas fa-info-circle" [title]="'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE_INFO'|translate"></span>
-                        </td>
-                        <td nowrap>
-                            <label>{{'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE'|translate}}:</label>
-                        </td>
-                        <td>
-                            <div class="custom-control custom-switch" (click)="changeInstanceAllowVisualizationChange()">
-                                <input type="checkbox" class="custom-control-input" [ngModel]="instanceAllowVisualizationChange">
-                                <label class="custom-control-label">
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div *ngIf="isOntolex" class="card mb-2">
-        <div class="card-header">{{'DATA.LEX_ENTRY.SETTINGS.LEX_ENTRY_SETTINGS'|translate}}</div>
-        <div class="card-body">
-            <div class="alert alert-info mb-1">
-                {{'ADMINISTRATION.DATASETS.SETTINGS.LEX_ENTRY_VISUALIZATION_INFO'|translate}}
-            </div>
-            <table class="table table-sm table-borderless">
-                <colgroup>
-                    <col style="width: 1%;">
-                    <col style="width: 1%;">
-                    <col>
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td nowrap>
-                            <label>{{'ADMINISTRATION.DATASETS.SETTINGS.DEFAULT_VISUALIZATION_MODE'|translate}}:</label>
-                        </td>
-                        <td>
-                            <select class="form-control form-control-sm" [(ngModel)]="selectedOntolexMode" (ngModelChange)="changeOntolexVisualizationMode()">
-                                <option *ngFor="let vm of ontolexVisualizationModes" [value]="vm.value">{{vm.labelTranslationKey|translate}}</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="fas fa-info-circle" [title]="'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE_INFO'|translate"></span>
-                        </td>
-                        <td nowrap>
-                            <label>{{'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE'|translate}}:</label>
-                        </td>
-                        <td>
-                            <div class="custom-control custom-switch" (click)="changeOntolexAllowVisualizationModeChage()">
-                                <input type="checkbox" class="custom-control-input" [ngModel]="ontolexAllowVisualizationChange">
-                                <label class="custom-control-label">
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <ng-container *ngIf="selectedOntolexMode == 'indexBased'">
+        <div *ngIf="isSkos || isOntolex" class="card mb-2">
+            <div class="card-header">{{'DATA.CONCEPT.SETTINGS.CONCEPT_TREE_SETTINGS'|translate}}</div>
+            <div class="card-body">
+                <div class="alert alert-info mb-1">
+                    {{'ADMINISTRATION.DATASETS.SETTINGS.CONCEPT_VISUALIZATION_INFO'|translate}}
+                </div>
+                <table class="table table-sm table-borderless">
+                    <colgroup>
+                        <col style="width: 1%;">
+                        <col style="width: 1%;">
+                        <col>
+                    </colgroup>
+                    <tbody>
                         <tr>
-                            <td>
-                                <span class="fas fa-info-circle" [title]="'DATA.LEX_ENTRY.SETTINGS.INDEX_LENGHT'|translate"></span>
-                            </td>
+                            <td></td>
                             <td nowrap>
-                                <label>{{'DATA.LEX_ENTRY.SETTINGS.INDEX_LENGHT'|translate}}:</label>
+                                <label>{{'ADMINISTRATION.DATASETS.SETTINGS.DEFAULT_VISUALIZATION_MODE'|translate}}:</label>
                             </td>
                             <td>
-                                <select class="form-control form-control-sm" [(ngModel)]="indexLength" (ngModelChange)="changeOntolexIndexLength()">
-                                    <option>1</option>
-                                    <option>2</option>
+                                <select class="form-control form-control-sm" [(ngModel)]="selectedSkosMode" (ngModelChange)="changeSkosVisualizationMode()">
+                                    <option *ngFor="let vm of skosVisualizationModes" [value]="vm.value">{{vm.labelTranslationKey|translate}}</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <span class="fas fa-info-circle" [title]="'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_INDEX_CHANGE_INFO'|translate"></span>
+                                <span class="fas fa-info-circle" [title]="'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE_INFO'|translate"></span>
                             </td>
                             <td nowrap>
-                                <label>{{'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_INDEX_CHANGE'|translate}}:</label>
+                                <label>{{'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE'|translate}}:</label>
                             </td>
                             <td>
-                                <div class="custom-control custom-switch" (click)="changeOntolexAllowIndexLengthChange()">
-                                    <input type="checkbox" class="custom-control-input" [ngModel]="ontolexAllowIndexLengthChange">
+                                <div class="custom-control custom-switch" (click)="changeSkosAllowVisualizationChange()">
+                                    <input type="checkbox" class="custom-control-input" [ngModel]="skosAllowVisualizationChange">
                                     <label class="custom-control-label">
                                     </label>
                                 </div>
                             </td>
                         </tr>
-                    </ng-container>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <div *ngIf="isOwl" class="card mb-2">
+            <div class="card-header">{{'DATA.INSTANCE.SETTINGS.INSTANCE_LIST_SETTINGS'|translate}}</div>
+            <div class="card-body">
+                <div class="alert alert-info mb-1">
+                    {{'ADMINISTRATION.DATASETS.SETTINGS.INSTANCE_LIST_VISUALIZATION_INFO'|translate}}
+                </div>
+                <table class="table table-sm table-borderless">
+                    <colgroup>
+                        <col style="width: 1%;">
+                        <col style="width: 1%;">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td nowrap>
+                                <label>{{'ADMINISTRATION.DATASETS.SETTINGS.DEFAULT_VISUALIZATION_MODE'|translate}}:</label>
+                            </td>
+                            <td>
+                                <select class="form-control form-control-sm" [(ngModel)]="selectedInstanceMode" (ngModelChange)="changeInstanceVisualizationMode()">
+                                    <option *ngFor="let vm of instanceVisualizationModes" [value]="vm.value">{{vm.labelTranslationKey|translate}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="fas fa-info-circle" [title]="'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE_INFO'|translate"></span>
+                            </td>
+                            <td nowrap>
+                                <label>{{'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE'|translate}}:</label>
+                            </td>
+                            <td>
+                                <div class="custom-control custom-switch" (click)="changeInstanceAllowVisualizationChange()">
+                                    <input type="checkbox" class="custom-control-input" [ngModel]="instanceAllowVisualizationChange">
+                                    <label class="custom-control-label">
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div *ngIf="isOntolex" class="card mb-2">
+            <div class="card-header">{{'DATA.LEX_ENTRY.SETTINGS.LEX_ENTRY_SETTINGS'|translate}}</div>
+            <div class="card-body">
+                <div class="alert alert-info mb-1">
+                    {{'ADMINISTRATION.DATASETS.SETTINGS.LEX_ENTRY_VISUALIZATION_INFO'|translate}}
+                </div>
+                <table class="table table-sm table-borderless">
+                    <colgroup>
+                        <col style="width: 1%;">
+                        <col style="width: 1%;">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td nowrap>
+                                <label>{{'ADMINISTRATION.DATASETS.SETTINGS.DEFAULT_VISUALIZATION_MODE'|translate}}:</label>
+                            </td>
+                            <td>
+                                <select class="form-control form-control-sm" [(ngModel)]="selectedOntolexMode" (ngModelChange)="changeOntolexVisualizationMode()">
+                                    <option *ngFor="let vm of ontolexVisualizationModes" [value]="vm.value">{{vm.labelTranslationKey|translate}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="fas fa-info-circle" [title]="'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE_INFO'|translate"></span>
+                            </td>
+                            <td nowrap>
+                                <label>{{'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_VISUALIZATION_CHANGE'|translate}}:</label>
+                            </td>
+                            <td>
+                                <div class="custom-control custom-switch" (click)="changeOntolexAllowVisualizationModeChage()">
+                                    <input type="checkbox" class="custom-control-input" [ngModel]="ontolexAllowVisualizationChange">
+                                    <label class="custom-control-label">
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <ng-container *ngIf="selectedOntolexMode == 'indexBased'">
+                            <tr>
+                                <td>
+                                    <span class="fas fa-info-circle" [title]="'DATA.LEX_ENTRY.SETTINGS.INDEX_LENGHT'|translate"></span>
+                                </td>
+                                <td nowrap>
+                                    <label>{{'DATA.LEX_ENTRY.SETTINGS.INDEX_LENGHT'|translate}}:</label>
+                                </td>
+                                <td>
+                                    <select class="form-control form-control-sm" [(ngModel)]="indexLength" (ngModelChange)="changeOntolexIndexLength()">
+                                        <option>1</option>
+                                        <option>2</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="fas fa-info-circle" [title]="'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_INDEX_CHANGE_INFO'|translate"></span>
+                                </td>
+                                <td nowrap>
+                                    <label>{{'ADMINISTRATION.DATASETS.SETTINGS.ALLOW_INDEX_CHANGE'|translate}}:</label>
+                                </td>
+                                <td>
+                                    <div class="custom-control custom-switch" (click)="changeOntolexAllowIndexLengthChange()">
+                                        <input type="checkbox" class="custom-control-input" [ngModel]="ontolexAllowIndexLengthChange">
+                                        <label class="custom-control-label">
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <rendering-editor *ngIf="renderingLangs" style="min-height: 300px;" [projectCtx]="projectCtx" [(ngModel)]="renderingLangs" 
+            (ngModelChange)="onRenderingChange()" [alert]="'ADMINISTRATION.DATASETS.SETTINGS.RENDERING_LANG_INFO'|translate">
+        </rendering-editor>
+
     </div>
-
-    <rendering-editor *ngIf="renderingLangs" style="min-height: 300px;" [projectCtx]="projectCtx" [(ngModel)]="renderingLangs" 
-        (ngModelChange)="onRenderingChange()" [alert]="'ADMINISTRATION.DATASETS.SETTINGS.RENDERING_LANG_INFO'|translate">
-    </rendering-editor>
-
-</div>
-<div class="modal-footer">
-    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
+    </div>
 </div>

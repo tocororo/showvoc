@@ -1,55 +1,57 @@
-<div class="modal-header">
-    <h5 class="modal-title">{{'GRAPHS.LINKS_FILTER.EXPAND_NODE'|translate}}</h5>
-    <button class="close" (click)="close()">
-        <span>&times;</span>
-    </button>
-</div>
-<div class="modal-body vbox">
-
-    <div class="alert alert-warning">
-        {{'GRAPHS.LINKS_FILTER.TOO_MUCH_RELATIONS_WARNING'|translate}}
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{'GRAPHS.LINKS_FILTER.EXPAND_NODE'|translate}}</h5>
+        <button class="close" (click)="close()">
+            <span>&times;</span>
+        </button>
     </div>
+    <div class="modal-body vbox">
 
-    <div class="card vbox mt-1">
-        <div class="card-body scrollableContainer">
-            <div *ngFor="let filter of filters" class="card mb-1">
-                <div class="card-header">
-                    <label>{{filter.partition.showTranslationKey|translate}} ({{getPartitionCount(filter)}})</label>
+        <div class="alert alert-warning">
+            {{'GRAPHS.LINKS_FILTER.TOO_MUCH_RELATIONS_WARNING'|translate}}
+        </div>
 
-                    <div class="btn-toolbar float-right">
-                        <div class="btn-group btn-group-xs">
-                            <button class="btn btn-outline-info" [title]="'COMMONS.ACTIONS.CHECK_ALL'|translate" (click)="checkAll(filter, true)">
-                                <span class="far fa-check-square" style="width: 16px;"></span>
-                            </button>
-                            <button class="btn btn-outline-info" [title]="'COMMONS.ACTIONS.UNCHECK_ALL'|translate" (click)="checkAll(filter, false)">
-                                <span class="far fa-square" style="width: 16px;"></span>
-                            </button>
+        <div class="card vbox mt-1">
+            <div class="card-body scrollableContainer">
+                <div *ngFor="let filter of filters" class="card mb-1">
+                    <div class="card-header">
+                        <label>{{filter.partition.showTranslationKey|translate}} ({{getPartitionCount(filter)}})</label>
+
+                        <div class="btn-toolbar float-right">
+                            <div class="btn-group btn-group-xs">
+                                <button class="btn btn-outline-info" [title]="'COMMONS.ACTIONS.CHECK_ALL'|translate" (click)="checkAll(filter, true)">
+                                    <span class="far fa-check-square" style="width: 16px;"></span>
+                                </button>
+                                <button class="btn btn-outline-info" [title]="'COMMONS.ACTIONS.UNCHECK_ALL'|translate" (click)="checkAll(filter, false)">
+                                    <span class="far fa-square" style="width: 16px;"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div *ngFor="let pred of filter.predicates" class="listItem">
-                        <input type="checkbox" [(ngModel)]="pred.checked">
-                        <div class="hbox mh-1 align-items-center">
-                            <rdf-resource [resource]="pred.res" style="flex: initial"></rdf-resource>
-                            <span style="font-size: 12px; font-weight: bold;">({{pred.count}})</span>
+                    <div class="card-body">
+                        <div *ngFor="let pred of filter.predicates" class="listItem">
+                            <input type="checkbox" [(ngModel)]="pred.checked">
+                            <div class="hbox mh-1 align-items-center">
+                                <rdf-resource [resource]="pred.res" style="flex: initial"></rdf-resource>
+                                <span style="font-size: 12px; font-weight: bold;">({{pred.count}})</span>
+                            </div>
+                            <span *ngIf="pred.checked" class="fas fa-eye"></span>
+                            <span *ngIf="!pred.checked" class="fas fa-eye-slash"></span>
                         </div>
-                        <span *ngIf="pred.checked" class="fas fa-eye"></span>
-                        <span *ngIf="!pred.checked" class="fas fa-eye-slash"></span>
                     </div>
                 </div>
             </div>
+            <div class="card-footer">
+                <span class="float-right" style="font-weight: bold">
+                    {{'GRAPHS.LINKS_FILTER.VISIBLE_X_OUT_OF_Y.0'|translate}} {{getVisibleCount()}}
+                    {{'GRAPHS.LINKS_FILTER.VISIBLE_X_OUT_OF_Y.1'|translate}} {{totalObjCount}}
+                </span>
+            </div>
         </div>
-        <div class="card-footer">
-            <span class="float-right" style="font-weight: bold">
-                {{'GRAPHS.LINKS_FILTER.VISIBLE_X_OUT_OF_Y.0'|translate}} {{getVisibleCount()}}
-                {{'GRAPHS.LINKS_FILTER.VISIBLE_X_OUT_OF_Y.1'|translate}} {{totalObjCount}}
-            </span>
-        </div>
-    </div>
 
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary btn-sm" (click)="ok()" [disabled]="getVisibleCount() == 0">Ok</button>
-    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CANCEL'|translate}}</button>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-sm" (click)="ok()" [disabled]="getVisibleCount() == 0">Ok</button>
+        <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CANCEL'|translate}}</button>
+    </div>
 </div>

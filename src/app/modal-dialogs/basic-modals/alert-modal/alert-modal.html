@@ -1,33 +1,35 @@
-<div class="modal-header">
-	<h5 [class]="'modal-title ' + titleClass">{{title}}</h5>
-</div>
-<div class="modal-body">
-	<div *ngIf="alertClass" [class]="alertClass + ' vbox'">
-        <span style="white-space: pre-line">{{message}}</span>
-
-		<div *ngIf="details" class="vbox mt-1">
-            <div (click)="detailsCollapsed = !detailsCollapsed">
-                <div class="expandCollapseBtnContainer" style="display: inline">
-                    <img src="./assets/images/icons/arrow.png" [ngClass]="{'arrow-right': detailsCollapsed}">
-                </div>
-                <label>{{'COMMONS.DETAILS'|translate}}:</label>
-            </div>
-            <div *ngIf="!detailsCollapsed" class="card vbox">
-                <div class="card-body overflow-auto" style="font-size: .8rem;">
-                    {{details}}
-                </div>
-            </div>
-		</div>
-		
-	</div>
-	<p *ngIf="!alertClass" class="m-0">{{message}}</p>
-</div>
-<div class="modal-footer">
-    <div *ngIf="checkboxLabel" class="form-check float-left">
-        <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" [(ngModel)]="checkbox">
-            {{checkboxLabel}}
-        </label>
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 [class]="'modal-title ' + titleClass">{{title}}</h5>
     </div>
-	<button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
+    <div class="modal-body">
+        <div *ngIf="alertClass" [class]="alertClass + ' vbox'">
+            <span style="white-space: pre-line">{{message}}</span>
+
+            <div *ngIf="details" class="vbox mt-1">
+                <div (click)="detailsCollapsed = !detailsCollapsed">
+                    <div class="expandCollapseBtnContainer" style="display: inline">
+                        <img src="./assets/images/icons/arrow.png" [ngClass]="{'arrow-right': detailsCollapsed}">
+                    </div>
+                    <label>{{'COMMONS.DETAILS'|translate}}:</label>
+                </div>
+                <div *ngIf="!detailsCollapsed" class="card vbox">
+                    <div class="card-body overflow-auto" style="font-size: .8rem;">
+                        {{details}}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <p *ngIf="!alertClass" class="m-0">{{message}}</p>
+    </div>
+    <div class="modal-footer">
+        <div *ngIf="checkboxLabel" class="form-check float-left">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="checkbox">
+                {{checkboxLabel}}
+            </label>
+        </div>
+        <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
+    </div>
 </div>

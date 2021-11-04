@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -29,6 +30,7 @@ import { ToastService } from './toast/toast-service';
 @NgModule({
     imports: [
         CommonModule,
+        DragDropModule,
         FormsModule,
         NgbToastModule,
         TranslateModule,

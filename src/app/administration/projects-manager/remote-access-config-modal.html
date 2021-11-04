@@ -1,56 +1,58 @@
-<div class="modal-header">
-    <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.REMOTE.CONFIG.REMOTE_ACCESS_CONFIG'|translate}}</h5>
-    <button class="close" (click)="close()">
-        <span>&times;</span>
-    </button>
-</div>
-<div class="modal-body">
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.REMOTE.CONFIG.REMOTE_ACCESS_CONFIG'|translate}}</h5>
+        <button class="close" (click)="close()">
+            <span>&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
 
-    <table class="table table-sm">
-        <thead class="thead-light">
-            <tr>
-                <th>{{'COMMONS.CONFIG.SERVER_URL'|translate}}</th>
-                <th>{{'COMMONS.CONFIG.USERNAME'|translate}}</th>
-                <th>{{'COMMONS.CONFIG.PASSWORD'|translate}}</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngIf="savedConfigs.length == 0">
-                <td colspan="4">{{'ADMINISTRATION.DATASETS.REMOTE.CONFIG.NO_CONFIG_FOUND'|translate}}</td>
-            </tr>
-            <tr *ngFor="let conf of savedConfigs">
-                <td>
-                    <input-editable [value]="conf.serverURL" (valueEdited)="updateConfServerURL(conf, $event)"></input-editable>
-                </td>
-                <td>
-                    <input-editable [value]="conf.username" allowEmpty="true" (valueEdited)="updateConfUsername(conf, $event)"></input-editable>
-                </td>
-                <td>
-                    <input-editable [value]="conf.password" allowEmpty="true" (valueEdited)="updateConfPassword(conf, $event)"></input-editable>
-                </td>
-                <td>
-                    <button class="btn btn-sm btn-light" (click)="deleteConfig(conf)">
-                        <span class="fas fa-trash"></span>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.serverURL" placeholder="http://serverurl"></td>
-                <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.username" [placeholder]="'COMMONS.CONFIG.USERNAME'|translate"></td>
-                <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.password" [placeholder]="'COMMONS.CONFIG.PASSWORD'|translate"></td>
-                <td>
-                    <button class="btn btn-sm btn-light" (click)="createConfiguration()" [disabled]="!newConfig.serverURL">
-                        <span class="fas fa-plus"></span>
-                    </button>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
+        <table class="table table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th>{{'COMMONS.CONFIG.SERVER_URL'|translate}}</th>
+                    <th>{{'COMMONS.CONFIG.USERNAME'|translate}}</th>
+                    <th>{{'COMMONS.CONFIG.PASSWORD'|translate}}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="savedConfigs.length == 0">
+                    <td colspan="4">{{'ADMINISTRATION.DATASETS.REMOTE.CONFIG.NO_CONFIG_FOUND'|translate}}</td>
+                </tr>
+                <tr *ngFor="let conf of savedConfigs">
+                    <td>
+                        <input-editable [value]="conf.serverURL" (valueEdited)="updateConfServerURL(conf, $event)"></input-editable>
+                    </td>
+                    <td>
+                        <input-editable [value]="conf.username" allowEmpty="true" (valueEdited)="updateConfUsername(conf, $event)"></input-editable>
+                    </td>
+                    <td>
+                        <input-editable [value]="conf.password" allowEmpty="true" (valueEdited)="updateConfPassword(conf, $event)"></input-editable>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-light" (click)="deleteConfig(conf)">
+                            <span class="fas fa-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.serverURL" placeholder="http://serverurl"></td>
+                    <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.username" [placeholder]="'COMMONS.CONFIG.USERNAME'|translate"></td>
+                    <td><input class="form-control form-control-sm" [(ngModel)]="newConfig.password" [placeholder]="'COMMONS.CONFIG.PASSWORD'|translate"></td>
+                    <td>
+                        <button class="btn btn-sm btn-light" (click)="createConfiguration()" [disabled]="!newConfig.serverURL">
+                            <span class="fas fa-plus"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
 
-</div>
-<div class="modal-footer">
-    <button class="btn btn-sm btn-secondary" (click)="ok()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-secondary" (click)="ok()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
+    </div>
 </div>

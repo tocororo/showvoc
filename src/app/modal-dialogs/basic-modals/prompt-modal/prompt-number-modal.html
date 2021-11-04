@@ -1,16 +1,18 @@
-<div class="modal-header">
-	<h5 [class]="'modal-title ' + titleClass">{{title}}</h5>
-	<button class="close" (click)="close()">
-		<span>&times;</span>
-	</button>
-</div>
-<div class="modal-body">
-	<div [class]="alertClass">
-		{{message}}
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+		<h5 [class]="'modal-title ' + titleClass">{{title}}</h5>
+		<button class="close" (click)="close()">
+			<span>&times;</span>
+		</button>
 	</div>
-	<input type="number" class="form-control mt-2" [min]="min" [min]="min" [min]="min" [(ngModel)]="value">
-</div>
-<div class="modal-footer">
-    <button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="!isInputValid()">Ok</button>
-    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CANCEL'|translate}}</button>
+	<div class="modal-body">
+		<div [class]="alertClass">
+			{{message}}
+		</div>
+		<input type="number" class="form-control mt-2" [min]="min" [min]="min" [min]="min" [(ngModel)]="value">
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="!isInputValid()">Ok</button>
+		<button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CANCEL'|translate}}</button>
+	</div>
 </div>

@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -30,6 +31,7 @@ import { YasguiComponent } from './sparql/yasgui.component';
 	imports: [
 		AlignmentsModule,
 		CommonModule,
+		DragDropModule,
 		FormsModule,
 		NgbDropdownModule,
 		NgbNavModule,

@@ -1,28 +1,30 @@
-<div class="modal-header">
-    <h5 class="modal-title">{{'PREFERENCES.LANG.RENDERING.RENDERING_LANGS'|translate}}</h5>
-    <button class="close" (click)="close()">
-        <span>&times;</span>
-    </button>
-</div>
-<div class="modal-body">
-
-    <div  class="alert alert-info mb-2">
-        {{'PREFERENCES.LANG.RENDERING.DESCRIPTION'|translate}}
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{'PREFERENCES.LANG.RENDERING.RENDERING_LANGS'|translate}}</h5>
+        <button class="close" (click)="close()">
+            <span>&times;</span>
+        </button>
     </div>
+    <div class="modal-body">
 
-    <rendering-editor [(ngModel)]="renderingLangs" (ngModelChange)="onRenderingChange()"></rendering-editor>
+        <div  class="alert alert-info mb-2">
+            {{'PREFERENCES.LANG.RENDERING.DESCRIPTION'|translate}}
+        </div>
 
-    <div *ngIf="defaultPrefLangs" class="mt-2" style="font-size: 12px;">
-        <span *ngIf="cookieLangs">
-            The administrator has provided a default language set for the dataset <i>{{project.getName()}}</i>.
-            Click <a href="javascript:void(0)" (click)="restoreDefault()">here</a> to set it.
-        </span>
-        <span *ngIf="!cookieLangs">
-            The current language set is the default provided by the administrator for the dataset <i>{{project.getName()}}</i>.
-        </span>
+        <rendering-editor [(ngModel)]="renderingLangs" (ngModelChange)="onRenderingChange()"></rendering-editor>
+
+        <div *ngIf="defaultPrefLangs" class="mt-2" style="font-size: 12px;">
+            <span *ngIf="cookieLangs">
+                The administrator has provided a default language set for the dataset <i>{{project.getName()}}</i>.
+                Click <a href="javascript:void(0)" (click)="restoreDefault()">here</a> to set it.
+            </span>
+            <span *ngIf="!cookieLangs">
+                The current language set is the default provided by the administrator for the dataset <i>{{project.getName()}}</i>.
+            </span>
+        </div>
+
     </div>
-
-</div>
-<div class="modal-footer">
-    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
+    </div>
 </div>

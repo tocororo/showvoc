@@ -1,63 +1,65 @@
-<div class="modal-header">
-    <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA'|translate}}</h5>
-    <button class="close" (click)="close()">
-        <span>&times;</span>
-    </button>
-</div>
-<div class="modal-body">
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA'|translate}}</h5>
+        <button class="close" (click)="close()">
+            <span>&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
 
-    <div class="form-group row">
-        <label class="col-sm-1 col-form-label col-form-label-sm">{{'DATASETS.DATASET'|translate}}</label>
-        <div class="col-sm-11">
-            <input class="form-control form-control-sm" [ngModel]="project.getName()" disabled>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-1 col-form-label col-form-label-sm">File</label>
-        <div class="col-sm-11">
-            <file-picker (fileChanged)="fileChangeEvent($event)" size="sm" [accept]="filePickerAccept"></file-picker>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-1 col-form-label col-form-label-sm">Lifter</label>
-        <div class="col-sm-5">
-            <extension-configurator *ngIf="lifters" [extensions]="lifters" (extensionUpdated)="onLifterExtensionUpdated($event)" 
-                (configurationUpdated)="selectedLifterConfig = $event">
-            </extension-configurator>
-        </div>
-        <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.FORMAT'|translate}}</label>
-        <div class="col-sm-4">
-            <select class="form-control form-control-sm" [(ngModel)]="selectedInputFormat">
-                <option *ngFor="let f of inputFormats" [ngValue]="f">{{f.name}}</option>
-            </select>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-1 col-form-label col-form-label-sm">{{'MODELS.PROJECT.BASE_URI'|translate}}</label>
-        <div class="col-sm-5">
-            <div class="input-group input-group-sm">
-                <input class="form-control" [(ngModel)]="baseURI" [placeholder]="'MODELS.PROJECT.BASE_URI'|translate" [disabled]="useProjectBaseURI">
-                <div class="input-group-append">
-                    <button class="btn btn-info" (click)="changeUseProjectBaseUri()" [ngClass]="{ active: useProjectBaseURI }" [title]="'ADMINISTRATION.DATASETS.MANAGEMENT.USE_DATASET_BASEURI'|translate">
-                        <span *ngIf="useProjectBaseURI" class="fas fa-lock"></span>
-                        <span *ngIf="!useProjectBaseURI" class="fas fa-unlock-alt"></span>
-                    </button>
-                </div>
+        <div class="form-group row">
+            <label class="col-sm-1 col-form-label col-form-label-sm">{{'DATASETS.DATASET'|translate}}</label>
+            <div class="col-sm-11">
+                <input class="form-control form-control-sm" [ngModel]="project.getName()" disabled>
             </div>
         </div>
-        <label class="col-sm-2 col-form-label col-form-label-sm">{{'ADMINISTRATION.DATASETS.MANAGEMENT.RESOLVE_IMPORTS'|translate}}</label>
-        <div class="col-sm-4">
-            <select class="form-control form-control-sm" [(ngModel)]="selectedImportAllowance">
-                <option *ngFor="let ia of importAllowances" [ngValue]="ia.allowance">{{ia.show}}</option>
-            </select>
+        <div class="form-group row">
+            <label class="col-sm-1 col-form-label col-form-label-sm">File</label>
+            <div class="col-sm-11">
+                <file-picker (fileChanged)="fileChangeEvent($event)" size="sm" [accept]="filePickerAccept"></file-picker>
+            </div>
         </div>
+        <div class="form-group row">
+            <label class="col-sm-1 col-form-label col-form-label-sm">Lifter</label>
+            <div class="col-sm-5">
+                <extension-configurator *ngIf="lifters" [extensions]="lifters" (extensionUpdated)="onLifterExtensionUpdated($event)" 
+                    (configurationUpdated)="selectedLifterConfig = $event">
+                </extension-configurator>
+            </div>
+            <label class="col-sm-2 col-form-label col-form-label-sm">{{'COMMONS.FORMAT'|translate}}</label>
+            <div class="col-sm-4">
+                <select class="form-control form-control-sm" [(ngModel)]="selectedInputFormat">
+                    <option *ngFor="let f of inputFormats" [ngValue]="f">{{f.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-1 col-form-label col-form-label-sm">{{'MODELS.PROJECT.BASE_URI'|translate}}</label>
+            <div class="col-sm-5">
+                <div class="input-group input-group-sm">
+                    <input class="form-control" [(ngModel)]="baseURI" [placeholder]="'MODELS.PROJECT.BASE_URI'|translate" [disabled]="useProjectBaseURI">
+                    <div class="input-group-append">
+                        <button class="btn btn-info" (click)="changeUseProjectBaseUri()" [ngClass]="{ active: useProjectBaseURI }" [title]="'ADMINISTRATION.DATASETS.MANAGEMENT.USE_DATASET_BASEURI'|translate">
+                            <span *ngIf="useProjectBaseURI" class="fas fa-lock"></span>
+                            <span *ngIf="!useProjectBaseURI" class="fas fa-unlock-alt"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <label class="col-sm-2 col-form-label col-form-label-sm">{{'ADMINISTRATION.DATASETS.MANAGEMENT.RESOLVE_IMPORTS'|translate}}</label>
+            <div class="col-sm-4">
+                <select class="form-control form-control-sm" [(ngModel)]="selectedImportAllowance">
+                    <option *ngFor="let ia of importAllowances" [ngValue]="ia.allowance">{{ia.show}}</option>
+                </select>
+            </div>
+        </div>
+
+
     </div>
-
-
-</div>
-<div class="modal-footer">
-    <button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="!file || loading">
-        Ok <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-    </button>
-    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="!file || loading">
+            Ok <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+        </button>
+        <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
+    </div>
 </div>

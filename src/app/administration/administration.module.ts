@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -35,6 +36,7 @@ import { SystemConfigurationComponent } from './system-configuration/system-conf
     imports: [
         CommonModule,
         ContributionModule,
+        DragDropModule,
         FormsModule,
         NgbDropdownModule,
         RouterModule,

@@ -1,57 +1,59 @@
-<div class="modal-header">
-    <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.REMOTE.DELETE_REPO'|translate}}</h5>
-    <button class="close" (click)="close()">
-        <span>&times;</span>
-    </button>
-</div>
-<div class="modal-body">
-
-    <div class="alert alert-danger mb-2">
-        {{message}}
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.REMOTE.DELETE_REPO'|translate}}</h5>
+        <button class="close" (click)="close()">
+            <span>&times;</span>
+        </button>
     </div>
+    <div class="modal-body">
 
-    <div class="card vbox">
-        <div class="card-body vbox scrollableContainer">
-
-            <div *ngFor="let report of failReports" class="card mb-2">
-                <div class="card-body">
-                    <table class="table table-sm" style="table-layout: fixed;">
-                        <colgroup>
-                            <col style="width: 110px">
-                            <col>
-                        </colgroup>
-                        <tbody>
-                            <tr>
-                                <td nowrap><label>{{'MODELS.PROJECT.REPOSITORY_ID'|translate}}:</label></td>
-                                <td>{{report.repositoryID}}</td>
-                            </tr>
-                            <tr>
-                                <td nowrap><label>{{'ADMINISTRATION.DATASETS.REMOTE.REASON'|translate}}:</label></td>
-                                <td>
-                                    {{report.exception.type}}:<br>
-                                    {{report.exception.message}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label>Stacktrace:</label></td>
-                                <td>
-                                    <div class="card vbox">
-                                        <div class="card-body">
-                                            <div class="stacktrace">{{report.exception.stacktrace}}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
+        <div class="alert alert-danger mb-2">
+            {{message}}
         </div>
+
+        <div class="card vbox">
+            <div class="card-body vbox scrollableContainer">
+
+                <div *ngFor="let report of failReports" class="card mb-2">
+                    <div class="card-body">
+                        <table class="table table-sm" style="table-layout: fixed;">
+                            <colgroup>
+                                <col style="width: 110px">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td nowrap><label>{{'MODELS.PROJECT.REPOSITORY_ID'|translate}}:</label></td>
+                                    <td>{{report.repositoryID}}</td>
+                                </tr>
+                                <tr>
+                                    <td nowrap><label>{{'ADMINISTRATION.DATASETS.REMOTE.REASON'|translate}}:</label></td>
+                                    <td>
+                                        {{report.exception.type}}:<br>
+                                        {{report.exception.message}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Stacktrace:</label></td>
+                                    <td>
+                                        <div class="card vbox">
+                                            <div class="card-body">
+                                                <div class="stacktrace">{{report.exception.stacktrace}}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
     </div>
-
-
-</div>
-<div class="modal-footer">
-    <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
+    </div>
 </div>

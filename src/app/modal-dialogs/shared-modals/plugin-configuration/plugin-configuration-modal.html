@@ -1,11 +1,13 @@
-<div class="modal-header">
-    <h5 class="modal-title">{{'COMMONS.CONFIG.CONFIGURATION_OF'|translate}} '{{config.shortName}}'</h5>
-</div>
-<div class="modal-body">
-    <settings-renderer-panel class="vbox" [(ngModel)]="config"></settings-renderer-panel>
-</div>
-<div class="modal-footer">
-    <span class="float-left">(*) {{'COMMONS.MANDATORY_FIELD'|translate}}</span>
-    <button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="!isOkClickable()">Ok</button>
-    <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CANCEL'|translate}}</button>
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{'COMMONS.CONFIG.CONFIGURATION_OF'|translate}} '{{config.shortName}}'</h5>
+    </div>
+    <div class="modal-body">
+        <settings-renderer-panel class="vbox" [(ngModel)]="config"></settings-renderer-panel>
+    </div>
+    <div class="modal-footer">
+        <span class="float-left">(*) {{'COMMONS.MANDATORY_FIELD'|translate}}</span>
+        <button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="!isOkClickable()">Ok</button>
+        <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CANCEL'|translate}}</button>
+    </div>
 </div>

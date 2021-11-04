@@ -1,6 +1,8 @@
-<div class="modal-body vbox">
-    <resource-view [resource]="resource" [context]="context" [projectCtx]="projectCtx"></resource-view>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <resource-view [resource]="resource" [context]="context" [projectCtx]="projectCtx"></resource-view>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
+    </div>
 </div>
