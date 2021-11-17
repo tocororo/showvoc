@@ -6,6 +6,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
 # 1.1.2 (dd-mm-yyyy)
   * Made dialogs draggable
+  * Added localization for Spanish, thanks to Juan Antonio Pastor Sánchez for the contribution!
 
 # 1.1.1 (28-10-2021)
   * Added localization for French, thanks to Nathalie Vedovotto for the contribution!
