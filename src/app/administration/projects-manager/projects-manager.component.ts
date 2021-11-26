@@ -40,6 +40,7 @@ export class ProjectsManagerComponent {
     projectList: Project[];
     //usefuld attributes to set in the Project objects
     private readonly roleAttr: string = "role"; //the role that the visitor user has in the project (tells the project status)
+    private readonly clearingIndexAttr: string = "clearingIndex"; //stores a boolean that tells if the system is clearing the index for the project
     private readonly creatingIndexAttr: string = "creatingIndex"; //stores a boolean that tells if the system is creating the index for the project
     private readonly creatingMetadataAttr: string = "creatingMetadata"; //stores a boolean that tells if the system is creating the metadata for the project
     private readonly openingAttr: string = "opening"; //stores a boolean that tells if the system is creating the index for the project
@@ -241,12 +242,10 @@ export class ProjectsManagerComponent {
     }
     private clearIndexImpl(project: Project): Observable<void> {
         return new Observable((observer: Observer<void>) => {
-            project[this.creatingIndexAttr] = true;
-            this.globalCreatingIndex = true;
+            project[this.clearingIndexAttr] = true;
             this.globalSearchService.clearSpecificIndex(project.getName()).pipe(
                 finalize(() => {
-                    project[this.creatingIndexAttr] = false;
-                    this.globalCreatingIndex = false;
+                    project[this.clearingIndexAttr] = false;
                 })
             ).subscribe(
                 () => observer.next()
