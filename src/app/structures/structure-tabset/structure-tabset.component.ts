@@ -1,13 +1,14 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalRef, NgbNav, NgbNavbar } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef, NgbNav } from '@ng-bootstrap/ng-bootstrap';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { LinksetMetadata } from 'src/app/models/Metadata';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
+import { OntoLex, OWL, RDFS, SKOS } from 'src/app/models/Vocabulary';
 import { Cookie } from 'src/app/utils/Cookie';
-import { SVContext } from 'src/app/utils/SVContext';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
+import { SVContext } from 'src/app/utils/SVContext';
 import { TreeListContext } from 'src/app/utils/UIUtils';
 import { RenderingEditorModal } from 'src/app/widget/rendering-editor/rendering-editor-modal';
 import { LexicalEntryListPanelComponent } from '../list/lexical-entry/lexical-entry-list-panel.component';
@@ -36,19 +37,19 @@ export class StructureTabsetComponent implements OnInit {
     @ViewChild(LexiconListPanelComponent) viewChildLexiconPanel: LexiconListPanelComponent;
     @ViewChild(LexicalEntryListPanelComponent) viewChildLexialEntryPanel: LexicalEntryListPanelComponent;
 
-    private context: TreeListContext = TreeListContext.dataPanel;
+    context: TreeListContext = TreeListContext.dataPanel;
 
     initialActiveTab: RDFResourceRolesEnum;
 
-    model: string;
+    private model: string;
 
     constructor(private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices, private modalService: NgbModal) { }
 
     ngOnInit() {
-        this.model = SVContext.getWorkingProject().getModelType(true);
-        if (this.model == "OntoLex") {
+        this.model = SVContext.getWorkingProject().getModelType(false);
+        if (this.model == OntoLex.uri) {
             this.initialActiveTab = RDFResourceRolesEnum.limeLexicon;
-        } else if (this.model == "SKOS") {
+        } else if (this.model == SKOS.uri) {
             this.initialActiveTab = RDFResourceRolesEnum.concept;
         } else {
             this.initialActiveTab = RDFResourceRolesEnum.cls;
@@ -81,7 +82,8 @@ export class StructureTabsetComponent implements OnInit {
             ) {
                 tabToActivate = role;
             }
-            if (tabToActivate != null) {
+
+            if (tabToActivate != null && this.isTabVisible(tabToActivate)) {
                 this.viewChildNavbar.select(tabToActivate);
                 setTimeout(() => { //wait for the tab to be activate
                     if (tabToActivate == RDFResourceRolesEnum.cls) {
@@ -128,6 +130,19 @@ export class StructureTabsetComponent implements OnInit {
     changeRendering() {
         const modalRef: NgbModalRef = this.modalService.open(RenderingEditorModal, new ModalOptions());
     }
-    
+
+    isTabVisible(tabRole: string): boolean {
+        if (tabRole == RDFResourceRolesEnum.cls || tabRole == RDFResourceRolesEnum.individual) {
+            return this.model == RDFS.uri || this.model == OWL.uri;
+        } else if (tabRole == RDFResourceRolesEnum.concept || tabRole == RDFResourceRolesEnum.conceptScheme || tabRole == RDFResourceRolesEnum.skosCollection) {
+            return this.model == SKOS.uri || this.model == OntoLex.uri;
+        } else if (tabRole == RDFResourceRolesEnum.limeLexicon || tabRole == RDFResourceRolesEnum.ontolexLexicalEntry) {
+            return this.model == OntoLex.uri;
+        } else if (tabRole == RDFResourceRolesEnum.property) {
+            return true; //property tree is always present
+        } else {
+            return false;
+        }
+    }    
 
 }

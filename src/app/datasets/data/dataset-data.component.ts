@@ -59,7 +59,7 @@ export class DatasetDataComponent implements OnInit {
         this.location.go(urlTree.toString());
     }
 
-    private objectDblClick(object: AnnotatedValue<Resource>) {
+    objectDblClick(object: AnnotatedValue<Resource>) {
         this.viewChildStructureTabset.selectResource(object);
     }
 

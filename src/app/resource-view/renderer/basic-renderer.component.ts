@@ -51,7 +51,7 @@ export class BasicRendererComponent {
         return splitted.charAt(0).toLocaleUpperCase() + splitted.slice(1); //upper case the first letter
     }
 
-    private isResourceWithLang(obj: AnnotatedValue<Value>): boolean {
+    isResourceWithLang(obj: AnnotatedValue<Value>): boolean {
         if (obj.getAttribute(ResAttribute.LANG) != null) {
             return true;
         } else {
@@ -62,7 +62,7 @@ export class BasicRendererComponent {
         }
     }
 
-    private getLang(obj: AnnotatedValue<Value>): string {
+    getLang(obj: AnnotatedValue<Value>): string {
         let lang: string = obj.getAttribute(ResAttribute.LANG);
         if (lang == null) {
             let value = obj.getValue();

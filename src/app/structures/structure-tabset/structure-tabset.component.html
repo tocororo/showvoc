@@ -1,28 +1,28 @@
 <div left class="card vbox">
     <div class="card-body vbox p-0">
         <ul ngbNav #nav="ngbNav" [(activeId)]="initialActiveTab" [destroyOnHide]="false" class="nav-tabs">
-            <li *ngIf="model == 'OWL' || model == 'RDFS'" [ngbNavItem]="'cls'">
+            <li *ngIf="isTabVisible('cls')" [ngbNavItem]="'cls'">
                 <a ngbNavLink>{{'DATA.CLASS.CLASS'|translate}}</a>
                 <ng-template ngbNavContent>
                     <class-instance-panel [context]="context" (nodeSelected)="onNodeSelected($event)">
                     </class-instance-panel>
                 </ng-template>
             </li>
-            <li *ngIf="model == 'SKOS' || model == 'OntoLex'" [ngbNavItem]="'concept'">
+            <li *ngIf="isTabVisible('concept')" [ngbNavItem]="'concept'">
                 <a ngbNavLink>{{'DATA.CONCEPT.CONCEPT'|translate}}</a>
                 <ng-template ngbNavContent>
                     <concept-tree-panel [context]="context" (nodeSelected)="onNodeSelected($event)">
                     </concept-tree-panel>
                 </ng-template>
             </li>
-            <li *ngIf="model == 'SKOS'" [ngbNavItem]="'collection'">
+            <li *ngIf="isTabVisible('collection')" [ngbNavItem]="'collection'">
                 <a ngbNavLink>{{'DATA.COLLECTION.COLLECTION'|translate}}</a>
                 <ng-template ngbNavContent>
                     <collection-tree-panel [context]="context" (nodeSelected)="onNodeSelected($event)">
                     </collection-tree-panel>
                 </ng-template>
             </li>
-            <li *ngIf="model == 'SKOS' || model == 'OntoLex'" [ngbNavItem]="'conceptScheme'">
+            <li *ngIf="isTabVisible('conceptScheme')" [ngbNavItem]="'conceptScheme'">
                 <a ngbNavLink>{{'DATA.SCHEME.SCHEME'|translate}}</a>
                 <ng-template ngbNavContent>
                     <scheme-list-panel [context]="context" (nodeSelected)="onNodeSelected($event)"></scheme-list-panel>
@@ -35,14 +35,14 @@
                     </property-tree-panel>
                 </ng-template>
             </li>
-            <li *ngIf="model == 'OntoLex'" [ngbNavItem]="'limeLexicon'">
+            <li *ngIf="isTabVisible('limeLexicon')" [ngbNavItem]="'limeLexicon'">
                 <a ngbNavLink>{{'DATA.LEXICON.LEXICON'|translate}}</a>
                 <ng-template ngbNavContent>
                     <lexicon-list-panel [context]="context" (nodeSelected)="onNodeSelected($event)">
                     </lexicon-list-panel>
                 </ng-template>
             </li>
-            <li *ngIf="model == 'OntoLex'" [ngbNavItem]="'ontolexLexicalEntry'">
+            <li *ngIf="isTabVisible('ontolexLexicalEntry')" [ngbNavItem]="'ontolexLexicalEntry'">
                 <a ngbNavLink>{{'DATA.LEX_ENTRY.LEX_ENTRY'|translate}}</a>
                 <ng-template ngbNavContent>
                     <lexical-entry-list-panel [context]="context" (nodeSelected)="onNodeSelected($event)">
