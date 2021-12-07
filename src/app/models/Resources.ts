@@ -290,6 +290,19 @@ export class AnnotatedValue<T extends Value> {
     equals(annValue: AnnotatedValue<T>): boolean {
         return this.value != null && annValue.getValue() != null && this.value.equals(annValue.getValue());
     }
+
+    /**
+     * Returns the language of the AnnotatedValue. Useful to abstract the usage for both Resource and Literal values.
+     * If the AnnotatedValue is about a literal, returns the language of the value,
+     * otherwise, if it's a resource, return the lang attribute
+     */
+    getLanguage(): string {
+        if (this.value instanceof Literal) {
+            return this.value.getLanguage();
+        } else {
+            return this.getAttribute(ResAttribute.LANG);
+        }
+    }
 }
 
 export class PredicateObjects {

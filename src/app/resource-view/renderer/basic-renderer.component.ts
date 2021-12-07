@@ -52,25 +52,11 @@ export class BasicRendererComponent {
     }
 
     isResourceWithLang(obj: AnnotatedValue<Value>): boolean {
-        if (obj.getAttribute(ResAttribute.LANG) != null) {
-            return true;
-        } else {
-            let value = obj.getValue();
-            if (value instanceof Literal) {
-                return value.getLanguage() != null;
-            }
-        }
+        return obj.getLanguage() != null;
     }
 
     getLang(obj: AnnotatedValue<Value>): string {
-        let lang: string = obj.getAttribute(ResAttribute.LANG);
-        if (lang == null) {
-            let value = obj.getValue();
-            if (value instanceof Literal) {
-                lang = value.getLanguage();
-            }
-        }
-        return lang;
+        return obj.getLanguage();
     }
 
     getRendering(obj: AnnotatedValue<Value>): string {

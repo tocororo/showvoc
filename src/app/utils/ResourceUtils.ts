@@ -16,9 +16,9 @@ export class ResourceUtils {
             list.sort(
                 function (r1: AnnotatedValue<Value>, r2: AnnotatedValue<Value>) {
                     //if both resources have language tag (literals or reified resources with lang), sort according lang
-                    if (r1.getAttribute(ResAttribute.LANG) != null && r2.getAttribute(ResAttribute.LANG) != null) {
-                        if (r1.getAttribute(ResAttribute.LANG) < r2.getAttribute(ResAttribute.LANG)) return -1;
-                        if (r1.getAttribute(ResAttribute.LANG) > r2.getAttribute(ResAttribute.LANG)) return 1;
+                    if (r1.getLanguage() != null && r2.getLanguage() != null) {
+                        if (r1.getLanguage() < r2.getLanguage()) return -1;
+                        if (r1.getLanguage() > r2.getLanguage()) return 1;
                         //same lang code, order alphabetically
                         return collator.compare(r1.getShow().toLowerCase(), r2.getShow().toLowerCase());
                     } else {
