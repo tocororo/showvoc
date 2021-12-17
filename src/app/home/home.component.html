@@ -1,36 +1,115 @@
-<div class="container my-3">
-	<div class="jumbotron">
+<div class="vbox">
 
-		<ng-container *ngIf="instanceName">
-			<div class="d-flex align-items-center">
-				<div class="p-2 mr-4" style="background: linear-gradient(180deg, #1e4387, #00b5e9); border-radius: 32px;">
-					<img src="./assets/images/logos/sv_logo.png" style="max-height: 130px;">
+	<div class="container mt-3" style="flex: 1;">
+		<div class="jumbotron">
+			<ng-container *ngIf="instanceName">
+				<div class="d-flex align-items-center">
+					<div class="p-2 mr-4" style="background: linear-gradient(180deg, #1e4387, #00b5e9); border-radius: 32px;">
+						<img src="./assets/images/logos/sv_logo.png" style="max-height: 130px;">
+					</div>
+					<div>
+						<h1 class="display-4">{{'HOME.WELCOME_W_INST_NAME.WELCOME'|translate:translationParam}}</h1>
+						<p class="lead">
+							{{'HOME.WELCOME_W_INST_NAME.POWERED_BY'|translate:translationParam}} (<a href="http://vocbench.uniroma2.it/pmki/">ShowVoc</a>)
+						</p>
+					</div>
 				</div>
-				<div>
-					<h1 class="display-4">{{'HOME.WELCOME_W_INST_NAME.WELCOME'|translate:translationParam}}</h1>
-					<p class="lead">
-						{{'HOME.WELCOME_W_INST_NAME.POWERED_BY'|translate:translationParam}} (<a href="http://vocbench.uniroma2.it/pmki/">ShowVoc</a>)
-					</p>
-				</div>
-			</div>
-			<ng-container *ngIf="showContribution">
-				<hr class="my-4">
-				<a class="btn btn-info" [routerLink]="['/contribution']" queryParamsHandling="merge">{{'HOME.WELCOME_W_INST_NAME.CONTRIBUTE_TO'|translate:translationParam}}</a>
+				<ng-container *ngIf="showContribution">
+					<hr class="my-4">
+					<a class="btn btn-info" [routerLink]="['/contribution']" queryParamsHandling="merge">{{'HOME.WELCOME_W_INST_NAME.CONTRIBUTE_TO'|translate:translationParam}}</a>
+				</ng-container>
 			</ng-container>
-		</ng-container>
 
-		<ng-container *ngIf="!instanceName">
-			<div class="d-flex align-items-center">
-				<div class="p-2 mr-4" style="background: linear-gradient(180deg, #1e4387, #00b5e9); border-radius: 32px;">
-					<img src="./assets/images/logos/sv_logo.png" style="max-height: 130px;">
+			<ng-container *ngIf="!instanceName">
+				<div class="d-flex align-items-center">
+					<div class="p-2 mr-4" style="background: linear-gradient(180deg, #1e4387, #00b5e9); border-radius: 32px;">
+						<img src="./assets/images/logos/sv_logo.png" style="max-height: 130px;">
+					</div>
+					<h1 class="display-4">{{'HOME.WELCOME_WO_INST_NAME.WELCOME'|translate}}</h1>
 				</div>
-				<h1 class="display-4">{{'HOME.WELCOME_WO_INST_NAME.WELCOME'|translate}}</h1>
-			</div>
-			<ng-container *ngIf="showContribution">
-				<hr class="my-4">
-				<a class="btn btn-info" [routerLink]="['/contribution']" queryParamsHandling="merge">{{'HOME.WELCOME_WO_INST_NAME.CONTRIBUTE_TO'|translate}}</a>
+				<ng-container *ngIf="showContribution">
+					<hr class="my-4">
+					<a class="btn btn-info" [routerLink]="['/contribution']" queryParamsHandling="merge">{{'HOME.WELCOME_WO_INST_NAME.CONTRIBUTE_TO'|translate}}</a>
+				</ng-container>
 			</ng-container>
-		</ng-container>
-
+		</div>
 	</div>
+
+	<div class="pb-3" style="background-color: #e9ecef">
+		<table class="table">
+			<tbody>
+				<tr>
+					<td colspan="2"><label class="creditTitle">{{'HOME.DEVELOPED_BY.TITLE'|translate}}:</label></td>
+					<td colspan="2"><label class="creditTitle">{{'HOME.MANAGED_BY.TITLE'|translate}}:</label></td>
+				</tr>
+				<tr>
+					<td style="border: none; width: 5%; text-align: center;">
+						<a href="http://web.uniroma2.it/home/newlang/english" target="_blank">
+							<img src="./assets/images/logos/logo_tor_vergata.svg" class="organizzationLogo">
+						</a>
+					</td>
+					<td style="border: none; width: 45%;">
+						<a href="http://web.uniroma2.it/home/newlang/english" target="_blank">
+							<div>
+								<div class="organizzationName">{{'HOME.DEVELOPED_BY.TOR_VERGATA_NAME'|translate}}</div>
+								<div class="organizzationSubtitle">{{'HOME.DEVELOPED_BY.TOR_VERGATA_SUBTITLE'|translate}}</div>
+							</div>
+						</a>
+					</td>
+
+					<td style="border: none; width: 5%; text-align: center;">
+						<a href="https://www.infeurope.lu/" target="_blank">
+							<img src="./assets/images/logos/infeurope-blue-logo.png" class="organizzationLogo">
+						</a>
+					</td>
+					<td style="border: none; width: 45%;">
+						<a href="http://web.uniroma2.it/home/newlang/english" target="_blank">
+							<div>
+								<div class="organizzationName">{{'HOME.MANAGED_BY.INFEUROPE_NAME'|translate}}</div>
+								<div class="organizzationSubtitle">{{'HOME.MANAGED_BY.INFEUROPE_SUBTITLE'|translate}}</div>
+							</div>
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4"><label class="creditTitle">{{'HOME.FUNDED_BY.TITLE'|translate}}:</label></td>
+				</tr>
+				<tr>
+					<td style="border: none; text-align: center;">
+						<a href="http://ec.europa.eu/isa/isa2/index_en.htm" target="_blank">
+							<img src="./assets/images/logos/european_commission_logo.gif" class="organizzationLogo">
+						</a>
+					</td>
+					<td style="border: none;">
+						<a href="http://ec.europa.eu/isa/isa2/index_en.htm" target="_blank">
+							<div>
+								<div>
+									<div class="organizzationName" [innerHTML]="'HOME.FUNDED_BY.ISA2_NAME'|translate"></div>
+									<div class="organizzationSubtitle">
+										{{'HOME.FUNDED_BY.ISA2_SUBTITLE'|translate}}
+									</div>
+								</div>
+							</div>
+						</a>
+					</td>
+					<td style="border: none; text-align: center;">
+						<a href="https://publications.europa.eu/en/home" target="_blank">
+							<img src="./assets/images/logos/publications_office_eu_logo.png" class="organizzationLogo">
+						</a>
+					</td>
+					<td style="border: none;">
+						<a href="https://publications.europa.eu/en/home" target="_blank">
+							<div>
+								<div>
+									<div class="organizzationName">{{'HOME.FUNDED_BY.OP_NAME'|translate}}</div>
+									<div class="organizzationSubtitle">{{'HOME.FUNDED_BY.OP_SUBTITLE'|translate }}</div>
+								</div>
+							</div>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
 </div>

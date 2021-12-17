@@ -413,6 +413,23 @@
         }
     },
     "HOME": {
+        "DEVELOPED_BY": {
+            "TITLE": "ShowVoc wurde entwickelt von",
+            "TOR_VERGATA_NAME": "Universität Rom Tor Vergata",
+            "TOR_VERGATA_SUBTITLE": "Heute die Universität von morgen"
+        },
+        "FUNDED_BY": {
+            "ISA2_NAME": "ISA<sup>2</sup>",
+            "ISA2_SUBTITLE": "Interoperabilitätslösungen für die Öffentliche Verwaltung, Unternehmen und Bürger",
+            "OP_NAME": "Amt für Veröffentlichungen der Europäischen Union",
+            "OP_SUBTITLE": "EU-Recht und Veröffentlichungen",
+            "TITLE": "ShowVoc wird finanziert von"
+        },
+        "MANAGED_BY": {
+            "INFEUROPE_NAME": "Infeurope",
+            "INFEUROPE_SUBTITLE": "Architektur beginnt dort, wo das Engineering endet",
+            "TITLE": "Vertrag verwaltet von"
+        },
         "WELCOME_WO_INST_NAME": {
             "CONTRIBUTE_TO": "Zu ShowVoc beitragen",
             "WELCOME": "Willkommen bei ShowVoc!"
