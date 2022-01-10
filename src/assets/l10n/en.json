@@ -413,11 +413,13 @@
         }
     },
     "HOME": {
+        "DESCRIPTION": "a web-based catalogue and viewer for <a href=\"https://www.w3.org/TR/owl2-overview/\" target=\"_blank\">OWL</a> ontologies, <a href=\"https://www.w3.org/TR/skos-reference/\" target=\"_blank\">SKOS</a>(/<a href=\"https://www.w3.org/TR/skos-reference/skos-xl.html\" target=\"_blank\">XL</a>) thesauri, <a href=\"https://www.w3.org/2016/05/ontolex/\" target=\"_blank\">Ontolex-lemon</a> lexicons and generic RDF datasets.",
         "DEVELOPED_BY": {
             "TITLE": "ShowVoc has been developed by",
             "TOR_VERGATA_NAME": "University of Rome Tor Vergata",
             "TOR_VERGATA_SUBTITLE": "Today, the University of tomorrow"
         },
+        "FIND_MORE": "Find out more about ShowVoc on its homepage at",
         "FUNDED_BY": {
             "ISA2_NAME": "ISA<sup>2</sup>",
             "ISA2_SUBTITLE": "Interoperability solutions for public administrations, business and citizens",
@@ -432,11 +434,13 @@
         },
         "WELCOME_WO_INST_NAME": {
             "CONTRIBUTE_TO": "Contribute to ShowVoc",
+            "POWERED_BY": "ShowVoc is powered by the <a href=\"http://semanticturkey.uniroma2.it/\" target=\"_blank\">Semantic Turkey</a> Knowledge Acquisition and Management framework",
+            "PRE_DESCRIPTION": "ShowVoc is ",
             "WELCOME": "Welcome to ShowVoc!"
         },
         "WELCOME_W_INST_NAME": {
             "CONTRIBUTE_TO": "Contribute to {{instanceName}}",
-            "POWERED_BY": "{{instanceName}} is powered by",
+            "POWERED_BY": "{{instanceName}} is powered by ShowVoc, ",
             "WELCOME": "Welcome to {{instanceName}} dataset browser!"
         }
     },

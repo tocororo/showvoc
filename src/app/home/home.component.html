@@ -10,8 +10,10 @@
 					<div>
 						<h1 class="display-4">{{'HOME.WELCOME_W_INST_NAME.WELCOME'|translate:translationParam}}</h1>
 						<p class="lead">
-							{{'HOME.WELCOME_W_INST_NAME.POWERED_BY'|translate:translationParam}} (<a href="http://vocbench.uniroma2.it/pmki/">ShowVoc</a>)
+							{{'HOME.WELCOME_W_INST_NAME.POWERED_BY'|translate:translationParam}}
+							<span [innerHTML]="'HOME.DESCRIPTION'|translate"></span>
 						</p>
+						<p class="lead">{{'HOME.FIND_MORE'|translate}} <a href="http://showvoc.uniroma2.it/" target="_blank">http://showvoc.uniroma2.it/</a></p>
 					</div>
 				</div>
 				<ng-container *ngIf="showContribution">
@@ -25,7 +27,14 @@
 					<div class="p-2 mr-4" style="background: linear-gradient(180deg, #1e4387, #00b5e9); border-radius: 32px;">
 						<img src="./assets/images/logos/sv_logo.png" style="max-height: 130px;">
 					</div>
-					<h1 class="display-4">{{'HOME.WELCOME_WO_INST_NAME.WELCOME'|translate}}</h1>
+					<div>
+						<h1 class="display-4">{{'HOME.WELCOME_WO_INST_NAME.WELCOME'|translate}}</h1>
+						<p class="lead">
+							{{'HOME.WELCOME_WO_INST_NAME.PRE_DESCRIPTION'|translate:translationParam}}
+							<span [innerHTML]="'HOME.DESCRIPTION'|translate"></span>
+						</p>
+						<p class="lead">{{'HOME.FIND_MORE'|translate}} <a href="http://showvoc.uniroma2.it/" target="_blank">http://showvoc.uniroma2.it/</a></p>
+					</div>
 				</div>
 				<ng-container *ngIf="showContribution">
 					<hr class="my-4">

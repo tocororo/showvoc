@@ -413,11 +413,13 @@
         }
     },
     "HOME": {
+        "DESCRIPTION": "un catalogo e visualizzatore web di ontologie <a href=\"https://www.w3.org/TR/owl2-overview/\" target=\"_blank\">OWL</a>, tesauri <a href=\"https://www.w3.org/TR/skos-reference/\" target=\"_blank\">SKOS</a>(/<a href=\"https://www.w3.org/TR/skos-reference/skos-xl.html\" target=\"_blank\">XL</a>), lessici <a href=\"https://www.w3.org/2016/05/ontolex/\" target=\"_blank\">Ontolex-lemon</a> e generici dataset RDF.",
         "DEVELOPED_BY": {
             "TITLE": "ShowVoc è sviluppato da",
             "TOR_VERGATA_NAME": "Università degli studi di Roma \"Tor Vergata\"",
             "TOR_VERGATA_SUBTITLE": "Oggi, l´Ateneo del domani"
         },
+        "FIND_MORE": "Scopri di più su ShowVoc sulla sua homepage a",
         "FUNDED_BY": {
             "ISA2_NAME": "ISA<sup>2</sup>",
             "ISA2_SUBTITLE": "Interoperability solutions for public administrations, business and citizens",
@@ -432,6 +434,8 @@
         },
         "WELCOME_WO_INST_NAME": {
             "CONTRIBUTE_TO": "Contribuisci a ShowVoc",
+            "POWERED_BY": "ShowVoc è realizzato col supporto del framework per la gestione e acquisizione della conoscenza <a href=\"http://semanticturkey.uniroma2.it/\" target=\"_blank\">Semantic Turkey</a>",
+            "PRE_DESCRIPTION": "ShowVoc è ",
             "WELCOME": "Benvenuto in ShowVoc!"
         },
         "WELCOME_W_INST_NAME": {
