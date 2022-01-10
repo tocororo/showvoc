@@ -4,10 +4,7 @@
     </div>
     <div class="property-value-col">
         <div *ngFor="let obj of po.getObjects()" class="property-value" [ngClass]="{ clickable: obj.clickable }" (dblclick)="objectDblClick(obj)">
-            <span [title]="obj.getValue().toNT()">
-                {{getRendering(obj)}}
-            </span>
-            <span *ngIf="isResourceWithLang(obj)" class="ml-1">({{getLang(obj)}})</span>
+            <value-renderer [value]="obj" [rendering]="rendering"></value-renderer>
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { AnnotatedValue, BNode, IRI, Literal, PredicateObjects, RDFResourceRolesEnum, ResAttribute, Resource, Value } from '../models/Resources';
+import { AnnotatedValue, BNode, IRI, Literal, PredicateObjects, RDFResourceRolesEnum, ResAttribute, Resource, ShowInterpretation, Value } from '../models/Resources';
 import { Lime, OntoLex, OWL, RDF, RDFS, SemanticTurkey, SKOS, SKOSXL } from '../models/Vocabulary';
 import { SVContext } from './SVContext';
 
@@ -85,7 +85,7 @@ export class ResourceUtils {
     }
     static isResourceInStagingAdd(resource: AnnotatedValue<Value>): boolean {
         let graphs: IRI[] = resource.getResourceGraphs();
-        for (var i = 0; i < graphs.length; i++) {
+        for (let i = 0; i < graphs.length; i++) {
             if (graphs[i].getIRI().startsWith(SemanticTurkey.stagingAddGraph)) {
                 return true;
             }
@@ -94,7 +94,7 @@ export class ResourceUtils {
     }
     static isResourceInStagingRemove(resource: AnnotatedValue<Value>): boolean {
         let graphs: IRI[] = resource.getResourceGraphs();
-        for (var i = 0; i < graphs.length; i++) {
+        for (let i = 0; i < graphs.length; i++) {
             if (graphs[i].getIRI().startsWith(SemanticTurkey.stagingRemoveGraph)) {
                 return true;
             }
@@ -111,7 +111,7 @@ export class ResourceUtils {
     }
     static isTripleInStagingAdd(resource: AnnotatedValue<Value>): boolean {
         let graphs: IRI[] = resource.getTripleGraphs();
-        for (var i = 0; i < graphs.length; i++) {
+        for (let i = 0; i < graphs.length; i++) {
             if (graphs[i].getIRI().startsWith(SemanticTurkey.stagingAddGraph)) {
                 return true;
             }
@@ -120,7 +120,7 @@ export class ResourceUtils {
     }
     static isTripleInStagingRemove(resource: AnnotatedValue<Value>): boolean {
         let graphs: IRI[] = resource.getTripleGraphs();
-        for (var i = 0; i < graphs.length; i++) {
+        for (let i = 0; i < graphs.length; i++) {
             if (graphs[i].getIRI().startsWith(SemanticTurkey.stagingRemoveGraph)) {
                 return true;
             }
@@ -295,7 +295,7 @@ export class ResourceUtils {
         // First character of literal is guaranteed to be a double
         // quote, start search at second character.
         let previousWasBackslash: boolean = false;
-        for (var i = 1; i < nTriplesLiteral.length; i++) {
+        for (let i = 1; i < nTriplesLiteral.length; i++) {
             let c: string = nTriplesLiteral.charAt(i);
             if (c == '"' && !previousWasBackslash) {
                 return i;
@@ -447,7 +447,7 @@ export class ResourceDeserializer {
             let natureAttr: string = resJson[ResAttribute.NATURE];
             if (natureAttr != undefined && natureAttr != "") {
                 let splitted: string[] = natureAttr.split("|_|");
-                for (var i = 0; i < splitted.length; i++) {
+                for (let i = 0; i < splitted.length; i++) {
                     let roleGraphDeprecated: string[] = splitted[i].split(",");
                     let roleInNature: RDFResourceRolesEnum = <RDFResourceRolesEnum>roleGraphDeprecated[0];
                     let graphInNature: IRI = new IRI(roleGraphDeprecated[1]);
@@ -466,7 +466,7 @@ export class ResourceDeserializer {
                     let resGraphs: IRI[] = annotatedValue.getResourceGraphs();
                     let inMainGraph: boolean = false;
                     let inRemoveStagingGraph: boolean = false;
-                    for (var i = 0; i < resGraphs.length; i++) {
+                    for (let i = 0; i < resGraphs.length; i++) {
                         if (resGraphs[i].getIRI() == baseURI) {
                             inMainGraph = true;
                         } else if (resGraphs[i].getIRI().startsWith(SemanticTurkey.stagingRemoveGraph)) {
@@ -501,9 +501,14 @@ export class ResourceDeserializer {
             }
         }
 
-        var tripleScope: string = resJson[ResAttribute.TRIPLE_SCOPE];
+        let tripleScope: string = resJson[ResAttribute.TRIPLE_SCOPE];
         if (tripleScope != undefined) {
             annotatedValue.setAttribute(ResAttribute.TRIPLE_SCOPE, tripleScope);
+        }
+
+        let showInterpr: ShowInterpretation = resJson[ResAttribute.SHOW_INTERPR];
+        if (showInterpr != null) {
+            annotatedValue.setAttribute(ResAttribute.SHOW_INTERPR, showInterpr);
         }
 
         if (additionalAttr != undefined) {

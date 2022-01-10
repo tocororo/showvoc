@@ -1,0 +1,12 @@
+<ng-container *ngIf="manchExpr; else notManchExprBlock">
+    <span style="font-family: monospace;">
+        <span *ngFor="let cas of manchExprStruct" [class]="cas.class">{{cas.token}}</span>
+    </span>
+</ng-container>
+
+<ng-template #notManchExprBlock>
+    <span [title]="value.getValue().toNT()">
+        {{renderedValue}}
+    </span>
+    <span *ngIf="lang" class="ml-1">({{lang}})</span>
+</ng-template>

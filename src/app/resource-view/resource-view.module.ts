@@ -10,15 +10,16 @@ import { ResourceViewModal } from './modals/resource-view-modal';
 import { ResViewModalsServices } from './modals/resource-view-modal.service';
 import { ResViewSettingsModal } from './modals/resource-view-settings-modal';
 import { BasicRendererComponent } from './renderer/basic-renderer.component';
+import { ValueRendererComponent } from './renderer/value-renderer.component';
 import { ResourceViewComponent } from './resource-view.component';
 
 @NgModule({
     declarations: [
-        ResourceViewComponent,
         BasicRendererComponent,
-        //modals
+        ResourceViewComponent,
         ResourceViewModal,
-        ResViewSettingsModal
+        ResViewSettingsModal,
+        ValueRendererComponent
     ],
     imports: [
         CommonModule,
