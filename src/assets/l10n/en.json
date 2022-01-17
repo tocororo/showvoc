@@ -42,6 +42,10 @@
             }
         },
         "SYSTEM": {
+            "ADMIN": {
+                "ADD_ADMIN": "Add administrator",
+                "ADMINISTRATORS": "Administrators"
+            },
             "COMMONS": {
                 "MAIL_PASSWORD_WARN": "Password is stored wihtout encryption on the server"
             },

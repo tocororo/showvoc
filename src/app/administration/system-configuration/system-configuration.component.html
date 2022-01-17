@@ -2,6 +2,28 @@
 
     <div class="card-body vbox scrollableContainer">
 
+        <div class="card mb-2">
+            <div class="card-header d-flex align-items-center">
+                <label style="flex: 1;">{{'ADMINISTRATION.SYSTEM.ADMIN.ADMINISTRATORS'|translate}}:</label>
+                <div class="btn-toolbar">
+                    <button class="btn btn-light btn-sm" [title]="'COMMONS.ACTIONS.CREATE'|translate" (click)="addAdministrator()">
+                        <span class="fas fa-plus"></span>
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="adminList" class="card-body scrollableContainer" style="max-height: 100px;">
+                <div *ngFor="let u of adminList" class="listItem">
+                    <div style="flex: 1; white-space: nowrap">
+                        <b>{{u.getShow()}}</b>
+                        <span class="text-muted">&nbsp;({{u.getEmail()}})</span>
+                    </div>
+                    <button *ngIf="adminList.length > 1" class="btn btn-light btn-sm" (click)="deleteAdministrator(u)">
+                        <span class="fas fa-trash"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Email -->
         <div class="card mb-2">
             <div class="card-header">

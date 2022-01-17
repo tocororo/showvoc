@@ -14,6 +14,8 @@ export class PasswordInputComponent implements OnInit {
     @Input() placeholder: string = "";
     @Input() btnClass: string;
     @Input() readonly: boolean = false;
+    @Input() invalid: boolean = false;
+
 
     private value: string;
     show: boolean = false;

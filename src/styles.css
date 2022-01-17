@@ -3,6 +3,10 @@ html, body {
     font-size: 15px;
 }
 
+b {
+    font-weight: 500;
+}
+
 app-root {
     height: 100%;
 }
@@ -67,7 +71,7 @@ app-root {
     transform: rotate(270deg);
 }
 
-input.invalid {
+input.invalid, input.invalid:focus {
     background: #ffaaaa;
 }
 

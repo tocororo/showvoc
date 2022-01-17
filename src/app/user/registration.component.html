@@ -5,38 +5,9 @@
     </div>
 
     <div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">{{'USER.ATTR.EMAIL_ADDRESS'|translate}}</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" [(ngModel)]="userForm.email" [placeholder]="'USER.ATTR.EMAIL_ADDRESS'|translate">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">{{'USER.ATTR.PASSWORD'|translate}}</label>
-            <div class="col-sm-10">
-                <password-input [(ngModel)]="userForm.password" [placeholder]="'USER.ATTR.PASSWORD'|translate"></password-input>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">{{'USER.PASSWORD.CONFIRM_PASSWORD'|translate}}</label>
-            <div class="col-sm-10">
-                <password-input [(ngModel)]="userForm.confirmedPassword" [placeholder]="'USER.PASSWORD.CONFIRM_PASSWORD'|translate"></password-input>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">{{'USER.ATTR.GIVEN_NAME'|translate}}</label>
-            <div class="col-sm-10">
-                <input class="form-control" [(ngModel)]="userForm.givenName" [placeholder]="'USER.ATTR.GIVEN_NAME'|translate">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">{{'USER.ATTR.FAMILY_NAME'|translate}}</label>
-            <div class="col-sm-10">
-                <input class="form-control" [(ngModel)]="userForm.familyName" [placeholder]="'USER.ATTR.FAMILY_NAME'|translate">
-            </div>
-        </div>
+        <user-create-form [(ngModel)]="userForm"></user-create-form>
 
-        <button type="submit" class="btn btn-info" (click)="submit()" [disabled]="isSumbitEnabled()">{{'COMMONS.ACTIONS.SUBMIT'|translate}}</button>
+        <button type="submit" class="btn btn-info float-right mt-2" (click)="submit()" [disabled]="!isDataValid()">{{'COMMONS.ACTIONS.SUBMIT'|translate}}</button>
     </div>
 
 </div>

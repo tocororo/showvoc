@@ -31,6 +31,27 @@ export class UserServices {
         return this.httpMgr.doPost(this.serviceName, "registerUser", params);
     }
 
+    createUser(email: string, password: string, givenName: string, familyName: string) {
+        let params: any = {
+            email: email,
+            password: password,
+            givenName: givenName,
+            familyName: familyName,
+        }
+        return this.httpMgr.doPost(this.serviceName, "createUser", params);
+    }
+
+    /**
+     * Deletes a user
+     * @param email
+     */
+     deleteUser(email: string) {
+        let params: any = {
+            email: email
+        }
+        return this.httpMgr.doPost(this.serviceName, "deleteUser", params);
+    }
+
     /**
      * Returns the user corrently logged (response contains user object).
      * Returns null if no user is logged (response contains empty user object).
@@ -49,6 +70,22 @@ export class UserServices {
                 } else { //no user object in the response => there is no user registered
                     this.router.navigate(["/registration"]);
                 }
+            })
+        );
+    }
+
+    /**
+     * Lists all the registered users
+     */
+     listUsers(): Observable<User[]> {
+        let params: any = {}
+        return this.httpMgr.doGet(this.serviceName, "listUsers", params).pipe(
+            map(stResp => {
+                let users: User[] = User.createUsersArray(stResp);
+                users.sort((u1: User, u2: User) => {
+                    return u1.getGivenName().localeCompare(u2.getGivenName());
+                });
+                return users;
             })
         );
     }

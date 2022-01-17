@@ -7,6 +7,7 @@ import { OWL, RDF, RDFS } from './Vocabulary';
  * Names of the property of the Settings (at every levels: system, project, user, project-user)
  */
  export enum SettingsEnum {
+    adminList = "adminList",
     conceptTree = "conceptTree",
     disableContributions = "disableContributions",
     instanceList = "instanceList",

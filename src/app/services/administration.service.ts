@@ -9,6 +9,13 @@ export class AdministrationServices {
 
     constructor(private httpMgr: HttpManager) { }
 
+    setAdministrator(email: string) {
+        let params = {
+            email: email,
+        }
+        return this.httpMgr.doPost(this.serviceName, "setAdministrator", params);
+    }
+
     /**
      * 
      * @param mailTo 

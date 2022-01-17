@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContributionModule } from '../contribution/contribution.module';
+import { UserModule } from '../user/user.module';
 import { WidgetModule } from '../widget/widget.module';
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { CreateProjectModal } from './projects-manager/create-project-modal';
@@ -41,6 +42,7 @@ import { SystemConfigurationComponent } from './system-configuration/system-conf
         NgbDropdownModule,
         RouterModule,
         TranslateModule,
+        UserModule,
         WidgetModule
     ],
     exports: [],

@@ -25,17 +25,19 @@ export class RegistrationComponent implements OnInit {
 		return this.userForm.password == this.userForm.confirmedPassword;
 	}
 
-	isSumbitEnabled(): boolean {
-		return (
-			(!this.userForm.email || this.userForm.email.trim() == "") ||
-			(!this.userForm.password || this.userForm.password.trim() == "") ||
-			(!this.userForm.confirmedPassword || this.userForm.confirmedPassword.trim() == "") ||
-			(!this.userForm.givenName || this.userForm.givenName.trim() == "") ||
-			(!this.userForm.familyName || this.userForm.familyName.trim() == "")
+	isDataValid(): boolean {
+        return (
+			(this.userForm.email && this.userForm.email.trim() != "") &&
+			(this.userForm.password && this.userForm.password.trim() != "") &&
+			(this.userForm.confirmedPassword && this.userForm.confirmedPassword.trim() != "") &&
+			(this.userForm.givenName && this.userForm.givenName.trim() != "") &&
+			(this.userForm.familyName && this.userForm.familyName.trim() != "")
 		);
-	}
+    }
 
 	submit() {
+		if (!this.isDataValid()) return;
+
 		//check email
 		if (!UserForm.isValidEmail(this.userForm.email)) {
 			this.basicModals.alert({ key: "COMMONS.STATUS.INVALID_DATA" }, { key: "MESSAGES.ENTER_VALID_EMAIL" }, ModalType.warning);

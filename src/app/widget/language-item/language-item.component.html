@@ -10,6 +10,6 @@
         </ng-template>
     </div>
     
-    <span *ngIf="showName" [ngClass]="{ grayText: disabled }" style="margin-left: 2px;">{{language.name}}</span>
-    <span *ngIf="showTag" [ngClass]="{ grayText: disabled }" style="margin-left: 2px;">({{language.tag}})</span>
+    <span *ngIf="showName" [ngClass]="{ 'text-muted': disabled }" style="margin-left: 2px;">{{language.name}}</span>
+    <span *ngIf="showTag" [ngClass]="{ 'text-muted': disabled }" style="margin-left: 2px;">({{language.tag}})</span>
 </div>

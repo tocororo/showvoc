@@ -42,6 +42,10 @@
             }
         },
         "SYSTEM": {
+            "ADMIN": {
+                "ADD_ADMIN": "Aggiungi amministratore",
+                "ADMINISTRATORS": "Amministratori"
+            },
             "COMMONS": {
                 "MAIL_PASSWORD_WARN": "La password è salvata in chiaro sul server"
             },

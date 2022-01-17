@@ -8,8 +8,10 @@ import { ModalsModule } from '../modal-dialogs/modals.module';
 import { WidgetModule } from '../widget/widget.module';
 import { ChangePasswordModal } from './change-password-modal';
 import { LoginComponent } from './login.component';
+import { RegistrationModal } from './registration-modal';
 import { RegistrationComponent } from './registration.component';
 import { ResetPasswordComponent } from './reset-password.component';
+import { UserCreateFormComponent } from './user-create-form.component';
 import { UserProfileComponent } from './user-profile.component';
 
 @NgModule({
@@ -17,7 +19,9 @@ import { UserProfileComponent } from './user-profile.component';
 		ChangePasswordModal,
         LoginComponent,
 		RegistrationComponent,
+		RegistrationModal,
 		ResetPasswordComponent,
+		UserCreateFormComponent,
 		UserProfileComponent
 	],
 	imports: [
@@ -29,9 +33,13 @@ import { UserProfileComponent } from './user-profile.component';
 		TranslateModule,
 		WidgetModule
 	],
+	exports: [
+		RegistrationModal,
+	],
 	providers: [],
 	entryComponents: [
-		ChangePasswordModal
+		ChangePasswordModal,
+		RegistrationModal
 	]
 })
 export class UserModule { }

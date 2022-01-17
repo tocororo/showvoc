@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
+import { Observable, of } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
-import { ModalType } from 'src/app/modal-dialogs/Modals';
+import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { ExtensionPointID, Scope, Settings, STProperties } from 'src/app/models/Plugins';
 import { RemoteRepositoryAccessConfig } from 'src/app/models/Project';
 import { SettingsEnum, ShowVocSettings, VocBenchConnectionShowVocSettings } from 'src/app/models/Properties';
+import { User, UserForm } from 'src/app/models/User';
 import { AdministrationServices } from 'src/app/services/administration.service';
 import { SettingsServices } from 'src/app/services/settings.service';
 import { ShowVocServices } from 'src/app/services/showvoc.service';
+import { UserServices } from 'src/app/services/user.service';
+import { RegistrationModal } from 'src/app/user/registration-modal';
 import { SVContext } from 'src/app/utils/SVContext';
 
 @Component({
@@ -19,6 +24,10 @@ import { SVContext } from 'src/app/utils/SVContext';
 export class SystemConfigurationComponent implements OnInit {
 
     private getSystemCoreSettingsFn: Observable<Settings> = this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM);
+
+    /* Administrators */
+    private users: User[];
+    adminList: User[];
 
     /* ST+VB configuration */
     private showVocSettings: ShowVocSettings;
@@ -46,7 +55,8 @@ export class SystemConfigurationComponent implements OnInit {
 
     
     constructor(private adminService: AdministrationServices, private svService: ShowVocServices, private settingsService: SettingsServices,
-        private basicModals: BasicModalsServices) { }
+        private usersService: UserServices, private basicModals: BasicModalsServices, private modalService: NgbModal,
+        private translateService: TranslateService) { }
 
     ngOnInit() {
         this.initAll()
@@ -55,13 +65,79 @@ export class SystemConfigurationComponent implements OnInit {
     private initAll() {
         this.getSystemCoreSettingsFn.subscribe(
             settings => {
-                this.initEmailConfigHanlder(settings);
+                this.initAdminListConfigHandler(settings);
+                this.initEmailConfigHandler(settings);
                 this.initRemoteConfigHandler(settings);
                 this.initVbConfigHandler(settings);
                 this.initOtherConfig(settings);
             }
         )
     }
+
+
+    /* ============================
+     * Admin managment
+     * ============================ */
+
+    private initAdminListConfig() {
+        this.getSystemCoreSettingsFn.subscribe(
+            settings => {
+                this.initAdminListConfigHandler(settings);
+            }
+        )
+    }
+
+    private initAdminListConfigHandler(settings: Settings) {
+        this.ensureUsersInitialized().subscribe(
+            () => {
+                let adminEmailList: string[] = settings.getPropertyValue(SettingsEnum.adminList);
+                this.adminList = adminEmailList.map(email => this.users.find(u => u.getEmail() == email));
+            }
+        );
+    }
+
+    private ensureUsersInitialized(): Observable<void> {
+        if (this.users == null) {
+            return this.usersService.listUsers().pipe(
+                map(users => {
+                    this.users = users;
+                })
+            )
+        } else {
+            return of();
+        }
+    }
+
+    addAdministrator() {
+        let modalRef: NgbModalRef = this.modalService.open(RegistrationModal, new ModalOptions('lg'));
+
+        modalRef.componentInstance.title = this.translateService.instant("ADMINISTRATION.SYSTEM.ADMIN.ADD_ADMIN");
+        modalRef.result.then(
+            (userForm: UserForm) => {
+                this.usersService.createUser(userForm.email, userForm.password, userForm.givenName, userForm.familyName).subscribe(
+                    () => {
+                        this.users = null; //so forces the users list to be reinitialized
+                        this.adminService.setAdministrator(userForm.email).subscribe(
+                            () => {
+                                this.initAdminListConfig();
+                            }
+                        )
+                    }
+                )
+            },
+            () => { }
+        );
+    }
+
+    deleteAdministrator(admin: User) {
+        this.usersService.deleteUser(admin.getEmail()).subscribe(
+            () => {
+                this.users = null; //so forces the users list to be reinitialized
+                this.initAdminListConfig();
+            }
+        )
+    }
+
 
     /* ============================
      * E-mail managment
@@ -70,12 +146,12 @@ export class SystemConfigurationComponent implements OnInit {
     private initEmailConfig() {
         this.getSystemCoreSettingsFn.subscribe(
             settings => {
-                this.initEmailConfigHanlder(settings);
+                this.initEmailConfigHandler(settings);
             }
         )
     }
 
-    private initEmailConfigHanlder(settings: Settings) {
+    private initEmailConfigHandler(settings: Settings) {
         let mailProp: STProperties = settings.getProperty(SettingsEnum.mail);
         let mailPropCloned = mailProp.clone();
         this.emailSettings = mailProp.value;
