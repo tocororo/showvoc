@@ -4,7 +4,7 @@ The full changelog of the platform includes also changes brought to the Semantic
 
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
-# 1.2.0 (dd-mm-yyyy)
+# 1.2.0 (26-01-2022)
   * Added possibility to create multiple administrators
   * Made dialogs draggable
   * Added localization for Spanish, thanks to Juan Antonio Pastor Sánchez for the contribution!
