@@ -9,6 +9,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
   * Made dialogs draggable
   * Added localization for Spanish, thanks to Juan Antonio Pastor Sánchez for the contribution!
   * Added Manchester Syntax highlighting in resource view
+  * Added possibility to hide the dataset name in the Dataset view through the URL parameter "hideDatasetName"
 
 # 1.1.1 (28-10-2021)
   * Added localization for French, thanks to Nathalie Vedovotto for the contribution!

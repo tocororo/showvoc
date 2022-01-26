@@ -17,10 +17,17 @@ export class DatasetViewComponent {
 
     project: Project;
 
-    constructor(private router: Router, private activeRoute: ActivatedRoute) { }
+    hideDatasetName: boolean;
+
+    constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
         this.project = SVContext.getWorkingProject();
+        this.activatedRoute.queryParams.subscribe(
+            params => {
+                this.hideDatasetName = params[ShowVocUrlParams.hideDatasetName] == "true";
+            }
+        );
     }
 
     isActiveRoute(route: string) {
@@ -32,10 +39,13 @@ export class DatasetViewComponent {
 
     goToRoute(route: string) {
         let queryParams = {};
-        if (this.activeRoute.snapshot.queryParams[ShowVocUrlParams.hideNav] != null) {
-            queryParams[ShowVocUrlParams.hideNav] = this.activeRoute.snapshot.queryParams[ShowVocUrlParams.hideNav];
+        if (this.activatedRoute.snapshot.queryParams[ShowVocUrlParams.hideNav] != null) {
+            queryParams[ShowVocUrlParams.hideNav] = this.activatedRoute.snapshot.queryParams[ShowVocUrlParams.hideNav];
         }
-        this.router.navigate([route], { relativeTo: this.activeRoute, queryParams: queryParams });
+        if (this.activatedRoute.snapshot.queryParams[ShowVocUrlParams.hideDatasetName] != null) {
+            queryParams[ShowVocUrlParams.hideDatasetName] = this.activatedRoute.snapshot.queryParams[ShowVocUrlParams.hideDatasetName];
+        }
+        this.router.navigate([route], { relativeTo: this.activatedRoute, queryParams: queryParams });
     }
 
 }

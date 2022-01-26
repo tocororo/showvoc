@@ -1,15 +1,9 @@
 <div class="container-fluid my-3">
 
     <div class="d-flex border-bottom py-2 px-3 mb-2">
-        <h3 class="m-0" style="display: inline; flex: 1;">{{project.getName()}}</h3>
+        <h3 *ngIf="!hideDatasetName" class="m-0" style="display: inline; flex: 1;">{{project.getName()}}</h3>
 
-        <ul class="nav nav-pills">
-            <!-- <li class="nav-item">
-                <a class="nav-link" [routerLink]="['data']" routerLinkActive="active" queryParamsHandling="merge">{{'DATA.DATA'|translate}}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['sparql']" routerLinkActive="active" queryParamsHandling="merge">Sparql</a>
-            </li> -->
+        <ul class="nav nav-pills ml-auto">
             <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" (click)="goToRoute('data')" [ngClass]="{ active: isActiveRoute('data') }">{{'DATA.DATA'|translate}}</a>
             </li>

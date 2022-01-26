@@ -132,10 +132,13 @@ export class ProjectGuard implements CanActivate {
                                     this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_NOT_FOUND" }, { key: "MESSAGES.UNEXISTING_OR_CLOSED_DATASET", params: { datasetId: paramProject } }, ModalType.warning).then(
                                         () => {
                                             /* queryParamsHandling doesn't work in canActivate (https://stackoverflow.com/a/45843291/5805661)
-                                            in order to preserve hideNav param I need to set it manually */
+                                            in order to preserve query params I need to set them manually */
                                             let queryParams = {};
                                             if (route.queryParams[ShowVocUrlParams.hideNav] != null) {
                                                 queryParams[ShowVocUrlParams.hideNav] = route.queryParams[ShowVocUrlParams.hideNav];
+                                            }
+                                            if (route.queryParams[ShowVocUrlParams.hideDatasetName] != null) {
+                                                queryParams[ShowVocUrlParams.hideDatasetName] = route.queryParams[ShowVocUrlParams.hideDatasetName];
                                             }
                                             this.router.navigate(["/home"], { queryParams: queryParams });
                                         }

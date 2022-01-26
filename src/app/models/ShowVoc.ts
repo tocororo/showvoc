@@ -16,6 +16,7 @@ export enum ShowVocConversionFormat {
 }
 
 export enum ShowVocUrlParams {
+    hideDatasetName = "hideDatasetName",
     hideNav = "hideNav",
     resId = "resId"
 }
