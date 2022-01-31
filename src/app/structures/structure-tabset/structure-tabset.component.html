@@ -15,7 +15,7 @@
                     </concept-tree-panel>
                 </ng-template>
             </li>
-            <li *ngIf="isTabVisible('collection')" [ngbNavItem]="'collection'">
+            <li *ngIf="isTabVisible('skosCollection')" [ngbNavItem]="'skosCollection'">
                 <a ngbNavLink>{{'DATA.COLLECTION.COLLECTION'|translate}}</a>
                 <ng-template ngbNavContent>
                     <collection-tree-panel [context]="context" (nodeSelected)="onNodeSelected($event)">
