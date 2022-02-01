@@ -37,7 +37,7 @@ export class DatasetsComponent implements OnInit {
     translationParam: { instanceName: string }
 
     constructor(private router: Router, private projectService: ProjectsServices, private eventHandler: SVEventHandler) {
-        this.eventSubscriptions.push(eventHandler.projectUpdatedEvent.subscribe(
+        this.eventSubscriptions.push(this.eventHandler.projectUpdatedEvent.subscribe(
             () => this.initDatasets())
         );
     }
@@ -95,7 +95,7 @@ export class DatasetsComponent implements OnInit {
         this.filterDatasets();
     }
 
-    private goToProject(project: Project) {
+    goToProject(project: Project) {
         this.router.navigate(["/datasets/" + project.getName()]);
     }
 

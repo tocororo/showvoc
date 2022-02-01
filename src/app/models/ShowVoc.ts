@@ -16,6 +16,10 @@ export enum ShowVocConversionFormat {
 }
 
 export enum ShowVocUrlParams {
+    /*
+    hideNav and hideDatasetName are preserved only when navigating within the Dataset->Data view, since they are only used for restricting the usage of
+    ShowVoc into a certain dataset. This means that in other navigation, they might be lost
+    */
     hideDatasetName = "hideDatasetName",
     hideNav = "hideNav",
     resId = "resId"

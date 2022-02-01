@@ -20,12 +20,13 @@ export class DatasetDataComponent implements OnInit {
 
     selectedLinkset: LinksetMetadata;
 
+
     constructor(private activatedRoute: ActivatedRoute, private router: Router, private location: Location, private resourcesService: ResourcesServices) { }
 
     ngOnInit() {
         /**
          * The subscription to queryParams is MANDATORY in order to trigger the handler each time the resId param changes
-         * (not only at the first initialization of the component)
+         * (not only at the first initialization of the component, but also when user changes resId by going back to a previous page in the browser)
          */
         this.activatedRoute.queryParams.subscribe(
             params => {
@@ -54,7 +55,7 @@ export class DatasetDataComponent implements OnInit {
         const urlTree = this.router.createUrlTree([], {
             queryParams: { [ShowVocUrlParams.resId]: node.getValue().getIRI() },
             queryParamsHandling: 'merge',
-            preserveFragment: true 
+            preserveFragment: true
         });
         this.location.go(urlTree.toString());
     }
@@ -66,11 +67,14 @@ export class DatasetDataComponent implements OnInit {
     onLinksetSelected(linkset: LinksetMetadata) {
         this.selectedLinkset = linkset;
         this.selectedResource = null;
-        //update the url removing the query parameters eventually set by the selected node
-        this.router.navigate([], { 
-            relativeTo: this.activatedRoute, 
-            replaceUrl: true,
+        //update the url removing the query parameter resId eventually set by a previously selected node in other structures (but keep hideNav and hideDatasetName).
+        //For this purpose use the same logic used in onNodeSelected()
+        const urlTree = this.router.createUrlTree([], {
+            queryParams: { [ShowVocUrlParams.resId]: null },
+            queryParamsHandling: 'merge',
+            preserveFragment: true
         });
+        this.location.go(urlTree.toString());
     }
 
 }
