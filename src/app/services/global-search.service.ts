@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IRI, Literal } from '../models/Resources';
 import { GlobalSearchResult, SearchResultDetails } from '../models/Search';
-import { HttpManager, SVRequestOptions } from "../utils/HttpManager";
+import { HttpManager, STRequestOptions } from "../utils/HttpManager";
 
 @Injectable()
 export class GlobalSearchServices {
@@ -31,11 +31,10 @@ export class GlobalSearchServices {
             maxResults: maxResults,
             searchInLocalName: searchInLocalName
         };
-        let options: SVRequestOptions = new SVRequestOptions({
-            errorAlertOpt: { 
-                show: true,
-                exceptionsToSkip: ['org.apache.lucene.index.IndexNotFoundException'] 
-            } 
+        let options: STRequestOptions = new STRequestOptions({
+            errorHandlers: [{
+                className: "org.apache.lucene.index.IndexNotFoundException", action: 'skip'
+            }]
         });
         return this.httpMgr.doGet(this.serviceName, "search", params, options).pipe(
             map(results => {

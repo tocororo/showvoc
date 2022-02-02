@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { ExtensionPoint, Scope, Settings } from '../models/Plugins';
 import { Project } from '../models/Project';
 import { User } from '../models/User';
-import { HttpManager, SVRequestOptions } from "../utils/HttpManager";
+import { HttpManager, STRequestOptions } from "../utils/HttpManager";
 
 @Injectable()
 export class SettingsServices {

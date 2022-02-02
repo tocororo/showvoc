@@ -5,7 +5,7 @@ import { ConfigurationObject, Reference } from '../models/Configuration';
 import { PluginSpecification } from '../models/Plugins';
 import { RepositoryAccess } from '../models/Project';
 import { IRI } from '../models/Resources';
-import { HttpManager, SVRequestOptions } from "../utils/HttpManager";
+import { HttpManager, STRequestOptions } from "../utils/HttpManager";
 import { TransitiveImportMethodAllowance } from '../models/Metadata';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class ShowVocServices {
      * 
      */
     initShowVoc(): Observable<void> {
-        var params = {};
+        let params = {};
         return this.httpMgr.doPost(this.serviceName, "initShowVoc", params);
     }
 
@@ -27,25 +27,24 @@ export class ShowVocServices {
      * 
      */
     testVocbenchConfiguration(): Observable<void> {
-        var params = {};
-        let options: SVRequestOptions = new SVRequestOptions({
-            errorAlertOpt: { 
-                show: false, //don't automatically show alert in case of error
-            } 
+        let params = {};
+        let options: STRequestOptions = new STRequestOptions({
+            errorHandlers: [{
+                className: "*", action: 'skip'
+            }]
         });
         return this.httpMgr.doGet(this.serviceName, "testVocbenchConfiguration", params, options);
-        // return this.httpMgr.doGet(this.serviceName, "testVocbenchConfiguration", params);
     }
 
     /**
      * 
      */
     getContributionReferences(): Observable<Reference[]> {
-        var params = {};
+        let params = {};
         return this.httpMgr.doGet(this.serviceName, "getContributionReferences", params).pipe(
             map(stResp => {
                 let references: Reference[] = [];
-                for (var i = 0; i < stResp.length; i++) {
+                for (let i = 0; i < stResp.length; i++) {
                     references.push(Reference.deserialize(stResp[i]));
                 }
                 return references;
@@ -58,7 +57,7 @@ export class ShowVocServices {
      * @param configuration 
      */
     submitContribution(configuration: ConfigurationObject) {
-        var params = {
+        let params = {
             configuration: JSON.stringify(configuration)
         };
         return this.httpMgr.doPost(this.serviceName, "submitContribution", params);
@@ -69,7 +68,7 @@ export class ShowVocServices {
      * @param relativeReference 
      */
     rejectContribution(relativeReference: string) {
-        var params = {
+        let params = {
             relativeReference: relativeReference
         };
         return this.httpMgr.doPost(this.serviceName, "rejectContribution", params);
@@ -88,7 +87,7 @@ export class ShowVocServices {
     approveStableContribution(projectName: string, model: IRI, lexicalizationModel: IRI, baseURI: string,
         repositoryAccess: RepositoryAccess, coreRepoSailConfigurerSpecification: PluginSpecification,
         configurationReference: string) {
-        var params = {
+        let params = {
             projectName: projectName,
             model: model,
             lexicalizationModel: lexicalizationModel,
@@ -112,7 +111,7 @@ export class ShowVocServices {
      */
     approveDevelopmentContribution(projectName: string, model: IRI, lexicalizationModel: IRI, baseURI: string, 
         coreRepoSailConfigurerSpecification: PluginSpecification, configurationReference: string) {
-        var params = {
+        let params = {
             projectName: projectName,
             model: model,
             lexicalizationModel: lexicalizationModel,
@@ -129,7 +128,7 @@ export class ShowVocServices {
      * @param configurationReference 
      */
     approveMetadataContribution(configurationReference: string) {
-        var params = {
+        let params = {
             configurationReference: configurationReference,
         };
         return this.httpMgr.doPost(this.serviceName, "approveMetadataContribution", params);
@@ -143,7 +142,7 @@ export class ShowVocServices {
      */
     loadStableContributionData(token: string, projectName: string, contributorEmail: string, inputFile: File, format: string,
         rdfLifterSpec: PluginSpecification, transitiveImportAllowance: TransitiveImportMethodAllowance) {
-        var params = {
+        let params = {
             token: token,
             projectName: projectName,
             contributorEmail: contributorEmail,
@@ -166,7 +165,7 @@ export class ShowVocServices {
      */
     loadDevContributionData(token: string, projectName: string, contributorEmail: string, inputFile: File, format: string,
         rdfLifterSpec: PluginSpecification, transitiveImportAllowance: TransitiveImportMethodAllowance) {
-        var params = {
+        let params = {
             token: token,
             projectName: projectName,
             contributorEmail: contributorEmail,
@@ -184,7 +183,7 @@ export class ShowVocServices {
      * @param status 
      */
     setProjectStatus(projectName: string, status: string) {
-        var params = {
+        let params = {
             projectName: projectName,
             status: status
         };

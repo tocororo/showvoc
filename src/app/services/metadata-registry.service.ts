@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { DatasetMetadata, LinksetMetadata, Target } from '../models/Metadata';
 import { Project } from '../models/Project';
 import { AnnotatedValue, IRI, Literal, ResourcePosition } from '../models/Resources';
-import { SVRequestOptions } from '../utils/HttpManager';
+import { STRequestOptions } from '../utils/HttpManager';
 import { ResourceDeserializer, ResourceUtils } from '../utils/ResourceUtils';
 import { StMetadataRegistry } from '../utils/STMetadataRegistry';
 
@@ -139,11 +139,10 @@ export class MetadataRegistryServices {
         var params: any = {
             iri: iri
         }
-        let options: SVRequestOptions = new SVRequestOptions({
-            errorAlertOpt: { 
-                show: true,
-                exceptionsToSkip: ['it.uniroma2.art.semanticturkey.exceptions.DeniedOperationException'] 
-            } 
+        let options: STRequestOptions = new STRequestOptions({
+            errorHandlers: [{
+                className: "it.uniroma2.art.semanticturkey.exceptions.DeniedOperationException", action: 'skip'
+            }]
         });
         return this.httpMgr.doGet(this.serviceName, "discoverDatasetMetadata", params, options).pipe(
             map(stResp => {

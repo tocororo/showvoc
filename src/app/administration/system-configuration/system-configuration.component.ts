@@ -90,8 +90,8 @@ export class SystemConfigurationComponent implements OnInit {
     private initAdminListConfigHandler(settings: Settings) {
         this.ensureUsersInitialized().subscribe(
             () => {
-                let adminEmailList: string[] = settings.getPropertyValue(SettingsEnum.adminList);
-                this.adminList = adminEmailList.map(email => this.users.find(u => u.getEmail() == email));
+                let adminIriList: string[] = settings.getPropertyValue(SettingsEnum.adminList);
+                this.adminList = adminIriList.map(iri => this.users.find(u => u.getIri() == iri));
             }
         );
     }
@@ -310,7 +310,7 @@ export class SystemConfigurationComponent implements OnInit {
     }
 
     isVbConfigChanged() {
-        for (var key in this.pristineVbConnConfig) {
+        for (let key in this.pristineVbConnConfig) {
             if (this.pristineVbConnConfig[key] != this.vbConnectionConfig[key]) {
                 return true;
             }

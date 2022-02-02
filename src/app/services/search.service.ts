@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { SearchMode, StatusFilter } from "../models/Properties";
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource, Value } from '../models/Resources';
 import { TripleForSearch } from '../models/Search';
-import { HttpManager, SVRequestOptions } from "../utils/HttpManager";
+import { HttpManager, STRequestOptions } from "../utils/HttpManager";
 import { ResourceDeserializer } from '../utils/ResourceUtils';
 
 @Injectable()
@@ -39,7 +39,12 @@ export class SearchServices {
             includeLocales: includeLocales,
             schemes: schemes
         };
-        return this.httpMgr.doGet(this.serviceName, "searchResource", params).pipe(
+        let options = new STRequestOptions({
+            errorHandlers: [{
+                    className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
+            }]
+        })
+        return this.httpMgr.doGet(this.serviceName, "searchResource", params, options).pipe(
             map(stResp => {
                 return ResourceDeserializer.createResourceArray(stResp);
             })
@@ -69,7 +74,12 @@ export class SearchServices {
             langs: langs,
             includeLocales: includeLocales
         };
-        return this.httpMgr.doGet(this.serviceName, "searchLexicalEntry", params).pipe(
+        let options = new STRequestOptions({
+            errorHandlers: [{
+                    className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
+            }]
+        })
+        return this.httpMgr.doGet(this.serviceName, "searchLexicalEntry", params, options).pipe(
             map(stResp => {
                 return ResourceDeserializer.createIRIArray(stResp, ["index"]);
             })
@@ -88,7 +98,7 @@ export class SearchServices {
      * @return an array of resources
      */
     searchInstancesOfClass(cls: IRI, searchString: string, useLocalName: boolean, useURI: boolean, useNotes: boolean,
-        searchMode: SearchMode, langs?: string[], includeLocales?: boolean, options?: SVRequestOptions): Observable<AnnotatedValue<IRI>[]> {
+        searchMode: SearchMode, langs?: string[], includeLocales?: boolean, options?: STRequestOptions): Observable<AnnotatedValue<IRI>[]> {
         let params: any = {
             cls: cls,
             searchString: searchString,
@@ -103,6 +113,11 @@ export class SearchServices {
         if (includeLocales != null) {
             params.includeLocales = includeLocales;
         }
+        options = new STRequestOptions({
+            errorHandlers: [{
+                    className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
+            }]
+        }).merge(options);
         return this.httpMgr.doGet(this.serviceName, "searchInstancesOfClass", params, options).pipe(
             map(stResp => {
                 return ResourceDeserializer.createIRIArray(stResp);
@@ -161,7 +176,12 @@ export class SearchServices {
             schemes: schemes,
             cls: cls
         };
-        return this.httpMgr.doGet(this.serviceName, "searchStringList", params);
+        let options = new STRequestOptions({
+            errorHandlers: [{
+                    className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
+            }]
+        })
+        return this.httpMgr.doGet(this.serviceName, "searchStringList", params, options);
     }
 
 
@@ -218,7 +238,12 @@ export class SearchServices {
         if (outgoingSearch != null) {
             params.outgoingSearch = this.serializeSearchLinks(outgoingSearch);
         }
-        return this.httpMgr.doPost(this.serviceName, "advancedSearch", params).pipe(
+        let options = new STRequestOptions({
+            errorHandlers: [{
+                    className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
+            }]
+        })
+        return this.httpMgr.doPost(this.serviceName, "advancedSearch", params, options).pipe(
             map(stResp => {
                 return ResourceDeserializer.createResourceArray(stResp);
             })

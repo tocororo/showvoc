@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AnnotatedValue, IRI, Resource } from '../models/Resources';
-import { HttpManager, SVRequestOptions } from "../utils/HttpManager";
+import { HttpManager, STRequestOptions } from "../utils/HttpManager";
 import { ResourceDeserializer } from '../utils/ResourceUtils';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class ClassesServices {
 	 * (so more, role, explicit etc...)
      * @param classList
      */
-    getClassesInfo(classList: IRI[], options?: SVRequestOptions): Observable<AnnotatedValue<IRI>[]> {
+    getClassesInfo(classList: IRI[], options?: STRequestOptions): Observable<AnnotatedValue<IRI>[]> {
         var params: any = {
             classList: classList
         };
@@ -32,7 +32,7 @@ export class ClassesServices {
      * Returns a list of AnnotatedValue subClasses of the given class
      * @param superClass class of which retrieve its subClasses
 	 */
-    getSubClasses(superClass: IRI, numInst: boolean, options?: SVRequestOptions): Observable<AnnotatedValue<IRI>[]> {
+    getSubClasses(superClass: IRI, numInst: boolean, options?: STRequestOptions): Observable<AnnotatedValue<IRI>[]> {
         var params: any = {
             superClass: superClass,
             numInst: numInst
@@ -48,7 +48,7 @@ export class ClassesServices {
      * Returns the (explicit) instances of the class cls.
 	 * @param cls
      */
-    getInstances(cls: IRI, options?: SVRequestOptions): Observable<AnnotatedValue<Resource>[]> {
+    getInstances(cls: IRI, options?: STRequestOptions): Observable<AnnotatedValue<Resource>[]> {
         var params: any = {
             cls: cls
         };
@@ -64,7 +64,7 @@ export class ClassesServices {
      * 
      * @param cls 
      */
-    getNumberOfInstances(cls: IRI, options?: SVRequestOptions): Observable<number> {
+    getNumberOfInstances(cls: IRI, options?: STRequestOptions): Observable<number> {
         var params: any = {
             cls: cls
         };

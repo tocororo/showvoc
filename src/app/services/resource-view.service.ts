@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resource } from '../models/Resources';
-import { HttpManager, SVRequestOptions } from "../utils/HttpManager";
+import { HttpManager, STRequestOptions } from "../utils/HttpManager";
 
 @Injectable()
 export class ResourceViewServices {
@@ -19,10 +19,10 @@ export class ResourceViewServices {
             includeInferred: includeInferred,
             resourcePosition: resourcePosition
         };
-        var options: SVRequestOptions = new SVRequestOptions({
-            errorAlertOpt: { 
-                show: true, exceptionsToSkip: ['java.net.UnknownHostException']
-            } 
+        var options: STRequestOptions = new STRequestOptions({
+            errorHandlers: [{
+                className: "java.net.UnknownHostException", action: 'skip'
+            }]
         });
         return this.httpMgr.doGet(this.serviceName, "getResourceView", params, options);
     }

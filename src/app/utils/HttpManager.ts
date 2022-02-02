@@ -23,15 +23,13 @@ export class HttpManager {
     protected serverhost: string;
 
     //default request options, to eventually override through options parameter in doGet, doPost, ...
-    private defaultRequestOptions: SVRequestOptions = new SVRequestOptions({
-        errorAlertOpt: { show: true, exceptionsToSkip: [] }
-    });
+    private defaultRequestOptions: STRequestOptions = new STRequestOptions();
 
     constructor(private http: HttpClient, private router: Router, private basicModals: BasicModalsServices) {
         this.serverhost = HttpManager.getServerHost();
     }
 
-    doGet(service: string, request: string, params: STRequestParams, options?: SVRequestOptions) {
+    doGet(service: string, request: string, params: STRequestParams, options?: STRequestOptions) {
         options = this.defaultRequestOptions.merge(options);
 
         let url: string = this.getRequestBaseUrl(service, request);
@@ -49,18 +47,18 @@ export class HttpManager {
 
         //execute request
         return this.http.get(url, httpOptions).pipe(
-            map(res => { 
-                return this.handleOkOrErrorResponse(res); 
+            map(res => {
+                return this.handleOkOrErrorResponse(res);
             }),
             catchError(error => {
-                return this.handleError(error, options.errorAlertOpt);
+                return this.handleError(error, options.errorHandlers);
             })
         );
     }
 
-    doPost(service: string, request: string, params: STRequestParams, options?: SVRequestOptions) {
+    doPost(service: string, request: string, params: STRequestParams, options?: STRequestOptions) {
         options = this.defaultRequestOptions.merge(options);
-        
+
         let url: string = this.getRequestBaseUrl(service, request);
 
         //add ctx parameters
@@ -79,17 +77,17 @@ export class HttpManager {
 
         //execute request
         return this.http.post(url, postData, httpOptions).pipe(
-            map(res => { 
-                return this.handleOkOrErrorResponse(res); 
+            map(res => {
+                return this.handleOkOrErrorResponse(res);
             }),
             catchError(error => {
-                return this.handleError(error, options.errorAlertOpt);
+                return this.handleError(error, options.errorHandlers);
             })
         );
     }
 
 
-    uploadFile(service: string, request: string, params: STRequestParams, options?: SVRequestOptions) {
+    uploadFile(service: string, request: string, params: STRequestParams, options?: STRequestOptions) {
         options = this.defaultRequestOptions.merge(options);
 
         let url: string = this.getRequestBaseUrl(service, request);
@@ -114,11 +112,11 @@ export class HttpManager {
 
         //execute request
         return this.http.post(url, formData, httpOptions).pipe(
-            map(res => { 
-                return this.handleOkOrErrorResponse(res); 
+            map(res => {
+                return this.handleOkOrErrorResponse(res);
             }),
             catchError(error => {
-                return this.handleError(error, options.errorAlertOpt);
+                return this.handleError(error, options.errorHandlers);
             })
         );
     }
@@ -129,16 +127,16 @@ export class HttpManager {
      * @param request the request name
      * @param params the parameters to send in the request. This parameter must be an object like:
      *  { 
-	 * 	   "urlParName1" : "urlParValue1",
-	 * 	   "urlParName2" : "urlParValue2",
-	 * 	   "urlParName3" : "urlParValue3",
-	 *  }
+     * 	   "urlParName1" : "urlParValue1",
+     * 	   "urlParName2" : "urlParValue2",
+     * 	   "urlParName3" : "urlParValue3",
+     *  }
      * @param post tells if the download is done via post-request (e.g. Export.export() service)
      * @param options further options that overrides the default ones
      */
-    downloadFile(service: string, request: string, params: STRequestParams, post?: boolean, options?: SVRequestOptions): Observable<Blob> {
+    downloadFile(service: string, request: string, params: STRequestParams, post?: boolean, options?: STRequestOptions): Observable<Blob> {
         options = this.defaultRequestOptions.merge(options);
-        
+
         let url: string = this.getRequestBaseUrl(service, request);
 
         if (post) {
@@ -158,11 +156,11 @@ export class HttpManager {
             };
 
             return this.http.post(url, postData, httpOptions).pipe(
-                map(res => { 
-                    return this.arrayBufferRespHandler(res); 
+                map(res => {
+                    return this.arrayBufferRespHandler(res);
                 }),
-                catchError(error => { 
-                    return this.handleError(error, options.errorAlertOpt);
+                catchError(error => {
+                    return this.handleError(error, options.errorHandlers);
                 })
             );
         } else { //GET
@@ -179,11 +177,11 @@ export class HttpManager {
 
             //execute request
             return this.http.get(url, httpOptions).pipe(
-                map(res => { 
+                map(res => {
                     return this.arrayBufferRespHandler(res);
                 }),
                 catchError(error => {
-                    return this.handleError(error, options.errorAlertOpt);
+                    return this.handleError(error, options.errorHandlers);
                 })
             );
         }
@@ -197,14 +195,14 @@ export class HttpManager {
      * @param request the request name
      * 
      */
-     protected getRequestBaseUrl(service: string, request: string): string {
+    protected getRequestBaseUrl(service: string, request: string): string {
         return this.serverhost + "/" + HttpManager.serverpath + "/" + HttpManager.groupId + "/" + HttpManager.artifactId + "/" + service + "/" + request + "?";
     }
 
     /**
      * Returns the request context parameters.
      */
-     private getContextParametersForUrl(): string {
+    private getContextParametersForUrl(): string {
         let params: string = "";
 
         /**
@@ -238,20 +236,13 @@ export class HttpManager {
         }
 
         //language (if languages provided in cookies, override the preference stored server side through the ctx_langs param)
-        // let proj = SVContext.getWorkingProject();
-        // if (proj != null && ctxProject != null && proj.getName() == ctxProject.getName()) {
-        //     let langsCookie = Cookie.getUserProjectCookiePref(Properties.pref_languages, proj);
-        //     if (langsCookie != null) {
-        //         params += "ctx_langs=" + langsCookie + "&";
-        //     }
-        // }
         if (ctxProject != null) {
             let langsCookie = Cookie.getCookie(Properties.pref_languages, ctxProject);
             if (langsCookie != null) {
                 params += "ctx_langs=" + langsCookie + "&";
             }
         }
-        
+
         return params;
     }
 
@@ -305,7 +296,7 @@ export class HttpManager {
      * Second step of the "pipeline" of response management:
      * Gets the json or xml response and detect whether it is an error response, in case throws an Error, otherwise return the
      * response data content
-     * @param res response json or xml returned by handleJsonXmlResponse
+     * @param res 
      */
     private handleOkOrErrorResponse(res: any | Document) {
         if (STResponseUtils.isErrorResponse(res)) {
@@ -322,7 +313,7 @@ export class HttpManager {
      * Analyze the err object in input, shows eventually the error modal and then forward an Error object.
      * @param err
      */
-    private handleError(err: HttpErrorResponse | Error, errorAlertOpt: ErrorAlertOptions) {
+    private handleError(err: HttpErrorResponse | Error, errorHandlers: ExceptionHandlerInfo[]) {
         let error: Error = new Error();
 
         if (err instanceof HttpErrorResponse) { //error thrown by the angular HttpClient get() or post()
@@ -352,7 +343,7 @@ export class HttpManager {
                         this.basicModals.alert({ key: "COMMONS.STATUS.ERROR" }, errorMsg, ModalType.error).then(
                             () => {
                                 //in case user is not logged at all (probably session timedout), reset context and redirect to home
-                                if (err.status == 401) { 
+                                if (err.status == 401) {
                                     SVContext.resetContext();
                                     HttpServiceContext.resetContext();
                                     if (this.router.url != "/login") {
@@ -361,7 +352,7 @@ export class HttpManager {
                                     }
                                 };
                             },
-                            () => {}
+                            () => { }
                         );
                     } else if (status == 500 || status == 404) { //server error (e.g. out of memory)
                         let errorMsg = (err.statusText != null ? err.statusText : "Unknown response from the server") + " (status: " + err.status + ")";
@@ -373,14 +364,25 @@ export class HttpManager {
             }
         } else if (err instanceof Error) { //error already parsed and thrown in handleOkOrErrorResponse or arrayBufferRespHandler
             error = err;
-            if (
-                errorAlertOpt.show && 
-                (errorAlertOpt.exceptionsToSkip == null || errorAlertOpt.exceptionsToSkip.indexOf(error.name) == -1) &&
-                HttpServiceContext.isErrorInterceptionEnabled()
-            ) { //if the alert should be shown
-                let errorMsg = error.message != null ? error.message : "Unknown response from the server";
-                let errorDetails = error.stack ? error.stack : error.name;
-                this.basicModals.alert({ key: "COMMONS.STATUS.ERROR" }, errorMsg, ModalType.error, errorDetails);
+            if (HttpServiceContext.isErrorInterceptionEnabled()) {
+                let handleErrorDefault: boolean = true;
+                if (errorHandlers) {
+                    let errHandler = errorHandlers.find(h => h.className == error.name || h.className == "*");
+                    if (errHandler) {
+                        if (errHandler.action == 'warning') {
+                            let errorMsg = error.message;
+                            this.basicModals.alert({key:"STATUS.WARNING"}, errorMsg, ModalType.warning);
+                            handleErrorDefault = false; //handled with a simple warning alert, so skip the default "error" alert
+                        } else if (errHandler.action == 'skip') {
+                            handleErrorDefault = false; //simply skip the alert (it will be handled ad-hoc by the component that invoked the service)
+                        }
+                    }
+                } 
+                if (handleErrorDefault) { //if the alert should be shown
+                    let errorMsg = error.message != null ? error.message : "Unknown response from the server";
+                    let errorDetails = error.stack ? error.stack : error.name;
+                    this.basicModals.alert({key:"COMMONS.STATUS.ERROR"}, errorMsg, ModalType.error, errorDetails);
+                }
             }
         }
         return throwError(error);
@@ -398,7 +400,7 @@ export class HttpManager {
     private arrayBufferRespHandler(resp: HttpResponse<ArrayBuffer>) {
         let arrayBuffer = resp.body;
         let respContType = resp.headers.get("content-type");
-        if (respContType.includes(STResponseUtils.ContentType.applicationJson + ";")) { //could be an error response
+        if (respContType && respContType.includes(STResponseUtils.ContentType.applicationJson+";")) { //could be an error response
             //convert arrayBuffer to json object
             let respContentAsString = String.fromCharCode.apply(String, new Uint8Array(arrayBuffer));
             let jsonResp = JSON.parse(respContentAsString);
@@ -497,12 +499,12 @@ export class HttpServiceContext {
 
 
 //inspired by angular RequestOptions
-export class SVRequestOptions {
+export class STRequestOptions {
 
-    errorAlertOpt: ErrorAlertOptions;
-    
-    constructor({ errorAlertOpt }: SVRequestOptionsArgs = {}) {
-        this.errorAlertOpt = errorAlertOpt != null ? errorAlertOpt : null;
+    errorHandlers: ExceptionHandlerInfo[];
+
+    constructor({ errorHandlers, ctxProject }: STRequestOptionsArgs = {}) {
+        this.errorHandlers = errorHandlers != null ? errorHandlers : null;
     }
 
     /**
@@ -510,25 +512,38 @@ export class SVRequestOptions {
      * This method will not change the values of the instance on which it is being  called.
      * @param options 
      */
-    merge(options?: SVRequestOptions): SVRequestOptions {
+    merge(options?: STRequestOptions): STRequestOptions {
         //if options is provided and its parameters is not null, override the value of the current instance
-        return new SVRequestOptions({
-            errorAlertOpt: options && options.errorAlertOpt != null ? options.errorAlertOpt : this.errorAlertOpt
+        return new STRequestOptions({
+            errorHandlers: options && options.errorHandlers != null ? options.errorHandlers : this.errorHandlers
         });
     }
 
+    public static getRequestOptions(projectCtx?: ProjectContext): STRequestOptions {
+        if (projectCtx != null) {
+            return new STRequestOptions({ ctxProject: projectCtx.getProject() });
+        } else {
+            return null;
+        }
+    }
+
 }
+
 //inspired by angular RequestOptionsArgs
-interface SVRequestOptionsArgs {
-    /**
-     * To prevent an alert dialog to show up in case of error during requests.
-     * Is useful to handle the error from the component that invokes the service.
-     */
-    errorAlertOpt?: ErrorAlertOptions;
+interface STRequestOptionsArgs {
+    errorHandlers?: ExceptionHandlerInfo[];
+    ctxProject?: Project;
 }
-class ErrorAlertOptions {
-    show: boolean; //if true HttpManager show the error alert in case of error response, skip the show alert otherwise
-    exceptionsToSkip?: string[]; //if provided, tells for which exceptions the alert should be skipped (useful only if show is true)
+
+export interface ExceptionHandlerInfo {
+    className: string; //"*" for any exception
+    /**
+     * tells how the exception should be handled: 
+     * - skip: doesn't show any alert (it will be handled ad-hoc into the component which invoked the service)
+     * - warning: show the alert as warning, not as error (this can be used when the exception doesn't need to be handled in the component, but the error message
+     * is quite user-friendly and can be simply shown in a warning dialog)
+     */
+    action: 'skip' | 'warning';
 }
 
 export class STRequestParams { [key: string]: any }
