@@ -7,6 +7,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 # 1.2.1 (dd-mm-yyyy)
   * Added the possibility to edit the remote repo configuration of a dataset
   * Preserved hideNav param when selecting an alignment in Alignments tab
+  * Fixed bug when creating dataset using GraphDB Free configuration
 
 # 1.2.0 (26-01-2022)
   * Added possibility to create multiple administrators
