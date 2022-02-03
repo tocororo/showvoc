@@ -13,7 +13,6 @@ export class DeleteRemoteRepoReportModal {
     @Input() deletingRepositories: RemoteRepositorySummary[];
     @Input() exceptions: ExceptionDAO[];
 
-    message: string;
     failReports: FailReport[];
 
     constructor(public activeModal: NgbActiveModal) { }
@@ -28,7 +27,6 @@ export class DeleteRemoteRepoReportModal {
                 });
             }
         });
-        this.message = "The deletion of the following remote " + ((this.failReports.length > 1) ? "repositories" : "repository") + " has failed:";
     }
 
     ok() {

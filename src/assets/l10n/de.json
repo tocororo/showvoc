@@ -11,6 +11,7 @@
                 "DELETE_INDEX": "Index löschen",
                 "EDIT_DESCRIPTION": "Beschreibung bearbeiten",
                 "EDIT_FACETS": "Facetten bearbeiten",
+                "EDIT_REMOTE_REPO_CONFIG": "Remote Repo-Konfiguration bearbeiten",
                 "EDIT_SETTINGS": "Einstellungen bearbeiten",
                 "LOAD_DATA": "Daten laden",
                 "MAKE_PUBLIC": "Status ändern zu 'Öffentlich' ",
@@ -20,12 +21,19 @@
                 "USE_DATASET_BASEURI": "Base-URI des Datasets verwenden"
             },
             "REMOTE": {
+                "BATCH_MODIFY": "Bulk Edit",
+                "BATCH_MODIFY_INFO": "Ändert auf einmal die Zugriffsdaten von (möglicherweise) vielen Repositorys mit derselben Server-URL.",
                 "CONFIG": {
                     "NO_CONFIG_FOUND": "Keine Remote-Access-Konfiguration gefunden. Bitte neue Konfiguration erstellen.",
                     "REMOTE_ACCESS_CONFIG": "Konfiguration des Fernzugriffs"
                 },
-                "DELETE_REPO": "Remote-Repositorys löschen",
-                "REASON": "Reasoning",
+                "DELETE_REMOTE_REPO": "Remote-Repositorys löschen",
+                "DELETE_REMOTE_REPO_INFO": "Die folgenden Repositorys wurden vom gelöschten Projekt referenziert. Wählen Sie die Repositorys aus, die Sie löschen möchten.",
+                "DELETE_REMOTE_REPO_REPORT_INFO": "Das Löschen der folgenden Remote-Repositorys ist fehlgeschlagen",
+                "MATCH_USERNAME": "Benutzername abgleichen",
+                "MATCH_USERNAME_INFO": "Wenn diese Option aktiviert ist, werden die Anmeldeinformationen von Repositorys mit derselben Server-URL und demselben Benutzernamen geändert (leerer 'alter' Benutzername zeigt Repositorys ohne zugeordneten Benutzernamen an).",
+                "NO_REMOTE_REPO_WARN": "Es gibt keine Remote-Repositorys für dieses Projekt",
+                "REMOTE_REPOSITORIES": "Remote-Repositorys",
                 "SELECT_REMOTE_REPO": "Externes Daten-Repository auswählen"
             },
             "SETTINGS": {
@@ -129,7 +137,8 @@
             "SEARCH": "Suche",
             "SUBMIT": "Abschicken",
             "UNCHECK": "Deaktivieren",
-            "UNCHECK_ALL": "Alle Markierungen entfernen"
+            "UNCHECK_ALL": "Alle Markierungen entfernen",
+            "UPDATE": "Aktualisieren"
         },
         "BOOLEAN": {
             "FALSE": "Falsch",
@@ -170,12 +179,15 @@
             "PREV_PAGE": "Vorherige Seite"
         },
         "POSITION": "Position",
+        "REASON": "Reasoning",
         "SETTINGS": "Einstellungen",
         "STATUS": {
             "ACTIVE": "Aktiv",
             "ERROR": "Fehler",
             "INCOMPLETE_FORM": "Unvollständiges Formular",
             "INVALID_DATA": "Ungültige Daten",
+            "OPERATION_DENIED": "Operation abgelehnt",
+            "OPERATION_DONE": "Operation beendet",
             "STATUS": "Status",
             "WARNING": "Warnung"
         },
@@ -448,6 +460,7 @@
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "Für einen geschlossenen Datensatz kann kein Index erstellt werden. Bitte Datensatz öffnen und noch einmal versuchen.",
         "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "Für einen geschlossenen Datensatz können keine Metadaten erstellt werden. Bitte Datensatz öffnen und noch einmal versuchen.",
         "CANNOT_DELETE_OPEN_DATASET": "Ein geöffneter Datensatz kann nicht gelöscht werden. Bitte Datensatz schließen und noch einmal versuchen.",
+        "CANNOT_EDIT_OPEN_PROJECT_CREDENTIALS": "Anmeldeinformationen von Remote-Repositorys, die mit einem geöffneten Projekt verknüpft sind, können nicht bearbeitet werden. Bitte Projekt schließen und noch einmal versuchen.",
         "CANNOT_LOAD_DATA_IN_CLOSED_DATASET": "In einen geschlossenen Datensatz können keine Daten geladen werden. Bitte Datensatz öffnen und noch einmal versuchen.",
         "CANNOT_PROFILE_CLOSED_DATASET": "Ein geschlossener Datensatz kann nicht profiliert werden",
         "CLASS_FILTER_ALREADY_EXIST": "Es existiert bereits ein Filter für die Klasse {{cls}} .",
@@ -492,6 +505,12 @@
         "REFRESH_METADATA_CONFIRM": "Sie sind dabei, die Metadaten des Datensatzes '{{datasetName}}' zu aktualisieren. Sind Sie sicher?",
         "REJECT_CONTRIBUTION_CONFIRM": "Sind Sie sicher, dass Sie den Beitrag ablehnen wollen?",
         "REMOTE_REPO_ACCESS_NOT_CONFIGURED": "Der Zugang zum externen Repository wurde nicht konfiguriert.",
+        "REPO_CREDENTIALS_BATCH_UPDATED": {
+            "AND_USERNAME": "und Benutzername '{{username}}'",
+            "CREDENTIALS_OF_SERVER_URL": "Anmeldeinformationen für Remote-Repositorys mit Server-URL {{serverUrl}}",
+            "UPDATED": "wurden aktualisiert."
+        },
+        "REPO_CREDENTIALS_UPDATED": "Die Anmeldeinformationen für das Remote-Repository '{{repoId}}' wurden aktualisiert.",
         "RESET_PARTITION_FILTER_CONFIRM": "Der Partitionsfilter wird für alle verfügbaren Rollen zurückgesetzt. Sind Sie sicher?",
         "RESET_PASSWORD_EMAIL_SENT": "Eine E-Mail mit den Anweisungen zum Zurücksetzen des Passworts wurde an die angegebene Adresse gesendet.",
         "RESOURCE_ALREADY_IN_GRAPH": "Kann keinen Knoten für die ausgewählte Ressource hinzufügen, da bereits ein Knoten für diese Ressource existiert",

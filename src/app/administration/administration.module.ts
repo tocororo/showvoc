@@ -16,6 +16,7 @@ import { ProjectsManagerComponent } from './projects-manager/projects-manager.co
 import { RemoteAccessConfigModal } from './projects-manager/remote-access-config-modal';
 import { DeleteRemoteRepoModal } from './projects-manager/remote-repositories/delete-remote-repo-modal';
 import { DeleteRemoteRepoReportModal } from './projects-manager/remote-repositories/delete-remote-repo-report-modal';
+import { RemoteRepoEditorModal } from './projects-manager/remote-repositories/remote-repo-editor-modal';
 import { RemoteRepoSelectionModal } from './projects-manager/remote-repositories/remote-repo-selection-modal';
 import { InitialConfigurationComponent } from './system-configuration/initial-configuration.component';
 import { SystemConfigurationComponent } from './system-configuration/system-configuration.component';
@@ -31,6 +32,7 @@ import { SystemConfigurationComponent } from './system-configuration/system-conf
         ProjectsManagerComponent,
         ProjectSettingsModal,
         RemoteAccessConfigModal,
+        RemoteRepoEditorModal,
         RemoteRepoSelectionModal,
         SystemConfigurationComponent,
     ],
@@ -54,7 +56,8 @@ import { SystemConfigurationComponent } from './system-configuration/system-conf
         LoadDataModal,
         ProjectSettingsModal,
         RemoteAccessConfigModal,
-        RemoteRepoSelectionModal
+        RemoteRepoEditorModal,
+        RemoteRepoSelectionModal,
     ]
 })
 export class AdministrationModule { }

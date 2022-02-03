@@ -1,6 +1,6 @@
 <div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
     <div class="modal-header" cdkDragHandle>
-        <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.REMOTE.DELETE_REPO'|translate}}</h5>
+        <h5 class="modal-title">{{'ADMINISTRATION.DATASETS.REMOTE.DELETE_REMOTE_REPO'|translate}}</h5>
         <button class="close" (click)="close()">
             <span>&times;</span>
         </button>
@@ -8,7 +8,8 @@
     <div class="modal-body">
 
         <div class="alert alert-danger mb-2">
-            {{message}}
+            {{'ADMINISTRATION.DATASETS.REMOTE.DELETE_REMOTE_REPO_REPORT_INFO'|translate}}
+
         </div>
 
         <div class="card vbox">
@@ -27,7 +28,7 @@
                                     <td>{{report.repositoryID}}</td>
                                 </tr>
                                 <tr>
-                                    <td nowrap><label>{{'ADMINISTRATION.DATASETS.REMOTE.REASON'|translate}}:</label></td>
+                                    <td nowrap><label>{{'COMMONS.REASON'|translate}}:</label></td>
                                     <td>
                                         {{report.exception.type}}:<br>
                                         {{report.exception.message}}

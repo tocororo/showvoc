@@ -11,6 +11,7 @@
                 "DELETE_INDEX": "Supprimer l'index",
                 "EDIT_DESCRIPTION": "Éditer la description",
                 "EDIT_FACETS": "Éditer les facettes",
+                "EDIT_REMOTE_REPO_CONFIG": "Éditer la configuration de l'entrepôt distant",
                 "EDIT_SETTINGS": "Éditer les paramétrages",
                 "LOAD_DATA": "Charger des données",
                 "MAKE_PUBLIC": "Rendre public",
@@ -20,12 +21,19 @@
                 "USE_DATASET_BASEURI": "Utiliser l'URI de base du jeu de données"
             },
             "REMOTE": {
+                "BATCH_MODIFY": "Modifier en bloc",
+                "BATCH_MODIFY_INFO": "Modifie en bloc les informations d'accès de (potentiellement) plusieurs entrepôts qui possèdent le même URL de serveur",
                 "CONFIG": {
                     "NO_CONFIG_FOUND": "Aucune configuration d'accès distant n'a été trouvée, Veuillez en créer une",
                     "REMOTE_ACCESS_CONFIG": "Configuration d'accès distant"
                 },
-                "DELETE_REPO": "Supprimer les entrepôts distants",
-                "REASON": "Raison",
+                "DELETE_REMOTE_REPO": "Supprimer les entrepôts distants",
+                "DELETE_REMOTE_REPO_INFO": "Les entrepôts suivants étaient référencés par le projet supprimé. Sélectionnez ceux que vous voulez supprimer.",
+                "DELETE_REMOTE_REPO_REPORT_INFO": "La suppression des entrepôts distants suivants a échoué",
+                "MATCH_USERNAME": "Associer le nom d'utilisateur",
+                "MATCH_USERNAME_INFO": "Activer cette option pour modifier les informations d'accès aux entrepôts avec le même URL de serveur et nom d'utilisateur (un champ nom d'utilisateur vide indique les entrepôts auquel aucun nom d'utilisateur n'a été associé)",
+                "NO_REMOTE_REPO_WARN": "Aucun entrepôt distant n'est lié à ce projet",
+                "REMOTE_REPOSITORIES": "Entrepôts distants",
                 "SELECT_REMOTE_REPO": "Sélectionner un entrepôt distant"
             },
             "SETTINGS": {
@@ -129,7 +137,8 @@
             "SEARCH": "Rechercher",
             "SUBMIT": "Soumettre",
             "UNCHECK": "Désélectionner",
-            "UNCHECK_ALL": "Tout désélectionner"
+            "UNCHECK_ALL": "Tout désélectionner",
+            "UPDATE": "Mettre à jour"
         },
         "BOOLEAN": {
             "FALSE": "Faux",
@@ -170,12 +179,15 @@
             "PREV_PAGE": "Page précédente"
         },
         "POSITION": "Position",
+        "REASON": "Raison",
         "SETTINGS": "Réglages",
         "STATUS": {
             "ACTIVE": "Actif",
             "ERROR": "Erreur",
             "INCOMPLETE_FORM": "Formulaire incomplet",
             "INVALID_DATA": "Donnée non valide",
+            "OPERATION_DENIED": "Opération refusée",
+            "OPERATION_DONE": "Opération réalisée",
             "STATUS": "Statut",
             "WARNING": "Avertissement"
         },
@@ -415,7 +427,7 @@
     "HOME": {
         "DEVELOPED_BY": {
             "TITLE": "ShowVoc a été développé par",
-            "TOR_VERGATA_NAME": "l'Université de Rome \"Tor Vergata\"", 
+            "TOR_VERGATA_NAME": "l'Université de Rome \"Tor Vergata\"",
             "TOR_VERGATA_SUBTITLE": "Oggi, l´Ateneo del domani"
         },
         "FUNDED_BY": {
@@ -448,6 +460,7 @@
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "Impossible de créer l'index d'un jeu de données fermé. Veuillez ouvrir le jeu de données et réessayer.",
         "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "Impossible de créer les métadonnées d'un jeu de données fermé. Veuillez ouvrir le jeu de données et réessayer.",
         "CANNOT_DELETE_OPEN_DATASET": "Impossible de supprimer un jeu de données ouvert. Veuillez fermer le jeu de données et réessayer.",
+        "CANNOT_EDIT_OPEN_PROJECT_CREDENTIALS": "Vous ne pouvez pas éditer les informations d'authentification de dépôts distants liés à un projet ouvert. Fermez d'abord le projet puis réessayez",
         "CANNOT_LOAD_DATA_IN_CLOSED_DATASET": "Impossible de charger des données dans un jeu de données fermé. Veuillez ouvrir le jeu de données et réessayer.",
         "CANNOT_PROFILE_CLOSED_DATASET": "Un jeu de données fermé ne peut être profilé",
         "CLASS_FILTER_ALREADY_EXIST": "Un filtre existe déjà pour la classe {{cls}}.",
@@ -472,7 +485,7 @@
         "INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET": "La création d'un index n'est pas disponible pour un jeu de données fermé",
         "INSERT_EMAIL_FOR_RESET_PASSWORD": "Indiquez l'adresse électronique de votre compte. Vous recevrez un e-mail comportant les instructions de réinitialisation de votre mot de passe",
         "INVALID_EMAIL": "{{email}} n'est pas une adresse électronique valide.",
-        "INVALID_SEARCH_STRING": "Veuillez saisir une chaîne de caractères valide pour la recherche" ,
+        "INVALID_SEARCH_STRING": "Veuillez saisir une chaîne de caractères valide pour la recherche",
         "LANGUAGE_ALREAY_IN_LIST": "La langue '{{lang}}' figure déjà dans la liste.",
         "LANGUAGE_DUPLICATED": "La langue '{{lang}}' figure en double dans la liste.",
         "LANGUAGE_INVALID_TAG": "'{{lang}}' n'est pas une étiquette de langue valide.",
@@ -492,10 +505,16 @@
         "REFRESH_METADATA_CONFIRM": "Vous êtes sur le point de rafraîchir les métadonnées du jeu de données '{{datasetName}}'. Êtes-vous certain ?",
         "REJECT_CONTRIBUTION_CONFIRM": "Êtes-vous certain de vouloir rejeter la contribution ?",
         "REMOTE_REPO_ACCESS_NOT_CONFIGURED": "L'accès à l'entrepôt distant n'a pas été configuré.",
+        "REPO_CREDENTIALS_BATCH_UPDATED": {
+            "AND_USERNAME": "et nom d'utilisateur '{{username}}'",
+            "CREDENTIALS_OF_SERVER_URL": "Les références des entrepôts distants dont l'URL du serveur est {{serverUrl}}",
+            "UPDATED": "ont été mises à jour"
+        },
+        "REPO_CREDENTIALS_UPDATED": "Les références de l'entrepôt distant '{{repoId}}' ont été mises à jour",
         "RESET_PARTITION_FILTER_CONFIRM": "Le filtre des partitions va être réinitialisé pour tous les rôles disponibles. Êtes-vous certain ?",
         "RESET_PASSWORD_EMAIL_SENT": "Un e-mail comportant les instructions de réinitialisation du mot de passe a été envoyé à l'adresse électronique fournie.",
         "RESOURCE_ALREADY_IN_GRAPH": "Impossible d'ajouter un nœud à la ressource sélectionnée car un nœud existe déjà pour cette même ressource",
-        "RESOURCE_NOT_REACHABLE": "La ressource {{resource}} n'est accessible depuis aucun arbre ni liste. Sa vue sera affichée dans une fenêtre modale" ,
+        "RESOURCE_NOT_REACHABLE": "La ressource {{resource}} n'est accessible depuis aucun arbre ni liste. Sa vue sera affichée dans une fenêtre modale",
         "RES_NOT_REACHABLE_IN_TREE": "La ressource {{resource}} n'est accessible dans l'arbre courant.",
         "RES_NOT_REACHABLE_IN_TREE_DIALOG_RES_VIEW_CONFIRM": "La ressource {{resource}} n'est accessible dans l'arbre courant. Voulez-vous ouvrir sa vue dans une fenêtre modale ?",
         "RES_NOT_REACHABLE_IN_TREE_THROUGH_DEPRECATED": "La ressource {{resource}} n'est accessible dans l'arbre courant car son chemin comporte un nœud déprécié. Autorisez l'affichage des ressources dépréciées et renouvelez votre recherche",

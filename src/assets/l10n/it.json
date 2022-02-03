@@ -11,6 +11,7 @@
                 "DELETE_INDEX": "Cancella indice",
                 "EDIT_DESCRIPTION": "Modifica descrizione",
                 "EDIT_FACETS": "Modifica facets",
+                "EDIT_REMOTE_REPO_CONFIG": "Modifica configurazione repository remoto",
                 "EDIT_SETTINGS": "Modifica impostazioni",
                 "LOAD_DATA": "Carica dati",
                 "MAKE_PUBLIC": "Rendi publico",
@@ -20,12 +21,19 @@
                 "USE_DATASET_BASEURI": "Usa il baseURI del dataset"
             },
             "REMOTE": {
+                "BATCH_MODIFY": "Modifica in blocco",
+                "BATCH_MODIFY_INFO": "Modifica, tutte in blocco, le credenziali di accesso di (potenzialmente) più  repository con lo stesso URL server",
                 "CONFIG": {
                     "NO_CONFIG_FOUND": "Nessuna configurazione per accesso remoto trovata. Creane una nuova.",
                     "REMOTE_ACCESS_CONFIG": "Configurazione accesso remoto"
                 },
-                "DELETE_REPO": "Cancella repository remoto",
-                "REASON": "Motivo",
+                "DELETE_REMOTE_REPO": "Elimina repository remoti",
+                "DELETE_REMOTE_REPO_INFO": "I seguenti repository erano referenziati dal progetto eliminato. Seleziona i repository che desideri eliminare.",
+                "DELETE_REMOTE_REPO_REPORT_INFO": "La cancellazione del/i seguente/i repository è fallita ",
+                "MATCH_USERNAME": "Match username",
+                "MATCH_USERNAME_INFO": "Se selezionato, modifica le credenziali dei repository con gli stessi URL server e username (il campo useername lasciato vuoto indica che il repository non ha un username associato)",
+                "NO_REMOTE_REPO_WARN": "Non ci sono repository remoti collegati a questo progetto",
+                "REMOTE_REPOSITORIES": "Repository remoti",
                 "SELECT_REMOTE_REPO": "Seleziona Repository dati remoto"
             },
             "SETTINGS": {
@@ -133,7 +141,8 @@
             "SEARCH": "Cerca",
             "SUBMIT": "Invia",
             "UNCHECK": "Deseleziona",
-            "UNCHECK_ALL": "Deseleziona tutto"
+            "UNCHECK_ALL": "Deseleziona tutto",
+            "UPDATE": "Aggiorna"
         },
         "BOOLEAN": {
             "FALSE": "Falso",
@@ -174,12 +183,15 @@
             "PREV_PAGE": "Pagina precedente"
         },
         "POSITION": "Posizione",
+        "REASON": "Motivo",
         "SETTINGS": "Impostazioni",
         "STATUS": {
             "ACTIVE": "Attivo",
             "ERROR": "Errore",
             "INCOMPLETE_FORM": "Form incompleto",
             "INVALID_DATA": "Dati non validi",
+            "OPERATION_DENIED": "Operazione negata",
+            "OPERATION_DONE": "Operazione completata",
             "STATUS": "Stato",
             "WARNING": "Attenzione"
         },
@@ -456,6 +468,7 @@
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "Non è possibile creare l'indice di un dataset chiuso. Aprire il dataset e riprovare.",
         "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "Non è possibile creare i metadati di un dataset chiuso. Aprire il dataset e riprovare.",
         "CANNOT_DELETE_OPEN_DATASET": "Non è possibile eliminare un dataset aperto. Chiudere il dataset e riprovare.",
+        "CANNOT_EDIT_OPEN_PROJECT_CREDENTIALS": "Impossibile modificare le credenziali di repository remoti collegati ad un progetto aperto. Chiudi il progetto e riprova",
         "CANNOT_LOAD_DATA_IN_CLOSED_DATASET": "Non è possibile caricare dati in un dataset chiuso. Aprire il dataset e riprovare.",
         "CANNOT_PROFILE_CLOSED_DATASET": "Un dataset chiuso non può essere profilato",
         "CLASS_FILTER_ALREADY_EXIST": "Un filtro per la classe {{cls}} già esiste.",
@@ -500,6 +513,12 @@
         "REFRESH_METADATA_CONFIRM": "Stai per aggiornare i metadati del dataset '{{datasetName}}'. Sei sicuro?",
         "REJECT_CONTRIBUTION_CONFIRM": "Sei sicuro di voler rifiutare il contributo?",
         "REMOTE_REPO_ACCESS_NOT_CONFIGURED": "Il 'Repository Access' remoto non è stato configurato.",
+        "REPO_CREDENTIALS_BATCH_UPDATED": {
+            "AND_USERNAME": "e username '{{username}}'",
+            "CREDENTIALS_OF_SERVER_URL": "Le credenziali dei repository remoti con serverURL {{serverUrl}}",
+            "UPDATED": "sono stati aggiornati"
+        },
+        "REPO_CREDENTIALS_UPDATED": "Le credenziali per il reporitory remoto '{{repoId}}' sono state aggiornate",
         "RESET_PARTITION_FILTER_CONFIRM": "Il filtro partizione verrà resettato per tutti i tipi di risorsa. Sei sicuro?",
         "RESET_PASSWORD_EMAIL_SENT": "Una email con le istruzioni per resettare la password è stata inviata all'indirizzo fornito.",
         "RESOURCE_ALREADY_IN_GRAPH": "Non è possibile aggiungere un nodo per la risorsa selezionata, un nodo per la stessa risorsa è già presente",

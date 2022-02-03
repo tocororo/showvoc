@@ -25,6 +25,7 @@ import { ProjectSettingsModal } from './project-settings-modal';
 import { DeleteRemoteRepoModal } from './remote-repositories/delete-remote-repo-modal';
 import { DeleteRemoteRepoReportModal } from './remote-repositories/delete-remote-repo-report-modal';
 import { InputOutputServices } from 'src/app/services/input-output.service';
+import { RemoteRepoEditorModal } from './remote-repositories/remote-repo-editor-modal';
 
 @Component({
     selector: 'projects-manager',
@@ -351,6 +352,16 @@ export class ProjectsManagerComponent {
                 project.setOpen(true);
             });
         }
+    }
+
+    editRemoteRepoCredential(project: Project) {
+        if (project.isOpen()) {
+            this.basicModals.alert({ key: "COMMONS.STATUS.OPERATION_DENIED" }, { key: "MESSAGES.CANNOT_EDIT_OPEN_PROJECT_CREDENTIALS" }, ModalType.warning);
+            return;
+        }
+        const modalRef: NgbModalRef = this.modalService.open(RemoteRepoEditorModal, new ModalOptions('lg'));
+        modalRef.componentInstance.project = project;
+        return modalRef.result;
     }
 
     editSettings(project: Project) {

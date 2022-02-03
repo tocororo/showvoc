@@ -11,6 +11,7 @@
                 "DELETE_INDEX": "Eliminar índice",
                 "EDIT_DESCRIPTION": "Editar descripción",
                 "EDIT_FACETS": "Editar facetas",
+                "EDIT_REMOTE_REPO_CONFIG": "Editar configuración de repositorio remoto",
                 "EDIT_SETTINGS": "Editar configuración",
                 "LOAD_DATA": "Cargar datos",
                 "MAKE_PUBLIC": "Hacer público",
@@ -20,12 +21,19 @@
                 "USE_DATASET_BASEURI": "Usar baseURI del conjunto de datos"
             },
             "REMOTE": {
+                "BATCH_MODIFY": "Modificar por lotes",
+                "BATCH_MODIFY_INFO": "Modifica, todas a la vez, las credenciales de acceso de (posiblemente) muchos repositorios con la misma URL de servidor.",
                 "CONFIG": {
                     "NO_CONFIG_FOUND": "No se encontró ninguna configuración de acceso remoto. Crear una nueva.",
                     "REMOTE_ACCESS_CONFIG": "Configuración de acceso remoto"
                 },
-                "DELETE_REPO": "Eliminar repositorio remoto",
-                "REASON": "Razón",
+                "DELETE_REMOTE_REPO": "Eliminar repositorios remotos",
+                "DELETE_REMOTE_REPO_INFO": "El proyecto eliminado hizo referencia a los siguientes repositorios. Seleccione los repositorios que desea eliminar.",
+                "DELETE_REMOTE_REPO_REPORT_INFO": "La eliminación de los siguientes repositorios remotos ha fallado",
+                "MATCH_USERNAME": "Coincidir con el nombre de usuario",
+                "MATCH_USERNAME_INFO": "Si está marcado, modifica las credenciales de los repositorios con la misma URL de servidor y nombre de usuario (el nombre de usuario 'antiguo' vacío indica repositorios sin nombre de usuario asociado)",
+                "NO_REMOTE_REPO_WARN": "No hay repositorios remotos relacionados con este proyecto",
+                "REMOTE_REPOSITORIES": "Repositorios remotos",
                 "SELECT_REMOTE_REPO": "Seleccionar repositorio de datos remoto"
             },
             "SETTINGS": {
@@ -129,7 +137,8 @@
             "SEARCH": "Buscar",
             "SUBMIT": "Enviar",
             "UNCHECK": "Desmarcar",
-            "UNCHECK_ALL": "Desmarcar todo"
+            "UNCHECK_ALL": "Desmarcar todo",
+            "UPDATE": "Actualizar"
         },
         "BOOLEAN": {
             "FALSE": "Falso",
@@ -170,12 +179,15 @@
             "PREV_PAGE": "Pagina anterior"
         },
         "POSITION": "Posición",
+        "REASON": "Razón",
         "SETTINGS": "Ajustes",
         "STATUS": {
             "ACTIVE": "Activo",
             "ERROR": "Error",
             "INCOMPLETE_FORM": "Formulario incompleto",
             "INVALID_DATA": "Datos no válidos",
+            "OPERATION_DENIED": "Operación denegada",
+            "OPERATION_DONE": "Operación realizada",
             "STATUS": "Estado",
             "WARNING": "Advertencia"
         },
@@ -448,6 +460,7 @@
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "No se puede crear el índice de un conjunto de datos cerrado. Abra el conjunto de datos y vuelva a intentarlo",
         "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "No se pueden crear metadatos para un conjunto de datos cerrado. Abra el conjunto de datos y vuelva a intentarlo",
         "CANNOT_DELETE_OPEN_DATASET": "No se puede eliminar un conjunto de datos abierto. Cierra el conjunto de datos y vuelve a intentarlo",
+        "CANNOT_EDIT_OPEN_PROJECT_CREDENTIALS": "No puede editar las credenciales de los repositorios remotos vinculados a un proyecto abierto. Por favor, cierre el proyecto y vuelva a intentarlo",
         "CANNOT_LOAD_DATA_IN_CLOSED_DATASET": "No se pueden cargar datos en un conjunto de datos cerrado. Abra el conjunto de datos y vuelva a intentarlo",
         "CANNOT_PROFILE_CLOSED_DATASET": "No se puede crear un perfil de un conjunto de datos cerrado",
         "CLASS_FILTER_ALREADY_EXIST": "Ya existe un filtro para la clase {{cls}}.",
@@ -492,6 +505,12 @@
         "REFRESH_METADATA_CONFIRM": "Estás a punto de actualizar los metadatos del conjunto de datos '{{datasetName}}'. ¿Estás seguro?",
         "REJECT_CONTRIBUTION_CONFIRM": "¿Está seguro de que desea rechazar la contribución?",
         "REMOTE_REPO_ACCESS_NOT_CONFIGURED": "No se ha configurado el 'Repositorio de acceso' remoto.",
+        "REPO_CREDENTIALS_BATCH_UPDATED": {
+            "AND_USERNAME": "y nombre de usuario '{{username}}'",
+            "CREDENTIALS_OF_SERVER_URL": "Credenciales para repositorios remotos con serverURL {{serverUrl}}",
+            "UPDATED": "se han actualizado"
+        },
+        "REPO_CREDENTIALS_UPDATED": "Se actualizaron las credenciales para el repositorio remoto '{{repoId}}'",
         "RESET_PARTITION_FILTER_CONFIRM": "El filtro de partición se restablecerá para todos los tipos de recursos. ¿Estás seguro?",
         "RESET_PASSWORD_EMAIL_SENT": "Se envió un correo electrónico con instrucciones para restablecer la contraseña a la dirección proporcionada.",
         "RESOURCE_ALREADY_IN_GRAPH": "No es posible agregar un nodo para el recurso seleccionado, ya existe un nodo para el mismo recurso",

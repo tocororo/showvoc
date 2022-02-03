@@ -5,6 +5,7 @@ The full changelog of the platform includes also changes brought to the Semantic
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
 # 1.2.1 (dd-mm-yyyy)
+  * Added the possibility to edit the remote repo configuration of a dataset
   * Preserved hideNav param when selecting an alignment in Alignments tab
 
 # 1.2.0 (26-01-2022)

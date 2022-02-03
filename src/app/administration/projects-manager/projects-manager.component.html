@@ -96,6 +96,9 @@
                                     <span *ngIf="p.creatingMetadata" class="spinner-border spinner-border-sm ml-2"></span>
                                 </button>
                                 <div class="dropdown-divider"></div>
+                                <button *ngIf="p.isRepositoryRemote()" class="dropdown-item" (click)="editRemoteRepoCredential(p)">
+                                    {{'ADMINISTRATION.DATASETS.MANAGEMENT.EDIT_REMOTE_REPO_CONFIG'|translate}}
+                                </button>
                                 <button class="dropdown-item" (click)="editDescription(p)">
                                     {{'ADMINISTRATION.DATASETS.MANAGEMENT.EDIT_DESCRIPTION'|translate}}
                                 </button>

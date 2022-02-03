@@ -11,6 +11,7 @@
                 "DELETE_INDEX": "Delete index",
                 "EDIT_DESCRIPTION": "Edit description",
                 "EDIT_FACETS": "Edit facets",
+                "EDIT_REMOTE_REPO_CONFIG": "Edit Remote Repo configuration",
                 "EDIT_SETTINGS": "Edit settings",
                 "LOAD_DATA": "Load data",
                 "MAKE_PUBLIC": "Make public",
@@ -20,12 +21,19 @@
                 "USE_DATASET_BASEURI": "Use the baseURI of the dataset"
             },
             "REMOTE": {
+                "BATCH_MODIFY": "Batch modify",
+                "BATCH_MODIFY_INFO": "Modifies, all at once, the access credentials of (possibly) many repositories with the same serverURL.",
                 "CONFIG": {
                     "NO_CONFIG_FOUND": "No Remote Access Configuration found. Please, create a new one.",
                     "REMOTE_ACCESS_CONFIG": "Remote access configuration"
                 },
-                "DELETE_REPO": "Delete remote repositories",
-                "REASON": "Reason",
+                "DELETE_REMOTE_REPO": "Delete remote repositories",
+                "DELETE_REMOTE_REPO_INFO": "The following repositories was referenced by the deleted project. Select the repositories you want to delete.",
+                "DELETE_REMOTE_REPO_REPORT_INFO": "The deletion of the following remote repository/ies has failed",
+                "MATCH_USERNAME": "Match username",
+                "MATCH_USERNAME_INFO": "If checked, modifies credentials of repositories with same serverURL and username (empty 'old' username indicates repositories with no associated username)",
+                "NO_REMOTE_REPO_WARN": "There are no remote repositories related to this project",
+                "REMOTE_REPOSITORIES": "Remote repositories",
                 "SELECT_REMOTE_REPO": "Select Remote Data Repository"
             },
             "SETTINGS": {
@@ -133,7 +141,8 @@
             "SEARCH": "Search",
             "SUBMIT": "Submit",
             "UNCHECK": "Uncheck",
-            "UNCHECK_ALL": "Uncheck all"
+            "UNCHECK_ALL": "Uncheck all",
+            "UPDATE": "Update"
         },
         "BOOLEAN": {
             "FALSE": "False",
@@ -174,12 +183,15 @@
             "PREV_PAGE": "Previous page"
         },
         "POSITION": "Position",
+        "REASON": "Reason",
         "SETTINGS": "Settings",
         "STATUS": {
             "ACTIVE": "Active",
             "ERROR": "Error",
             "INCOMPLETE_FORM": "Incomplete form",
             "INVALID_DATA": "Invalid data",
+            "OPERATION_DENIED": "Operation denied",
+            "OPERATION_DONE": "Operation done",
             "STATUS": "Status",
             "WARNING": "Warning"
         },
@@ -456,6 +468,7 @@
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "Cannot create the index of a closed dataset. Please, open the dataset and then retry.",
         "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "Cannot create the metadata of a closed dataset. Please, open the dataset and then retry.",
         "CANNOT_DELETE_OPEN_DATASET": "Cannot delete an open dataset. Please, close the dataset and then retry.",
+        "CANNOT_EDIT_OPEN_PROJECT_CREDENTIALS": "You cannot edit credentials of remote repositories linked to an open project. Please, close the project and retry",
         "CANNOT_LOAD_DATA_IN_CLOSED_DATASET": "Cannot load data into a closed dataset. Please, open the dataset and then retry.",
         "CANNOT_PROFILE_CLOSED_DATASET": "A closed dataset cannot be profiled",
         "CLASS_FILTER_ALREADY_EXIST": "A filter for class {{cls}} already exists.",
@@ -500,6 +513,12 @@
         "REFRESH_METADATA_CONFIRM": "You're going to refresh the metadata about the dataset '{{datasetName}}'. Are you sure?",
         "REJECT_CONTRIBUTION_CONFIRM": "Are you sure to reject the contribution?",
         "REMOTE_REPO_ACCESS_NOT_CONFIGURED": "The remote 'Repository Access' has not been configured.",
+        "REPO_CREDENTIALS_BATCH_UPDATED": {
+            "AND_USERNAME": "and username '{{username}}'",
+            "CREDENTIALS_OF_SERVER_URL": "Credentials for remote repositories with serverURL {{serverUrl}}",
+            "UPDATED": "have been updated"
+        },
+        "REPO_CREDENTIALS_UPDATED": "Credentials for the '{{repoId}}' remote repository have been updated",
         "RESET_PARTITION_FILTER_CONFIRM": "The partition filter will be reset for all the available roles. Are you sure?",
         "RESET_PASSWORD_EMAIL_SENT": "An e-mail with the instructions for resetting password has been sent to the provided address.",
         "RESOURCE_ALREADY_IN_GRAPH": "Cannot add a node for the selected resource since a node for the same resource already exists",

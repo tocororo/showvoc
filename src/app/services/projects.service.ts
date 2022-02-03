@@ -203,6 +203,57 @@ export class ProjectsServices {
     /**
      * 
      * @param project 
+     * @param repositoryID 
+     * @param newUsername 
+     * @param newPassword 
+     */
+    modifyRepositoryAccessCredentials(project: Project, repositoryID: string, newUsername?: string, newPassword?: string) {
+        let params: any = {
+            projectName: project.getName(),
+            repositoryID: repositoryID,
+        };
+        if (newUsername != null) {
+            params.newUsername = newUsername;
+        }
+        if (newPassword != null) {
+            params.newPassword = newPassword;
+        }
+        return this.httpMgr.doPost(this.serviceName, "modifyRepositoryAccessCredentials", params);
+    }
+    
+    /**
+     * 
+     * @param project 
+     * @param serverURL 
+     * @param matchUsername 
+     * @param currentUsername 
+     * @param newUsername 
+     * @param newPassword 
+     */
+    batchModifyRepostoryAccessCredentials(project: Project, serverURL: string, matchUsername?: boolean, 
+        currentUsername?: string, newUsername?: string, newPassword?: string) {
+        let params: any = {
+            projectName: project.getName(),
+            serverURL: serverURL,
+        };
+        if (matchUsername != null) {
+            params.matchUsername = matchUsername;
+        }
+        if (currentUsername != null) {
+            params.currentUsername = currentUsername;
+        }
+        if (newUsername != null) {
+            params.newUsername = newUsername;
+        }
+        if (newPassword != null) {
+            params.newPassword = newPassword;
+        }
+        return this.httpMgr.doPost(this.serviceName, "batchModifyRepostoryAccessCredentials", params);
+    }
+
+    /**
+     * 
+     * @param project 
      * @param propName 
      * @param propValue 
      */
