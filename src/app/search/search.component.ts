@@ -39,6 +39,10 @@ export class SearchComponent {
 
     openProjectFilter: boolean = true;
     filteredRepoIds: string[]; //id (eventually filtered) of the repositories of the results, useful to iterate over them in the view
+    
+    resultsCount: number;
+    excludedResultsCount: number; //results excluded due filters
+    excludedRepoCount: number; //repo excluded due filters
 
     anyLangFilter: boolean;
     languagesFilter: LanguageFilter[];
@@ -68,7 +72,7 @@ export class SearchComponent {
         }
 
         this.loading = true;
-        this.globalSearchService.search(this.searchString, langPar).pipe(
+        this.globalSearchService.search(this.searchString, langPar, 99999).pipe(
             finalize(() => this.loading = false)
         ).subscribe(
             (results: GlobalSearchResult[]) => {
@@ -110,11 +114,19 @@ export class SearchComponent {
     }
 
     private filterSearchResults() {
+        this.resultsCount = 0;
+        this.excludedResultsCount = 0;
+        this.excludedRepoCount = 0;
+
         //collect the repositories ID according the filter
         this.filteredRepoIds = [];
         Object.keys(this.groupedSearchResults).forEach(repoId => {
             if (this.openProjectFilter && this.groupedSearchResults[repoId][0].repository.open || !this.openProjectFilter) {
                 this.filteredRepoIds.push(repoId);
+                this.resultsCount = this.resultsCount + this.groupedSearchResults[repoId].length;
+            } else {
+                this.excludedRepoCount++;
+                this.excludedResultsCount = this.excludedResultsCount + this.groupedSearchResults[repoId].length
             }
         });
         this.filteredRepoIds.sort();

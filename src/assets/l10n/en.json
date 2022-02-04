@@ -653,6 +653,11 @@
             "STARTS_WITH": "Starts with",
             "STRING_MATCH_MODE": "String match mode"
         },
+        "X_HIDDEN_IN_N_DATASETS": [
+            "hidden",
+            "in",
+            "datasets"
+        ],
         "X_MATCHES_IN_N_DATASETS": [
             "matches in",
             "datasets"

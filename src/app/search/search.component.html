@@ -50,12 +50,23 @@
         <h5 *ngIf="filteredRepoIds.length == 0" class="text-secondary">{{'SEARCH.NO_RESOURCE_FOUND_FOR'|translate}} '{{lastSearch}}'</h5>
         <!-- Results found -->
         <ng-container *ngIf="filteredRepoIds.length != 0">
-            <h5 class="text-secondary">
-                '{{lastSearch}}' 
-                {{'SEARCH.X_MATCHES_IN_N_DATASETS.0'|translate}}
-                {{filteredRepoIds.length}} 
-                {{'SEARCH.X_MATCHES_IN_N_DATASETS.1'|translate}}
-            </h5>
+            <div>
+                <h5 class="text-secondary" style="display: inline;">
+                    {{resultsCount}}
+                    {{'SEARCH.X_MATCHES_IN_N_DATASETS.0'|translate}}
+                    {{filteredRepoIds.length}}
+                    {{'SEARCH.X_MATCHES_IN_N_DATASETS.1'|translate}}
+                </h5>
+                <h6 *ngIf="excludedResultsCount > 0" class="text-secondary ml-1" style="display: inline;">
+                    (
+                    {{'SEARCH.X_HIDDEN_IN_N_DATASETS.0'|translate}}: 
+                    {{excludedResultsCount}}
+                    {{'SEARCH.X_HIDDEN_IN_N_DATASETS.1'|translate}}
+                    {{excludedRepoCount}}
+                    {{'SEARCH.X_HIDDEN_IN_N_DATASETS.2'|translate}}
+                    )
+                </h6>
+            </div>
 
             <div class="card vbox mt-1">
                 <div class="card-body vbox scrollableContainer">

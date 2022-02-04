@@ -653,8 +653,13 @@
             "STARTS_WITH": "Comincia per",
             "STRING_MATCH_MODE": "Modalità di string match"
         },
+        "X_HIDDEN_IN_N_DATASETS": [
+            "nascosti",
+            "in",
+            "dataset"
+        ],
         "X_MATCHES_IN_N_DATASETS": [
-            "trovato in",
+            "corrispondenze in",
             "dataset"
         ]
     },
