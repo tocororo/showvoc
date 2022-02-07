@@ -4,15 +4,16 @@ The full changelog of the platform includes also changes brought to the Semantic
 
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
-# 1.2.1 (dd-mm-yyyy)
+# 1.2.1 (07-02-2022)
   * Added the possibility to edit the remote repo configuration of a dataset
   * Preserved hideNav param when selecting an alignment in Alignments tab
-  * Fixed bug when creating dataset using GraphDB Free configuration
+  * Fixed bug when creating dataset and not changing the configuration through the combo-box. In that case no configuration
+    is sent (instead of the default one on the combobox: GraphDBFree) and native-store is set instead
 
 # 1.2.0 (26-01-2022)
   * Added possibility to create multiple administrators
   * Made dialogs draggable
-  * Added localization for Spanish, thanks to Juan Antonio Pastor SÃ¡nchez for the contribution!
+  * Added localization for Spanish, thanks to Juan Antonio Pastor S nchez for the contribution!
   * Added Manchester Syntax highlighting in resource view
   * Added possibility to hide the dataset name in the Dataset view through the URL parameter "hideDatasetName"
 
