@@ -9,6 +9,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
   * Preserved hideNav param when selecting an alignment in Alignments tab
   * Fixed bug when creating dataset and not changing the configuration through the combo-box. In that case no configuration
     is sent (instead of the default one on the combobox: GraphDBFree) and native-store is set instead
+  * Added the count of hidden results in Search page
 
 # 1.2.0 (26-01-2022)
   * Added possibility to create multiple administrators
