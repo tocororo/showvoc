@@ -90,8 +90,6 @@ export class SystemConfigurationComponent implements OnInit {
     private initAdminListConfigHandler(settings: Settings) {
         this.ensureUsersInitialized().subscribe(
             () => {
-                // let adminEmailList: string[] = settings.getPropertyValue(SettingsEnum.adminList);
-                // this.adminList = adminEmailList.map(email => this.users.find(u => u.getEmail() == email));
                 let adminIriList: string[] = settings.getPropertyValue(SettingsEnum.adminList);
                 this.adminList = adminIriList.map(iri => this.users.find(u => u.getIri() == iri));
             }

@@ -72,7 +72,7 @@ export class SearchComponent {
         }
 
         this.loading = true;
-        this.globalSearchService.search(this.searchString, langPar, 99999).pipe(
+        this.globalSearchService.search(this.searchString, langPar).pipe(
             finalize(() => this.loading = false)
         ).subscribe(
             (results: GlobalSearchResult[]) => {
