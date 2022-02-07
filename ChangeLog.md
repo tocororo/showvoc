@@ -7,8 +7,8 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 # 1.2.1 (07-02-2022)
   * Added the possibility to edit the remote repo configuration of a dataset
   * Preserved hideNav param when selecting an alignment in Alignments tab
-  * Fixed bug when creating dataset and not changing the configuration through the combo-box. In that case no configuration
-    is sent (instead of the default one on the combobox: GraphDBFree) and native-store is set instead
+  * Fixed bug when creating dataset and not changing the configuration through the combo-box: in that case no configuration
+    was sent (instead of the default one on the combobox: GraphDBFree) and native-store was set instead
   * Added the count of hidden results in Search page
 
 # 1.2.0 (26-01-2022)
