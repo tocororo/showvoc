@@ -5,7 +5,7 @@ The full changelog of the platform includes also changes brought to the Semantic
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
 # 1.2.1 (07-02-2022)
-  * Added the possibility to edit the remote repo configuration of a dataset
+  * Added the possibility to edit credentials for accessing a remote repo
   * Preserved hideNav param when selecting an alignment in Alignments tab
   * Fixed bug when creating dataset and not changing the configuration through the combo-box: in that case no configuration
     was sent (instead of the default one on the combobox: GraphDBFree) and native-store was set instead
