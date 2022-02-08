@@ -4,6 +4,9 @@ The full changelog of the platform includes also changes brought to the Semantic
 
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
+# 1.2.2 (dd-mm-yyyy)
+  * 
+
 # 1.2.1 (07-02-2022)
   * Added the possibility to edit credentials for accessing a remote repo
   * Preserved hideNav param when selecting an alignment in Alignments tab
@@ -14,7 +17,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 # 1.2.0 (26-01-2022)
   * Added possibility to create multiple administrators
   * Made dialogs draggable
-  * Added localization for Spanish, thanks to Juan Antonio Pastor Sánchez for the contribution!
+  * Added localization for Spanish, thanks to Juan Antonio Pastor SÃ¡nchez for the contribution!
   * Added Manchester Syntax highlighting in resource view
   * Added possibility to hide the dataset name in the Dataset view through the URL parameter "hideDatasetName"
 
