@@ -46,8 +46,8 @@ export abstract class AbstractList extends AbstractStruct {
         this.ensureNodeVisibility(node);
         setTimeout( //apply timeout in order to wait that the children node is rendered (in case the openPages has been increased)
             () => {
-                var childrenNodeComponent = this.viewChildrenNode.toArray();
-                for (var i = 0; i < childrenNodeComponent.length; i++) {
+                let childrenNodeComponent = this.viewChildrenNode.toArray();
+                for (let i = 0; i < childrenNodeComponent.length; i++) {
                     if (childrenNodeComponent[i].node.getValue().equals(node.getValue())) {
                         if (!childrenNodeComponent[i].node.getAttribute(ResAttribute.SELECTED)) {
                             childrenNodeComponent[i].selectNode();
@@ -63,7 +63,7 @@ export abstract class AbstractList extends AbstractStruct {
     }
 
     ensureNodeVisibility(resource: AnnotatedValue<IRI>) {
-        for (var i = 0; i < this.nodes.length; i++) {
+        for (let i = 0; i < this.nodes.length; i++) {
             if (this.nodes[i].getValue().equals(resource.getValue())) {
                 if (i >= this.nodesLimit) {
                     //update nodeLimit so that node at index i is within the range

@@ -4,9 +4,9 @@ import { finalize, mergeMap } from 'rxjs/operators';
 import { LexEntryVisualizationMode, LexicalEntryListPreference, SafeToGo, SafeToGoMap } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
+import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { SVContext } from 'src/app/utils/SVContext';
 import { SVEventHandler } from 'src/app/utils/SVEventHandler';
-import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractList } from '../abstract-list';
 
 @Component({

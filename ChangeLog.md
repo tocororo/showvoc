@@ -5,7 +5,7 @@ The full changelog of the platform includes also changes brought to the Semantic
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
 # 1.2.2 (dd-mm-yyyy)
-  * 
+  * Fixed a bug that prevented to automatically change the alphabetic index in Lexical Entry panel after a search
 
 # 1.2.1 (07-02-2022)
   * Added the possibility to edit credentials for accessing a remote repo

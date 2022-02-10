@@ -1,14 +1,16 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, of } from "rxjs";
+import { map } from "rxjs/operators";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions } from 'src/app/modal-dialogs/Modals';
 import { LexEntryVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
 import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
+import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { SVContext } from 'src/app/utils/SVContext';
 import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { SVProperties } from 'src/app/utils/SVProperties';
-import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
 import { AbstractListPanel } from '../abstract-list-panel';
 import { LexicalEntryListSettingsModal } from './lexical-entry-list-settings-modal';
@@ -138,12 +140,37 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
     public openAt(node: AnnotatedValue<IRI>) {
         this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().lexEntryListPreferences.visualization;
         if (this.visualizationMode == LexEntryVisualizationMode.indexBased) {
-            this.viewChildList.openListAt(node);
+            this.getSearchedEntryIndex(node).subscribe(
+                (index: string) => {
+                    this.firstDigitIndex = index.charAt(0);
+                    this.secondDigitIndex = index.charAt(1);
+                    this.onDigitChange();
+                    setTimeout(() => {
+                        this.viewChildList.openListAt(node);
+                    });
+                }
+            );
         } else { //search-based
             this.viewChildList.forceList([node]);
             setTimeout(() => {
                 this.viewChildList.openListAt(node);
             });
+        }
+    }
+
+    /**
+     * Index of a searched entry could be retrieved from a "index" attribute (if searched by a "ordinary" search), or from
+     * invoking a specific service (if the "index" attr is not present when searched by advanced search)
+     */
+     private getSearchedEntryIndex(entry: AnnotatedValue<IRI>): Observable<string> {
+        if (entry.getAttribute("index") != null) {
+            return of(entry.getAttribute("index").toLocaleUpperCase());
+        } else {
+            return this.ontolexService.getLexicalEntryIndex(entry.getValue()).pipe(
+                map(index => {
+                    return index.toLocaleUpperCase();
+                })
+            );
         }
     }
 
@@ -187,11 +214,11 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
      * Listener to <select> element that allows to change dynamically the lexicon of the lex-entry list
      * (visible only if @Input lexiconChangeable is true).
      */
-    private onLexiconSelectionChange() {
+    onLexiconSelectionChange() {
         this.lexiconChanged.emit(this.workingLexicon);
     }
 
-    private getLexiconRendering(lexicon: AnnotatedValue<IRI>) {
+    getLexiconRendering(lexicon: AnnotatedValue<IRI>) {
         return ResourceUtils.getRendering(lexicon, this.rendering);
     }
 
