@@ -104,7 +104,7 @@ export class AlignmentsSearchbar {
         ).subscribe(() => {
             const modalRef: NgbModalRef = this.modalService.open(AlignmentsSearchResultsModal, new ModalOptions('lg'));
             modalRef.componentInstance.sourceProject = this.sourceCtx.getProject();
-            modalRef.componentInstance.targetProject = this.targetCtx.getProject();
+            modalRef.componentInstance.targetProject = this.targetDatasetAvailable ? this.targetCtx.getProject() : null;
             modalRef.componentInstance.sourceResults = sourceDatasetResults;
             modalRef.componentInstance.targetResults = targetDatasetResults;
         })
