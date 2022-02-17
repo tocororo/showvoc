@@ -5,8 +5,9 @@ The full changelog of the platform includes also changes brought to the Semantic
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
 # 1.2.2 (dd-mm-yyyy)
+  * Enabled support to SAML authentication
   * Fixed a bug that prevented to automatically change the alphabetic index in Lexical Entry panel after a search
-  * Fixed a bug that prevented to show search results in Alignments tab when the target dataset is not available
+  * Fixed a bug that prevented to show search results in Alignments tab when the target dataset was not available
 
 # 1.2.1 (07-02-2022)
   * Added the possibility to edit credentials for accessing a remote repo

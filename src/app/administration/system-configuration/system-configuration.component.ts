@@ -7,7 +7,7 @@ import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-mo
 import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { ExtensionPointID, Scope, Settings, STProperties } from 'src/app/models/Plugins';
 import { RemoteRepositoryAccessConfig } from 'src/app/models/Project';
-import { SettingsEnum, ShowVocSettings, VocBenchConnectionShowVocSettings } from 'src/app/models/Properties';
+import { AuthServiceMode, SettingsEnum, ShowVocSettings, VocBenchConnectionShowVocSettings } from 'src/app/models/Properties';
 import { User, UserForm } from 'src/app/models/User';
 import { AdministrationServices } from 'src/app/services/administration.service';
 import { SettingsServices } from 'src/app/services/settings.service';
@@ -26,6 +26,7 @@ export class SystemConfigurationComponent implements OnInit {
     private getSystemCoreSettingsFn: Observable<Settings> = this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM);
 
     /* Administrators */
+    currentUser: User; //used to disable delete btn in admin list (user cannot delete itself)
     private users: User[];
     adminList: User[];
 
@@ -53,12 +54,16 @@ export class SystemConfigurationComponent implements OnInit {
     /* Other */
     disableContributions: boolean;
 
+    authServiceModes: AuthServiceMode[] = [AuthServiceMode.Default, AuthServiceMode.SAML];
+    selectedAuthServiceMode: AuthServiceMode;
+
     
     constructor(private adminService: AdministrationServices, private svService: ShowVocServices, private settingsService: SettingsServices,
         private usersService: UserServices, private basicModals: BasicModalsServices, private modalService: NgbModal,
         private translateService: TranslateService) { }
 
     ngOnInit() {
+        this.currentUser = SVContext.getLoggedUser();
         this.initAll()
     }
 
@@ -324,12 +329,37 @@ export class SystemConfigurationComponent implements OnInit {
 
     private initOtherConfig(settings: Settings) {
         this.disableContributions = this.showVocSettings.disableContributions; //showVocSettings is already initialized in initVbConfigHandler which is invoked before initOtherConfig in initAll
+        
+        this.selectedAuthServiceMode = SVContext.getSystemSettings().authService;
     }
 
     updateDisableContributions() {
         SVContext.getSystemSettings().disableContributions = this.disableContributions;
         this.showVocSettings.disableContributions = this.disableContributions;
         this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.showvoc, this.showVocSettings).subscribe();
+    }
+
+
+    onAuthServiceChanged(newValue: AuthServiceMode) {
+        let oldValue = this.selectedAuthServiceMode
+        this.basicModals.confirm({key:"COMMONS.STATUS.WARNING"}, {key:"MESSAGES.AUTH_MODE_CHANGE_WARN"}, ModalType.warning).then(
+            () => {
+                this.selectedAuthServiceMode = newValue;
+                this.updateAuthServiceMode();
+            },
+            () => { //change rejected, restore previous value
+                //this "hack" is needed in order to force the ngModel to detect the change
+                this.selectedAuthServiceMode = null;
+                setTimeout(() => {
+                    this.selectedAuthServiceMode = oldValue;
+                });
+            }
+        )
+    }
+
+    private updateAuthServiceMode() {
+        SVContext.getSystemSettings().authService = this.selectedAuthServiceMode;
+        this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.authService, this.selectedAuthServiceMode).subscribe();
     }
 
 }

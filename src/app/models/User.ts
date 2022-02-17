@@ -16,6 +16,7 @@ export class User {
     private status: UserStatusEnum;
     private admin: boolean = false;
     private online: boolean = false;
+    private samlLevel: SamlLevel;
 
     constructor(email: string, givenName: string, familyName: string, iri: string) {
         this.email = email;
@@ -40,36 +41,12 @@ export class User {
         return this.iri;
     }
 
-    setBirthday(birthday: Date) {
-        this.birthday = birthday;
-    }
-
-    getBirthday(): Date {
-        return this.birthday;
-    }
-
     setPhone(phone: string) {
         this.phone = phone;
     }
 
     getPhone(): string {
         return this.phone;
-    }
-
-    setGender(gender: string) {
-        this.gender = gender;
-    }
-
-    getGender(): string {
-        return this.gender;
-    }
-
-    setCountry(country: string) {
-        this.country = country;
-    }
-
-    getCountry(): string {
-        return this.country;
     }
 
     setAddress(address: string) {
@@ -136,6 +113,18 @@ export class User {
         return this.admin;
     }
 
+    setSamlLevel(samlLevel: SamlLevel) {
+        this.samlLevel = samlLevel;
+    }
+
+    getSamlLevel(): SamlLevel {
+        return this.samlLevel;
+    }
+
+    isSamlUser(): boolean {
+        return this.samlLevel != null;
+    }
+
     setOnline(online: boolean) {
         this.online = online;
     }
@@ -157,13 +146,13 @@ export class User {
      * ===== Deserializer =====
      */
 
-     /**
-     * @param resp json response containing {"user"" : [{givenName: string, familyName: string, ...}, {...}]}
-     */
+    /**
+    * @param resp json response containing {"user"" : [{givenName: string, familyName: string, ...}, {...}]}
+    */
     static createUsersArray(resp: any): User[] {
-        var users: User[] = [];
-        for (var i = 0; i < resp.length; i++) {
-            users.push(this.createUser(resp[i]));
+        let users: User[] = [];
+        for (let i = 0; i < resp.length; i++) {
+            users.push(this.parse(resp[i]));
         }
         return users;
     }
@@ -173,26 +162,17 @@ export class User {
      * @param resp could be a "data" element of a response (containing a "user" element)
      * or directly a "user" element
      */
-    static createUser(userJson: any): User {
+    static parse(userJson: any): User {
         if (userJson.email == null) { //user object is empty (scenario: getUser with no logged user)
             return null;
         }
-        var user = new User(userJson.email, userJson.givenName, userJson.familyName, userJson.iri);
+        let user = new User(userJson.email, userJson.givenName, userJson.familyName, userJson.iri);
         user.setRegistrationDate(userJson.registrationDate);
         user.setStatus(userJson.status);
         user.setAdmin(userJson.admin);
         user.setOnline(userJson.online);
-        if (userJson.birthday != undefined) {
-            user.setBirthday(userJson.birthday);
-        }
         if (userJson.phone != undefined) {
             user.setPhone(userJson.phone);
-        }
-        if (userJson.gender != undefined) {
-            user.setGender(userJson.gender)
-        }
-        if (userJson.country != undefined) {
-            user.setCountry(userJson.country);
         }
         if (userJson.address != undefined) {
             user.setAddress(userJson.address);
@@ -203,6 +183,7 @@ export class User {
         if (userJson.url != undefined) {
             user.setUrl(userJson.url);
         }
+        user.setSamlLevel(userJson.samlLevel);
         if (userJson.avatarUrl != undefined) {
             user.setAvatarUrl(userJson.avatarUrl);
         }
@@ -213,6 +194,11 @@ export class User {
     }
 
 
+}
+
+export enum SamlLevel {
+    LEV_1 = "LEV_1", //first user registered
+    LEV_2 = "LEV_2" //other users already registered
 }
 
 export enum UserStatusEnum {

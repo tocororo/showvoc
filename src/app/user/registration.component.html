@@ -5,7 +5,7 @@
     </div>
 
     <div>
-        <user-create-form [(ngModel)]="userForm"></user-create-form>
+        <user-create-form [(ngModel)]="userForm" [constraint]="constraintUser"></user-create-form>
 
         <button type="submit" class="btn btn-info float-right mt-2" (click)="submit()" [disabled]="!isDataValid()">{{'COMMONS.ACTIONS.SUBMIT'|translate}}</button>
     </div>

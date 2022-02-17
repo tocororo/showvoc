@@ -24,7 +24,7 @@ export class AuthServices {
         }
         return this.httpMgr.doPost(this.serviceName, "login", params).pipe(
             map(stResp => {
-                let user: User = User.createUser(stResp);
+                let user: User = User.parse(stResp);
                 SVContext.setLoggedUser(user);
                 return user;
             })

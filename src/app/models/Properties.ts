@@ -8,6 +8,7 @@ import { OWL, RDF, RDFS } from './Vocabulary';
  */
  export enum SettingsEnum {
     adminList = "adminList",
+    authService = "authService",
     conceptTree = "conceptTree",
     disableContributions = "disableContributions",
     instanceList = "instanceList",
@@ -220,6 +221,7 @@ export class SystemSettings {
     showFlags: boolean = true;
     languages: Language[];
     disableContributions: boolean = false;
+    authService: AuthServiceMode = AuthServiceMode.Default;
 }
 
 export class VisualizationModeTranslation {
@@ -243,4 +245,9 @@ export class VocBenchConnectionShowVocSettings {
 	stHost: string;
 	adminEmail: string;
 	adminPassword: string = "";
+}
+
+export enum AuthServiceMode {
+    Default = "Default",
+    SAML = "SAML",
 }

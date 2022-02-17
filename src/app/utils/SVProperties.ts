@@ -4,7 +4,7 @@ import { finalize, map } from 'rxjs/operators';
 import { Language, Languages } from '../models/LanguagesCountries';
 import { ExtensionPointID, Scope } from '../models/Plugins';
 import { Project } from '../models/Project';
-import { ClassIndividualPanelSearchMode, ClassTreeFilter, ClassTreePreference, ConceptTreePreference, ConceptTreeVisualizationMode, InstanceListPreference, InstanceListVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, PreferencesUtils, ProjectPreferences, ProjectSettings, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, SettingsEnum, SystemSettings, ValueFilterLanguages } from '../models/Properties';
+import { AuthServiceMode, ClassIndividualPanelSearchMode, ClassTreeFilter, ClassTreePreference, ConceptTreePreference, ConceptTreeVisualizationMode, InstanceListPreference, InstanceListVisualizationMode, LexEntryVisualizationMode, LexicalEntryListPreference, PreferencesUtils, ProjectPreferences, ProjectSettings, Properties, ResViewPartitionFilterPreference, SearchMode, SearchSettings, SettingsEnum, SystemSettings, ValueFilterLanguages } from '../models/Properties';
 import { IRI, RDFResourceRolesEnum } from '../models/Resources';
 import { ResViewPartition } from '../models/ResourceView';
 import { OWL, RDFS } from '../models/Vocabulary';
@@ -430,6 +430,10 @@ export class SVProperties {
                 Languages.sortLanguages(systemLanguages);
                 systemSettings.languages = systemLanguages;
                 systemSettings.disableContributions = settings.getPropertyValue(SettingsEnum.disableContributions);
+                let authServiceValue = settings.getPropertyValue(SettingsEnum.authService);
+                if (authServiceValue in AuthServiceMode) {
+                    systemSettings.authService = authServiceValue;
+                }
                 SVContext.setSystemSettings(systemSettings);
             })
         )

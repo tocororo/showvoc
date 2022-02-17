@@ -371,7 +371,7 @@ export class HttpManager {
                     if (errHandler) {
                         if (errHandler.action == 'warning') {
                             let errorMsg = error.message;
-                            this.basicModals.alert({key:"STATUS.WARNING"}, errorMsg, ModalType.warning);
+                            this.basicModals.alert({key:"COMMONS.STATUS.WARNING"}, errorMsg, ModalType.warning);
                             handleErrorDefault = false; //handled with a simple warning alert, so skip the default "error" alert
                         } else if (errHandler.action == 'skip') {
                             handleErrorDefault = false; //simply skip the alert (it will be handled ad-hoc by the component that invoked the service)

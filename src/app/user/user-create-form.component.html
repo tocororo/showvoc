@@ -1,21 +1,23 @@
 <div class="form-group row">
     <label class="col-sm-3 col-form-label">{{'USER.ATTR.EMAIL_ADDRESS'|translate}}</label>
     <div class="col-sm-9">
-        <input type="email" class="form-control" [(ngModel)]="userForm.email" (ngModelChange)="onModelChanged()" [placeholder]="'USER.ATTR.EMAIL_ADDRESS'|translate">
+        <input type="email" class="form-control" [(ngModel)]="userForm.email" (ngModelChange)="onModelChanged()" [disabled]="constraint" [placeholder]="'USER.ATTR.EMAIL_ADDRESS'|translate">
     </div>
 </div>
-<div class="form-group row">
-    <label class="col-sm-3 col-form-label">{{'USER.ATTR.PASSWORD'|translate}}</label>
-    <div class="col-sm-9">
-        <password-input [(ngModel)]="userForm.password" (ngModelChange)="onModelChanged()" [placeholder]="'USER.ATTR.PASSWORD'|translate"></password-input>
+<ng-container *ngIf="authServMode=='Default'">
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label">{{'USER.ATTR.PASSWORD'|translate}}</label>
+        <div class="col-sm-9">
+            <password-input [(ngModel)]="userForm.password" (ngModelChange)="onModelChanged()" [placeholder]="'USER.ATTR.PASSWORD'|translate"></password-input>
+        </div>
     </div>
-</div>
-<div class="form-group row">
-    <label class="col-sm-3 col-form-label">{{'USER.PASSWORD.CONFIRM_PASSWORD'|translate}}</label>
-    <div class="col-sm-9">
-        <password-input [(ngModel)]="userForm.confirmedPassword" (ngModelChange)="onModelChanged()" [placeholder]="'USER.PASSWORD.CONFIRM_PASSWORD'|translate" [invalid]="!isConfirmPwdOk()"></password-input>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label">{{'USER.PASSWORD.CONFIRM_PASSWORD'|translate}}</label>
+        <div class="col-sm-9">
+            <password-input [(ngModel)]="userForm.confirmedPassword" (ngModelChange)="onModelChanged()" [placeholder]="'USER.PASSWORD.CONFIRM_PASSWORD'|translate" [invalid]="!isConfirmPwdOk()"></password-input>
+        </div>
     </div>
-</div>
+</ng-container>
 <div class="form-group row">
     <label class="col-sm-3 col-form-label">{{'USER.ATTR.GIVEN_NAME'|translate}}</label>
     <div class="col-sm-9">

@@ -17,7 +17,7 @@
                         <b>{{u.getShow()}}</b>
                         <span class="text-muted">&nbsp;({{u.getEmail()}})</span>
                     </div>
-                    <button *ngIf="adminList.length > 1" class="btn btn-light btn-sm" (click)="deleteAdministrator(u)">
+                    <button *ngIf="adminList.length > 1" class="btn btn-light btn-sm" (click)="deleteAdministrator(u)" [disabled]="currentUser.getIri() == u.getIri()">
                         <span class="fas fa-trash"></span>
                     </button>
                 </div>
@@ -281,10 +281,33 @@
                 <label>{{'ADMINISTRATION.SYSTEM.OTHER.OTHER_SETTINGS'|translate}}:</label>
             </div>
             <div class="card-body">
-                <div class="form-check">
-                    <input class="form-check-input" id="disableContribCheck" type="checkbox" [(ngModel)]="disableContributions" (ngModelChange)="updateDisableContributions()">
-                    <label class="form-check-label" for="disableContribCheck">{{'ADMINISTRATION.SYSTEM.OTHER.DISABLE_CONTRIBUTION'|translate}}</label>
-                </div>
+                <table class="table table-sm table-borderless">
+                    <colgroup>
+                        <col style="width: 1%;">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td nowrap>
+                                <label>{{'ADMINISTRATION.SYSTEM.OTHER.DISABLE_CONTRIBUTION'|translate}}:</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" [(ngModel)]="disableContributions" (ngModelChange)="updateDisableContributions()">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td nowrap>
+                                <label>{{'ADMINISTRATION.SYSTEM.OTHER.AUTH_MODE'|translate}}:</label>
+                            </td>
+                            <td>
+                                <select class="form-control form-control-sm" [ngModel]="selectedAuthServiceMode" (ngModelChange)="onAuthServiceChanged($event)">
+                                    <option *ngFor="let a of authServiceModes">{{a}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
         </div>
 

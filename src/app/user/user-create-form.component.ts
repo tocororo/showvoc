@@ -1,6 +1,8 @@
-import { Component, forwardRef } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AuthServiceMode } from '../models/Properties';
 import { UserForm } from '../models/User';
+import { SVContext } from '../utils/SVContext';
 
 @Component({
     selector: 'user-create-form',
@@ -11,11 +13,34 @@ import { UserForm } from '../models/User';
 })
 export class UserCreateFormComponent implements ControlValueAccessor {
 
+    @Input() constraint: UserConstraint;
+
+    authServMode: AuthServiceMode; //in case of SAML hides pwd fields
+
     userForm: UserForm = new UserForm();
 
     constructor() { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.authServMode = SVContext.getSystemSettings().authService;
+        if (this.authServMode == AuthServiceMode.SAML) {
+            if (this.constraint) {
+                this.userForm.email = this.constraint.email;
+                this.userForm.givenName = this.constraint.givenName;
+                this.userForm.familyName = this.constraint.familyName;
+            }
+            //set a fake password since in SAML pwd is not necessary, but are still needed for creating user
+            let fakePwd: string = Math.random()+"";
+            this.userForm.password = fakePwd;
+            this.userForm.confirmedPassword = fakePwd;
+        }
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.onModelChanged();
+        });
+    }
 
     isConfirmPwdOk() {
         return this.userForm.password == this.userForm.confirmedPassword;
@@ -50,4 +75,10 @@ export class UserCreateFormComponent implements ControlValueAccessor {
     private propagateChange = (_: any) => { };
 
     //--------------------------------------------------
+}
+
+export interface UserConstraint {
+    email: string;
+    givenName: string;
+    familyName: string;
 }

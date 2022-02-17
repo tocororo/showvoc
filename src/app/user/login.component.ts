@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
+import { AuthServiceMode } from '../models/Properties';
 import { AuthServices } from '../services/auth.service';
 import { UserServices } from '../services/user.service';
+import { HttpManager } from '../utils/HttpManager';
+import { SVContext } from '../utils/SVContext';
 
 @Component({
     selector: 'login-component',
@@ -22,10 +25,31 @@ import { UserServices } from '../services/user.service';
 })
 export class LoginComponent {
 
+    @ViewChild("samlForm", { static: true }) samlFormEl: ElementRef;
+
     email: string;
     password: string;
 
+    authServMode: AuthServiceMode;
+
+    samlAction: string;
+
     constructor(private authService: AuthServices, private userService: UserServices, private basicModals: BasicModalsServices, private router: Router) { }
+
+    ngOnInit() {
+        this.authServMode = SVContext.getSystemSettings().authService;
+
+        let serverhost = HttpManager.getServerHost();
+        this.samlAction = serverhost + "/semanticturkey/it.uniroma2.art.semanticturkey/st-core-services/saml/login";
+    }
+
+    ngAfterViewInit() {
+        //in case of saml authentication, right after the view is init (required in order to let the view init samlForm), submit the form
+        if (this.authServMode == AuthServiceMode.SAML) {
+            let form: HTMLFormElement = this.samlFormEl.nativeElement;
+            form.submit();
+        }
+    }
 
     login() {
         this.authService.login(this.email, this.password).subscribe(

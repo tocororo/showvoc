@@ -73,6 +73,7 @@
                 "SSL_PROTOCOLS_INFO": "Specifies the SSL protocols that will be enabled for SSL connections"
             },
             "OTHER": {
+                "AUTH_MODE": "Authentication mode",
                 "DISABLE_CONTRIBUTION": "Deactivate the \"contribute to ShowVoc\" option",
                 "OTHER_SETTINGS": "Other settings"
             },
@@ -463,6 +464,7 @@
     "MESSAGES": {
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "You are going to submit the proposed metadata into the Metadata Registry. Are you sure?",
         "ADMIN_CREATED": "The administrator account has been created. Now you will be automatically logged in with the email and the password you provided",
+        "AUTH_MODE_CHANGE_WARN": "You're changing the authentication mode. This action could compromise the possibility to access ShowVoc next time you login. Do you want to continue?",
         "BASEURI_MISSING": "BaseURI is missing or not valid",
         "BASEURI_REQUIRED": "BaseURI required",
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "Cannot create the index of a closed dataset. Please, open the dataset and then retry.",
@@ -508,6 +510,8 @@
         "NO_METADATA_PROVIDED": "No metadata has been provided",
         "NO_SEARCH_RESULTS": "No results found for '{{searchedString}}'",
         "NO_USER_REGISTERED": "ShowVoc has detected that no user has yet registered. In order to use the platform, you need to create an administrator account by entering personal data and login credentials.",
+        "NO_USER_REGISTERED_SAML_MODE": "ShowVoc has detected no user registered. The authentication mode is set to SAML, so now you're going to be redirect to the authentication page of the Identity Provider. Once authenticated you'll be back here in ShowVoc for registering the administrator user.",
+        "NO_USER_REGISTERED_WITH_EMAIL": "No registered user with email {{email}} has been found.",
         "PASSWORD_CHANGED": "Your password has been succesfully changed. Now you will be logged out.",
         "PASSWORD_RESET_SUCCESS": "Password has been successfully reset. You will receive an e-mail with the new temporary password.",
         "REFRESH_METADATA_CONFIRM": "You're going to refresh the metadata about the dataset '{{datasetName}}'. Are you sure?",
