@@ -34,8 +34,8 @@ export class LexicalEntryListSettingsModal implements OnInit {
         this.indexLenght = lexEntryPref.indexLength;
         this.safeToGoLimit = lexEntryPref.safeToGoLimit;
 
-        this.allowVisualizationChange = lexEntryPref.allowVisualizationChange || SVContext.getLoggedUser().isAdmin();
-        this.allowIndexLengthChange = lexEntryPref.allowIndexLengthChange || SVContext.getLoggedUser().isAdmin();
+        this.allowVisualizationChange = lexEntryPref.allowVisualizationChange || SVContext.getLoggedUser().isSuperUser(false);
+        this.allowIndexLengthChange = lexEntryPref.allowIndexLengthChange || SVContext.getLoggedUser().isSuperUser(false);
     }
 
     ok() {

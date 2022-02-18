@@ -18,6 +18,7 @@ import { OWL, RDF, RDFS } from './Vocabulary';
     showvoc = "showvoc",
     remoteConfigs = "remoteConfigs",
     showFlags = "showFlags",
+    superUserList = "superUserList",
 }
 
 export class PreferencesUtils {

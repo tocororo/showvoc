@@ -82,6 +82,30 @@ export class AdminAuthGuard implements CanActivate {
     }
 }
 
+@Injectable()
+export class SuperUserAuthGuard implements CanActivate {
+
+    constructor(private router: Router, private userService: UserServices) { }
+
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+        let loggedUser = SVContext.getLoggedUser();
+        if (loggedUser != null) { //logged user initialized in the context => check if it is admin
+            return of(loggedUser.isSuperUser(false));
+        } else { //logged user not initialized => init
+            return this.userService.getUser().pipe(
+                mergeMap(user => {
+                    if (user && user.isSuperUser(false)) {
+                        return of(true);
+                    } else { //no logged user (getUser returned null), or logged user is not superuser
+                        this.router.navigate(['/home']);
+                        return of(false);
+                    }
+                })
+            );
+        }
+    }
+}
+
 
 /**
  * The datasets-view page and its children need a project to be selected/initialized. This guard ensures that.
@@ -178,4 +202,4 @@ export class SystemSettingsGuard implements CanActivate {
 
 
 
-export const GUARD_PROVIDERS = [VisitorAuthGuard, AdminAuthGuard, ProjectGuard, SystemSettingsGuard];
+export const GUARD_PROVIDERS = [VisitorAuthGuard, AdminAuthGuard, ProjectGuard, SuperUserAuthGuard, SystemSettingsGuard];

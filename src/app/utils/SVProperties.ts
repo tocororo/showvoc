@@ -286,8 +286,8 @@ export class SVProperties {
 
         //instance list preferences
         let instanceListPreferences: InstanceListPreference = projectPreferences.instanceListPreferences;
-        //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin
-        if (SVContext.getLoggedUser().isAdmin() || instanceListPreferences.allowVisualizationChange) {
+        //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin/superuser
+        if (SVContext.getLoggedUser().isSuperUser(false) || instanceListPreferences.allowVisualizationChange) {
             let instanceListVisualizationPref: string = Cookie.getCookie(Properties.pref_instance_list_visualization, project);
             if (instanceListVisualizationPref == InstanceListVisualizationMode.searchBased || instanceListVisualizationPref == InstanceListVisualizationMode.standard) {
                 //overwrite only if the cookie value is an admitted value
@@ -302,8 +302,8 @@ export class SVProperties {
 
         //concept tree preferences
         let conceptTreePref: ConceptTreePreference = projectPreferences.conceptTreePreferences;
-        //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin
-        if (SVContext.getLoggedUser().isAdmin() || conceptTreePref.allowVisualizationChange) {
+        //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin/superuser
+        if (SVContext.getLoggedUser().isSuperUser(false) || conceptTreePref.allowVisualizationChange) {
             let conceptTreeVisualizationPref: string = Cookie.getCookie(Properties.pref_concept_tree_visualization, project);
             if (conceptTreeVisualizationPref == ConceptTreeVisualizationMode.searchBased || conceptTreeVisualizationPref == ConceptTreeVisualizationMode.hierarchyBased) {
                 //overwrite only if the cookie value is an admitted value
@@ -317,16 +317,16 @@ export class SVProperties {
 
         //lexical entry list preferences
         let lexEntryListPref: LexicalEntryListPreference = projectPreferences.lexEntryListPreferences;
-        //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin
-        if (SVContext.getLoggedUser().isAdmin() || lexEntryListPref.allowVisualizationChange) {
+        //the visualization mode is taken from cookie only if there isn't any restriction on it or if the user is the admin/superuser
+        if (SVContext.getLoggedUser().isSuperUser(false) || lexEntryListPref.allowVisualizationChange) {
             let lexEntryListVisualizationPref: string = Cookie.getCookie(Properties.pref_lex_entry_list_visualization, project);
             if (lexEntryListVisualizationPref == LexEntryVisualizationMode.searchBased || lexEntryListVisualizationPref == LexEntryVisualizationMode.indexBased) {
                 //overwrite only if the cookie value is an admitted value
                 lexEntryListPref.visualization = lexEntryListVisualizationPref;
             }
         }
-        //the index length is taken from cookie only if admin there isn't any restriction on it or if the user is the admin
-        if (SVContext.getLoggedUser().isAdmin() || lexEntryListPref.allowIndexLengthChange) {
+        //the index length is taken from cookie only if admin there isn't any restriction on it or if the user is the admin/superuser
+        if (SVContext.getLoggedUser().isSuperUser(false) || lexEntryListPref.allowIndexLengthChange) {
             let lexEntryListIndexLenghtPref: string = Cookie.getCookie(Properties.pref_lex_entry_list_index_length, project);
             if (lexEntryListIndexLenghtPref == "1" || lexEntryListIndexLenghtPref == "2") {
                 //overwrite only if the cookie value is an admitted value

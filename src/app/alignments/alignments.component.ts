@@ -36,7 +36,7 @@ export class AlignmentsComponent implements OnInit {
 
     ngOnInit() {
         this.sourceProjects = [];
-        this.projectService.listProjectsPerRole(ShowVocConstants.rolePublic, null, true).subscribe(
+        this.projectService.listProjectsPerRole(ShowVocConstants.rolePublic, null, true, false).subscribe(
             projects => {
                 this.sourceProjects = projects;
             }

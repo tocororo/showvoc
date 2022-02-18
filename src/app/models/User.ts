@@ -3,10 +3,7 @@ export class User {
     private givenName: string;
     private familyName: string
     private iri: string;
-    private birthday: Date;
     private phone: string;
-    private gender: string;
-    private country: string;
     private address: string;
     private registrationDate: Date;
     private affiliation: string;
@@ -15,6 +12,7 @@ export class User {
     private languageProficiencies: string[];
     private status: UserStatusEnum;
     private admin: boolean = false;
+    private superuser: boolean = false;
     private online: boolean = false;
     private samlLevel: SamlLevel;
 
@@ -113,6 +111,19 @@ export class User {
         return this.admin;
     }
 
+    setSuperUser(superuser: boolean) {
+        this.superuser = superuser;
+    }
+
+    isSuperUser(strict: boolean): boolean {
+        if (strict) {
+            return this.superuser;
+        } else {
+            return this.superuser || this.admin;
+        }
+        
+    }
+
     setSamlLevel(samlLevel: SamlLevel) {
         this.samlLevel = samlLevel;
     }
@@ -170,6 +181,7 @@ export class User {
         user.setRegistrationDate(userJson.registrationDate);
         user.setStatus(userJson.status);
         user.setAdmin(userJson.admin);
+        user.setSuperUser(userJson.superuser);
         user.setOnline(userJson.online);
         if (userJson.phone != undefined) {
             user.setPhone(userJson.phone);

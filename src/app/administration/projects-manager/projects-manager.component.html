@@ -6,7 +6,7 @@
             <button class="btn btn-light btn-sm" [title]="'COMMONS.ACTIONS.CREATE'|translate" (click)="createProject()">
                 <span class="fas fa-plus"></span>
             </button>
-            <button class="btn btn-light btn-sm" [title]="'ADMINISTRATION.DATASETS.MANAGEMENT.CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS'|translate" (click)="editCustomFacetsSchema()">
+            <button *ngIf="isAdmin" class="btn btn-light btn-sm" [title]="'ADMINISTRATION.DATASETS.MANAGEMENT.CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS'|translate" (click)="editCustomFacetsSchema()">
                 <span class="fas fa-cog"></span>
             </button>
         </div>

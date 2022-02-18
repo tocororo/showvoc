@@ -60,7 +60,7 @@ export class AppComponent {
     }
 
     isNavVisible(): boolean {
-        return this.isAdminLogged() || !this.hideNav;
+        return this.isAuthorizedUserLogged() || !this.hideNav;
     }
 
     /**
@@ -72,12 +72,12 @@ export class AppComponent {
 
     /**
      * Determines if the login button and the link for the admin dashboard are available
-     * - the login button should be visible if the only visitor is logged (returns false)
-     * - the links for the admin dashboard should be visible only if the admin is logged (returns true)
+     * - the login button should be visible if the logged user is visitor (returns false)
+     * - the links for the admin dashboard should be visible only if the logged user is admin or superuser (returns true)
      */
-    isAdminLogged(): boolean {
+    isAuthorizedUserLogged(): boolean {
         this.currentUser = SVContext.getLoggedUser();
-        return this.currentUser != null && this.currentUser.isAdmin();
+        return this.currentUser != null && this.currentUser.isSuperUser(false);
     }
 
     logout() {

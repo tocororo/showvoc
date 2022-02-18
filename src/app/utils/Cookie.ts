@@ -37,7 +37,8 @@ export class Cookie {
 
     public static EXPLORE_HIDE_WARNING_MODAL_RES_VIEW = "explore.hide_warning_open_modal_res_view";
 
-    public static WARNING_CUSTOM_ROOT = "ui.tree.cls.warnings.customroot";
+    public static WARNING_CUSTOM_ROOT = "warnings.ui.tree.cls.customroot";
+    public static WARNING_ADMIN_CHANGE_USER_TYPE = "warnings.administration.change_user_type";
 
     public static getCookie(name: string, project?: Project, user?: User): string {
         if (project) {

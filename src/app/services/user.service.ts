@@ -24,24 +24,32 @@ export class UserServices {
      * @param givenName 
      * @param familyName 
      */
-    registerUser(email: string, password: string, givenName: string, familyName: string) {
+    registerUser(email: string, password: string, givenName: string, familyName: string): Observable<User> {
         let params: STRequestParams = {
             email: email,
             password: password,
             givenName: givenName,
             familyName: familyName,
         }
-        return this.httpMgr.doPost(this.serviceName, "registerUser", params);
+        return this.httpMgr.doPost(this.serviceName, "registerUser", params).pipe(
+            map(stResp => {
+                return User.parse(stResp);
+            })
+        );
     }
 
-    createUser(email: string, password: string, givenName: string, familyName: string) {
+    createUser(email: string, password: string, givenName: string, familyName: string): Observable<User> {
         let params: STRequestParams = {
             email: email,
             password: password,
             givenName: givenName,
             familyName: familyName,
         }
-        return this.httpMgr.doPost(this.serviceName, "createUser", params);
+        return this.httpMgr.doPost(this.serviceName, "createUser", params).pipe(
+            map(stResp => {
+                return User.parse(stResp);
+            })
+        );
     }
 
     /**

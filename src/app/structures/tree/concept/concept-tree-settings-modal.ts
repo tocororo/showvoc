@@ -25,7 +25,7 @@ export class ConceptTreeSettingsModal implements OnInit {
 
     ngOnInit() {
         let conceptTreePref: ConceptTreePreference = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
-        this.allowVisualizationChange = conceptTreePref.allowVisualizationChange || SVContext.getLoggedUser().isAdmin();
+        this.allowVisualizationChange = conceptTreePref.allowVisualizationChange || SVContext.getLoggedUser().isSuperUser(false);
         this.pristineConcPref = JSON.parse(JSON.stringify(conceptTreePref));
         
         this.visualization = conceptTreePref.visualization;

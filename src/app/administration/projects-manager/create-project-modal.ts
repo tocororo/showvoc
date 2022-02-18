@@ -7,6 +7,7 @@ import { ShowVocConstants } from 'src/app/models/ShowVoc';
 import { AdministrationServices } from 'src/app/services/administration.service';
 import { ProjectsServices } from 'src/app/services/projects.service';
 import { SettingsServices } from "src/app/services/settings.service";
+import { SVContext } from "src/app/utils/SVContext";
 import { ExtensionConfiguratorComponent } from 'src/app/widget/extensionConfigurator/extension-configurator.component';
 import { BasicModalsServices } from '../../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions, ModalType } from '../../modal-dialogs/Modals';
@@ -26,6 +27,8 @@ export class CreateProjectModal extends AbstractProjectCreationModal {
 
     loading: boolean;
 
+    isAdmin: boolean;
+
     dataRepoId: string;
 
     //backend types (when accessing an existing remote repository)
@@ -41,8 +44,8 @@ export class CreateProjectModal extends AbstractProjectCreationModal {
         }
 
     ngOnInit() {
+        this.isAdmin = SVContext.getLoggedUser().isAdmin();
         this.initCoreRepoExtensions();
-
         this.initRemoteConfigs();
     }
 

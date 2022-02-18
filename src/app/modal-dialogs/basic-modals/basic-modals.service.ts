@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { AnnotatedValue, Resource } from 'src/app/models/Resources';
+import { Cookie } from 'src/app/utils/Cookie';
 import { ModalOptions, ModalType, TextOrTranslation } from '../Modals';
 import { AlertModal } from './alert-modal/alert-modal';
 import { ConfirmCheckModal, ConfirmCheckOptions } from './confirm-modal/confirm-check-modal';
@@ -37,7 +38,7 @@ export class BasicModalsServices {
         return modalRef.result;
     }
 
-	/**
+    /**
      * Opens a modal with two buttons (Yes and No) with the given title and content message.
      * Returns a Promise with the result
      * @param title the title of the modal dialog
@@ -77,6 +78,34 @@ export class BasicModalsServices {
         modalRef.componentInstance.checkOpts = checkOpts;
         modalRef.componentInstance.type = type;
         return modalRef.result;
+    }
+
+    /**
+     * Open a modal that ask for confirmation. It uses the checkbox for "don't show/ask again". It stores the choice in a cookie.
+     * If the cookie was set in order to not show the confirmation, it skips the dialog and simply returns an empty promise (like the user has confirmed)
+     * @param title 
+     * @param msg 
+     * @param warningCookie 
+     * @param type 
+     * @returns 
+     */
+    confirmCheckCookie(title: TextOrTranslation, msg: TextOrTranslation, warningCookie: string, type?: ModalType): Promise<void> {
+        let showWarning = Cookie.getCookie(warningCookie) != "false";
+        if (showWarning) {
+            let confCheckOpt: ConfirmCheckOptions = {
+                label: this.translateService.instant("COMMONS.DONT_ASK_AGAIN"),
+                value: false
+            }
+            return this.confirmCheck(title, msg, [confCheckOpt], type).then(
+                (checkOpts: ConfirmCheckOptions[]) => {
+                    if (checkOpts[0].value) {
+                        Cookie.setCookie(warningCookie, "false");
+                    }
+                }
+            );
+        } else {
+            return new Promise((resolve, reject) => resolve());
+        }
     }
 
     /**
@@ -129,7 +158,7 @@ export class BasicModalsServices {
         return modalRef.result;
     }
 
-	/**
+    /**
      * Opens a modal with an message and a list of selectable options.
      * @param title the title of the modal dialog
      * @param message the message to show in the modal dialog body. If null no message will be in the modal
@@ -149,7 +178,7 @@ export class BasicModalsServices {
         return modalRef.result;
     }
 
-	/**
+    /**
      * Opens a modal with a link to download a file
      * @param title the title of the modal dialog
      * @param message the message to show in the modal dialog body. If null no message will be in the modal

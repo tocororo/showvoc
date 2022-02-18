@@ -19,26 +19,33 @@
         </ul>
 
         <ul class="navbar-nav">
-            <li *ngIf="isAdminLogged()" class="nav-item dropdown" ngbDropdown display="dynamic">
-                <a class="nav-link dropdown-toggle dropdown-no-arrow" style="padding: .5rem;" [routerLink]="" data-toggle="dropdown" ngbDropdownToggle>
-                    <span class="fas fa-bars"></span>
-                </a>
-                <div class="dropdown-menu" ngbDropdownMenu>
-                    <a class="dropdown-item">
-                        <div class="hbox p-2 align-items-center">
-                            <i class="fas fa-user fa-lg"></i>
-                            <a [routerLink]="['/profile']" class="ml-3">
-                                <span style="font-weight: bold;">{{currentUser.getShow()}}</span>
-                            </a>
-                        </div>
+
+            <ng-container *ngIf="isAuthorizedUserLogged(); then userMenu else loginBtn"></ng-container>
+
+            <ng-template #userMenu>
+                <li class="nav-item dropdown" ngbDropdown display="dynamic">
+                    <a class="nav-link dropdown-toggle dropdown-no-arrow" style="padding: .5rem;" [routerLink]="" data-toggle="dropdown" ngbDropdownToggle>
+                        <span class="fas fa-bars"></span>
                     </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" [routerLink]="['/admin']">{{'APP.USER_MENU.ADMINISTRATION_DASHBOARD'|translate}}</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" [routerLink]="" (click)="logout()">{{'APP.USER_MENU.LOGOUT'|translate}}</a>
-                </div>
-            </li>
-            <button *ngIf="!isAdminLogged()" class="btn btn-outline-info" routerLink="/login">{{'APP.USER_MENU.LOGIN'|translate}}</button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                        <a class="dropdown-item">
+                            <div class="hbox p-2 align-items-center">
+                                <i class="fas fa-user fa-lg"></i>
+                                <a [routerLink]="['/profile']" class="ml-3">
+                                    <span style="font-weight: bold;">{{currentUser.getShow()}}</span>
+                                </a>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" [routerLink]="['/admin']">{{'APP.USER_MENU.ADMINISTRATION_DASHBOARD'|translate}}</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" [routerLink]="" (click)="logout()">{{'APP.USER_MENU.LOGOUT'|translate}}</a>
+                    </div>
+                </li>
+            </ng-template>
+            <ng-template #loginBtn>
+                <button class="btn btn-outline-info" routerLink="/login">{{'APP.USER_MENU.LOGIN'|translate}}</button>
+            </ng-template>
         </ul>
     </div>
 </nav>

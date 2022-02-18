@@ -20,7 +20,7 @@ import { LoginComponent } from './user/login.component';
 import { RegistrationComponent } from './user/registration.component';
 import { ResetPasswordComponent } from './user/reset-password.component';
 import { UserProfileComponent } from './user/user-profile.component';
-import { AdminAuthGuard, ProjectGuard, SystemSettingsGuard, VisitorAuthGuard } from './utils/CanActivateGuards';
+import { AdminAuthGuard, ProjectGuard, SuperUserAuthGuard, SystemSettingsGuard, VisitorAuthGuard } from './utils/CanActivateGuards';
 
 const routes: Routes = [
     { path: '', canActivate: [SystemSettingsGuard], children: [ //this empty parent route is needed in order to apply the SystemSettingsGuard to the whole application
@@ -28,14 +28,14 @@ const routes: Routes = [
         { path: "home", component: HomeComponent, canActivate: [VisitorAuthGuard], runGuardsAndResolvers: 'always' }, //VisitorAuthGuard needed in order to redirect to the registration page if no user is registered
         { path: "login", component: LoginComponent },
         { path: "registration", component: RegistrationComponent },
-        { path: "profile", component: UserProfileComponent, canActivate: [AdminAuthGuard] },
+        { path: "profile", component: UserProfileComponent, canActivate: [SuperUserAuthGuard] },
         {
-            path: 'admin', component: AdminDashboardComponent, canActivate: [AdminAuthGuard],
+            path: 'admin', component: AdminDashboardComponent, canActivate: [SuperUserAuthGuard],
             children: [
                 { path: '', redirectTo: "projects", pathMatch: 'full' },
                 { path: 'projects', component: ProjectsManagerComponent },
-                { path: 'contributions', component: ContributionsManagerComponent },
-                { path: 'config', component: SystemConfigurationComponent }
+                { path: 'contributions', component: ContributionsManagerComponent, canActivate: [AdminAuthGuard] },
+                { path: 'config', component: SystemConfigurationComponent, canActivate: [AdminAuthGuard] }
             ]
         },
         { path: "sysconfig", component: InitialConfigurationComponent, canActivate: [AdminAuthGuard] },

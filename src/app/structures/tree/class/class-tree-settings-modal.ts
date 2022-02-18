@@ -74,21 +74,17 @@ export class ClassTreeSettingsModal implements OnInit {
     changeClass() {
         this.browsingModals.browseClassTree({ key: "DATA.CLASS.ACTIONS.SELECT_ROOT_CLASS" }, [RDFS.resource]).then(
             (cls: AnnotatedValue<IRI>) => {
-                if (Cookie.getCookie(Cookie.WARNING_CUSTOM_ROOT) != "false") {
-                    let model: string = SVContext.getWorkingProject().getModelType();
-                    if ((model == RDFS.uri && !cls.getValue().equals(RDFS.resource)) ||
-                        (!cls.getValue().equals(RDFS.resource) && !cls.getValue().equals(OWL.thing)) //OWL or RDFS model
-                    ) {
-                        this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "MESSAGES.CUSTOM_ROOT_WARN" }, ModalType.warning, null, "Don't show this again").then(
-                            checked => {
-                                if (checked) {
-                                    Cookie.setCookie(Cookie.WARNING_CUSTOM_ROOT, "false");
-                                }
-                            }
-                        )
-                    }
+                let model: string = SVContext.getWorkingProject().getModelType();
+                if ((model == RDFS.uri && !cls.getValue().equals(RDFS.resource)) || //root different from rdfs:Resource in RDFS model
+                    (!cls.getValue().equals(RDFS.resource) && !cls.getValue().equals(OWL.thing)) //root different from rdfs:Resource and owl:Thing in other models
+                ) {
+                    this.basicModals.confirmCheckCookie({key: "COMMONS.STATUS.WARNING"}, { key: "MESSAGES.CUSTOM_ROOT_WARN" }, Cookie.WARNING_CUSTOM_ROOT, ModalType.warning).then(
+                        () => {
+                            this.rootClass = cls;
+                        },
+                        () => {}
+                    )
                 }
-                this.rootClass = cls;
             },
             () => {}
         );

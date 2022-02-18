@@ -25,7 +25,7 @@ export class InstanceListSettingsModal {
 
     ngOnInit() {
         let instanceListPref: InstanceListPreference = SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences;
-        this.allowVisualizationChange = instanceListPref.allowVisualizationChange || SVContext.getLoggedUser().isAdmin();
+        this.allowVisualizationChange = instanceListPref.allowVisualizationChange || SVContext.getLoggedUser().isSuperUser(false);
         this.pristineInstancePref = JSON.parse(JSON.stringify(instanceListPref));
         this.visualization = instanceListPref.visualization;
         this.safeToGoLimit = instanceListPref.safeToGoLimit;

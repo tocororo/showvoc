@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ShowVocConstants } from '../models/ShowVoc';
-import { HttpManager } from "../utils/HttpManager";
+import { User } from '../models/User';
+import { HttpManager, STRequestParams } from "../utils/HttpManager";
 
 @Injectable()
 export class AdministrationServices {
@@ -9,11 +10,52 @@ export class AdministrationServices {
 
     constructor(private httpMgr: HttpManager) { }
 
-    setAdministrator(email: string) {
-        let params = {
-            email: email,
+    /**
+     * 
+     * @param user 
+     * @returns 
+     */
+    setAdministrator(user: User) {
+        let params: STRequestParams = {
+            email: user.getEmail(),
         }
         return this.httpMgr.doPost(this.serviceName, "setAdministrator", params);
+    }
+
+    /**
+    * 
+    * @param user 
+    * @returns 
+    */
+    removeAdministrator(user: User) {
+        let params: STRequestParams = {
+            email: user.getEmail(),
+        }
+        return this.httpMgr.doPost(this.serviceName, "removeAdministrator", params);
+    }
+
+    /**
+     * 
+     * @param user 
+     * @returns 
+     */
+    setSuperUser(user: User) {
+        let params: STRequestParams = {
+            email: user.getEmail(),
+        }
+        return this.httpMgr.doPost(this.serviceName, "setSuperUser", params);
+    }
+
+    /**
+     * 
+     * @param user 
+     * @returns 
+     */
+    removeSuperUser(user: User) {
+        let params: STRequestParams = {
+            email: user.getEmail(),
+        }
+        return this.httpMgr.doPost(this.serviceName, "removeSuperUser", params);
     }
 
     /**
@@ -21,7 +63,7 @@ export class AdministrationServices {
      * @param mailTo 
      */
     testEmailConfig(mailTo: string) {
-        var params: any = {
+        let params: STRequestParams = {
             mailTo: mailTo,
             appCtx: ShowVocConstants.appCtx
         }
@@ -35,7 +77,7 @@ export class AdministrationServices {
      * @param roles
      */
     addRolesToUser(projectName: string, email: string, roles: string[]) {
-        var params: any = {
+        let params: STRequestParams = {
             projectName: projectName,
             email: email,
             roles: roles

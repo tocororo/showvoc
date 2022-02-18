@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SVContext } from '../utils/SVContext';
 
 @Component({
     selector: 'admin-dashboard-component',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminDashboardComponent implements OnInit {
 
+    isAdmin: boolean
+
     constructor() { }
 
     ngOnInit() {
+        this.isAdmin = SVContext.getLoggedUser().isAdmin();
     }
 
 }

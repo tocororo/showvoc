@@ -38,6 +38,8 @@ export class ProjectsManagerComponent {
     private readonly roleStaging: string = ShowVocConstants.roleStaging;
     private readonly rolePublic: string = ShowVocConstants.rolePublic;
 
+    isAdmin: boolean;
+
     projectList: Project[];
     //usefuld attributes to set in the Project objects
     private readonly roleAttr: string = "role"; //the role that the visitor user has in the project (tells the project status)
@@ -62,6 +64,7 @@ export class ProjectsManagerComponent {
         private translateService: TranslateService) { }
 
     ngOnInit() {
+        this.isAdmin = SVContext.getLoggedUser().isAdmin();
         this.initProjects();
     }
 
@@ -73,7 +76,7 @@ export class ProjectsManagerComponent {
 
         roles.forEach(r => {
             listProjectFn.push(
-                this.projectService.listProjectsPerRole(r).pipe(
+                this.projectService.listProjectsPerRole(r, null, false, true).pipe(
                     map(projects => {
                         projects.forEach(p => {
                             p[this.roleAttr] = r;

@@ -51,7 +51,7 @@
                                 <select class="form-control form-control-sm" [(ngModel)]="selectedRemoteRepoConfig">
                                     <option *ngFor="let conf of remoteRepoConfigs" [ngValue]="conf">{{conf.serverURL}}</option>
                                 </select>
-                                <div class="input-group-append">
+                                <div *ngIf="isAdmin" class="input-group-append">
                                     <button class="btn btn-outline-info" (click)="configRemoteRepoAccess()">
                                         <span class="fas fa-edit"></span>
                                     </button>

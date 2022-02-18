@@ -53,11 +53,12 @@ export class ProjectsServices {
      * @param consumer 
      * @param onlyOpen 
      */
-    listProjectsPerRole(role: string, consumer?: Project, onlyOpen?: boolean) {
+    listProjectsPerRole(role: string, consumer?: Project, onlyOpen?: boolean, userDependent?: boolean) {
         let params: any = {
             role: role,
             consumer: consumer != null ? consumer.getName() : "SYSTEM",
-            onlyOpen: onlyOpen
+            onlyOpen: onlyOpen,
+            userDependent: userDependent
         };
         return this.httpMgr.doGet(this.serviceName, "listProjectsPerRole", params).pipe(
             map(stResp => {

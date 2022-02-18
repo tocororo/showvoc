@@ -1,6 +1,6 @@
 <div class="container my-3">
 
-    <div class="mb-2">
+    <div *ngIf="isAdmin" class="mb-2">
         <div class="btn-group btn-group-sm">
             <button type="button" class="btn btn-outline-info" [routerLink]="['projects']" routerLinkActive="active">{{'DATASETS.DATASETS'|translate}}</button>
             <button type="button" class="btn btn-outline-info" [routerLink]="['contributions']" routerLinkActive="active">{{'CONTRIBUTIONS.CONTRIBUTIONS'|translate}}</button>

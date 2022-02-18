@@ -4,22 +4,71 @@
 
         <div class="card mb-2">
             <div class="card-header d-flex align-items-center">
-                <label style="flex: 1;">{{'ADMINISTRATION.SYSTEM.ADMIN.ADMINISTRATORS'|translate}}:</label>
-                <div class="btn-toolbar">
-                    <button class="btn btn-light btn-sm" [title]="'COMMONS.ACTIONS.CREATE'|translate" (click)="addAdministrator()">
-                        <span class="fas fa-plus"></span>
-                    </button>
-                </div>
+                <label style="flex: 1;">{{'ADMINISTRATION.SYSTEM.USERS.USERS'|translate}}:</label>
             </div>
-            <div *ngIf="adminList" class="card-body scrollableContainer" style="max-height: 100px;">
-                <div *ngFor="let u of adminList" class="listItem">
-                    <div style="flex: 1; white-space: nowrap">
-                        <b>{{u.getShow()}}</b>
-                        <span class="text-muted">&nbsp;({{u.getEmail()}})</span>
+            <div class="card-body">
+                <div class="card mb-2">
+                    <div class="card-header d-flex align-items-center">
+                        <label style="flex: 1;">{{'ADMINISTRATION.SYSTEM.USERS.ADMINISTRATORS'|translate}}:</label>
+                        <div class="btn-toolbar">
+                            <button class="btn btn-light btn-sm" [title]="'COMMONS.ACTIONS.CREATE'|translate" (click)="createAdministrator()">
+                                <span class="fas fa-plus"></span>
+                            </button>
+                        </div>
                     </div>
-                    <button *ngIf="adminList.length > 1" class="btn btn-light btn-sm" (click)="deleteAdministrator(u)" [disabled]="currentUser.getIri() == u.getIri()">
-                        <span class="fas fa-trash"></span>
-                    </button>
+                    <div *ngIf="adminList" class="card-body scrollableContainer" style="max-height: 200px;">
+                        <div *ngFor="let u of adminList">
+                            <div class="listItem">
+                                <div style="flex: 1; white-space: nowrap">
+                                    <b>{{u.getShow()}}</b>
+                                    <span class="text-muted">&nbsp;({{u.getEmail()}})</span>
+                                </div>
+                                <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right top-right" container="body" display="dynamic">
+                                    <button class="btn btn-light dropdown-toggle" style="width: 32px;" data-toggle="dropdown" ngbDropdownToggle></button>
+                                    <div class="dropdown-menu dropdown-menu-sm" ngbDropdownMenu>
+                                        <button class="dropdown-item" (click)="changeUserType(u)" [disabled]="currentUser.getIri() == u.getIri()">
+                                            {{'ADMINISTRATION.SYSTEM.USERS.DOWNGRADE_TO_SUPERUSER'|translate}}
+                                        </button>
+                                        <button class="dropdown-item" (click)="deleteUser(u)" [disabled]="currentUser.getIri() == u.getIri()">
+                                            {{'COMMONS.ACTIONS.DELETE'|translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-2">
+                    <div class="card-header d-flex align-items-center">
+                        <label style="flex: 1;">{{'ADMINISTRATION.SYSTEM.USERS.SUPER_USERS'|translate}}:</label>
+                        <div class="btn-toolbar">
+                            <button class="btn btn-light btn-sm" [title]="'COMMONS.ACTIONS.CREATE'|translate" (click)="createSuperUser()">
+                                <span class="fas fa-plus"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div *ngIf="superUserList" class="card-body scrollableContainer" style="max-height: 200px;">
+                        <div *ngFor="let u of superUserList">
+                            <div class="listItem">
+                                <div style="flex: 1; white-space: nowrap">
+                                    <b>{{u.getShow()}}</b>
+                                    <span class="text-muted">&nbsp;({{u.getEmail()}})</span>
+                                </div>
+                                <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right top-right" container="body" display="dynamic">
+                                    <button class="btn btn-light dropdown-toggle" style="width: 32px;" data-toggle="dropdown" ngbDropdownToggle></button>
+                                    <div class="dropdown-menu dropdown-menu-sm" ngbDropdownMenu>
+                                        <button class="dropdown-item" (click)="changeUserType(u)">
+                                            {{'ADMINISTRATION.SYSTEM.USERS.PROMOTE_TO_ADMIN'|translate}}
+                                        </button>
+                                        <button class="dropdown-item" (click)="deleteUser(u)">
+                                            {{'COMMONS.ACTIONS.DELETE'|translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, of } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { from, Observable, of } from 'rxjs';
+import { finalize, map, mergeMap, tap } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { ExtensionPointID, Scope, Settings, STProperties } from 'src/app/models/Plugins';
@@ -14,6 +14,7 @@ import { SettingsServices } from 'src/app/services/settings.service';
 import { ShowVocServices } from 'src/app/services/showvoc.service';
 import { UserServices } from 'src/app/services/user.service';
 import { RegistrationModal } from 'src/app/user/registration-modal';
+import { Cookie } from 'src/app/utils/Cookie';
 import { SVContext } from 'src/app/utils/SVContext';
 
 @Component({
@@ -29,6 +30,7 @@ export class SystemConfigurationComponent implements OnInit {
     currentUser: User; //used to disable delete btn in admin list (user cannot delete itself)
     private users: User[];
     adminList: User[];
+    superUserList: User[];
 
     /* ST+VB configuration */
     private showVocSettings: ShowVocSettings;
@@ -70,7 +72,7 @@ export class SystemConfigurationComponent implements OnInit {
     private initAll() {
         this.getSystemCoreSettingsFn.subscribe(
             settings => {
-                this.initAdminListConfigHandler(settings);
+                this.initUsersListConfigHandler(settings);
                 this.initEmailConfigHandler(settings);
                 this.initRemoteConfigHandler(settings);
                 this.initVbConfigHandler(settings);
@@ -84,19 +86,21 @@ export class SystemConfigurationComponent implements OnInit {
      * Admin managment
      * ============================ */
 
-    private initAdminListConfig() {
+    private initUsersListConfig() {
         this.getSystemCoreSettingsFn.subscribe(
             settings => {
-                this.initAdminListConfigHandler(settings);
+                this.initUsersListConfigHandler(settings);
             }
         )
     }
 
-    private initAdminListConfigHandler(settings: Settings) {
+    private initUsersListConfigHandler(settings: Settings) {
         this.ensureUsersInitialized().subscribe(
             () => {
                 let adminIriList: string[] = settings.getPropertyValue(SettingsEnum.adminList);
-                this.adminList = adminIriList.map(iri => this.users.find(u => u.getIri() == iri));
+                this.adminList = adminIriList.map(iri => this.users.find(u => u.getIri() == iri)).filter(u => u != null);
+                let superUserIriList: string[] = settings.getPropertyValue(SettingsEnum.superUserList);
+                this.superUserList = superUserIriList.map(iri => this.users.find(u => u.getIri() == iri)).filter(u => u != null);
             }
         );
     }
@@ -109,38 +113,89 @@ export class SystemConfigurationComponent implements OnInit {
                 })
             )
         } else {
-            return of();
+            return of(null);
         }
     }
 
-    addAdministrator() {
-        let modalRef: NgbModalRef = this.modalService.open(RegistrationModal, new ModalOptions('lg'));
-
-        modalRef.componentInstance.title = this.translateService.instant("ADMINISTRATION.SYSTEM.ADMIN.ADD_ADMIN");
-        modalRef.result.then(
-            (userForm: UserForm) => {
-                this.usersService.createUser(userForm.email, userForm.password, userForm.givenName, userForm.familyName).subscribe(
+    createAdministrator() {
+        this.createUser("ADMINISTRATION.SYSTEM.USERS.ADD_ADMIN").subscribe(
+            (user: User) => {
+                this.users = null; //so forces ensureUsersInitialized to reinit users list
+                this.adminService.setAdministrator(user).subscribe(
                     () => {
-                        this.users = null; //so forces the users list to be reinitialized
-                        this.adminService.setAdministrator(userForm.email).subscribe(
-                            () => {
-                                this.initAdminListConfig();
-                            }
-                        )
+                        this.initUsersListConfig();
                     }
-                )
-            },
-            () => { }
+                );
+            }
+        )
+    }
+
+    createSuperUser() {
+        this.createUser("ADMINISTRATION.SYSTEM.USERS.ADD_SUPER_USER").subscribe(
+            (user: User) => {
+                this.users = null; //so forces ensureUsersInitialized to reinit users list
+                this.adminService.setSuperUser(user).subscribe(
+                    () => {
+                        this.initUsersListConfig();
+                    }
+                );
+            }
+        )
+    }
+
+    private createUser(titleTranslationKey: string): Observable<User> {
+        let modalRef: NgbModalRef = this.modalService.open(RegistrationModal, new ModalOptions('lg'));
+        modalRef.componentInstance.title = this.translateService.instant(titleTranslationKey);
+        return from(
+            modalRef.result.then(
+                (userForm: UserForm) => {
+                    return this.usersService.createUser(userForm.email, userForm.password, userForm.givenName, userForm.familyName);
+                }
+            )
+        ).pipe(
+            mergeMap(user => user)
         );
     }
 
-    deleteAdministrator(admin: User) {
-        this.usersService.deleteUser(admin.getEmail()).subscribe(
+    changeUserType(user: User) {
+        let msgTranslationKey = user.isAdmin() ? "MESSAGES.CHANGE_USER_TYPE_ADMIN_TO_SUPER_CONFIRM" : "MESSAGES.CHANGE_USER_TYPE_SUPER_TO_ADMIN_CONFIRM";
+        this.basicModals.confirmCheckCookie({key: "COMMONS.STATUS.WARNING"}, { key: msgTranslationKey, params: { user: user.getShow() } }, Cookie.WARNING_ADMIN_CHANGE_USER_TYPE, ModalType.warning).then(
             () => {
-                this.users = null; //so forces the users list to be reinitialized
-                this.initAdminListConfig();
-            }
+                let removeFn: Observable<void>;
+                let addFn: Observable<void>;
+                if (user.isAdmin()) { // admin to superuser
+                    removeFn = this.adminService.removeAdministrator(user).pipe(tap(() => { user.setAdmin(false) }));
+                    addFn = this.adminService.setSuperUser(user).pipe(tap(() => { user.setSuperUser(true) }));
+                } else { // superuser to admin
+                    removeFn = this.adminService.removeSuperUser(user).pipe(tap(() => { user.setSuperUser(false) }));
+                    addFn = this.adminService.setAdministrator(user).pipe(tap(() => { user.setAdmin(true) }));
+                }
+                removeFn.subscribe(
+                    () => {
+                        addFn.subscribe(
+                            () => {
+                                this.initUsersListConfig();
+                            }
+                        );
+                    }
+                );
+            },
+            () => {}
         )
+    }
+
+    deleteUser(user: User) {
+        this.basicModals.confirm({ key: "COMMONS.STATUS.WARNING" }, { key: "MESSAGES.DELETE_USER_CONFIRM_WARN", params: { user: user.getShow() } }, ModalType.warning).then(
+            () => {
+                this.usersService.deleteUser(user.getEmail()).subscribe(
+                    () => {
+                        this.users = null; //so forces the users list to be reinitialized
+                        this.initUsersListConfig();
+                    }
+                )
+            }, 
+            () => {}
+        );
     }
 
 
