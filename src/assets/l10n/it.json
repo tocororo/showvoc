@@ -82,11 +82,11 @@
             },
             "USERS": {
                 "ADD_ADMIN": "Aggiungi amministratore",
-                "ADD_SUPER_USER": "Aggiungi super-user",
+                "ADD_SUPER_USER": "Aggiungi superuser",
                 "ADMINISTRATORS": "Amministratori",
-                "DOWNGRADE_TO_SUPERUSER": "Declassa a super-user",
+                "DOWNGRADE_TO_SUPERUSER": "Declassa a superuser",
                 "PROMOTE_TO_ADMIN": "Promuovi ad amministratore",
-                "SUPER_USERS": "Super-user",
+                "SUPER_USERS": "Superuser",
                 "USERS": "Utenti"
             },
             "VB_CONFIG": {
@@ -481,8 +481,8 @@
         "CANNOT_EDIT_OPEN_PROJECT_CREDENTIALS": "Impossibile modificare le credenziali di repository remoti collegati ad un progetto aperto. Chiudi il progetto e riprova",
         "CANNOT_LOAD_DATA_IN_CLOSED_DATASET": "Non è possibile caricare dati in un dataset chiuso. Aprire il dataset e riprovare.",
         "CANNOT_PROFILE_CLOSED_DATASET": "Un dataset chiuso non può essere profilato",
-        "CHANGE_USER_TYPE_ADMIN_TO_SUPER_CONFIRM": "Stai declassando {{user}} da amministratore a super-user. Vuoi continuare?",
-        "CHANGE_USER_TYPE_SUPER_TO_ADMIN_CONFIRM": "Stai promovoendo {{user}} da super-user ad amministratore. Vuoi continuare?",
+        "CHANGE_USER_TYPE_ADMIN_TO_SUPER_CONFIRM": "Stai declassando {{user}} da amministratore a superuser. Vuoi continuare?",
+        "CHANGE_USER_TYPE_SUPER_TO_ADMIN_CONFIRM": "Stai promovoendo {{user}} da superuser ad amministratore. Vuoi continuare?",
         "CLASS_FILTER_ALREADY_EXIST": "Un filtro per la classe {{cls}} già esiste.",
         "CLEAR_DATA_CONFIRM": "Questa operazione cancellerà i dati dal dataset '{{datasetName}}'. Vuoi continuare?",
         "CONTRIBUTION_APPROVED_DATASET_CREATED": "Il contributo è stato approvato e il dataset è stato creato con successo",
