@@ -1,0 +1,68 @@
+<div class="card vbox">
+    <div class="card-header d-flex align-items-center">
+        <b style="flex: 1;">Lexical assets</b>
+
+        <div class="btn-group btn-group-sm" ngbDropdown>
+            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle></button>
+            <div class="dropdown-menu" ngbDropdownMenu>
+                <button class="dropdown-item" (click)="sortLexicalizationSets('language')">
+                    <span class="fas fa-sort-alpha-down"></span> Sort by language
+                </button>
+                <button class="dropdown-item" (click)="sortLexicalizationSets('lexicalizations')">
+                    <span class="fas fa-sort-numeric-down"></span> Sort by lexicalizations
+                </button>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item" (click)="collapseAll(false)">
+                    <span class="fas fa-expand-alt"></span> Expand All
+                </button>
+                <button class="dropdown-item" (click)="collapseAll(true)">
+                    <span class="fas fa-compress-alt"></span> Collapse All
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body vbox overflow-auto">
+
+        <div *ngFor="let l of lexicalizationSets" class="card m-1">
+            <div class="card-body">
+                <div class="d-flex align-items-center" class="clickable" [ngClass]="{ 'mb-2': !l['collapsed'] }" (click)="l['collapsed'] = !l['collapsed']">
+                    <span [class]="'fas fa-chevron-' + (l['collapsed'] ? 'down' : 'right')"></span>
+                    <span class="ml-2">{{l.language}}</span>
+                </div>
+                <div *ngIf="!l['collapsed']">
+                    <table class="table table-sm">
+                        <tr>
+                            <td nowrap>Lexicalization model:</td>
+                            <td>{{l['lexModelPretty']}}</td>
+                        </tr>
+                        <tr>
+                            <td nowrap>Lexicalizations:</td>
+                            <td>{{l.lexicalizations}}</td>
+                        </tr>
+                        <tr>
+                            <td nowrap>Lexical Entries:</td>
+                            <td>{{l.lexicalEntries}}</td>
+                        </tr>
+                        <tr>
+                            <td nowrap>References:</td>
+                            <td>{{l.references}}</td>
+                        </tr>
+                        <tr>
+                            <td nowrap>Avg num of lexicalizations:</td>
+                            <td>{{l.avgNumOfLexicalizations}}</td>
+                        </tr>
+                        <tr>
+                            <td nowrap>Percentage:</td>
+                            <td>{{l.percentage}}</td>
+                        </tr>
+                        <tr>
+                            <td nowrap>Lexicon Dataset:</td>
+                            <td>{{l.lexiconDataset}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

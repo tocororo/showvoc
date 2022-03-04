@@ -75,7 +75,12 @@ export class Settings {
         return value;
     }
 
-    public getPropertiesAsMap(includeType?: boolean): { [key: string]: string } {
+    /**
+     * Return the facets name-value as map, where the value is most of the time a string, but it can be also a nested map in turn
+     * @param includeType 
+     * @returns 
+     */
+    public getPropertiesAsMap(includeType?: boolean): { [key: string]: any } {
         let map: { [key: string]: string } = {};
         if (includeType) {
             map["@type"] = this.type;

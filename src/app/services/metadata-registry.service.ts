@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DatasetMetadata, LinksetMetadata, Target } from '../models/Metadata';
+import { DatasetMetadata, LexicalizationSetMetadata, LinksetMetadata, ProjectDatasetMapping, Target } from '../models/Metadata';
 import { Project } from '../models/Project';
 import { AnnotatedValue, IRI, Literal, ResourcePosition } from '../models/Resources';
 import { STRequestOptions } from '../utils/HttpManager';
@@ -14,6 +14,17 @@ export class MetadataRegistryServices {
     private serviceName = "MetadataRegistry";
 
     constructor(private httpMgr: StMetadataRegistry) { }
+
+    /**
+     * 
+     * @param dataset 
+     */
+     getEmbeddedLexicalizationSets(dataset: IRI): Observable<LexicalizationSetMetadata[]> {
+        var params: any = {
+            dataset: dataset
+        }
+        return this.httpMgr.doGet(this.serviceName, "getEmbeddedLexicalizationSets", params);
+    }
 
     /**
      * Returns metadata about the linksets sets embedded in a given dataset
@@ -70,13 +81,13 @@ export class MetadataRegistryServices {
      * 
      * @param projects 
      */
-    findDatasetForProjects(projects: Project[]): Observable<{[project: string]: AnnotatedValue<IRI>}> {
+    findDatasetForProjects(projects: Project[]): Observable<ProjectDatasetMapping> {
         let params: any = {
             projects: projects.map(p => p.getName())
         }
         return this.httpMgr.doGet(this.serviceName, "findDatasetForProjects", params).pipe(
             map(stResp => {
-                let mappings: {[project: string]: AnnotatedValue<IRI>} = {};
+                let mappings: ProjectDatasetMapping = {};
                 for (let key in stResp) {
                     mappings[key] = ResourceDeserializer.createIRI(stResp[key]);
                 }

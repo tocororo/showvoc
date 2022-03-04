@@ -12,6 +12,7 @@ import { LoadStableResourceComponent } from './contribution/stable/load-stable.c
 import { DatasetDataComponent } from './datasets/data/dataset-data.component';
 import { DatasetViewComponent } from './datasets/dataset-view/dataset-view.component';
 import { DatasetsComponent } from './datasets/datasets.component';
+import { MetadataComponent } from './datasets/metadata/metadata.component';
 import { SparqlComponent } from './datasets/sparql/sparql.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found.component';
@@ -47,7 +48,8 @@ const routes: Routes = [
         {
             path: 'datasets/:id', component: DatasetViewComponent, canActivate: [ProjectGuard], //ProjectGuard implicitly requires VisitorAuthGuard
             children: [
-                { path: '', redirectTo: "data", pathMatch: 'full' },
+                { path: '', redirectTo: "metadata", pathMatch: 'full' },
+                { path: 'metadata', component: MetadataComponent },
                 { path: 'data', component: DatasetDataComponent },
                 { path: 'sparql', component: SparqlComponent }
             ]

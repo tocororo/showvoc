@@ -639,6 +639,7 @@
     },
     "SEARCH": {
         "ANY_LANGUAGE": "Qualsiasi lingua",
+        "DISABLE_FILTER": "Disabilita filtro",
         "EDIT_LANGS": {
             "ADD_LANG": "Aggiungi lingua",
             "EDIT_LANGS": "Cambia lingue",
@@ -671,7 +672,7 @@
         "X_HIDDEN_IN_N_DATASETS": [
             "nascosti",
             "in",
-            "dataset"
+            "closet dataset"
         ],
         "X_MATCHES_IN_N_DATASETS": [
             "corrispondenze in",

@@ -41,7 +41,7 @@ export class SearchComponent {
     filteredRepoIds: string[]; //id (eventually filtered) of the repositories of the results, useful to iterate over them in the view
     
     resultsCount: number;
-    excludedResultsCount: number; //results excluded due filters
+    excludedResultsCount: number; //results excluded due filters (currently just due the "only open" dataset filter)
     excludedRepoCount: number; //repo excluded due filters
 
     anyLangFilter: boolean;
@@ -157,11 +157,11 @@ export class SearchComponent {
     }
 
 
-    private goToResource(result: GlobalSearchResult) {
-        this.router.navigate(["/datasets/" + result.repository.id], { queryParams: { [ShowVocUrlParams.resId]: result.resource.getIRI() } });
+    goToResource(result: GlobalSearchResult) {
+        this.router.navigate(["/datasets/" + result.repository.id + "/data"], { queryParams: { [ShowVocUrlParams.resId]: result.resource.getIRI() } });
     }
 
-    private goToDataset(repoId: string) {
+    goToDataset(repoId: string) {
         this.router.navigate(["/datasets/" + repoId]);
     }
 
@@ -172,9 +172,11 @@ export class SearchComponent {
     //Projects
 
     updateProjectFilter() {
-        this.openProjectFilter = !this.openProjectFilter;
+        this.openProjectFilter = !this.openProjectFilter; //commented when replaced dropdown button with checkbox (if dropdown will be restored, decomment this line)
         this.updateCookies();
-        this.filterSearchResults();
+        if (this.groupedSearchResults) { //if search results are available, filter them
+            this.filterSearchResults();
+        }
     }
 
     //Languages

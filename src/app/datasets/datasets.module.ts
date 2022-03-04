@@ -13,6 +13,8 @@ import { WidgetModule } from '../widget/widget.module';
 import { DatasetDataComponent } from './data/dataset-data.component';
 import { DatasetViewComponent } from './dataset-view/dataset-view.component';
 import { DatasetsComponent } from './datasets.component';
+import { LexicalizationSetsRenderer } from './metadata/lexicalization-sets-renderer.component';
+import { MetadataComponent } from './metadata/metadata.component';
 import { ExportResultRdfModal } from './sparql/export-result-rdf-modal';
 import { SparqlTabComponent } from './sparql/sparql-tab.component';
 import { SparqlComponent } from './sparql/sparql.component';
@@ -23,10 +25,12 @@ import { YasguiComponent } from './sparql/yasgui.component';
 		DatasetsComponent,
 		DatasetViewComponent,
 		DatasetDataComponent,
+		ExportResultRdfModal,
+		LexicalizationSetsRenderer,
+		MetadataComponent,
 		SparqlComponent,
 		SparqlTabComponent,
 		YasguiComponent,
-		ExportResultRdfModal
 	],
 	imports: [
 		AlignmentsModule,

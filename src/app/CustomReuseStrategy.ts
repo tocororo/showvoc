@@ -45,7 +45,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     private log: boolean = false; //set to true in order to read prints in the browser logger
 
     private stickyRoutes: string[] = ["search", "datasets", "datasets/:id", "data", "sparql"]
-    private projectDependantRoutes: string[] = ["datasets/:id", "data", "sparql"];
+    private projectDependantRoutes: string[] = ["datasets/:id", "data", "sparql", "metadata"];
 
 	/** 
      * Object which will store DetachedRouteHandle indexed by keys

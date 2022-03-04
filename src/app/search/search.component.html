@@ -22,7 +22,8 @@
                 </button>
             </div>
         </div>
-        <div class="btn-group btn-group-sm ml-1" ngbDropdown autoClose="outside">
+        
+        <div class="btn-group btn-group-sm ml-3" ngbDropdown autoClose="outside">
             <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle>{{'COMMONS.LANGUAGE.LANGUAGES'|translate}}</button>
             <div class="dropdown-menu" ngbDropdownMenu>
                 <button class="dropdown-item d-flex align-items-center" (click)="setAllLanguagesFilter()">
@@ -63,7 +64,8 @@
                     {{excludedResultsCount}}
                     {{'SEARCH.X_HIDDEN_IN_N_DATASETS.1'|translate}}
                     {{excludedRepoCount}}
-                    {{'SEARCH.X_HIDDEN_IN_N_DATASETS.2'|translate}}
+                    {{'SEARCH.X_HIDDEN_IN_N_DATASETS.2'|translate}}.
+                    <button class="btn btn-link btn-xs mb-1" (click)="updateProjectFilter()">{{'SEARCH.DISABLE_FILTER'|translate}}</button>
                     )
                 </h6>
             </div>

@@ -101,6 +101,8 @@ export class Project {
             return "SKOSXL";
         } else if (modelType == OntoLex.uri) {
             return "OntoLex";
+        } else {
+            return modelType;
         }
     }
 

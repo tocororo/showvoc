@@ -1,0 +1,87 @@
+<div class="hbox">
+
+    <div class="vbox" style="flex: 3;">
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="m-0">General Metadata</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <colgroup>
+                        <col style="width: 1%;">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td class="font-weight-bold" nowrap>Title:</td>
+                            <td>{{datasetMetadata?.title}}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold" nowrap>URI space:</td>
+                            <td>{{datasetMetadata?.uriSpace}}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold" nowrap>Description:</td>
+                            <td>{{project.getDescription()}}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold" nowrap>Model:</td>
+                            <td>{{project.getModelType(true)}}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold" nowrap>Lexicalization:</td>
+                            <td>{{project.getLexicalizationModelType(true)}}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold" nowrap>SPARQL Endpoint:</td>
+                            <td>{{datasetMetadata?.sparqlEndpointMetadata?.id}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="m-0">Facets</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <colgroup>
+                        <col style="width: 1%;">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                        <tr *ngFor="let f of facets | keyvalue">
+                            <td class="font-weight-bold" nowrap>{{f.key}}:</td>
+                            <td>{{f.value}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="m-0">Distributions</h5>
+            </div>
+            <div class="card-body">
+            </div>
+        </div>
+    </div>
+
+    <div class="card vbox ml-3">
+
+        <div class="card-header">
+            <h5 class="m-0">Stats</h5>
+        </div>
+        <div class="card-body vbox">
+
+            <lexicalization-sets-renderer [dataset]="dataset"></lexicalization-sets-renderer>
+
+        </div>
+
+    </div>
+
+</div>

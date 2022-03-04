@@ -1,6 +1,6 @@
 import { ResourceUtils } from '../utils/ResourceUtils';
 import { Project } from './Project';
-import { IRI, Literal } from './Resources';
+import { AnnotatedValue, IRI, Literal } from './Resources';
 
 export class PrefixMapping {
     public prefix: string;
@@ -110,10 +110,27 @@ export class SparqlEndpointMetadata {
     }
 }
 
+export interface LexicalizationSetMetadata {
+    identity: string;
+    referenceDataset: string;
+    lexiconDataset?: string;
+    lexicalizationModel: string;
+    language: string;
+    references?: number;
+    lexicalEntries?: number;
+    lexicalizations?: number;
+    percentage?: number;
+    avgNumOfLexicalizations?: number;
+}
+
 export enum TransitiveImportMethodAllowance {
     web = "web",
     webFallbackToMirror = "webFallbackToMirror",
     mirrorFallbackToWeb = "mirrorFallbackToWeb",
     mirror = "mirror",
     nowhere = "nowhere"
+}
+
+export interface ProjectDatasetMapping {
+    [project: string]: AnnotatedValue<IRI>
 }

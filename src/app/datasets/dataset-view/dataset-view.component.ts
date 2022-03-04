@@ -9,9 +9,9 @@ import { SVContext } from 'src/app/utils/SVContext';
     templateUrl: './dataset-view.component.html',
     host: { class: "pageComponent" },
     styles: [`
-		.nav-pills .nav-link.active { background-color: #17a2b8; }
-		a { color: #17a2b8; }
-	`]
+        /*.nav-pills .nav-link.active { background-color: #17a2b8; }*/
+        .nav li a { padding: 10px; font-size: 15px; color: #17a2b8; }
+    `]
 })
 export class DatasetViewComponent {
 
@@ -33,7 +33,7 @@ export class DatasetViewComponent {
     isActiveRoute(route: string) {
         let url: string = this.router.url.split("?")[0];
         let splittedUrl = url.split("/");
-        let active = splittedUrl[splittedUrl.length-1];
+        let active = splittedUrl[splittedUrl.length - 1];
         return active == route;
     }
 
