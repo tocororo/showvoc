@@ -24,7 +24,7 @@ export class InputOutputServices {
      * @param transformationPipeline a JSON string representing an array of TransformationStep.
      * @param validateImplicitly 
      */
-    loadRDF(baseURI: string, transitiveImportAllowance: TransitiveImportMethodAllowance, inputFile?: File, format?: string, 
+    loadRDF(baseURI: string, transitiveImportAllowance: TransitiveImportMethodAllowance, inputFile?: File, format?: string,
         loaderSpec?: PluginSpecification, rdfLifterSpec?: PluginSpecification, transformationPipeline?: string, validateImplicitly?: boolean) {
         let data: any = {
             baseURI: baseURI,
@@ -73,7 +73,7 @@ export class InputOutputServices {
                 }
                 //sort by name
                 formats.sort(
-                    function(a: RDFFormat, b: RDFFormat) {
+                    function (a: RDFFormat, b: RDFFormat) {
                         if (a.name < b.name) return -1;
                         if (a.name > b.name) return 1;
                         return 0;
@@ -84,6 +84,10 @@ export class InputOutputServices {
         );
     }
 
+    /**
+     * 
+     * @param extensionID 
+     */
     getSupportedFormats(extensionID: string): Observable<DataFormat[]> {
         let params = {
             extensionID: extensionID
@@ -91,12 +95,12 @@ export class InputOutputServices {
         return this.httpMgr.doGet(this.serviceName, "getSupportedFormats", params).pipe(
             map(stResp => {
                 let formats: DataFormat[] = [];
-                for (let i = 0; i < stResp.length; i++) {
-                    formats.push(new DataFormat(stResp[i].name, stResp[i].defaultMimeType, stResp[i].defaultFileExtension));
+                for (let f of stResp) {
+                    formats.push(DataFormat.parse(f));
                 }
                 //sort by name
                 formats.sort(
-                    function(a: DataFormat, b: DataFormat) {
+                    function (a: DataFormat, b: DataFormat) {
                         if (a.name < b.name) return -1;
                         if (a.name > b.name) return 1;
                         return 0;
@@ -118,5 +122,5 @@ export class InputOutputServices {
         return this.httpMgr.doGet(this.serviceName, "getParserFormatForFileName", params);
     }
 
-    
+
 }

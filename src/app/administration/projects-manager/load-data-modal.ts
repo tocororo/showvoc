@@ -68,24 +68,16 @@ export class LoadDataModal {
         this.inputOutputService.getSupportedFormats(this.selectedLifterExtension.id).subscribe(
             formats => {
                 this.inputFormats = formats;
-                /*
-                 * Iterate over the input format for:
-                 * - collecting the extensions of the formats, in order to provide them to the file picker
-                 * - select a default input format (rdf for the rdf lifter)
-                 */
-                let extList: string[] = [];
-                let defaultInputFormatIdx: number = 0;
-                for (var i = 0; i < this.inputFormats.length; i++) {
-                    extList.push("." + this.inputFormats[i].defaultFileExtension);
-                    if (this.inputFormats[i].name == "RDF/XML") {
-                        defaultInputFormatIdx = i;
-                    }
-                }
-                this.selectedInputFormat = this.inputFormats[defaultInputFormatIdx];
-                //remove duplicated extensions
-                extList = extList.filter((item: string, pos: number) => {
-                    return extList.indexOf(item) == pos;
+                this.selectedInputFormat = this.inputFormats.find(f => f.name == "RDF/XML"); //select rdf/xml as default choice
+
+                let extList: string[] = []; //collects the extensions of the formats in order to provide them to the file picker
+                this.inputFormats.forEach(f => {
+                    f.fileExtensions.forEach(ext => {
+                        extList.push("." + ext);
+                    })
                 });
+                //remove duplicated extensions
+                extList = extList.filter((item: string, pos: number) => extList.indexOf(item) == pos);
                 this.filePickerAccept = extList.join(",");
             }
         )
@@ -96,7 +88,7 @@ export class LoadDataModal {
         this.inputOutputService.getParserFormatForFileName(file.name).subscribe(
             format => {
                 if (format != null) {
-                    for (var i = 0; i < this.inputFormats.length; i++) {
+                    for (let i = 0; i < this.inputFormats.length; i++) {
                         if (this.inputFormats[i].name == format) {
                             this.selectedInputFormat = this.inputFormats[i];
                             return;
@@ -109,7 +101,7 @@ export class LoadDataModal {
 
     ok() {
         if (this.baseURI == null || this.baseURI.trim() == "") {
-            this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, {key:"MESSAGES.BASEURI_REQUIRED"}, ModalType.warning);
+            this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, { key: "MESSAGES.BASEURI_REQUIRED" }, ModalType.warning);
             return;
         }
 
@@ -118,7 +110,7 @@ export class LoadDataModal {
         }
         if (this.selectedLifterConfig != null) {
             if (this.selectedLifterConfig.requireConfiguration()) {
-                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.LIFTER_NOT_CONFIGURED"}, ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, { key: "MESSAGES.LIFTER_NOT_CONFIGURED" }, ModalType.warning);
                 return;
             }
             rdfLifterSpec.configType = this.selectedLifterConfig.type;
@@ -136,7 +128,7 @@ export class LoadDataModal {
                 if (this.project['role'] == ShowVocConstants.rolePristine) { //role is an attribute attached in ProjectsManagerComponent, namely the component that opens this modal)
                     this.svService.setProjectStatus(this.project.getName(), ShowVocConstants.roleStaging).subscribe();
                 }
-                this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, {key:"MESSAGES.DATA_LOADED"}).then(
+                this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, { key: "MESSAGES.DATA_LOADED" }).then(
                     () => this.activeModal.close()
                 )
             }

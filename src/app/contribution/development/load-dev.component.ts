@@ -80,24 +80,16 @@ export class LoadDevResourceComponent {
         this.inputOutputService.getSupportedFormats(this.selectedLifterExtension.id).subscribe(
             formats => {
                 this.inputFormats = formats;
-                /*
-                 * Iterate over the input format for:
-                 * - collecting the extensions of the formats, in order to provide them to the file picker
-                 * - select a default input format (rdf for the rdf lifter)
-                 */
-                let extList: string[] = []; 
-                let defaultInputFormatIdx: number = 0;
-                for (var i = 0; i < this.inputFormats.length; i++) {
-                    extList.push("."+this.inputFormats[i].defaultFileExtension);
-                    if (this.selectedLifterExtension.id == this.rdfExtensionId && this.inputFormats[i].name == "RDF/XML") {
-                        defaultInputFormatIdx = i;
-                    }
-                }
-                this.selectedInputFormat = this.inputFormats[defaultInputFormatIdx];
-                //remove duplicated extensions
-                extList = extList.filter((item: string, pos: number) => {
-                    return extList.indexOf(item) == pos;
+                this.selectedInputFormat = this.inputFormats.find(f => f.name == "RDF/XML"); //select rdf/xml as default choice
+
+                let extList: string[] = []; //collects the extensions of the formats in order to provide them to the file picker
+                this.inputFormats.forEach(f => {
+                    f.fileExtensions.forEach(ext => {
+                        extList.push("." + ext);
+                    })
                 });
+                //remove duplicated extensions
+                extList = extList.filter((item: string, pos: number) => extList.indexOf(item) == pos);
                 this.filePickerAccept = extList.join(",");
             }
         )
