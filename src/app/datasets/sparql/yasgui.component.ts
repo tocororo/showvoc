@@ -1,10 +1,11 @@
-import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import * as $ from 'jquery';
 import { PrefixMapping } from 'src/app/models/Metadata';
 import { SearchMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI } from 'src/app/models/Resources';
 import { QueryChangedEvent } from 'src/app/models/Sparql';
 import { SearchServices } from 'src/app/services/search.service';
+import { SparqlServices } from 'src/app/services/sparql.service';
 import { SVContext } from 'src/app/utils/SVContext';
 import * as YASQE from 'yasgui-yasqe';
 
@@ -18,24 +19,25 @@ export class YasguiComponent {
     @Input() hideButtons: boolean = false;
     @Output() querychange = new EventEmitter<QueryChangedEvent>();
 
-    @ViewChild('txtarea', { static: true }) textareaElement: ElementRef;
+    @ViewChild('txtarea') textareaElement: ElementRef;
 
     private CLASS_COMPLETER_NAME = "customClassCompleter";
     private PREFIX_COMPLETER_NAME = "customPrefixCompleter";
     private PROPERTY_COMPLETER_NAME = "customPropertyCompleter";
+    private SERVICE_COMPLETER_NAME = "customServiceCompleter";
 
     fetchFromPrefixCheck: boolean = false;
 
     private yasqe: any;
 
-    constructor(private searchService: SearchServices) { }
+    constructor(private searchService: SearchServices, private sparqlServices: SparqlServices) { }
 
     ngAfterViewInit() {
         YASQE.defaults.indentUnit = 4;
         YASQE.defaults.persistent = null; //disable persistency
         YASQE.defaults.autocompleters = ["variables"];
 
-        //register the autocompleters if not yet done (by other instances of YasguiComponent)
+        // register the autocompleters if not yet done (by other instances of YasguiComponent)
         if (YASQE.defaults.autocompleters.indexOf(this.PREFIX_COMPLETER_NAME) == -1) {
             YASQE.registerAutocompleter(this.PREFIX_COMPLETER_NAME,
                 (yasqe: any) => {
@@ -57,7 +59,13 @@ export class YasguiComponent {
                 }
             );
         }
-
+        if (YASQE.defaults.autocompleters.indexOf(this.SERVICE_COMPLETER_NAME) == -1) {
+            YASQE.registerAutocompleter(this.SERVICE_COMPLETER_NAME,
+                (yasqe: any) => {
+                    return this.customServiceCompleter(yasqe);
+                }
+            );
+        }
         this.yasqe = YASQE.fromTextArea(
             this.textareaElement.nativeElement,
             {
@@ -66,6 +74,7 @@ export class YasguiComponent {
                 extraKeys: { "Ctrl-7": YASQE.commentLines },
             }
         );
+
 
         //called on changes in yasqe editor
         this.yasqe.on('change', (yasqe: any) => {
@@ -76,7 +85,7 @@ export class YasguiComponent {
             YASQE.Autocompleters.prefixes.appendPrefixIfNeeded(yasqe, this.PREFIX_COMPLETER_NAME);
         });
 
-        //I can't explain why, but if I don't force the update of the content, when a new tab is added, the editor is initialized with UI issues
+        //force the update of the content, so init empty query and prevent UI issue with the gutter
         setTimeout(() => {
             this.forceContentUpdate();
         })
@@ -86,10 +95,10 @@ export class YasguiComponent {
      * If query is changed in code from the parent component, the @Input query changes, but content of the yasqe editor is not updated.
      * I need to force it by setting the value with setValue().
      * Note: this operation reset the caret at the beginning of the editor, so use it with caution.
-     * @param changes 
      */
     public forceContentUpdate() {
         this.yasqe.setValue(this.query);
+        this.yasqe.refresh(); //this fixes strange issues with gutter (see https://github.com/codemirror/CodeMirror/issues/4412)
         this.collapsePrefixDeclaration();
     }
 
@@ -129,20 +138,20 @@ export class YasguiComponent {
                 return YASQE.Autocompleters.prefixes.isValidCompletionPosition(yasqe);
             },
             get: function (token: any, callback: any) { //callback is the function to which pass the suggested strings if get is async
-                var prefixArray: string[] = [];
+                let prefixArray: string[] = [];
                 //add the prefixes from the local triplestore
-                for (var i = 0; i < prefixMappings.length; i++) {
-                    var prNs = prefixMappings[i].prefix + ": <" + prefixMappings[i].namespace + ">";
+                for (let i = 0; i < prefixMappings.length; i++) {
+                    let prNs = prefixMappings[i].prefix + ": <" + prefixMappings[i].namespace + ">";
                     prefixArray.push(prNs);
                 }
                 prefixArray.sort();
                 if (fetchFromPrefixCC) {
                     //-----------copied from prefixes.js of yasgui-yasqe-----------
                     $.get(YASQE.Autocompleters.prefixes.fetchFrom, function (data) {
-                        for (var prefix in data) {
+                        for (let prefix in data) {
                             if (prefix == "bif")
                                 continue; // skip this one! see #231
-                            var completeString = prefix + ": <" + data[prefix] + ">";
+                            let completeString = prefix + ": <" + data[prefix] + ">";
                             prefixArray.push(completeString); // the array we want to store in localstorage
                         }
 
@@ -184,9 +193,9 @@ export class YasguiComponent {
                 }
                 searchService.searchResource(token.autocompletionString, ["property"], false, true, false, SearchMode.startsWith).subscribe(
                     (results: AnnotatedValue<IRI>[]) => {
-                        var resArray: string[] = [];
-                        for (var i = 0; i < results.length; i++) {
-                            var uri = results[i].getValue().getIRI();
+                        let resArray: string[] = [];
+                        for (let i = 0; i < results.length; i++) {
+                            let uri = results[i].getValue().getIRI();
                             //results may contains duplicate (properties with multiple roles), so add the uri only if not already in
                             if (resArray.indexOf(uri) == -1) {
                                 resArray.push(uri);
@@ -225,8 +234,8 @@ export class YasguiComponent {
                 if (token.autocompletionString.trim() != "") {
                     searchService.searchResource(token.autocompletionString, ["cls"], false, true, false, SearchMode.startsWith).subscribe(
                         (results: AnnotatedValue<IRI>[]) => {
-                            var resArray: string[] = [];
-                            for (var i = 0; i < results.length; i++) {
+                            let resArray: string[] = [];
+                            for (let i = 0; i < results.length; i++) {
                                 resArray.push(results[i].getValue().getIRI());
                             }
                             callback(resArray);
@@ -247,6 +256,70 @@ export class YasguiComponent {
             callbacks: {
                 validPosition: yasqe.autocompleters.notifications.show,
                 invalidPosition: yasqe.autocompleters.notifications.hide,
+            }
+        }
+    }
+
+    private customServiceCompleter(yasqe: any): any {
+
+        let selectCallback = (completion, completionEl) => {
+            // The show-hint addon of Code Mirror differentiates between the text shown in the completion menu
+            // and the actual completion string substituted in the text
+            // As this difference is not supported by YASQE, we alter the (substitution) text lazily, when
+            // a completion is selected
+            let displayText = completion.displayText;
+            if (displayText.startsWith("<")) return; // the completion is already an IRI, nothing to do
+            let pipeIndex = displayText.lastIndexOf("| <");
+            if (pipeIndex == -1) return; // no pipe to split the name
+            let text = displayText.substring(pipeIndex + 2, displayText.length).trim();
+            completion.text = text;
+        }
+
+        // adapted from yasqe/autocompleters/utils.js
+        let tokenPostProcessor = (yasqe, token, suggestedString) => {
+            if (token.tokenPrefix && token.autocompletionString && token.tokenPrefixUri) {
+                // we need to get the suggested string back to prefixed form
+                suggestedString = token.tokenPrefix + suggestedString.substring(token.tokenPrefixUri.length);
+              } else if (suggestedString.indexOf("| <") == -1){ // avoid to mangle the cases in which we return the repository label and the URI 
+                // it is a regular uri. add '<' and '>' to string
+                suggestedString = "<" + suggestedString + ">";
+              }
+              return suggestedString;
+        }
+        return {
+            isValidCompletionPosition: () => {
+                let token = yasqe.getCompleteToken();
+                if (token.string.indexOf("_") == 0) return false;
+                let cur = yasqe.getCursor();
+                let previousToken = yasqe.getPreviousNonWsToken(cur.line, token);
+                if (previousToken != null && previousToken.string.toLowerCase() == "silent") {
+                    previousToken = yasqe.getPreviousNonWsToken(cur.line, previousToken)
+                }
+                if (previousToken != null && previousToken.string.toLowerCase() == "service") return true;
+                else return false;  
+            },
+            get: (token: any, callback: any) => {
+                if (token.autocompletionString.trim() != "") {
+                        this.sparqlServices.suggestEndpointsForFederation(token.autocompletionString).subscribe(results => {
+                        let suggestions: string[] = results.map(res => res.endpointLabel + " | <" + res.endpointURL + ">");
+                        callback(suggestions);
+                    });
+                }
+            },
+            preProcessToken: (token: any) => {
+                return YASQE.Autocompleters.classes.preProcessToken(yasqe, token);
+            },
+            postProcessToken: (token: any, suggestedString: string) => {
+                return tokenPostProcessor(yasqe, token, suggestedString);
+            },
+            async: true,
+            bulk: false,
+            autoShow: false,
+            persistent: null,
+            callbacks: {
+                validPosition: yasqe.autocompleters.notifications.show,
+                invalidPosition: yasqe.autocompleters.notifications.hide,
+                select: selectCallback
             }
         }
     }

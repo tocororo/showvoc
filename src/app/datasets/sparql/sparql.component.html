@@ -1,7 +1,8 @@
 <div left class="card vbox">
     <div class="card-body vbox p-0">
 
-        <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs" (navChange)="onTabChange($event)">
+        <!-- animmation=false is mandatory to prevent issues when yasgui textarea is initialized -->
+        <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" [animation]="false" class="nav-tabs" (navChange)="onTabChange($event)">
             <li *ngFor="let t of tabs" [ngbNavItem]="'tab'+t.id">
                 <a ngbNavLink>
                     <span>Query </span>

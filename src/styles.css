@@ -253,6 +253,8 @@ a.disabled {
 .CodeMirror.CodeMirror-fullscreen { height: auto !important }
 /* To put codemirror in fullscreen in front of the menubar (default z-index 7 made the textarea behind the navbar) */
 .yasqe .CodeMirror-fullscreen { z-index: 999 !important; }
+.yasqe .yasqe_buttons { top: 4px; right: 6px !important;} 
+.yasqe-hide-btns .yasqe_buttons { display: none; }
 
 /* Bootstrap extension */
 

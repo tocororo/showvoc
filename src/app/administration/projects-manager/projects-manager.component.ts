@@ -101,7 +101,7 @@ export class ProjectsManagerComponent {
                 this.eventHandler.projectUpdatedEvent.emit();
                 this.initProjects();
             },
-            () => {}
+            () => { }
         );
     }
 
@@ -111,7 +111,7 @@ export class ProjectsManagerComponent {
 
     loadData(project: Project) {
         if (!project.isOpen()) {
-            this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, { key:"MESSAGES.CANNOT_LOAD_DATA_IN_CLOSED_DATASET" }, ModalType.warning);
+            this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, { key: "MESSAGES.CANNOT_LOAD_DATA_IN_CLOSED_DATASET" }, ModalType.warning);
             return;
         }
         const modalRef: NgbModalRef = this.modalService.open(LoadDataModal, new ModalOptions("lg"));
@@ -120,7 +120,7 @@ export class ProjectsManagerComponent {
             () => { //load data might update the project status => refresh the projects list
                 this.initProjects();
             },
-            () => {}
+            () => { }
         )
     }
 
@@ -136,43 +136,47 @@ export class ProjectsManagerComponent {
                     })
                 ).subscribe(
                     () => {
-                        this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, {key:"MESSAGES.DATA_CLEARED", params: { datasetName: project.getName() }});
+                        this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, { key: "MESSAGES.DATA_CLEARED", params: { datasetName: project.getName() } });
                     }
                 )
             },
-            () => {}
+            () => { }
         )
     }
 
     deleteProject(project: Project) {
         if (project.isOpen()) {
-            this.basicModals.alert({ key: "DATASETS.ACTIONS.DELETE_DATASET" }, {key:"MESSAGES.CANNOT_DELETE_OPEN_DATASET"}, ModalType.warning);
+            this.basicModals.alert({ key: "DATASETS.ACTIONS.DELETE_DATASET" }, { key: "MESSAGES.CANNOT_DELETE_OPEN_DATASET" }, ModalType.warning);
             return;
         }
-        this.basicModals.confirm({ key: "DATASETS.ACTIONS.DELETE_DATASET" }, {key:"MESSAGES.DELETE_DATASET_CONFIRM_WARN"}, ModalType.warning).then(
+        this.basicModals.confirm({ key: "DATASETS.ACTIONS.DELETE_DATASET" }, { key: "MESSAGES.DELETE_DATASET_CONFIRM_WARN" }, ModalType.warning).then(
             () => {
-                //retrieve the remote repositories referenced by the deleting project (this must be done before the deletion in order to prevent errors)
-                this.projectService.getRepositories(project, true).subscribe(
-                    (repositories: RepositorySummary[]) => {
-                        this.projectService.deleteProject(project).subscribe( //delete the project
-                            () => {
-                                if (repositories.length > 0) { //if the deleted project was linked with remote repositories proceed with the deletion
-                                    this.deleteRemoteRepo(project, repositories);
-                                }
+                //clear the index of the project (NOTE: this MUST be done before deleting the project, otherwise the Auth check in ST would fail (check on a unexisting project))
+                this.clearIndexImpl(project).subscribe(
+                    () => {
+                        //retrieve the remote repositories referenced by the deleting project (this must be done before the deletion in order to prevent errors)
+                        this.projectService.getRepositories(project, true).subscribe(
+                            (repositories: RepositorySummary[]) => {
+                                this.projectService.deleteProject(project).subscribe( //delete the project
+                                    () => {
+                                        if (repositories.length > 0) { //if the deleted project was linked with remote repositories proceed with the deletion
+                                            this.deleteRemoteRepo(project, repositories);
+                                        }
 
-                                this.eventHandler.projectUpdatedEvent.emit();
-                                //remove the project from the list
-                                this.projectList.forEach((proj: Project, idx: number, list: Project[]) => {
-                                    if (proj.getName() == project.getName()) {
-                                        list.splice(idx, 1);
+                                        this.eventHandler.projectUpdatedEvent.emit();
+                                        //remove the project from the list
+                                        this.projectList.forEach((proj: Project, idx: number, list: Project[]) => {
+                                            if (proj.getName() == project.getName()) {
+                                                list.splice(idx, 1);
+                                            }
+                                        });
                                     }
-                                });
-                                //clear the index of the project
-                                this.clearIndexImpl(project).subscribe();
+                                )
                             }
                         )
                     }
-                )
+                );
+
             },
             () => { }
         );
@@ -215,7 +219,7 @@ export class ProjectsManagerComponent {
 
     createIndex(project: Project) {
         if (!project.isOpen()) {
-            this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.CREATE_INDEX" }, {key:"MESSAGES.CANNOT_CREATE_INDEX_OF_CLOSED_DATASET"}, ModalType.warning);
+            this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.CREATE_INDEX" }, { key: "MESSAGES.CANNOT_CREATE_INDEX_OF_CLOSED_DATASET" }, ModalType.warning);
             return;
         }
         this.clearIndexImpl(project).subscribe(
@@ -259,7 +263,7 @@ export class ProjectsManagerComponent {
 
     createMapleMetadata(project: Project) {
         if (!project.isOpen()) {
-            this.basicModals.alert({ key: "DATASETS.ACTIONS.CREATE_METADATA" }, {key:"MESSAGES.CANNOT_CREATE_METADATA_OF_CLOSED_DATASET"}, ModalType.warning);
+            this.basicModals.alert({ key: "DATASETS.ACTIONS.CREATE_METADATA" }, { key: "MESSAGES.CANNOT_CREATE_METADATA_OF_CLOSED_DATASET" }, ModalType.warning);
             return;
         }
         this.createMapleMetadataImpl(project).subscribe();
@@ -287,22 +291,22 @@ export class ProjectsManagerComponent {
         let deleteIndexLabel: string = this.translateService.instant("ADMINISTRATION.DATASETS.MANAGEMENT.DELETE_INDEX");
         let createMetadataLabel: string = this.translateService.instant("DATASETS.ACTIONS.CREATE_METADATA");
         if (role == ShowVocConstants.rolePublic) { //from staging to public
-            confirmationMsg = { key: "MESSAGES.MAKE_DATASET_PUBLIC_CONFIRM"};
-            confirmActionOpt.push({ 
+            confirmationMsg = { key: "MESSAGES.MAKE_DATASET_PUBLIC_CONFIRM" };
+            confirmActionOpt.push({
                 label: createIndexLabel,
                 value: project.isOpen(),
                 disabled: !project.isOpen(),
                 warning: !project.isOpen() ? this.translateService.instant("MESSAGES.INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET") : null
             });
-            confirmActionOpt.push({ 
+            confirmActionOpt.push({
                 label: createMetadataLabel,
                 value: project.isOpen(),
                 disabled: !project.isOpen(),
                 warning: !project.isOpen() ? this.translateService.instant("MESSAGES.CANNOT_PROFILE_CLOSED_DATASET") : null
             })
         } else if (role == ShowVocConstants.roleStaging) { //from public to staging
-            confirmationMsg = { key: "MESSAGES.MAKE_DATASET_STAGING_CONFIRM"};
-            confirmActionOpt.push({ 
+            confirmationMsg = { key: "MESSAGES.MAKE_DATASET_STAGING_CONFIRM" };
+            confirmActionOpt.push({
                 label: deleteIndexLabel,
                 value: true,
             });
@@ -381,7 +385,7 @@ export class ProjectsManagerComponent {
                     }
                 );
             },
-            () => {}
+            () => { }
         )
     }
 
@@ -394,7 +398,7 @@ export class ProjectsManagerComponent {
                     }
                 );
             },
-            () => {}
+            () => { }
         );
     }
 
@@ -403,10 +407,10 @@ export class ProjectsManagerComponent {
         this.projectService.getCustomProjectFacetsSchema().subscribe(facetsSchema => {
             this.sharedModals.configurePlugin(facetsSchema, handler).then(
                 () => { //changed settings
-                    this.initProjects(); 
+                    this.initProjects();
                 },
-                () => {}  //nothing changed
-            );    
+                () => { }  //nothing changed
+            );
         });
     }
 

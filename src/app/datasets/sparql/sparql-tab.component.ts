@@ -46,9 +46,9 @@ export class SparqlTabComponent implements OnInit {
 
 	ngOnInit() {
         //collect the prefix namespace mappings
-        var mappings: PrefixMapping[] = SVContext.getPrefixMappings();
-        var prefixImports: string = "";
-        for (var i = 0; i < mappings.length; i++) {
+        let mappings: PrefixMapping[] = SVContext.getPrefixMappings();
+        let prefixImports: string = "";
+        for (let i = 0; i < mappings.length; i++) {
             prefixImports += "PREFIX " + mappings[i].prefix + ": <" + mappings[i].namespace + ">\n";
         }
         //set them as suffix of sampleQuery
@@ -109,8 +109,8 @@ export class SparqlTabComponent implements OnInit {
     private sparqlResponseHandler(stResp: any, initTime: number) {
         this.respSparqlJSON = stResp.sparql;
         //calculates the time spent in query
-        var finishTime = new Date().getTime();
-        var diffTime = finishTime - initTime;
+        let finishTime = new Date().getTime();
+        let diffTime = finishTime - initTime;
         this.queryTime = this.getPrettyPrintTime(diffTime);
         //process result
         this.resultType = stResp.resultType;
@@ -132,8 +132,8 @@ export class SparqlTabComponent implements OnInit {
         if (time < 1000) {
             return time + " millisec";
         } else {
-            var sec = Math.floor(time / 1000);
-            var millisec: any = time % 1000;
+            let sec = Math.floor(time / 1000);
+            let millisec: any = time % 1000;
             if (millisec < 10) {
                 millisec = "00" + millisec;
             } else if (millisec < 100) {
@@ -185,7 +185,7 @@ export class SparqlTabComponent implements OnInit {
         } else if (binding.type == "bnode") {
             return "_:" + binding.value;
         } else if (binding.type == "literal") {
-            var show = "\"" + binding.value + "\"";
+            let show = "\"" + binding.value + "\"";
             if (binding['xml:lang']) {
                 show += "@" + binding['xml:lang'];
             }
@@ -210,21 +210,21 @@ export class SparqlTabComponent implements OnInit {
 
     private exportAsCSV() {
         //https://www.w3.org/TR/sparql11-results-csv-tsv/#csv
-        var serialization = "";
-        var separator = ",";
+        let serialization = "";
+        let separator = ",";
 
         if (this.resultType == ResultType.tuple || this.resultType == ResultType.graph) {
             //headers
-            var headers = this.headers;
-            for (var i = 0; i < headers.length; i++) {
+            let headers = this.headers;
+            for (let i = 0; i < headers.length; i++) {
                 serialization += headers[i] + separator;
             }
             serialization = serialization.slice(0, -1); //remove last separator
             serialization += "\n"; //and add new line
             //results
-            var res: QueryResultBinding[] = <QueryResultBinding[]>this.queryResult;
-            for (var j = 0; j < res.length; j++) {
-                for (var i = 0; i < headers.length; i++) {
+            let res: QueryResultBinding[] = <QueryResultBinding[]>this.queryResult;
+            for (let j = 0; j < res.length; j++) {
+                for (let i = 0; i < headers.length; i++) {
                     if (res[j][headers[i]] != undefined) {
                         serialization += this.escapeForCSV(res[j][headers[i]]) + separator;
                     } else {
@@ -245,7 +245,7 @@ export class SparqlTabComponent implements OnInit {
      * Field is an object {value, type} like the bindings in the sparql response of tuple query
      */
     private escapeForCSV(field: any): string {
-        var value: string = field.value;
+        let value: string = field.value;
         /* Fields containing any of 
         " (QUOTATION MARK, code point 34),
         , (COMMA, code point 44),
@@ -265,22 +265,22 @@ export class SparqlTabComponent implements OnInit {
 
     private exportAsTSV() {
         //https://www.w3.org/TR/sparql11-results-csv-tsv/#csv
-        var serialization = "";
-        var separator = "\t";
+        let serialization = "";
+        let separator = "\t";
 
         if (this.resultType == ResultType.tuple || this.resultType == ResultType.graph) {
             //headers
             //Variables are serialized in SPARQL syntax, using question mark ? character followed by the variable name
-            var headers = this.headers;
-            for (var i = 0; i < headers.length; i++) {
+            let headers = this.headers;
+            for (let i = 0; i < headers.length; i++) {
                 serialization += headers[i] + separator;
             }
             serialization = serialization.slice(0, -1); //remove last separator
             serialization += "\n"; //and add new line
             //results
-            var res: QueryResultBinding[] = <QueryResultBinding[]>this.queryResult;
-            for (var j = 0; j < res.length; j++) {
-                for (var i = 0; i < headers.length; i++) {
+            let res: QueryResultBinding[] = <QueryResultBinding[]>this.queryResult;
+            for (let j = 0; j < res.length; j++) {
+                for (let i = 0; i < headers.length; i++) {
                     if (res[j][headers[i]] != undefined) {
                         serialization += this.escapeForTSV(res[j][headers[i]]) + separator;
                     } else {
@@ -302,7 +302,7 @@ export class SparqlTabComponent implements OnInit {
      * if type is literal, it may contains an attribute "xml:lang" or "datatype"
      */
     private escapeForTSV(field: any): string {
-        var value: string = field.value;
+        let value: string = field.value;
         /* IRIs enclosed in <...>,
         literals are enclosed with double quotes "..." or single quotes ' ...' with optional @lang or ^^ for datatype.
         Tab, newline and carriage return characters (codepoints 0x09, 0x0A, 0x0D) are encoded as \t, \n and \r
@@ -331,7 +331,7 @@ export class SparqlTabComponent implements OnInit {
         this.sparqlService.exportQueryResultAsSpreadsheet(this.queryCache, format, this.inferred).subscribe(
             blob => {
                 this.exportInProgress = false;
-                var exportLink = window.URL.createObjectURL(blob);
+                let exportLink = window.URL.createObjectURL(blob);
                 this.basicModals.downloadLink({ key: "SPARQL.ACTIONS.EXPORT_RESULTS" }, null, exportLink, "sparql_export." + format);
             }
         );
@@ -348,9 +348,9 @@ export class SparqlTabComponent implements OnInit {
      * Prepares a json or text file containing the given content and shows a modal to download it.
      */
     private downloadSavedResult(fileContent: string, type: "csv" | "tsv" | "json") {
-        var data = new Blob([fileContent], { type: 'text/plain' });
-        var textFile = window.URL.createObjectURL(data);
-        var fileName = "result." + type;
+        let data = new Blob([fileContent], { type: 'text/plain' });
+        let textFile = window.URL.createObjectURL(data);
+        let fileName = "result." + type;
         this.basicModals.downloadLink({ key: "SPARQL.ACTIONS.EXPORT_RESULTS" }, null, textFile, fileName).then(
             done => { window.URL.revokeObjectURL(textFile); },
             () => { }

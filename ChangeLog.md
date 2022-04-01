@@ -7,6 +7,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 # 1.2.2 (dd-mm-yyyy)
   * Enabled support to SAML authentication
   * Added new kind of auhtorized user: SuperUser
+  * Added completion for endpoints to use in federated SPARQL queries
   * Fixed a bug that prevented to automatically change the alphabetic index in Lexical Entry panel after a search
   * Fixed a bug that prevented to show search results in Alignments tab when the target dataset was not available
 

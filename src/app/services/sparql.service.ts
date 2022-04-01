@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { RDFFormat } from '../models/RDFFormat';
 import { IRI, Value } from '../models/Resources';
-import { HttpManager } from '../utils/HttpManager';
+import { FederatedEndpointSuggestion } from '../models/Sparql';
+import { HttpManager, STRequestParams } from '../utils/HttpManager';
 
 @Injectable()
 export class SparqlServices {
@@ -20,8 +22,8 @@ export class SparqlServices {
      * @param namedGraphs the graphs that constitute the set of named graphs.
      */
     evaluateQuery(query: string, includeInferred?: boolean, ql?: "SPARQL" | "SERQL", bindings?: Map<string, Value>, maxExecTime?: number,
-            defaultGraphs?: IRI[], namedGraphs?: IRI[]) {
-        let params: any = {
+        defaultGraphs?: IRI[], namedGraphs?: IRI[]) {
+        let params: STRequestParams = {
             query: query,
             includeInferred: includeInferred,
             ql: ql,
@@ -44,10 +46,10 @@ export class SparqlServices {
      * @param defaultGraphs 
      * @param namedGraphs 
      */
-    exportGraphQueryResultAsRdf(query: string, format: RDFFormat, includeInferred?: boolean, 
-            filteringPipeline?: string, ql?: "SPARQL" | "SERQL", bindings?: any, maxExecTime?: number, 
-            defaultGraphs?: IRI[], namedGraphs?: IRI[]) {
-        var params: any = {
+    exportGraphQueryResultAsRdf(query: string, format: RDFFormat, includeInferred?: boolean,
+        filteringPipeline?: string, ql?: "SPARQL" | "SERQL", bindings?: any, maxExecTime?: number,
+        defaultGraphs?: IRI[], namedGraphs?: IRI[]) {
+        let params: STRequestParams = {
             query: query,
             outputFormat: format.name,
             includeInferred: includeInferred,
@@ -60,7 +62,7 @@ export class SparqlServices {
         };
         return this.httpMgr.downloadFile(this.serviceName, "exportGraphQueryResultAsRdf", params, true);
     }
-    
+
     /**
      * Exports the results of a query in the given spreadsheet format
      * @param query 
@@ -73,8 +75,8 @@ export class SparqlServices {
      * @param namedGraphs 
      */
     exportQueryResultAsSpreadsheet(query: string, format: "xlsx" | "ods", includeInferred?: boolean, ql?: "SPARQL" | "SERQL",
-            bindings?: any, maxExecTime?: number, defaultGraphs?: IRI[], namedGraphs?: IRI[]) {
-        var params: any = {
+        bindings?: any, maxExecTime?: number, defaultGraphs?: IRI[], namedGraphs?: IRI[]) {
+        let params: STRequestParams = {
             query: query,
             format: format,
             includeInferred: includeInferred,
@@ -85,6 +87,17 @@ export class SparqlServices {
             namedGraphs: namedGraphs
         };
         return this.httpMgr.downloadFile(this.serviceName, "exportQueryResultAsSpreadsheet", params, true);
+    }
+
+    /**
+     * Obtain suggestions about endpoints to use in federated SPARQL queries
+     * @param query 
+     */
+    suggestEndpointsForFederation(query: string): Observable<FederatedEndpointSuggestion[]> {
+        let params: STRequestParams = {
+            query: query
+        };
+        return this.httpMgr.doGet(this.serviceName, "suggestEndpointsForFederation", params);
     }
 
 }

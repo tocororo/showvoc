@@ -27,3 +27,8 @@ export class QueryResultBinding {
     datatype?: string;
     'xml:lang': string;
 }
+
+export class FederatedEndpointSuggestion {
+    endpointURL: string;
+    endpointLabel: string;
+}
