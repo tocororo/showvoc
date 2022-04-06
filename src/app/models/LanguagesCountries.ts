@@ -41,7 +41,7 @@ export class Languages {
     
     static sortLanguages(languages: Language[]) {
         languages.sort(
-            function (l1: Language, l2: Language) {
+            (l1: Language, l2: Language) => {
                 if (l1.tag > l2.tag) return 1;
                 if (l1.tag < l2.tag) return -1;
                 return 0;
@@ -50,7 +50,7 @@ export class Languages {
     }
 
     static containsLanguage(languages: Language[], lang: Language): boolean {
-        for (var i = 0; i < languages.length; i++) {
+        for (let i = 0; i < languages.length; i++) {
             if (languages[i].tag == lang.tag) {
                 return true;
             }
@@ -79,7 +79,7 @@ export class Languages {
     }
 
     static indexOf(languages: Language[], lang: Language): number {
-        for (var i = 0; i < languages.length; i++) {
+        for (let i = 0; i < languages.length; i++) {
             if (languages[i].tag == lang.tag) {
                 return i;
             }
@@ -89,10 +89,10 @@ export class Languages {
 
     static fromTagsToLanguages(tags: string[]): Language[] {
         let languages: Language[] = [];
-        for (var i = 0; i < tags.length; i++) {
+        for (let i = 0; i < tags.length; i++) {
             let lang: Language = Languages.getLanguageFromTag(tags[i]);
             if (lang != null) {
-                languages.push(lang)
+                languages.push(lang);
             }
         }
         return languages;
@@ -100,7 +100,7 @@ export class Languages {
 
     static fromLanguagesToTags(languages: Language[]) {
         let tags: string[] = [];
-        for (var i = 0; i < languages.length; i++) {
+        for (let i = 0; i < languages.length; i++) {
             tags.push(languages[i].tag);
         }
         return tags;

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { TransitiveImportMethodAllowance } from 'src/app/models/Metadata';
+import { ExtensionFactory, ExtensionPointID, PluginSpecification, Settings } from 'src/app/models/Plugins';
 import { Project } from 'src/app/models/Project';
-import { RDFFormat, DataFormat } from 'src/app/models/RDFFormat';
+import { DataFormat } from 'src/app/models/RDFFormat';
+import { ExtensionsServices } from 'src/app/services/extensions.service';
 import { InputOutputServices } from 'src/app/services/input-output.service';
 import { ShowVocServices } from 'src/app/services/showvoc.service';
 import { SVContext } from 'src/app/utils/SVContext';
-import { ExtensionFactory, Settings, ExtensionPointID, PluginSpecification } from 'src/app/models/Plugins';
-import { ExtensionsServices } from 'src/app/services/extensions.service';
-import { ModalType } from 'src/app/modal-dialogs/Modals';
-import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'load-stable',
@@ -72,15 +72,15 @@ export class LoadStableResourceComponent {
 
                 let extList: string[] = []; //collects the extensions of the formats in order to provide them to the file picker
                 this.inputFormats.forEach(f => {
-                    f.fileExtensions.forEach(ext => {
-                        extList.push("." + ext);
-                    })
+                    f.fileExtensions.forEach(fExt => {
+                        extList.push("." + fExt);
+                    });
                 });
                 //remove duplicated extensions
                 extList = extList.filter((item: string, pos: number) => extList.indexOf(item) == pos);
                 this.filePickerAccept = extList.join(",");
             }
-        )
+        );
     }
 
     fileChangeEvent(file: File) {
@@ -88,7 +88,7 @@ export class LoadStableResourceComponent {
         this.inputOutputService.getParserFormatForFileName(file.name).subscribe(
             format => {
                 if (format != null) {
-                    for (var i = 0; i < this.inputFormats.length; i++) {
+                    for (let i = 0; i < this.inputFormats.length; i++) {
                         if (this.inputFormats[i].name == format) {
                             this.selectedInputFormat = this.inputFormats[i];
                             return;
@@ -102,10 +102,10 @@ export class LoadStableResourceComponent {
     load() {
         let rdfLifterSpec: PluginSpecification = {
             factoryId: this.selectedLifterExtension.id,
-        }
+        };
         if (this.selectedLifterConfig != null) {
             if (this.selectedLifterConfig.requireConfiguration()) {
-                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.LIFTER_NOT_CONFIGURED"}, ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, { key: "MESSAGES.LIFTER_NOT_CONFIGURED" }, ModalType.warning);
                 return;
             }
             rdfLifterSpec.configType = this.selectedLifterConfig.type;
@@ -116,17 +116,17 @@ export class LoadStableResourceComponent {
         SVContext.setTempProject(new Project(this.projectName));
         this.svService.loadStableContributionData(this.token, this.projectName, this.contributorEmail, this.file,
             this.selectedInputFormat.name, rdfLifterSpec, this.selectedImportAllowance).pipe(
-                finalize(() => this.loading = false)
+                finalize(() => { this.loading = false; })
             ).subscribe(
                 () => {
                     SVContext.removeTempProject();
-                    this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, {key:"MESSAGES.DATA_LOADED"}).then(
+                    this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, { key: "MESSAGES.DATA_LOADED" }).then(
                         () => {
                             this.router.navigate(["/home"]);
                         }
-                    )
+                    );
                 }
-            )
+            );
     }
 
 

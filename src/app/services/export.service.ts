@@ -17,7 +17,7 @@ export class ExportServices {
      * Returns the list of named graphs
      */
     getNamedGraphs(): Observable<AnnotatedValue<IRI>[]> {
-        var params = {};
+        let params = {};
         return this.httpMgr.doGet(this.serviceName, "getNamedGraphs", params).pipe(
             map(stResp => {
                 return ResourceDeserializer.createIRIArray(stResp);
@@ -29,19 +29,12 @@ export class ExportServices {
      * Returns the list of available output formats
      */
     getOutputFormats(): Observable<RDFFormat[]> {
-        var params = {};
+        let params = {};
         return this.httpMgr.doGet(this.serviceName, "getOutputFormats", params).pipe(
             map(stResp => {
-                var formats: RDFFormat[] = [];
-                for (var i = 0; i < stResp.length; i++) {
-                    let name = stResp[i].name;
-                    let charset = stResp[i].charset;
-                    let fileExtensions = stResp[i].fileExtensions;
-                    let standardURI = stResp[i].standardURI;
-                    let mimetypes = stResp[i].mimetypes;
-                    let defaultMIMEType = stResp[i].defaultMIMEType;
-                    let defaultFileExtension = stResp[i].defaultFileExtension;
-                    formats.push(new RDFFormat(name, charset, fileExtensions, standardURI, mimetypes, defaultMIMEType, defaultFileExtension));
+                let formats: RDFFormat[] = [];
+                for (let formatJson of stResp) {
+                    formats.push(RDFFormat.parse(formatJson));
                 }
                 //sort by name
                 formats.sort(

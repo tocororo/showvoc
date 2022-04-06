@@ -19,6 +19,17 @@ export class RDFFormat {
         this.defaultFileExtension = defaultFileExt;
     }
 
+    static parse(formatJson: any): RDFFormat {
+        let name = formatJson.name;
+        let charset = formatJson.charset;
+        let fileExtensions = formatJson.fileExtensions;
+        let standardURI = formatJson.standardURI;
+        let mimetypes = formatJson.mimetypes;
+        let defaultMIMEType = formatJson.defaultMIMEType;
+        let defaultFileExtension = formatJson.defaultFileExtension;
+        return new RDFFormat(name, charset, fileExtensions, standardURI, mimetypes, defaultMIMEType, defaultFileExtension);
+    }
+
 }
 
 export class DataFormat {

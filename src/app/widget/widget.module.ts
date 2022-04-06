@@ -7,8 +7,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SanitizerDirective } from './directives/sanitizer.directive';
 import { ExtensionConfiguratorComponent } from './extensionConfigurator/extension-configurator.component';
 import { InputEditableComponent } from './input-editable/input-editable.component';
+import { LangPickerComponent } from './lang-picker/lang-picker.component';
 import { LangStringEditorComponent } from './langstring-editor/langstring-editor.component';
 import { LanguageItemComponent } from './language-item/language-item.component';
+import { LocalizedEditorModal } from './localized-editor/localized-editor-modal';
 import { PasswordInputComponent } from './password-input/password-input.component';
 import { FilePickerComponent } from './pickers/file-picker/file-picker.component';
 import { RdfResourceComponent } from './rdf-resource/rdf-resource.component';
@@ -40,8 +42,10 @@ import { ToastService } from './toast/toast-service';
         ExtensionConfiguratorComponent,
         FilePickerComponent,
         InputEditableComponent,
-        LanguageItemComponent,
+        LangPickerComponent,
         LangStringEditorComponent,
+        LanguageItemComponent,
+        LocalizedEditorModal,
         NestedSettingSetRendererComponent,
         PasswordInputComponent,
         RdfResourceComponent,
@@ -63,8 +67,10 @@ import { ToastService } from './toast/toast-service';
         ExtensionConfiguratorComponent,
         FilePickerComponent,
         InputEditableComponent,
+        LangPickerComponent,
         LangStringEditorComponent,
         LanguageItemComponent,
+        LocalizedEditorModal,
         PasswordInputComponent,
         RdfResourceComponent,
         RenderingEditor,

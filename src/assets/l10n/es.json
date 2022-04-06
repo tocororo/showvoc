@@ -455,6 +455,7 @@
     "MESSAGES": {
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Está a punto de introducir los metadatos propuestos en el Registro de Metadatos. ¿Está seguro?",
         "ADMIN_CREATED": "Se ha creado la cuenta de administrador. Ahora iniciará sesión automáticamente con el correo electrónico y la contraseña proporcionados.",
+        "ALREADY_EXISTING_FILE_OVERWRITE_CONFIRM": "Ya existe un archivo con el mismo nombre. ¿Quieres sobreescribirlo?",
         "BASEURI_MISSING": "BaseURI falta o no es válido",
         "BASEURI_REQUIRED": "BaseURI obligatorio",
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "No se puede crear el índice de un conjunto de datos cerrado. Abra el conjunto de datos y vuelva a intentarlo",

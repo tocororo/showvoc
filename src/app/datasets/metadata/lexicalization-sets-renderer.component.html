@@ -26,7 +26,7 @@
         <div *ngFor="let l of lexicalizationSets" class="card m-1">
             <div class="card-body">
                 <div class="d-flex align-items-center" class="clickable" [ngClass]="{ 'mb-2': !l['collapsed'] }" (click)="l['collapsed'] = !l['collapsed']">
-                    <span [class]="'fas fa-chevron-' + (l['collapsed'] ? 'down' : 'right')"></span>
+                    <span [class]="'fas fa-chevron-' + (l['collapsed'] ? 'right' : 'down')"></span>
                     <span class="ml-2">{{l.language}}</span>
                 </div>
                 <div *ngIf="!l['collapsed']">

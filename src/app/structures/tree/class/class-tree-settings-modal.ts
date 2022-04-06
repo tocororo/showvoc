@@ -14,8 +14,8 @@ import { Cookie } from 'src/app/utils/Cookie';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 
 @Component({
-	selector: 'class-tree-settings-modal',
-	templateUrl: './class-tree-settings-modal.html'
+    selector: 'class-tree-settings-modal',
+    templateUrl: './class-tree-settings-modal.html'
 })
 export class ClassTreeSettingsModal implements OnInit {
 
@@ -33,8 +33,8 @@ export class ClassTreeSettingsModal implements OnInit {
     showInstances: boolean;
 
     constructor(public activeModal: NgbActiveModal, private svProp: SVProperties,
-        private clsService: ClassesServices, private resourceService: ResourcesServices, 
-        private basicModals: BasicModalsServices, private browsingModals: BrowsingModalsServices) {}
+        private clsService: ClassesServices, private resourceService: ResourcesServices,
+        private basicModals: BasicModalsServices, private browsingModals: BrowsingModalsServices) { }
 
     ngOnInit() {
         let classTreePref: ClassTreePreference = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences;
@@ -50,7 +50,7 @@ export class ClassTreeSettingsModal implements OnInit {
         //init filter
         this.filterEnabled = classTreePref.filter.enabled;
         let filteredClss: IRI[] = [];
-        for (var key in classTreePref.filter.map) {
+        for (let key in classTreePref.filter.map) {
             filteredClss.push(new IRI(key));
         }
         if (filteredClss.length > 0) {
@@ -58,9 +58,9 @@ export class ClassTreeSettingsModal implements OnInit {
                 resources => {
                     resources.forEach(r => {
                         this.filterMapRes.push({ cls: r, subClasses: null });
-                    })
+                    });
                 }
-            )
+            );
         }
 
         //init show instances
@@ -78,15 +78,15 @@ export class ClassTreeSettingsModal implements OnInit {
                 if ((model == RDFS.uri && !cls.getValue().equals(RDFS.resource)) || //root different from rdfs:Resource in RDFS model
                     (!cls.getValue().equals(RDFS.resource) && !cls.getValue().equals(OWL.thing)) //root different from rdfs:Resource and owl:Thing in other models
                 ) {
-                    this.basicModals.confirmCheckCookie({key: "COMMONS.STATUS.WARNING"}, { key: "MESSAGES.CUSTOM_ROOT_WARN" }, Cookie.WARNING_CUSTOM_ROOT, ModalType.warning).then(
+                    this.basicModals.confirmCheckCookie({ key: "COMMONS.STATUS.WARNING" }, { key: "MESSAGES.CUSTOM_ROOT_WARN" }, Cookie.WARNING_CUSTOM_ROOT, ModalType.warning).then(
                         () => {
                             this.rootClass = cls;
                         },
-                        () => {}
-                    )
+                        () => { }
+                    );
                 }
             },
-            () => {}
+            () => { }
         );
     }
 
@@ -106,7 +106,7 @@ export class ClassTreeSettingsModal implements OnInit {
                     //temporarly reset the root class and the restore it (in order to trigger the change detection editable-input)
                     let oldRootClass = this.rootClass;
                     this.rootClass = null;
-                    setTimeout(() => this.rootClass = oldRootClass);
+                    setTimeout(() => { this.rootClass = oldRootClass; });
                 }
             }
         );
@@ -126,15 +126,15 @@ export class ClassTreeSettingsModal implements OnInit {
                     ResourceUtils.sortResources(classes, SortAttribute.show);
                     let clsTreePref: ClassTreePreference = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences;
                     let filteredSubClssPref = clsTreePref.filter.map[this.selectedFilteredClass.getValue().getIRI()];
-    
+
                     filterMapEntry.subClasses = [];
-    
+
                     classes.forEach(c => {
                         if (filteredSubClssPref != null) { //exists a subclasses filter for the selected class
-                            filterMapEntry.subClasses.push({ 
+                            filterMapEntry.subClasses.push({
                                 checked: filteredSubClssPref.indexOf(c.getValue().getIRI()) == -1, //subClass not in the filter, so checked (visible)
                                 disabled: c.getValue().equals(OWL.thing), //owl:Thing cannot be filtered out
-                                resource: c 
+                                resource: c
                             });
                         } else { //doesn't exist a subclasses filter for the selected class => every subclasses is checked
                             filterMapEntry.subClasses.push({ checked: true, disabled: c.getValue().equals(OWL.thing), resource: c });
@@ -162,12 +162,12 @@ export class ClassTreeSettingsModal implements OnInit {
                     this.basicModals.alert({ key: "COMMONS.STATUS.ERROR" }, { key: "MESSAGES.CLASS_FILTER_ALREADY_EXIST", params: { cls: cls.getShow() } }, ModalType.warning);
                 }
             },
-            () => {}
+            () => { }
         );
     }
 
     removeFilter() {
-        for (var i = 0; i < this.filterMapRes.length; i++) {
+        for (let i = 0; i < this.filterMapRes.length; i++) {
             if (this.filterMapRes[i].cls.getValue().equals(this.selectedFilteredClass.getValue())) {
                 this.selectedFilteredClass = null;
                 this.filterMapRes.splice(i, 1);
@@ -185,7 +185,7 @@ export class ClassTreeSettingsModal implements OnInit {
     }
 
     private getFilterMapEntry(cls: AnnotatedValue<IRI>): FilterMapEntry {
-        for (var i = 0; i < this.filterMapRes.length; i++) {
+        for (let i = 0; i < this.filterMapRes.length; i++) {
             if (this.filterMapRes[i].cls.getValue().equals(cls.getValue())) {
                 return this.filterMapRes[i];
             }
@@ -194,31 +194,30 @@ export class ClassTreeSettingsModal implements OnInit {
     }
 
 
-
-	ok() {
+    ok() {
         //convert filterMapRes to a map string: string[]
-        let filterMap: {[key: string]: string[]} = {};
+        let filterMap: { [key: string]: string[] } = {};
         this.filterMapRes.forEach(f => {
             let filteredSubClasses: string[] = [];
             if (f.subClasses == null) {
                 //subClasses in filterMapRes not yet initialized => get it from the preference
                 filteredSubClasses = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.filter.map[f.cls.getValue().getIRI()];
             } else {
-                for (var i = 0; i < f.subClasses.length; i++) {
+                for (let i = 0; i < f.subClasses.length; i++) {
                     if (!f.subClasses[i].checked) {
                         filteredSubClasses.push(f.subClasses[i].resource.getValue().getIRI());
                     }
                 }
             }
             filterMap[f.cls.getValue().getIRI()] = filteredSubClasses;
-        })
-        
+        });
+
         //update the settings only if changed
         if (
             JSON.stringify(this.pristinePref.filter.map) != JSON.stringify(filterMap) ||
             this.pristinePref.filter.enabled != this.filterEnabled
         ) {
-            this.svProp.setClassTreeFilter({ map: filterMap, enabled: this.filterEnabled })
+            this.svProp.setClassTreeFilter({ map: filterMap, enabled: this.filterEnabled });
         }
 
         if (this.pristinePref.rootClassUri != this.rootClass.getValue().getIRI()) {
@@ -232,17 +231,16 @@ export class ClassTreeSettingsModal implements OnInit {
         //only if the root class changed close the dialog (so that the class tree refresh)
         if (this.pristinePref.rootClassUri != this.rootClass.getValue().getIRI()) {
             this.activeModal.close();
-        } else {//for other changes simply dismiss the modal
+        } else { //for other changes simply dismiss the modal
             this.close();
         }
-	}
+    }
 
-	close() {
-		this.activeModal.dismiss();
-	}
+    close() {
+        this.activeModal.dismiss();
+    }
 
 }
-
 
 
 class FilterMapEntry {

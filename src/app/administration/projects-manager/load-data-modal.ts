@@ -72,15 +72,15 @@ export class LoadDataModal {
 
                 let extList: string[] = []; //collects the extensions of the formats in order to provide them to the file picker
                 this.inputFormats.forEach(f => {
-                    f.fileExtensions.forEach(ext => {
-                        extList.push("." + ext);
-                    })
+                    f.fileExtensions.forEach(fExt => {
+                        extList.push("." + fExt);
+                    });
                 });
                 //remove duplicated extensions
                 extList = extList.filter((item: string, pos: number) => extList.indexOf(item) == pos);
                 this.filePickerAccept = extList.join(",");
             }
-        )
+        );
     }
 
     fileChangeEvent(file: File) {
@@ -107,7 +107,7 @@ export class LoadDataModal {
 
         let rdfLifterSpec: PluginSpecification = {
             factoryId: this.selectedLifterExtension.id,
-        }
+        };
         if (this.selectedLifterConfig != null) {
             if (this.selectedLifterConfig.requireConfiguration()) {
                 this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, { key: "MESSAGES.LIFTER_NOT_CONFIGURED" }, ModalType.warning);
@@ -130,7 +130,7 @@ export class LoadDataModal {
                 }
                 this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, { key: "MESSAGES.DATA_LOADED" }).then(
                     () => this.activeModal.close()
-                )
+                );
             }
         );
     }

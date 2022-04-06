@@ -455,6 +455,7 @@
     "MESSAGES": {
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Sie sind dabei, die vorgeschlagenen Metadaten in das Metadatenregister zu übertragen. Sind Sie sicher?",
         "ADMIN_CREATED": "Das Administratorkonto wurde angelegt. Jetzt werden Sie automatisch mit der E-Mail und dem Passwort, das Sie angegeben haben, eingeloggt.",
+        "ALREADY_EXISTING_FILE_OVERWRITE_CONFIRM": "Es existiert bereits eine Datei mit diesem Namen. Datei überschreiben?",
         "BASEURI_MISSING": "BaseURI fehlt oder ist ungültig",
         "BASEURI_REQUIRED": "BaseURI erforderlich",
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "Für einen geschlossenen Datensatz kann kein Index erstellt werden. Bitte Datensatz öffnen und noch einmal versuchen.",

@@ -40,8 +40,8 @@ export class CreateProjectModal extends AbstractProjectCreationModal {
 
     constructor(activeModal: NgbActiveModal, settingsService: SettingsServices, extensionsService: ExtensionsServices, modalService: NgbModal,
         private projectService: ProjectsServices, private adminService: AdministrationServices, private basicModals: BasicModalsServices, private translateService: TranslateService) {
-            super(activeModal, modalService, extensionsService, settingsService);
-        }
+        super(activeModal, modalService, extensionsService, settingsService);
+    }
 
     ngOnInit() {
         this.isAdmin = SVContext.getLoggedUser().isAdmin();
@@ -62,11 +62,11 @@ export class CreateProjectModal extends AbstractProjectCreationModal {
 
     /**
      * Handler of the button to explore remote repositories (when accessing an existing one)
-     * @returns 
+     * @returns
      */
     changeRemoteRepository() {
         if (this.selectedRemoteRepoConfig == null || this.selectedRemoteRepoConfig.serverURL == null) {
-            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.REMOTE_REPO_ACCESS_NOT_CONFIGURED"}, ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, { key: "MESSAGES.REMOTE_REPO_ACCESS_NOT_CONFIGURED" }, ModalType.warning);
             return;
         }
 
@@ -84,12 +84,12 @@ export class CreateProjectModal extends AbstractProjectCreationModal {
     ok() {
         //check project name
         if (!this.projectName || this.projectName.trim() == "") {
-            this.basicModals.alert({ key: "DATASETS.ACTIONS.CREATE_DATASET" }, {key:"MESSAGES.DATASET_NAME_MISSING"}, ModalType.warning);
+            this.basicModals.alert({ key: "DATASETS.ACTIONS.CREATE_DATASET" }, { key: "MESSAGES.DATASET_NAME_MISSING" }, ModalType.warning);
             return;
         }
         //check baseURI
         if (this.baseURI == null || this.baseURI.trim() == "") {
-            this.basicModals.alert({ key: "DATASETS.ACTIONS.CREATE_DATASET" }, {key:"MESSAGES.BASEURI_MISSING"}, ModalType.warning);
+            this.basicModals.alert({ key: "DATASETS.ACTIONS.CREATE_DATASET" }, { key: "MESSAGES.BASEURI_MISSING" }, ModalType.warning);
             return;
         }
 
@@ -100,7 +100,7 @@ export class CreateProjectModal extends AbstractProjectCreationModal {
         //in case of remote repository access, set the configuration
         if (this.isRepoAccessRemote()) {
             if (this.selectedRemoteRepoConfig == null) {
-                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.REMOTE_REPO_ACCESS_NOT_CONFIGURED"}, ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, { key: "MESSAGES.REMOTE_REPO_ACCESS_NOT_CONFIGURED" }, ModalType.warning);
                 return;
             }
             repositoryAccess.setConfiguration(this.selectedRemoteRepoConfig);
@@ -108,14 +108,14 @@ export class CreateProjectModal extends AbstractProjectCreationModal {
 
         //check if data repository configuration needs to be configured
         if (this.selectedDataRepoConfig.requireConfiguration()) {
-            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.DATA_REPO_NOT_CONFIGURED"}, ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, { key: "MESSAGES.DATA_REPO_NOT_CONFIGURED" }, ModalType.warning);
             return;
         }
         let coreRepoSailConfigurerSpecification: PluginSpecification = {
             factoryId: this.selectedDataRepoExtension.id,
             configType: this.selectedDataRepoConfig.type,
             configuration: this.selectedDataRepoConfig.getPropertiesAsMap()
-        }
+        };
 
         //backend types
         let coreRepoBackendType: BackendTypesEnum;
@@ -130,15 +130,16 @@ export class CreateProjectModal extends AbstractProjectCreationModal {
 
         this.loading = true;
         this.projectService.createProject(this.projectName, this.baseURI, new IRI(this.selectedSemModel), new IRI(this.selectedLexModel),
-            false, false, false, repositoryAccess, this.dataRepoId, this.supportRepoId, coreRepoSailConfigurerSpecification, coreRepoBackendType).pipe(
-                finalize(() => this.loading = false)
+            false, false, false, repositoryAccess, this.dataRepoId, this.supportRepoId, coreRepoSailConfigurerSpecification, coreRepoBackendType)
+            .pipe(
+                finalize(() => { this.loading = false; })
             ).subscribe(() => {
                 this.adminService.addRolesToUser(this.projectName, ShowVocConstants.visitorEmail, [ShowVocConstants.roleStaging]).pipe(
-                    finalize(() => this.loading = false)
+                    finalize(() => { this.loading = false; })
                 ).subscribe(() => {
-                    this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_CREATED" }, {key:"MESSAGES.DATASET_CREATED"});
+                    this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_CREATED" }, { key: "MESSAGES.DATASET_CREATED" });
                     this.activeModal.close();
-                })
+                });
             });
     }
 

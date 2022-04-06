@@ -26,6 +26,7 @@ import { DeleteRemoteRepoModal } from './remote-repositories/delete-remote-repo-
 import { DeleteRemoteRepoReportModal } from './remote-repositories/delete-remote-repo-report-modal';
 import { InputOutputServices } from 'src/app/services/input-output.service';
 import { RemoteRepoEditorModal } from './remote-repositories/remote-repo-editor-modal';
+import { CreateDownloadModal } from './create-download-modal';
 
 @Component({
     selector: 'projects-manager',
@@ -53,7 +54,7 @@ export class ProjectsManagerComponent {
         [this.rolePristine]: "Pristine",
         [this.roleStaging]: "Staging",
         [this.rolePublic]: "Public",
-    }
+    };
 
     globalCreatingIndex: boolean = false; //when it's true, all the other "create index" button should be disabled
 
@@ -81,7 +82,7 @@ export class ProjectsManagerComponent {
                         projects.forEach(p => {
                             p[this.roleAttr] = r;
                             this.projectList.push(p);
-                        })
+                        });
                     })
                 )
             );
@@ -121,7 +122,7 @@ export class ProjectsManagerComponent {
                 this.initProjects();
             },
             () => { }
-        )
+        );
     }
 
     clearData(project: Project) {
@@ -138,10 +139,10 @@ export class ProjectsManagerComponent {
                     () => {
                         this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, { key: "MESSAGES.DATA_CLEARED", params: { datasetName: project.getName() } });
                     }
-                )
+                );
             },
             () => { }
-        )
+        );
     }
 
     deleteProject(project: Project) {
@@ -171,9 +172,9 @@ export class ProjectsManagerComponent {
                                             }
                                         });
                                     }
-                                )
+                                );
                             }
-                        )
+                        );
                     }
                 );
 
@@ -217,6 +218,11 @@ export class ProjectsManagerComponent {
         modalRef.componentInstance.exceptions = exceptions;
     }
 
+    createDownload(project: Project) {
+        const modalRef: NgbModalRef = this.modalService.open(CreateDownloadModal, new ModalOptions("lg"));
+        modalRef.componentInstance.project = project;
+    }
+
     createIndex(project: Project) {
         if (!project.isOpen()) {
             this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.CREATE_INDEX" }, { key: "MESSAGES.CANNOT_CREATE_INDEX_OF_CLOSED_DATASET" }, ModalType.warning);
@@ -245,7 +251,7 @@ export class ProjectsManagerComponent {
                 })
             ).subscribe(
                 () => observer.next()
-            )
+            );
         });
     }
     private clearIndexImpl(project: Project): Observable<void> {
@@ -257,7 +263,7 @@ export class ProjectsManagerComponent {
                 })
             ).subscribe(
                 () => observer.next()
-            )
+            );
         });
     }
 
@@ -280,7 +286,7 @@ export class ProjectsManagerComponent {
                 })
             ).subscribe(
                 () => observer.next()
-            )
+            );
         });
     }
 
@@ -303,7 +309,7 @@ export class ProjectsManagerComponent {
                 value: project.isOpen(),
                 disabled: !project.isOpen(),
                 warning: !project.isOpen() ? this.translateService.instant("MESSAGES.CANNOT_PROFILE_CLOSED_DATASET") : null
-            })
+            });
         } else if (role == ShowVocConstants.roleStaging) { //from public to staging
             confirmationMsg = { key: "MESSAGES.MAKE_DATASET_STAGING_CONFIRM" };
             confirmActionOpt.push({
@@ -336,9 +342,7 @@ export class ProjectsManagerComponent {
                     }
                 );
             },
-            () => {
-                return;
-            }
+            () => { }
         );
     }
 
@@ -346,14 +350,14 @@ export class ProjectsManagerComponent {
         project[this.openingAttr] = true;
         if (project.isOpen()) { //project open => close it
             this.projectService.disconnectFromProject(project).pipe(
-                finalize(() => project[this.openingAttr] = false)
+                finalize(() => { project[this.openingAttr] = false; })
             ).subscribe(() => {
                 this.eventHandler.projectUpdatedEvent.emit();
                 project.setOpen(false);
             });
         } else { //project closed => open it
             this.projectService.accessProject(project).pipe(
-                finalize(() => project[this.openingAttr] = false)
+                finalize(() => { project[this.openingAttr] = false; })
             ).subscribe(() => {
                 this.eventHandler.projectUpdatedEvent.emit();
                 project.setOpen(true);
@@ -368,7 +372,6 @@ export class ProjectsManagerComponent {
         }
         const modalRef: NgbModalRef = this.modalService.open(RemoteRepoEditorModal, new ModalOptions('lg'));
         modalRef.componentInstance.project = project;
-        return modalRef.result;
     }
 
     editSettings(project: Project) {
@@ -386,7 +389,7 @@ export class ProjectsManagerComponent {
                 );
             },
             () => { }
-        )
+        );
     }
 
     editFacets(project: Project) {
@@ -409,7 +412,7 @@ export class ProjectsManagerComponent {
                 () => { //changed settings
                     this.initProjects();
                 },
-                () => { }  //nothing changed
+                () => { } //nothing changed
             );
         });
     }

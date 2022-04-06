@@ -7,6 +7,7 @@ import { AlignmentServices } from './alignment.service';
 import { AuthServices } from "./auth.service";
 import { ClassesServices } from './classes.service';
 import { ConfigurationsServices } from './configuration.service';
+import { DownloadServices } from './download.service';
 import { ExportServices } from './export.service';
 import { ExtensionsServices } from './extensions.service';
 import { GlobalSearchServices } from './global-search.service';
@@ -17,7 +18,6 @@ import { MapleServices } from './maple.service';
 import { MetadataRegistryServices } from './metadata-registry.service';
 import { MetadataServices } from './metadata.service';
 import { OntoLexLemonServices } from './ontolex-lemon.service';
-import { ShowVocServices } from './showvoc.service';
 import { ProjectsServices } from './projects.service';
 import { PropertiesServices } from './properties.service';
 import { RepositoriesServices } from './repositories.service';
@@ -25,6 +25,7 @@ import { ResourceViewServices } from './resource-view.service';
 import { ResourcesServices } from './resources.service';
 import { SearchServices } from './search.service';
 import { SettingsServices } from './settings.service';
+import { ShowVocServices } from './showvoc.service';
 import { SkosServices } from './skos.service';
 import { SparqlServices } from './sparql.service';
 import { UserServices } from './user.service';
@@ -39,6 +40,7 @@ import { UserServices } from './user.service';
         AuthServices,
         ClassesServices,
         ConfigurationsServices,
+        DownloadServices,
         ExportServices,
         ExtensionsServices,
         GlobalSearchServices,

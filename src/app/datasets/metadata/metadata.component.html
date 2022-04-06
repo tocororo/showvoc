@@ -63,10 +63,48 @@
         </div>
 
         <div class="card mt-3">
-            <div class="card-header">
-                <h5 class="m-0">Distributions</h5>
+            <div class="card-header d-flex align-items-center">
+                <h5 class="m-0" style="flex: 1;">Distributions</h5>
+                <button *ngIf="isAdmin" class="btn btn-sm btn-light" (click)="createDownload()">
+                    <span class="fas fa-plus"></span>
+                </button>
             </div>
             <div class="card-body">
+                <table class="table table-sm">
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                        <col style="width: 1%;">
+                    </colgroup>
+                    <thead>
+                        <th>Distribution</th>
+                        <th>Release date</th>
+                        <th>Download</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let d of downloads">
+                            <td>
+                                {{d.localizedLabel}}
+                                <button class="btn btn-xs btn-light" (click)="editLabel(d)">
+                                    <span class="fas fa-edit"></span>
+                                </button>
+                            </td>
+                            <td [title]="d.date" nowrap>{{d.dateLocal}}</td>
+                            <td [title]="d.fileName">
+                                <a href="javascript:void(0)" (click)="downloadDistribution(d)">{{d.format}}</a>
+                            </td>
+                            <td>
+                                <div *ngIf="isAdmin" class="btn-toolbar">
+                                    <button class="btn btn-sm btn-light" (click)="deleteDownload(d)">
+                                        <span class="fas fa-trash"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

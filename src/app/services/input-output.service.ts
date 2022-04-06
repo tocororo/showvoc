@@ -61,15 +61,8 @@ export class InputOutputServices {
         return this.httpMgr.doGet(this.serviceName, "getInputRDFFormats", params).pipe(
             map(stResp => {
                 let formats: RDFFormat[] = [];
-                for (let i = 0; i < stResp.length; i++) {
-                    let name = stResp[i].name;
-                    let charset = stResp[i].charset;
-                    let fileExtensions = stResp[i].fileExtensions;
-                    let standardURI = stResp[i].standardURI;
-                    let mimetypes = stResp[i].mimetypes;
-                    let defaultMIMEType = stResp[i].defaultMIMEType;
-                    let defaultFileExtension = stResp[i].defaultFileExtension;
-                    formats.push(new RDFFormat(name, charset, fileExtensions, standardURI, mimetypes, defaultMIMEType, defaultFileExtension));
+                for (let formatJson of stResp) {
+                    formats.push(RDFFormat.parse(formatJson));
                 }
                 //sort by name
                 formats.sort(

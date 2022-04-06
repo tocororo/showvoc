@@ -7,7 +7,6 @@ import { AuthServices } from './services/auth.service';
 import { Cookie } from './utils/Cookie';
 import { HttpManager } from './utils/HttpManager';
 import { SVContext } from './utils/SVContext';
-import { SVProperties } from './utils/SVProperties';
 import { ToastService } from './widget/toast/toast-service';
 
 @Component({
@@ -28,7 +27,7 @@ export class AppComponent {
     translateLangs: string[];
     translateLang: string;
 
-    hideNav: boolean
+    hideNav: boolean;
 
     constructor(private authServices: AuthServices, private translate: TranslateService, private toastService: ToastService, private activatedRoute: ActivatedRoute) {
         this.activatedRoute.queryParams.subscribe(
@@ -95,7 +94,7 @@ export class AppComponent {
             HttpManager.groupId + "/" + HttpManager.artifactId + "/";
         navigator.clipboard.writeText(baseUrl).then(() => {
             this.toastService.show(null, { key: "APP.FOOTER.WEB_API_COPIED" }, { toastClass: "bg-dark", textClass: "text-white" });
-        }, function (err) {});
+        }, (err) => {});
     }
 
 }

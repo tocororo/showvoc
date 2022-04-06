@@ -455,6 +455,7 @@
     "MESSAGES": {
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Vous êtes sur le point de soumettre les métadonnées proposées dans le répertoire des métadonnées. Êtes-vous certain ?",
         "ADMIN_CREATED": "Le compte administrateur a été créé. Vous serez désormais automatiquement connecté avec l'adresse e-mail et le mot de passe que vous avez fournis",
+        "ALREADY_EXISTING_FILE_OVERWRITE_CONFIRM": "Un fichier portant le même nom existe déjà. Voulez-vous l'écraser ?",
         "BASEURI_MISSING": "L'URI de base est manquante ou non valide",
         "BASEURI_REQUIRED": "URI de base nécessaire",
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "Impossible de créer l'index d'un jeu de données fermé. Veuillez ouvrir le jeu de données et réessayer.",

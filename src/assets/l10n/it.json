@@ -472,6 +472,7 @@
     "MESSAGES": {
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Stai per inserire nel Metadata Registry i metadati proposti. Sei sicuro?",
         "ADMIN_CREATED": "L'account amministratore è stato creato. Verrai ora automaticamente loggato con l'email e la password fornite.",
+        "ALREADY_EXISTING_FILE_OVERWRITE_CONFIRM": "Esiste già un file con lo stesso nome. Vuoi sovrascriverlo?",
         "AUTH_MODE_CHANGE_WARN": "Stai cambiando la modalità di autenticazione. Questa modifica potrebbe compromettere la possibilità di accedere a ShowVoc al prossimo login. Vuoi continuare?",
         "BASEURI_MISSING": "BaseURI mancante o non valido",
         "BASEURI_REQUIRED": "BaseURI necessario",
