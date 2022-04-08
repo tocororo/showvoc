@@ -97,8 +97,8 @@ export class Settings {
                 for (let j = 0; j < value.length; j++) {
                     let v: any = value[j];
                     if (v instanceof Value) {
-                        serializedValues.push(v.toNT())
-                    } else if(v instanceof Settings) {
+                        serializedValues.push(v.toNT());
+                    } else if (v instanceof Settings) {
                         serializedValues.push(v.getPropertiesAsMap());
                     } else {
                         serializedValues.push(v);
@@ -140,7 +140,7 @@ export class Settings {
 export class Enumeration {
     values: string[];
     open: boolean;
-};
+}
 
 export class STProperties {
     public name: string;
@@ -150,7 +150,7 @@ export class STProperties {
     public type: SettingsPropType;
     public value: any;
     public enumeration: Enumeration;
-    constructor (name: string, displayName: any, description: any, required: boolean, type: SettingsPropType, enumeration?: Enumeration, value?: string) {
+    constructor(name: string, displayName: any, description: any, required: boolean, type: SettingsPropType, enumeration?: Enumeration, value?: string) {
         this.name = name;
         this.displayName = displayName;
         this.description = description;
@@ -189,9 +189,7 @@ export class STProperties {
         return v == null ||
             (typeof v == "string" && v.trim() == "") ||
             (v instanceof Settings && v.requireConfiguration()) ||
-            (v instanceof Array && (v.length == 0 ||
-                v.findIndex(SettingsProp.isNullish) != -1
-            ))
+            (v instanceof Array && (v.length == 0 ||v.findIndex(SettingsProp.isNullish) != -1));
     }
 
     public clone(): STProperties {
@@ -208,7 +206,7 @@ export class STProperties {
         if (stProp.value != null && schema) { //if the property belong to a schema, its value is a list of properties
             let props: STProperties[] = [];
             for (let v of stProp.value) {
-                props.push(STProperties.parse(v))
+                props.push(STProperties.parse(v));
             }
             value = props;
         }
@@ -219,7 +217,7 @@ export class STProperties {
             let descriptions: Literal[] = description.map(dn => ResourceUtils.parseLiteral(dn));
             return new DynamicSettingProp(name, displayNames, descriptions, required, type, enumeration, value);
         } else {
-            return new SettingsProp(name, displayName, description, required, type, enumeration, value)
+            return new SettingsProp(name, displayName, description, required, type, enumeration, value);
         }
     }
 }
@@ -387,7 +385,7 @@ export class ConfigurableExtensionFactory extends ExtensionFactory {
     configurationScopes: Scope[];
     configurations: Settings[];
     constructor(id: string, name: string, description: string, extensionType: string, scope: Scope, configurationScopes: Scope[], configurations: Settings[]) {
-        super(id, name, description, extensionType)
+        super(id, name, description, extensionType);
         this.scope = scope;
         this.configurationScopes = configurationScopes;
         this.configurations = configurations;
@@ -398,7 +396,7 @@ export class ConfigurableExtensionFactory extends ExtensionFactory {
         this.configurations.forEach((conf: Settings) => {
             confs.push(conf.clone());
         });
-        return new ConfigurableExtensionFactory(this.id, this.name, this.description, this.extensionType, this.scope, 
+        return new ConfigurableExtensionFactory(this.id, this.name, this.description, this.extensionType, this.scope,
             this.configurationScopes, confs);
     }
 }
@@ -406,7 +404,7 @@ export class ConfigurableExtensionFactory extends ExtensionFactory {
 export class NonConfigurableExtensionFactory extends ExtensionFactory {
     settingsScopes: Scope[];
     constructor(id: string, name: string, description: string, extensionType: string, settingsScopes: Scope[]) {
-        super(id, name, description, extensionType)
+        super(id, name, description, extensionType);
         this.settingsScopes = settingsScopes;
     }
 
@@ -424,7 +422,7 @@ export class ExtensionPoint {
     configurationScopes?: Scope[];
 
     getShortId(): string {
-        return this.id.substring(this.id.lastIndexOf(".")+1);
+        return this.id.substring(this.id.lastIndexOf(".") + 1);
     }
 
     static parse(json: any): ExtensionPoint {
@@ -454,13 +452,14 @@ export class ScopeUtils {
             return "sys";
         } else if (scope == Scope.PROJECT) {
             return "proj";
-        } else if (scope == Scope.USER) { 
+        } else if (scope == Scope.USER) {
             return "usr";
         } else if (scope == Scope.PROJECT_USER) {
             return "pu";
         } else if (scope == Scope.PROJECT_GROUP) {
             return "pg";
         }
+        return "";
     }
 
     public static deserializeScope(serialization: string): Scope {
@@ -471,10 +470,11 @@ export class ScopeUtils {
         } else if (serialization == "usr") {
             return Scope.USER;
         } else if (serialization == "pu") {
-            return Scope.PROJECT_USER
-        }  else if (serialization == "factory") {
-            return Scope.FACTORY
+            return Scope.PROJECT_USER;
+        } else if (serialization == "factory") {
+            return Scope.FACTORY;
         }
+        return null;
     }
 }
 
@@ -482,9 +482,9 @@ export class ScopeUtils {
 export class TransformationStep {
     filter: {
         factoryId: string,
-        configuration: {[key: string]: any}
+        configuration: { [key: string]: any }
     };
-    graphs?: string[]
+    graphs?: string[];
 }
 
 export enum ExtensionConfigurationStatus {

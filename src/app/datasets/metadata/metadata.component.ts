@@ -3,6 +3,7 @@ import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { TranslateService } from "@ngx-translate/core";
 import { CreateDownloadModal } from "src/app/administration/projects-manager/create-download-modal";
 import { ModalOptions } from "src/app/modal-dialogs/Modals";
+import { SharedModalsServices } from "src/app/modal-dialogs/shared-modals/shared-modal.service";
 import { Languages } from "src/app/models/LanguagesCountries";
 import { DatasetMetadata, ProjectDatasetMapping } from "src/app/models/Metadata";
 import { Settings } from "src/app/models/Plugins";
@@ -12,6 +13,8 @@ import { CommonUtils } from "src/app/models/Shared";
 import { DownloadsMap, SingleDownload } from "src/app/models/Storage";
 import { DownloadServices } from "src/app/services/download.service";
 import { MetadataRegistryServices } from "src/app/services/metadata-registry.service";
+import { ProjectsServices } from "src/app/services/projects.service";
+import { AuthorizationEvaluator, STActionsEnum } from "src/app/utils/AuthorizationEvaluator";
 import { SVContext } from "src/app/utils/SVContext";
 import { LocalizedEditorModal, LocalizedMap } from "src/app/widget/localized-editor/localized-editor-modal";
 
@@ -27,7 +30,8 @@ import { LocalizedEditorModal, LocalizedMap } from "src/app/widget/localized-edi
 })
 export class MetadataComponent implements OnInit {
 
-    isAdmin: boolean;
+    isUpdateFacetsAuthorized: boolean;
+    isUpdateDownloadsAuthorized: boolean;
 
     project: Project;
     facets: { [key: string]: any };
@@ -36,12 +40,13 @@ export class MetadataComponent implements OnInit {
 
     downloads: DownloadInfo[] = [];
 
-    constructor(private metadataRegistryService: MetadataRegistryServices, private downloadService: DownloadServices,
-        private modalService: NgbModal, private translate: TranslateService) { }
+    constructor(private metadataRegistryService: MetadataRegistryServices, private downloadService: DownloadServices, private projectService: ProjectsServices,
+        private sharedModals: SharedModalsServices, private modalService: NgbModal, private translate: TranslateService) { }
 
     ngOnInit() {
 
-        this.isAdmin = SVContext.getLoggedUser().isAdmin();
+        this.isUpdateDownloadsAuthorized = AuthorizationEvaluator.isAuthorized(STActionsEnum.downloadGenericAction);
+        this.isUpdateFacetsAuthorized = AuthorizationEvaluator.isAuthorized(STActionsEnum.projectSetProjectFacets);
 
         this.project = SVContext.getWorkingProject();
 
@@ -56,11 +61,31 @@ export class MetadataComponent implements OnInit {
             }
         );
 
+        this.initFacets();
         this.initDownloads();
+    }
 
+    initFacets() {
         let pFacets: Settings = this.project.getFacets();
         let facetsMap = pFacets.getPropertiesAsMap();
+        if (facetsMap['customFacets'] == null) {
+            delete facetsMap['customFacets'];
+        }
         this.facets = this.flattenizeFacetsMap(facetsMap);
+    }
+
+    editFacets() {
+        this.sharedModals.configurePlugin(this.project.getFacets()).then(
+            facets => {
+                this.projectService.setProjectFacets(this.project, facets).subscribe(
+                    () => {
+                        this.project.setFacets(facets); //update facets in project
+                        this.initFacets();
+                    }
+                );
+            },
+            () => { }
+        );
     }
 
     /**
@@ -189,7 +214,6 @@ export class MetadataComponent implements OnInit {
                 aElement.download = download.fileName;
                 aElement.href = exportLink;
                 aElement.click();
-                // this.basicModals.downloadLink({ key: "SPARQL.ACTIONS.EXPORT_RESULTS" }, null, exportLink, "sparql_export." + format);
             }
         );
     }

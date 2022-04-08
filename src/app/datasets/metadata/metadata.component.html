@@ -1,130 +1,134 @@
-<div class="hbox">
+<resizable-layout orientation="H" mainFlex="10">
+    <ng-container main>
+        <div class="vbox overflow-auto" style="flex: 3;">
 
-    <div class="vbox overflow-auto" style="flex: 3;">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="m-0">{{'METADATA.GENERAL_METADATA'|translate}}</h5>
+                </div>
+                <div class="card-body overflow-auto">
+                    <table class="table table-sm">
+                        <colgroup>
+                            <col style="width: 1%;">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td class="font-weight-bold" nowrap>{{'COMMONS.TITLE'|translate}}:</td>
+                                <td>{{datasetMetadata?.title}}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" nowrap>{{'DATASETS.ATTR.URI_SPACE'|translate}}:</td>
+                                <td>{{datasetMetadata?.uriSpace}}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" nowrap>{{'COMMONS.DESCRIPTION'|translate}}:</td>
+                                <td>{{project.getDescription()}}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" nowrap>{{'MODELS.PROJECT.MODEL'|translate}}:</td>
+                                <td>{{project.getModelType(true)}}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" nowrap>{{'MODELS.PROJECT.LEXICALIZATION_MODEL'|translate}}:</td>
+                                <td>{{project.getLexicalizationModelType(true)}}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" nowrap>{{'DATASETS.ATTR.SPARQL_ENDPOINT'|translate}}:</td>
+                                <td>{{datasetMetadata?.sparqlEndpointMetadata?.id}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-        <div class="card">
-            <div class="card-header">
-                <h5 class="m-0">{{'METADATA.GENERAL_METADATA'|translate}}</h5>
+            <div class="card mt-3">
+                <div class="card-header d-flex align-items-center">
+                    <h5 class="m-0" style="flex: 1;">{{'METADATA.FACETS'|translate}}</h5>
+                    <button *ngIf="isUpdateFacetsAuthorized" class="btn btn-sm btn-light" (click)="editFacets()">
+                        <span class="fas fa-pencil-alt"></span>
+                    </button>
+                </div>
+                <div class="card-body overflow-auto">
+                    <table class="table table-sm">
+                        <colgroup>
+                            <col style="width: 1%;">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                            <tr *ngFor="let f of facets | keyvalue">
+                                <td class="font-weight-bold" nowrap>{{f.key}}:</td>
+                                <td>{{f.value}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="card-body overflow-auto">
-                <table class="table table-sm">
-                    <colgroup>
-                        <col style="width: 1%;">
-                        <col>
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            <td class="font-weight-bold" nowrap>{{'COMMONS.TITLE'|translate}}:</td>
-                            <td>{{datasetMetadata?.title}}</td>
-                        </tr>
-                        <tr>
-                            <td class="font-weight-bold" nowrap>{{'DATASETS.ATTR.URI_SPACE'|translate}}:</td>
-                            <td>{{datasetMetadata?.uriSpace}}</td>
-                        </tr>
-                        <tr>
-                            <td class="font-weight-bold" nowrap>{{'COMMONS.DESCRIPTION'|translate}}:</td>
-                            <td>{{project.getDescription()}}</td>
-                        </tr>
-                        <tr>
-                            <td class="font-weight-bold" nowrap>{{'MODELS.PROJECT.MODEL'|translate}}:</td>
-                            <td>{{project.getModelType(true)}}</td>
-                        </tr>
-                        <tr>
-                            <td class="font-weight-bold" nowrap>{{'MODELS.PROJECT.LEXICALIZATION_MODEL'|translate}}:</td>
-                            <td>{{project.getLexicalizationModelType(true)}}</td>
-                        </tr>
-                        <tr>
-                            <td class="font-weight-bold" nowrap>{{'DATASETS.ATTR.SPARQL_ENDPOINT'|translate}}:</td>
-                            <td>{{datasetMetadata?.sparqlEndpointMetadata?.id}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
-        <div class="card mt-3">
-            <div class="card-header">
-                <h5 class="m-0">{{'METADATA.FACETS'|translate}}</h5>
-            </div>
-            <div class="card-body overflow-auto">
-                <table class="table table-sm">
-                    <colgroup>
-                        <col style="width: 1%;">
-                        <col>
-                    </colgroup>
-                    <tbody>
-                        <tr *ngFor="let f of facets | keyvalue">
-                            <td class="font-weight-bold" nowrap>{{f.key}}:</td>
-                            <td>{{f.value}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="card mt-3">
-            <div class="card-header d-flex align-items-center">
-                <h5 class="m-0" style="flex: 1;">{{'METADATA.DISTRIBUTIONS.DISTRIBUTIONS'|translate}}</h5>
-                <button *ngIf="isAdmin" class="btn btn-sm btn-light" (click)="createDownload()">
-                    <span class="fas fa-plus"></span>
-                </button>
-            </div>
-            <div class="card-body overflow-auto">
-                <table class="table table-sm">
-                    <colgroup>
-                        <col>
-                        <col>
-                        <col>
-                        <col style="width: 1%;">
-                    </colgroup>
-                    <thead>
-                        <th>{{'METADATA.DISTRIBUTIONS.DISTRIBUTIONS'|translate}}</th>
-                        <th>{{'METADATA.DISTRIBUTIONS.CREATION_DATE'|translate}}</th>
-                        <th>{{'METADATA.DISTRIBUTIONS.DOWNLOADS'|translate}}</th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        <tr *ngIf="downloads.length == 0">
-                            <td colspan="4">
-                                {{'METADATA.DISTRIBUTIONS.NO_DISTRIBUTION_AVAILABLE'|translate}}
-                            </td>
-                        </tr>
-                        <tr *ngFor="let d of downloads">
-                            <td>
-                                {{d.localizedLabel}}
-                                <button class="btn btn-xs btn-light" (click)="editLabel(d)">
-                                    <span class="fas fa-edit"></span>
-                                </button>
-                            </td>
-                            <td [title]="d.date" nowrap>{{d.dateLocal}}</td>
-                            <td [title]="d.fileName">
-                                <a href="javascript:void(0)" (click)="downloadDistribution(d)">{{d.format}}</a>
-                            </td>
-                            <td>
-                                <div *ngIf="isAdmin" class="btn-toolbar">
-                                    <button class="btn btn-sm btn-light" (click)="deleteDownload(d)">
-                                        <span class="fas fa-trash"></span>
+            <div class="card mt-3">
+                <div class="card-header d-flex align-items-center">
+                    <h5 class="m-0" style="flex: 1;">{{'METADATA.DISTRIBUTIONS.DISTRIBUTIONS'|translate}}</h5>
+                    <button *ngIf="isUpdateDownloadsAuthorized" class="btn btn-sm btn-light" (click)="createDownload()">
+                        <span class="fas fa-plus"></span>
+                    </button>
+                </div>
+                <div class="card-body overflow-auto">
+                    <table class="table table-sm">
+                        <colgroup>
+                            <col>
+                            <col>
+                            <col>
+                            <col style="width: 1%;">
+                        </colgroup>
+                        <thead>
+                            <th>{{'METADATA.DISTRIBUTIONS.DISTRIBUTIONS'|translate}}</th>
+                            <th>{{'METADATA.DISTRIBUTIONS.CREATION_DATE'|translate}}</th>
+                            <th>{{'METADATA.DISTRIBUTIONS.DOWNLOADS'|translate}}</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="downloads.length == 0">
+                                <td colspan="4">
+                                    {{'METADATA.DISTRIBUTIONS.NO_DISTRIBUTION_AVAILABLE'|translate}}
+                                </td>
+                            </tr>
+                            <tr *ngFor="let d of downloads">
+                                <td>
+                                    {{d.localizedLabel}}
+                                    <button *ngIf="isUpdateDownloadsAuthorized" class="btn btn-xs btn-light" (click)="editLabel(d)">
+                                        <span class="fas fa-pencil-alt"></span>
                                     </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </td>
+                                <td [title]="d.date" nowrap>{{d.dateLocal}}</td>
+                                <td [title]="d.fileName">
+                                    <a href="javascript:void(0)" (click)="downloadDistribution(d)">{{d.format}}</a>
+                                </td>
+                                <td>
+                                    <div *ngIf="isUpdateDownloadsAuthorized" class="btn-toolbar">
+                                        <button class="btn btn-sm btn-light" (click)="deleteDownload(d)">
+                                            <span class="fas fa-trash"></span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    </ng-container>
+    <ng-container secondary>
+        <div class="card vbox">
 
-    <div class="card ml-3">
+            <div class="card-header">
+                <h5 class="m-0">{{'METADATA.STATS'|translate}}</h5>
+            </div>
+            <div class="card-body vbox">
 
-        <div class="card-header">
-            <h5 class="m-0">{{'METADATA.STATS'|translate}}</h5>
+                <lexicalization-sets-renderer [dataset]="dataset"></lexicalization-sets-renderer>
+
+            </div>
+
         </div>
-        <div class="card-body vbox">
-
-            <lexicalization-sets-renderer [dataset]="dataset"></lexicalization-sets-renderer>
-
-        </div>
-
-    </div>
-
-</div>
+    </ng-container>
+</resizable-layout>

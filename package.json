@@ -29,6 +29,7 @@
     "@ngx-translate/http-loader": "6.0.0",
     "bootstrap": "4.6.0",
     "d3": "5.9.2",
+    "jsprolog": "0.2.2",
     "jquery": "3.5.1",
     "rxjs": "6.6.6",
     "tslib": "2.2.0",

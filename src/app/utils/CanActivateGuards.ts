@@ -117,7 +117,7 @@ export class ProjectGuard implements CanActivate {
      * Here I inject the authGuard since in order to retrieve the project (listProjects), at leas the visitor user needs to be logged.
      * So, ProjectGuard implicitly requires VisitorAuthGuard
      */
-    constructor(private router: Router, private projectService: ProjectsServices, private metadataService: MetadataServices,
+    constructor(private router: Router, private projectService: ProjectsServices, private userService: UserServices, private metadataService: MetadataServices,
         private svProp: SVProperties, private basicModals: BasicModalsServices, private authGuard: VisitorAuthGuard) { }
 
     /**
@@ -147,11 +147,12 @@ export class ProjectGuard implements CanActivate {
                                     let projInitFunctions: Observable<any>[] = [
                                         this.metadataService.getNamespaceMappings(),
                                         this.svProp.initProjectSettings(SVContext.getProjectCtx()),
-                                        this.svProp.initUserProjectPreferences(SVContext.getProjectCtx())
-                                    ]
+                                        this.svProp.initUserProjectPreferences(SVContext.getProjectCtx()),
+                                        this.userService.listUserCapabilities() //get the capabilities for the user
+                                    ];
                                     return forkJoin(projInitFunctions).pipe(
                                         map(() => true)
-                                    )
+                                    );
                                 } else { //project not found, redirect to home
                                     this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_NOT_FOUND" }, { key: "MESSAGES.UNEXISTING_OR_CLOSED_DATASET", params: { datasetId: paramProject } }, ModalType.warning).then(
                                         () => {

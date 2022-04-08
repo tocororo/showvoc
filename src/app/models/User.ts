@@ -1,7 +1,7 @@
 export class User {
     private email: string;
     private givenName: string;
-    private familyName: string
+    private familyName: string;
     private iri: string;
     private phone: string;
     private address: string;
@@ -149,10 +149,6 @@ export class User {
     }
 
 
-
-
-
-
     /*
      * ===== Deserializer =====
      */
@@ -205,7 +201,6 @@ export class User {
         return user;
     }
 
-
 }
 
 export enum SamlLevel {
@@ -236,7 +231,7 @@ export class UserForm {
     urlAsIri: boolean;
     languageProficiencies: string[];
 
-    static emailRegexp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    static emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     static iriRegexp = new RegExp("\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]");
 
     constructor() { }

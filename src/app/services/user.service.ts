@@ -7,6 +7,7 @@ import { ModalType } from '../modal-dialogs/Modals';
 import { AuthServiceMode } from '../models/Properties';
 import { ShowVocConstants } from '../models/ShowVoc';
 import { SamlLevel, User } from "../models/User";
+import { AuthorizationEvaluator } from '../utils/AuthorizationEvaluator';
 import { HttpManager, STRequestParams } from "../utils/HttpManager";
 import { SVContext } from '../utils/SVContext';
 
@@ -135,6 +136,21 @@ export class UserServices {
                     return u1.getGivenName().localeCompare(u2.getGivenName());
                 });
                 return users;
+            })
+        );
+    }
+
+    /**
+     * Returns the capabilities of the current logged user in according the roles he has in the current project.
+     * Note: this is used just in projectListModal and not in projectComponent,
+     * since the latter is accessed only by the admin that doesn't require authorization check and has no capabilities
+     */
+    listUserCapabilities(): Observable<string[]> {
+        let params: STRequestParams = {};
+        return this.httpMgr.doGet(this.serviceName, "listUserCapabilities", params).pipe(
+            map(stResp => {
+                AuthorizationEvaluator.initEvalutator(stResp);
+                return stResp;
             })
         );
     }
