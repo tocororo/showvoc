@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { TextOrTranslation } from "../../modal-dialogs/Modals";
+import { TextOrTranslation, TranslationUtils } from "../../modal-dialogs/Modals";
 import { Toast, ToastOpt } from "./Toasts";
 
 @Injectable()
@@ -11,8 +11,8 @@ export class ToastService {
     toasts: Toast[] = [];
 
     show(title: TextOrTranslation, message: TextOrTranslation, options?: ToastOpt) {
-        let t = title != null ? (typeof title == "string") ? title : this.translateService.instant(title.key, title.params) : null;
-        let msg = (typeof message == "string") ? message : this.translateService.instant(message.key, message.params);
+        let t = TranslationUtils.getTranslatedText(title, this.translateService);
+        let msg = TranslationUtils.getTranslatedText(message, this.translateService);
         this.toasts.push({ title: t, message: msg, options: options });
     }
 

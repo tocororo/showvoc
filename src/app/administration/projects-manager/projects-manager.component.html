@@ -86,7 +86,7 @@
                                     {{'ADMINISTRATION.DATASETS.MANAGEMENT.CLEAR_DATA'|translate}}
                                 </button>
                                 <button class="dropdown-item" (click)="createDownload(p)" [disabled]="!p.isOpen() || p.creatingIndex || p.clearingIndex || p.opening || p.clearingData">
-                                    CREATE DOWNLOAD
+                                    {{'ADMINISTRATION.DATASETS.MANAGEMENT.CREATE_DOWNLOAD'|translate}}
                                 </button>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item d-flex align-items-center" (click)="createIndex(p)" [disabled]="globalCreatingIndex || p.creatingIndex || p.clearingIndex || p.opening || p.clearingData">

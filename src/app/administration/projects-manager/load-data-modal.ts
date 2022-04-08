@@ -1,16 +1,17 @@
 import { Component, Input } from "@angular/core";
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { CheckOptions, ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { TransitiveImportMethodAllowance } from 'src/app/models/Metadata';
-import { ExtensionFactory, ExtensionPointID, Settings, PluginSpecification } from 'src/app/models/Plugins';
+import { ExtensionFactory, ExtensionPointID, PluginSpecification, Settings } from 'src/app/models/Plugins';
 import { Project } from 'src/app/models/Project';
 import { DataFormat } from 'src/app/models/RDFFormat';
+import { ShowVocConstants } from "src/app/models/ShowVoc";
 import { ExtensionsServices } from 'src/app/services/extensions.service';
 import { InputOutputServices } from 'src/app/services/input-output.service';
-import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
-import { ModalType } from 'src/app/modal-dialogs/Modals';
-import { SVContext } from 'src/app/utils/SVContext';
-import { ShowVocConstants } from "src/app/models/ShowVoc";
 import { ShowVocServices } from "src/app/services/showvoc.service";
+import { SVContext } from 'src/app/utils/SVContext';
+import { CreateDownloadModal } from "./create-download-modal";
 
 @Component({
     selector: "load-data-modal",
@@ -45,12 +46,22 @@ export class LoadDataModal {
     selectedLifterConfig: Settings;
 
     constructor(public activeModal: NgbActiveModal, private extensionService: ExtensionsServices, private inputOutputService: InputOutputServices,
-        private svService: ShowVocServices, private basicModals: BasicModalsServices) { }
+        private svService: ShowVocServices, private basicModals: BasicModalsServices, private modalService: NgbModal) { }
 
     ngOnInit() {
         this.baseURI = this.project.getBaseURI();
         this.extensionService.getExtensions(ExtensionPointID.RDF_LIFTER_ID).subscribe(
             extensions => {
+                //sort extensions in order to force RDFDeserializingLifter in 1st position, so selected as default
+                extensions.sort((e1, e2) => {
+                    if (e1.id.includes("RDFDeserializingLifter")) {
+                        return -1;
+                    } else if (e2.id.includes("RDFDeserializingLifter")) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                });
                 this.lifters = extensions;
             }
         );
@@ -128,8 +139,18 @@ export class LoadDataModal {
                 if (this.project['role'] == ShowVocConstants.rolePristine) { //role is an attribute attached in ProjectsManagerComponent, namely the component that opens this modal)
                     this.svService.setProjectStatus(this.project.getName(), ShowVocConstants.roleStaging).subscribe();
                 }
-                this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, { key: "MESSAGES.DATA_LOADED" }).then(
-                    () => this.activeModal.close()
+                let checkOpt: CheckOptions = {
+                    label: { key: "ADMINISTRATION.DATASETS.MANAGEMENT.CREATE_DOWNLOAD" },
+                    value: true,
+                };
+                this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, { key: "MESSAGES.DATA_LOADED" }, null, null, checkOpt).then(
+                    (checkOptResult: CheckOptions) => {
+                        if (checkOptResult.value) {
+                            const modalRef: NgbModalRef = this.modalService.open(CreateDownloadModal, new ModalOptions("lg"));
+                            modalRef.componentInstance.project = this.project;
+                        }
+                        this.activeModal.close();
+                    }
                 );
             }
         );

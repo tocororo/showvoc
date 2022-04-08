@@ -9,15 +9,15 @@ import { MetadataRegistryServices } from "src/app/services/metadata-registry.ser
     templateUrl: './lexicalization-sets-renderer.component.html',
     host: { class: "vbox" },
     styles: [`
-	.table > tbody > tr:first-child > td {
-		border-top: none;
-	}
-	`]
+    .table > tbody > tr:first-child > td {
+        border-top: none;
+    }
+    `]
 })
 export class LexicalizationSetsRenderer {
 
     @Input() dataset: AnnotatedValue<IRI>;
-    lexicalizationSets: LexicalizationSetMetadata[]
+    lexicalizationSets: LexicalizationSetMetadata[];
 
     constructor(private metadataRegistryService: MetadataRegistryServices) { }
 
@@ -33,7 +33,7 @@ export class LexicalizationSetsRenderer {
                 this.lexicalizationSets = lexicalizationSets;
                 this.lexicalizationSets.forEach(l => {
                     l['lexModelPretty'] = Project.getPrettyPrintModelType(l.lexicalizationModel);
-                })
+                });
                 this.sortLexicalizationSets("language");
             }
         );
@@ -43,7 +43,7 @@ export class LexicalizationSetsRenderer {
         if (criteria == "language") {
             this.lexicalizationSets.sort((l1, l2) => {
                 return l1.language.localeCompare(l2.language);
-            })
+            });
         } else { //lexicalizations
             this.lexicalizationSets.sort((l1, l2) => {
                 /*
@@ -55,19 +55,19 @@ export class LexicalizationSetsRenderer {
                     return l2.lexicalizations - l1.lexicalizations;
                 } else if (l1.lexicalizations && !l2.lexicalizations) {
                     return -1;
-                } else if (l1.lexicalizations && !l2.lexicalizations) {
+                } else if (!l1.lexicalizations && l2.lexicalizations) {
                     return 1;
                 } else {
                     return l1.language.localeCompare(l2.language);
                 }
-            })
+            });
         }
     }
 
     collapseAll(collapse: boolean) {
         this.lexicalizationSets.forEach(l => {
             l['collapsed'] = collapse;
-        })
+        });
     }
 
 }

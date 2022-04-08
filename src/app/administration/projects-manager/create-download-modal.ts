@@ -76,7 +76,7 @@ export class CreateDownloadModal {
         this.createDownload(false).subscribe(
             (success: boolean) => {
                 if (success) {
-                    this.basicModals.alert({ key: "COMMONS.STATUS.OPERATION_DONE" }, { key: "Download created successfully" });
+                    this.basicModals.alert({ key: "COMMONS.STATUS.OPERATION_DONE" }, { key: "MESSAGES.DOWNLOAD_CREATED" });
                     SVContext.removeTempProject();
                     this.activeModal.close();
                 }

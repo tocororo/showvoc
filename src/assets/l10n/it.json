@@ -4,6 +4,7 @@
             "MANAGEMENT": {
                 "CHANGE_STATUS": "Cambia stato",
                 "CLEAR_DATA": "Cancella dati",
+                "CREATE_DOWNLOAD": "Crea un download",
                 "CREATE_INDEX": "Crea indice",
                 "CREATE_REFRESH_INDEX": "Crea/aggiorna indice",
                 "CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS": "Impostazione dello schema della facets di progetto personalizzate",
@@ -137,15 +138,18 @@
             "CHECK": "Seleziona",
             "CHECK_ALL": "Seleziona tutto",
             "CLOSE": "Chiudi",
+            "COLLAPSE_ALL": "Collassa tutto",
             "CONFIRM": "Conferma",
             "CREATE": "Crea",
             "DELETE": "Elimina",
             "EDIT": "Modifica",
+            "EXPAND_ALL": "Espandi tutto",
             "LOAD": "Carica",
             "REFRESH": "Aggiorna",
             "REMOVE": "Rimuovi",
             "RESET": "Reset",
             "SEARCH": "Cerca",
+            "SORT_BY_X": "Ordina per",
             "SUBMIT": "Invia",
             "UNCHECK": "Deseleziona",
             "UNCHECK_ALL": "Deseleziona tutto",
@@ -175,6 +179,7 @@
         "DETAILS": "Dettagli",
         "DONT_ASK_AGAIN": "Non chiedere più",
         "DONT_SHOW_AGAIN": "Non mostrare più",
+        "FILE_NAME": "Nome file",
         "FILTER": "Filtro",
         "FORMAT": "Formato",
         "LANGUAGE": {
@@ -498,6 +503,7 @@
         "DELETE_DATASET_CONFIRM_WARN": "Attenzione, questa operazione eliminerà il dataset. Vuoi procedere?",
         "DELETE_USER_CONFIRM_WARN": "Attenzione, questa operazione eliminerà l'utente {{user}}. Vuoi continuare?",
         "DIFFERENT_CONFIRM_PASSWORD": "Password e conferma passowrd sono differenti.",
+        "DOWNLOAD_CREATED": "Download distribuzione creato con successo",
         "DUPLICATED_SERVER_URL_CONFIG": "Una configurazione per lo stesso URL server già esiste",
         "EMAIL_CONFIG_CHANGED": "La configurazione email è stata modificata, è necessario prima confermare le modifiche.",
         "EMAIL_CONFIG_INFO": "Configurazione del servizio e-mail di ShowVoc. Questo servizio sarà usato per inviare notifiche ai contributor<br><strong>Nota</strong>: se non opportunamente configurato, sarà impossibile inviare email ai contributor, pertanto non saranno in grado di portare a completamento il contributo.",
@@ -560,6 +566,31 @@
         "VB_CONFIG_TEST_SUCCESS": "La configurazione è stata testata con successo.",
         "X_SEARCH_RESOURCES_FOUND": "{{results}} risultati trovati",
         "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "Riceverai a breve una email contenente i dettagli per accedere a VocBench."
+    },
+    "METADATA": {
+        "DISTRIBUTIONS": {
+            "COMPRESS": "Comprimi (.zip)",
+            "CREATION_DATE": "Data di creazione",
+            "DISTRIBUTIONS": "Distribuzioni",
+            "DISTRIBUTION_LABEL": "Etichetta distribuzione",
+            "DISTRIBUTION_LABELS": "Etichette distribuzione",
+            "DOWNLOADS": "Download",
+            "NO_DISTRIBUTION_AVAILABLE": "Nessuna distribuzione disponibile"
+        },
+        "FACETS": "Facets",
+        "GENERAL_METADATA": "Metadati generali",
+        "LEXICALIZATION_SET": {
+            "AVG_OF_LEXICALIZATIONS": "Q.tà media di lessicalizzazioni",
+            "EMBEDDED_LEXICALIZATION_SETS": "Embedded Lexicalization Sets",
+            "LEXICALIZATIONS": "Lessicalizzazioni",
+            "LEXICALIZATION_SET": "Lexicalization Set",
+            "LEXICAL_ASSETS": "Assets lessicali",
+            "LEXICAL_ENTRIES": "Lexical Entries",
+            "LEXICON_DATASET": "Lexicon Dataset",
+            "PERCENTAGE": "Percentuale",
+            "REFERENCES": "Riferimenti"
+        },
+        "STATS": "Stats"
     },
     "MODELS": {
         "PROJECT": {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { AnnotatedValue, IRI } from 'src/app/models/Resources';
-import { ModalOptions, TextOrTranslation } from '../Modals';
+import { ModalOptions, TextOrTranslation, TranslationUtils } from '../Modals';
 import { ClassTreeModal } from './class-tree-modal/class-tree-modal';
 import { CollectionTreeModal } from './collection-tree-modal/collection-tree-modal';
 import { ConceptTreeModal } from './concept-tree-modal/concept-tree-modal';
@@ -25,7 +25,7 @@ export class BrowsingModalsServices {
     browseClassTree(title: TextOrTranslation, roots?: IRI[], options?: ModalOptions): Promise<AnnotatedValue<IRI>> {
         let _options: ModalOptions = new ModalOptions().merge(options);
         const modalRef: NgbModalRef = this.modalService.open(ClassTreeModal, _options);
-        modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
+        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
         modalRef.componentInstance.roots = roots;
         return modalRef.result;
     }
@@ -40,7 +40,7 @@ export class BrowsingModalsServices {
     browseConceptTree(title: TextOrTranslation, schemes?: IRI[], schemeChangeable?: boolean, options?: ModalOptions): Promise<AnnotatedValue<IRI>> {
         let _options: ModalOptions = new ModalOptions().merge(options);
         const modalRef: NgbModalRef = this.modalService.open(ConceptTreeModal, _options);
-        modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
+        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
         modalRef.componentInstance.schemes = schemes;
         modalRef.componentInstance.schemeChangeable = schemeChangeable;
         return modalRef.result;
@@ -53,8 +53,8 @@ export class BrowsingModalsServices {
      */
     browseCollectionTree(title: TextOrTranslation, options?: ModalOptions): Promise<AnnotatedValue<IRI>> {
         let _options: ModalOptions = new ModalOptions().merge(options);
-    	const modalRef: NgbModalRef = this.modalService.open(CollectionTreeModal, _options );
-        modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
+        const modalRef: NgbModalRef = this.modalService.open(CollectionTreeModal, _options);
+        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
         return modalRef.result;
     }
 
@@ -65,8 +65,8 @@ export class BrowsingModalsServices {
      */
     browseSchemeList(title: TextOrTranslation, options?: ModalOptions): Promise<AnnotatedValue<IRI>> {
         let _options: ModalOptions = new ModalOptions().merge(options);
-    	const modalRef: NgbModalRef = this.modalService.open(SchemeListModal, _options );
-        modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
+        const modalRef: NgbModalRef = this.modalService.open(SchemeListModal, _options);
+        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
         return modalRef.result;
     }
 
@@ -80,8 +80,8 @@ export class BrowsingModalsServices {
      */
     browsePropertyTree(title: TextOrTranslation, rootProperties?: IRI[], resource?: IRI, options?: ModalOptions): Promise<AnnotatedValue<IRI>> {
         let _options: ModalOptions = new ModalOptions().merge(options);
-    	const modalRef: NgbModalRef = this.modalService.open(PropertyTreeModal, _options );
-        modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
+        const modalRef: NgbModalRef = this.modalService.open(PropertyTreeModal, _options);
+        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
         modalRef.componentInstance.rootProperties = rootProperties;
         modalRef.componentInstance.resource = resource;
         return modalRef.result;
@@ -95,8 +95,8 @@ export class BrowsingModalsServices {
      */
     browseLexicalEntryList(title: TextOrTranslation, lexicon?: IRI, lexiconChangeable?: boolean, options?: ModalOptions): Promise<AnnotatedValue<IRI>> {
         let _options: ModalOptions = new ModalOptions().merge(options);
-    	const modalRef: NgbModalRef = this.modalService.open(LexicalEntryListModal, _options );
-        modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
+        const modalRef: NgbModalRef = this.modalService.open(LexicalEntryListModal, _options);
+        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
         modalRef.componentInstance.lexicon = lexicon;
         modalRef.componentInstance.lexiconChangeable = lexiconChangeable;
         return modalRef.result;
@@ -108,8 +108,8 @@ export class BrowsingModalsServices {
      */
     browseLexiconList(title: TextOrTranslation, options?: ModalOptions): Promise<AnnotatedValue<IRI>> {
         let _options: ModalOptions = new ModalOptions().merge(options);
-    	const modalRef: NgbModalRef = this.modalService.open(LexiconListModal, _options );
-        modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
+        const modalRef: NgbModalRef = this.modalService.open(LexiconListModal, _options);
+        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
         return modalRef.result;
     }
 

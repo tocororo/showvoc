@@ -1,51 +1,53 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalType } from '../../Modals';
+import { CheckOptions, ModalType } from '../../Modals';
 
 @Component({
-	selector: 'alert-modal',
-	templateUrl: './alert-modal.html',
-	styleUrls: ['../../modals.css']
+    selector: 'alert-modal',
+    templateUrl: './alert-modal.html',
+    styleUrls: ['../../modals.css']
 })
 export class AlertModal implements OnInit {
 
-	@Input() title: string;
-	@Input() message: string;
-	@Input() type: ModalType;
-	@Input() details: string;
-	@Input() checkboxLabel: string;
+    @Input() title: string;
+    @Input() message: string;
+    @Input() type: ModalType;
+    @Input() details: string;
+    @Input() checkboxLabel: string;
 
-	titleClass: string;
-	alertClass: string;
+    @Input() checkOpt: CheckOptions;
 
-	detailsCollapsed: boolean = true;
+    titleClass: string;
+    alertClass: string;
 
-	checkbox: boolean = false;
+    detailsCollapsed: boolean = true;
 
-	constructor(public activeModal: NgbActiveModal) { }
+    checkbox: boolean = false;
 
-	ngOnInit() {
-		if (this.type == null) {
-			this.type = ModalType.info
-		}
-		if (this.type == ModalType.info) {
-			this.titleClass = "text-info";
-			this.alertClass = "alert alert-info";
-		} else if (this.type == ModalType.warning) {
-			this.titleClass = "text-warning";
-			this.alertClass = "alert alert-warning";
-		} else if (this.type == ModalType.error) {
-			this.titleClass = "text-danger";
-			this.alertClass = "alert alert-danger";
-		}
-	}
+    constructor(public activeModal: NgbActiveModal) { }
 
-	ok() {
-		this.activeModal.close(this.checkbox);
-	}
+    ngOnInit() {
+        if (this.type == null) {
+            this.type = ModalType.info;
+        }
+        if (this.type == ModalType.info) {
+            this.titleClass = "text-info";
+            this.alertClass = "alert alert-info";
+        } else if (this.type == ModalType.warning) {
+            this.titleClass = "text-warning";
+            this.alertClass = "alert alert-warning";
+        } else if (this.type == ModalType.error) {
+            this.titleClass = "text-danger";
+            this.alertClass = "alert alert-danger";
+        }
+    }
 
-	close() {
-		this.activeModal.dismiss();
-	}
+    ok() {
+        this.activeModal.close(this.checkOpt);
+    }
+
+    close() {
+        this.activeModal.dismiss();
+    }
 
 }

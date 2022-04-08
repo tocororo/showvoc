@@ -36,7 +36,7 @@ export class SystemConfigurationComponent implements OnInit {
     private showVocSettings: ShowVocSettings;
     vbConnectionConfig: VocBenchConnectionShowVocSettings = new VocBenchConnectionShowVocSettings();
     private pristineVbConnConfig: VocBenchConnectionShowVocSettings;
-    
+
     testVbConfigLoading: boolean;
 
     /* Remote access configuration */
@@ -59,14 +59,14 @@ export class SystemConfigurationComponent implements OnInit {
     authServiceModes: AuthServiceMode[] = [AuthServiceMode.Default, AuthServiceMode.SAML];
     selectedAuthServiceMode: AuthServiceMode;
 
-    
+
     constructor(private adminService: AdministrationServices, private svService: ShowVocServices, private settingsService: SettingsServices,
         private usersService: UserServices, private basicModals: BasicModalsServices, private modalService: NgbModal,
         private translateService: TranslateService) { }
 
     ngOnInit() {
         this.currentUser = SVContext.getLoggedUser();
-        this.initAll()
+        this.initAll();
     }
 
     private initAll() {
@@ -78,7 +78,7 @@ export class SystemConfigurationComponent implements OnInit {
                 this.initVbConfigHandler(settings);
                 this.initOtherConfig(settings);
             }
-        )
+        );
     }
 
 
@@ -91,7 +91,7 @@ export class SystemConfigurationComponent implements OnInit {
             settings => {
                 this.initUsersListConfigHandler(settings);
             }
-        )
+        );
     }
 
     private initUsersListConfigHandler(settings: Settings) {
@@ -111,7 +111,7 @@ export class SystemConfigurationComponent implements OnInit {
                 map(users => {
                     this.users = users;
                 })
-            )
+            );
         } else {
             return of(null);
         }
@@ -127,7 +127,7 @@ export class SystemConfigurationComponent implements OnInit {
                     }
                 );
             }
-        )
+        );
     }
 
     createSuperUser() {
@@ -140,7 +140,7 @@ export class SystemConfigurationComponent implements OnInit {
                     }
                 );
             }
-        )
+        );
     }
 
     private createUser(titleTranslationKey: string): Observable<User> {
@@ -159,16 +159,16 @@ export class SystemConfigurationComponent implements OnInit {
 
     changeUserType(user: User) {
         let msgTranslationKey = user.isAdmin() ? "MESSAGES.CHANGE_USER_TYPE_ADMIN_TO_SUPER_CONFIRM" : "MESSAGES.CHANGE_USER_TYPE_SUPER_TO_ADMIN_CONFIRM";
-        this.basicModals.confirmCheckCookie({key: "COMMONS.STATUS.WARNING"}, { key: msgTranslationKey, params: { user: user.getShow() } }, Cookie.WARNING_ADMIN_CHANGE_USER_TYPE, ModalType.warning).then(
+        this.basicModals.confirmCheckCookie({ key: "COMMONS.STATUS.WARNING" }, { key: msgTranslationKey, params: { user: user.getShow() } }, Cookie.WARNING_ADMIN_CHANGE_USER_TYPE, ModalType.warning).then(
             () => {
                 let removeFn: Observable<void>;
                 let addFn: Observable<void>;
                 if (user.isAdmin()) { // admin to superuser
-                    removeFn = this.adminService.removeAdministrator(user).pipe(tap(() => { user.setAdmin(false) }));
-                    addFn = this.adminService.setSuperUser(user).pipe(tap(() => { user.setSuperUser(true) }));
+                    removeFn = this.adminService.removeAdministrator(user).pipe(tap(() => { user.setAdmin(false); }));
+                    addFn = this.adminService.setSuperUser(user).pipe(tap(() => { user.setSuperUser(true); }));
                 } else { // superuser to admin
-                    removeFn = this.adminService.removeSuperUser(user).pipe(tap(() => { user.setSuperUser(false) }));
-                    addFn = this.adminService.setAdministrator(user).pipe(tap(() => { user.setAdmin(true) }));
+                    removeFn = this.adminService.removeSuperUser(user).pipe(tap(() => { user.setSuperUser(false); }));
+                    addFn = this.adminService.setAdministrator(user).pipe(tap(() => { user.setAdmin(true); }));
                 }
                 removeFn.subscribe(
                     () => {
@@ -180,8 +180,8 @@ export class SystemConfigurationComponent implements OnInit {
                     }
                 );
             },
-            () => {}
-        )
+            () => { }
+        );
     }
 
     deleteUser(user: User) {
@@ -192,9 +192,9 @@ export class SystemConfigurationComponent implements OnInit {
                         this.users = null; //so forces the users list to be reinitialized
                         this.initUsersListConfig();
                     }
-                )
-            }, 
-            () => {}
+                );
+            },
+            () => { }
         );
     }
 
@@ -208,7 +208,7 @@ export class SystemConfigurationComponent implements OnInit {
             settings => {
                 this.initEmailConfigHandler(settings);
             }
-        )
+        );
     }
 
     private initEmailConfigHandler(settings: Settings) {
@@ -237,35 +237,35 @@ export class SystemConfigurationComponent implements OnInit {
             this.emailSettings.smtp.starttlsEnabled = false;
         }
     }
-    
+
     updateEmailConfig() {
         this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.mail, this.emailSettings).subscribe(
             () => {
                 this.initEmailConfig();
             }
-        )
+        );
     }
 
     testEmailConfig() {
         if (this.isEmailConfigChanged()) {
-            this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST" }, {key:"MESSAGES.EMAIL_CONFIG_CHANGED"}, ModalType.warning);
+            this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST" }, { key: "MESSAGES.EMAIL_CONFIG_CHANGED" }, ModalType.warning);
             return;
         }
 
-        this.basicModals.prompt({ key: "ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST" }, { value: "Mail to" }, { key: "MESSAGES.EMAIL_CONFIG_TEST_INFO"}, 
+        this.basicModals.prompt({ key: "ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST" }, { value: "Mail to" }, { key: "MESSAGES.EMAIL_CONFIG_TEST_INFO" },
             SVContext.getLoggedUser().getEmail()).then(
-            mailTo => {
-                this.testEmailConfigLoading = true;
-                this.adminService.testEmailConfig(mailTo).pipe(
-                    finalize(() => this.testEmailConfigLoading = false)
-                ).subscribe(
-                    () => {
-                        this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST" }, {key:"MESSAGES.EMAIL_CONFIG_TEST_SUCCESS"});
-                    }
-                );
-            },
-            () => {}
-        );
+                mailTo => {
+                    this.testEmailConfigLoading = true;
+                    this.adminService.testEmailConfig(mailTo).pipe(
+                        finalize(() => { this.testEmailConfigLoading = false; })
+                    ).subscribe(
+                        () => {
+                            this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.EMAIL.EMAIL_CONFIG_TEST" }, { key: "MESSAGES.EMAIL_CONFIG_TEST_SUCCESS" });
+                        }
+                    );
+                },
+                () => { }
+            );
     }
 
     isEmailConfigChanged(): boolean {
@@ -281,7 +281,7 @@ export class SystemConfigurationComponent implements OnInit {
             settings => {
                 this.initRemoteConfigHandler(settings);
             }
-        )
+        );
     }
 
     private initRemoteConfigHandler(settings: Settings) {
@@ -319,17 +319,17 @@ export class SystemConfigurationComponent implements OnInit {
             settings => {
                 this.initVbConfigHandler(settings);
             }
-        )
+        );
     }
 
     private initVbConfigHandler(settings: Settings) {
-        this.showVocSettings = settings.getPropertyValue(SettingsEnum.showvoc)
+        this.showVocSettings = settings.getPropertyValue(SettingsEnum.showvoc);
         if (this.showVocSettings == null) {
-            this.showVocSettings = new ShowVocSettings()
+            this.showVocSettings = new ShowVocSettings();
         }
 
         if (this.showVocSettings.vbConnectionConfig != null) {
-            this.vbConnectionConfig = this.showVocSettings.vbConnectionConfig
+            this.vbConnectionConfig = this.showVocSettings.vbConnectionConfig;
         }
         this.pristineVbConnConfig = Object.assign({}, this.vbConnectionConfig);
     }
@@ -337,7 +337,7 @@ export class SystemConfigurationComponent implements OnInit {
     updateVbConfig() {
         this.showVocSettings.vbConnectionConfig = this.vbConnectionConfig;
         this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.showvoc, this.showVocSettings).subscribe(
-            () =>{
+            () => {
                 this.initVbConfig();
             }
         );
@@ -349,24 +349,24 @@ export class SystemConfigurationComponent implements OnInit {
             (!this.vbConnectionConfig.adminPassword || this.vbConnectionConfig.adminPassword.trim() == "") ||
             (!this.vbConnectionConfig.stHost || this.vbConnectionConfig.stHost.trim() == "")
         ) {
-            this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST" }, {key:"MESSAGES.VB_CONFIG_INCOMPLETE"}, ModalType.warning);
+            this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST" }, { key: "MESSAGES.VB_CONFIG_INCOMPLETE" }, ModalType.warning);
             return;
         }
         if (this.isVbConfigChanged()) {
-            this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST" }, {key:"MESSAGES.VB_CONFIG_CHANGED"}, ModalType.warning);
+            this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST" }, { key: "MESSAGES.VB_CONFIG_CHANGED" }, ModalType.warning);
             return;
         }
         this.testVbConfigLoading = true;
         this.svService.testVocbenchConfiguration().pipe(
-            finalize(() => this.testVbConfigLoading = false)
+            finalize(() => { this.testVbConfigLoading = false; })
         ).subscribe(
             () => {
-                this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST" }, {key:"MESSAGES.VB_CONFIG_TEST_SUCCESS"});
+                this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST" }, { key: "MESSAGES.VB_CONFIG_TEST_SUCCESS" });
             },
             (error: Error) => {
-                this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST" }, {key:"MESSAGES.VB_CONFIG_TEST_FAIL"}, ModalType.error, error.message);
+                this.basicModals.alert({ key: "ADMINISTRATION.SYSTEM.VB_CONFIG.VB_CONFIG_TEST" }, { key: "MESSAGES.VB_CONFIG_TEST_FAIL" }, ModalType.error, error.message);
             }
-        )
+        );
     }
 
     isVbConfigChanged() {
@@ -384,7 +384,7 @@ export class SystemConfigurationComponent implements OnInit {
 
     private initOtherConfig(settings: Settings) {
         this.disableContributions = this.showVocSettings.disableContributions; //showVocSettings is already initialized in initVbConfigHandler which is invoked before initOtherConfig in initAll
-        
+
         this.selectedAuthServiceMode = SVContext.getSystemSettings().authService;
     }
 
@@ -396,8 +396,8 @@ export class SystemConfigurationComponent implements OnInit {
 
 
     onAuthServiceChanged(newValue: AuthServiceMode) {
-        let oldValue = this.selectedAuthServiceMode
-        this.basicModals.confirm({key:"COMMONS.STATUS.WARNING"}, {key:"MESSAGES.AUTH_MODE_CHANGE_WARN"}, ModalType.warning).then(
+        let oldValue = this.selectedAuthServiceMode;
+        this.basicModals.confirm({ key: "COMMONS.STATUS.WARNING" }, { key: "MESSAGES.AUTH_MODE_CHANGE_WARN" }, ModalType.warning).then(
             () => {
                 this.selectedAuthServiceMode = newValue;
                 this.updateAuthServiceMode();
@@ -409,7 +409,7 @@ export class SystemConfigurationComponent implements OnInit {
                     this.selectedAuthServiceMode = oldValue;
                 });
             }
-        )
+        );
     }
 
     private updateAuthServiceMode() {
@@ -432,5 +432,5 @@ class MailSettings {
         address: string,
         password: string,
         alias: string,
-    }
+    };
 }

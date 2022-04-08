@@ -28,14 +28,14 @@ export class RemoteAccessConfigModal {
                     this.savedConfigs = remoteConfSetting;
                 }
             }
-        )
+        );
     }
 
     createConfiguration() {
         //add the new configuration only if another config with the same url doesn't exist
-        for (var i = 0; i < this.savedConfigs.length; i++) {
+        for (let i = 0; i < this.savedConfigs.length; i++) {
             if (this.savedConfigs[i].serverURL == this.newConfig.serverURL) {
-                this.basicModals.alert({ key: "COMMONS.CONFIG.DUPLICATED_CONFIGURATION" }, {key:"MESSAGES.DUPLICATED_SERVER_URL_CONFIG"}, ModalType.error);
+                this.basicModals.alert({ key: "COMMONS.CONFIG.DUPLICATED_CONFIGURATION" }, { key: "MESSAGES.DUPLICATED_SERVER_URL_CONFIG" }, ModalType.error);
                 return;
             }
         }

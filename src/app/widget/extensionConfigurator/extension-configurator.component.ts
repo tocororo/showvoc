@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { ConfigurationsServices } from 'src/app/services/configuration.service';
 import { Configuration } from '../../models/Configuration';
@@ -23,7 +22,7 @@ export class ExtensionConfiguratorComponent {
 
     private status: ExtensionConfigurationStatus;
     
-    constructor(private configurationService: ConfigurationsServices, private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices) {}
+    constructor(private configurationService: ConfigurationsServices, private sharedModals: SharedModalsServices) {}
 
     ngOnInit() {
         this.selectedExtension = this.extensions[0];
@@ -80,7 +79,7 @@ export class ExtensionConfiguratorComponent {
     }
 
     private saveConfig() {
-        alert("TODO"); //currently there is no extension that allow to save configuration
+        //TODO currently there is no extension that allow to save configuration
         // let config: { [key: string]: any } = this.selectedConfiguration.getPropertiesAsMap();
         // this.sharedModals.storeConfiguration("Store configuration", this.selectedExtension.id, config).then(
         //     (relativeRef: string) => {
@@ -94,7 +93,7 @@ export class ExtensionConfiguratorComponent {
     }
 
     private loadConfig() {
-        alert("TODO"); //currently there is no extension that allow to load configuration
+        //TODO currently there is no extension that allow to load configuration
         // this.sharedModals.loadConfiguration("Load configuration", this.selectedExtension.id).then(
         //     (config: LoadConfigurationModalReturnData) => {
         //         for (let i = 0; i < this.selectedExtension.configurations.length; i++) {
@@ -154,7 +153,7 @@ export class ExtensionConfiguratorComponent {
                 this.status = ExtensionConfigurationStatus.saved;
                 this.configStatusUpdated.emit({ status: this.status, relativeReference: configRef });
             }
-        )
+        );
     }
 
 

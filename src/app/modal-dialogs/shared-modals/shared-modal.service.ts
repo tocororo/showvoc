@@ -5,7 +5,7 @@ import { Settings } from 'src/app/models/Plugins';
 import { Resource } from 'src/app/models/Resources';
 import { ProjectContext } from 'src/app/utils/SVContext';
 import { ResourceViewModal } from '../../resource-view/modals/resource-view-modal';
-import { ModalOptions, TextOrTranslation } from '../Modals';
+import { ModalOptions, TextOrTranslation, TranslationUtils } from '../Modals';
 import { LanguageSelectorModal } from './languages-selector-modal/languages-selector-modal';
 import { PluginConfigurationModal, PluginSettingsHandler } from './plugin-configuration/plugin-configuration-modal';
 
@@ -14,7 +14,7 @@ export class SharedModalsServices {
 
     constructor(private modalService: NgbModal, private translateService: TranslateService) { }
 
-	/**
+    /**
      * Opens a resource view in a modal
      * @param resource 
      */
@@ -34,9 +34,9 @@ export class SharedModalsServices {
      * @param projectAware if true, allow selection only of languages available in the current project
      * @param projectCtx allow to customize the available languages for the contextual project
      */
-     selectLanguages(title: TextOrTranslation, languages?: string[], radio?: boolean, projectAware?: boolean, projectCtx?: ProjectContext) {
+    selectLanguages(title: TextOrTranslation, languages?: string[], radio?: boolean, projectAware?: boolean, projectCtx?: ProjectContext) {
         const modalRef: NgbModalRef = this.modalService.open(LanguageSelectorModal, new ModalOptions());
-        modalRef.componentInstance.title = (typeof title == "string") ? title : this.translateService.instant(title.key, title.params);
+        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
         if (languages != null) modalRef.componentInstance.languages = languages;
         if (radio != null) modalRef.componentInstance.radio = radio;
         if (projectAware != null) modalRef.componentInstance.projectAware = projectAware;
@@ -49,7 +49,7 @@ export class SharedModalsServices {
      * Returns a new PluginConfiguration, the input configuration doesn't mutate.
      * @param configuration
      */
-     configurePlugin(configuration: Settings, handler?: PluginSettingsHandler) {
+    configurePlugin(configuration: Settings, handler?: PluginSettingsHandler) {
         const modalRef: NgbModalRef = this.modalService.open(PluginConfigurationModal, new ModalOptions("lg"));
         modalRef.componentInstance.configuration = configuration;
         modalRef.componentInstance.handler = handler;

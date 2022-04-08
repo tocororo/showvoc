@@ -10,6 +10,7 @@ import { SVContext } from "src/app/utils/SVContext";
 })
 export class LocalizedEditorModal {
 
+    @Input() title: string;
     @Input() localizedMap: LocalizedMap;
 
     labels: LocalizedItem[];

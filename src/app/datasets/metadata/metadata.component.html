@@ -1,12 +1,12 @@
 <div class="hbox">
 
-    <div class="vbox" style="flex: 3;">
+    <div class="vbox overflow-auto" style="flex: 3;">
 
         <div class="card">
             <div class="card-header">
-                <h5 class="m-0">General Metadata</h5>
+                <h5 class="m-0">{{'METADATA.GENERAL_METADATA'|translate}}</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-sm">
                     <colgroup>
                         <col style="width: 1%;">
@@ -14,27 +14,27 @@
                     </colgroup>
                     <tbody>
                         <tr>
-                            <td class="font-weight-bold" nowrap>Title:</td>
+                            <td class="font-weight-bold" nowrap>{{'COMMONS.TITLE'|translate}}:</td>
                             <td>{{datasetMetadata?.title}}</td>
                         </tr>
                         <tr>
-                            <td class="font-weight-bold" nowrap>URI space:</td>
+                            <td class="font-weight-bold" nowrap>{{'DATASETS.ATTR.URI_SPACE'|translate}}:</td>
                             <td>{{datasetMetadata?.uriSpace}}</td>
                         </tr>
                         <tr>
-                            <td class="font-weight-bold" nowrap>Description:</td>
+                            <td class="font-weight-bold" nowrap>{{'COMMONS.DESCRIPTION'|translate}}:</td>
                             <td>{{project.getDescription()}}</td>
                         </tr>
                         <tr>
-                            <td class="font-weight-bold" nowrap>Model:</td>
+                            <td class="font-weight-bold" nowrap>{{'MODELS.PROJECT.MODEL'|translate}}:</td>
                             <td>{{project.getModelType(true)}}</td>
                         </tr>
                         <tr>
-                            <td class="font-weight-bold" nowrap>Lexicalization:</td>
+                            <td class="font-weight-bold" nowrap>{{'MODELS.PROJECT.LEXICALIZATION_MODEL'|translate}}:</td>
                             <td>{{project.getLexicalizationModelType(true)}}</td>
                         </tr>
                         <tr>
-                            <td class="font-weight-bold" nowrap>SPARQL Endpoint:</td>
+                            <td class="font-weight-bold" nowrap>{{'DATASETS.ATTR.SPARQL_ENDPOINT'|translate}}:</td>
                             <td>{{datasetMetadata?.sparqlEndpointMetadata?.id}}</td>
                         </tr>
                     </tbody>
@@ -44,9 +44,9 @@
 
         <div class="card mt-3">
             <div class="card-header">
-                <h5 class="m-0">Facets</h5>
+                <h5 class="m-0">{{'METADATA.FACETS'|translate}}</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-sm">
                     <colgroup>
                         <col style="width: 1%;">
@@ -64,12 +64,12 @@
 
         <div class="card mt-3">
             <div class="card-header d-flex align-items-center">
-                <h5 class="m-0" style="flex: 1;">Distributions</h5>
+                <h5 class="m-0" style="flex: 1;">{{'METADATA.DISTRIBUTIONS.DISTRIBUTIONS'|translate}}</h5>
                 <button *ngIf="isAdmin" class="btn btn-sm btn-light" (click)="createDownload()">
                     <span class="fas fa-plus"></span>
                 </button>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-sm">
                     <colgroup>
                         <col>
@@ -78,12 +78,17 @@
                         <col style="width: 1%;">
                     </colgroup>
                     <thead>
-                        <th>Distribution</th>
-                        <th>Release date</th>
-                        <th>Download</th>
+                        <th>{{'METADATA.DISTRIBUTIONS.DISTRIBUTIONS'|translate}}</th>
+                        <th>{{'METADATA.DISTRIBUTIONS.CREATION_DATE'|translate}}</th>
+                        <th>{{'METADATA.DISTRIBUTIONS.DOWNLOADS'|translate}}</th>
                         <th></th>
                     </thead>
                     <tbody>
+                        <tr *ngIf="downloads.length == 0">
+                            <td colspan="4">
+                                {{'METADATA.DISTRIBUTIONS.NO_DISTRIBUTION_AVAILABLE'|translate}}
+                            </td>
+                        </tr>
                         <tr *ngFor="let d of downloads">
                             <td>
                                 {{d.localizedLabel}}
@@ -109,10 +114,10 @@
         </div>
     </div>
 
-    <div class="card vbox ml-3">
+    <div class="card ml-3">
 
         <div class="card-header">
-            <h5 class="m-0">Stats</h5>
+            <h5 class="m-0">{{'METADATA.STATS'|translate}}</h5>
         </div>
         <div class="card-body vbox">
 

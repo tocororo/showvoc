@@ -196,6 +196,7 @@ export class MetadataComponent implements OnInit {
 
     editLabel(download: DownloadInfo) {
         const modalRef: NgbModalRef = this.modalService.open(LocalizedEditorModal, new ModalOptions('lg'));
+        modalRef.componentInstance.title = this.translate.instant("METADATA.DISTRIBUTIONS.DISTRIBUTION_LABELS");
         modalRef.componentInstance.localizedMap = download.langToLocalizedMap;
         modalRef.result.then(
             (map: LocalizedMap) => {

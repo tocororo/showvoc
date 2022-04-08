@@ -66,7 +66,7 @@ export abstract class AbstractTreeNode extends AbstractNode {
         if (more) { //if the more attribute is true, doesn't implies that the button is visible, the node children could be all deprecated
             if (this.children.length > 0) {
                 let childVisible: boolean = false; //true if showDeprecated true, or child not-deprecated
-                for (var i = 0; i < this.children.length; i++) {
+                for (let i = 0; i < this.children.length; i++) {
                     if (this.showDeprecated || !this.children[i].isDeprecated()) {
                         childVisible = true;
                         break;
@@ -88,19 +88,19 @@ export abstract class AbstractTreeNode extends AbstractNode {
     expandNode(): Observable<void> {
         this.loading = true;
         return this.expandNodeImpl().pipe(
-            finalize(() => this.loading = false),
+            finalize(() => { this.loading = false; }),
             map(children => {
                 this.children = children;
                 this.open = true;
             })
-        )
-    };
+        );
+    }
 
     abstract expandNodeImpl(): Observable<AnnotatedValue<IRI>[]>;
 
     /**
-   	 * Collapse the subtree div.
-   	 */
+           * Collapse the subtree div.
+           */
     collapseNode() {
         this.open = false;
         this.children = [];
@@ -116,7 +116,7 @@ export abstract class AbstractTreeNode extends AbstractNode {
         if (path.length == 0) { //this is the last node of the path. Focus it in the tree
             this.selectNode();
             setTimeout(() => { //give time to update the view (after selectNode the res view could make reduce the size of the tree)
-                this.treeNodeElement.nativeElement.scrollIntoView({block: 'end', behavior: 'smooth'});
+                this.treeNodeElement.nativeElement.scrollIntoView({ block: 'end', behavior: 'smooth' });
             });
         } else {
             if (!this.open) { //if node is close, expand itself
@@ -128,7 +128,7 @@ export abstract class AbstractTreeNode extends AbstractNode {
                                 this.expandChild(path);
                             }
                         );
-                        
+
                     }
                 );
             } else {
@@ -140,15 +140,15 @@ export abstract class AbstractTreeNode extends AbstractNode {
     private expandChild(path: AnnotatedValue<IRI>[]) {
         //If the deprecated nodes are hidden, check if the path pass through a deprecated node not visible
         if (!this.showDeprecated) {
-            for (var i = 0; i < this.children.length; i++) {
+            for (let i = 0; i < this.children.length; i++) {
                 if (this.children[i].getValue().equals(path[0].getValue()) && this.children[i].isDeprecated()) {
-                    this.basicModals.alert({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.RES_NOT_REACHABLE_IN_TREE_THROUGH_DEPRECATED", params: { resource: path[path.length-1].getShow() }}, ModalType.warning);
+                    this.basicModals.alert({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.RES_NOT_REACHABLE_IN_TREE_THROUGH_DEPRECATED", params: { resource: path[path.length - 1].getShow() } }, ModalType.warning);
                     return;
                 }
             }
         }
         let nodeChildren = this.viewChildrenNode.toArray();
-        for (var i = 0; i < nodeChildren.length; i++) {//for every ConceptTreeNodeComponent child
+        for (let i = 0; i < nodeChildren.length; i++) { //for every ConceptTreeNodeComponent child
             if (nodeChildren[i].node.getValue().equals(path[0].getValue())) { //look for the next node of the path
                 //let the child node expand the remaining path
                 path.splice(0, 1);
@@ -158,14 +158,14 @@ export abstract class AbstractTreeNode extends AbstractNode {
         }
         //if this line is reached it means that the first node of the path has not been found
         if (this.context == TreeListContext.dataPanel) {
-            this.basicModals.confirm({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.RES_NOT_REACHABLE_IN_TREE_DIALOG_RES_VIEW_CONFIRM", params: { resource: path[path.length-1].getShow() } }, ModalType.warning).then(
-                confirm => { 
-                    this.sharedModals.openResourceView(path[path.length-1].getValue());
+            this.basicModals.confirm({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.RES_NOT_REACHABLE_IN_TREE_DIALOG_RES_VIEW_CONFIRM", params: { resource: path[path.length - 1].getShow() } }, ModalType.warning).then(
+                confirm => {
+                    this.sharedModals.openResourceView(path[path.length - 1].getValue());
                 },
-                cancel => {}
+                cancel => { }
             );
         } else {
-            this.basicModals.alert({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.RES_NOT_REACHABLE_IN_TREE", params: { resource: path[path.length-1].getShow() } }, ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.RES_NOT_REACHABLE_IN_TREE", params: { resource: path[path.length - 1].getShow() } }, ModalType.warning);
         }
     }
 

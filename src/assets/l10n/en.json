@@ -4,6 +4,7 @@
             "MANAGEMENT": {
                 "CHANGE_STATUS": "Change status",
                 "CLEAR_DATA": "Clear data",
+                "CREATE_DOWNLOAD": "Create distribution download",
                 "CREATE_INDEX": "Create index",
                 "CREATE_REFRESH_INDEX": "Create/refresh index",
                 "CUSTOM_PROJ_FACETS_SCHEMA_SETTINGS": "Custom project facets schema settings",
@@ -137,15 +138,18 @@
             "CHECK": "Check",
             "CHECK_ALL": "Check all",
             "CLOSE": "Close",
+            "COLLAPSE_ALL": "Collapse all",
             "CONFIRM": "Confirm",
             "CREATE": "Create",
             "DELETE": "Delete",
             "EDIT": "Edit",
+            "EXPAND_ALL": "Expand all",
             "LOAD": "Load",
             "REFRESH": "Refresh",
             "REMOVE": "Remove",
             "RESET": "Reset",
             "SEARCH": "Search",
+            "SORT_BY_X": "Sort by",
             "SUBMIT": "Submit",
             "UNCHECK": "Uncheck",
             "UNCHECK_ALL": "Uncheck all",
@@ -175,6 +179,7 @@
         "DETAILS": "Details",
         "DONT_ASK_AGAIN": "Do not ask again",
         "DONT_SHOW_AGAIN": "Do not show again",
+        "FILE_NAME": "File name",
         "FILTER": "Filter",
         "FORMAT": "Format",
         "LANGUAGE": {
@@ -498,6 +503,7 @@
         "DELETE_DATASET_CONFIRM_WARN": "Attention, this operation will delete the dataset. Do you want to continue?",
         "DELETE_USER_CONFIRM_WARN": "Attention, this operation will delete user {{user}}. Do you want to continue?",
         "DIFFERENT_CONFIRM_PASSWORD": "Password and confirmed password are different.",
+        "DOWNLOAD_CREATED": "Distribution download created successfully",
         "DUPLICATED_SERVER_URL_CONFIG": "A configuration for the same server URL already exists",
         "EMAIL_CONFIG_CHANGED": "Email configuration has been changed, you need first to submit the changes.",
         "EMAIL_CONFIG_INFO": "Configuration of the ShowVoc e-mail service. This service will be used to send notifications to the contributors<br><strong>Note</strong>: if this is not properly configured, it will be impossible to send email to contributors, so they will be not able to complete a contribution.",
@@ -560,6 +566,31 @@
         "VB_CONFIG_TEST_SUCCESS": "The configuration has been tested successfully.",
         "X_SEARCH_RESOURCES_FOUND": "{{results}} results found",
         "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "You will soon recieve an email containing details for connecting to the VocBench."
+    },
+    "METADATA": {
+        "DISTRIBUTIONS": {
+            "COMPRESS": "Compress (.zip)",
+            "CREATION_DATE": "Creation date",
+            "DISTRIBUTIONS": "Distributions",
+            "DISTRIBUTION_LABEL": "Distribution label",
+            "DISTRIBUTION_LABELS": "Distribution labels",
+            "DOWNLOADS": "Downloads",
+            "NO_DISTRIBUTION_AVAILABLE": "No distribution available"
+        },
+        "FACETS": "Facets",
+        "GENERAL_METADATA": "General metadata",
+        "LEXICALIZATION_SET": {
+            "AVG_OF_LEXICALIZATIONS": "Avg number of Lexicalizations",
+            "EMBEDDED_LEXICALIZATION_SETS": "Embedded Lexicalization Sets",
+            "LEXICALIZATIONS": "Lexicalizations",
+            "LEXICALIZATION_SET": "Lexicalization Set",
+            "LEXICAL_ASSETS": "Lexical assets",
+            "LEXICAL_ENTRIES": "Lexical Entries",
+            "LEXICON_DATASET": "Lexicon Dataset",
+            "PERCENTAGE": "Percentage",
+            "REFERENCES": "References"
+        },
+        "STATS": "Stats"
     },
     "MODELS": {
         "PROJECT": {

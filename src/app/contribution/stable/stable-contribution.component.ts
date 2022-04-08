@@ -18,7 +18,7 @@ export class StableContributionComponent extends AbstractContributionComponent {
 
     storedConfigurationTypeId: string = ConfigurationComponents.CONTRIBUTION_STORE.CONFIG_IMPL.STABLE;
 
-    
+
 
     resourceName: string;
     homepage: string;
@@ -29,7 +29,7 @@ export class StableContributionComponent extends AbstractContributionComponent {
 
     semanticModels: { uri: string, show: string }[] = [
         { uri: RDFS.uri, show: Project.getPrettyPrintModelType(RDFS.uri) },
-        { uri: OWL.uri, show:  Project.getPrettyPrintModelType(OWL.uri) },
+        { uri: OWL.uri, show: Project.getPrettyPrintModelType(OWL.uri) },
         { uri: SKOS.uri, show: Project.getPrettyPrintModelType(SKOS.uri) },
         { uri: OntoLex.uri, show: Project.getPrettyPrintModelType(OntoLex.uri) }
     ];
@@ -55,19 +55,19 @@ export class StableContributionComponent extends AbstractContributionComponent {
         { uri: null, show: "Unknown" },
         { uri: SemanticTurkey.standardDereferenciation, show: "Yes" },
         { uri: SemanticTurkey.noDereferenciation, show: "No" },
-    ]
+    ];
 
     constructor(private metadataRegistryService: MetadataRegistryServices, private basicModals: BasicModalsServices, private translateService: TranslateService) {
         super();
     }
 
-    ngOnInit() {}
+    ngOnInit() { }
 
     discoverMetadata() {
         this.loadingMetadata = true;
         let baseUriIRI: IRI = new IRI(this.baseURI);
         this.metadataRegistryService.discoverDatasetMetadata(baseUriIRI).pipe(
-            finalize(() => this.loadingMetadata = false)
+            finalize(() => { this.loadingMetadata = false; })
         ).subscribe(
             dataset => {
                 // this.metadataDiscovered = true;
@@ -106,7 +106,7 @@ export class StableContributionComponent extends AbstractContributionComponent {
             missingField = this.translateService.instant("MODELS.PROJECT.LEXICALIZATION");
         }
         if (missingField != null) {
-            this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" }, { key: "MESSAGES.MISSING_MANDATORY_FIELD", params: { missingField: missingField } } , ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" }, { key: "MESSAGES.MISSING_MANDATORY_FIELD", params: { missingField: missingField } }, ModalType.warning);
             return;
         }
         let config: ConfigurationObject = {
@@ -123,7 +123,7 @@ export class StableContributionComponent extends AbstractContributionComponent {
             sparqlEndpoint: this.sparqlEndpoint ? new IRI(this.sparqlEndpoint).toNT() : null,
             sparqlLimitations: this.sparqlNoAggregation ? [new IRI(SemanticTurkey.noAggregation).toNT()] : null,
             uriSpace: this.uriSpace
-        }
+        };
         return config;
     }
 

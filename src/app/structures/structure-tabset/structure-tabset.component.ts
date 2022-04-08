@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalRef, NgbNav } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbNav } from '@ng-bootstrap/ng-bootstrap';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
-import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
+import { CheckOptions, ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { LinksetMetadata } from 'src/app/models/Metadata';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
@@ -107,15 +107,19 @@ export class StructureTabsetComponent implements OnInit {
                 if (hideWarning) {
                     this.sharedModals.openResourceView(resource.getValue());
                 } else {
-                    this.basicModals.alert({ key: "SEARCH.RESOURCE_NOT_REACHABLE" }, { key: "MESSAGES.RESOURCE_NOT_REACHABLE", params: { resource: annotatedIRI.getValue().getIRI() } }, ModalType.warning, null, "Don't show again").then(
-                            (dontShowAgain: boolean) => {
-                                if (dontShowAgain) {
-                                    Cookie.setCookie(Cookie.EXPLORE_HIDE_WARNING_MODAL_RES_VIEW, "true");
-                                }
-                                this.sharedModals.openResourceView(resource.getValue());
-                            },
-                            () => { }
-                        );
+                    let checkOpt: CheckOptions = {
+                        label: { key: "COMMONS.DONT_SHOW_AGAIN" },
+                        value: false
+                    };
+                    this.basicModals.alert({ key: "SEARCH.RESOURCE_NOT_REACHABLE" }, { key: "MESSAGES.RESOURCE_NOT_REACHABLE", params: { resource: annotatedIRI.getValue().getIRI() } }, ModalType.warning, null, checkOpt).then(
+                        (checkOptRes: CheckOptions) => {
+                            if (checkOptRes.value) {
+                                Cookie.setCookie(Cookie.EXPLORE_HIDE_WARNING_MODAL_RES_VIEW, "true");
+                            }
+                            this.sharedModals.openResourceView(resource.getValue());
+                        },
+                        () => { }
+                    );
                 }
             }
         } else { //Bnode
@@ -128,7 +132,7 @@ export class StructureTabsetComponent implements OnInit {
     }
 
     changeRendering() {
-        const modalRef: NgbModalRef = this.modalService.open(RenderingEditorModal, new ModalOptions());
+        this.modalService.open(RenderingEditorModal, new ModalOptions());
     }
 
     isTabVisible(tabRole: string): boolean {
@@ -143,6 +147,6 @@ export class StructureTabsetComponent implements OnInit {
         } else {
             return false;
         }
-    }    
+    }
 
 }

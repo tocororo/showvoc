@@ -5,28 +5,27 @@ import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, from, Observable, Observer } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
-import { ConfirmCheckOptions } from 'src/app/modal-dialogs/basic-modals/confirm-modal/confirm-check-modal';
-import { ModalOptions, ModalType, TextOrTranslation } from 'src/app/modal-dialogs/Modals';
+import { CheckOptions, ModalOptions, ModalType, TextOrTranslation } from 'src/app/modal-dialogs/Modals';
 import { PluginSettingsHandler } from 'src/app/modal-dialogs/shared-modals/plugin-configuration/plugin-configuration-modal';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { Settings } from 'src/app/models/Plugins';
-import { ShowVocConstants } from 'src/app/models/ShowVoc';
 import { AccessLevel, ExceptionDAO, Project, RemoteRepositorySummary, RepositorySummary } from 'src/app/models/Project';
+import { ShowVocConstants } from 'src/app/models/ShowVoc';
 import { GlobalSearchServices } from 'src/app/services/global-search.service';
+import { InputOutputServices } from 'src/app/services/input-output.service';
 import { MapleServices } from 'src/app/services/maple.service';
-import { ShowVocServices } from 'src/app/services/showvoc.service';
 import { ProjectsServices } from 'src/app/services/projects.service';
 import { RepositoriesServices } from 'src/app/services/repositories.service';
+import { ShowVocServices } from 'src/app/services/showvoc.service';
 import { SVContext } from 'src/app/utils/SVContext';
 import { SVEventHandler } from 'src/app/utils/SVEventHandler';
+import { CreateDownloadModal } from './create-download-modal';
 import { CreateProjectModal } from './create-project-modal';
 import { LoadDataModal } from './load-data-modal';
 import { ProjectSettingsModal } from './project-settings-modal';
 import { DeleteRemoteRepoModal } from './remote-repositories/delete-remote-repo-modal';
 import { DeleteRemoteRepoReportModal } from './remote-repositories/delete-remote-repo-report-modal';
-import { InputOutputServices } from 'src/app/services/input-output.service';
 import { RemoteRepoEditorModal } from './remote-repositories/remote-repo-editor-modal';
-import { CreateDownloadModal } from './create-download-modal';
 
 @Component({
     selector: 'projects-manager',
@@ -292,7 +291,7 @@ export class ProjectsManagerComponent {
 
     changeProjectStatus(project: Project, role: string) {
         let confirmationMsg: TextOrTranslation;
-        let confirmActionOpt: ConfirmCheckOptions[] = [];
+        let confirmActionOpt: CheckOptions[] = [];
         let createIndexLabel: string = this.translateService.instant("ADMINISTRATION.DATASETS.MANAGEMENT.CREATE_INDEX");
         let deleteIndexLabel: string = this.translateService.instant("ADMINISTRATION.DATASETS.MANAGEMENT.DELETE_INDEX");
         let createMetadataLabel: string = this.translateService.instant("DATASETS.ACTIONS.CREATE_METADATA");
@@ -318,7 +317,7 @@ export class ProjectsManagerComponent {
             });
         }
         this.basicModals.confirmCheck({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.CHANGE_STATUS" }, confirmationMsg, confirmActionOpt, ModalType.warning).then(
-            (checkboxOpts: ConfirmCheckOptions[]) => {
+            (checkboxOpts: CheckOptions[]) => {
                 this.svService.setProjectStatus(project.getName(), role).subscribe(
                     () => {
                         this.eventHandler.projectUpdatedEvent.emit();

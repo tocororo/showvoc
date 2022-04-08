@@ -1,6 +1,6 @@
 <div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
     <div class="modal-header" cdkDragHandle>
-        <h5 class="modal-title">Distribution Labels</h5>
+        <h5 class="modal-title">{{title}}</h5>
         <button class="close" (click)="close()">
             <span>&times;</span>
         </button>
@@ -11,7 +11,7 @@
             <div class="card-body">
                 <table class="table table-sm table-borderless">
                     <colgroup>
-                        <col style="width: 150px">
+                        <col style="width: 200px">
                         <col>
                         <col style="width: 1%">
                         <col style="width: 1%">
