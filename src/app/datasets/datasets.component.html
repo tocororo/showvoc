@@ -39,24 +39,29 @@
             <div class="card-body scrollableContainer">
                 <div *ngIf="loading" class="spinner-border text-info"></div>
                 <ng-container *ngIf="!loading">
-                    <div *ngFor="let p of projects" class="card mb-1">
+                    <div *ngFor="let d of datasets" class="card mb-1">
                         <div class="card-body">
                             <h5 class="card-title mb-1">
-                                <p *ngIf="!p.isOpen()" class="text-muted">{{p.getName()}}</p>
-                                <a *ngIf="p.isOpen()" [routerLink]="" (click)="goToProject(p)">{{p.getName()}}</a>
+                                <ng-container *ngIf="d.project.isOpen() && d.accessible; then accessibleDatasetBlock; else notAccessibleDatasetBlock"></ng-container>
+                                <ng-template #accessibleDatasetBlock>
+                                    <a [routerLink]="" (click)="goToProject(d.project)">{{d.project.getName()}}</a>
+                                </ng-template>
+                                <ng-template #notAccessibleDatasetBlock>
+                                    <p class="text-muted">{{d.project.getName()}}</p>
+                                </ng-template>
                             </h5>
                             <div class="p-1 border-left border-bottom" style="position: absolute; top: 0; right: 0; border-bottom-left-radius: 5px">
                                 <span class="mr-2">
-                                    <span class="mr-1">{{'MODELS.PROJECT.MODEL'|translate}}:</span><span class="badge badge-info">{{p.getModelType(true)}}</span>
+                                    <span class="mr-1">{{'MODELS.PROJECT.MODEL'|translate}}:</span><span class="badge badge-info">{{d.project.getModelType(true)}}</span>
                                 </span>
                                 <span>
-                                    <span class="mr-1">{{'MODELS.PROJECT.LEXICALIZATION'|translate}}:</span><span class="badge badge-info">{{p.getLexicalizationModelType(true)}}</span>
+                                    <span class="mr-1">{{'MODELS.PROJECT.LEXICALIZATION'|translate}}:</span><span class="badge badge-info">{{d.project.getLexicalizationModelType(true)}}</span>
                                 </span>
                             </div>
 
-                            <p class="card-text text-secondary mb-2" style="font-size: 13px;">{{p.getBaseURI()}}</p>
+                            <p class="card-text text-secondary mb-2" style="font-size: 13px;">{{d.project.getBaseURI()}}</p>
 
-                            <p class="card-text text-dark">{{p.getDescription()}}</p>
+                            <p class="card-text text-dark">{{d.project.getDescription()}}</p>
                         </div>
                     </div>
                 </ng-container>

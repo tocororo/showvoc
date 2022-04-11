@@ -28,6 +28,7 @@ import { SettingsServices } from './settings.service';
 import { ShowVocServices } from './showvoc.service';
 import { SkosServices } from './skos.service';
 import { SparqlServices } from './sparql.service';
+import { StorageServices } from './storage.service';
 import { UserServices } from './user.service';
 
 @NgModule({
@@ -63,6 +64,7 @@ import { UserServices } from './user.service';
         SkosServices,
         SparqlServices,
         StMetadataRegistry,
+        StorageServices,
         UserServices
     ]
 })

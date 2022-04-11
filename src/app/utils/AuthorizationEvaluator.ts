@@ -5,10 +5,11 @@ import { SVContext } from './SVContext';
 
 export enum STActionsEnum {
     //Download
-    downloadCreateDownload = "downloadCreateDownload",
     downloadGenericAction = "downloadGenericAction",
     //Projects
     projectSetProjectFacets = "projectSetProjectFacets",
+    //Storage
+    storageGenericAction = "storageGenericAction",
 }
 
 export class AuthorizationEvaluator {
@@ -20,6 +21,7 @@ export class AuthorizationEvaluator {
     public static actionAuthGoalMap: { [key: string]: string } = {
         [STActionsEnum.downloadGenericAction]: 'auth(pm(project,downloads), "CRUD").',
         [STActionsEnum.projectSetProjectFacets]: 'auth(pm(project), "U").',
+        [STActionsEnum.storageGenericAction]: 'auth(pm(project), "CRUD").',
     };
 
     public static initEvalutator(capabilityList: string[]) {

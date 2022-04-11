@@ -6,7 +6,7 @@ import { User } from '../models/User';
 export class SVContext {
 
     private static workingProjectCtx: ProjectContext;
-    private static projectChanged: boolean;
+    private static resetRoutes: boolean;
     private static tempProject: Project; //project that could be temporarly set in order to execute request within its context 
         //(and there is no need to init preferences and to set a consumer)
 
@@ -48,13 +48,13 @@ export class SVContext {
     }
 
     /**
-     * When project changes set a flag in the context, so the CustomReuseStrategy knows if to reattach or reload a route
+     * Set the flag for informing CustomReuseStrategy if to reattach or reload a route
      */
-    static setProjectChanged(changed: boolean) {
-        this.projectChanged = changed;
+    static setResetRoutes(reset: boolean) {
+        this.resetRoutes = reset;
     }
-    static isProjectChanged() {
-        return this.projectChanged;
+    static isResetRoutes(): boolean {
+        return this.resetRoutes;
     }
 
 

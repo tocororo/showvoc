@@ -142,6 +142,7 @@
             "CONFIRM": "Confirm",
             "CREATE": "Create",
             "DELETE": "Delete",
+            "DOWNLOAD": "Download",
             "EDIT": "Edit",
             "EXPAND_ALL": "Expand all",
             "LOAD": "Load",
@@ -153,7 +154,8 @@
             "SUBMIT": "Submit",
             "UNCHECK": "Uncheck",
             "UNCHECK_ALL": "Uncheck all",
-            "UPDATE": "Update"
+            "UPDATE": "Update",
+            "UPLOAD_FILE": "Upload file"
         },
         "BOOLEAN": {
             "FALSE": "False",
@@ -179,6 +181,7 @@
         "DETAILS": "Details",
         "DONT_ASK_AGAIN": "Do not ask again",
         "DONT_SHOW_AGAIN": "Do not show again",
+        "FILE": "File",
         "FILE_NAME": "File name",
         "FILTER": "Filter",
         "FORMAT": "Format",
@@ -555,7 +558,7 @@
         "SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO": "The system has not been configured in order to create a remote repository. Please provide a configuration to a remote triple store from the administrator dashboard.",
         "SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION": "The system has not been configured in order to connect with a remote VocBench instance. Please provide a configuration from the administrator dashboard.",
         "TOO_MUCH_LINKSETS_FILTER": "The expanded dataset has an high number of linksets ({{linksetCount}}). A performance decrease could be experienced with a growing amount of visual elements in the graph. You can filter only those linksets containing at least a given amount of links",
-        "UNEXISTING_OR_CLOSED_DATASET": "The requested dateset (id: '{{datasetId}}') does not exist or is not open. You will be redirect to the home page.",
+        "UNEXISTING_OR_INACCESSIBLE_DATASET": "The requested dateset (id: '{{datasetId}}') does not exist or is not accessible. You will be redirect to the home page.",
         "UNEXISTING_URI_IN_PROJECT": "Wrong URI: no resource with URI {{resUri}} exists in the current project",
         "UPDATE_QUERY_NOT_ALLOWED": "Update query not allowed",
         "VALUE_EMPTY_OR_INVALID": "The inserted value is empty or not valid. Please check and retry.",

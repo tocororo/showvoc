@@ -526,7 +526,7 @@
         "SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO": "Das System wurde nicht so konfiguriert, dass ein externes Repository erstellt werden kann. Bitte erstellen Sie über das Administrator-Dashboard eine Konfiguration für einen externen Triplestore.",
         "SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION": "Das System wurde nicht so konfiguriert, dass es sich mit einer externen VocBench-Instanz verbinden kann. Bitte erstellen Sie eine Konfiguration über das Administrator-Dashboard.",
         "TOO_MUCH_LINKSETS_FILTER": "Der erweiterte Datensatz hat eine hohe Anzahl von Linksets ({{linksetCount}}). Mit einer wachsenden Anzahl visueller Elemente im Diagramm kann es zu einem Leistungsabfall kommen. Sie können nur die Linksets filtern, die mindestens eine bestimmte Anzahl von Links enthalten",
-        "UNEXISTING_OR_CLOSED_DATASET": "Der angeforderte Datensatz (id: '{{datasetId}}') existiert nicht oder ist nicht geöffnet. Sie werden auf die Startseite weitergeleitet.",
+        "UNEXISTING_OR_INACCESSIBLE_DATASET": "Der angeforderte Datensatz (id: '{{datasetId}}') existiert nicht oder ist nicht geöffnet. Sie werden auf die Startseite weitergeleitet.",
         "UNEXISTING_URI_IN_PROJECT": "Falscher URI: Im aktuellen Projekt existiert keine Ressource mit URI {{resUri}} ",
         "UPDATE_QUERY_NOT_ALLOWED": "Update-Operation nicht erlaubt",
         "VALUE_EMPTY_OR_INVALID": "Der eingefügte Wert ist leer oder ungültig. Bitte überprüfen und noch einmal versuchen.",

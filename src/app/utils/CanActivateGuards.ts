@@ -137,7 +137,7 @@ export class ProjectGuard implements CanActivate {
                     } else { //the context project was not initialized, or it was not the project passed via url param 
 
                         //the project was changed, so set the flag in the context, so the CustomReuseStrategy knows if to reattach or reload a route
-                        SVContext.setProjectChanged(true);
+                        SVContext.setResetRoutes(true);
 
                         return this.projectService.listProjects(null, true, true).pipe( //retrieve project with a service invocation
                             mergeMap(projects => {
@@ -154,7 +154,7 @@ export class ProjectGuard implements CanActivate {
                                         map(() => true)
                                     );
                                 } else { //project not found, redirect to home
-                                    this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_NOT_FOUND" }, { key: "MESSAGES.UNEXISTING_OR_CLOSED_DATASET", params: { datasetId: paramProject } }, ModalType.warning).then(
+                                    this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_NOT_FOUND" }, { key: "MESSAGES.UNEXISTING_OR_INACCESSIBLE_DATASET", params: { datasetId: paramProject } }, ModalType.warning).then(
                                         () => {
                                             /* queryParamsHandling doesn't work in canActivate (https://stackoverflow.com/a/45843291/5805661)
                                             in order to preserve query params I need to set them manually */

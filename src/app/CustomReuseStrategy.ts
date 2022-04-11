@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle, OutletContext } from '@angular/router';
 import { SVContext } from './utils/SVContext';
 import { ComponentRef } from '@angular/core';
@@ -44,28 +45,27 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
 
     private log: boolean = false; //set to true in order to read prints in the browser logger
 
-    private stickyRoutes: string[] = ["search", "datasets", "datasets/:id", "data", "sparql"]
-    private projectDependantRoutes: string[] = ["datasets/:id", "data", "sparql", "metadata"];
+    private stickyRoutes: string[] = ["search", "datasets", "datasets/:id", "data", "sparql", "metadata"];
 
-	/** 
+    /** 
      * Object which will store DetachedRouteHandle indexed by keys
      * The keys will all be a path (as in route.routeConfig.path)
      * This allows us to see if we've got a route stored for the requested path
      */
-	storedRoutes: { [key: string]: DetachedRouteHandle } = {};
+    storedRoutes: { [key: string]: DetachedRouteHandle } = {};
 
-	/**
+    /**
      * Determines if this route (and its subtree) should be detached to be reused later.
-     * @param is the route that is going to leave
+     * @param route is the route that is going to leave
      * @returns true if the route should be stored via store(), 
      *  false otherwise (the route is lost/destroyed and then, when requested again, the route (and its subtree) is reinitialized)
      */
     shouldDetach(route: ActivatedRouteSnapshot): boolean {
         if (this.log) console.log('CustomReuseStrategy.shouldDetach', route.routeConfig.path, (this.stickyRoutes.indexOf(route.routeConfig.path) != -1));
         return this.stickyRoutes.indexOf(route.routeConfig.path) != -1;
-	}
-	
-	/**
+    }
+
+    /**
      * Stores the detached route.
      * This method is called only if shouldDetach return true.
      * Add the handle of the route to the storedRoutes map.
@@ -73,9 +73,9 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
         if (this.log) console.log('CustomReuseStrategy.store', route.routeConfig.path);
         this.storedRoutes[route.routeConfig.path] = handle;
-	}
-	
-	/**
+    }
+
+    /**
      * Determines if this route (and its subtree) should be reattached
      * @returns true if it should reattach a route previously stored.
      */
@@ -83,9 +83,9 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
         if (this.log) console.log('CustomReuseStrategy.shouldAttach', route.routeConfig.path, (!!route.routeConfig && !!this.storedRoutes[route.routeConfig.path]));
         //true if there is a route stored
         return !!route.routeConfig && !!this.storedRoutes[route.routeConfig.path];
-	}
-	
-	/** 
+    }
+
+    /** 
      * Retrieves the previously stored route
      * @param route New route the user has requested
      * @returns DetachedRouteHandle object which can be used to render the component
@@ -97,26 +97,22 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
             return null;
         }
         /**
-         * if the route to retireve is a sticky one
-         * - if the project was changed and the route to retrieve is project-dependant, do not retrieve the route and destroy it.
-         * - otherwise returns the stored route
+         * if the route to retireve is a sticky one and the project was changed, 
+         * do not retrieve the route and destroy it, otherwise returns the stored route
          */
-        if (this.stickyRoutes.indexOf(route.routeConfig.path) != -1 && SVContext.isProjectChanged()) {
-            SVContext.setProjectChanged(false); //reset projectChanged
-            //destroy the routes project-dependant
-            this.projectDependantRoutes.forEach(projDependantRoute => {
-                this.destroyRouteHandle(projDependantRoute);
-            })
-            //return null, so a new route it will be created
+        if (this.stickyRoutes.indexOf(route.routeConfig.path) != -1 && SVContext.isResetRoutes()) {
+            SVContext.setResetRoutes(false); //reset projectChanged
+            this.destroyStoredRoutes();
+            //return null, so a new route will be created
             if (this.log) console.log('CustomReuseStrategy.retrieve', route.routeConfig.path, 'null');
             return null;
         }
         // returns handle when the route.routeConfig.path is already stored
         if (this.log) console.log('CustomReuseStrategy.retrieve', route.routeConfig.path, (!!route.routeConfig && !!this.storedRoutes[route.routeConfig.path]));
         return this.storedRoutes[route.routeConfig.path];
-	}
-	
-	/** 
+    }
+
+    /** 
      * Determines whether or not the current route should be reused.
      * In case it returns false (the routing should happen), the rest of the methods are called
      * @param future The route the user is going to, as triggered by the router
@@ -127,8 +123,13 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
         if (this.log) console.log('CustomReuseStrategy.shouldReuseRoute', (future.routeConfig === curr.routeConfig));
         return future.routeConfig === curr.routeConfig;
     }
-    
-    
+
+    private destroyStoredRoutes(): void {
+        for (let routePath in this.storedRoutes) {
+            this.destroyRouteHandle(routePath);
+        }
+    }
+
     /**
      * destroy the previously stored Component of the given route and remove the related DetachedRouteHandle from the storedRoutes map
      * @param routePath 

@@ -142,6 +142,7 @@
             "CONFIRM": "Conferma",
             "CREATE": "Crea",
             "DELETE": "Elimina",
+            "DOWNLOAD": "Scarica",
             "EDIT": "Modifica",
             "EXPAND_ALL": "Espandi tutto",
             "LOAD": "Carica",
@@ -153,7 +154,8 @@
             "SUBMIT": "Invia",
             "UNCHECK": "Deseleziona",
             "UNCHECK_ALL": "Deseleziona tutto",
-            "UPDATE": "Aggiorna"
+            "UPDATE": "Aggiorna",
+            "UPLOAD_FILE": "Carica file"
         },
         "BOOLEAN": {
             "FALSE": "Falso",
@@ -179,6 +181,7 @@
         "DETAILS": "Dettagli",
         "DONT_ASK_AGAIN": "Non chiedere più",
         "DONT_SHOW_AGAIN": "Non mostrare più",
+        "FILE": "File",
         "FILE_NAME": "Nome file",
         "FILTER": "Filtro",
         "FORMAT": "Formato",
@@ -555,7 +558,7 @@
         "SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO": "Il sistema non è stato configurato per creare un repository remoto. Si prega di fornire una configurazione di un triple store remoto tramite la dashboard di amministrazione.",
         "SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION": "Il sistema non è stato configurato per connettersi con un'istanza remota di VocBench. Si prega di fornire una configurazione tramite la dashboard di amministrazione.",
         "TOO_MUCH_LINKSETS_FILTER": "Il dataset che stai espandendo ha una grande quantità di linkset ({{linksetCount}}). Si potrebbero riscontrare rallentamenti delle prestazioni al crescere degli elementi visualizzati nel grafo. Puoi far sì che vengano visualizzati solo i linkset contenenti almeno un numero minimo di link",
-        "UNEXISTING_OR_CLOSED_DATASET": "Il dateset richiesto (id: '{{datasetId}}') non esiste o non è aperto. Verrai rimandato alla home page.",
+        "UNEXISTING_OR_INACCESSIBLE_DATASET": "Il dateset richiesto (id: '{{datasetId}}') non esiste o non è accessibile. Verrai rimandato alla home page.",
         "UNEXISTING_URI_IN_PROJECT": "URI sbagliato: non esiste alcuna risorsa con URI {{resUri}} nel progetto corrente",
         "UPDATE_QUERY_NOT_ALLOWED": "Query update non censentite",
         "VALUE_EMPTY_OR_INVALID": "Il valore inserito è vuoto o non valido. Verificare e riprovare.",

@@ -526,7 +526,7 @@
         "SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO": "Le système n'a pas été configuré pour créer un entrepôt distant. Veuillez fournir une configuration vers un triple store distant depuis le tableau de bord d'administration.",
         "SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION": "Le système n'a pas été configuré pour se connecter à une instance VocBench distante. Veuillez fournir une configuration depuis le tableau de bord d'administration",
         "TOO_MUCH_LINKSETS_FILTER": "Le jeu de données que vous voulez développer possède un grand nombre de jeux de liens ({{linksetCount}}). Une baisse des performances peut être constatée lorsque le nombre d'éléments visuels du graphe augmente. Vous pouvez filtrer pour n'afficher que les jeux de liens contenant un nombre minimum de liens",
-        "UNEXISTING_OR_CLOSED_DATASET": "Le jeu de données demandé (id : '{{datasetId}}') n'existe pas ou n'est pas ouvert. Vous allez être redirigé vers la page d'accueil.",
+        "UNEXISTING_OR_INACCESSIBLE_DATASET": "Le jeu de données demandé (id : '{{datasetId}}') n'existe pas ou n'est pas ouvert. Vous allez être redirigé vers la page d'accueil.",
         "UNEXISTING_URI_IN_PROJECT": "URI erroné : aucune ressource d'URI {{resUri}} n'existe dans le projet courant",
         "UPDATE_QUERY_NOT_ALLOWED": "La mise à jour de la requête n'est pas autorisée",
         "VALUE_EMPTY_OR_INVALID": "La valeur saisie est vide ou non valide. Veuillez vérifier et réessayer.",

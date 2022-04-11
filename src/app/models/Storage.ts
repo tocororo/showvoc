@@ -1,6 +1,7 @@
 export interface DirectoryEntryInfo {
     type: EntryType;
     name: string;
+    creationTimestamp: number;
 }
 
 export enum EntryType {

@@ -526,7 +526,7 @@
         "SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO": "El sistema no se ha configurado para crear un repositorio remoto. Proporcione una configuración de triple tienda remota a través del panel de administración.",
         "SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION": "El sistema no se ha configurado para conectarse con una instancia remota de VocBench. Proporcione una configuración a través del panel de administración.",
         "TOO_MUCH_LINKSETS_FILTER": "El conjunto de datos que está expandiendo tiene una gran cantidad de conjuntos de vínculos ({{linksetCount}}). Es posible que experimente un rendimiento lento a medida que crecen los elementos que se muestran en el grafo. Puede asegurarse de que solo los vínculos que contengan al menos uno sean mostrado. número mínimo de enlaces ",
-        "UNEXISTING_OR_CLOSED_DATASET": "El conjunto de fechas solicitado (id: '{{datasetId}}') no existe o no está abierto. Serás redirigido a la página de inicio.",
+        "UNEXISTING_OR_INACCESSIBLE_DATASET": "El conjunto de fechas solicitado (id: '{{datasetId}}') no existe o no está abierto. Serás redirigido a la página de inicio.",
         "UNEXISTING_URI_IN_PROJECT": "URI incorrecto: no hay recurso con URI {{resUri}} en el proyecto actual",
         "UPDATE_QUERY_NOT_ALLOWED": "Actualizaciones de consultas sin censura",
         "VALUE_EMPTY_OR_INVALID": "El valor ingresado está vacío o no es válido. Verifique y vuelva a intentarlo",

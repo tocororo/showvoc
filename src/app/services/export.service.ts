@@ -37,13 +37,11 @@ export class ExportServices {
                     formats.push(RDFFormat.parse(formatJson));
                 }
                 //sort by name
-                formats.sort(
-                    function (a: RDFFormat, b: RDFFormat) {
-                        if (a.name < b.name) return -1;
-                        if (a.name > b.name) return 1;
-                        return 0;
-                    }
-                );
+                formats.sort((a: RDFFormat, b: RDFFormat) => {
+                    if (a.name < b.name) return -1;
+                    if (a.name > b.name) return 1;
+                    return 0;
+                });
                 return formats;
             })
         );
@@ -64,13 +62,11 @@ export class ExportServices {
                     formats.push(DataFormat.parse(f));
                 }
                 //sort by name
-                formats.sort(
-                    function (a: DataFormat, b: DataFormat) {
-                        if (a.name < b.name) return -1;
-                        if (a.name > b.name) return 1;
-                        return 0;
-                    }
-                );
+                formats.sort((a: DataFormat, b: DataFormat) => {
+                    if (a.name < b.name) return -1;
+                    if (a.name > b.name) return 1;
+                    return 0;
+                });
                 return formats;
             })
         );

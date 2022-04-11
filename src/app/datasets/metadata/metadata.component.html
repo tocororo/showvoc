@@ -68,9 +68,20 @@
             <div class="card mt-3">
                 <div class="card-header d-flex align-items-center">
                     <h5 class="m-0" style="flex: 1;">{{'METADATA.DISTRIBUTIONS.DISTRIBUTIONS'|translate}}</h5>
-                    <button *ngIf="isUpdateDownloadsAuthorized" class="btn btn-sm btn-light" (click)="createDownload()">
-                        <span class="fas fa-plus"></span>
-                    </button>
+
+                    <div *ngIf="isUpdateDownloadsAuthorized" class="btn-group btn-group-sm" ngbDropdown container="body" display="dynamic">
+                        <button class="btn btn-light dropdown-toggle dropdown-no-arrow" data-toggle="dropdown" ngbDropdownToggle>
+                            <span class="fas fa-plus"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-sm" ngbDropdownMenu>
+                            <button class="dropdown-item" (click)="createDistribution()">
+                                {{'ADMINISTRATION.DATASETS.MANAGEMENT.CREATE_DOWNLOAD'|translate}}
+                            </button>
+                            <button class="dropdown-item" (click)="uploadFile()">
+                                {{'COMMONS.ACTIONS.UPLOAD_FILE'|translate}}
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body overflow-auto">
                     <table class="table table-sm">
@@ -81,21 +92,21 @@
                             <col style="width: 1%;">
                         </colgroup>
                         <thead>
-                            <th>{{'METADATA.DISTRIBUTIONS.DISTRIBUTIONS'|translate}}</th>
-                            <th>{{'METADATA.DISTRIBUTIONS.CREATION_DATE'|translate}}</th>
-                            <th>{{'METADATA.DISTRIBUTIONS.DOWNLOADS'|translate}}</th>
-                            <th></th>
+                            <th class="border-top-0">{{'METADATA.DISTRIBUTIONS.DISTRIBUTIONS'|translate}}</th>
+                            <th class="border-top-0">{{'METADATA.DISTRIBUTIONS.CREATION_DATE'|translate}}</th>
+                            <th class="border-top-0">{{'METADATA.DISTRIBUTIONS.DOWNLOADS'|translate}}</th>
+                            <th class="border-top-0"></th>
                         </thead>
                         <tbody>
-                            <tr *ngIf="downloads.length == 0">
+                            <tr *ngIf="distributions.length == 0 && files.length == 0">
                                 <td colspan="4">
                                     {{'METADATA.DISTRIBUTIONS.NO_DISTRIBUTION_AVAILABLE'|translate}}
                                 </td>
                             </tr>
-                            <tr *ngFor="let d of downloads">
+                            <tr *ngFor="let d of distributions">
                                 <td>
                                     {{d.localizedLabel}}
-                                    <button *ngIf="isUpdateDownloadsAuthorized" class="btn btn-xs btn-light" (click)="editLabel(d)">
+                                    <button *ngIf="isUpdateDownloadsAuthorized" class="btn btn-xs btn-light" (click)="editDistributionLabels(d)">
                                         <span class="fas fa-pencil-alt"></span>
                                     </button>
                                 </td>
@@ -105,7 +116,23 @@
                                 </td>
                                 <td>
                                     <div *ngIf="isUpdateDownloadsAuthorized" class="btn-toolbar">
-                                        <button class="btn btn-sm btn-light" (click)="deleteDownload(d)">
+                                        <button class="btn btn-sm btn-light" (click)="deleteDistribution(d)">
+                                            <span class="fas fa-trash"></span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let f of files">
+                                <td>
+                                    {{f.name}}
+                                </td>
+                                <td [title]="f.date" nowrap>{{f.dateLocal}}</td>
+                                <td [title]="f.name">
+                                    <a href="javascript:void(0)" (click)="downloadFile(f)">{{'COMMONS.ACTIONS.DOWNLOAD'|translate}}</a>
+                                </td>
+                                <td>
+                                    <div *ngIf="isUpdateDownloadsAuthorized" class="btn-toolbar">
+                                        <button class="btn btn-sm btn-light" (click)="deleteFile(f)">
                                             <span class="fas fa-trash"></span>
                                         </button>
                                     </div>

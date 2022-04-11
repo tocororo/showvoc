@@ -27,7 +27,7 @@ export class ContributionsManagerComponent {
     contributions: StoredContribution[];
 
     constructor(private svService: ShowVocServices, private configurationServices: ConfigurationsServices,
-        private basicModals: BasicModalsServices, private modalService: NgbModal) {}
+        private basicModals: BasicModalsServices, private modalService: NgbModal) { }
 
     ngOnInit() {
         this.initContributions();
@@ -56,18 +56,18 @@ export class ContributionsManagerComponent {
                                 this.contributions.push(contribution);
                             })
                         )
-                    )
+                    );
                 });
                 this.contributions = [];
                 forkJoin(getConfigFn).pipe(
-                    finalize(() => this.loading = false)
+                    finalize(() => { this.loading = false; })
                 ).subscribe(
                     () => {
                         this.contributions.sort((c1: StoredContribution, c2: StoredContribution) => {
-                            return c1['timestamp']-c2['timestamp'];
-                        })
+                            return c1['timestamp'] - c2['timestamp'];
+                        });
                     }
-                )
+                );
             }
         );
     }
@@ -167,7 +167,7 @@ export class ContributionsManagerComponent {
                 () => { //modal closed via "OK" button => contribution approved and removed => remove the contribution
                     this.contributions.splice(this.contributions.indexOf(contribution), 1);
                 },
-                () => {}
+                () => { }
             );
         } else if (contribution instanceof DevResourceStoredContribution) {
             let _options: ModalOptions = new ModalOptions("lg");
@@ -178,24 +178,24 @@ export class ContributionsManagerComponent {
                 () => { //modal closed via "OK" button => contribution approved and removed => remove the contribution
                     this.contributions.splice(this.contributions.indexOf(contribution), 1);
                 },
-                () => {}
+                () => { }
             );
         } else if (contribution instanceof MetadataStoredContribution) {
             this.basicModals.confirm({ key: "CONTRIBUTIONS.ACTIONS.APPROVE_CONTRIBUTION" }, { key: "MESSAGES.ACCEPT_METADATA_CONTRIBUTION_CONFIRM" }, ModalType.warning).then(
                 () => {
                     contribution['loading'] = true;
                     this.svService.approveMetadataContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).pipe(
-                        finalize(() => contribution['loading'] = false)
+                        finalize(() => { contribution['loading'] = false; })
                     ).subscribe(
                         () => {
                             this.contributions.splice(this.contributions.indexOf(contribution), 1);
                         }
-                    )
+                    );
                 },
-                () => {}
+                () => { }
             );
         }
-        
+
     }
 
     rejectContribution(contribution: StoredContribution) {
@@ -203,14 +203,14 @@ export class ContributionsManagerComponent {
             () => {
                 contribution['loading'] = true;
                 this.svService.rejectContribution(contribution[StoredContribution.RELATIVE_REFERENCE]).pipe(
-                    finalize(() => contribution['loading'] = false)
+                    finalize(() => { contribution['loading'] = false; })
                 ).subscribe(
                     () => {
                         this.contributions.splice(this.contributions.indexOf(contribution), 1);
                     }
                 );
             },
-            () => {}
+            () => { }
         );
     }
 
