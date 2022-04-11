@@ -55,7 +55,7 @@ export class AlignmentGraphComponent extends AbstractGraph {
                 }
                 node.open = true;
             }
-        )
+        );
     }
 
     private getLinksets(node: Node, treshold?: number): Observable<LinksetMetadata[]> {
@@ -63,14 +63,14 @@ export class AlignmentGraphComponent extends AbstractGraph {
             mergeMap(linksets => {
                 if (linksets.length > this.linkLimit) {
                     return from(
-                        this.basicModals.promptNumber({ key: "GRAPHS.ACTIONS.EXPAND_LINKSET" }, 
+                        this.basicModals.promptNumber({ key: "GRAPHS.ACTIONS.EXPAND_LINKSET" },
                             { key: "MESSAGES.TOO_MUCH_LINKSETS_FILTER", params: { linksetCount: linksets.length } },
                             treshold, 0, null, 1, ModalType.warning)
                     ).pipe(
                         mergeMap(treshold => {
                             return this.getLinksets(node, treshold);
                         })
-                    )
+                    );
                 } else {
                     return of(linksets);
                 }
@@ -155,7 +155,7 @@ export class AlignmentGraphComponent extends AbstractGraph {
                     this.graph.removeNode(targetNode); //remove the node from the graph
                     recursivelyClosingNodes.push(targetNode); //add to the list of nodes to recursively close
                 }
-            })
+            });
             //call recursively the deletion of the subtree for the deleted node)
             recursivelyClosingNodes.forEach(n => {
                 this.deleteSubtree(n);
@@ -182,7 +182,7 @@ export class AlignmentGraphComponent extends AbstractGraph {
             if (l.source.res.getValue().equals(source) && l.target.res.getValue().equals(target)) {
                 return l;
             }
-        };
+        }
         return null;
     }
 

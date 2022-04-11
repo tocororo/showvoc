@@ -32,7 +32,7 @@ export class MetadataContributionComponent extends AbstractContributionComponent
         { uri: null, show: "Unknown" },
         { uri: SemanticTurkey.standardDereferenciation, show: "Yes" },
         { uri: SemanticTurkey.noDereferenciation, show: "No" },
-    ]
+    ];
 
     constructor(private metadataRegistryService: MetadataRegistryServices, private basicModals: BasicModalsServices, private translateService: TranslateService) {
         super();
@@ -43,7 +43,7 @@ export class MetadataContributionComponent extends AbstractContributionComponent
 
         let baseUriIRI: IRI = new IRI(this.baseURI);
         this.metadataRegistryService.discoverDatasetMetadata(baseUriIRI).pipe(
-            finalize(() => this.loading = false)
+            finalize(() => { this.loading = false; })
         ).subscribe(
             dataset => {
                 this.resourceName = dataset.title;
@@ -58,7 +58,7 @@ export class MetadataContributionComponent extends AbstractContributionComponent
             (err: Error) => {
                 //in case discoverDataset throws an exception prevent to contribute metadata
                 if (err.name.endsWith("DeniedOperationException")) {
-                    this.basicModals.alert({ key: "DATASETS.STATUS.ALREADY_EXISTING_DATASET" }, {key:"MESSAGES.DATASET_ALREADY_IN_METADATA_REGISTRY"}, ModalType.warning);
+                    this.basicModals.alert({ key: "DATASETS.STATUS.ALREADY_EXISTING_DATASET" }, { key: "MESSAGES.DATASET_ALREADY_IN_METADATA_REGISTRY" }, ModalType.warning);
                 }
             }
         );
@@ -66,10 +66,10 @@ export class MetadataContributionComponent extends AbstractContributionComponent
 
     getConfigurationImpl(): ConfigurationObject {
         if (this.resourceName == null) {
-            this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" }, 
+            this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" },
                 { key: "MESSAGES.MISSING_MANDATORY_FIELD", params: { missingField: this.translateService.instant("CONTRIBUTIONS.FORM.COMMONS.RESOURCE_NAME") } },
                 ModalType.warning);
-            return;
+            return null;
         }
         let config: ConfigurationObject = {
             baseURI: new IRI(this.baseURI).toNT(),
@@ -79,7 +79,7 @@ export class MetadataContributionComponent extends AbstractContributionComponent
             sparqlEndpoint: this.sparqlEndpoint ? new IRI(this.sparqlEndpoint).toNT() : null,
             sparqlLimitations: this.sparqlNoAggregation ? [new IRI(SemanticTurkey.noAggregation).toNT()] : null,
             uriSpace: this.uriSpace
-        }
+        };
         let emptyMetadata: boolean = true;
         for (let key in config) {
             if (key != "resourceName" && config[key] != null) {
@@ -88,8 +88,8 @@ export class MetadataContributionComponent extends AbstractContributionComponent
             }
         }
         if (emptyMetadata) {
-            this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" }, {key:"MESSAGES.NO_METADATA_PROVIDED"}, ModalType.warning);
-            return;
+            this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" }, { key: "MESSAGES.NO_METADATA_PROVIDED" }, ModalType.warning);
+            return null;
         }
         return config;
     }

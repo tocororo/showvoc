@@ -1,5 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { concat, forkJoin, Observable } from 'rxjs';
+import { concat, Observable } from 'rxjs';
 import { finalize, map, toArray } from 'rxjs/operators';
 import { SharedModalsServices } from '../modal-dialogs/shared-modals/shared-modal.service';
 import { LinksetMetadata } from '../models/Metadata';
@@ -127,9 +127,8 @@ export class AlignmentsView {
                             if (mapping.getLeft().getValue().equals(a.getValue())) {
                                 mapping.setLeft(a);
                             }
-                        })
-                        a.getValue().equals
-                    })
+                        });
+                    });
                 })
             );
             annotateFunctions.push(annotateLeft);
@@ -148,9 +147,8 @@ export class AlignmentsView {
                             if (mapping.getRight().getValue().equals(a.getValue())) {
                                 mapping.setRight(a);
                             }
-                        })
-                        a.getValue().equals
-                    })
+                        });
+                    });
                 })
             );
             annotateFunctions.push(annotateRight);

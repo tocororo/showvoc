@@ -9,23 +9,23 @@ export class AbstractStructureModal {
     @Input() title: string;
 
     selectedNode: AnnotatedValue<IRI>;
-    
-	constructor(protected activeModal: NgbActiveModal, protected elementRef: ElementRef) { }
-	
-	ngAfterViewInit() {
-		UIUtils.setFullSizeModal(this.elementRef);
-	}
-    
+
+    constructor(protected activeModal: NgbActiveModal, protected elementRef: ElementRef) { }
+
+    ngAfterViewInit() {
+        UIUtils.setFullSizeModal(this.elementRef);
+    }
+
     onNodeSelected(node: AnnotatedValue<IRI>) {
         this.selectedNode = node;
     }
 
-	ok() {
-		this.activeModal.close(this.selectedNode);
-	}
+    ok() {
+        this.activeModal.close(this.selectedNode);
+    }
 
-	close() {
-		this.activeModal.dismiss();
-	}
+    close() {
+        this.activeModal.dismiss();
+    }
 
 }

@@ -33,7 +33,7 @@ export class DataGraphComponent extends AbstractGraph {
     private rvPartitions: ResViewPartition[] = ResViewUtils.orderedResourceViewPartitions;
 
     constructor(protected d3Service: D3Service, protected elementRef: ElementRef, protected ref: ChangeDetectorRef, protected basicModals: BasicModalsServices,
-        private resViewService: ResourceViewServices, private graphService: GraphServices,  private graphModals: GraphModalServices) {
+        private resViewService: ResourceViewServices, private graphService: GraphServices, private graphModals: GraphModalServices) {
         super(d3Service, elementRef, ref, basicModals);
     }
 
@@ -43,7 +43,7 @@ export class DataGraphComponent extends AbstractGraph {
 
     addNode(res: AnnotatedValue<IRI>) {
         if (this.graph.getNode(res.getValue())) {
-            this.basicModals.alert({ key: "GRAPHS.ACTIONS.ADD_NODE" }, {key:"MESSAGES.RESOURCE_ALREADY_IN_GRAPH"}, ModalType.warning);
+            this.basicModals.alert({ key: "GRAPHS.ACTIONS.ADD_NODE" }, { key: "MESSAGES.RESOURCE_ALREADY_IN_GRAPH" }, ModalType.warning);
             return;
         }
 
@@ -116,7 +116,7 @@ export class DataGraphComponent extends AbstractGraph {
                                     this.onNodeClicked(node);
                                 }
                             },
-                            () => {}
+                            () => { }
                         );
                     } else {
                         let links: DataLink[] = this.convertPredObjListMapToLinks(node, predObjListMap, []);
@@ -133,7 +133,7 @@ export class DataGraphComponent extends AbstractGraph {
 
     protected closeNode(node: Node) {
         this.deleteSubtree(node);
-        
+
         let sourceDataNode = <DataNode>node;
         if (sourceDataNode.isPending()) {
             this.graph.removeNode(sourceDataNode); //remove the node from the graph
@@ -143,7 +143,7 @@ export class DataGraphComponent extends AbstractGraph {
         node.open = false;
     }
 
-    
+
     private appendLinks(expandedNode: Node, links: DataLink[]) {
         links.forEach(l => {
             if (this.retrieveLink(l.source.res.getValue(), l.target.res.getValue(), l.res.getValue())) {
@@ -186,7 +186,7 @@ export class DataGraphComponent extends AbstractGraph {
                     this.graph.removeNode(targetDataNode); //remove the node from the graph
                     recursivelyClosingNodes.push(targetDataNode); //add to the list of nodes to recursively close
                 }
-            })
+            });
             //call recursively the deletion of the subtree for the deleted node)
             recursivelyClosingNodes.forEach(n => {
                 this.deleteSubtree(n);
@@ -245,9 +245,9 @@ export class DataGraphComponent extends AbstractGraph {
         let valueFilterLanguage: ValueFilterLanguages = SVContext.getProjectCtx().getProjectPreferences().filterValueLang;
         if (valueFilterLanguage.enabled) {
             let valueFilterLanguages = valueFilterLanguage.languages;
-            for (var i = 0; i < predObjList.length; i++) {
-                var objList: AnnotatedValue<Value>[] = predObjList[i].getObjects();
-                for (var j = 0; j < objList.length; j++) {
+            for (let i = 0; i < predObjList.length; i++) {
+                let objList: AnnotatedValue<Value>[] = predObjList[i].getObjects();
+                for (let j = 0; j < objList.length; j++) {
                     let lang = objList[j].getAttribute(ResAttribute.LANG);
                     //remove the object if it has a language not in the languages list of the filter
                     if (lang != null && valueFilterLanguages.indexOf(lang) == -1) {
@@ -281,7 +281,7 @@ export class DataGraphComponent extends AbstractGraph {
             if (l.source.res.getValue().equals(source) && l.target.res.getValue().equals(target) && l.res.getValue().equals(pred)) {
                 return l;
             }
-        };
+        }
         return null;
     }
 

@@ -17,7 +17,7 @@ export class LinksetMetadata {
     linkPredicate?: IRI;
 
     sourceDatasetProject?: Project; //this is not included in the linkset returned by the services, 
-        //this is added manually since it is useful when describing mapping from the Alignment tree
+    //this is added manually since it is useful when describing mapping from the Alignment tree
 
     /**
      * Returns in order (with fallback):
@@ -90,7 +90,7 @@ export class DatasetMetadata {
             dereferenciationSystem: datasetMetadataJson.dereferenciationSystem,
             sparqlEndpointMetadata: sparqlEndpointMetadata,
             versionInfo: datasetMetadataJson.versionInfo
-        }
+        };
     }
 }
 
@@ -102,11 +102,11 @@ export class SparqlEndpointMetadata {
             return {
                 id: ResourceUtils.parseIRI(metadataJson['@id']).getIRI(),
                 limitations: metadataJson.limitations
-            }
+            };
         } else {
-            return { id: null, limitations: null }
+            return { id: null, limitations: null };
         }
-        
+
     }
 }
 

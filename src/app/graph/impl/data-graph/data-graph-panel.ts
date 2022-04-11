@@ -57,7 +57,7 @@ export class DataGraphPanel extends AbstractGraphPanel {
                     resRole == RDFResourceRolesEnum.cls || resRole == RDFResourceRolesEnum.concept ||
                     resRole == RDFResourceRolesEnum.skosCollection || ResourceUtils.roleSubsumes(RDFResourceRolesEnum.property, resRole)
                 )
-            )
+            );
         } else {
             return false;
         }

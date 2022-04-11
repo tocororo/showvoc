@@ -12,7 +12,7 @@ import { SVContext } from 'src/app/utils/SVContext';
 import { ExportResultRdfModal } from './export-result-rdf-modal';
 
 @Component({
-	selector: 'sparql-tab',
+    selector: 'sparql-tab',
     templateUrl: './sparql-tab.component.html',
     host: { class: "vbox" }
 })
@@ -30,7 +30,7 @@ export class SparqlTabComponent implements OnInit {
     queryInProgress: boolean = false;
     queryValid: boolean = true;
     private queryTime: string;
-    
+
     private sortOrder: string;
     private asc_Order: string = "_asc";
     private desc_Order: string = "_desc";
@@ -44,7 +44,7 @@ export class SparqlTabComponent implements OnInit {
 
     constructor(private sparqlService: SparqlServices, private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices, private modalService: NgbModal) { }
 
-	ngOnInit() {
+    ngOnInit() {
         //collect the prefix namespace mappings
         let mappings: PrefixMapping[] = SVContext.getPrefixMappings();
         let prefixImports: string = "";
@@ -56,7 +56,7 @@ export class SparqlTabComponent implements OnInit {
 
         this.query = this.sampleQuery;
     }
-    
+
     /**
      * Listener of event querychange, emitted from YasquiComponent.
      * Event is an object {query: string, valid: boolean, mode} where
@@ -82,7 +82,7 @@ export class SparqlTabComponent implements OnInit {
     doQuery() {
 
         if (this.queryMode == QueryMode.update) {
-            this.basicModals.alert({ key: "COMMONS.DENIED_OPERATION" }, {key:"MESSAGES.UPDATE_QUERY_NOT_ALLOWED"}, ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.DENIED_OPERATION" }, { key: "MESSAGES.UPDATE_QUERY_NOT_ALLOWED" }, ModalType.warning);
             return;
         }
 
@@ -95,7 +95,7 @@ export class SparqlTabComponent implements OnInit {
         this.queryInProgress = true;
         if (this.queryMode == QueryMode.query) {
             this.sparqlService.evaluateQuery(this.query, this.inferred).pipe(
-                finalize(() => this.queryInProgress = false)
+                finalize(() => { this.queryInProgress = false; })
             ).subscribe(
                 stResp => {
                     this.sparqlResponseHandler(stResp, initTime);
@@ -179,7 +179,7 @@ export class SparqlTabComponent implements OnInit {
         }
     }
 
-    private getBindingShow(binding: QueryResultBinding) {
+    getBindingShow(binding: QueryResultBinding) {
         if (binding.type == "uri") {
             return "<" + binding.value + ">";
         } else if (binding.type == "bnode") {
@@ -338,7 +338,7 @@ export class SparqlTabComponent implements OnInit {
     }
 
     private exportAsRdf() {
-		const modalRef: NgbModalRef = this.modalService.open(ExportResultRdfModal, new ModalOptions());
+        const modalRef: NgbModalRef = this.modalService.open(ExportResultRdfModal, new ModalOptions());
         modalRef.componentInstance.query = this.queryCache;
         modalRef.componentInstance.inferred = this.inferred;
         return modalRef.result;

@@ -4,15 +4,15 @@ import { AbstractStructureModal } from '../abstract-structure-modal';
 import { IRI } from 'src/app/models/Resources';
 
 @Component({
-	selector: 'class-tree-modal',
-	templateUrl: './class-tree-modal.html'
+    selector: 'class-tree-modal',
+    templateUrl: './class-tree-modal.html'
 })
 export class ClassTreeModal extends AbstractStructureModal {
 
-	@Input() roots: IRI[];
+    @Input() roots: IRI[];
 
-	constructor(activeModal: NgbActiveModal, elementRef: ElementRef) {
-		super(activeModal, elementRef);
-	}
-	
+    constructor(activeModal: NgbActiveModal, elementRef: ElementRef) {
+        super(activeModal, elementRef);
+    }
+
 }

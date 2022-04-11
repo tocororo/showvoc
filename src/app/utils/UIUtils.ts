@@ -104,9 +104,9 @@ export class UIUtils {
         let imgSrc: string;
         let value = rdfResource.getValue();
         if (value instanceof Resource) {
-            var role: RDFResourceRolesEnum = rdfResource.getAttribute(ResAttribute.ROLE);
-            var deprecated: boolean = rdfResource.isDeprecated();
-            var explicit: boolean = rdfResource.getAttribute(ResAttribute.EXPLICIT) || rdfResource.getAttribute(ResAttribute.EXPLICIT) == undefined;
+            let role: RDFResourceRolesEnum = rdfResource.getAttribute(ResAttribute.ROLE);
+            let deprecated: boolean = rdfResource.isDeprecated();
+            let explicit: boolean = rdfResource.getAttribute(ResAttribute.EXPLICIT) || rdfResource.getAttribute(ResAttribute.EXPLICIT) == undefined;
             if (role == RDFResourceRolesEnum.annotationProperty) {
                 imgSrc = this.propAnnotationImgSrc;
                 if (!explicit) {
@@ -303,13 +303,13 @@ export class UIUtils {
             }
         }
         return imgSrc;
-    };
+    }
 
     static getRoleImageSrc(role: RDFResourceRolesEnum) {
         if (role == RDFResourceRolesEnum.concept) {
             return this.conceptImgSrc;
         } else if (role == RDFResourceRolesEnum.conceptScheme) {
-            return this.conceptSchemeImgSrc
+            return this.conceptSchemeImgSrc;
         } else if (role == RDFResourceRolesEnum.cls) {
             return this.classImgSrc;
         } else if (role == RDFResourceRolesEnum.individual) {
@@ -336,7 +336,7 @@ export class UIUtils {
     }
 
     static getFlagImgSrc(langTag: string): string {
-        var imgSrc: string;
+        let imgSrc: string;
         if (langTag != null && this.availableFlagLang.indexOf(langTag) != -1) {
             imgSrc = "./assets/images/flags/flag_" + langTag + ".png";
         } else {
@@ -346,14 +346,14 @@ export class UIUtils {
     }
 
     static getDatatypeImgSrc(datatype: IRI): string {
-        var imgSrc: string;
+        let imgSrc: string;
         if (datatype.equals(XmlSchema.dateTime) || datatype.equals(XmlSchema.dateTimeStamp)) {
             imgSrc = "./assets/images/icons/res/datetime.png";
         } else if (datatype.equals(XmlSchema.date)) {
             imgSrc = "./assets/images/icons/res/date.png";
         } else if (datatype.equals(XmlSchema.time)) {
             imgSrc = "./assets/images/icons/res/time.png";
-        } else if (datatype.equals(RDF.xmlLiteral) || datatype.equals(XmlSchema.string) ||  datatype.equals(XmlSchema.normalizedString)) {
+        } else if (datatype.equals(RDF.xmlLiteral) || datatype.equals(XmlSchema.string) || datatype.equals(XmlSchema.normalizedString)) {
             imgSrc = "./assets/images/icons/res/string.png";
         } else if (datatype.equals(XmlSchema.boolean)) {
             imgSrc = "./assets/images/icons/res/boolean.png";
@@ -362,7 +362,7 @@ export class UIUtils {
             datatype.equals(XmlSchema.float) || datatype.equals(XmlSchema.int) || datatype.equals(XmlSchema.integer) || 
             datatype.equals(XmlSchema.long) || datatype.equals(XmlSchema.negativeInteger) || 
             datatype.equals(XmlSchema.nonNegativeInteger) || datatype.equals(XmlSchema.nonPositiveInteger) || 
-            datatype.equals(XmlSchema.positiveInteger) ||  datatype.equals(XmlSchema.short) || 
+            datatype.equals(XmlSchema.positiveInteger) ||datatype.equals(XmlSchema.short) || 
             datatype.equals(XmlSchema.unsignedByte) || datatype.equals(XmlSchema.unsignedInt) || 
             datatype.equals(XmlSchema.unsignedLong) || datatype.equals(XmlSchema.unsignedShort)) {
             imgSrc = "./assets/images/icons/res/number.png";

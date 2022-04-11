@@ -13,19 +13,19 @@ export class GlobalSearchServices {
     constructor(private httpMgr: HttpManager) { }
 
     createIndex() {
-        var params: any = {};
+        let params: any = {};
         return this.httpMgr.doPost(this.serviceName, "createIndex", params);
     }
 
     clearSpecificIndex(projectName: string) {
-        var params: any = {
+        let params: any = {
             projectName: projectName
         };
         return this.httpMgr.doPost(this.serviceName, "clearSpecificIndex", params);
     }
 
     search(searchString: string, langs?: string[], maxResults?: number, searchInLocalName?: boolean): Observable<GlobalSearchResult[]> {
-        var params: any = {
+        let params: any = {
             searchString: searchString,
             langs: langs,
             maxResults: maxResults,
@@ -40,7 +40,7 @@ export class GlobalSearchServices {
             map(results => {
                 let parsedSearchResults: GlobalSearchResult[] = [];
                 results.forEach(element => {
-                    let details: SearchResultDetails[] = []
+                    let details: SearchResultDetails[] = [];
                     element.details.forEach(detail => {
                         details.push({
                             matchedValue: new Literal(detail.matchedValue, detail.lang),
@@ -55,10 +55,10 @@ export class GlobalSearchServices {
                         role: element.role,
                         repository: element.repository,
                         details: details
-                    }
+                    };
                     parsedSearchResults.push(r);
                 });
-                return parsedSearchResults
+                return parsedSearchResults;
             })
         );
     }

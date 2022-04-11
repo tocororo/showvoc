@@ -20,7 +20,7 @@ export class DevelopmentContributionComponent extends AbstractContributionCompon
     conversionRequired: boolean = false;
     inputFormats: ShowVocConversionFormat[] = [
         ShowVocConversionFormat.EXCEL, ShowVocConversionFormat.TBX, ShowVocConversionFormat.ZTHES
-    ]
+    ];
     selectedFormat: string;
 
     resourceName: string;
@@ -31,7 +31,7 @@ export class DevelopmentContributionComponent extends AbstractContributionCompon
 
     semanticModels: { uri: string, show: string }[] = [
         { uri: RDFS.uri, show: Project.getPrettyPrintModelType(RDFS.uri) },
-        { uri: OWL.uri, show:  Project.getPrettyPrintModelType(OWL.uri) },
+        { uri: OWL.uri, show: Project.getPrettyPrintModelType(OWL.uri) },
         { uri: SKOS.uri, show: Project.getPrettyPrintModelType(SKOS.uri) },
         { uri: OntoLex.uri, show: Project.getPrettyPrintModelType(OntoLex.uri) }
     ];
@@ -65,22 +65,22 @@ export class DevelopmentContributionComponent extends AbstractContributionCompon
         }
         if (missingField != null) {
             this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" }, { key: "MESSAGES.MISSING_MANDATORY_FIELD", params: { missingField: missingField } }, ModalType.warning);
-            return;
+            return null;
         }
         if (this.conversionRequired && this.selectedFormat == null) {
-            this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" }, {key:"MESSAGES.NO_CONVERSION_FORMAT_SELECTED"}, ModalType.warning);
-            return;
+            this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" }, { key: "MESSAGES.NO_CONVERSION_FORMAT_SELECTED" }, ModalType.warning);
+            return null;
         }
 
         let config: ConfigurationObject = {
-            format: this.conversionRequired ? this.selectedFormat : null, 
+            format: this.conversionRequired ? this.selectedFormat : null,
             resourceName: this.resourceName,
             homepage: this.homepage,
             description: this.description,
             baseURI: new IRI(this.baseURI).toNT(),
             model: new IRI(this.selectedSemModel).toNT(),
             lexicalizationModel: new IRI(this.selectedLexModel).toNT()
-        }
+        };
         return config;
     }
 

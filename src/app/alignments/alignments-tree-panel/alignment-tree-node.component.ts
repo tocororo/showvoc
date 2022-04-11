@@ -26,7 +26,7 @@ export class AlignmentTreeNodeComponent {
 
     showExpandCollapseBtn: boolean = true; //tells if the expand/collapse node button should be visible (it depends on more_attr and showDeprecated)
 
-    constructor(private metadataRegistryService: MetadataRegistryServices) {}
+    constructor(private metadataRegistryService: MetadataRegistryServices) { }
 
     /**
      * Implementation of the expansion. It calls the  service for getting the child of a node in the given tree
@@ -42,12 +42,12 @@ export class AlignmentTreeNodeComponent {
                 this.children = linkset;
                 this.children.forEach(l => {
                     l.sourceDatasetProject = new Project(this.linkset.getTargetDatasetShow());
-                })
+                });
 
                 this.open = true;
                 this.showExpandCollapseBtn = this.children.length != 0;
             }
-        )
+        );
     }
 
     collapseNode() {

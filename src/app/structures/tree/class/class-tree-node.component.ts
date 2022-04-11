@@ -13,8 +13,8 @@ import { TreeListContext } from 'src/app/utils/UIUtils';
 import { AbstractTreeNode } from '../abstract-tree-node';
 
 @Component({
-	selector: 'class-tree-node',
-	templateUrl: './class-tree-node.component.html',
+    selector: 'class-tree-node',
+    templateUrl: './class-tree-node.component.html',
 })
 export class ClassTreeNodeComponent extends AbstractTreeNode {
 
@@ -38,10 +38,10 @@ export class ClassTreeNodeComponent extends AbstractTreeNode {
     ngOnInit() {
         super.ngOnInit();
         //show instance number only if enabled in the preferences and if the node belongs to a tree in TreePanelComponent
-        this.showInstanceNumber = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.showInstancesNumber && 
+        this.showInstanceNumber = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences.showInstancesNumber &&
             (this.context == TreeListContext.dataPanel || this.context == TreeListContext.clsIndTree);
         //expand immediately the node if it is a root and if it is owl:Thing or rdfs:Resource
-        if ((this.node.getValue().equals(OWL.thing) || this.node.getValue().equals(RDFS.resource)) && 
+        if ((this.node.getValue().equals(OWL.thing) || this.node.getValue().equals(RDFS.resource)) &&
             this.root && this.node.getAttribute(ResAttribute.MORE) == "1") {
             this.expandNode().subscribe();
         }
@@ -80,9 +80,9 @@ export class ClassTreeNodeComponent extends AbstractTreeNode {
              */
             c['filtered'] = (
                 this.filterEnabled &&
-                classTreePref.filter.map[this.node.getValue().getIRI()] != null && 
+                classTreePref.filter.map[this.node.getValue().getIRI()] != null &&
                 classTreePref.filter.map[this.node.getValue().getIRI()].indexOf(c.getValue().getIRI()) != -1
-            )
+            );
         });
     }
 
@@ -110,8 +110,8 @@ export class ClassTreeNodeComponent extends AbstractTreeNode {
                  * AND
                  * subClassFilter disabled or child not filtered
                  */
-                for (var i = 0; i < this.children.length; i++) {
-                    let childFiltered: boolean = classTreeFilter.map[this.node.getValue().getIRI()] != null && 
+                for (let i = 0; i < this.children.length; i++) {
+                    let childFiltered: boolean = classTreeFilter.map[this.node.getValue().getIRI()] != null &&
                         classTreeFilter.map[this.node.getValue().getIRI()].indexOf(this.children[i].getValue().getIRI()) != -1;
                     if ((this.showDeprecated || !this.children[i].isDeprecated()) && (!classTreeFilter.enabled || !childFiltered)) {
                         childVisible = true;

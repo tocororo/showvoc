@@ -6,7 +6,6 @@ import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.
 import { ModalType } from '../modal-dialogs/Modals';
 import { ContributionType } from '../models/Contribution';
 import { UserForm } from '../models/User';
-import { ConfigurationsServices } from '../services/configuration.service';
 import { ShowVocServices } from '../services/showvoc.service';
 import { AbstractContributionComponent } from './abstract-contribution.component';
 import { DevelopmentContributionComponent } from './development/development-contribution.component';
@@ -33,14 +32,14 @@ export class ContributionComponent {
     organization: string;
 
     contributionOpts: { type: ContributionType, show: string }[] = [
-        { type: ContributionType.metadata, show: "I want to provide metadata about an existing resource on the web"},
-        { type: ContributionType.stable, show: "I want to contribute an existing RDF dataset"},
-        { type: ContributionType.development, show: "I want to contribute a resource needing some editing before being published (conversion of some non-RDF formats is also available)"},
+        { type: ContributionType.metadata, show: "I want to provide metadata about an existing resource on the web" },
+        { type: ContributionType.stable, show: "I want to contribute an existing RDF dataset" },
+        { type: ContributionType.development, show: "I want to contribute a resource needing some editing before being published (conversion of some non-RDF formats is also available)" },
     ];
     selectedContribution: ContributionType;
 
 
-    constructor(private svService: ShowVocServices, private basicModals: BasicModalsServices, private router: Router, 
+    constructor(private svService: ShowVocServices, private basicModals: BasicModalsServices, private router: Router,
         private translateService: TranslateService) { }
 
     submit() {
@@ -58,11 +57,11 @@ export class ContributionComponent {
             return;
         }
         if (!UserForm.isValidEmail(this.email)) {
-            this.basicModals.alert({ key: "COMMONS.STATUS.INVALID_DATA" }, { key: "MESSAGES.INVALID_EMAIL", params: { email: this.email }}, ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.STATUS.INVALID_DATA" }, { key: "MESSAGES.INVALID_EMAIL", params: { email: this.email } }, ModalType.warning);
             return;
         }
 
-        let config: {[key: string]: any} = {};
+        let config: { [key: string]: any } = {};
         config['contributorName'] = this.name;
         config['contributorLastName'] = this.lastName;
         config['contributorEmail'] = this.email;
@@ -77,18 +76,18 @@ export class ContributionComponent {
         }
 
         //get the configuration of the contribution component and merge with the current page config
-        let contributionImplConfig: {[key: string]: any} = this.activeContribComponentImpl.getConfiguration();
+        let contributionImplConfig: { [key: string]: any } = this.activeContribComponentImpl.getConfiguration();
         if (contributionImplConfig == null) { //in case of missing mandatory fields in the child component, getConfiguration returns null
             return;
         }
         config = { ...config, ...contributionImplConfig }; //merge
-        
+
         this.loading = true;
         this.svService.submitContribution(config).pipe(
-            finalize(() => this.loading = false)
+            finalize(() => { this.loading = false; })
         ).subscribe(
             () => {
-                this.basicModals.alert({ key: "CONTRIBUTIONS.FORM.COMMONS.REQUEST_SUBMITTED" }, {key:"MESSAGES.CONTRIBUTION_SUBMITTED"}).then(
+                this.basicModals.alert({ key: "CONTRIBUTIONS.FORM.COMMONS.REQUEST_SUBMITTED" }, { key: "MESSAGES.CONTRIBUTION_SUBMITTED" }).then(
                     () => {
                         this.router.navigate(["/home"]);
                     }

@@ -14,12 +14,12 @@ export class ResourceViewServices {
      * @param resource
      */
     getResourceView(resource: Resource, includeInferred?: boolean, resourcePosition?: string) {
-        var params: any = {
+        let params: any = {
             resource: resource,
             includeInferred: includeInferred,
             resourcePosition: resourcePosition
         };
-        var options: STRequestOptions = new STRequestOptions({
+        let options: STRequestOptions = new STRequestOptions({
             errorHandlers: [{
                 className: "java.net.UnknownHostException", action: 'skip'
             }]

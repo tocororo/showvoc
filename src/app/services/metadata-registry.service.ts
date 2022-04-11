@@ -19,10 +19,10 @@ export class MetadataRegistryServices {
      * 
      * @param dataset 
      */
-     getEmbeddedLexicalizationSets(dataset: IRI): Observable<LexicalizationSetMetadata[]> {
-        var params: any = {
+    getEmbeddedLexicalizationSets(dataset: IRI): Observable<LexicalizationSetMetadata[]> {
+        let params: any = {
             dataset: dataset
-        }
+        };
         return this.httpMgr.doGet(this.serviceName, "getEmbeddedLexicalizationSets", params);
     }
 
@@ -37,17 +37,17 @@ export class MetadataRegistryServices {
             dataset: dataset,
             treshold: treshold,
             coalesce: coalesce
-        }
+        };
         return this.httpMgr.doGet(this.serviceName, "getEmbeddedLinksets", params).pipe(
             map(stResp => {
                 let linksets: LinksetMetadata[] = [];
                 for (let lsJson of stResp) {
                     let l: LinksetMetadata = new LinksetMetadata();
-                    l.sourceDataset = ResourceUtils.parseIRI(lsJson.sourceDataset),
-                    l.targetDataset = this.parseTarget(lsJson.targetDataset),
-                    l.registeredTargets = lsJson.registeredTargets.map(rt => this.parseTarget(rt)),
-                    l.linkCount = lsJson.linkCount,
-                    l.linkPredicate = lsJson.linkPredicate ? ResourceUtils.parseIRI(lsJson.linkPredicate) : null
+                    l.sourceDataset = ResourceUtils.parseIRI(lsJson.sourceDataset);
+                    l.targetDataset = this.parseTarget(lsJson.targetDataset);
+                    l.registeredTargets = lsJson.registeredTargets.map(rt => this.parseTarget(rt));
+                    l.linkCount = lsJson.linkCount;
+                    l.linkPredicate = lsJson.linkPredicate ? ResourceUtils.parseIRI(lsJson.linkPredicate) : null;
                     linksets.push(l);
                 }
                 //compute percentage for each link (not contained in the response)
@@ -56,8 +56,8 @@ export class MetadataRegistryServices {
                     totalLinkCount += l.linkCount;
                 });
                 linksets.forEach(l => {
-                    let percentage = l.linkCount/totalLinkCount*100;
-                    l.linkPercentage = Math.round((percentage + Number.EPSILON) * 100) / 100
+                    let percentage = l.linkCount / totalLinkCount * 100;
+                    l.linkPercentage = Math.round((percentage + Number.EPSILON) * 100) / 100;
                 });
                 return linksets;
             })
@@ -74,7 +74,7 @@ export class MetadataRegistryServices {
             projectName: targetJson.projectName,
             uriSpace: targetJson.uriSpace,
             titles: titles
-        }
+        };
     }
 
     /**
@@ -84,7 +84,7 @@ export class MetadataRegistryServices {
     findDatasetForProjects(projects: Project[]): Observable<ProjectDatasetMapping> {
         let params: any = {
             projects: projects.map(p => p.getName())
-        }
+        };
         return this.httpMgr.doGet(this.serviceName, "findDatasetForProjects", params).pipe(
             map(stResp => {
                 let mappings: ProjectDatasetMapping = {};
@@ -101,9 +101,9 @@ export class MetadataRegistryServices {
      * @param iri 
      */
     findDataset(iri: IRI): Observable<ResourcePosition> {
-        var params: any = {
+        let params: any = {
             iri: iri,
-        }
+        };
         return this.httpMgr.doGet(this.serviceName, "findDataset", params).pipe(
             map(resp => {
                 return ResourcePosition.deserialize(resp);
@@ -116,9 +116,9 @@ export class MetadataRegistryServices {
      * @param dataset 
      */
     getDatasetMetadata(dataset: IRI): Observable<DatasetMetadata> {
-        var params: any = {
+        let params: any = {
             dataset: dataset
-        }
+        };
         return this.httpMgr.doGet(this.serviceName, "getDatasetMetadata", params).pipe(
             map(stResp => {
                 return DatasetMetadata.deserialize(stResp);
@@ -132,9 +132,9 @@ export class MetadataRegistryServices {
      * @param iri 
      */
     discoverDataset(iri: IRI): Observable<AnnotatedValue<IRI>> {
-        var params: any = {
+        let params: any = {
             iri: iri,
-        }
+        };
         return this.httpMgr.doPost(this.serviceName, "discoverDataset", params).pipe(
             map(stResp => {
                 return ResourceDeserializer.createIRI(stResp);
@@ -147,9 +147,9 @@ export class MetadataRegistryServices {
      * @param iri 
      */
     discoverDatasetMetadata(iri: IRI): Observable<DatasetMetadata> {
-        var params: any = {
+        let params: any = {
             iri: iri
-        }
+        };
         let options: STRequestOptions = new STRequestOptions({
             errorHandlers: [{
                 className: "it.uniroma2.art.semanticturkey.exceptions.DeniedOperationException", action: 'skip'

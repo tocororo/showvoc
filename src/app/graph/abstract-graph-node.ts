@@ -31,7 +31,7 @@ export abstract class AbstractGraphNode {
      * Here I inject the ChangeDetectorRef in order to force the change detection when objects (show and normalizedShow)
      * are not replaced but simply changed.
      */
-    protected changeDetectorRef: ChangeDetectorRef
+    protected changeDetectorRef: ChangeDetectorRef;
     constructor(changeDetectorRef: ChangeDetectorRef) {
         this.changeDetectorRef = changeDetectorRef;
     }

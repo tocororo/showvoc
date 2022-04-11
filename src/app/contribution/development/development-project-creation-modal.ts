@@ -27,19 +27,19 @@ export class DevProjectCreationModal extends AbstractProjectCreationModal {
 
     formLocked: boolean = true;
     lockTooltip: string = "The form has been partially pre-filled with the information contained in the contribution request. " +
-        "It is strongly recommended to leave them as they are. If you desire to change them anyway, you can unlock the field with the following switch."
+        "It is strongly recommended to leave them as they are. If you desire to change them anyway, you can unlock the field with the following switch.";
 
     vbConnectionConfig: VocBenchConnectionShowVocSettings = {
         vbURL: null,
         stHost: null,
         adminEmail: null,
         adminPassword: ""
-    }
+    };
 
     constructor(activeModal: NgbActiveModal, settingsService: SettingsServices, extensionsService: ExtensionsServices, modalService: NgbModal,
         private svService: ShowVocServices, private basicModals: BasicModalsServices) {
-            super(activeModal, modalService, extensionsService, settingsService);
-        }
+        super(activeModal, modalService, extensionsService, settingsService);
+    }
 
     ngOnInit() {
         this.projectName = this.contribution.resourceName;
@@ -52,12 +52,12 @@ export class DevProjectCreationModal extends AbstractProjectCreationModal {
             settings => {
                 let showVocSettings: ShowVocSettings = settings.getPropertyValue(SettingsEnum.showvoc);
                 if (showVocSettings != null && showVocSettings.vbConnectionConfig != null) {
-                    this.vbConnectionConfig = showVocSettings.vbConnectionConfig
+                    this.vbConnectionConfig = showVocSettings.vbConnectionConfig;
                 } else {
                     this.vbConnectionConfig = new VocBenchConnectionShowVocSettings();
                 }
             }
-        )
+        );
 
         //init core repo extensions by excluding the configurations which are not remote (that are not for GraphDB)
         let pred: ConfigurationFilterPredicate = (settings: Settings) => settings.type.includes("GraphDB");
@@ -66,28 +66,28 @@ export class DevProjectCreationModal extends AbstractProjectCreationModal {
 
     ok() {
         if (this.vbConnectionConfig.stHost == null) {
-            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION"}, ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, { key: "MESSAGES.SYSTEM_NOT_CONFIGURED_FOR_VB_CONNECTION" }, ModalType.warning);
             return;
         }
 
         //check if data repository configuration needs to be configured
         if (this.selectedDataRepoConfig.requireConfiguration()) {
-            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.DATA_REPO_NOT_CONFIGURED"}, ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, { key: "MESSAGES.DATA_REPO_NOT_CONFIGURED" }, ModalType.warning);
             return;
         }
         let coreRepoSailConfigurerSpecification: PluginSpecification = {
             factoryId: this.selectedDataRepoExtension.id,
             configType: this.selectedDataRepoConfig.type,
             configuration: this.selectedDataRepoConfig.getPropertiesAsMap()
-        }
+        };
 
         this.loading = true;
         this.svService.approveDevelopmentContribution(this.projectName, new IRI(this.selectedSemModel), new IRI(this.selectedLexModel),
             this.baseURI, coreRepoSailConfigurerSpecification, this.contribution['relativeReference']).pipe(
-                finalize(() => this.loading = false)
+                finalize(() => { this.loading = false; })
             ).subscribe(
                 () => {
-                    this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_CREATED" }, {key:"MESSAGES.CONTRIBUTION_APPROVED_DATASET_CREATED"});
+                    this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_CREATED" }, { key: "MESSAGES.CONTRIBUTION_APPROVED_DATASET_CREATED" });
                     this.activeModal.close();
                 }
             );

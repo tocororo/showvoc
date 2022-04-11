@@ -34,7 +34,7 @@ export class DatasetDetailsPanel {
                         this.dereferenciationNormalized = this.datasetMetadata.dereferenciationSystem;
                     }
                 }
-            )
+            );
         }
     }
 

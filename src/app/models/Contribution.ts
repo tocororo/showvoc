@@ -12,7 +12,7 @@ export class ContributionTypeUtils {
         { type: ContributionType.development, configurationID: ConfigurationComponents.CONTRIBUTION_STORE.CONFIG_IMPL.DEVELOPMENT },
         { type: ContributionType.metadata, configurationID: ConfigurationComponents.CONTRIBUTION_STORE.CONFIG_IMPL.METADATA },
         { type: ContributionType.stable, configurationID: ConfigurationComponents.CONTRIBUTION_STORE.CONFIG_IMPL.STABLE },
-    ]
+    ];
 }
 
 export abstract class StoredContribution {
@@ -50,8 +50,8 @@ export class MetadataStoredContribution extends StoredContribution {
 export class DevResourceStoredContribution extends StoredContribution {
     type = "Development";
     format: string;
-	homepage: string;
-	description: string;
-	model: IRI;
-	lexicalizationModel: IRI;
+    homepage: string;
+    description: string;
+    model: IRI;
+    lexicalizationModel: IRI;
 }

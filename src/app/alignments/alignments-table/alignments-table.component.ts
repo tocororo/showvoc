@@ -40,9 +40,9 @@ export class AlignmentsTableComponent {
     private initLinksets() {
         this.loading = true;
         this.linksets = null;
-        
+
         this.metadataRegistryService.getEmbeddedLinksets(this.dataset.getValue(), null, true).pipe(
-            finalize(() => this.loading = false)
+            finalize(() => { this.loading = false; })
         ).subscribe(
             linksets => {
                 this.linksets = linksets;

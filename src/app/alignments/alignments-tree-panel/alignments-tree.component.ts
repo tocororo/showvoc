@@ -51,7 +51,7 @@ export class AlignmentsTreeComponent {
     private getDatasetIRI(project: Project): Observable<AnnotatedValue<IRI>> {
         this.loading = true;
         return this.metadataRegistryService.findDatasetForProjects([project]).pipe(
-            finalize(() => this.loading = false),
+            finalize(() => { this.loading = false; }),
             map(mappings => {
                 return mappings[this.workingProject.getName()];
             })
@@ -72,7 +72,7 @@ export class AlignmentsTreeComponent {
     private initLinksets(datasetIRI: AnnotatedValue<IRI>) {
         this.loading = true;
         this.metadataRegistryService.getEmbeddedLinksets(datasetIRI.getValue(), null, true).pipe(
-            finalize(() => this.loading = false)
+            finalize(() => { this.loading = false; })
         ).subscribe(
             linksets => {
                 this.linksets = linksets;
@@ -80,9 +80,9 @@ export class AlignmentsTreeComponent {
                     return l1.getTargetDatasetShow().localeCompare(l2.getTargetDatasetShow());
                 });
                 //set the source dataset project, useful for retrieving the mappings
-                this.linksets.forEach(l => l.sourceDatasetProject = this.workingProject);
+                this.linksets.forEach(l => { l.sourceDatasetProject = this.workingProject; });
             }
-        )
+        );
     }
 
 

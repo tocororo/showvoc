@@ -14,7 +14,7 @@ export class ConfigurationComponents {
             METADATA: "it.uniroma2.art.semanticturkey.config.contribution.StoredMetadataContributionConfiguration",
             STABLE: "it.uniroma2.art.semanticturkey.config.contribution.StoredStableResourceContributionConfiguration"
         }
-    }
+    };
 }
 
 export class Reference {

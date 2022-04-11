@@ -3,7 +3,6 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { concat, Observable } from 'rxjs';
 import { finalize, map, toArray } from 'rxjs/operators';
 import { ModalOptions } from '../modal-dialogs/Modals';
-import { LinksetMetadata } from '../models/Metadata';
 import { SearchMode, SearchSettings, StatusFilter } from '../models/Properties';
 import { AnnotatedValue, Resource } from '../models/Resources';
 import { TripleForSearch } from '../models/Search';
@@ -69,12 +68,12 @@ export class AlignmentsSearchbar {
     }
 
     openSearchSettings() {
-		const modalRef: NgbModalRef = this.modalService.open(SearchSettingsModal, new ModalOptions());
+        const modalRef: NgbModalRef = this.modalService.open(SearchSettingsModal, new ModalOptions());
         modalRef.componentInstance.projectCtx = this.sourceCtx;
         modalRef.componentInstance.roles = [];
         return modalRef.result;
     }
-    
+
     doSearch() {
         if (this.searchStr == null || this.searchStr.trim() == "") return;
 
@@ -88,26 +87,26 @@ export class AlignmentsSearchbar {
             map(results => {
                 sourceDatasetResults = results;
             })
-        ))
+        ));
         if (inTarget) {
             searchFn.push(this.searchInTarget().pipe(
                 map(results => {
                     targetDatasetResults = results;
                 })
-            ))
+            ));
         }
 
         this.searchLoading = true;
         concat(...searchFn).pipe(
             toArray(),
-            finalize(() => this.searchLoading = false)
+            finalize(() => { this.searchLoading = false; })
         ).subscribe(() => {
             const modalRef: NgbModalRef = this.modalService.open(AlignmentsSearchResultsModal, new ModalOptions('lg'));
             modalRef.componentInstance.sourceProject = this.sourceCtx.getProject();
             modalRef.componentInstance.targetProject = this.targetDatasetAvailable ? this.targetCtx.getProject() : null;
             modalRef.componentInstance.sourceResults = sourceDatasetResults;
             modalRef.componentInstance.targetResults = targetDatasetResults;
-        })
+        });
     }
 
     private searchInSource(): Observable<AnnotatedValue<Resource>[]> {
@@ -115,10 +114,10 @@ export class AlignmentsSearchbar {
         HttpServiceContext.setContextProject(this.sourceCtx.getProject());
         return this.searchService.advancedSearch(this.searchStr, this.searchSettings.useLocalName, this.searchSettings.useURI,
             this.searchSettings.useNotes, this.searchSettings.stringMatchMode, StatusFilter.ANYTHING, null, null, null, null, null, null, [outgoingSearch]).pipe(
-            finalize(() => {
-                HttpServiceContext.removeContextProject();
-            })
-        );
+                finalize(() => {
+                    HttpServiceContext.removeContextProject();
+                })
+            );
     }
 
     private searchInTarget(): Observable<AnnotatedValue<Resource>[]> {
@@ -126,11 +125,11 @@ export class AlignmentsSearchbar {
         HttpServiceContext.setContextProject(this.targetCtx.getProject());
         return this.searchService.searchAlignedResources(this.searchStr, this.searchSettings.useLocalName, this.searchSettings.useURI, this.searchSettings.stringMatchMode,
             this.searchSettings.useNotes).pipe(
-            finalize(() => {
-                HttpServiceContext.removeConsumerProject();
-                HttpServiceContext.removeContextProject();
-            })
-        )
+                finalize(() => {
+                    HttpServiceContext.removeConsumerProject();
+                    HttpServiceContext.removeContextProject();
+                })
+            );
     }
 
     updateSearchMode(mode: SearchMode, event: Event) {
@@ -144,7 +143,7 @@ export class AlignmentsSearchbar {
         this.datasetSearchMode = mode;
         Cookie.setCookie(Cookie.ALIGNMENT_SEARCH_DATASET_MODE, mode);
     }
-    
+
 }
 
 enum DatasetSearchMode {

@@ -61,7 +61,7 @@ export class ResViewUtils {
         ResViewPartition.constituents,
         ResViewPartition.rdfsMembers,
         ResViewPartition.properties
-    ]
+    ];
 
     public static getResourceViewPartitionLabelTranslationKey(partition: ResViewPartition): string {
         switch (partition) {

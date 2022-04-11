@@ -8,7 +8,7 @@ export class Size {
     };
     public static Circle = {
         radius: 40
-    }
+    };
     /**
      * Same as rectangle, but with corner "cutted"
      */
@@ -16,13 +16,13 @@ export class Size {
         base: Size.Rectangle.base,
         height: Size.Rectangle.height,
         cut: 10
-    }
+    };
 
     public static Label = {
         base: 90,
         height: 40,
         cut: 10
-    }
+    };
 }
 
 export class Constants {

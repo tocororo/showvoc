@@ -93,7 +93,7 @@ export abstract class AbstractProjectCreationModal {
                     this.selectedRemoteRepoConfig = null;
                 }
             }
-        )
+        );
     }
 
     /**

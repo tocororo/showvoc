@@ -9,7 +9,7 @@ export class GlobalSearchResult {
     repository: {
         id: string;
         open: boolean;
-    }
+    };
     details: SearchResultDetails[];
     show?: string; //not in the response, computed later for each result
 }

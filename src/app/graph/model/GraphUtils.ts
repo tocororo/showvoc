@@ -8,24 +8,24 @@ export class GraphUtils {
     public static computeCenter(node1: Node, node2: Node): { x: number, y: number } {
         return {
             x: (node1.x + node2.x) / 2,
-			y: (node1.y + node2.y) / 2
-        }
+            y: (node1.y + node2.y) / 2
+        };
     }
 
     public static calculateNormalVector(node1: Node, node2: Node, length: number) {
-		let dx = node2.x - node1.x;
-		let dy = node2.y - node1.y;
+        let dx = node2.x - node1.x;
+        let dy = node2.y - node1.y;
 
-		let nx = -dy;
-		let ny = dx;
+        let nx = -dy;
+        let ny = dx;
 
-		var vlength = Math.sqrt(nx * nx + ny * ny);
+        let vlength = Math.sqrt(nx * nx + ny * ny);
 
-		var ratio = vlength !== 0 ? length / vlength : 0;
+        let ratio = vlength !== 0 ? length / vlength : 0;
 
-		return {"x": nx * ratio, "y": ny * ratio};
-    };
-    
+        return { "x": nx * ratio, "y": ny * ratio };
+    }
+
     /**
      * Returns the coordinates (x, y) of the intersection point between the link line and the border of the target node
      */
@@ -38,7 +38,7 @@ export class GraphUtils {
             let length: number = Math.sqrt(dx * dx + dy * dy);
 
             if (length === 0) { //avoid division per 0 when source and target are the same node
-                return {x: link.source.x, y: link.source.y};
+                return { x: link.source.x, y: link.source.y };
             }
 
             let innerDistance = this.distanceToBorder(dx, dy, link.target);
@@ -48,9 +48,9 @@ export class GraphUtils {
             let x = dx * ratio + link.source.x;
             let y = dy * ratio + link.source.y;
 
-            return {x: x, y: y};
+            return { x: x, y: y };
         } else {
-            return { x: link.target.x, y: link.target.y }
+            return { x: link.target.x, y: link.target.y };
         }
     }
 
@@ -58,7 +58,7 @@ export class GraphUtils {
      * Returns the distance of the node border from the center
      * @param dx 
      * @param dy 
-     * @param nodeShape 
+     * @param node 
      */
     private static distanceToBorder(dx: number, dy: number, node: Node) {
         let nodeShape: NodeShape = node.getNodeShape();

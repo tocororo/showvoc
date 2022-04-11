@@ -168,7 +168,7 @@ export class Repository {
 export class RepositorySummary {
     public id: string;
     public description: string;
-    public remoteRepoSummary: RemoteRepositorySummary
+    public remoteRepoSummary: RemoteRepositorySummary;
 }
 export class RemoteRepositorySummary {
     public serverURL: string;
@@ -198,7 +198,7 @@ export class RepositoryAccess {
     public stringify(): string {
         let repoAccess: any = {
             "@type": this.type,
-        }
+        };
         //if the repository access is remote, add the configuration
         if (this.type == RepositoryAccessType.CreateRemote || this.type == RepositoryAccessType.AccessExistingRemote) {
             repoAccess.serverURL = this.configuration.serverURL;

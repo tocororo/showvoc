@@ -29,19 +29,19 @@ export class AlignmentsTreePanelComponent {
     }
 
     refreshProfile() {
-        this.basicModals.confirm({ key: "DATASETS.ACTIONS.PROFILE_DATASET" }, 
-            { key: "MESSAGES.REFRESH_METADATA_CONFIRM", params: { datasetName: SVContext.getWorkingProject().getName() }}, ModalType.info).then(
-            () => {
-                this.loadingProfile = true;
-                this.mapleService.profileProject().pipe(
-                    finalize(() => this.loadingProfile = false)
-                ).subscribe(
-                    () => {
-                        this.refresh();
-                    }
-                );
-            }
-        );
+        this.basicModals.confirm({ key: "DATASETS.ACTIONS.PROFILE_DATASET" },
+            { key: "MESSAGES.REFRESH_METADATA_CONFIRM", params: { datasetName: SVContext.getWorkingProject().getName() } }, ModalType.info).then(
+                () => {
+                    this.loadingProfile = true;
+                    this.mapleService.profileProject().pipe(
+                        finalize(() => { this.loadingProfile = false; })
+                    ).subscribe(
+                        () => {
+                            this.refresh();
+                        }
+                    );
+                }
+            );
     }
 
     onLinksetSelected(linkset: LinksetMetadata) {

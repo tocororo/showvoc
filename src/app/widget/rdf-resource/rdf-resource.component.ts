@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { AnnotatedValue, Literal, RDFResourceRolesEnum, ResAttribute, Resource, Value, ResourceNature } from 'src/app/models/Resources';
-import { ResourceUtils } from 'src/app/utils/ResourceUtils';
-import { UIUtils } from 'src/app/utils/UIUtils';
+import { Component, Input, SimpleChanges } from '@angular/core';
+import { AnnotatedValue, Literal, RDFResourceRolesEnum, ResAttribute, Resource, ResourceNature, Value } from 'src/app/models/Resources';
 import { XmlSchema } from 'src/app/models/Vocabulary';
+import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 import { SVProperties } from 'src/app/utils/SVProperties';
+import { UIUtils } from 'src/app/utils/UIUtils';
 
 @Component({
     selector: 'rdf-resource',
@@ -50,9 +50,9 @@ export class RdfResourceComponent {
         this.renderingLabel = ResourceUtils.getRendering(this.resource, this.rendering);
     }
 
-	/**
-	 * Initializes the class of the resource text: green if the resource is in the staging-add-graph, red if it's in the staging-remove-graph
-	 */
+    /**
+     * Initializes the class of the resource text: green if the resource is in the staging-add-graph, red if it's in the staging-remove-graph
+     */
     private initRenderingClass() {
         this.renderingClass = "";
         let value = this.resource.getValue();
@@ -88,16 +88,16 @@ export class RdfResourceComponent {
         }
     }
 
-	/**
-	 * If the resource is a literal with a link, splits the literal value so it can be rendered with different elements
-	 * like <span> for plain text (even elements of array) or <a> for url (odd elements)
-	 */
+    /**
+     * If the resource is a literal with a link, splits the literal value so it can be rendered with different elements
+     * like <span> for plain text (even elements of array) or <a> for url (odd elements)
+     */
     private initLiteralWithLink() {
         this.literalWithLink = false;
         let value = this.resource.getValue();
         if (value instanceof Literal) {
             let label = value.getLabel();
-            let regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g;
+            let regexToken = /(((ftp|https?):\/\/)[-\w@:%_+.~#?,&//=]+)|((mailto:)?[_.\w-]+@([\w][\w-]+\.)+[a-zA-Z]{2,3})/g;
             let urlArray: string[] = [];
 
             let matchArray: RegExpExecArray;
@@ -108,7 +108,7 @@ export class RdfResourceComponent {
             if (urlArray.length > 0) {
                 this.literalWithLink = true;
                 this.splittedLiteral = [];
-                for (var i = 0; i < urlArray.length; i++) {
+                for (let i = 0; i < urlArray.length; i++) {
                     let idx: number = 0;
                     let urlStartIdx: number = label.indexOf(urlArray[i]);
                     let urlEndIdx: number = label.indexOf(urlArray[i]) + urlArray[i].length;
@@ -125,17 +125,17 @@ export class RdfResourceComponent {
         }
     }
 
-	/**
-	 * Initializes the source of the icon image
-	 */
+    /**
+     * Initializes the source of the icon image
+     */
     private initImgSrc() {
         this.imgSrc = UIUtils.getImageSrc(this.resource);
     }
 
-	/**
-	 * Returns the language tag of the current resource in order to show it as title of resource icon (flag)
-	 * Note: this should be used in template only when isResourceWithLang returns true
-	 */
+    /**
+     * Returns the language tag of the current resource in order to show it as title of resource icon (flag)
+     * Note: this should be used in template only when isResourceWithLang returns true
+     */
     private initLang(): string {
         let lang: string = null;
         let value = this.resource.getValue();
@@ -154,10 +154,10 @@ export class RdfResourceComponent {
         return lang;
     }
 
-	/**
-	 * Returns true if the current resource langTag has a flag image available and the show_flag is true.
-	 * This method should be called only for resource with lang, so it should depend from isResourceWithLang
-	 */
+    /**
+     * Returns true if the current resource langTag has a flag image available and the show_flag is true.
+     * This method should be called only for resource with lang, so it should depend from isResourceWithLang
+     */
     private isLangFlagAvailable(): boolean {
         if (this.svProp.getShowFlags()) {
             return !this.imgSrc.includes("unknown");
@@ -171,10 +171,10 @@ export class RdfResourceComponent {
         return UIUtils.getFlagImgSrc("unknown");
     }
 
-	/**
-	 * Tells if the described resource is explicit.
-	 * Useful for flag icons since they have not the "transparent" version (as for the concept/class/property... icons)
-	 */
+    /**
+     * Tells if the described resource is explicit.
+     * Useful for flag icons since they have not the "transparent" version (as for the concept/class/property... icons)
+     */
     private isExplicit(): boolean {
         return this.resource.getAttribute(ResAttribute.EXPLICIT) || this.resource.getAttribute(ResAttribute.EXPLICIT) == undefined;
     }

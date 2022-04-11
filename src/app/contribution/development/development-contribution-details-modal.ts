@@ -18,13 +18,9 @@ export class DevelopmentContributionDetailsModal {
         [SKOS.uri]: Project.getPrettyPrintModelType(SKOS.uri),
         [SKOSXL.uri]: Project.getPrettyPrintModelType(SKOSXL.uri),
         [OntoLex.uri]: Project.getPrettyPrintModelType(OntoLex.uri)
-    }
+    };
 
     constructor(public activeModal: NgbActiveModal) { }
-
-    // ok() {
-    // 	this.activeModal.close();
-    // }
 
     close() {
         this.activeModal.dismiss();

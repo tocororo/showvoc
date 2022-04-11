@@ -89,7 +89,7 @@ export class PartitionFilter {
         for (let role in this.rolePartitionMap) {
             if (this.rolePartitionMap[role] == null) {
                 //set the individual partitions (as fallback) to those roles that have no partitions specified
-                this.rolePartitionMap[role] = this.rolePartitionMap[RDFResourceRolesEnum.individual]
+                this.rolePartitionMap[role] = this.rolePartitionMap[RDFResourceRolesEnum.individual];
             }
         }
 
@@ -188,7 +188,7 @@ export class PartitionFilter {
                     rps.partitions.forEach(p => {
                         p.checked = true;
                     });
-                })
+                });
                 this.updatePref();
             },
             () => {}

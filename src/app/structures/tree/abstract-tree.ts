@@ -59,7 +59,7 @@ export abstract class AbstractTree extends AbstractStruct {
             path => {
                 if (path.length == 0) {
                     this.onTreeNodeNotReachable(node);
-                };
+                }
                 this.expandPath(path);
             }
         );
@@ -72,12 +72,12 @@ export abstract class AbstractTree extends AbstractStruct {
      * @param path 
      */
     ensureRootVisibility(resource: AnnotatedValue<IRI>, path: AnnotatedValue<IRI>[]): boolean {
-        for (var i = 0; i < this.nodes.length; i++) {
+        for (let i = 0; i < this.nodes.length; i++) {
             if (this.nodes[i].getValue().equals(resource.getValue())) {
                 if (i >= this.nodesLimit) {
                     //update rootLimit so that node at index i is within the range
-                    let scrollStep: number = ((i - this.nodesLimit)/this.increaseRate)+1;
-                    this.nodesLimit = this.nodesLimit + this.increaseRate*scrollStep;
+                    let scrollStep: number = ((i - this.nodesLimit) / this.increaseRate) + 1;
+                    this.nodesLimit += this.increaseRate * scrollStep;
                 }
                 //if there was any pending search, reset it
                 if (this.pendingSearchPath) {
@@ -95,8 +95,8 @@ export abstract class AbstractTree extends AbstractStruct {
         //open tree from root to node
         if (this.ensureRootVisibility(path[0], path)) { //if root is visible
             setTimeout(() => { //wait the the UI is updated after the (possible) update of rootLimit
-                var childrenNodeComponent = this.viewChildrenNode.toArray();
-                for (var i = 0; i < childrenNodeComponent.length; i++) {//looking for first node (root) to expand
+                let childrenNodeComponent = this.viewChildrenNode.toArray();
+                for (let i = 0; i < childrenNodeComponent.length; i++) { //looking for first node (root) to expand
                     if (childrenNodeComponent[i].node.getValue().equals(path[0].getValue())) {
                         //let the found node expand itself and the remaining path
                         path.splice(0, 1);
@@ -110,14 +110,14 @@ export abstract class AbstractTree extends AbstractStruct {
 
     onTreeNodeNotReachable(node: AnnotatedValue<IRI>) {
         if (this.context == TreeListContext.dataPanel) {
-            this.basicModals.confirm({ key: "COMMONS.ACTIONS.SEARCH" }, 
-                { key: "MESSAGES.RES_NOT_REACHABLE_IN_TREE_DIALOG_RES_VIEW_CONFIRM", params: { resource: node.getShow() }},
+            this.basicModals.confirm({ key: "COMMONS.ACTIONS.SEARCH" },
+                { key: "MESSAGES.RES_NOT_REACHABLE_IN_TREE_DIALOG_RES_VIEW_CONFIRM", params: { resource: node.getShow() } },
                 ModalType.warning).then(
-                confirm => { 
-                    this.sharedModals.openResourceView(node.getValue());
-                },
-                () => {}
-            );
+                    confirm => {
+                        this.sharedModals.openResourceView(node.getValue());
+                    },
+                    () => { }
+                );
         } else {
             this.basicModals.alert({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.RES_NOT_REACHABLE_IN_TREE", params: { resource: node.getShow() } }, ModalType.warning);
         }

@@ -17,7 +17,7 @@ export class ResourcesServices {
      * @param resource 
      */
     getResourceDescription(resource: Resource): Observable<AnnotatedValue<Resource>> {
-        var params: any = {
+        let params: any = {
             resource: resource
         };
         return this.httpMgr.doGet(this.serviceName, "getResourceDescription", params).pipe(
@@ -33,7 +33,7 @@ export class ResourcesServices {
      */
     getResourcesInfo(resources: IRI[]): Observable<AnnotatedValue<IRI>[]> {
         let resourcesIri: string[] = resources.map(r => r.toNT());
-        var params: any = {
+        let params: any = {
             resources: JSON.stringify(resourcesIri)
         };
         return this.httpMgr.doPost(this.serviceName, "getResourcesInfo", params).pipe(
@@ -48,7 +48,7 @@ export class ResourcesServices {
      * @param resource
      */
     getResourcePosition(resource: IRI): Observable<ResourcePosition> {
-        var params: any = {
+        let params: any = {
             resource: resource
         };
         return this.httpMgr.doGet(this.serviceName, "getResourcePosition", params).pipe(

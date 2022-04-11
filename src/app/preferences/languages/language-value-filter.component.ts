@@ -11,7 +11,7 @@ import { SVProperties } from 'src/app/utils/SVProperties';
 export class LanguageValueFilterComponent {
 
     sortOrder: SortOrder = SortOrder.ISO_CODE_ASCENDING;
-    
+
     filterLanguages: LanguageItem[] = [];
     filterEnabled: boolean = false;
 
@@ -24,7 +24,7 @@ export class LanguageValueFilterComponent {
 
         if (preferenceLangs.length == 1 && preferenceLangs[0] == "*") { //"*" stands for all languages
             //set as active all the available langs
-            for (var i = 0; i < projectLanguages.length; i++) {
+            for (let i = 0; i < projectLanguages.length; i++) {
                 this.filterLanguages.push({
                     lang: projectLanguages[i],
                     active: false
@@ -32,7 +32,7 @@ export class LanguageValueFilterComponent {
             }
         } else {
             //set as active only the listed by the preference
-            for (var i = 0; i < projectLanguages.length; i++) {
+            for (let i = 0; i < projectLanguages.length; i++) {
                 this.filterLanguages.push({
                     lang: projectLanguages[i],
                     active: (preferenceLangs.indexOf(projectLanguages[i].tag) != -1) //active if the language is among the listed in preferences
@@ -50,21 +50,21 @@ export class LanguageValueFilterComponent {
 
     changeAllLangStatus(checked: boolean) {
         this.filterLanguages.forEach(l => {
-            l.active = checked
-        })
+            l.active = checked;
+        });
         this.updatePref();
     }
 
     private updatePref() {
         //collect the active languages to set in the preference
-        var preferenceLangs: string[] = [];
-        var activeLangs: LanguageItem[] = this.getActiveLanguageItems();
+        let preferenceLangs: string[] = [];
+        let activeLangs: LanguageItem[] = this.getActiveLanguageItems();
         activeLangs.forEach(l => {
             preferenceLangs.push(l.lang.tag);
         });
         this.svProp.setValueFilterLanguages({ languages: preferenceLangs, enabled: this.filterEnabled });
     }
-    
+
     changeIsocodeOrder() {
         if (this.sortOrder == SortOrder.ISO_CODE_ASCENDING) {
             this.sortOrder = SortOrder.ISO_CODE_DESCENDING;
@@ -99,8 +99,8 @@ export class LanguageValueFilterComponent {
     //Utils 
 
     getActiveLanguageItems(): LanguageItem[] {
-        var activeLangs: LanguageItem[] = [];
-        for (var i = 0; i < this.filterLanguages.length; i++) {
+        let activeLangs: LanguageItem[] = [];
+        for (let i = 0; i < this.filterLanguages.length; i++) {
             if (this.filterLanguages[i].active) {
                 activeLangs.push(this.filterLanguages[i]);
             }

@@ -21,35 +21,35 @@ import { SparqlComponent } from './sparql/sparql.component';
 import { YasguiComponent } from './sparql/yasgui.component';
 
 @NgModule({
-	declarations: [
-		DatasetsComponent,
-		DatasetViewComponent,
-		DatasetDataComponent,
-		ExportResultRdfModal,
-		LexicalizationSetsRenderer,
-		MetadataComponent,
-		SparqlComponent,
-		SparqlTabComponent,
-		YasguiComponent,
-	],
-	imports: [
-		AlignmentsModule,
-		CommonModule,
-		DragDropModule,
-		FormsModule,
-		NgbDropdownModule,
-		NgbNavModule,
-		ResourceViewModule,
-		RouterModule,
-		StructuresModule,
-		TranslateModule,
-		WidgetModule,
-	],
-	providers: [
-		BasicModalsServices
-	],
-	entryComponents: [
-		ExportResultRdfModal
-	]
+    declarations: [
+        DatasetsComponent,
+        DatasetViewComponent,
+        DatasetDataComponent,
+        ExportResultRdfModal,
+        LexicalizationSetsRenderer,
+        MetadataComponent,
+        SparqlComponent,
+        SparqlTabComponent,
+        YasguiComponent,
+    ],
+    imports: [
+        AlignmentsModule,
+        CommonModule,
+        DragDropModule,
+        FormsModule,
+        NgbDropdownModule,
+        NgbNavModule,
+        ResourceViewModule,
+        RouterModule,
+        StructuresModule,
+        TranslateModule,
+        WidgetModule,
+    ],
+    providers: [
+        BasicModalsServices
+    ],
+    entryComponents: [
+        ExportResultRdfModal
+    ]
 })
 export class DatasetsModule { }

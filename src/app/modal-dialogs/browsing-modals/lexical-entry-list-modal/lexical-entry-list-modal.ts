@@ -32,7 +32,7 @@ export class LexicalEntryListModal extends AbstractStructureModal {
                 lex => {
                     this.activeLexicon = <AnnotatedValue<IRI>>lex;
                 }
-            )
+            );
         }
     }
 
@@ -44,7 +44,7 @@ export class LexicalEntryListModal extends AbstractStructureModal {
                 this.activeLexicon = lexicon;
             },
             () => { }
-        )
+        );
     }
 
 }

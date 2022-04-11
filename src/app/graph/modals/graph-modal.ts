@@ -6,7 +6,7 @@ import { GraphMode } from '../abstract-graph';
 import { ForceDirectedGraph } from "../model/ForceDirectedGraph";
 
 @Component({
-	selector: "graph-modal",
+    selector: "graph-modal",
     templateUrl: "./graph-modal.html"
 })
 export class GraphModal {
@@ -16,18 +16,18 @@ export class GraphModal {
     @Input() rendering: boolean;
     @Input() role?: RDFResourceRolesEnum; //needed in data-oriented graph in order to inform the graph panel which role should allow to add
 
-	constructor(public activeModal: NgbActiveModal, private elementRef: ElementRef) { }
-	
-	ngAfterViewInit() {
-		UIUtils.setFullSizeModal(this.elementRef);
-	}
-    
-	ok() {
-		this.activeModal.close();
-	}
+    constructor(public activeModal: NgbActiveModal, private elementRef: ElementRef) { }
 
-	close() {
-		this.activeModal.dismiss();
-	}
+    ngAfterViewInit() {
+        UIUtils.setFullSizeModal(this.elementRef);
+    }
+
+    ok() {
+        this.activeModal.close();
+    }
+
+    close() {
+        this.activeModal.dismiss();
+    }
 
 }

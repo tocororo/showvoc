@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpManager } from '../utils/HttpManager';
-import { SVEventHandler } from '../utils/SVEventHandler';
 import { Observable } from 'rxjs';
-import { PrefixMapping } from '../models/Metadata';
 import { map } from 'rxjs/operators';
+import { PrefixMapping } from '../models/Metadata';
+import { HttpManager } from '../utils/HttpManager';
 import { SVContext } from '../utils/SVContext';
 
 @Injectable()
@@ -21,12 +20,12 @@ export class MetadataServices {
      * "prefix" the prefix
      */
     getNamespaceMappings(): Observable<PrefixMapping[]> {
-        var params: any = {};
+        let params: any = {};
         return this.httpMgr.doGet(this.serviceName, "getNamespaceMappings", params).pipe(
             map(stResp => {
-                var mappings: PrefixMapping[] = [];
-                for (var i = 0; i < stResp.length; i++) {
-                    var m: PrefixMapping = {
+                let mappings: PrefixMapping[] = [];
+                for (let i = 0; i < stResp.length; i++) {
+                    let m: PrefixMapping = {
                         prefix: stResp[i].prefix,
                         namespace: stResp[i].namespace,
                         explicit: stResp[i].explicit
@@ -47,12 +46,12 @@ export class MetadataServices {
     //  * "imports": array of recursive imports
     //  */
     // getImports(): Observable<OntologyImport[]> {
-    //     var params: any = {};
+    //     let params: any = {};
     //     return this.httpMgr.doGet(this.serviceName, "getImports", params).map(
     //         stResp => {
-    //             var importedOntologies: OntologyImport[] = [];
+    //             let importedOntologies: OntologyImport[] = [];
 
-    //             for (var i = 0; i < stResp.length; i++) {
+    //             for (let i = 0; i < stResp.length; i++) {
     //                 importedOntologies.push(this.parseImport(stResp[i]));
     //             }
     //             return importedOntologies;
@@ -61,11 +60,11 @@ export class MetadataServices {
     // }
 
     // private parseImport(importNode: any): OntologyImport {
-    //     var id: string = importNode['@id'];
-    //     var status: ImportStatus = importNode.status;
-    //     var imports: OntologyImport[] = [];
+    //     let id: string = importNode['@id'];
+    //     let status: ImportStatus = importNode.status;
+    //     let imports: OntologyImport[] = [];
     //     if (importNode.imports != null) {
-    //         for (var i = 0; i < importNode.imports.length; i++) {
+    //         for (let i = 0; i < importNode.imports.length; i++) {
     //             imports.push(this.parseImport(importNode.imports[i]));
     //         }
     //     }
@@ -76,7 +75,7 @@ export class MetadataServices {
      * Returns the default namespace of the currently open project
      */
     getDefaultNamespace(): Observable<string> {
-        var params: any = {};
+        let params: any = {};
         return this.httpMgr.doGet(this.serviceName, "getDefaultNamespace", params);
     }
 
@@ -84,7 +83,7 @@ export class MetadataServices {
      * Returns the baseURI of the currently open project
      */
     getBaseURI(): Observable<string> {
-        var params: any = {};
+        let params: any = {};
         return this.httpMgr.doGet(this.serviceName, "getBaseURI", params);
     }
 
@@ -92,7 +91,7 @@ export class MetadataServices {
      * Returns the URI obtained expanding the given qname
      */
     expandQName(qname: string): Observable<string> {
-        var params: any = {
+        let params: any = {
             qname: qname
         };
         return this.httpMgr.doGet(this.serviceName, "expandQName", params);

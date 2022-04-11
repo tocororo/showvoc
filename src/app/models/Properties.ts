@@ -6,7 +6,7 @@ import { OWL, RDF, RDFS } from './Vocabulary';
 /**
  * Names of the property of the Settings (at every levels: system, project, user, project-user)
  */
- export enum SettingsEnum {
+export enum SettingsEnum {
     adminList = "adminList",
     authService = "authService",
     conceptTree = "conceptTree",
@@ -33,7 +33,7 @@ export class PreferencesUtils {
             if (settingsProperty[prop] != null) {
                 localPref[prop] = settingsProperty[prop];
             }
-        })
+        });
     }
 }
 
@@ -52,9 +52,9 @@ export class Properties {
     static pref_class_tree_filter: string = "class_tree.filter";
 
     static pref_instance_list_visualization: string = "instance_list_visualization";
-    static pref_instance_list_safe_to_go_limit: string = "instance_list_safe_to_go_limit";s
+    static pref_instance_list_safe_to_go_limit: string = "instance_list_safe_to_go_limit";
     static pref_instance_list_allow_visualization_change: string = "instance_list_allow_visualization_change";
-    
+
     static pref_concept_tree_visualization: string = "concept_tree_visualization";
     static pref_concept_tree_safe_to_go_limit: string = "concept_tree_safe_to_go_limit";
     static pref_concept_tree_allow_visualization_change: string = "concept_tree_allow_visualization_change";
@@ -102,7 +102,7 @@ export enum StatusFilter {
     UNDER_VALIDATION = "UNDER_VALIDATION",
     UNDER_VALIDATION_FOR_DEPRECATION = "UNDER_VALIDATION_FOR_DEPRECATION",
     ANYTHING = "ANYTHING",
-} 
+}
 
 export enum ClassIndividualPanelSearchMode {
     onlyClasses = "onlyClasses",
@@ -118,14 +118,14 @@ export class ClassTreePreference {
 export class ClassTreeFilter {
     enabled: boolean = true;
     map: { [key: string]: string[] } = { //map where keys are the URIs of a class and the values are the URIs of the subClasses to filter out
-        [RDFS.resource.getIRI()]: [ 
+        [RDFS.resource.getIRI()]: [
             OWL.allDifferent.getIRI(), OWL.allDisjointClasses.getIRI(), OWL.allDisjointProperties.getIRI(),
             OWL.annotation.getIRI(), OWL.axiom.getIRI(), OWL.negativePropertyAssertion.getIRI(), OWL.ontology.getIRI(),
             RDF.list.getIRI(), RDF.property.getIRI(), RDF.statement.getIRI(),
             RDFS.class.getIRI(), RDFS.container.getIRI(), RDFS.literal.getIRI(),
         ],
-        [OWL.thing.getIRI()]: [ OWL.nothing.getIRI(), OWL.namedIndividual.getIRI()]
-    }
+        [OWL.thing.getIRI()]: [OWL.nothing.getIRI(), OWL.namedIndividual.getIRI()]
+    };
 }
 
 export class InstanceListPreference {
@@ -151,8 +151,8 @@ export class ConceptTreePreference {
  * checksum: string - it is a representation of the request params (it could be a concat of the params serialization)
  * safe: boolean tells if the tree/list is safe to be initialized, namely if the amount of elements (root/items) are under a safety limit
  */
-export interface SafeToGoMap { [checksum: string]: SafeToGo };
-export interface SafeToGo { safe: boolean, count?: number };
+export interface SafeToGoMap { [checksum: string]: SafeToGo }
+export interface SafeToGo { safe: boolean, count?: number }
 
 export enum ConceptTreeVisualizationMode {
     searchBased = "searchBased",
@@ -226,14 +226,14 @@ export class SystemSettings {
 }
 
 export class VisualizationModeTranslation {
-    static translationMap: {[key: string]: string} = {
+    static translationMap: { [key: string]: string } = {
         [ConceptTreeVisualizationMode.hierarchyBased]: "DATA.COMMONS.VISUALIZATION_MODE.HIERARCHY_BASED",
         [ConceptTreeVisualizationMode.searchBased]: "DATA.COMMONS.VISUALIZATION_MODE.SEARCH_BASED",
         [InstanceListVisualizationMode.searchBased]: "DATA.COMMONS.VISUALIZATION_MODE.SEARCH_BASED",
         [InstanceListVisualizationMode.standard]: "DATA.COMMONS.VISUALIZATION_MODE.STANDARD",
         [LexEntryVisualizationMode.indexBased]: "DATA.COMMONS.VISUALIZATION_MODE.INDEX_BASED",
         [LexEntryVisualizationMode.searchBased]: "DATA.COMMONS.VISUALIZATION_MODE.SEARCH_BASED",
-    }
+    };
 }
 
 export class ShowVocSettings {
@@ -243,9 +243,9 @@ export class ShowVocSettings {
 
 export class VocBenchConnectionShowVocSettings {
     vbURL: string;
-	stHost: string;
-	adminEmail: string;
-	adminPassword: string = "";
+    stHost: string;
+    adminEmail: string;
+    adminPassword: string = "";
 }
 
 export enum AuthServiceMode {

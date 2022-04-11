@@ -94,7 +94,7 @@ export class BNode extends Resource {
 
     constructor(id: string) {
         super();
-        this.setID(id);;
+        this.setID(id);
     }
 
     getID(): string {
@@ -143,7 +143,7 @@ export class Literal extends Value {
         this.language = language;
     }
     getDatatype(): IRI {
-        return this.datatype
+        return this.datatype;
     }
     setDatatype(datatype: IRI) {
         this.datatype = datatype;
@@ -229,7 +229,7 @@ export class AnnotatedValue<T extends Value> {
      * Returns the graph where the annotated resource is defined (collected from the nature).
      */
     getResourceGraphs(): IRI[] {
-        let resGraphs: IRI[] = []
+        let resGraphs: IRI[] = [];
         if (this.value instanceof Resource) {
             let nature: ResourceNature[] = this.attributes[ResAttribute.NATURE];
             if (nature != null) {
@@ -316,11 +316,11 @@ export class PredicateObjects {
 
     getPredicate(): AnnotatedValue<IRI> {
         return this.predicate;
-    };
+    }
 
     getObjects(): AnnotatedValue<Value>[] {
         return this.objects;
-    };
+    }
 }
 
 export class ResAttribute {

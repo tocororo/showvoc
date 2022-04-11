@@ -26,7 +26,7 @@ export class ProjectSettingsModal {
     skosVisualizationModes: {value: ConceptTreeVisualizationMode, labelTranslationKey: string }[] = [
         { value: ConceptTreeVisualizationMode.hierarchyBased, labelTranslationKey: VisualizationModeTranslation.translationMap[ConceptTreeVisualizationMode.hierarchyBased] },
         { value: ConceptTreeVisualizationMode.searchBased, labelTranslationKey: VisualizationModeTranslation.translationMap[ConceptTreeVisualizationMode.searchBased] }
-    ]
+    ];
     selectedSkosMode: ConceptTreeVisualizationMode = this.skosVisualizationModes[0].value;
     skosAllowVisualizationChange: boolean;
 
@@ -34,7 +34,7 @@ export class ProjectSettingsModal {
     ontolexVisualizationModes: { value: LexEntryVisualizationMode, labelTranslationKey: string }[] = [
         { value: LexEntryVisualizationMode.indexBased, labelTranslationKey: VisualizationModeTranslation.translationMap[LexEntryVisualizationMode.indexBased] },
         { value: LexEntryVisualizationMode.searchBased, labelTranslationKey: VisualizationModeTranslation.translationMap[LexEntryVisualizationMode.searchBased] }
-    ]
+    ];
     selectedOntolexMode: LexEntryVisualizationMode = this.ontolexVisualizationModes[0].value;
     indexLength: number = 1;
     ontolexAllowVisualizationChange: boolean;
@@ -44,7 +44,7 @@ export class ProjectSettingsModal {
     instanceVisualizationModes: { value: InstanceListVisualizationMode, labelTranslationKey: string }[] = [
         { value: InstanceListVisualizationMode.standard, labelTranslationKey: VisualizationModeTranslation.translationMap[InstanceListVisualizationMode.standard] },
         { value: InstanceListVisualizationMode.searchBased, labelTranslationKey: VisualizationModeTranslation.translationMap[InstanceListVisualizationMode.searchBased] }
-    ]
+    ];
     selectedInstanceMode: InstanceListVisualizationMode = this.instanceVisualizationModes[0].value;
     instanceAllowVisualizationChange: boolean;
     
@@ -100,7 +100,7 @@ export class ProjectSettingsModal {
                     this.ontolexAllowVisualizationChange = this.lexEntryListPref.allowVisualizationChange;
                     this.ontolexAllowIndexLengthChange = this.lexEntryListPref.allowIndexLengthChange;
                 }
-            )
+            );
         }
     }
 

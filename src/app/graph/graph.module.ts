@@ -29,7 +29,7 @@ import { ResourceDetailsPanel } from './widget/resource-details-panel';
 
 @NgModule({
     declarations: [
-        DraggableDirective, 
+        DraggableDirective,
         ZoomableDirective,
 
         AlignmentLinkComponent,
@@ -39,17 +39,17 @@ import { ResourceDetailsPanel } from './widget/resource-details-panel';
         AlignmentDetailsPanel,
         DatasetDetailsPanel,
 
-        DataLinkComponent, 
-        DataNodeComponent, 
+        DataLinkComponent,
+        DataNodeComponent,
         DataGraphComponent,
-        DataGraphPanel, 
-        
-        ForceControlPanel, 
-        ResourceDetailsPanel, 
+        DataGraphPanel,
+
+        ForceControlPanel,
+        ResourceDetailsPanel,
         PartitionFilter,
         //modals
         GraphModal,
-        LinksFilterModal, 
+        LinksFilterModal,
         DataGraphSettingsModal
     ],
     imports: [
@@ -64,9 +64,9 @@ import { ResourceDetailsPanel } from './widget/resource-details-panel';
     exports: [
         AlignmentGraphPanelComponent
     ],
-    providers: [ D3Service, GraphModalServices ],
+    providers: [D3Service, GraphModalServices],
     entryComponents: [
-        GraphModal, 
+        GraphModal,
         LinksFilterModal,
         DataGraphSettingsModal
     ]

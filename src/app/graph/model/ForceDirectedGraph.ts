@@ -91,7 +91,7 @@ export class ForceDirectedGraph {
          */
         if (this.links.length > 0) {
             //resets all the offsets: useful since once the links are changed, some links could be no more overlapped
-            this.links.forEach(l => l.offset = 0);
+            this.links.forEach(l => { l.offset = 0; });
 
             //set offset for overlapping links (offsets are balanced around the 0, e.g. if 5 links => -2,-1,0,1,2)
             let overlappingLinkGroups = this.getOverlappingLinkGroups();
@@ -115,7 +115,7 @@ export class ForceDirectedGraph {
                 if (group.length == 1) {
                     group[0].offset = -1; //offset -1 in order to avoid multiplication by 0 when computing the control point of the loop
                 } else {
-                    for (let i = 0, x = group.length - 1; i < group.length; i++ , x--) {
+                    for (let i = 0, x = group.length - 1; i < group.length; i++, x--) {
                         let offset: number; //-1, 1, -2, 2, -3, 3, ...
                         if (x % 2 == 0) { //even index
                             offset = -x / 2 - 1;
@@ -274,7 +274,7 @@ export class GraphOptions {
         this.width = width;
         this.height = height;
         if (forces) {
-            this.forces = forces
+            this.forces = forces;
         } else {
             this.forces = new GraphForces();
         }

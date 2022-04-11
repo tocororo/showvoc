@@ -9,7 +9,7 @@ import { Project, RemoteRepositorySummary, RepositorySummary } from 'src/app/mod
 export class DeleteRemoteRepoModal {
     
     @Input() project: Project; 
-    @Input() repositories: RepositorySummary[]
+    @Input() repositories: RepositorySummary[];
 
     private selectionList: boolean[];
 

@@ -22,7 +22,7 @@ export class SchemeListComponent extends AbstractList {
         //handler when active schemes is changed programmatically when a searched concept belong to a non active scheme
         this.eventSubscriptions.push(eventHandler.schemeChangedEvent.subscribe(
             (schemes: IRI[]) => {
-                this.nodes.forEach((s: AnnotatedValue<IRI>) => s['checked'] = schemes.some(sc => sc.equals(s.getValue())));
+                this.nodes.forEach((s: AnnotatedValue<IRI>) => { s['checked'] = schemes.some(sc => sc.equals(s.getValue())); });
             }
         ));
     }
@@ -30,7 +30,7 @@ export class SchemeListComponent extends AbstractList {
     initImpl() {
         this.loading = true;
         this.skosService.getAllSchemes().pipe(
-            finalize(() => this.loading = false)
+            finalize(() => { this.loading = false; })
         ).subscribe(
             schemes => {
                 let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
@@ -47,12 +47,12 @@ export class SchemeListComponent extends AbstractList {
     }
 
     updateActiveSchemesPref() {
-        this.svProp.setActiveSchemes(SVContext.getProjectCtx(), this.collectCheckedSchemes())
+        this.svProp.setActiveSchemes(SVContext.getProjectCtx(), this.collectCheckedSchemes());
     }
 
     private collectCheckedSchemes(): IRI[] {
         //collect all the active scheme
-        var activeSchemes: IRI[] = [];
+        let activeSchemes: IRI[] = [];
         this.nodes.forEach(n => {
             if (n['checked']) {
                 activeSchemes.push(n.getValue());
@@ -62,12 +62,12 @@ export class SchemeListComponent extends AbstractList {
     }
 
     public activateAllScheme() {
-        this.nodes.forEach(n => n['checked'] = true);
+        this.nodes.forEach(n => { n['checked'] = true; });
         this.updateActiveSchemesPref();
     }
 
     public deactivateAllScheme() {
-        this.nodes.forEach(n => n['checked'] = false);
+        this.nodes.forEach(n => { n['checked'] = false; });
         this.updateActiveSchemesPref();
     }
 

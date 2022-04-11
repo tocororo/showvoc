@@ -14,11 +14,11 @@ export class ClassesServices {
 
     /**
      * takes a list of classes and return their description as if they were roots for a tree
-	 * (so more, role, explicit etc...)
+     * (so more, role, explicit etc...)
      * @param classList
      */
     getClassesInfo(classList: IRI[], options?: STRequestOptions): Observable<AnnotatedValue<IRI>[]> {
-        var params: any = {
+        let params: any = {
             classList: classList
         };
         return this.httpMgr.doGet(this.serviceName, "getClassesInfo", params, options).pipe(
@@ -31,9 +31,9 @@ export class ClassesServices {
     /**
      * Returns a list of AnnotatedValue subClasses of the given class
      * @param superClass class of which retrieve its subClasses
-	 */
+     */
     getSubClasses(superClass: IRI, numInst: boolean, options?: STRequestOptions): Observable<AnnotatedValue<IRI>[]> {
-        var params: any = {
+        let params: any = {
             superClass: superClass,
             numInst: numInst
         };
@@ -46,15 +46,15 @@ export class ClassesServices {
 
     /**
      * Returns the (explicit) instances of the class cls.
-	 * @param cls
+     * @param cls
      */
     getInstances(cls: IRI, options?: STRequestOptions): Observable<AnnotatedValue<Resource>[]> {
-        var params: any = {
+        let params: any = {
             cls: cls
         };
         return this.httpMgr.doGet(this.serviceName, "getInstances", params, options).pipe(
             map(stResp => {
-                var instances = ResourceDeserializer.createResourceArray(stResp);
+                let instances = ResourceDeserializer.createResourceArray(stResp);
                 return instances;
             })
         );
@@ -65,7 +65,7 @@ export class ClassesServices {
      * @param cls 
      */
     getNumberOfInstances(cls: IRI, options?: STRequestOptions): Observable<number> {
-        var params: any = {
+        let params: any = {
             cls: cls
         };
         return this.httpMgr.doGet(this.serviceName, "getNumberOfInstances", params, options);

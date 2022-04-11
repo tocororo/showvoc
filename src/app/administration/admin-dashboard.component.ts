@@ -8,7 +8,7 @@ import { SVContext } from '../utils/SVContext';
 })
 export class AdminDashboardComponent implements OnInit {
 
-    isAdmin: boolean
+    isAdmin: boolean;
 
     constructor() { }
 

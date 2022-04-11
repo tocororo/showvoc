@@ -107,7 +107,7 @@ export class StableContributionComponent extends AbstractContributionComponent {
         }
         if (missingField != null) {
             this.basicModals.alert({ key: "COMMONS.STATUS.INCOMPLETE_FORM" }, { key: "MESSAGES.MISSING_MANDATORY_FIELD", params: { missingField: missingField } }, ModalType.warning);
-            return;
+            return null;
         }
         let config: ConfigurationObject = {
             resourceName: this.resourceName,

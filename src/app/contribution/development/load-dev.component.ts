@@ -86,13 +86,13 @@ export class LoadDevResourceComponent {
                 this.inputFormats.forEach(f => {
                     f.fileExtensions.forEach(ext => {
                         extList.push("." + ext);
-                    })
+                    });
                 });
                 //remove duplicated extensions
                 extList = extList.filter((item: string, pos: number) => extList.indexOf(item) == pos);
                 this.filePickerAccept = extList.join(",");
             }
-        )
+        );
     }
 
     fileChangeEvent(file: File) {
@@ -101,7 +101,7 @@ export class LoadDevResourceComponent {
             this.inputOutputService.getParserFormatForFileName(file.name).subscribe(
                 format => {
                     if (format != null) {
-                        for (var i = 0; i < this.inputFormats.length; i++) {
+                        for (let i = 0; i < this.inputFormats.length; i++) {
                             if (this.inputFormats[i].name == format) {
                                 this.selectedInputFormat = this.inputFormats[i];
                                 return;
@@ -120,10 +120,10 @@ export class LoadDevResourceComponent {
     load() {
         let rdfLifterSpec: PluginSpecification = {
             factoryId: this.selectedLifterExtension.id,
-        }
+        };
         if (this.selectedLifterConfig != null) {
             if (this.selectedLifterConfig.requireConfiguration()) {
-                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.LIFTER_NOT_CONFIGURED"}, ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, { key: "MESSAGES.LIFTER_NOT_CONFIGURED" }, ModalType.warning);
                 return;
             }
             rdfLifterSpec.configType = this.selectedLifterConfig.type;
@@ -131,22 +131,22 @@ export class LoadDevResourceComponent {
         }
 
         this.loading = true;
-        this.svService.loadDevContributionData(this.token, this.projectName, this.contributorEmail, this.file, 
+        this.svService.loadDevContributionData(this.token, this.projectName, this.contributorEmail, this.file,
             this.selectedInputFormat.name, rdfLifterSpec, this.selectedImportAllowance).pipe(
-            finalize(() => this.loading = false)
-        ).subscribe(
-            () => {
-                let message: string = this.translateService.instant("MESSAGES.DATA_LOADED");
-                if (this.conversionFormat != ShowVocConversionFormat.EXCEL) {
-                    message += " " + this.translateService.instant("MESSAGES.YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB");
-                }
-                this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, message).then(
-                    () => {
-                        this.router.navigate(["/home"]);
+                finalize(() => { this.loading = false; })
+            ).subscribe(
+                () => {
+                    let message: string = this.translateService.instant("MESSAGES.DATA_LOADED");
+                    if (this.conversionFormat != ShowVocConversionFormat.EXCEL) {
+                        message += " " + this.translateService.instant("MESSAGES.YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB");
                     }
-                )
-            }
-        )
+                    this.basicModals.alert({ key: "ADMINISTRATION.DATASETS.MANAGEMENT.LOAD_DATA" }, message).then(
+                        () => {
+                            this.router.navigate(["/home"]);
+                        }
+                    );
+                }
+            );
     }
 
 

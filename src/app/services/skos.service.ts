@@ -21,7 +21,7 @@ export class SkosServices {
      */
     getTopConcepts(timestamp: number, schemes?: IRI[], broaderProps?: IRI[], narrowerProps?: IRI[], includeSubProperties?: boolean): 
             Observable<{ concepts: AnnotatedValue<IRI>[], timestamp: number }> {
-        var params: any = {
+        let params: any = {
             schemes: schemes,
             broaderProps: broaderProps,
             narrowerProps: narrowerProps,
@@ -32,7 +32,7 @@ export class SkosServices {
                 return {
                     concepts: ResourceDeserializer.createIRIArray(stResp),
                     timestamp: timestamp
-                }
+                };
             })
         );
     }
@@ -40,20 +40,18 @@ export class SkosServices {
     /**
      * 
      * @param schemes 
-     * @param schemeFilter 
      * @param broaderProps 
      * @param narrowerProps 
      * @param includeSubProperties 
-     * @param options 
      */
     countTopConcepts(schemes?: IRI[], broaderProps?: IRI[], narrowerProps?: IRI[], includeSubProperties?: boolean): Observable<number> {
-        var params: any = {
+        let params: any = {
             schemes: schemes,
             broaderProps: broaderProps,
             narrowerProps: narrowerProps,
             includeSubProperties: includeSubProperties,
         };
-        return this.httpMgr.doGet(this.serviceName, "countTopConcepts", params)
+        return this.httpMgr.doGet(this.serviceName, "countTopConcepts", params);
     }
 
     /**
@@ -63,7 +61,7 @@ export class SkosServices {
      * @return an array of narrowers
      */
     getNarrowerConcepts(concept: IRI, schemes?: IRI[], broaderProps?: IRI[], narrowerProps?: IRI[], includeSubProperties?: boolean): Observable<AnnotatedValue<IRI>[]> {
-        var params: any = {
+        let params: any = {
             concept: concept
         };
         if (schemes != null) {
@@ -92,7 +90,7 @@ export class SkosServices {
      * @return an array of broaders
      */
     getBroaderConcepts(concept: IRI, schemes: IRI[]): Observable<AnnotatedValue<IRI>[]> {
-        var params: any = {
+        let params: any = {
             concept: concept
         };
         if (schemes != null) {
@@ -113,7 +111,7 @@ export class SkosServices {
      * @return an array of schemes
      */
     getAllSchemes(): Observable<AnnotatedValue<IRI>[]> {
-        var params: any = {};
+        let params: any = {};
         return this.httpMgr.doGet(this.serviceName, "getAllSchemes", params).pipe(
             map(stResp => {
                 return ResourceDeserializer.createIRIArray(stResp);
@@ -126,7 +124,7 @@ export class SkosServices {
      * @param scheme
      */
     isSchemeEmpty(scheme: IRI): Observable<boolean> {
-        var params: any = {
+        let params: any = {
             scheme: scheme
         };
         return this.httpMgr.doGet(this.serviceName, "isSchemeEmpty", params);
@@ -137,7 +135,7 @@ export class SkosServices {
      * @param concept
      */
     getSchemesMatrixPerConcept(concept: IRI) {
-        var params: any = {
+        let params: any = {
             concept: concept
         };
         return this.httpMgr.doGet(this.serviceName, "getSchemesMatrixPerConcept", params).pipe(
@@ -153,7 +151,7 @@ export class SkosServices {
      * @param concept
      */
     getSchemesOfConcept(concept: IRI): Observable<AnnotatedValue<IRI>[]> {
-        var params: any = {
+        let params: any = {
             concept: concept
         };
         return this.httpMgr.doGet(this.serviceName, "getSchemesMatrixPerConcept", params).pipe(
@@ -178,7 +176,7 @@ export class SkosServices {
      * @param language
      */
     getAltLabels(concept: IRI, language: string): Observable<AnnotatedValue<Literal>[]> {
-        var params: any = {
+        let params: any = {
             concept: concept,
             language: language,
         };
@@ -196,7 +194,7 @@ export class SkosServices {
      * Gets the root collections
      */
     getRootCollections(): Observable<AnnotatedValue<IRI>[]> {
-        var params: any = {};
+        let params: any = {};
         return this.httpMgr.doGet(this.serviceName, "getRootCollections", params).pipe(
             map(stResp => {
                 return ResourceDeserializer.createIRIArray(stResp);
@@ -209,7 +207,7 @@ export class SkosServices {
      * @param container the URI of the container collection
      */
     getNestedCollections(container: IRI): Observable<AnnotatedValue<IRI>[]> {
-        var params: any = {
+        let params: any = {
             container: container
         };
         return this.httpMgr.doGet(this.serviceName, "getNestedCollections", params).pipe(

@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, ElementRef, EventEmitter, Input, Output, ViewChild, SimpleChanges, Directive } from "@angular/core";
+import { ChangeDetectorRef, Directive, ElementRef, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { AnnotatedValue, IRI } from '../models/Resources';
+import { D3Service } from './d3/d3.service';
 import { ForceDirectedGraph, GraphForces, GraphOptions } from "./model/ForceDirectedGraph";
 import { Link } from "./model/Link";
 import { Node } from "./model/Node";
-import { D3Service } from './d3/d3.service';
-import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 
 @Directive()
 export abstract class AbstractGraph {
@@ -56,7 +56,7 @@ export abstract class AbstractGraph {
         }
         this.linkAhead = null;
         this.elementSelected.emit(this.selectedElement);
-    };
+    }
 
     protected abstract onNodeDblClicked(node: Node): void;
 
@@ -74,7 +74,7 @@ export abstract class AbstractGraph {
         }
         this.linkAhead = <Link>this.selectedElement;
         this.elementSelected.emit(this.selectedElement);
-    };
+    }
 
     onBackgroundClicked() {
         this.selectedElement = null;
@@ -98,7 +98,7 @@ export abstract class AbstractGraph {
         source = '<?xml version="1.0" standalone="no"?>\r\n' + source;//add xml declaration
         source = source.replace(/<!--[\s\S]*?-->/g, "");//remove comments
         
-        var url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source); //convert svg source to URI data scheme.
+        let url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source); //convert svg source to URI data scheme.
         return url;
 
 
@@ -114,11 +114,11 @@ export abstract class AbstractGraph {
         // let img = new Image();
         // img.src = 'data:image/svg+xml;base64,' + window.btoa(source);
 
-        // var canvas = document.createElement("canvas");
+        // let canvas = document.createElement("canvas");
         // document.body.appendChild(canvas);
         // canvas.getContext("2d").drawImage(img, 0, 0);
 
-        // var url = canvas.toDataURL("image/png");
+        // let url = canvas.toDataURL("image/png");
         // return url;
     }
 
@@ -149,7 +149,7 @@ class ExportGraphUtils {
         this.removeNgAttributes(targetEl);
         let targetChildren: HTMLCollection = targetEl.children;
         let sourceChildren: HTMLCollection = sourceEl.children;
-        for (var i = 0; i < targetChildren.length; i++) {
+        for (let i = 0; i < targetChildren.length; i++) {
             let targetChildEl: HTMLElement = <HTMLElement>targetChildren.item(i);
             let sourceChildEl: HTMLElement = <HTMLElement>sourceChildren.item(i);
             this.processDom(targetChildEl, sourceChildEl);

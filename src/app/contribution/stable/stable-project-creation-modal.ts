@@ -22,16 +22,16 @@ export class StableProjectCreationModal extends AbstractProjectCreationModal {
 
     formLocked: boolean = true;
     lockTooltip: string = "The form has been partially pre-filled with the information contained in the contribution request. " +
-        "It is strongly recommended to leave them as they are. If you desire to change them anyway, you can unlock the field with the following switch."
+        "It is strongly recommended to leave them as they are. If you desire to change them anyway, you can unlock the field with the following switch.";
 
     //@Override access existing is not allowed when approving a contribution
-    repositoryAccessList: RepositoryAccessType[] = [RepositoryAccessType.CreateLocal, RepositoryAccessType.CreateRemote]
+    repositoryAccessList: RepositoryAccessType[] = [RepositoryAccessType.CreateLocal, RepositoryAccessType.CreateRemote];
 
 
-    constructor(activeModal: NgbActiveModal, settingsService: SettingsServices, extensionsService: ExtensionsServices, modalService: NgbModal, 
-        private svService: ShowVocServices, private basicModals: BasicModalsServices, ) {
-            super(activeModal, modalService, extensionsService, settingsService);
-        }
+    constructor(activeModal: NgbActiveModal, settingsService: SettingsServices, extensionsService: ExtensionsServices, modalService: NgbModal,
+        private svService: ShowVocServices, private basicModals: BasicModalsServices) {
+        super(activeModal, modalService, extensionsService, settingsService);
+    }
 
     ngOnInit() {
         this.projectName = this.contribution.resourceName;
@@ -50,7 +50,7 @@ export class StableProjectCreationModal extends AbstractProjectCreationModal {
         //in case of remote repository access, set the configuration
         if (this.isRepoAccessRemote()) {
             if (this.selectedRemoteRepoConfig == null) {
-                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, {key:"MESSAGES.REMOTE_REPO_ACCESS_NOT_CONFIGURED"}, ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.CONFIG.MISSING_CONFIGURATION" }, { key: "MESSAGES.REMOTE_REPO_ACCESS_NOT_CONFIGURED" }, ModalType.warning);
                 return;
             }
             repositoryAccess.setConfiguration(this.selectedRemoteRepoConfig);
@@ -65,12 +65,12 @@ export class StableProjectCreationModal extends AbstractProjectCreationModal {
             factoryId: this.selectedDataRepoExtension.id,
             configType: this.selectedDataRepoConfig.type,
             configuration: this.selectedDataRepoConfig.getPropertiesAsMap()
-        }
+        };
 
         this.loading = true;
         this.svService.approveStableContribution(this.projectName, new IRI(this.selectedSemModel), new IRI(this.selectedLexModel),
             this.baseURI, repositoryAccess, coreRepoSailConfigurerSpecification, this.contribution['relativeReference']).pipe(
-                finalize(() => this.loading = false)
+                finalize(() => { this.loading = false; })
             ).subscribe(
                 () => {
                     this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_CREATED" }, { key: "MESSAGES.CONTRIBUTION_APPROVED_DATASET_CREATED" });

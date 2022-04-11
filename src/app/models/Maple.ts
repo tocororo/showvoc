@@ -6,8 +6,8 @@ export class MatchingProblem {
 }
 export class Dataset {
     '@id': string;
-	'@type': string;
-	uriSpace: string;
+    '@type': string;
+    uriSpace: string;
     sparqlEndpoint?: string;
 }
 export class Pairing {

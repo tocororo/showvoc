@@ -11,7 +11,7 @@ export class ModelNode extends Node {
      */
     incomingNodes: Node[]; //list of node linked to this by an incoming link
     outgoingNodes: Node[]; //list of node linked to this by an outgoing link
-    
+
     constructor(res: AnnotatedValue<Value>) {
         super(res);
         this.incomingNodes = [];
@@ -78,9 +78,9 @@ export class ModelNode extends Node {
         } else if (shape == NodeShape.square) {
             this.measures = { width: Size.Square.side, height: Size.Square.side };
         } else if (shape == NodeShape.label) {
-            this.measures = { width: Size.Label.base, height: Size.Label.height }
+            this.measures = { width: Size.Label.base, height: Size.Label.height };
         } else if (shape == NodeShape.octagon) {
-            this.measures = { width: Size.Octagon.base, height: Size.Octagon.height }
+            this.measures = { width: Size.Octagon.base, height: Size.Octagon.height };
         }
 
     }
@@ -91,6 +91,6 @@ export class ModelNode extends Node {
     removeOutgoingNode(node: Node) {
         this.outgoingNodes.splice(this.outgoingNodes.indexOf(node), 1);
     }
-    
+
 
 }

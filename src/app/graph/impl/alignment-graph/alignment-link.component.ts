@@ -12,7 +12,7 @@ export class AlignmentLinkComponent extends AbstractLinkComponent {
     @Input() showPercentage: boolean = false;
 
     constructor(changeDetectorRef: ChangeDetectorRef) {
-        super(changeDetectorRef)
+        super(changeDetectorRef);
     }
 
     ngOnChanges(changes: SimpleChanges) {

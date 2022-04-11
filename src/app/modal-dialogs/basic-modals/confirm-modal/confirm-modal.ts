@@ -3,22 +3,22 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AbstractConfirmModal } from './abstract-confirm-modal';
 
 @Component({
-	selector: 'confirm-modal',
-	templateUrl: './confirm-modal.html',
-	styleUrls: ['../../modals.css']
+    selector: 'confirm-modal',
+    templateUrl: './confirm-modal.html',
+    styleUrls: ['../../modals.css']
 })
 export class ConfirmModal extends AbstractConfirmModal {
 
-	constructor(public activeModal: NgbActiveModal) {
-		super(activeModal);
-	}
+    constructor(public activeModal: NgbActiveModal) {
+        super(activeModal);
+    }
 
-	ok() {
-		this.activeModal.close();
-	}
+    ok() {
+        this.activeModal.close();
+    }
 
-	close() {
-		this.activeModal.dismiss();
-	}
+    close() {
+        this.activeModal.dismiss();
+    }
 
 }

@@ -55,18 +55,18 @@ export class GraphModalServices {
             if (!ResourceUtils.containsNode(annotatedRes, l.res.getValue())) {
                 annotatedRes.push(l.res);
             }
-        })
+        });
         this.resourceService.getResourcesInfo(annotatedRes.map(ar => ar.getValue())).subscribe(
             resources => {
                 resources.forEach(r => {
                     GraphUtils.getLinksWithPredicate(links, r.getValue()).forEach(l => {
                         l.res = r;
-                    })
+                    });
                     let n = GraphUtils.getNodeOfValue(nodes, r.getValue());
                     if (n != null) {
                         n.res = r;
                     }
-                })
+                });
                 let graph: ForceDirectedGraph = this.d3Service.getForceDirectedGraph(nodes, links, false);
 
                 const modalRef: NgbModalRef = this.modalService.open(GraphModal, new ModalOptions("full"));

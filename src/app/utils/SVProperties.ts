@@ -46,7 +46,7 @@ export class SVProperties {
                 projectPreferences.renderingLanguagesPreference = settings.getPropertyValue(SettingsEnum.languages).split(",");
             })
         );
-        
+
         let initStructuresPrefFn = this.settingsService.getSettings(ExtensionPointID.ST_CORE_ID, Scope.PROJECT_USER).pipe(
             map(settings => {
                 //concept tree pref (initialized here, eventually overwritten later with cookie)
@@ -62,7 +62,7 @@ export class SVProperties {
                 if (instListSetting != null) {
                     PreferencesUtils.mergePreference(projectPreferences.instanceListPreferences, instListSetting);
                 }
-                
+
                 //lex entry list pref (initialized here, eventually overwritten later with cookie)
                 projectPreferences.lexEntryListPreferences = new LexicalEntryListPreference();
                 let lexEntrySetting: LexicalEntryListPreference = settings.getPropertyValue(SettingsEnum.lexEntryList);
@@ -74,7 +74,7 @@ export class SVProperties {
 
         return forkJoin([initRenderingPrefFn, initStructuresPrefFn]).pipe(
             finalize(() => {
-                SVContext.removeTempProject()
+                SVContext.removeTempProject();
             }),
             map(() => {
                 //init also cookie-stored preferences
@@ -91,7 +91,7 @@ export class SVProperties {
                 projectSettings.projectLanguagesSetting = langsValue;
                 Languages.sortLanguages(projectSettings.projectLanguagesSetting);
             })
-        )
+        );
     }
 
     /**
@@ -111,7 +111,7 @@ export class SVProperties {
                 projectSettings.projectLanguagesSetting = langsValue;
                 Languages.sortLanguages(projectSettings.projectLanguagesSetting);
             })
-        )
+        );
     }
 
     setActiveSchemes(projectCtx: ProjectContext, schemes: IRI[]) {
@@ -171,7 +171,7 @@ export class SVProperties {
         SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences.visualization = mode;
     }
     setInstanceLisSafeToGoLimit(limit: number) {
-        Cookie.setCookie(Properties.pref_instance_list_safe_to_go_limit, limit+"", SVContext.getProjectCtx().getProject());
+        Cookie.setCookie(Properties.pref_instance_list_safe_to_go_limit, limit + "", SVContext.getProjectCtx().getProject());
         let instanceListPref = SVContext.getProjectCtx().getProjectPreferences().instanceListPreferences;
         instanceListPref.safeToGoLimit = limit;
         instanceListPref.safeToGoMap = {}; //changing the limit invalidated the safe => reset the map
@@ -184,7 +184,7 @@ export class SVProperties {
     }
     setConceptTreeSafeToGoLimit(limit: number) {
         Cookie.setCookie(Properties.pref_concept_tree_safe_to_go_limit, limit, SVContext.getProjectCtx().getProject());
-        let conceptTreePref = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences; 
+        let conceptTreePref = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
         conceptTreePref.safeToGoLimit = limit;
         conceptTreePref.safeToGoMap = {}; //changing the limit invalidated the safe => reset the map
     }
@@ -230,7 +230,7 @@ export class SVProperties {
         let activeSchemesPref: string = Cookie.getCookie(Properties.pref_active_schemes, project);
         if (activeSchemesPref != null) {
             let skSplitted: string[] = activeSchemesPref.split(",");
-            for (var i = 0; i < skSplitted.length; i++) {
+            for (let i = 0; i < skSplitted.length; i++) {
                 activeSchemes.push(ResourceUtils.parseIRI(skSplitted[i]));
             }
         }
@@ -246,7 +246,7 @@ export class SVProperties {
 
         //show flag
         projectPreferences.showFlags = Cookie.getCookie(Properties.pref_show_flags, project) != "false";
-        
+
         //graph & resView pref: filter value lang
         let filterValueLangPref = Cookie.getCookie(Properties.pref_filter_value_languages, project);
         if (filterValueLangPref == null) {
@@ -269,7 +269,7 @@ export class SVProperties {
         projectPreferences.hideLiteralGraphNodes = Cookie.getCookie(Properties.pref_hide_literal_graph_nodes, project) != "false";
 
         //cls tree preferences
-        let classTreePreferences: ClassTreePreference = { 
+        let classTreePreferences: ClassTreePreference = {
             showInstancesNumber: Cookie.getCookie(Properties.pref_class_tree_show_instances, project) == "true",
             rootClassUri: (projectCtx.getProject().getModelType() == RDFS.uri) ? RDFS.resource.getIRI() : OWL.thing.getIRI(),
             filter: new ClassTreeFilter()
@@ -414,8 +414,8 @@ export class SVProperties {
         Cookie.setCookie(Cookie.SEARCH_USE_NOTES, settings.useNotes + "");
         Cookie.setCookie(Cookie.SEARCH_CONCEPT_SCHEME_RESTRICTION, settings.restrictActiveScheme + "");
         Cookie.setCookie(Cookie.SEARCH_LANGUAGES, JSON.stringify(settings.languages));
-        Cookie.setCookie(Cookie.SEARCH_RESTRICT_LANG, settings.restrictLang+"");
-        Cookie.setCookie(Cookie.SEARCH_INCLUDE_LOCALES, settings.includeLocales+"");
+        Cookie.setCookie(Cookie.SEARCH_RESTRICT_LANG, settings.restrictLang + "");
+        Cookie.setCookie(Cookie.SEARCH_INCLUDE_LOCALES, settings.includeLocales + "");
         Cookie.setCookie(Cookie.SEARCH_USE_AUTOMOMPLETION, settings.useAutocompletion + "");
         projectPreferences.searchSettings = settings;
         this.eventHandler.searchPrefsUpdatedEvent.emit();
@@ -436,7 +436,7 @@ export class SVProperties {
                 }
                 SVContext.setSystemSettings(systemSettings);
             })
-        )
+        );
     }
 
 }

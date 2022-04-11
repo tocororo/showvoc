@@ -18,7 +18,7 @@ export class StableContributionDetailsModal {
         [SKOS.uri]: Project.getPrettyPrintModelType(SKOS.uri),
         [SKOSXL.uri]: Project.getPrettyPrintModelType(SKOSXL.uri),
         [OntoLex.uri]: Project.getPrettyPrintModelType(OntoLex.uri)
-    }
+    };
 
     dereferenciationMap: { [uri: string]: string } = {
         null: "Unknown",

@@ -16,7 +16,7 @@ export abstract class AbstractContributionComponent {
         let config: ConfigurationObject = this.getConfigurationImpl();
         config['@type'] = this.storedConfigurationTypeId;
         return config;
-    };
+    }
 
     abstract getConfigurationImpl(): ConfigurationObject;
 }

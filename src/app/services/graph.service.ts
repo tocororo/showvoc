@@ -15,7 +15,7 @@ export class GraphServices {
     constructor(private httpMgr: HttpManager, private resourceService: ResourcesServices) { }
 
     getGraphModel(): Observable<GraphModelRecord[]> {
-        var params: any = {};
+        let params: any = {};
         return this.httpMgr.doGet(this.serviceName, "getGraphModel", params).pipe(
             mergeMap((plainModel: PlainGraphModelRecord[]) => {
                 return this.enrichGraphModelRecords(plainModel);
@@ -24,7 +24,7 @@ export class GraphServices {
     }
 
     expandGraphModelNode(resource: IRI): Observable<GraphModelRecord[]> {
-        var params: any = {
+        let params: any = {
             resource: resource
         };
         return this.httpMgr.doGet(this.serviceName, "expandGraphModelNode", params).pipe(
@@ -35,7 +35,7 @@ export class GraphServices {
     }
 
     expandSubResources(resource: IRI, role: RDFResourceRolesEnum): Observable<GraphModelRecord[]> {
-        var params: any = {
+        let params: any = {
             resource: resource,
             role: role
         };
@@ -47,7 +47,7 @@ export class GraphServices {
     }
 
     expandSuperResources(resource: IRI, role: RDFResourceRolesEnum): Observable<GraphModelRecord[]> {
-        var params: any = {
+        let params: any = {
             resource: resource,
             role: role
         };

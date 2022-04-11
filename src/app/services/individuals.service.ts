@@ -17,12 +17,12 @@ export class IndividualsServices {
      * @param individual
      */
     getNamedTypes(individual: Resource, options?: STRequestOptions): Observable<AnnotatedValue<IRI>[]> {
-        var params: any = {
+        let params: any = {
             individual: individual
         };
         return this.httpMgr.doGet(this.serviceName, "getNamedTypes", params, options).pipe(
             map(stResp => {
-                var types = ResourceDeserializer.createIRIArray(stResp);
+                let types = ResourceDeserializer.createIRIArray(stResp);
                 return types;
             })
         );

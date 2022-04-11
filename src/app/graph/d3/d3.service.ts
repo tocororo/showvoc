@@ -6,26 +6,26 @@ import { Node } from '../model/Node';
 
 @Injectable()
 export class D3Service {
-    
+
     constructor() { }
 
     /** 
      * A method to bind a pan and zoom behaviour to an svg element 
      */
     applyZoomableBehaviour(svgElement: any, containerElement: any) {
-        let svg: d3.Selection<any, {}, null, undefined>;
-        let container: d3.Selection<any, {}, null, undefined>;
-        let zoomed: { (): void}
-        let zoom: d3.ZoomBehavior<Element, {}>;
-    
+        let svg: d3.Selection<any, any, null, undefined>;
+        let container: d3.Selection<any, any, null, undefined>;
+        let zoomed: { (): void };
+        let zoom: d3.ZoomBehavior<Element, any>;
+
         svg = d3.select(svgElement);
         container = d3.select(containerElement);
-    
+
         zoomed = () => {
-          const transform = d3.event.transform;
-          container.attr("transform", "translate(" + transform.x + "," + transform.y + ") scale(" + transform.k + ")");
-        }
-    
+            const transform = d3.event.transform;
+            container.attr("transform", "translate(" + transform.x + "," + transform.y + ") scale(" + transform.k + ")");
+        };
+
         zoom = d3.zoom()
             .on("zoom", zoomed);
         svg.call(zoom);

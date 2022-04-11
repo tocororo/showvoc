@@ -6,8 +6,8 @@ import { ExportServices } from 'src/app/services/export.service';
 import { SparqlServices } from 'src/app/services/sparql.service';
 
 @Component({
-	selector: 'export-result-rdf-modal',
-	templateUrl: './export-result-rdf-modal.html'
+    selector: 'export-result-rdf-modal',
+    templateUrl: './export-result-rdf-modal.html'
 })
 export class ExportResultRdfModal {
 
@@ -18,16 +18,16 @@ export class ExportResultRdfModal {
     selectedExportFormat: RDFFormat;
 
     loading: boolean = false;
-    
+
     constructor(public activeModal: NgbActiveModal, private exportService: ExportServices, private sparqlService: SparqlServices,
         private basicModals: BasicModalsServices) { }
-    
+
     ngOnInit() {
         this.exportService.getOutputFormats().subscribe(
             formats => {
                 this.exportFormats = formats;
                 //select RDF/XML as default
-                for (var i = 0; i < this.exportFormats.length; i++) {
+                for (let i = 0; i < this.exportFormats.length; i++) {
                     if (this.exportFormats[i].name == "RDF/XML") {
                         this.selectedExportFormat = this.exportFormats[i];
                         return;
@@ -37,20 +37,20 @@ export class ExportResultRdfModal {
         );
     }
 
-	ok() {
+    ok() {
         this.loading = true;
         this.sparqlService.exportGraphQueryResultAsRdf(this.query, this.selectedExportFormat, this.inferred).subscribe(
             blob => {
                 this.loading = false;
-                var exportLink = window.URL.createObjectURL(blob);
+                let exportLink = window.URL.createObjectURL(blob);
                 this.basicModals.downloadLink({ key: "SPARQL.ACTIONS.EXPORT_RESULTS" }, null, exportLink, "sparql_export." + this.selectedExportFormat.defaultFileExtension);
             }
         );
-		this.activeModal.close();
-	}
+        this.activeModal.close();
+    }
 
-	close() {
-		this.activeModal.dismiss();
-	}
+    close() {
+        this.activeModal.dismiss();
+    }
 
 }

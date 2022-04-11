@@ -16,7 +16,7 @@ export abstract class AbstractConfirmModal implements OnInit {
 
     ngOnInit() {
         if (this.type == null) {
-            this.type = ModalType.info
+            this.type = ModalType.info;
         }
         if (this.type == ModalType.info) {
             this.titleClass = "text-info";

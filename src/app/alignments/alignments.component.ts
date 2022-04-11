@@ -3,10 +3,9 @@ import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from '../modal-dialogs/Modals';
-import { ShowVocConstants } from '../models/ShowVoc';
 import { Project } from '../models/Project';
 import { AnnotatedValue, IRI } from '../models/Resources';
-import { OntoLex, SKOS } from '../models/Vocabulary';
+import { ShowVocConstants } from '../models/ShowVoc';
 import { MapleServices } from '../services/maple.service';
 import { MetadataRegistryServices } from '../services/metadata-registry.service';
 import { ProjectsServices } from '../services/projects.service';
@@ -50,25 +49,25 @@ export class AlignmentsComponent implements OnInit {
             datasetIRI => {
                 this.datasetIRI = datasetIRI;
                 if (this.datasetIRI == null) { //missing IRI for project => initialize it
-                    this.basicModals.confirm({ key: "DATASETS.STAUTS.MISSING_DATASET_PROFILE" }, 
-                        { key: "MESSAGES.METADATA_NOT_FOUND_PROFILE_CONFIRM", params: { datasetName: this.selectedSourceProject.getName() }}, 
+                    this.basicModals.confirm({ key: "DATASETS.STAUTS.MISSING_DATASET_PROFILE" },
+                        { key: "MESSAGES.METADATA_NOT_FOUND_PROFILE_CONFIRM", params: { datasetName: this.selectedSourceProject.getName() } },
                         ModalType.warning).then(
-                        () => { //confirmed
-                            this.profileProject(this.selectedSourceProject).subscribe(
-                                () => {
-                                    this.getDatasetIRI(this.selectedSourceProject).subscribe(
-                                        datasetIRI => {
-                                            this.datasetIRI = datasetIRI;
-                                        }
-                                    );
-                                }
-                            );
-                        },
-                        () => { //canceled
-                            this.selectedSourceProject = null;
-                            this.loading = false;
-                        }
-                    );
+                            () => { //confirmed
+                                this.profileProject(this.selectedSourceProject).subscribe(
+                                    () => {
+                                        this.getDatasetIRI(this.selectedSourceProject).subscribe(
+                                            datasetIRI => {
+                                                this.datasetIRI = datasetIRI;
+                                            }
+                                        );
+                                    }
+                                );
+                            },
+                            () => { //canceled
+                                this.selectedSourceProject = null;
+                                this.loading = false;
+                            }
+                        );
                 }
             }
         );
@@ -77,7 +76,7 @@ export class AlignmentsComponent implements OnInit {
     private getDatasetIRI(project: Project): Observable<AnnotatedValue<IRI>> {
         this.loading = true;
         return this.metadataRegistryService.findDatasetForProjects([project]).pipe(
-            finalize(() => this.loading = false),
+            finalize(() => { this.loading = false; }),
             map(mappings => {
                 return mappings[this.selectedSourceProject.getName()];
             })
@@ -96,22 +95,22 @@ export class AlignmentsComponent implements OnInit {
     }
 
     refreshProfile() {
-        this.basicModals.confirm({ key: "DATASETS.ACTIONS.PROFILE_DATASET" }, 
-            { key: "MESSAGES.REFRESH_METADATA_CONFIRM", params: { datasetName: this.selectedSourceProject.getName() }},
+        this.basicModals.confirm({ key: "DATASETS.ACTIONS.PROFILE_DATASET" },
+            { key: "MESSAGES.REFRESH_METADATA_CONFIRM", params: { datasetName: this.selectedSourceProject.getName() } },
             ModalType.info).then(
-            () => {
-                this.datasetIRI = null;
-                this.profileProject(this.selectedSourceProject).subscribe(
-                    () => {
-                        this.getDatasetIRI(this.selectedSourceProject).subscribe(
-                            datasetIRI => {
-                                this.datasetIRI = datasetIRI;
-                            }
-                        );
-                    }
-                );
-            }
-        );
+                () => {
+                    this.datasetIRI = null;
+                    this.profileProject(this.selectedSourceProject).subscribe(
+                        () => {
+                            this.getDatasetIRI(this.selectedSourceProject).subscribe(
+                                datasetIRI => {
+                                    this.datasetIRI = datasetIRI;
+                                }
+                            );
+                        }
+                    );
+                }
+            );
     }
 
 }

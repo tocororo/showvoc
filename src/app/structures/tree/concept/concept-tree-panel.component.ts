@@ -119,7 +119,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
      * This is only invokable if schemeChangeable is true, this mode allow only one scheme at time, so can reset workingSchemes
      */
     private onSchemeSelectionChange() {
-        var newSelectedScheme: IRI = this.getSchemeResourceFromUri(this.selectedSchemeUri);
+        let newSelectedScheme: IRI = this.getSchemeResourceFromUri(this.selectedSchemeUri);
         if (newSelectedScheme != null) { //if it is not "no-scheme"                 
             this.workingSchemes = [newSelectedScheme];
         } else {
@@ -191,7 +191,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                 if (this.workingSchemes.length == 0) { //no scheme mode -> searched concept should be visible
                     isInActiveSchemes = true;
                 } else {
-                    for (var i = 0; i < schemes.length; i++) {
+                    for (let i = 0; i < schemes.length; i++) {
                         if (this.workingSchemes.find(s => s.equals(schemes[i]))) {
                             isInActiveSchemes = true;
                             break;
@@ -202,7 +202,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                     this.openAt(resource);
                 } else {
                     if (schemes.length == 0) { //searched concept doesn't belong to any scheme => ask switch to no-scheme mode
-                        this.basicModals.confirm({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.SWITCH_NO_SCHEME_CONFIRM", params: { concept: resource.getShow() }}, ModalType.warning).then(
+                        this.basicModals.confirm({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.SWITCH_NO_SCHEME_CONFIRM", params: { concept: resource.getShow() } }, ModalType.warning).then(
                             confirm => {
                                 this.svProp.setActiveSchemes(SVContext.getProjectCtx(), []); //update the active schemes
                                 setTimeout(() => {
@@ -210,7 +210,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                                 });
                             },
                             () => { }
-                        )
+                        );
                     } else { //searched concept belongs to at least one scheme => ask to activate one of them
                         let message = "Searched concept '" + resource.getShow() + "' is not reachable in the tree since it belongs to the following";
                         if (schemes.length > 1) {
@@ -221,7 +221,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                         }
                         this.resourceService.getResourcesInfo(schemes).subscribe(
                             schemes => {
-                                this.basicModals.selectResource({key:"COMMONS.ACTIONS.SEARCH"}, message, schemes, this.rendering).then(
+                                this.basicModals.selectResource({ key: "COMMONS.ACTIONS.SEARCH" }, message, schemes, this.rendering).then(
                                     (scheme: AnnotatedValue<IRI>) => {
                                         this.svProp.setActiveSchemes(SVContext.getProjectCtx(), this.workingSchemes.concat(scheme.getValue())); //update the active schemes
                                         setTimeout(() => {

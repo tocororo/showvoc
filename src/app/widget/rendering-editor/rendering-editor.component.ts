@@ -61,11 +61,10 @@ export class RenderingEditor implements ControlValueAccessor {
                 this.renderingLanguages.forEach((lang: LanguageItem) => {
                     if (lang.lang.tag == langTag) {
                         lang.position = position;
-                        return;
                     }
-                })
+                });
                 position++;
-            })
+            });
         }
         this.sortLanguages();
     }
@@ -86,7 +85,7 @@ export class RenderingEditor implements ControlValueAccessor {
         let renderingLangs: string[] = [];
         activeLangs.forEach(l => {
             renderingLangs.push(l.lang.tag);
-        })
+        });
         this.propagateChange(renderingLangs);
     }
 
@@ -101,7 +100,7 @@ export class RenderingEditor implements ControlValueAccessor {
                     l.position = lastPosition+1;
                     lastPosition++;
                 }
-            })
+            });
         } else {
             this.renderingLanguages.forEach(l => {
                 l.active = checked;
@@ -184,7 +183,7 @@ export class RenderingEditor implements ControlValueAccessor {
 
     private onPositionChange(langItem: LanguageItem, newPositionValue: string) {
         let newPosition: number = parseInt(newPositionValue);
-        for (var i = 0; i < this.renderingLanguages.length; i++) {
+        for (let i = 0; i < this.renderingLanguages.length; i++) {
             //swap the position between the changed language and the language that was in the "newPosition"
             if (this.renderingLanguages[i].position == newPosition) {
                 this.renderingLanguages[i].position = langItem.position;
@@ -208,7 +207,7 @@ export class RenderingEditor implements ControlValueAccessor {
                 if (l.position > deactivatedPosition) {
                     l.position = l.position-1;
                 }
-            })
+            });
 
         }
         this.updateLanguages();
