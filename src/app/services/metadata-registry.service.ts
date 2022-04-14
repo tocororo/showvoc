@@ -5,7 +5,7 @@ import { DatasetMetadata, LexicalizationSetMetadata, LinksetMetadata, ProjectDat
 import { Project } from '../models/Project';
 import { AnnotatedValue, IRI, Literal, ResourcePosition } from '../models/Resources';
 import { STRequestOptions } from '../utils/HttpManager';
-import { ResourceDeserializer, ResourceUtils } from '../utils/ResourceUtils';
+import { NTriplesUtil, ResourceDeserializer } from '../utils/ResourceUtils';
 import { StMetadataRegistry } from '../utils/STMetadataRegistry';
 
 @Injectable()
@@ -43,11 +43,11 @@ export class MetadataRegistryServices {
                 let linksets: LinksetMetadata[] = [];
                 for (let lsJson of stResp) {
                     let l: LinksetMetadata = new LinksetMetadata();
-                    l.sourceDataset = ResourceUtils.parseIRI(lsJson.sourceDataset);
+                    l.sourceDataset = NTriplesUtil.parseIRI(lsJson.sourceDataset);
                     l.targetDataset = this.parseTarget(lsJson.targetDataset);
                     l.registeredTargets = lsJson.registeredTargets.map(rt => this.parseTarget(rt));
                     l.linkCount = lsJson.linkCount;
-                    l.linkPredicate = lsJson.linkPredicate ? ResourceUtils.parseIRI(lsJson.linkPredicate) : null;
+                    l.linkPredicate = lsJson.linkPredicate ? NTriplesUtil.parseIRI(lsJson.linkPredicate) : null;
                     linksets.push(l);
                 }
                 //compute percentage for each link (not contained in the response)
@@ -67,10 +67,10 @@ export class MetadataRegistryServices {
     private parseTarget(targetJson: any): Target {
         let titles: Literal[] = [];
         for (let title of targetJson.titles) {
-            titles.push(ResourceUtils.parseLiteral(title));
+            titles.push(NTriplesUtil.parseLiteral(title));
         }
         return {
-            dataset: ResourceUtils.parseIRI(targetJson.dataset),
+            dataset: NTriplesUtil.parseIRI(targetJson.dataset),
             projectName: targetJson.projectName,
             uriSpace: targetJson.uriSpace,
             titles: titles

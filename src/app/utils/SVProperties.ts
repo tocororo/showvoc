@@ -10,7 +10,7 @@ import { ResViewPartition } from '../models/ResourceView';
 import { OWL, RDFS } from '../models/Vocabulary';
 import { SettingsServices } from '../services/settings.service';
 import { Cookie } from './Cookie';
-import { ResourceUtils } from './ResourceUtils';
+import { NTriplesUtil } from './ResourceUtils';
 import { ProjectContext, SVContext } from './SVContext';
 import { SVEventHandler } from './SVEventHandler';
 
@@ -231,7 +231,7 @@ export class SVProperties {
         if (activeSchemesPref != null) {
             let skSplitted: string[] = activeSchemesPref.split(",");
             for (let i = 0; i < skSplitted.length; i++) {
-                activeSchemes.push(ResourceUtils.parseIRI(skSplitted[i]));
+                activeSchemes.push(NTriplesUtil.parseIRI(skSplitted[i]));
             }
         }
         this.setActiveSchemes(projectCtx, activeSchemes);
@@ -240,7 +240,7 @@ export class SVProperties {
         let activeLexicon = null;
         let activeLexiconPref: string = Cookie.getCookie(Properties.pref_active_lexicon, project);
         if (activeLexiconPref != null) {
-            activeLexicon = ResourceUtils.parseIRI(activeLexiconPref);
+            activeLexicon = NTriplesUtil.parseIRI(activeLexiconPref);
             this.setActiveLexicon(projectCtx, activeLexicon);
         }
 

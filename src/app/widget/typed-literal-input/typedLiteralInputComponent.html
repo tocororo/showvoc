@@ -1,0 +1,62 @@
+<div>
+    <select class="form-control" [(ngModel)]="selectedDatatype" (ngModelChange)="onDatatypeChange()" style="margin-bottom: 6px;">
+        <option *ngFor="let dt of datatypeList" [ngValue]="dt" [title]="dt.getValue().getIRI()">{{dt.getShow()}}</option>
+    </select>
+
+
+    <ng-container *ngIf="enumerations">
+        <select class="form-control" [(ngModel)]="selectedEnumeration" (ngModelChange)="onEnumerationChange()">
+            <option *ngFor="let e of enumerations" [ngValue]="e">
+                <ng-container *ngIf="e.getDatatype() != 'http://www.w3.org/2001/XMLSchema#string'; else stringValueBlock">{{e.toNT()}}</ng-container>
+                <ng-template #stringValueBlock>{{e.getValue()|json}}</ng-template>
+            </option>
+        </select>
+    </ng-container>
+
+    <ng-container *ngIf="!enumerations">
+        <input *ngIf="numericInput; else nonNumericBlock" type="number" [min]="numericInputMin" [max]="numericInputMax" 
+            class="form-control" [(ngModel)]="stringValue" (ngModelChange)="onValueChanged()">
+        <ng-template #nonNumericBlock>
+            <div *ngIf="isDatatypeBound(); else nonBoundBlock">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <div *ngIf="selectedDatatype?.getValue().getIRI()=='http://www.w3.org/2001/XMLSchema#boolean'" class="text-center">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="boolTrueCheck" type="radio" (click)="stringValue='true'; onValueChanged()" [checked]="stringValue=='true'">
+                                <label class="form-check-label" for="boolTrueCheck">{{'COMMONS.BOOLEAN.TRUE'|translate}}</label>
+                            </div>
+                            <div class="form-check form-check-inline ml-2">
+                                <input class="form-check-input" id="boolFalseCheck" type="radio" (click)="stringValue='false'; onValueChanged()" [checked]="stringValue=='false'">
+                                <label class="form-check-label" for="boolFalseCheck">{{'COMMONS.BOOLEAN.FALSE'|translate}}</label>
+                            </div>
+                        </div>
+                        <div *ngIf="selectedDatatype?.getValue().getIRI()=='http://www.w3.org/2001/XMLSchema#date'">
+                            <input class="form-control" type="date" [(ngModel)]="stringValue" (ngModelChange)="onValueChanged()">
+                        </div>
+                        <div *ngIf="selectedDatatype?.getValue().getIRI()=='http://www.w3.org/2001/XMLSchema#dateTime'">
+                            <input class="form-control" type="datetime-local" step="1" [(ngModel)]="stringValue" (ngModelChange)="onValueChanged()">
+                        </div>
+                        <div *ngIf="selectedDatatype?.getValue().getIRI()=='http://www.w3.org/2001/XMLSchema#time'">
+                            <input class="form-control" type="time" step="1" [(ngModel)]="stringValue" (ngModelChange)="onValueChanged()">
+                        </div>
+                    </div>
+                </div>
+                <input type="text" class="form-control" style="margin-top: 6px;" [(ngModel)]="stringValue" (ngModelChange)="onValueChanged()" disabled>
+            </div>
+            <ng-template #nonBoundBlock>
+                <div *ngIf="selectedDatatype?.getValue().getIRI()=='http://www.w3.org/1999/02/22-rdf-syntax-ns#langString'; else defaultBlock"
+                    class="hbox" style="align-items: center;">
+                    <textarea class="form-control" rows="1" style="flex: 1; margin-right: 4px; height: initial; resize: vertical;"
+                        [(ngModel)]="stringValue" (ngModelChange)="onValueChanged()">
+                    </textarea>
+                    <lang-picker [(ngModel)]="lang" (ngModelChange)="onLangChanged()"></lang-picker>
+                </div>
+                <!-- any other unknown datatype: non numeric, non bound, not rdf:langString -->
+                <ng-template #defaultBlock>
+                    <input type="text" class="form-control" [(ngModel)]="stringValue" (ngModelChange)="onValueChanged()">
+                </ng-template>
+            </ng-template>
+        </ng-template>
+    </ng-container>
+
+</div>

@@ -3,10 +3,21 @@
     <input type="text" class="form-control form-control-sm" [(ngModel)]="searchStr" (keydown.enter)="doSearch()" [placeholder]="'COMMONS.ACTIONS.SEARCH'|translate" [disabled]="disabled">
 
     <div class="btn-toolbar ml-1" style="flex-wrap: nowrap">
-        <button class="btn btn-info btn-sm" (click)="doSearch()" [disabled]="disabled || loading">
-            <i *ngIf="!loading" class="fas fa-search"></i>
-            <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-        </button>
+        <div class="btn-group btn-group-sm" ngbDropdown placement="top-right">
+            <button class="btn btn-info" (click)="doSearch()" [disabled]="disabled || loading">
+                <i *ngIf="!loading" class="fas fa-search"></i>
+                <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+            </button>
+            <ng-container *ngIf="showAdvSearch()">
+                <button class="btn btn-outline-info dropdown-toggle px-1" data-toggle="dropdown" ngbDropdownToggle>
+                </button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <button class="dropdown-item" (click)="advancedSearch()">{{'SEARCH.ADV_SEARCH.ADVANCED_SEARCH'|translate}}</button>
+                </div>
+            </ng-container>
+        </div>
+
+
         <div class="btn-group btn-group-sm ml-1">
             <div class="btn-group btn-group-sm dropup" ngbDropdown placement="top-right">
                 <button class="btn btn-outline-info dropdown-toggle dropdown-no-arrow" data-toggle="dropdown" ngbDropdownToggle>

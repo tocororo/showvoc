@@ -3,6 +3,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { AnnotatedValue, IRI } from 'src/app/models/Resources';
 import { ModalOptions, TextOrTranslation, TranslationUtils } from '../Modals';
+import { ClassIndividualTreeModal } from './class-individual-tree-modal/class-individual-tree-modal';
 import { ClassTreeModal } from './class-tree-modal/class-tree-modal';
 import { CollectionTreeModal } from './collection-tree-modal/collection-tree-modal';
 import { ConceptTreeModal } from './concept-tree-modal/concept-tree-modal';
@@ -27,6 +28,20 @@ export class BrowsingModalsServices {
         const modalRef: NgbModalRef = this.modalService.open(ClassTreeModal, _options);
         modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
         modalRef.componentInstance.roots = roots;
+        return modalRef.result;
+    }
+
+    /**
+     * Opens a modal to browse the class tree and select an individual of a class
+     * @param title the title of the modal
+     * @param classes (optional) tells the admitted type of the individual to pick
+     * @return if the modal closes with ok returns a promise containing the selected individual
+     */
+    browseClassIndividualTree(title: TextOrTranslation, classes?: IRI[], options?: ModalOptions): Promise<AnnotatedValue<IRI>> {
+        let _options: ModalOptions = new ModalOptions('xl').merge(options);
+        const modalRef: NgbModalRef = this.modalService.open(ClassIndividualTreeModal, _options);
+        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
+        if (classes != null) modalRef.componentInstance.classes = classes;
         return modalRef.result;
     }
 

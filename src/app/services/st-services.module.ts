@@ -7,6 +7,7 @@ import { AlignmentServices } from './alignment.service';
 import { AuthServices } from "./auth.service";
 import { ClassesServices } from './classes.service';
 import { ConfigurationsServices } from './configuration.service';
+import { DatatypesServices } from './datatypesServices';
 import { DownloadServices } from './download.service';
 import { ExportServices } from './export.service';
 import { ExtensionsServices } from './extensions.service';
@@ -41,6 +42,7 @@ import { UserServices } from './user.service';
         AuthServices,
         ClassesServices,
         ConfigurationsServices,
+        DatatypesServices,
         DownloadServices,
         ExportServices,
         ExtensionsServices,

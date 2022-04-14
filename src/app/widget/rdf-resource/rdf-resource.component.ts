@@ -1,5 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { AnnotatedValue, Literal, RDFResourceRolesEnum, ResAttribute, Resource, ResourceNature, Value } from 'src/app/models/Resources';
+import { Language, Languages } from 'src/app/models/LanguagesCountries';
+import { AnnotatedValue, IRI, Literal, ResAttribute, Resource, ResourceNature, Value } from 'src/app/models/Resources';
 import { XmlSchema } from 'src/app/models/Vocabulary';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 import { SVProperties } from 'src/app/utils/SVProperties';
@@ -17,8 +18,9 @@ export class RdfResourceComponent {
     renderingLabel: string;
     renderingClass: string = "";
 
-    langFlagAvailable: boolean = false; //true if the language has a flag icon available (used only if resourceWithLang is true)
-    lang: string; //language of the resource (used only if resourceWithLang is true)
+    language: Language; //language of the resource
+
+    datatype: IRI; //datatype of the resource
 
     literalWithLink: boolean = false; //true if the resource is a literal which contains url
     splittedLiteral: string[]; //when literalWithLink is true, even elements are plain text, odd elements are url
@@ -30,20 +32,20 @@ export class RdfResourceComponent {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['resource'] && changes['resource'].currentValue) {
-            this.initRenderingLabel();
-            this.initImgSrc();
-
-            this.lang = this.initLang();
-            if (this.lang) {
-                this.langFlagAvailable = this.isLangFlagAvailable();
-            }
-
-            this.initLiteralWithLink();
-            this.initRenderingClass();
-            this.initNatureTooltip();
+            this.init();
         } if (changes['rendering']) {
             this.initRenderingLabel();
         }
+    }
+
+    init() {
+        this.initRenderingLabel();
+        this.initImgSrc();
+        this.initLang();
+        this.initDatatype();
+        this.initLiteralWithLink();
+        this.initRenderingClass();
+        this.initNatureTooltip();
     }
 
     private initRenderingLabel() {
@@ -71,20 +73,47 @@ export class RdfResourceComponent {
         }
     }
 
-    private initNatureTooltip() {
-        this.natureTooltip = null;
+    private initDatatype(): void {
+        //reset
+        this.datatype = null;
+        //init
         let value = this.resource.getValue();
+
+        if (value instanceof Literal) { // if it is a literal
+            this.datatype = value.getDatatype();
+        } else { // otherwise, it is a resource, possibly with an additional property dataType (as it could be from a custom form preview)
+            this.datatype = new IRI(this.resource.getAttribute(ResAttribute.DATA_TYPE));
+        }
+    }
+
+    private initNatureTooltip() {
+        let value = this.resource.getValue();
+        this.natureTooltip = null;
         if (value instanceof Resource) {
-            let natureListSerlalized: string[] = [];
             let natureList: ResourceNature[] = this.resource.getNature();
-            natureList.forEach(n => {
-                let graphsToNT: string[] = [];
-                n.graphs.forEach(g => {
-                    graphsToNT.push(g.toNT());
+            if (natureList.length > 0) {
+                let natureListSerlalized: string[] = [];
+                natureList.forEach(n => {
+                    let graphsToNT: string[] = [];
+                    n.graphs.forEach(g => {
+                        graphsToNT.push(g.toNT());
+                    });
+                    natureListSerlalized.push(ResourceUtils.getResourceRoleLabel(n.role) + ", defined in: " + graphsToNT.join(", "));
                 });
-                natureListSerlalized.push(ResourceUtils.getResourceRoleLabel(n.role) + " in: " + graphsToNT.join(", "));
-            });
-            this.natureTooltip = natureListSerlalized.join("\n\n");
+                this.natureTooltip = natureListSerlalized.join("\n\n");
+            } else { //nature empty => could be the case of a reified resource => check language or datatype (representing the one of the preview value)
+                if (this.language != null) {
+                    this.natureTooltip = this.language.tag;
+                } else if (this.datatype != null) {
+                    this.natureTooltip = this.datatype.toNT();
+                }
+            }
+        } else if (value instanceof Literal) {
+            if (this.language != null) {
+                this.natureTooltip = this.language.tag;
+            } else if (this.datatype != null) {
+                this.natureTooltip = this.datatype.toNT();
+            }
         }
     }
 
@@ -136,46 +165,30 @@ export class RdfResourceComponent {
      * Returns the language tag of the current resource in order to show it as title of resource icon (flag)
      * Note: this should be used in template only when isResourceWithLang returns true
      */
-    private initLang(): string {
-        let lang: string = null;
+    private initLang(): void {
+        //reset
+        this.language = null;
+        //init
         let value = this.resource.getValue();
-        if (value instanceof Resource) {
-            let role: RDFResourceRolesEnum = this.resource.getAttribute(ResAttribute.ROLE);
-            if (role == RDFResourceRolesEnum.xLabel) {
-                lang = this.resource.getAttribute(ResAttribute.LANG);
-            }
+        let lang: string;
+        if (value.isResource()) { //even if it is a resource, get the lang (it could be a custom form preview)
+            lang = this.resource.getAttribute(ResAttribute.LANG);
         } else if (value instanceof Literal) {
             lang = value.getLanguage();
-            let datatype = value.getDatatype();
-            if (datatype != null && datatype.equals(XmlSchema.language)) {
-                lang = value.getLabel();
+            if (value.getDatatype().equals(XmlSchema.language)) {
+                lang = value.getLanguage();
             }
         }
-        return lang;
-    }
-
-    /**
-     * Returns true if the current resource langTag has a flag image available and the show_flag is true.
-     * This method should be called only for resource with lang, so it should depend from isResourceWithLang
-     */
-    private isLangFlagAvailable(): boolean {
-        if (this.svProp.getShowFlags()) {
-            return !this.imgSrc.includes("unknown");
-        } else {
-            return false;
+        if (lang != null) {
+            this.language = Languages.getLanguageFromTag(lang);
         }
-    }
-
-    private getUnknownFlagImgSrc(): string {
-        //pass an invalid langTag so the method returns the empty flag image source
-        return UIUtils.getFlagImgSrc("unknown");
     }
 
     /**
      * Tells if the described resource is explicit.
      * Useful for flag icons since they have not the "transparent" version (as for the concept/class/property... icons)
      */
-    private isExplicit(): boolean {
+    isExplicit(): boolean {
         return this.resource.getAttribute(ResAttribute.EXPLICIT) || this.resource.getAttribute(ResAttribute.EXPLICIT) == undefined;
     }
 

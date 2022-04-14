@@ -131,10 +131,15 @@
             "CREATE": "Erstellen",
             "EDIT": "Bearbeiten",
             "LOAD": "Laden",
+            "PICK_RESOURCE": "Ressource auswählen",
             "REFRESH": "Aktualisieren",
             "REMOVE": "Entfernen",
             "RESET": "Zurücksetzen",
             "SEARCH": "Suche",
+            "SELECT_LANGUAGE": "Sprache auswählen",
+            "SELECT_LANGUAGES": "Sprachen auswählen",
+            "SELECT_RESOURCE": "Ressource auswählen",
+            "SELECT_RESOURCE_TYPE_TO_PICK": "Ressourcentyp auswählen",
             "SUBMIT": "Abschicken",
             "UNCHECK": "Deaktivieren",
             "UNCHECK_ALL": "Alle Markierungen entfernen",
@@ -180,6 +185,7 @@
         },
         "POSITION": "Position",
         "REASON": "Reasoning",
+        "RENDERING": "Rendern",
         "SETTINGS": "Einstellungen",
         "STATUS": {
             "ACTIVE": "Aktiv",
@@ -241,11 +247,22 @@
         }
     },
     "DATA": {
+        "ACTIONS": {
+            "CHANGE_LEXICON": "Lexikon ändern",
+            "CHANGE_RENDERING": "Rendering ändern",
+            "CREATE_LITERAL": "Literal erstellen",
+            "SELECT_CLASS": "Klasse auswählen",
+            "SELECT_COLLECTION": "Sammlung auswählen",
+            "SELECT_CONCEPT": "Begriff auswählen",
+            "SELECT_INSTANCE": "Instanz auswählen",
+            "SELECT_LEXICAL_ENTRY": "Lexikalischen Eintrag auswählen",
+            "SELECT_LEXICON": "Lexikon auswählen",
+            "SELECT_PROPERTY": "Eigenschaft auswählen",
+            "SELECT_ROOT_CLASS": "Wurzelklasse auswählen",
+            "SELECT_SCHEME": "Schema auswählen",
+            "SHOW_ALL_PROPS": "Alle Eigenschaften anzeigen"
+        },
         "CLASS": {
-            "ACTIONS": {
-                "SELECT_CLASS": "Klasse auswählen",
-                "SELECT_ROOT_CLASS": "Wurzelklasse auswählen"
-            },
             "CLASS": "Klasse",
             "CLASSES": "Klassen",
             "SETTINGS": {
@@ -263,9 +280,6 @@
             "COLLECTIONS": "Sammlungen"
         },
         "COMMONS": {
-            "ACTIONS": {
-                "CHANGE_RENDERING": "Rendering ändern"
-            },
             "VISUALIZATION_MODE": {
                 "HIERARCHY_BASED": "Hierarchiebasiert",
                 "INDEX_BASED": "Indexbasiert",
@@ -313,10 +327,6 @@
             "USE_SEARCH_MSG": "Bitte benutzen Sie das Suchfeld, um Instanzen abzurufen"
         },
         "LEXICON": {
-            "ACTIONS": {
-                "CHANGE_LEXICON": "Lexikon ändern",
-                "SELECT_LEXICON": "Lexikon auswählen"
-            },
             "LEXICON": "Lexikon",
             "LEXICONS": "Lexika"
         },
@@ -344,9 +354,6 @@
             "USE_SEARCH_MSG": "Bitte benutzen Sie das Suchfeld, um lexikalische Einträge abzurufen"
         },
         "PROPERTY": {
-            "ACTIONS": {
-                "SHOW_ALL": "Alle Eigenschaften anzeigen"
-            },
             "PROPERTIES": "Eigenschaften",
             "PROPERTY": "Eigenschaft"
         },
@@ -499,7 +506,8 @@
         "MISSING_MANDATORY_FIELD": "Fehlendes Pflichtfeld '{{missingField}}'",
         "NO_CONVERSION_FORMAT_SELECTED": "Das Häkchen bei \"Konvertierung erforderlich\" ist gesetzt, aber es wurde kein Format ausgewählt",
         "NO_METADATA_PROVIDED": "Es sind keine Metadaten vorhanden",
-        "NO_SEARCH_RESULTS": "Keine Ergebnisse gefunden für '{{searchedString}}'",
+        "NO_RESULTS_FOUND": "Keine Ergebnisse gefunden",
+        "NO_RESULTS_FOUND_FOR": "Keine Ergebnisse gefunden für '{{searchedString}}'",
         "NO_USER_REGISTERED": "ShowVoc hat festgestellt, dass sich noch kein Benutzer registriert hat. Um die Plattform nutzen zu können, müssen Sie ein Administratorkonto anlegen, indem Sie persönliche Daten und Anmeldedaten eingeben.",
         "PASSWORD_CHANGED": "Das Passwort wurde erfolgreich geändert.",
         "PASSWORD_RESET_SUCCESS": "Das Passwort wurde erfolgreich zurückgesetzt. Sie erhalten eine E-Mail mit dem neuen temporären Passwort.",
@@ -616,6 +624,18 @@
         }
     },
     "SEARCH": {
+        "ADV_SEARCH": {
+            "ADD_FREE_TEXT": "Freitextsuche hinzufügen",
+            "ADD_LITERAL": "Literal hinzufügen",
+            "ADD_RESOURCE": "Ressource hinzufügen",
+            "ADD_SET_OF_VALUES": "Mehrere Werte hinzufügen",
+            "ADVANCED_SEARCH": "Erweiterte Suche",
+            "INGOING_LINKS": "Eingehende Links",
+            "OUTGOING_LINKS": "Ausgehende Links",
+            "SCHEMES": "Schemata",
+            "SEARCH_STRING": "Suchbegriff",
+            "TYPES": "Typen"
+        },
         "ANY_LANGUAGE": "Beliebige Sprache",
         "EDIT_LANGS": {
             "ADD_LANG": "Sprache hinzufügen",
@@ -636,6 +656,9 @@
             "ENDS_WITH": "endet mit",
             "EXACT": "Genau",
             "FUZZY": "Fuzzy",
+            "INCLUDE_LOCALES": "Territoriale Varietäten des Gebietsschemas (z. B. en-GB, en-US) in die Suche einbeziehen.",
+            "LEXICALIZATIONS_SEARCH": "Lexikalisierungs-Suche",
+            "RESTRICT_TO_LANGUAGES": "Suche auf folgende Sprachen beschränken",
             "RESTRICT_TO_SCHEME": "Suche auf die aktiven skos:ConceptScheme(s) beschränken",
             "SEARCH_IN_LOCAL_NAME": "Suche in lokalen Namen",
             "SEARCH_IN_NOTES": "Suche in Notizen",

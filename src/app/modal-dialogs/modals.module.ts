@@ -14,7 +14,9 @@ import { DownloadModal } from './basic-modals/download-modal/download-modal';
 import { PromptModal } from './basic-modals/prompt-modal/prompt-modal';
 import { PromptNumberModal } from './basic-modals/prompt-modal/prompt-number-modal';
 import { ResourceSelectionModal } from './basic-modals/selection-modal/resource-selection-modal';
+import { SelectionModal } from './basic-modals/selection-modal/selection-modal';
 import { BrowsingModalsServices } from './browsing-modals/browsing-modal.service';
+import { ClassIndividualTreeModal } from './browsing-modals/class-individual-tree-modal/class-individual-tree-modal';
 import { ClassTreeModal } from './browsing-modals/class-tree-modal/class-tree-modal';
 import { CollectionTreeModal } from './browsing-modals/collection-tree-modal/collection-tree-modal';
 import { ConceptTreeModal } from './browsing-modals/concept-tree-modal/concept-tree-modal';
@@ -22,13 +24,17 @@ import { LexicalEntryListModal } from './browsing-modals/lexical-entry-list-moda
 import { LexiconListModal } from './browsing-modals/lexicon-list-modal/lexicon-list-modal';
 import { PropertyTreeModal } from './browsing-modals/property-tree-modal/property-tree-modal';
 import { SchemeListModal } from './browsing-modals/scheme-list-modal/scheme-list-modal';
+import { CreationModalServices } from './creation-modals/creationModalServices';
+import { NewTypedLiteralModal } from './creation-modals/newTypedLiteralModal/new-typed-literal-modal';
 import { LanguageSelectorModal } from './shared-modals/languages-selector-modal/languages-selector-modal';
 import { PluginConfigurationModal } from './shared-modals/plugin-configuration/plugin-configuration-modal';
+import { ResourcePickerModal } from './shared-modals/resource-picker-modal/resourcePickerModal';
 import { SharedModalsServices } from './shared-modals/shared-modal.service';
 
 @NgModule({
     declarations: [
         AlertModal,
+        ClassIndividualTreeModal,
         ClassTreeModal,
         CollectionTreeModal,
         ConceptTreeModal,
@@ -38,12 +44,15 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         LanguageSelectorModal,
         LexicalEntryListModal,
         LexiconListModal,
+        NewTypedLiteralModal,
         PluginConfigurationModal,
         PromptModal,
         PromptNumberModal,
         PropertyTreeModal,
+        ResourcePickerModal,
         ResourceSelectionModal,
-        SchemeListModal
+        SchemeListModal,
+        SelectionModal
     ],
     imports: [
         CommonModule, 
@@ -55,10 +64,11 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         WidgetModule,  
     ],
     providers: [
-        BasicModalsServices, BrowsingModalsServices, SharedModalsServices
+        BasicModalsServices, BrowsingModalsServices, CreationModalServices, SharedModalsServices
     ],
     entryComponents: [
         AlertModal,
+        ClassIndividualTreeModal,
         ClassTreeModal,
         CollectionTreeModal,
         ConceptTreeModal,
@@ -68,12 +78,15 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         LanguageSelectorModal,
         LexicalEntryListModal,
         LexiconListModal,
+        NewTypedLiteralModal,
         PluginConfigurationModal,
         PromptModal,
         PromptNumberModal,
         PropertyTreeModal,
+        ResourcePickerModal,
         ResourceSelectionModal,
-        SchemeListModal
+        SchemeListModal,
+        SelectionModal
     ]
 })
 export class ModalsModule { }

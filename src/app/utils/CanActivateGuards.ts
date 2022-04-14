@@ -10,6 +10,7 @@ import { AuthServices } from '../services/auth.service';
 import { MetadataServices } from '../services/metadata.service';
 import { ProjectsServices } from '../services/projects.service';
 import { UserServices } from '../services/user.service';
+import { DatatypeValidator } from './DatatypeValidator';
 import { SVContext } from './SVContext';
 import { SVProperties } from './SVProperties';
 
@@ -118,7 +119,7 @@ export class ProjectGuard implements CanActivate {
      * So, ProjectGuard implicitly requires VisitorAuthGuard
      */
     constructor(private router: Router, private projectService: ProjectsServices, private userService: UserServices, private metadataService: MetadataServices,
-        private svProp: SVProperties, private basicModals: BasicModalsServices, private authGuard: VisitorAuthGuard) { }
+        private svProp: SVProperties, private dtValidator: DatatypeValidator, private basicModals: BasicModalsServices, private authGuard: VisitorAuthGuard) { }
 
     /**
      * This canActivate return Observable<boolean> since I need to asynchronously retrieve the project and the related preferences
@@ -146,6 +147,7 @@ export class ProjectGuard implements CanActivate {
                                     SVContext.initProjectCtx(p);
                                     let projInitFunctions: Observable<any>[] = [
                                         this.metadataService.getNamespaceMappings(),
+                                        this.dtValidator.initDatatypeRestrictions(),
                                         this.svProp.initProjectSettings(SVContext.getProjectCtx()),
                                         this.svProp.initUserProjectPreferences(SVContext.getProjectCtx()),
                                         this.userService.listUserCapabilities() //get the capabilities for the user

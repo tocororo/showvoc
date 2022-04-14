@@ -11,7 +11,6 @@ import { SkosServices } from 'src/app/services/skos.service';
 import { SVContext } from 'src/app/utils/SVContext';
 import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { SVProperties } from 'src/app/utils/SVProperties';
-import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
 import { AbstractTreePanel } from '../abstract-tree-panel';
 import { ConceptTreeSettingsModal } from './concept-tree-settings-modal';
@@ -25,21 +24,15 @@ import { ConceptTreeComponent } from './concept-tree.component';
 export class ConceptTreePanelComponent extends AbstractTreePanel {
     @Input('schemes') inputSchemes: IRI[]; //if set the concept tree is initialized with this scheme, otherwise with the scheme from VB context
     @Input() schemeChangeable: boolean = false; //if true, above the tree is shown a menu to select a scheme
-    @Output() schemeChanged = new EventEmitter<IRI>();//when dynamic scheme is changed
+    @Output() schemeChanged = new EventEmitter<IRI[]>();//when dynamic scheme is changed
 
     @ViewChild(ConceptTreeComponent) viewChildTree: ConceptTreeComponent;
     @ViewChild(SearchBarComponent) searchBar: SearchBarComponent;
 
     panelRole: RDFResourceRolesEnum = RDFResourceRolesEnum.concept;
 
-    // private modelType: string;
-
-    private schemeList: AnnotatedValue<IRI>[];
-    private selectedSchemeUri: string; //needed for the <select> element where I cannot use ARTURIResource as <option> values
-    //because I need also a <option> with null value for the no-scheme mode (and it's not possible)
     workingSchemes: IRI[];//keep track of the selected scheme: could be assigned throught @Input scheme or scheme selection
     //(useful expecially when schemeChangeable is true so the changes don't effect the scheme in context)
-    schemesForSearchBar: IRI[];
 
     visualizationMode: ConceptTreeVisualizationMode;//this could be changed dynamically, so each time it is used, get it again from preferences
 
@@ -60,29 +53,12 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
         let prefs = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences;
         this.visualizationMode = prefs.visualization;
 
+        //Initialize working schemes
         if (this.inputSchemes === undefined) { //if @Input is not provided at all, get the scheme from the preferences
             this.workingSchemes = SVContext.getProjectCtx().getProjectPreferences().activeSchemes;
         } else { //if @Input schemes is provided (it could be null => no scheme-mode), initialize the tree with this scheme
-            if (this.schemeChangeable) {
-                if (this.inputSchemes.length > 0) {
-                    this.selectedSchemeUri = this.inputSchemes[0].getIRI();
-                    this.workingSchemes = [this.inputSchemes[0]];
-                } else { //no scheme mode
-                    this.selectedSchemeUri = "---"; //no scheme
-                    this.workingSchemes = [];
-                }
-                //init the scheme list if the concept tree allows dynamic change of scheme
-                this.skosService.getAllSchemes().subscribe(
-                    schemes => {
-                        ResourceUtils.sortResources(schemes, this.rendering ? SortAttribute.show : SortAttribute.value);
-                        this.schemeList = schemes;
-                    }
-                );
-            } else {
-                this.workingSchemes = this.inputSchemes;
-            }
+            this.workingSchemes = this.inputSchemes;
         }
-        this.updateSchemesForSearchBar();
     }
 
     //top bar commands handlers
@@ -113,50 +89,23 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
 
     //scheme selection menu handlers
 
-    /**
-     * Listener to <select> element that allows to change dynamically the scheme of the
-     * concept tree (visible only if @Input schemeChangeable is true).
-     * This is only invokable if schemeChangeable is true, this mode allow only one scheme at time, so can reset workingSchemes
-     */
-    private onSchemeSelectionChange() {
-        let newSelectedScheme: IRI = this.getSchemeResourceFromUri(this.selectedSchemeUri);
-        if (newSelectedScheme != null) { //if it is not "no-scheme"                 
-            this.workingSchemes = [newSelectedScheme];
-        } else {
-            this.workingSchemes = [];
-        }
-        this.updateSchemesForSearchBar();
-        this.schemeChanged.emit(newSelectedScheme);
+    changeSchemeSelection() {
+        this.skosService.getAllSchemes().subscribe(
+            schemes => {
+                this.basicModals.selectResource({ key: "DATA.ACTIONS.SELECT_SCHEME" }, null, schemes, this.rendering, true, true, this.workingSchemes).then(
+                    (schemes: AnnotatedValue<IRI>[]) => {
+                        this.workingSchemes = schemes.map(s => s.getValue());
+                        this.schemeChanged.emit(this.workingSchemes);
+                    },
+                    () => { }
+                );
+            },
+            () => { }
+        );
     }
 
-    /**
-     * Retrieves the ARTURIResource of a scheme URI from the available scheme. Returns null
-     * if the URI doesn't represent a scheme in the list.
-     */
-    private getSchemeResourceFromUri(schemeUri: string): IRI {
-        let s = this.schemeList.find(sc => sc.getValue().getIRI() == schemeUri);
-        if (s != null) {
-            return s.getValue();
-        }
-        return null; //schemeUri was probably "---", so for no-scheme mode return a null object
-    }
-
-    private getSchemeRendering(scheme: AnnotatedValue<IRI>) {
-        return ResourceUtils.getRendering(scheme, this.rendering);
-    }
 
     //search handlers
-
-    updateSchemesForSearchBar() {
-        if (this.schemeChangeable) {
-            let s = this.getSchemeResourceFromUri(this.selectedSchemeUri);
-            if (s != null) {
-                this.schemesForSearchBar = [s];
-            }
-        } else {
-            this.schemesForSearchBar = this.workingSchemes;
-        }
-    }
 
     handleSearchResults(results: AnnotatedValue<IRI>[]) {
         this.visualizationMode = SVContext.getProjectCtx().getProjectPreferences().conceptTreePreferences.visualization;
@@ -166,8 +115,8 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
             } else {
                 // choose among results
                 this.basicModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
-                    (selectedResource: AnnotatedValue<IRI>) => {
-                        this.selectSearchedResource(selectedResource);
+                    (selectedResources: AnnotatedValue<IRI>[]) => {
+                        this.openAt(selectedResources[0]);
                     },
                     () => { }
                 );
@@ -222,8 +171,8 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                         this.resourceService.getResourcesInfo(schemes).subscribe(
                             schemes => {
                                 this.basicModals.selectResource({ key: "COMMONS.ACTIONS.SEARCH" }, message, schemes, this.rendering).then(
-                                    (scheme: AnnotatedValue<IRI>) => {
-                                        this.svProp.setActiveSchemes(SVContext.getProjectCtx(), this.workingSchemes.concat(scheme.getValue())); //update the active schemes
+                                    (schemes: AnnotatedValue<IRI>[]) => {
+                                        this.svProp.setActiveSchemes(SVContext.getProjectCtx(), this.workingSchemes.concat(schemes[0].getValue())); //update the active schemes
                                         setTimeout(() => {
                                             this.openAt(resource); //then open the tree on the searched resource
                                         });
@@ -276,7 +225,6 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
         if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
             this.viewChildTree.forceList([]);
         }
-        this.updateSchemesForSearchBar();
     }
 
 }

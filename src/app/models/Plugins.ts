@@ -1,4 +1,4 @@
-import { ResourceUtils } from "../utils/ResourceUtils";
+import { NTriplesUtil } from "../utils/ResourceUtils";
 import { Literal, Value } from "./Resources";
 
 /**
@@ -213,8 +213,8 @@ export class STProperties {
         let displayName = stProp.displayName;
         let description = stProp.description;
         if (displayName instanceof Array) { //properties are DynamicSettingProp
-            let displayNames: Literal[] = displayName.map(dn => ResourceUtils.parseLiteral(dn));
-            let descriptions: Literal[] = description.map(dn => ResourceUtils.parseLiteral(dn));
+            let displayNames: Literal[] = displayName.map(dn => NTriplesUtil.parseLiteral(dn));
+            let descriptions: Literal[] = description.map(dn => NTriplesUtil.parseLiteral(dn));
             return new DynamicSettingProp(name, displayNames, descriptions, required, type, enumeration, value);
         } else {
             return new SettingsProp(name, displayName, description, required, type, enumeration, value);

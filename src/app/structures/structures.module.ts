@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -6,8 +7,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AlignmentsModule } from '../alignments/alignments.module';
 import { WidgetModule } from '../widget/widget.module';
 import { InstanceListPanelComponent } from './list/instance/instance-list-panel.component';
-import { InstanceListComponent } from './list/instance/instance-list.component';
 import { InstanceListSettingsModal } from './list/instance/instance-list-settings-modal';
+import { InstanceListComponent } from './list/instance/instance-list.component';
 import { LexicalEntryListPanelComponent } from './list/lexical-entry/lexical-entry-list-panel.component';
 import { LexicalEntryListSettingsModal } from './list/lexical-entry/lexical-entry-list-settings-modal';
 import { LexicalEntryListComponent } from './list/lexical-entry/lexical-entry-list.component';
@@ -16,9 +17,11 @@ import { LexiconListComponent } from './list/lexicon/lexicon-list.component';
 import { ListNodeComponent } from './list/list-node.component';
 import { SchemeListPanelComponent } from './list/scheme/scheme-list-panel.component';
 import { SchemeListComponent } from './list/scheme/scheme-list.component';
+import { AdvancedSearchModal } from './search-bar/advanced-search-modal';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SearchSettingsModal } from './search-bar/search-settings-modal';
 import { StructureTabsetComponent } from './structure-tabset/structure-tabset.component';
+import { ClassIndividualTreeComponent } from './tree/class/class-individual-tree.component';
 import { ClassInstancePanelComponent } from './tree/class/class-instance-panel.component';
 import { ClassTreeNodeComponent } from './tree/class/class-tree-node.component';
 import { ClassTreePanelComponent } from './tree/class/class-tree-panel.component';
@@ -34,10 +37,11 @@ import { ConceptTreeComponent } from './tree/concept/concept-tree.component';
 import { PropertyTreeNodeComponent } from './tree/property/property-tree-node.component';
 import { PropertyTreePanelComponent } from './tree/property/property-tree-panel.component';
 import { PropertyTreeComponent } from './tree/property/property-tree.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
     declarations: [
+        AdvancedSearchModal,
+        ClassIndividualTreeComponent,
         ClassInstancePanelComponent,
         ClassTreeComponent,
         ClassTreeNodeComponent,
@@ -64,10 +68,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         PropertyTreePanelComponent,
         SchemeListComponent,
         SchemeListPanelComponent,
-        StructureTabsetComponent,
-
         SearchBarComponent,
-        SearchSettingsModal
+        SearchSettingsModal,
+        StructureTabsetComponent,
     ],
     imports: [
         AlignmentsModule,
@@ -81,6 +84,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ],
     exports: [
         StructureTabsetComponent,
+        ClassIndividualTreeComponent,
         ClassInstancePanelComponent,
         ClassTreePanelComponent,
         CollectionTreePanelComponent,
@@ -91,6 +95,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         SchemeListPanelComponent,
     ],
     entryComponents: [
+        AdvancedSearchModal,
         ClassTreeSettingsModal,
         ConceptTreeSettingsModal,
         InstanceListSettingsModal,

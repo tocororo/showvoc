@@ -68,7 +68,7 @@ export class LanguageSelectorModal {
         this.activeModal.close(activeLangs);
     }
 
-    cancel() {
+    close() {
         this.activeModal.dismiss();
     }
 

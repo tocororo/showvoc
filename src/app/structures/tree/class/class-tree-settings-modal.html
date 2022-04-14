@@ -35,7 +35,7 @@
                     <div class="card-header d-flex align-items-center">
                         <label style="flex: 1">{{'DATA.CLASS.CLASSES'|translate}}</label>
                         <div class="btn-toolbar">
-                            <button class="btn btn-light btn-sm" title="Rendering" (click)="renderingClasses = !renderingClasses" [ngClass]="{active: renderingClasses}">
+                            <button class="btn btn-light btn-sm" [title]="'COMMONS.RENDERING'|translate" (click)="renderingClasses = !renderingClasses" [ngClass]="{active: renderingClasses}">
                                 <span class="fas fa-font"></span>
                             </button>
                             <div class="btn-group btn-group-sm ml-2">
@@ -60,7 +60,7 @@
                     <div class="card-header d-flex align-items-center">
                         <label style="flex: 1">{{'DATA.CLASS.SETTINGS.FILTERED_SUBCLASSES'|translate}}</label>
                         <div class="btn-toolbar">
-                            <button class="btn btn-light btn-sm" title="Rendering" (click)="renderingFilter = !renderingFilter"
+                            <button class="btn btn-light btn-sm" [title]="'COMMONS.RENDERING'|translate" (click)="renderingFilter = !renderingFilter"
                                 [ngClass]="{active: renderingFilter}">
                                 <span class="glyphicon glyphicon-font"></span>
                             </button>

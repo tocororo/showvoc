@@ -26,8 +26,8 @@ export class ClassTreePanelComponent extends AbstractTreePanel {
 
     filterEnabled: boolean;
 
-	constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private modalService: NgbModal) {
-		super(basicModals, eventHandler, svProp);
+    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private modalService: NgbModal) {
+        super(basicModals, eventHandler, svProp);
     }
 
     ngOnInit() {
@@ -42,17 +42,17 @@ export class ClassTreePanelComponent extends AbstractTreePanel {
     }
 
     //search handlers
-    
+
     handleSearchResults(results: AnnotatedValue<IRI>[]) {
         if (results.length == 1) {
             this.openAt(results[0]);
         } else { //multiple results, ask the user which one select
             ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
             this.basicModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
-                (selectedResource: AnnotatedValue<IRI>) => {
-                    this.openAt(selectedResource);
+                (selectedResources: AnnotatedValue<IRI>[]) => {
+                    this.openAt(selectedResources[0]);
                 },
-                () => {}
+                () => { }
             );
         }
     }

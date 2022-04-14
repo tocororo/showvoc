@@ -98,6 +98,7 @@ export class OWL {
     public static maxCardinality = new IRI(OWL.namespace + "maxCardinality");
     public static minCardinality = new IRI(OWL.namespace + "minCardinality");
     public static oneOf = new IRI(OWL.namespace + "oneOf");
+    public static onDatatype = new IRI(OWL.namespace + "onDatatype");
     public static onProperty = new IRI(OWL.namespace + "onProperty");
     public static priorVersion = new IRI(OWL.namespace + "priorVersion");
     public static propertyChainAxiom = new IRI(OWL.namespace + "propertyChainAxiom");
@@ -176,6 +177,7 @@ export class XmlSchema { //all resources here have role "individual" (don't know
     public static date = new IRI(XmlSchema.namespace + "date");
     public static dateTime = new IRI(XmlSchema.namespace + "dateTime");
     public static dateTimeStamp = new IRI(XmlSchema.namespace + "dateTimeStamp");
+    public static dayTimeDuration = new IRI(XmlSchema.namespace + "dayTimeDuration");
     public static decimal = new IRI(XmlSchema.namespace + "decimal");
     public static double = new IRI(XmlSchema.namespace + "double");
     public static duration = new IRI(XmlSchema.namespace + "duration");
@@ -216,6 +218,13 @@ export class XmlSchema { //all resources here have role "individual" (don't know
     public static unsignedInt = new IRI(XmlSchema.namespace + "unsignedInt");
     public static unsignedLong = new IRI(XmlSchema.namespace + "unsignedLong");
     public static unsignedShort = new IRI(XmlSchema.namespace + "unsignedShort");
+    public static yearMonthDuration = new IRI(XmlSchema.namespace + "yearMonthDuration");
+    //attributes
+    public static maxExclusive = new IRI(XmlSchema.namespace + "maxExclusive");
+    public static maxInclusive = new IRI(XmlSchema.namespace + "maxInclusive");
+    public static minExclusive = new IRI(XmlSchema.namespace + "minExclusive");
+    public static minInclusive = new IRI(XmlSchema.namespace + "minInclusive");
+    public static pattern = new IRI(XmlSchema.namespace + "pattern");
 }
 
 

@@ -1,7 +1,7 @@
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
-import { AnnotatedValue, IRI, RDFResourceRolesEnum } from '../models/Resources';
+import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from '../models/Resources';
 import { SVEventHandler } from '../utils/SVEventHandler';
 import { SVProperties } from '../utils/SVProperties';
 import { TreeListContext } from '../utils/UIUtils';
@@ -17,6 +17,7 @@ export abstract class AbstractPanel {
     @Input() hideSearch: boolean = false; //if true hide the search bar
 
     @Output() nodeSelected = new EventEmitter<AnnotatedValue<IRI>>();
+    @Output() advancedSearchResult: EventEmitter<AnnotatedValue<Resource>> = new EventEmitter();
 
     /**
      * ATTRIBUTES
@@ -41,7 +42,7 @@ export abstract class AbstractPanel {
         this.svProp = svProp;
 
         this.eventSubscriptions.push(eventHandler.showDeprecatedChangedEvent.subscribe(
-            (showDeprecated: boolean) => this.showDeprecated = showDeprecated));
+            (showDeprecated: boolean) => { this.showDeprecated = showDeprecated; }));
     }
 
     /**
@@ -59,6 +60,10 @@ export abstract class AbstractPanel {
     abstract handleSearchResults(results: AnnotatedValue<IRI>[]): void;
 
     abstract openAt(node: AnnotatedValue<IRI>): void;
+
+    handleAdvSearchResult(resource: AnnotatedValue<IRI>) {
+        this.advancedSearchResult.emit(resource);
+    }
 
     //actions
     abstract refresh(): void;

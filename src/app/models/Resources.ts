@@ -223,6 +223,7 @@ export class AnnotatedValue<T extends Value> {
         if (this.value instanceof Resource) {
             return this.attributes[ResAttribute.ROLE];
         }
+        return null;
     }
 
     /**
@@ -334,6 +335,7 @@ export class ResAttribute {
     public static RESOURCE_POSITION = "resourcePosition";
     public static ACCESS_METHOD = "accessMethod";
     public static LANG = "lang";
+    public static DATA_TYPE = "dataType";
     public static GRAPHS = "graphs"; //used for the objects in getResourceView response
     public static MEMBERS = "members"; //used for ordered collections
     public static INDEX = "index"; //used for members of ordered collections
@@ -374,7 +376,7 @@ export enum RDFResourceRolesEnum {
     limeLexicon = "limeLexicon",
     ontolexLexicalEntry = "ontolexLexicalEntry",
     ontolexLexicalSense = "ontolexLexicalSense",
-    ontolexForm = "ontolexForm"
+    ontolexForm = "ontolexForm",
 }
 
 export enum RDFTypesEnum {

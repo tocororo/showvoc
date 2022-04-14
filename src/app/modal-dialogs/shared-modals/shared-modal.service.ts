@@ -4,10 +4,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { Settings } from 'src/app/models/Plugins';
 import { Resource } from 'src/app/models/Resources';
 import { ProjectContext } from 'src/app/utils/SVContext';
+import { ResourcePickerConfig } from 'src/app/widget/pickers/value-picker/resourcePickerComponent';
 import { ResourceViewModal } from '../../resource-view/modals/resource-view-modal';
 import { ModalOptions, TextOrTranslation, TranslationUtils } from '../Modals';
 import { LanguageSelectorModal } from './languages-selector-modal/languages-selector-modal';
 import { PluginConfigurationModal, PluginSettingsHandler } from './plugin-configuration/plugin-configuration-modal';
+import { ResourcePickerModal } from './resource-picker-modal/resourcePickerModal';
 
 @Injectable()
 export class SharedModalsServices {
@@ -41,6 +43,20 @@ export class SharedModalsServices {
         if (radio != null) modalRef.componentInstance.radio = radio;
         if (projectAware != null) modalRef.componentInstance.projectAware = projectAware;
         if (projectCtx != null) modalRef.componentInstance.projectCtx = projectCtx;
+        return modalRef.result;
+    }
+
+    /**
+     * 
+     * @param title 
+     * @param roles 
+     * @param editable 
+     */
+    pickResource(title: TextOrTranslation, config?: ResourcePickerConfig, editable?: boolean) {
+        const modalRef: NgbModalRef = this.modalService.open(ResourcePickerModal, new ModalOptions());
+        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
+        if (config != null) modalRef.componentInstance.config = config;
+        if (editable != null) modalRef.componentInstance.editable = editable;
         return modalRef.result;
     }
 

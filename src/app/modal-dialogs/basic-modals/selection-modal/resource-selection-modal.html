@@ -1,32 +1,28 @@
 <div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
     <div class="modal-header" cdkDragHandle>
-        <h5 class="modal-title">{{title}}</h5>
-        <button class="close" (click)="close()">
-            <span>&times;</span>
-        </button>
+        <h3 class="modal-title text-info">{{title}}</h3>
     </div>
-    <div class="modal-body">
-
+    <div class="modal-body vbox">
         <div *ngIf="message" class="alert alert-info">
             {{message}}
         </div>
-
-        <div class="card vbox mt-1">
-            <div class="card-header">  
-                <div class="btn-toolbar float-right">
-                    <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" title="Rendering" (click)="rendering = !rendering">
-                        <i class="fas fa-font"></i>
+        <div class="card card-default vbox" style="margin-top: 5px;">
+            <div class="card-header d-flex">  
+                <div style="flex: 1"></div>
+                <div class="btn-toolbar" role="toolbar">
+                    <button class="btn btn-light btn-xs" [title]="'COMMONS.RENDERING'|translate" (click)="rendering = !rendering" [ngClass]="{active: rendering}">
+                        <span class="fas fa-font"></span>
                     </button>
                 </div>
             </div>
             <div class="card-body vbox">
-                <resource-list [resources]="resourceList" [rendering]="rendering" (nodeSelected)="resourceSelected = $event">
-                </resource-list>
+                <resource-list-selection [resources]="resourceList" [selectedResources]="selectedResources" [rendering]="rendering" [multiselection]="multiselection" (nodeSelected)="onResourceSelected($event)" (dblClicked)="onResDblClicked($event)">
+                </resource-list-selection>
             </div>
         </div>
-
     </div>
     <div class="modal-footer">
-        <button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="!resourceSelected">Ok</button>
+        <button class="btn btn-primary btn-sm" (click)="ok()" [disabled]="!isOkEnabled()">Ok</button>
+        <button class="btn btn-light btn-sm" (click)="close()">{{'COMMONS.ACTIONS.CANCEL'|translate}}</button>
     </div>
 </div>

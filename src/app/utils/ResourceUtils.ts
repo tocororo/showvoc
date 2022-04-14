@@ -1,3 +1,4 @@
+import { PrefixMapping } from '../models/Metadata';
 import { AnnotatedValue, BNode, IRI, Literal, PredicateObjects, RDFResourceRolesEnum, ResAttribute, Resource, ShowInterpretation, Value } from '../models/Resources';
 import { Lime, OntoLex, OWL, RDF, RDFS, SemanticTurkey, SKOS, SKOSXL } from '../models/Vocabulary';
 import { SVContext } from './SVContext';
@@ -13,26 +14,22 @@ export class ResourceUtils {
         //sort by show
         if (attribute == SortAttribute.show) {
             let collator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
-            list.sort(
-                function (r1: AnnotatedValue<Value>, r2: AnnotatedValue<Value>) {
-                    //if both resources have language tag (literals or reified resources with lang), sort according lang
-                    if (r1.getLanguage() != null && r2.getLanguage() != null) {
-                        if (r1.getLanguage() < r2.getLanguage()) return -1;
-                        if (r1.getLanguage() > r2.getLanguage()) return 1;
-                        //same lang code, order alphabetically
-                        return collator.compare(r1.getShow().toLowerCase(), r2.getShow().toLowerCase());
-                    } else {
-                        return collator.compare(r1.getShow().toLowerCase(), r2.getShow().toLowerCase());
-                    }
+            list.sort((r1: AnnotatedValue<Value>, r2: AnnotatedValue<Value>) => {
+                //if both resources have language tag (literals or reified resources with lang), sort according lang
+                if (r1.getLanguage() != null && r2.getLanguage() != null) {
+                    if (r1.getLanguage() < r2.getLanguage()) return -1;
+                    if (r1.getLanguage() > r2.getLanguage()) return 1;
+                    //same lang code, order alphabetically
+                    return collator.compare(r1.getShow().toLowerCase(), r2.getShow().toLowerCase());
+                } else {
+                    return collator.compare(r1.getShow().toLowerCase(), r2.getShow().toLowerCase());
                 }
-            );
+            });
         }
         if (attribute == SortAttribute.value) {
-            list.sort(
-                function (r1: AnnotatedValue<Value>, r2: AnnotatedValue<Value>) {
-                    return r1.getValue().stringValue().localeCompare(r2.getValue().stringValue());
-                }
-            );
+            list.sort((r1: AnnotatedValue<Value>, r2: AnnotatedValue<Value>) => {
+                return r1.getValue().stringValue().localeCompare(r2.getValue().stringValue());
+            });
         }
     }
 
@@ -74,6 +71,20 @@ export class ResourceUtils {
                 return resource.getShow();
             }
         }
+    }
+
+    /**
+     * Returns the qname of a IRI if the prefix-namespace is found, the same IRI otherwise
+     * @param resource
+     * @param prefixMapping 
+     */
+    static getQName(iri: string, prefixMapping: PrefixMapping[]): string {
+        for (let mapping of prefixMapping) {
+            if (iri.startsWith(mapping.namespace)) {
+                return iri.replace(mapping.namespace, mapping.prefix + ":");
+            }
+        }
+        return iri;
     }
 
     /**
@@ -202,122 +213,6 @@ export class ResourceUtils {
         }
     }
 
-    /**
-     * 
-     * @param nTripleValue 
-     */
-    static parseValue(nTripleValue: string): Value {
-        let value: Value;
-        try {
-            value = ResourceUtils.parseIRI(nTripleValue);
-        } catch (err) {}
-        if (value == null) {
-            try {
-                value = ResourceUtils.parseLiteral(nTripleValue);
-            } catch (err) {}
-        }
-        if (value == null) {
-            try {
-                value = ResourceUtils.parseBNode(nTripleValue);
-            } catch (err) {}
-        }
-        if (value == null) {
-            throw new Error("Not a legal N-Triples representation: " + nTripleValue);
-        }
-        return value;
-    }
-
-    /**
-     * Given an NT serialization of a URI, creates and returns an ARTURIResource object.
-     * Code inspired by org.eclipse.rdf4j.rio.ntriples.NTripleUtils#parseURI()
-     * @param nTriplesURI 
-     */
-    static parseIRI(nTriplesURI: string): IRI {
-        if (nTriplesURI.startsWith("<") && nTriplesURI.endsWith(">")) {
-            let iri: string = nTriplesURI.substring(1, nTriplesURI.length - 1);
-            iri = decodeURI(iri);
-            return new IRI(iri);
-        }
-        else {
-            throw new Error("Not a legal N-Triples URI: " + nTriplesURI);
-        }
-    }
-
-    /**
-     * Given an NT serialization of a literal, creates and returns an ARTLiteral object.
-     * Code inspired by org.eclipse.rdf4j.rio.ntriples.NTripleUtils#parseLiteral()
-     * @param nTriplesLiteral
-     */
-    static parseLiteral(nTriplesLiteral: string): Literal {
-        if (nTriplesLiteral.startsWith("\"")) {
-            // Find string separation points
-            let endLabelIdx: number = this.findEndOfLabel(nTriplesLiteral);
-
-            if (endLabelIdx != -1) {
-                let startLangIdx: number = nTriplesLiteral.indexOf("@", endLabelIdx);
-                let startDtIdx: number = nTriplesLiteral.indexOf("^^", endLabelIdx);
-
-                if (startLangIdx != -1 && startDtIdx != -1) {
-                    throw new Error("Literals can not have both a language and a datatype");
-                }
-
-                // Get label
-                let label: string = nTriplesLiteral.substring(1, endLabelIdx);
-                label = label.replace(/\\"/g, '"');
-
-                if (startLangIdx != -1) {
-                    // Get language
-                    let language: string = nTriplesLiteral.substring(startLangIdx + 1);
-                    return new Literal(label, language);
-                }
-                else if (startDtIdx != -1) {
-                    // Get datatype
-                    let datatype: string = nTriplesLiteral.substring(startDtIdx + 2);
-                    let dtURI: IRI = this.parseIRI(datatype);
-                    return new Literal(label, null, dtURI);
-                }
-                else {
-                    return new Literal(label);
-                }
-            }
-        }
-        throw new Error("Not a legal N-Triples literal: " + nTriplesLiteral);
-    }
-
-    /**
-	 * Finds the end of the label in a literal string. This method takes into account that characters can be
-	 * escaped using backslashes.
-     * Code inspired by org.eclipse.rdf4j.rio.ntriples.NTripleUtils#parseLiteral()
-     * 
-	 * @return The index of the double quote ending the label, or <tt>-1</tt> if it could not be found.
-	 */
-    private static findEndOfLabel(nTriplesLiteral: string): number {
-        // First character of literal is guaranteed to be a double
-        // quote, start search at second character.
-        let previousWasBackslash: boolean = false;
-        for (let i = 1; i < nTriplesLiteral.length; i++) {
-            let c: string = nTriplesLiteral.charAt(i);
-            if (c == '"' && !previousWasBackslash) {
-                return i;
-            }
-            else if (c == '\\' && !previousWasBackslash) {
-                previousWasBackslash = true; // start of escape
-            }
-            else if (previousWasBackslash) {
-                previousWasBackslash = false; // c was escaped
-            }
-        }
-        return -1;
-    }
-
-    static parseBNode(nTriplesBNode: string): BNode {
-        if (nTriplesBNode.startsWith("_:")) {
-            return new BNode(nTriplesBNode);
-        } else {
-            throw new Error("Not a legal N-Triples Blank Node: " + nTriplesBNode);
-        }
-    }
-
 }
 
 export enum SortAttribute {
@@ -327,7 +222,7 @@ export enum SortAttribute {
 
 
 export class ResourceDeserializer {
-    
+
     /**
      * Creates an ARTURIResource from a Json Object {"@id": string, "show": string, "role": string, ...other optional attributes}
      */
@@ -340,7 +235,7 @@ export class ResourceDeserializer {
     public static createBlankNode(valueJson: any, additionalAttr?: string[]): AnnotatedValue<BNode> {
         let id = valueJson['@id'];
         let value: BNode = new BNode(id);
-        return  this.annotateValue(valueJson, value, additionalAttr);
+        return this.annotateValue(valueJson, value, additionalAttr);
     }
 
     public static createLiteral(valueJson: any, additionalAttr?: string[]): AnnotatedValue<Literal> {
@@ -408,7 +303,7 @@ export class ResourceDeserializer {
         let graphsAttr: string = resJson[ResAttribute.GRAPHS];
         if (graphsAttr != undefined) {
             let splittedGraph: string[] = graphsAttr.split(",");
-            let graphs: IRI[] = []
+            let graphs: IRI[] = [];
             for (let i = 0; i < splittedGraph.length; i++) {
                 graphs.push(new IRI(splittedGraph[i]));
             }
@@ -428,7 +323,7 @@ export class ResourceDeserializer {
         }
         let schemesAttr: string = resJson[ResAttribute.SCHEMES];
         if (schemesAttr != undefined) {
-            let schemes: IRI[] = []
+            let schemes: IRI[] = [];
             if (schemesAttr != "") {
                 let splittedSchemes: string[] = schemesAttr.split(",");
                 for (let i = 0; i < splittedSchemes.length; i++) {
@@ -456,7 +351,7 @@ export class ResourceDeserializer {
                     //I set the last deprecated encountered but it doesn't matter since the deprecated value is the same in all the role-graph-deprecated triples
                     annotatedValue.setAttribute(ResAttribute.DEPRECATED, roleGraphDeprecated[2] == "true");
                 }
-                
+
                 /**
                  * if explicit is null => explicit attribute was missing => infer it from the graphs in the nature:
                  * explicit is true if the resource is defined in the main graph (but not in the remove-staging)
@@ -494,7 +389,7 @@ export class ResourceDeserializer {
                     while (shortShow.length < charLimit) {
                         shortShow += splitted[i] + ",";
                         i++;
-                    } 
+                    }
                     shortShow += " ...}";
                     annotatedValue.setAttribute(ResAttribute.SHOW, shortShow);
                 }
@@ -552,7 +447,7 @@ export class ResourceDeserializer {
      * creates an array of only ARTURIResource from a json result
      */
     public static createIRIArray(result: Array<any>, additionalAttr?: string[]): AnnotatedValue<IRI>[] {
-        let uriResourceArray: AnnotatedValue<IRI>[] = new Array();
+        let uriResourceArray: AnnotatedValue<IRI>[] = [];
         for (let i = 0; i < result.length; i++) {
             uriResourceArray.push(this.createIRI(result[i], additionalAttr));
         }
@@ -560,7 +455,7 @@ export class ResourceDeserializer {
     }
 
     public static createResourceArray(resArray: any[], additionalAttr?: string[]): AnnotatedValue<Resource>[] {
-        let resourceArray: AnnotatedValue<Resource>[] = new Array();
+        let resourceArray: AnnotatedValue<Resource>[] = [];
         for (let i = 0; i < resArray.length; i++) {
             resourceArray.push(this.createResource(resArray[i], additionalAttr));
         }
@@ -568,7 +463,7 @@ export class ResourceDeserializer {
     }
 
     public static createLiteralArray(result: Array<any>, additionalAttr?: string[]): AnnotatedValue<Literal>[] {
-        let literalArray: AnnotatedValue<Literal>[] = new Array();
+        let literalArray: AnnotatedValue<Literal>[] = [];
         for (let i = 0; i < result.length; i++) {
             literalArray.push(this.createLiteral(result[i], additionalAttr));
         }
@@ -576,7 +471,7 @@ export class ResourceDeserializer {
     }
 
     public static createValueArray(nodeArray: any, additionalAttr?: string[]): AnnotatedValue<Value>[] {
-        let collectionArray: AnnotatedValue<Value>[] = new Array();
+        let collectionArray: AnnotatedValue<Value>[] = [];
         for (let i = 0; i < nodeArray.length; i++) {
             collectionArray.push(this.createValue(nodeArray[i], additionalAttr));
         }
@@ -596,6 +491,134 @@ export class ResourceDeserializer {
         //     return po1.getPredicate().getShow().localeCompare(po2.getPredicate().getShow());
         // })
         return poLists;
-    };
-    
+    }
+
+}
+
+
+
+export class NTriplesUtil {
+
+    /**
+     * 
+     * @param nTripleValue 
+     */
+    static parseValue(nTripleValue: string): Value {
+        let value: Value;
+        try {
+            value = NTriplesUtil.parseIRI(nTripleValue);
+        } catch (err) {
+            console.error(err);
+        }
+        if (value == null) {
+            try {
+                value = NTriplesUtil.parseLiteral(nTripleValue);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        if (value == null) {
+            try {
+                value = NTriplesUtil.parseBNode(nTripleValue);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        if (value == null) {
+            throw new Error("Not a legal N-Triples representation: " + nTripleValue);
+        }
+        return value;
+    }
+
+    /**
+     * Given an NT serialization of a URI, creates and returns an ARTURIResource object.
+     * Code inspired by org.eclipse.rdf4j.rio.ntriples.NTripleUtils#parseURI()
+     * @param nTriplesURI 
+     */
+    static parseIRI(nTriplesURI: string): IRI {
+        if (nTriplesURI.startsWith("<") && nTriplesURI.endsWith(">")) {
+            let iri: string = nTriplesURI.substring(1, nTriplesURI.length - 1);
+            iri = decodeURI(iri);
+            return new IRI(iri);
+        }
+        else {
+            throw new Error("Not a legal N-Triples URI: " + nTriplesURI);
+        }
+    }
+
+    /**
+     * Given an NT serialization of a literal, creates and returns an ARTLiteral object.
+     * Code inspired by org.eclipse.rdf4j.rio.ntriples.NTripleUtils#parseLiteral()
+     * @param nTriplesLiteral
+     */
+    static parseLiteral(nTriplesLiteral: string): Literal {
+        if (nTriplesLiteral.startsWith("\"")) {
+            // Find string separation points
+            let endLabelIdx: number = this.findEndOfLabel(nTriplesLiteral);
+
+            if (endLabelIdx != -1) {
+                let startLangIdx: number = nTriplesLiteral.indexOf("@", endLabelIdx);
+                let startDtIdx: number = nTriplesLiteral.indexOf("^^", endLabelIdx);
+
+                if (startLangIdx != -1 && startDtIdx != -1) {
+                    throw new Error("Literals can not have both a language and a datatype");
+                }
+
+                // Get label
+                let label: string = nTriplesLiteral.substring(1, endLabelIdx);
+                label = label.replace(/\\"/g, '"');
+
+                if (startLangIdx != -1) {
+                    // Get language
+                    let language: string = nTriplesLiteral.substring(startLangIdx + 1);
+                    return new Literal(label, language);
+                }
+                else if (startDtIdx != -1) {
+                    // Get datatype
+                    let datatype: string = nTriplesLiteral.substring(startDtIdx + 2);
+                    let dtURI: IRI = this.parseIRI(datatype);
+                    return new Literal(label, null, dtURI);
+                }
+                else {
+                    return new Literal(label);
+                }
+            }
+        }
+        throw new Error("Not a legal N-Triples literal: " + nTriplesLiteral);
+    }
+
+    /**
+     * Finds the end of the label in a literal string. This method takes into account that characters can be
+     * escaped using backslashes.
+     * Code inspired by org.eclipse.rdf4j.rio.ntriples.NTripleUtils#parseLiteral()
+     * 
+     * @return The index of the double quote ending the label, or <tt>-1</tt> if it could not be found.
+     */
+    private static findEndOfLabel(nTriplesLiteral: string): number {
+        // First character of literal is guaranteed to be a double
+        // quote, start search at second character.
+        let previousWasBackslash: boolean = false;
+        for (let i = 1; i < nTriplesLiteral.length; i++) {
+            let c: string = nTriplesLiteral.charAt(i);
+            if (c == '"' && !previousWasBackslash) {
+                return i;
+            }
+            else if (c == '\\' && !previousWasBackslash) {
+                previousWasBackslash = true; // start of escape
+            }
+            else if (previousWasBackslash) {
+                previousWasBackslash = false; // c was escaped
+            }
+        }
+        return -1;
+    }
+
+    static parseBNode(nTriplesBNode: string): BNode {
+        if (nTriplesBNode.startsWith("_:")) {
+            return new BNode(nTriplesBNode);
+        } else {
+            throw new Error("Not a legal N-Triples Blank Node: " + nTriplesBNode);
+        }
+    }
+
 }

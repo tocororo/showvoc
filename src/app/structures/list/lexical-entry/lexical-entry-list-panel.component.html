@@ -1,13 +1,13 @@
 <div class="card vbox">
     <div class="card-header">
         <div class="btn-toolbar float-right">
-            <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" title="Rendering" (click)="rendering=!rendering">
+            <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" [title]="'COMMONS.RENDERING'|translate" (click)="rendering=!rendering">
                 <i class="fas fa-font"></i>
             </button>
             <button class="btn btn-light btn-sm ml-1" [title]="'COMMONS.ACTIONS.REFRESH'|translate" (click)="refresh()">
                 <span class="fas fa-sync"></span>
             </button>
-            <button class="btn btn-light btn-sm ml-1" [title]="'COMMONS.SETTINGS'|translate" (click)="settings()">
+            <button *ngIf="context == 'dataPanel'" class="btn btn-light btn-sm ml-1" [title]="'COMMONS.SETTINGS'|translate" (click)="settings()">
                 <span class="fas fa-cog"></span>
             </button>
         </div>
@@ -48,6 +48,7 @@
     </div>
 
     <div *ngIf="!hideSearch" class="card-footer">
-        <search-bar (searchResults)="handleSearchResults($event)" [roles]="[panelRole]" [lexicon]="lexicon"></search-bar>
+        <search-bar (searchResults)="handleSearchResults($event)" (advancedSearchResult)="handleAdvSearchResult($event)"
+            [roles]="[panelRole]" [context]="context" [lexicon]="lexicon"></search-bar>
     </div>
 </div>

@@ -8,18 +8,35 @@ import { AnnotatedValue, Value } from 'src/app/models/Resources';
 })
 export class ResourceSelectionModal {
 
-    @Input() title: string = "Select a resource";
+    @Input() title: string;
     @Input() message: string;
-    @Input() resourceList: AnnotatedValue<Value>;
+    @Input() resourceList: AnnotatedValue<Value>[];
+    @Input() multiselection: boolean = false; //tells if multiple selection is allowed
+    @Input() selectedResources: Value[]; //resources that will be selected once the dialog is initialized
+    @Input() emptySelectionAllowed: boolean = false;
     @Input() rendering: boolean = true;
+    
+    private selection: AnnotatedValue<Value>[];
+    
+    constructor(public activeModal: NgbActiveModal) {}
 
-    resourceSelected: AnnotatedValue<Value>;
+    isOkEnabled() {
+        return this.emptySelectionAllowed || this.selection && this.selection.length > 0;
+    }
+    
+    onResourceSelected(resources: AnnotatedValue<Value>[]) {
+        this.selection = resources;
+    }
 
-    constructor(public activeModal: NgbActiveModal) { }
-
+    onResDblClicked(resource: AnnotatedValue<Value>) {
+        if (!this.multiselection) {
+            this.selection = [resource];
+            this.ok();
+        }
+    }
 
     ok() {
-        this.activeModal.close(this.resourceSelected);
+        this.activeModal.close(this.selection);
     }
 
     close() {

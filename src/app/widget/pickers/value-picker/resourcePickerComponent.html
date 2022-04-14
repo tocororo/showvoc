@@ -1,0 +1,8 @@
+<div [class]="inputGroupClass">
+    <input class="form-control" [(ngModel)]="resourceIRI" (ngModelChange)="onIriChanged()" placeholder="http://example.org" [readonly]="!editable" [disabled]="disabled">
+    <div class="input-group-append" ngbDropdown>
+        <button class="btn btn-outline-info" (click)="pickLocalResource()" [disabled]="disabled || !projectAccessed">
+            <span class="fas fa-pencil-alt"></span>
+        </button>
+    </div>
+</div>

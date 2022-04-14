@@ -16,7 +16,7 @@ export class InstanceListSettingsModal {
     visualizationModes: { value: InstanceListVisualizationMode, labelTranslationKey: string }[] = [
         { value: InstanceListVisualizationMode.standard, labelTranslationKey: VisualizationModeTranslation.translationMap[InstanceListVisualizationMode.standard] },
         { value: InstanceListVisualizationMode.searchBased, labelTranslationKey: VisualizationModeTranslation.translationMap[InstanceListVisualizationMode.searchBased] }
-    ]
+    ];
     allowVisualizationChange: boolean;
 
     private safeToGoLimit: number;
@@ -43,7 +43,7 @@ export class InstanceListSettingsModal {
         this.activeModal.close();
     }
 
-    cancel() {
+    close() {
         this.activeModal.dismiss();
     }
 

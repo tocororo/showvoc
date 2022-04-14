@@ -21,7 +21,7 @@
                         <td></td>
                         <td></td>
                         <td>
-                            <button class="btn btn-light" (click)="addLabel()" [title]="'ACTIONS.ADD'|translate">
+                            <button class="btn btn-light" (click)="addLabel()" [title]="'COMMONS.ACTIONS.ADD'|translate">
                                 <span class="fas fa-plus"></span>
                             </button>
                         </td>
@@ -34,12 +34,12 @@
                             <input class="form-control" [(ngModel)]="l.label">
                         </td>
                         <td>
-                            <button class="btn btn-light" (click)="removeLabel(l)" [title]="'ACTIONS.DELETE'|translate">
+                            <button class="btn btn-light" (click)="removeLabel(l)" [title]="'COMMONS.ACTIONS.DELETE'|translate">
                                 <span class="far fa-trash-alt"></span>
                             </button>
                         </td>
                         <td *ngIf="last && !pendingLabel">
-                            <button class="btn btn-light" (click)="addLabel()" [title]="'ACTIONS.ADD'|translate">
+                            <button class="btn btn-light" (click)="addLabel()" [title]="'COMMONS.ACTIONS.ADD'|translate">
                                 <span class="fas fa-plus"></span>
                             </button>
                         </td>

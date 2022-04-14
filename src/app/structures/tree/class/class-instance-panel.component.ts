@@ -49,7 +49,7 @@ export class ClassInstancePanelComponent {
                     //center instanceList to the individual
                     this.viewChildInstanceList.openAt(resource);
                 }
-            )
+            );
         }
     }
 

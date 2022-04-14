@@ -1,17 +1,17 @@
-import { Component, ViewChild, Input } from "@angular/core";
+import { Component, Input, ViewChild } from "@angular/core";
 import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions } from "src/app/modal-dialogs/Modals";
-import { InstanceListPreference, InstanceListVisualizationMode } from "src/app/models/Properties";
+import { InstanceListVisualizationMode } from "src/app/models/Properties";
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
+import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { SVContext } from "src/app/utils/SVContext";
 import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { SVProperties } from 'src/app/utils/SVProperties';
-import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { SearchBarComponent } from "../../search-bar/search-bar.component";
 import { AbstractListPanel } from '../abstract-list-panel';
-import { InstanceListComponent } from './instance-list.component';
 import { InstanceListSettingsModal } from "./instance-list-settings-modal";
+import { InstanceListComponent } from './instance-list.component';
 
 @Component({
     selector: "instance-list-panel",
@@ -48,8 +48,8 @@ export class InstanceListPanelComponent extends AbstractListPanel {
             } else { //multiple results, ask the user which one select
                 ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
                 this.basicModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
-                    (selectedResource: AnnotatedValue<IRI>) => {
-                        this.openAt(selectedResource);
+                    (selectedResources: AnnotatedValue<IRI>[]) => {
+                        this.openAt(selectedResources[0]);
                     },
                     () => {}
                 );

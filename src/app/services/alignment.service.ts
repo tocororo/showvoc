@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { IRI, Triple } from '../models/Resources';
 import { HttpManager } from "../utils/HttpManager";
-import { map } from 'rxjs/operators';
-import { ResourceUtils } from '../utils/ResourceUtils';
+import { NTriplesUtil } from '../utils/ResourceUtils';
 
 @Injectable()
 export class AlignmentServices {
@@ -48,9 +48,9 @@ export class AlignmentServices {
                 let triples: Triple<IRI>[] = [];
                 for (let t of stResp) {
                     triples.push(new Triple(
-                        ResourceUtils.parseIRI(t[0]),
-                        ResourceUtils.parseIRI(t[1]),
-                        ResourceUtils.parseIRI(t[2])
+                        NTriplesUtil.parseIRI(t[0]),
+                        NTriplesUtil.parseIRI(t[1]),
+                        NTriplesUtil.parseIRI(t[2])
                     ));
                 }
                 return triples;

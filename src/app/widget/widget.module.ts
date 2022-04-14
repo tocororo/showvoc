@@ -7,13 +7,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SanitizerDirective } from './directives/sanitizer.directive';
 import { ExtensionConfiguratorComponent } from './extensionConfigurator/extension-configurator.component';
 import { InputEditableComponent } from './input-editable/input-editable.component';
-import { LangPickerComponent } from './lang-picker/lang-picker.component';
 import { LangStringEditorComponent } from './langstring-editor/langstring-editor.component';
 import { LanguageItemComponent } from './language-item/language-item.component';
 import { LocalizedEditorModal } from './localized-editor/localized-editor-modal';
 import { PasswordInputComponent } from './password-input/password-input.component';
 import { FilePickerComponent } from './pickers/file-picker/file-picker.component';
+import { LangPickerComponent } from './pickers/lang-picker/lang-picker.component';
+import { LiteralPickerComponent } from './pickers/value-picker/literalPickerComponent';
+import { ResourcePickerComponent } from './pickers/value-picker/resourcePickerComponent';
 import { RdfResourceComponent } from './rdf-resource/rdf-resource.component';
+import { ResourceListSelectionComponent } from './rdf-resource/resource-list-selection.component';
 import { ResourceListComponent } from './rdf-resource/resource-list.component';
 import { RenderingEditorModal } from './rendering-editor/rendering-editor-modal';
 import { RenderingEditor } from './rendering-editor/rendering-editor.component';
@@ -28,6 +31,7 @@ import { SettingsRendererPanelComponent } from './settings-renderer/settings-ren
 import { SettingsRendererComponent } from './settings-renderer/settings-renderer.component';
 import { ToastsContainer } from './toast/toast-container';
 import { ToastService } from './toast/toast-service';
+import { TypedLiteralInputComponent } from './typed-literal-input/typedLiteralInputComponent';
 
 @NgModule({
     imports: [
@@ -45,6 +49,7 @@ import { ToastService } from './toast/toast-service';
         LangPickerComponent,
         LangStringEditorComponent,
         LanguageItemComponent,
+        LiteralPickerComponent,
         LocalizedEditorModal,
         NestedSettingSetRendererComponent,
         PasswordInputComponent,
@@ -52,6 +57,8 @@ import { ToastService } from './toast/toast-service';
         RenderingEditor,
         RenderingEditorModal,
         ResourceListComponent,
+        ResourceListSelectionComponent,
+        ResourcePickerComponent,
         ResizableLayoutComponent,
         SanitizerDirective,
         SettingMapRendererComponent,
@@ -60,7 +67,8 @@ import { ToastService } from './toast/toast-service';
         SettingsRendererPanelComponent,
         SettingsRendererComponent,
         SettingValueRendererComponent,
-        ToastsContainer
+        ToastsContainer,
+        TypedLiteralInputComponent
     ],
     exports: [
         DataSizeRenderer,
@@ -70,19 +78,23 @@ import { ToastService } from './toast/toast-service';
         LangPickerComponent,
         LangStringEditorComponent,
         LanguageItemComponent,
+        LiteralPickerComponent,
         LocalizedEditorModal,
         PasswordInputComponent,
         RdfResourceComponent,
         RenderingEditor,
         RenderingEditorModal,
         ResourceListComponent,
+        ResourceListSelectionComponent,
+        ResourcePickerComponent,
         ResizableLayoutComponent,
         SanitizerDirective,
         SettingMapRendererComponent,
         SettingSetRendererComponent,
         SettingsRendererPanelComponent,
         SettingsRendererComponent,
-        ToastsContainer
+        ToastsContainer,
+        TypedLiteralInputComponent
     ],
     entryComponents: [
         RenderingEditorModal

@@ -131,10 +131,15 @@
             "CREATE": "Crear",
             "EDIT": "Editar",
             "LOAD": "Cargar",
+            "PICK_RESOURCE": "Seleccionar recurso",
             "REFRESH": "Recargar",
             "REMOVE": "Borrar",
             "RESET": "Reiniciar",
             "SEARCH": "Buscar",
+            "SELECT_LANGUAGE": "Seleccionar idioma",
+            "SELECT_LANGUAGES": "Seleccionar idiomas",
+            "SELECT_RESOURCE": "Seleccionar recurso",
+            "SELECT_RESOURCE_TYPE_TO_PICK": "Seleccione el tipo de recurso a elegir",
             "SUBMIT": "Enviar",
             "UNCHECK": "Desmarcar",
             "UNCHECK_ALL": "Desmarcar todo",
@@ -180,6 +185,7 @@
         },
         "POSITION": "Posición",
         "REASON": "Razón",
+        "RENDERING": "Representación",
         "SETTINGS": "Ajustes",
         "STATUS": {
             "ACTIVE": "Activo",
@@ -241,11 +247,22 @@
         }
     },
     "DATA": {
+        "ACTIONS": {
+            "CHANGE_LEXICON": "Cambiar vocabulario",
+            "CHANGE_RENDERING": "Cambiar representación",
+            "CREATE_LITERAL": "Crear literal",
+            "SELECT_CLASS": "Seleccionar clase",
+            "SELECT_COLLECTION": "Seleccionar colección",
+            "SELECT_CONCEPT": "Seleccionar concepto",
+            "SELECT_INSTANCE": "Seleccionar instancia",
+            "SELECT_LEXICAL_ENTRY": "Select Lexical Entry",
+            "SELECT_LEXICON": "Seleccionar léxico",
+            "SELECT_PROPERTY": "Select property",
+            "SELECT_ROOT_CLASS": "Seleccionar clase raíz",
+            "SELECT_SCHEME": "Seleccionar esquema",
+            "SHOW_ALL_PROPS": "Mostrar todas las propiedades"
+        },
         "CLASS": {
-            "ACTIONS": {
-                "SELECT_CLASS": "Seleccionar clase",
-                "SELECT_ROOT_CLASS": "Seleccionar clase raíz"
-            },
             "CLASS": "Clase",
             "CLASSES": "Clases",
             "SETTINGS": {
@@ -263,9 +280,6 @@
             "COLLECTIONS": "Colecciones"
         },
         "COMMONS": {
-            "ACTIONS": {
-                "CHANGE_RENDERING": "Cambiar representación"
-            },
             "VISUALIZATION_MODE": {
                 "HIERARCHY_BASED": "Jerárquico",
                 "INDEX_BASED": "Basado en índices",
@@ -313,10 +327,6 @@
             "USE_SEARCH_MSG": "Utilice el campo de búsqueda para recuperar instancias"
         },
         "LEXICON": {
-            "ACTIONS": {
-                "CHANGE_LEXICON": "Cambiar vocabulario",
-                "SELECT_LEXICON": "Seleccionar léxico"
-            },
             "LEXICON": "Léxico",
             "LEXICONS": "Léxico"
         },
@@ -344,9 +354,6 @@
             "USE_SEARCH_MSG": "Utilice el campo de búsqueda para recuperar entradas léxicas"
         },
         "PROPERTY": {
-            "ACTIONS": {
-                "SHOW_ALL": "Mostrar todas las propiedades"
-            },
             "PROPERTIES": "Propiedad",
             "PROPERTY": "Propiedad"
         },
@@ -499,7 +506,8 @@
         "MISSING_MANDATORY_FIELD": "Falta el campo obligatorio: '{{missingField}}'",
         "NO_CONVERSION_FORMAT_SELECTED": "La opción 'Conversión necesaria' está marcada pero no se ha seleccionado ningún formato.",
         "NO_METADATA_PROVIDED": "No se proporcionaron metadatos",
-        "NO_SEARCH_RESULTS": "No se encontraron resultados para '{{seekString}}'",
+        "NO_RESULTS_FOUND": "No se encontraron resultados",
+        "NO_RESULTS_FOUND_FOR": "No se encontraron resultados para '{{seekString}}'",
         "NO_USER_Rreste": "ShowVoc no encontró ningún usuario registrado. Para utilizar la plataforma, es necesario crear una cuenta de administrador ingresando datos personales y credenciales de inicio de sesión.",
         "PASSWORD_CHANGED": "Su contraseña se ha cambiado correctamente. Ahora se cerrará la sesión.",
         "PASSWORD_RESET_SUCCESS": "La contraseña se ha restablecido correctamente. Recibirás un correo electrónico con una nueva contraseña temporal.",
@@ -616,6 +624,18 @@
         }
     },
     "SEARCH": {
+        "ADV_SEARCH": {
+            "ADD_FREE_TEXT": "Añadir búsqueda de texto libre",
+            "ADD_LITERAL": "Añadir literal",
+            "ADD_RESOURCE": "Añadir recurso",
+            "ADD_SET_OF_VALUES": "Añadir conjunto de valores",
+            "ADVANCED_SEARCH": "Búsqueda avanzada",
+            "INGOING_LINKS": "Enlaces entrantes",
+            "OUTGOING_LINKS": "Enlaces salientes",
+            "SCHEMES": "Esquemas",
+            "SEARCH_STRING": "Cadena de búsqueda",
+            "TYPES": "Tipos"
+        },
         "ANY_LANGUAGE": "Cualquier idioma",
         "EDIT_LANGS": {
             "ADD_LANG": "Agregar idioma",
@@ -636,6 +656,9 @@
             "ENDS_WITH": "Termina con",
             "EXACT": "Exactamente",
             "FUZZY": "Fuzzy",
+            "INCLUDE_LOCALES": "Incluir configuraciones regionales en la búsqueda (por ejemplo, en-GB, en-US)",
+            "LEXICALIZATIONS_SEARCH": "Búsqueda de Lexicalizaciones",
+            "RESTRICT_TO_LANGUAGES": "Restringir la búsqueda a idiomas",
             "RESTRICT_TO_SCHEME": "Restringir la búsqueda a recursos skos:ConceptScheme",
             "SEARCH_IN_LOCAL_NAME": "Buscar en nombre local",
             "SEARCH_IN_NOTES": "Buscar en notas",

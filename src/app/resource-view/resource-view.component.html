@@ -9,7 +9,7 @@
                     <i *ngIf="showInferred" class="fas fa-eye"></i>
                     <i *ngIf="!showInferred" class="fas fa-eye-slash"></i>
                 </button>
-                <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: rendering}" title="Rendering" (click)="switchRendering()">
+                <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: rendering}" [title]="'COMMONS.RENDERING'|translate" (click)="switchRendering()">
                     <i class="fas fa-font"></i>
                 </button>
                 <button class="btn btn-light btn-sm ml-1" [title]="'COMMONS.ACTIONS.REFRESH'|translate" (click)="buildResourceView(resource)">

@@ -4,7 +4,7 @@
             <div class="btn-toolbar" style="flex: 1;">
             </div>
             <div class="btn-toolbar float-right">
-                <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" (click)="rendering=!rendering" title="Rendering">
+                <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" (click)="rendering=!rendering" [title]="'COMMONS.RENDERING'|translate">
                     <i class="fas fa-font"></i>
                 </button>
                 <button class="btn btn-light btn-sm ml-1" [ngClass]="{active: showPercentage}" (click)="showPercentage=!showPercentage" [title]="'ALIGNMENTS.ACTIONS.SHOW_PERCENTAGE'|translate">

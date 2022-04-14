@@ -61,6 +61,10 @@ export class StructureTabsetComponent implements OnInit {
         this.nodeSelected.emit(node);
     }
 
+    handleAdvSearchResult(resource: AnnotatedValue<IRI>) {
+        this.selectResource(resource);
+    }
+
     /**
      * Allows to force the selection of a resource from outside this component.
      * This is useful when a search result is selected and it has to be show in the tree/list view or when an object is dblclicked from a RV

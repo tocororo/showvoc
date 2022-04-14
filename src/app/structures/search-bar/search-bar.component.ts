@@ -11,6 +11,8 @@ import { SVProperties } from 'src/app/utils/SVProperties';
 import { SearchSettingsModal } from './search-settings-modal';
 import { finalize } from 'rxjs/operators';
 import { SVContext } from 'src/app/utils/SVContext';
+import { AdvancedSearchModal } from './advanced-search-modal';
+import { TreeListContext } from 'src/app/utils/UIUtils';
 
 @Component({
     selector: "search-bar",
@@ -24,6 +26,8 @@ export class SearchBarComponent {
     @Input() lexicon: IRI; //if search-bar is in the lexicalEntryListPanel
     @Input() cls: IRI; //if search-bar is in the instanceListPanel
     @Output() searchResults: EventEmitter<AnnotatedValue<Resource>[]> = new EventEmitter();
+    @Output() advancedSearchResult: EventEmitter<AnnotatedValue<Resource>> = new EventEmitter();
+    @Input() context: TreeListContext;
 
     loading: boolean = false;
 
@@ -43,7 +47,7 @@ export class SearchBarComponent {
 
     private eventSubscriptions: Subscription[] = [];
 
-    constructor(private searchService: SearchServices, private svProps: SVProperties, private eventHandler: SVEventHandler, 
+    constructor(private searchService: SearchServices, private svProps: SVProperties, private eventHandler: SVEventHandler,
         private basicModals: BasicModalsServices, private modalService: NgbModal) {
 
         this.eventSubscriptions.push(eventHandler.searchPrefsUpdatedEvent.subscribe(
@@ -63,7 +67,7 @@ export class SearchBarComponent {
             this.lastSearch = this.searchStr;
             this.doSearchImpl();
         } else {
-            this.basicModals.alert({ key: "COMMONS.ACTIONS.SEARCH" }, {key:"MESSAGES.INVALID_SEARCH_STRING"}, ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.INVALID_SEARCH_STRING" }, ModalType.warning);
         }
     }
 
@@ -91,22 +95,22 @@ export class SearchBarComponent {
             } else if (this.searchSettings.classIndividualSearchMode == ClassIndividualPanelSearchMode.onlyClasses) {
                 searchRoles = [RDFResourceRolesEnum.cls];
             }
-            searchFn = this.searchService.searchResource(this.lastSearch, searchRoles, this.searchSettings.useLocalName, 
+            searchFn = this.searchService.searchResource(this.lastSearch, searchRoles, this.searchSettings.useLocalName,
                 this.searchSettings.useURI, this.searchSettings.useNotes, this.searchSettings.stringMatchMode, searchLangs,
                 includeLocales);
         } else { //concept
-            searchFn = this.searchService.searchResource(this.lastSearch, this.roles, this.searchSettings.useLocalName, 
+            searchFn = this.searchService.searchResource(this.lastSearch, this.roles, this.searchSettings.useLocalName,
                 this.searchSettings.useURI, this.searchSettings.useNotes, this.searchSettings.stringMatchMode, searchLangs,
                 includeLocales, searchingScheme);
         }
 
         this.loading = true;
         searchFn.pipe(
-            finalize(() => this.loading = false)
+            finalize(() => { this.loading = false; })
         ).subscribe(
             searchResult => {
                 if (searchResult.length == 0) {
-                    this.basicModals.alert({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.NO_SEARCH_RESULTS", params: { searchedString: this.lastSearch} }, ModalType.warning);
+                    this.basicModals.alert({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.NO_RESULTS_FOUND_FOR", params: { searchedString: this.lastSearch } }, ModalType.warning);
                 } else {
                     this.searchResults.emit(searchResult);
                 }
@@ -114,8 +118,26 @@ export class SearchBarComponent {
         );
     }
 
+    /**
+     * Advanced search is available only if the panel is in the data page (not in modals)
+     */
+    showAdvSearch(): boolean {
+        return this.context == TreeListContext.dataPanel;
+    }
+
+    advancedSearch() {
+        const modalRef: NgbModalRef = this.modalService.open(AdvancedSearchModal, new ModalOptions('xl'));
+        modalRef.result.then(
+            (resource: AnnotatedValue<Resource>) => {
+                console.log(resource);
+                this.advancedSearchResult.emit(resource);
+            },
+            () => { }
+        );
+    }
+
     settings() {
-		const modalRef: NgbModalRef = this.modalService.open(SearchSettingsModal, new ModalOptions());
+        const modalRef: NgbModalRef = this.modalService.open(SearchSettingsModal, new ModalOptions());
         modalRef.componentInstance.roles = this.roles;
         return modalRef.result;
     }

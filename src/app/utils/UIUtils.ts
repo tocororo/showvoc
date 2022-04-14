@@ -366,6 +366,8 @@ export class UIUtils {
             datatype.equals(XmlSchema.unsignedByte) || datatype.equals(XmlSchema.unsignedInt) || 
             datatype.equals(XmlSchema.unsignedLong) || datatype.equals(XmlSchema.unsignedShort)) {
             imgSrc = "./assets/images/icons/res/number.png";
+        } else {
+            imgSrc = "./assets/images/icons/res/unknown_datatype.png";
         }
         return imgSrc;
     }

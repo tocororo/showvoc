@@ -146,10 +146,15 @@
             "EDIT": "Edit",
             "EXPAND_ALL": "Expand all",
             "LOAD": "Load",
+            "PICK_RESOURCE": "Pick resource",
             "REFRESH": "Refresh",
             "REMOVE": "Remove",
             "RESET": "Reset",
             "SEARCH": "Search",
+            "SELECT_LANGUAGE": "Select language",
+            "SELECT_LANGUAGES": "Select languages",
+            "SELECT_RESOURCE": "Select resource",
+            "SELECT_RESOURCE_TYPE_TO_PICK": "Select the type of resource to pick",
             "SORT_BY_X": "Sort by",
             "SUBMIT": "Submit",
             "UNCHECK": "Uncheck",
@@ -201,6 +206,7 @@
         },
         "POSITION": "Position",
         "REASON": "Reason",
+        "RENDERING": "Rendering",
         "SETTINGS": "Settings",
         "STATUS": {
             "ACTIVE": "Active",
@@ -262,11 +268,22 @@
         }
     },
     "DATA": {
+        "ACTIONS": {
+            "CHANGE_LEXICON": "Change Lexicon",
+            "CHANGE_RENDERING": "Change rendering",
+            "CREATE_LITERAL": "Create literal",
+            "SELECT_CLASS": "Select class",
+            "SELECT_COLLECTION": "Select collection",
+            "SELECT_CONCEPT": "Select concept",
+            "SELECT_INSTANCE": "Select instance",
+            "SELECT_LEXICAL_ENTRY": "Lexikalischen Eintrag auswählen",
+            "SELECT_LEXICON": "Select Lexicon",
+            "SELECT_PROPERTY": "Eigenschaft auswählen",
+            "SELECT_ROOT_CLASS": "Select root class",
+            "SELECT_SCHEME": "Select scheme",
+            "SHOW_ALL_PROPS": "Show all properties"
+        },
         "CLASS": {
-            "ACTIONS": {
-                "SELECT_CLASS": "Select class",
-                "SELECT_ROOT_CLASS": "Select root class"
-            },
             "CLASS": "Class",
             "CLASSES": "Classes",
             "SETTINGS": {
@@ -284,9 +301,6 @@
             "COLLECTIONS": "Collections"
         },
         "COMMONS": {
-            "ACTIONS": {
-                "CHANGE_RENDERING": "Change rendering"
-            },
             "VISUALIZATION_MODE": {
                 "HIERARCHY_BASED": "Hierarchy based",
                 "INDEX_BASED": "Index based",
@@ -334,10 +348,6 @@
             "USE_SEARCH_MSG": "Please use the search field to retrieve instances"
         },
         "LEXICON": {
-            "ACTIONS": {
-                "CHANGE_LEXICON": "Change Lexicon",
-                "SELECT_LEXICON": "Select Lexicon"
-            },
             "LEXICON": "Lexicon",
             "LEXICONS": "Lexicons"
         },
@@ -365,9 +375,6 @@
             "USE_SEARCH_MSG": "Please use the search field to retrieve lexical entries"
         },
         "PROPERTY": {
-            "ACTIONS": {
-                "SHOW_ALL": "Show all properties"
-            },
             "PROPERTIES": "Properties",
             "PROPERTY": "Property"
         },
@@ -529,7 +536,8 @@
         "MISSING_MANDATORY_FIELD": "Missing mandatory field '{{missingField}}'",
         "NO_CONVERSION_FORMAT_SELECTED": "The 'Conversion required' is checked, but no format has been selected",
         "NO_METADATA_PROVIDED": "No metadata has been provided",
-        "NO_SEARCH_RESULTS": "No results found for '{{searchedString}}'",
+        "NO_RESULTS_FOUND": "No results found",
+        "NO_RESULTS_FOUND_FOR": "No results found for '{{searchedString}}'",
         "NO_USER_REGISTERED": "ShowVoc has detected that no user has yet registered. In order to use the platform, you need to create an administrator account by entering personal data and login credentials.",
         "NO_USER_REGISTERED_SAML_MODE": "ShowVoc has detected no user registered. The authentication mode is set to SAML, so now you're going to be redirect to the authentication page of the Identity Provider. Once authenticated you'll be back here in ShowVoc for registering the administrator user.",
         "NO_USER_REGISTERED_WITH_EMAIL": "No registered user with email {{email}} has been found.",
@@ -673,6 +681,19 @@
         }
     },
     "SEARCH": {
+        "ADV_SEARCH": {
+            "ADD_FREE_TEXT": "Add free text search",
+            "ADD_LITERAL": "Add literal",
+            "ADD_RESOURCE": "Add resource",
+            "ADD_SET_OF_VALUES": "Add set of values",
+            "ADVANCED_SEARCH": "Advanced Search",
+            "INCOMPLETE_FILTER_WARN": "Incomplete filter detected in {{filter}} (missing predicate or values). Please, fix it or remove it.",
+            "INGOING_LINKS": "Ingoing links",
+            "OUTGOING_LINKS": "Outgoing links",
+            "SCHEMES": "Schemes",
+            "SEARCH_STRING": "Search string",
+            "TYPES": "Types"
+        },
         "ANY_LANGUAGE": "Any language",
         "DISABLE_FILTER": "Disable filter",
         "EDIT_LANGS": {
@@ -694,6 +715,9 @@
             "ENDS_WITH": "Ends with",
             "EXACT": "Exact",
             "FUZZY": "Fuzzy",
+            "INCLUDE_LOCALES": "Include locales in search (e.g. en-GB, en-US)",
+            "LEXICALIZATIONS_SEARCH": "Lexicalizations search",
+            "RESTRICT_TO_LANGUAGES": "Restrict search to languages",
             "RESTRICT_TO_SCHEME": "Restrict the search to the active skos:ConceptScheme(s)",
             "SEARCH_IN_LOCAL_NAME": "Search in local name",
             "SEARCH_IN_NOTES": "Search in notes",

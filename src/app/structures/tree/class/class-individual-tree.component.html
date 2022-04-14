@@ -1,0 +1,49 @@
+<div class="hbox">
+    <class-tree-panel [roots]="roots" context="clsIndTree" (nodeSelected)="onTreeClassSelected($event)">
+    </class-tree-panel>
+
+    <!-- Show appropriate tree/list according to the selected class -->
+    <div [ngSwitch]="selectedClass?.getValue().getIRI()" class="vbox" style="margin-left: 4px;">
+
+        <concept-tree-panel *ngSwitchCase="'http://www.w3.org/2004/02/skos/core#Concept'" [context]="context"
+            [schemes]="currentSchemes" [schemeChangeable]="true"
+            [allowMultiselection]="allowMultiselection"
+            (nodeSelected)="onInstanceSelected($event)" (nodeChecked)="onNodeChecked($event)"
+            (schemeChanged)="onConceptTreeSchemeChange()" (multiselectionStatus)="onMultiselectionChange($event)">
+        </concept-tree-panel>
+
+        <concept-tree-panel *ngSwitchCase="'http://www.w3.org/ns/lemon/ontolex#LexicalConcept'" [context]="context"
+            [schemes]="currentSchemes" [schemeChangeable]="true"
+            [allowMultiselection]="allowMultiselection"
+            (nodeSelected)="onInstanceSelected($event)" (nodeChecked)="onNodeChecked($event)"
+            (schemeChanged)="onConceptTreeSchemeChange()" (multiselectionStatus)="onMultiselectionChange($event)">
+        </concept-tree-panel>
+
+        <scheme-list-panel *ngSwitchCase="'http://www.w3.org/2004/02/skos/core#ConceptScheme'" [context]="context"
+            [allowMultiselection]="allowMultiselection"
+            (nodeSelected)="onInstanceSelected($event)" (nodeChecked)="onNodeChecked($event)"
+            (multiselectionStatus)="onMultiselectionChange($event)">
+        </scheme-list-panel>
+
+        <collection-tree-panel *ngSwitchCase="'http://www.w3.org/2004/02/skos/core#Collection'" [context]="context"
+            [allowMultiselection]="allowMultiselection" 
+            (nodeSelected)="onInstanceSelected($event)" (nodeChecked)="onNodeChecked($event)" (multiselectionStatus)="onMultiselectionChange($event)">
+        </collection-tree-panel>
+
+        <lexical-entry-list-panel *ngSwitchCase="'http://www.w3.org/ns/lemon/ontolex#LexicalEntry'" [context]="context"
+            [lexiconChangeable]="true" [allowMultiselection]="allowMultiselection"
+            (nodeSelected)="onInstanceSelected($event)" (nodeChecked)="onNodeChecked($event)"
+            (lexiconChanged)="onLexEntryLexiconChange($event)" (multiselectionStatus)="onMultiselectionChange($event)">
+        </lexical-entry-list-panel>
+
+        <lexical-sense-selector *ngSwitchCase="'http://www.w3.org/ns/lemon/ontolex#LexicalSense'"
+            (nodeSelected)="onInstanceSelected($event)">
+        </lexical-sense-selector>
+
+        <instance-list-panel *ngSwitchDefault [context]="context"
+            [cls]="selectedClass" [allowMultiselection]="allowMultiselection"
+            (nodeSelected)="onInstanceSelected($event)" (nodeChecked)="onNodeChecked($event)" (multiselectionStatus)="onMultiselectionChange($event)">
+        </instance-list-panel>
+    </div>
+
+</div>

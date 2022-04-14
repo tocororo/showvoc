@@ -1,4 +1,4 @@
-import { ResourceUtils } from '../utils/ResourceUtils';
+import { NTriplesUtil } from '../utils/ResourceUtils';
 import { Project } from './Project';
 import { AnnotatedValue, IRI, Literal } from './Resources';
 
@@ -100,7 +100,7 @@ export class SparqlEndpointMetadata {
     public static deserialize(metadataJson: any): SparqlEndpointMetadata {
         if (metadataJson) {
             return {
-                id: ResourceUtils.parseIRI(metadataJson['@id']).getIRI(),
+                id: NTriplesUtil.parseIRI(metadataJson['@id']).getIRI(),
                 limitations: metadataJson.limitations
             };
         } else {

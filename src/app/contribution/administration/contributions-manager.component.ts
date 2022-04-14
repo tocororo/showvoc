@@ -8,7 +8,7 @@ import { Configuration, ConfigurationComponents, ConfigurationProperty } from 's
 import { DevResourceStoredContribution, MetadataStoredContribution, StableResourceStoredContribution, StoredContribution } from 'src/app/models/Contribution';
 import { ConfigurationsServices } from 'src/app/services/configuration.service';
 import { ShowVocServices } from 'src/app/services/showvoc.service';
-import { ResourceUtils } from 'src/app/utils/ResourceUtils';
+import { NTriplesUtil } from 'src/app/utils/ResourceUtils';
 import { DevelopmentContributionDetailsModal } from '../development/development-contribution-details-modal';
 import { DevProjectCreationModal } from '../development/development-project-creation-modal';
 import { MetadataContributionDetailsModal } from '../metadata/metadata-contribution-details-modal';
@@ -81,21 +81,21 @@ export class ContributionsManagerComponent {
             (<MetadataStoredContribution>contribution).uriSpace = properties.find(p => p.name == "uriSpace").value;
             let identityValue: string = properties.find(p => p.name == "identity").value;
             if (identityValue != null) {
-                (<MetadataStoredContribution>contribution).identity = ResourceUtils.parseIRI(identityValue);
+                (<MetadataStoredContribution>contribution).identity = NTriplesUtil.parseIRI(identityValue);
             }
             let dereferenciationSystemValue: string = properties.find(p => p.name == "dereferenciationSystem").value;
             if (dereferenciationSystemValue != null) {
-                (<MetadataStoredContribution>contribution).dereferenciationSystem = ResourceUtils.parseIRI(dereferenciationSystemValue);
+                (<MetadataStoredContribution>contribution).dereferenciationSystem = NTriplesUtil.parseIRI(dereferenciationSystemValue);
             }
             let sparqlEndpointValue = properties.find(p => p.name == "sparqlEndpoint").value;
             if (sparqlEndpointValue != null) {
-                (<MetadataStoredContribution>contribution).sparqlEndpoint = ResourceUtils.parseIRI(sparqlEndpointValue);
+                (<MetadataStoredContribution>contribution).sparqlEndpoint = NTriplesUtil.parseIRI(sparqlEndpointValue);
             }
             (<MetadataStoredContribution>contribution).sparqlLimitations = [];
             let sparqlLimitationValue: string[] = properties.find(p => p.name == "sparqlLimitations").value;
             if (sparqlLimitationValue != null) {
                 sparqlLimitationValue.forEach(l => {
-                    (<MetadataStoredContribution>contribution).sparqlLimitations.push(ResourceUtils.parseIRI(l));
+                    (<MetadataStoredContribution>contribution).sparqlLimitations.push(NTriplesUtil.parseIRI(l));
                 });
             }
         } else if (configuration.type == ConfigurationComponents.CONTRIBUTION_STORE.CONFIG_IMPL.STABLE) {
@@ -103,27 +103,27 @@ export class ContributionsManagerComponent {
             (<StableResourceStoredContribution>contribution).homepage = properties.find(p => p.name == "homepage").value;
             (<StableResourceStoredContribution>contribution).description = properties.find(p => p.name == "description").value;
             (<StableResourceStoredContribution>contribution).isOwner = properties.find(p => p.name == "isOwner").value;
-            (<StableResourceStoredContribution>contribution).model = ResourceUtils.parseIRI(properties.find(p => p.name == "model").value);
-            (<StableResourceStoredContribution>contribution).lexicalizationModel = ResourceUtils.parseIRI(properties.find(p => p.name == "lexicalizationModel").value);
+            (<StableResourceStoredContribution>contribution).model = NTriplesUtil.parseIRI(properties.find(p => p.name == "model").value);
+            (<StableResourceStoredContribution>contribution).lexicalizationModel = NTriplesUtil.parseIRI(properties.find(p => p.name == "lexicalizationModel").value);
             //metadata
             (<StableResourceStoredContribution>contribution).uriSpace = properties.find(p => p.name == "uriSpace").value;
             let identityValue: string = properties.find(p => p.name == "identity").value;
             if (identityValue != null) {
-                (<StableResourceStoredContribution>contribution).identity = ResourceUtils.parseIRI(identityValue);
+                (<StableResourceStoredContribution>contribution).identity = NTriplesUtil.parseIRI(identityValue);
             }
             let dereferenciationSystemValue: string = properties.find(p => p.name == "dereferenciationSystem").value;
             if (dereferenciationSystemValue != null) {
-                (<StableResourceStoredContribution>contribution).dereferenciationSystem = ResourceUtils.parseIRI(dereferenciationSystemValue);
+                (<StableResourceStoredContribution>contribution).dereferenciationSystem = NTriplesUtil.parseIRI(dereferenciationSystemValue);
             }
             let sparqlEndpointValue = properties.find(p => p.name == "sparqlEndpoint").value;
             if (sparqlEndpointValue != null) {
-                (<StableResourceStoredContribution>contribution).sparqlEndpoint = ResourceUtils.parseIRI(sparqlEndpointValue);
+                (<StableResourceStoredContribution>contribution).sparqlEndpoint = NTriplesUtil.parseIRI(sparqlEndpointValue);
             }
             (<StableResourceStoredContribution>contribution).sparqlLimitations = [];
             let sparqlLimitationValue: string[] = properties.find(p => p.name == "sparqlLimitations").value;
             if (sparqlLimitationValue != null) {
                 sparqlLimitationValue.forEach(l => {
-                    (<StableResourceStoredContribution>contribution).sparqlLimitations.push(ResourceUtils.parseIRI(l));
+                    (<StableResourceStoredContribution>contribution).sparqlLimitations.push(NTriplesUtil.parseIRI(l));
                 });
             }
         } else if (configuration.type == ConfigurationComponents.CONTRIBUTION_STORE.CONFIG_IMPL.DEVELOPMENT) {
@@ -131,8 +131,8 @@ export class ContributionsManagerComponent {
             (<DevResourceStoredContribution>contribution).format = properties.find(p => p.name == "format").value;
             (<DevResourceStoredContribution>contribution).homepage = properties.find(p => p.name == "homepage").value;
             (<DevResourceStoredContribution>contribution).description = properties.find(p => p.name == "description").value;
-            (<DevResourceStoredContribution>contribution).model = ResourceUtils.parseIRI(properties.find(p => p.name == "model").value);
-            (<DevResourceStoredContribution>contribution).lexicalizationModel = ResourceUtils.parseIRI(properties.find(p => p.name == "lexicalizationModel").value);
+            (<DevResourceStoredContribution>contribution).model = NTriplesUtil.parseIRI(properties.find(p => p.name == "model").value);
+            (<DevResourceStoredContribution>contribution).lexicalizationModel = NTriplesUtil.parseIRI(properties.find(p => p.name == "lexicalizationModel").value);
         }
         //parse common contribution properties
         contribution.resourceName = properties.find(p => p.name == "resourceName").value;
@@ -140,7 +140,7 @@ export class ContributionsManagerComponent {
         contribution.contributorLastName = properties.find(p => p.name == "contributorLastName").value;
         contribution.contributorEmail = properties.find(p => p.name == "contributorEmail").value;
         contribution.contributorOrganization = properties.find(p => p.name == "contributorOrganization").value;
-        contribution.baseURI = ResourceUtils.parseIRI(properties.find(p => p.name == "baseURI").value);
+        contribution.baseURI = NTriplesUtil.parseIRI(properties.find(p => p.name == "baseURI").value);
         return contribution;
     }
 

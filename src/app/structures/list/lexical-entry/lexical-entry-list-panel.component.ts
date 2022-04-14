@@ -97,8 +97,8 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
             } else { //multiple results, ask the user which one select
                 ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
                 this.basicModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
-                    (selectedResource: AnnotatedValue<IRI>) => {
-                        this.openAt(selectedResource);
+                    (selectedResources: AnnotatedValue<IRI>[]) => {
+                        this.openAt(selectedResources[0]);
                     },
                     () => { }
                 );
@@ -123,18 +123,18 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
                     } else {
                         message += " lexicon. If you want to activate the lexicon and continue the search, please select it and press OK.";
                     }
-                    this.basicModals.selectResource({key: "COMMONS.ACTIONS.SEARCH"}, message, lexicons, this.rendering).then(
-                        (lexicon: AnnotatedValue<Resource>) => {
-                            this.svProp.setActiveLexicon(SVContext.getProjectCtx(), <IRI>lexicon.getValue()); //update the active lexicon
+                    this.basicModals.selectResource({ key: "COMMONS.ACTIONS.SEARCH" }, message, lexicons, this.rendering).then(
+                        (lexicons: AnnotatedValue<Resource>[]) => {
+                            this.svProp.setActiveLexicon(SVContext.getProjectCtx(), <IRI>lexicons[0].getValue()); //update the active lexicon
                             setTimeout(() => { //wait for a change detection round, since after the setActiveLexicon, the lex entry list is reset
                                 this.openAt(resource);
                             });
                         },
-                        () => {}
+                        () => { }
                     );
                 }
             }
-        )
+        );
     }
 
     public openAt(node: AnnotatedValue<IRI>) {
@@ -162,7 +162,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
      * Index of a searched entry could be retrieved from a "index" attribute (if searched by a "ordinary" search), or from
      * invoking a specific service (if the "index" attr is not present when searched by advanced search)
      */
-     private getSearchedEntryIndex(entry: AnnotatedValue<IRI>): Observable<string> {
+    private getSearchedEntryIndex(entry: AnnotatedValue<IRI>): Observable<string> {
         if (entry.getAttribute("index") != null) {
             return of(entry.getAttribute("index").toLocaleUpperCase());
         } else {

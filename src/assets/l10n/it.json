@@ -146,10 +146,15 @@
             "EDIT": "Modifica",
             "EXPAND_ALL": "Espandi tutto",
             "LOAD": "Carica",
+            "PICK_RESOURCE": "Seleziona risorsa",
             "REFRESH": "Aggiorna",
             "REMOVE": "Rimuovi",
             "RESET": "Reset",
             "SEARCH": "Cerca",
+            "SELECT_LANGUAGE": "Seleziona lingua",
+            "SELECT_LANGUAGES": "Seleziona lingue",
+            "SELECT_RESOURCE": "Seleziona risorsa",
+            "SELECT_RESOURCE_TYPE_TO_PICK": "Indica il tipo di risorsa da selezionare",
             "SORT_BY_X": "Ordina per",
             "SUBMIT": "Invia",
             "UNCHECK": "Deseleziona",
@@ -201,6 +206,7 @@
         },
         "POSITION": "Posizione",
         "REASON": "Motivo",
+        "RENDERING": "Rendering",
         "SETTINGS": "Impostazioni",
         "STATUS": {
             "ACTIVE": "Attivo",
@@ -262,11 +268,22 @@
         }
     },
     "DATA": {
+        "ACTIONS": {
+            "CHANGE_LEXICON": "Cambia lessico",
+            "CHANGE_RENDERING": "Cambia rendering",
+            "CREATE_LITERAL": "Crea literal",
+            "SELECT_CLASS": "Seleziona classe",
+            "SELECT_COLLECTION": "Seleziona collezione",
+            "SELECT_CONCEPT": "Seleziona concetto",
+            "SELECT_INSTANCE": "Seleziona istanza",
+            "SELECT_LEXICAL_ENTRY": "Seleziona Lexical Entry",
+            "SELECT_LEXICON": "Seleziona lessico",
+            "SELECT_PROPERTY": "Seleziona proprietà",
+            "SELECT_ROOT_CLASS": "Seleziona classe root",
+            "SELECT_SCHEME": "Seleziona schema",
+            "SHOW_ALL_PROPS": "Mostra tutte le proprietà"
+        },
         "CLASS": {
-            "ACTIONS": {
-                "SELECT_CLASS": "Seleziona classe",
-                "SELECT_ROOT_CLASS": "Seleziona classe root"
-            },
             "CLASS": "Classe",
             "CLASSES": "Classi",
             "SETTINGS": {
@@ -284,9 +301,6 @@
             "COLLECTIONS": "Collezioni"
         },
         "COMMONS": {
-            "ACTIONS": {
-                "CHANGE_RENDERING": "Cambia rendering"
-            },
             "VISUALIZATION_MODE": {
                 "HIERARCHY_BASED": "Gerarchica",
                 "INDEX_BASED": "Basata su indice",
@@ -334,10 +348,6 @@
             "USE_SEARCH_MSG": "Usa il campo di ricerca per recuperare le istanze"
         },
         "LEXICON": {
-            "ACTIONS": {
-                "CHANGE_LEXICON": "Cambia lessico",
-                "SELECT_LEXICON": "Seleziona lessico"
-            },
             "LEXICON": "Lessico",
             "LEXICONS": "Lessici"
         },
@@ -365,9 +375,6 @@
             "USE_SEARCH_MSG": "Usa il campo di ricerca per recuperare le lexical entry"
         },
         "PROPERTY": {
-            "ACTIONS": {
-                "SHOW_ALL": "Mostra tutte le proprietà"
-            },
             "PROPERTIES": "Proprietà",
             "PROPERTY": "Proprietà"
         },
@@ -529,7 +536,8 @@
         "MISSING_MANDATORY_FIELD": "Campo obbligatorio assente: '{{missingField}}'",
         "NO_CONVERSION_FORMAT_SELECTED": "L'opzione 'CConversione necessaria' è spuntata ma nessun formato è stato selezionato.",
         "NO_METADATA_PROVIDED": "Nessun metadato è stato fornito",
-        "NO_SEARCH_RESULTS": "Nessun risultato trovato per '{{searchedString}}'",
+        "NO_RESULTS_FOUND": "Nessun risultato trovato",
+        "NO_RESULTS_FOUND_FOR": "Nessun risultato trovato per '{{searchedString}}'",
         "NO_USER_REGISTERED": "ShowVoc non ha rilevato alcun utente registrato. Al fine di usare la piattaforma, è necessario creare un account amministratore inserendo dati personali e credenziali d'accesso.",
         "NO_USER_REGISTERED_SAML_MODE": "ShowVoc non ha rilevato alcun utente registrato. Il metodo di autenticazione usato è SAML, perciò verrai reindirizzato alla pagina di autenticazione dell'Identity Provider. Una volta autenticato, sarai rimandato qui su ShowVoc per registrare l'utente amministratore.",
         "NO_USER_REGISTERED_WITH_EMAIL": "Non è stato trovato alcun utente registratoto con l'email {{email}}.",
@@ -673,6 +681,19 @@
         }
     },
     "SEARCH": {
+        "ADV_SEARCH": {
+            "ADD_FREE_TEXT": "Aggiungi ricerca di testo",
+            "ADD_LITERAL": "Aggiungi literal",
+            "ADD_RESOURCE": "Aggiungi risorsa",
+            "ADD_SET_OF_VALUES": "Aggiungi insieme di valori",
+            "ADVANCED_SEARCH": "Ricerca avanzata",
+            "INCOMPLETE_FILTER_WARN": "Rilevato filtro incompleto in {{filter}} (predicato o valori mancanti). Si prega di correggere o di rimuoverlo.",
+            "INGOING_LINKS": "Link entranti",
+            "OUTGOING_LINKS": "Link uscenti",
+            "SCHEMES": "Schemi",
+            "SEARCH_STRING": "Cerca parola",
+            "TYPES": "Tipi"
+        },
         "ANY_LANGUAGE": "Qualsiasi lingua",
         "DISABLE_FILTER": "Disabilita filtro",
         "EDIT_LANGS": {
@@ -694,6 +715,9 @@
             "ENDS_WITH": "Finisce con",
             "EXACT": "Esatta",
             "FUZZY": "Fuzzy",
+            "INCLUDE_LOCALES": "Includi i locali nella ricerca (es. en-GB, en-US)",
+            "LEXICALIZATIONS_SEARCH": "Ricerca lessicalizzazioni",
+            "RESTRICT_TO_LANGUAGES": "Restringi la ricerca alle lingue",
             "RESTRICT_TO_SCHEME": "Restringi la ricerca agli skos:ConceptScheme attivi",
             "SEARCH_IN_LOCAL_NAME": "Cerca nel local name",
             "SEARCH_IN_NOTES": "Cerca nelle note",

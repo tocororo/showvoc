@@ -1,7 +1,7 @@
 <div class="card vbox">
 	<div class="card-header">
         <div class="btn-toolbar float-right">
-			<button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" title="Rendering" (click)="rendering=!rendering">
+			<button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" [title]="'COMMONS.RENDERING'|translate" (click)="rendering=!rendering">
 				<i class="fas fa-font"></i>
 			</button>
 			<button class="btn btn-light btn-sm ml-1" [title]="'COMMONS.ACTIONS.REFRESH'|translate" (click)="refresh()">
@@ -16,6 +16,7 @@
 	</div>
 
 	<div *ngIf="!hideSearch" class="card-footer">
-        <search-bar (searchResults)="handleSearchResults($event)" [roles]="[panelRole]"></search-bar>
+        <search-bar (searchResults)="handleSearchResults($event)" (advancedSearchResult)="handleAdvSearchResult($event)"
+			[roles]="[panelRole]" [context]="context"></search-bar>
 	</div>
 </div>

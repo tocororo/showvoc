@@ -22,12 +22,13 @@ import { SearchModule } from './search/search.module';
 import { STServicesModule } from './services/st-services.module';
 import { UserModule } from './user/user.module';
 import { GUARD_PROVIDERS } from './utils/CanActivateGuards';
+import { DatatypeValidator } from './utils/DatatypeValidator';
 import { SVEventHandler } from './utils/SVEventHandler';
 import { SVProperties } from './utils/SVProperties';
 import { WidgetModule } from './widget/widget.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, "./assets/l10n/");
+    return new TranslateHttpLoader(http, "./assets/l10n/");
 }
 
 @NgModule({
@@ -50,10 +51,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         SearchModule,
         STServicesModule,
         TranslateModule.forRoot({
-			defaultLanguage: 'en',
+            defaultLanguage: 'en',
             loader: {
                 provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
+                useFactory: HttpLoaderFactory,
                 deps: [HttpClient]
             }
         }),
@@ -61,12 +62,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         WidgetModule
     ],
     providers: [
-        SVProperties, SVEventHandler,
+        DatatypeValidator, SVProperties, SVEventHandler,
         GUARD_PROVIDERS,
         { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
-		/** Uses the HashLocationStrategy instead of the default "HTML 5 pushState" PathLocationStrategy.
-		 * This solves the 404 error problem when reloading a page in a production server
-		 */
+        /** Uses the HashLocationStrategy instead of the default "HTML 5 pushState" PathLocationStrategy.
+         * This solves the 404 error problem when reloading a page in a production server
+         */
         { provide: LocationStrategy, useClass: HashLocationStrategy }
     ],
     bootstrap: [AppComponent]

@@ -72,7 +72,7 @@ export class ClassTreeSettingsModal implements OnInit {
      */
 
     changeClass() {
-        this.browsingModals.browseClassTree({ key: "DATA.CLASS.ACTIONS.SELECT_ROOT_CLASS" }, [RDFS.resource]).then(
+        this.browsingModals.browseClassTree({ key: "DATA.ACTIONS.SELECT_ROOT_CLASS" }, [RDFS.resource]).then(
             (cls: AnnotatedValue<IRI>) => {
                 let model: string = SVContext.getWorkingProject().getModelType();
                 if ((model == RDFS.uri && !cls.getValue().equals(RDFS.resource)) || //root different from rdfs:Resource in RDFS model
@@ -154,7 +154,7 @@ export class ClassTreeSettingsModal implements OnInit {
     }
 
     addFilter() {
-        this.browsingModals.browseClassTree({ key: "DATA.CLASS.ACTIONS.SELECT_CLASS" }, [RDFS.resource]).then(
+        this.browsingModals.browseClassTree({ key: "DATA.ACTIONS.SELECT_CLASS" }, [RDFS.resource]).then(
             (cls: AnnotatedValue<IRI>) => {
                 if (this.getFilterMapEntry(cls) == null) {
                     this.filterMapRes.push({ cls: cls, subClasses: null });
