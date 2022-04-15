@@ -82,10 +82,6 @@ export class ResourcePickerComponent {
             "ConceptScheme": RDFResourceRolesEnum.conceptScheme,
             "Collection": RDFResourceRolesEnum.skosCollection,
             "Property": RDFResourceRolesEnum.property,
-            "AnnotationProperty": RDFResourceRolesEnum.annotationProperty,
-            "DatatypeProperty": RDFResourceRolesEnum.datatypeProperty,
-            "ObjectProperty": RDFResourceRolesEnum.objectProperty,
-            "OntologyProperty": RDFResourceRolesEnum.ontologyProperty,
             "Lexicon": RDFResourceRolesEnum.limeLexicon,
             "LexicalEntry": RDFResourceRolesEnum.ontolexLexicalEntry,
         };
@@ -148,8 +144,7 @@ export class ResourcePickerComponent {
                 },
                 () => { }
             );
-        } else if (role == RDFResourceRolesEnum.property || role == RDFResourceRolesEnum.annotationProperty ||
-            role == RDFResourceRolesEnum.datatypeProperty || role == RDFResourceRolesEnum.objectProperty || role == RDFResourceRolesEnum.ontologyProperty) {
+        } else if (role == RDFResourceRolesEnum.property) {
             this.browsingModals.browsePropertyTree({ key: "DATA.ACTIONS.SELECT_PROPERTY" }).then(
                 (selectedResource: AnnotatedValue<IRI>) => {
                     this.updatePickedResource(selectedResource);
