@@ -29,7 +29,7 @@ export class InputOutputServices {
         let data: any = {
             baseURI: baseURI,
             transitiveImportAllowance: transitiveImportAllowance,
-        }
+        };
         if (inputFile != null) {
             data.inputFile = inputFile;
         }
@@ -65,13 +65,11 @@ export class InputOutputServices {
                     formats.push(RDFFormat.parse(formatJson));
                 }
                 //sort by name
-                formats.sort(
-                    function (a: RDFFormat, b: RDFFormat) {
-                        if (a.name < b.name) return -1;
-                        if (a.name > b.name) return 1;
-                        return 0;
-                    }
-                );
+                formats.sort((a: RDFFormat, b: RDFFormat) => {
+                    if (a.name < b.name) return -1;
+                    if (a.name > b.name) return 1;
+                    return 0;
+                });
                 return formats;
             })
         );
@@ -92,13 +90,11 @@ export class InputOutputServices {
                     formats.push(DataFormat.parse(f));
                 }
                 //sort by name
-                formats.sort(
-                    function (a: DataFormat, b: DataFormat) {
-                        if (a.name < b.name) return -1;
-                        if (a.name > b.name) return 1;
-                        return 0;
-                    }
-                );
+                formats.sort((a: DataFormat, b: DataFormat) => {
+                    if (a.name < b.name) return -1;
+                    if (a.name > b.name) return 1;
+                    return 0;
+                });
                 return formats;
             })
         );
@@ -111,7 +107,7 @@ export class InputOutputServices {
     getParserFormatForFileName(fileName: string): Observable<string> {
         let params: any = {
             fileName: fileName
-        }
+        };
         return this.httpMgr.doGet(this.serviceName, "getParserFormatForFileName", params);
     }
 

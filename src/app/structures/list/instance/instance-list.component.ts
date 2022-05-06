@@ -49,7 +49,7 @@ export class InstanceListComponent extends AbstractList {
                         if (this.safeToGo.safe) {
                             this.loading = true;
                             this.clsService.getInstances(this.cls.getValue()).pipe(
-                                finalize(() => this.loading = false)
+                                finalize(() => { this.loading = false; })
                             ).subscribe(
                                 instances => {
                                     let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
@@ -60,7 +60,7 @@ export class InstanceListComponent extends AbstractList {
                             );
                         }
                     }
-                )
+                );
             } else { //search based
                 //don't do nothing, just check for pending search
                 this.resumePendingSearch();
@@ -76,9 +76,9 @@ export class InstanceListComponent extends AbstractList {
     private resumePendingSearch() {
         // if there is some pending search where the class is same class which instance are currently described
         if (
-            this.pendingSearchRes && 
+            this.pendingSearchRes &&
             (
-                (this.pendingSearchCls && this.cls.getValue() && this.pendingSearchCls.equals(this.cls.getValue())) || 
+                (this.pendingSearchCls && this.cls.getValue() && this.pendingSearchCls.equals(this.cls.getValue())) ||
                 !this.pendingSearchCls //null if already checked that the pendingSearchCls is the current (see selectSearchedInstance)
             )
         ) {
@@ -112,15 +112,15 @@ export class InstanceListComponent extends AbstractList {
         let safeness: SafeToGo = safeToGoMap[checksum];
         if (safeness != null) { //found safeness in cache
             this.safeToGo = safeness;
-            return of(null)
+            return of(null);
         } else { //never initialized => count
             return this.getNumberOfInstances(this.cls.getValue()).pipe(
                 mergeMap(count => {
-                    safeness = { safe: count < this.safeToGoLimit, count: count }; 
+                    safeness = { safe: count < this.safeToGoLimit, count: count };
                     safeToGoMap[checksum] = safeness; //cache the safeness
                     this.safeToGo = safeness;
                     this.translationParam = { count: this.safeToGo.count, safeToGoLimit: this.safeToGoLimit };
-                    return of(null)
+                    return of(null);
                 })
             );
         }

@@ -127,9 +127,9 @@ export class HttpManager {
      * @param request the request name
      * @param params the parameters to send in the request. This parameter must be an object like:
      *  { 
-     * 	   "urlParName1" : "urlParValue1",
-     * 	   "urlParName2" : "urlParValue2",
-     * 	   "urlParName3" : "urlParValue3",
+     *     "urlParName1" : "urlParValue1",
+     *     "urlParName2" : "urlParValue2",
+     *     "urlParName3" : "urlParValue3",
      *  }
      * @param post tells if the download is done via post-request (e.g. Export.export() service)
      * @param options further options that overrides the default ones
@@ -276,7 +276,7 @@ export class HttpManager {
                     } else {
                         stringMap[key] = value;
                     }
-                })
+                });
                 strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(JSON.stringify(stringMap)));
             } else if (paramValue instanceof Value) {
                 strBuilder.push(encodeURIComponent(paramName) + "=" + encodeURIComponent(paramValue.toNT()));
@@ -350,7 +350,7 @@ export class HttpManager {
                                         //redirect to home only if not in login page, since 401 is returned even at login failed
                                         this.router.navigate(['/home'], { queryParamsHandling: "merge" });
                                     }
-                                };
+                                }
                             },
                             () => { }
                         );
@@ -371,17 +371,17 @@ export class HttpManager {
                     if (errHandler) {
                         if (errHandler.action == 'warning') {
                             let errorMsg = error.message;
-                            this.basicModals.alert({key:"COMMONS.STATUS.WARNING"}, errorMsg, ModalType.warning);
+                            this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, errorMsg, ModalType.warning);
                             handleErrorDefault = false; //handled with a simple warning alert, so skip the default "error" alert
                         } else if (errHandler.action == 'skip') {
                             handleErrorDefault = false; //simply skip the alert (it will be handled ad-hoc by the component that invoked the service)
                         }
                     }
-                } 
+                }
                 if (handleErrorDefault) { //if the alert should be shown
                     let errorMsg = error.message != null ? error.message : "Unknown response from the server";
                     let errorDetails = error.stack ? error.stack : error.name;
-                    this.basicModals.alert({key:"COMMONS.STATUS.ERROR"}, errorMsg, ModalType.error, errorDetails);
+                    this.basicModals.alert({ key: "COMMONS.STATUS.ERROR" }, errorMsg, ModalType.error, errorDetails);
                 }
             }
         }
@@ -400,7 +400,7 @@ export class HttpManager {
     private arrayBufferRespHandler(resp: HttpResponse<ArrayBuffer>) {
         let arrayBuffer = resp.body;
         let respContType = resp.headers.get("content-type");
-        if (respContType && respContType.includes(STResponseUtils.ContentType.applicationJson+";")) { //could be an error response
+        if (respContType && respContType.includes(STResponseUtils.ContentType.applicationJson + ";")) { //could be an error response
             //convert arrayBuffer to json object
             let respContentAsString = String.fromCharCode.apply(String, new Uint8Array(arrayBuffer));
             let jsonResp = JSON.parse(respContentAsString);
@@ -431,7 +431,7 @@ export class HttpManager {
         let port: string = st_port ? st_port : location.port;
 
         let st_path: string = window['st_path']; //url path (optional)
-        
+
         let serverhost = protocol + "//" + host + ":" + port;
         if (st_path != null) {
             serverhost += "/" + st_path;

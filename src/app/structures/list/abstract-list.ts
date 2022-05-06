@@ -68,7 +68,7 @@ export abstract class AbstractList extends AbstractStruct {
                 if (i >= this.nodesLimit) {
                     //update nodeLimit so that node at index i is within the range
                     let scrollStep: number = ((i - this.nodesLimit)/this.increaseRate)+1;
-                    this.nodesLimit = this.nodesLimit + this.increaseRate*scrollStep;
+                    this.nodesLimit += this.increaseRate*scrollStep;
                 }
                 this.pendingSearchRes = null; //if there was any pending search, reset it
                 return; //node found and visible

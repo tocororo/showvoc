@@ -506,28 +506,29 @@ export class NTriplesUtil {
     static parseValue(nTripleValue: string): Value {
         let value: Value;
         try {
-            value = NTriplesUtil.parseIRI(nTripleValue);
-        } catch (err) {
-            console.error(err);
-        }
-        if (value == null) {
+            value = NTriplesUtil.parseResource(nTripleValue);
+        } catch (e1) {
             try {
                 value = NTriplesUtil.parseLiteral(nTripleValue);
-            } catch (err) {
-                console.error(err);
+            } catch (e2) {
+                throw new Error("Not a legal N-Triples representation: " + nTripleValue);
             }
-        }
-        if (value == null) {
-            try {
-                value = NTriplesUtil.parseBNode(nTripleValue);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-        if (value == null) {
-            throw new Error("Not a legal N-Triples representation: " + nTripleValue);
         }
         return value;
+    }
+
+    static parseResource(nTripleNode: string): Resource {
+        let resource: Resource;
+        try {
+            resource = NTriplesUtil.parseIRI(nTripleNode);
+        } catch (e1) {
+            try {
+                resource = NTriplesUtil.parseBNode(nTripleNode);
+            } catch (e2) {
+                throw new Error("Not a legal resource N-Triples representation: " + nTripleNode);
+            }
+        }
+        return resource;
     }
 
     /**

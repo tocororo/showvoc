@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AnnotatedValue, IRI, Resource, ResourcePosition } from '../models/Resources';
-import { HttpManager } from "../utils/HttpManager";
+import { HttpManager, STRequestParams } from "../utils/HttpManager";
 import { ResourceDeserializer } from '../utils/ResourceUtils';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class ResourcesServices {
      * @param resource 
      */
     getResourceDescription(resource: Resource): Observable<AnnotatedValue<Resource>> {
-        let params: any = {
+        let params: STRequestParams = {
             resource: resource
         };
         return this.httpMgr.doGet(this.serviceName, "getResourceDescription", params).pipe(
@@ -33,7 +33,7 @@ export class ResourcesServices {
      */
     getResourcesInfo(resources: IRI[]): Observable<AnnotatedValue<IRI>[]> {
         let resourcesIri: string[] = resources.map(r => r.toNT());
-        let params: any = {
+        let params: STRequestParams = {
             resources: JSON.stringify(resourcesIri)
         };
         return this.httpMgr.doPost(this.serviceName, "getResourcesInfo", params).pipe(
@@ -48,7 +48,7 @@ export class ResourcesServices {
      * @param resource
      */
     getResourcePosition(resource: IRI): Observable<ResourcePosition> {
-        let params: any = {
+        let params: STRequestParams = {
             resource: resource
         };
         return this.httpMgr.doGet(this.serviceName, "getResourcePosition", params).pipe(
