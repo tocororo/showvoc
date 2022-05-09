@@ -23,7 +23,7 @@ export class ProjectsServices {
      * @param requestedAccessLevel
      * @param requestedLockLevel
      * @param userDependent if true, returns only the projects accessible by the logged user 
-     * 		(the user has a role assigned in it)
+     *  (the user has a role assigned in it)
      * @param onlyOpen if true, return only the open projects
      * @return an array of Project
      */
@@ -32,7 +32,7 @@ export class ProjectsServices {
             consumer: consumer != null ? consumer.getName() : "SYSTEM",
             userDependent: userDependent,
             onlyOpen: onlyOpen
-        }
+        };
         return this.httpMgr.doGet(this.serviceName, "listProjects", params).pipe(
             map(stResp => {
                 let projCollJson: any[] = stResp;
@@ -68,11 +68,9 @@ export class ProjectsServices {
                     projectList.push(this.parseProject(pJson));
                 });
                 //sort by name
-                projectList.sort(
-                    function (p1: Project, p2: Project) {
-                        return p1.getName().toLowerCase().localeCompare(p2.getName().toLowerCase());
-                    }
-                )
+                projectList.sort((p1: Project, p2: Project) => {
+                    return p1.getName().toLowerCase().localeCompare(p2.getName().toLowerCase());
+                });
                 return projectList;
             })
         );
@@ -221,7 +219,7 @@ export class ProjectsServices {
         }
         return this.httpMgr.doPost(this.serviceName, "modifyRepositoryAccessCredentials", params);
     }
-    
+
     /**
      * 
      * @param project 
@@ -231,7 +229,7 @@ export class ProjectsServices {
      * @param newUsername 
      * @param newPassword 
      */
-    batchModifyRepostoryAccessCredentials(project: Project, serverURL: string, matchUsername?: boolean, 
+    batchModifyRepostoryAccessCredentials(project: Project, serverURL: string, matchUsername?: boolean,
         currentUsername?: string, newUsername?: string, newPassword?: string) {
         let params: any = {
             projectName: project.getName(),
@@ -273,11 +271,11 @@ export class ProjectsServices {
      * @param project
      * @param facets
      */
-     setProjectFacets(project: Project, facets: Settings) {
+    setProjectFacets(project: Project, facets: Settings) {
         let params = {
             projectName: project.getName(),
             facets: JSON.stringify(facets.getPropertiesAsMap())
-        }
+        };
         return this.httpMgr.doPost(this.serviceName, "setProjectFacets", params);
     }
 
@@ -286,7 +284,7 @@ export class ProjectsServices {
      * 
      */
     getCustomProjectFacetsSchema(): Observable<Settings> {
-        let params = {}
+        let params = {};
         return this.httpMgr.doGet(this.serviceName, "getCustomProjectFacetsSchema", params).pipe(
             map(stResp => {
                 return Settings.parse(stResp);

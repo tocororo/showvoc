@@ -26,7 +26,7 @@ export class UserProfileComponent {
             user => {
                 SVContext.setLoggedUser(user);
             }
-        )
+        );
     }
 
     updateFamilyName(newFamilyName: string) {
@@ -34,7 +34,7 @@ export class UserProfileComponent {
             user => {
                 SVContext.setLoggedUser(user);
             }
-        )
+        );
     }
 
     updateEmail(newEmail: string) {
@@ -42,7 +42,7 @@ export class UserProfileComponent {
             user => {
                 SVContext.setLoggedUser(user);
             }
-        )
+        );
     }
 
     changePwd() {

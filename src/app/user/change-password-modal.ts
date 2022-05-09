@@ -40,7 +40,7 @@ export class ChangePasswordModal {
                     () => {
                         this.authService.logout().subscribe(
                             () => {
-                                this.activeModal.close()
+                                this.activeModal.close();
                             }
                         );
                     }

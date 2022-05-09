@@ -75,7 +75,7 @@ export abstract class AbstractStruct implements OnInit {
         if (scrollElement.scrollTop === (scrollElement.scrollHeight - scrollElement.offsetHeight)) {
             //bottom reached => increase max range if there are more roots to show
             if (this.nodesLimit < this.nodes.length) { 
-                this.nodesLimit = this.nodesLimit + this.increaseRate;
+                this.nodesLimit += this.increaseRate;
             }
         } 
     }

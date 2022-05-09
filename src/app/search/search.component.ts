@@ -39,7 +39,7 @@ export class SearchComponent {
 
     openProjectFilter: boolean = true;
     filteredRepoIds: string[]; //id (eventually filtered) of the repositories of the results, useful to iterate over them in the view
-    
+
     resultsCount: number;
     excludedResultsCount: number; //results excluded due filters (currently just due the "only open" dataset filter)
     excludedRepoCount: number; //repo excluded due filters
@@ -73,7 +73,7 @@ export class SearchComponent {
 
         this.loading = true;
         this.globalSearchService.search(this.searchString, langPar).pipe(
-            finalize(() => this.loading = false)
+            finalize(() => { this.loading = false; })
         ).subscribe(
             (results: GlobalSearchResult[]) => {
                 //group the results by repository ID 
@@ -100,17 +100,17 @@ export class SearchComponent {
                     Object.keys(this.groupedSearchResults).forEach(repoId => {
                         this.groupedSearchResults[repoId].sort((r1: GlobalSearchResult, r2: GlobalSearchResult) => {
                             return r1.show.localeCompare(r2.show);
-                        })
+                        });
                     });
                 });
                 this.filterSearchResults();
             },
             (err: Error) => {
                 if (err.name.endsWith("IndexNotFoundException")) {
-                    this.basicModals.alert({ key: "SEARCH.INDEX_NOT_FOUND" }, {key:"MESSAGES.SEARCH_INDEX_NOT_FOUND"}, ModalType.warning);
+                    this.basicModals.alert({ key: "SEARCH.INDEX_NOT_FOUND" }, { key: "MESSAGES.SEARCH_INDEX_NOT_FOUND" }, ModalType.warning);
                 }
             }
-        )
+        );
     }
 
     private filterSearchResults() {
@@ -123,10 +123,10 @@ export class SearchComponent {
         Object.keys(this.groupedSearchResults).forEach(repoId => {
             if (this.openProjectFilter && this.groupedSearchResults[repoId][0].repository.open || !this.openProjectFilter) {
                 this.filteredRepoIds.push(repoId);
-                this.resultsCount = this.resultsCount + this.groupedSearchResults[repoId].length;
+                this.resultsCount += this.groupedSearchResults[repoId].length;
             } else {
                 this.excludedRepoCount++;
-                this.excludedResultsCount = this.excludedResultsCount + this.groupedSearchResults[repoId].length
+                this.excludedResultsCount += this.groupedSearchResults[repoId].length;
             }
         });
         this.filteredRepoIds.sort();
@@ -134,7 +134,7 @@ export class SearchComponent {
 
     private getComputeResultsShowFn(results: GlobalSearchResult[]): Observable<void> {
         if (results[0].repository.open) { //if the repository is open, compute the show with a service invokation
-            let resources: IRI[] = []
+            let resources: IRI[] = [];
             results.forEach(r => {
                 resources.push(r.resource);
             });
@@ -150,7 +150,7 @@ export class SearchComponent {
         } else { //if the repository is closed, the show is the same IRI
             return of(
                 results.forEach(r => {
-                    r.show = r.resource.getIRI()
+                    r.show = r.resource.getIRI();
                 })
             );
         }
@@ -183,7 +183,7 @@ export class SearchComponent {
 
     setAllLanguagesFilter() {
         this.anyLangFilter = true;
-        this.languagesFilter.forEach(l => l.active = false);
+        this.languagesFilter.forEach(l => { l.active = false; });
         this.updateCookies();
     }
 
@@ -202,7 +202,7 @@ export class SearchComponent {
                 languages.forEach(l => {
                     let oldLangFilter = this.languagesFilter.find(lf => lf.lang == l);
                     newFilter.push({ lang: l, active: oldLangFilter ? oldLangFilter.active : false });
-                })
+                });
                 this.languagesFilter = newFilter;
                 this.updateCookies();
             },
@@ -219,7 +219,7 @@ export class SearchComponent {
             this.languagesFilter = JSON.parse(langFilterCookie);
             this.languagesFilter.sort((l1: LanguageFilter, l2: LanguageFilter) => {
                 return l1.lang.localeCompare(l2.lang);
-            })
+            });
             this.anyLangFilter = !this.languagesFilter.some(l => l.active); //if no language is enabled, set the "all languages" to true
         } else {
             this.languagesFilter = [

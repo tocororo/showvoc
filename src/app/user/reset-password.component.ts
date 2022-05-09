@@ -29,16 +29,16 @@ export class ResetPasswordComponent implements OnInit {
     reset() {
         this.loading = true;
         this.userService.resetPassword(this.email, this.token).pipe(
-            finalize(() => this.loading = false)
+            finalize(() => { this.loading = false; })
         ).subscribe(
             stResp => {
                 this.basicModals.alert({ key: "USER.PASSWORD.RESET_PASSWORD" }, { key: "MESSAGES.PASSWORD_RESET_SUCCESS" }).then(
                     () => {
                         this.router.navigate(["/login"]);
                     }
-                )
+                );
             }
-        )
+        );
     }
 
 }

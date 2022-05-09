@@ -89,7 +89,7 @@ export class RegistrationComponent implements OnInit {
                 }
 
             }
-        )
+        );
     }
 
     private initShowVocAndRedirect() {

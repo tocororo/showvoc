@@ -45,7 +45,7 @@ export class RegistrationModal {
             this.basicModals.alert({ key: "COMMONS.STATUS.INVALID_DATA" }, { key: "MESSAGES.DIFFERENT_CONFIRM_PASSWORD" }, ModalType.warning);
             return;
         }
-        this.activeModal.close(this.userForm)
+        this.activeModal.close(this.userForm);
     }
 
     close() {
