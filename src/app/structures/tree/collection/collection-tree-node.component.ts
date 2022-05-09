@@ -7,15 +7,15 @@ import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractTreeNode } from '../abstract-tree-node';
 
 @Component({
-	selector: 'collection-tree-node',
-	templateUrl: './collection-tree-node.component.html',
+    selector: 'collection-tree-node',
+    templateUrl: './collection-tree-node.component.html',
 })
 export class CollectionTreeNodeComponent extends AbstractTreeNode {
 
     @ViewChildren(CollectionTreeNodeComponent) viewChildrenNode: QueryList<CollectionTreeNodeComponent>;
 
-	constructor(private skosService: SkosServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
-        super(basicModals, sharedModals)
+    constructor(private skosService: SkosServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
+        super(basicModals, sharedModals);
     }
 
     /**
@@ -25,10 +25,10 @@ export class CollectionTreeNodeComponent extends AbstractTreeNode {
         return this.skosService.getNestedCollections(this.node.getValue()).pipe(
             map(collections => {
                 let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
-				ResourceUtils.sortResources(collections, orderAttribute);
-				return collections;
+                ResourceUtils.sortResources(collections, orderAttribute);
+                return collections;
             })
         );
-    };
+    }
 
 }

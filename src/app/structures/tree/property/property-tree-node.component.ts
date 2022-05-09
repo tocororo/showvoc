@@ -29,6 +29,6 @@ export class PropertyTreeNodeComponent extends AbstractTreeNode {
                 return properties;
             })
         );
-    };
+    }
 
 }

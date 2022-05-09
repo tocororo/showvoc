@@ -15,31 +15,31 @@ import { UserCreateFormComponent } from './user-create-form.component';
 import { UserProfileComponent } from './user-profile.component';
 
 @NgModule({
-	declarations: [
-		ChangePasswordModal,
+    declarations: [
+        ChangePasswordModal,
         LoginComponent,
-		RegistrationComponent,
-		RegistrationModal,
-		ResetPasswordComponent,
-		UserCreateFormComponent,
-		UserProfileComponent
-	],
-	imports: [
-		CommonModule,
-		DragDropModule,
-		FormsModule,
+        RegistrationComponent,
+        RegistrationModal,
+        ResetPasswordComponent,
+        UserCreateFormComponent,
+        UserProfileComponent
+    ],
+    imports: [
+        CommonModule,
+        DragDropModule,
+        FormsModule,
         ModalsModule,
-		RouterModule,
-		TranslateModule,
-		WidgetModule
-	],
-	exports: [
-		RegistrationModal,
-	],
-	providers: [],
-	entryComponents: [
-		ChangePasswordModal,
-		RegistrationModal
-	]
+        RouterModule,
+        TranslateModule,
+        WidgetModule
+    ],
+    exports: [
+        RegistrationModal,
+    ],
+    providers: [],
+    entryComponents: [
+        ChangePasswordModal,
+        RegistrationModal
+    ]
 })
 export class UserModule { }

@@ -41,9 +41,9 @@ export class SearchServices {
         };
         let options = new STRequestOptions({
             errorHandlers: [{
-                    className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
+                className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
             }]
-        })
+        });
         return this.httpMgr.doGet(this.serviceName, "searchResource", params, options).pipe(
             map(stResp => {
                 return ResourceDeserializer.createResourceArray(stResp);
@@ -62,7 +62,7 @@ export class SearchServices {
      * @param langs 
      * @param includeLocales 
      */
-    searchLexicalEntry(searchString: string, useLocalName: boolean, useURI: boolean, useNotes: boolean, searchMode: SearchMode, 
+    searchLexicalEntry(searchString: string, useLocalName: boolean, useURI: boolean, useNotes: boolean, searchMode: SearchMode,
         lexicons?: IRI[], langs?: string[], includeLocales?: boolean): Observable<AnnotatedValue<IRI>[]> {
         let params: any = {
             searchString: searchString,
@@ -76,9 +76,9 @@ export class SearchServices {
         };
         let options = new STRequestOptions({
             errorHandlers: [{
-                    className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
+                className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
             }]
-        })
+        });
         return this.httpMgr.doGet(this.serviceName, "searchLexicalEntry", params, options).pipe(
             map(stResp => {
                 return ResourceDeserializer.createIRIArray(stResp, ["index"]);
@@ -115,7 +115,7 @@ export class SearchServices {
         }
         options = new STRequestOptions({
             errorHandlers: [{
-                    className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
+                className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
             }]
         }).merge(options);
         return this.httpMgr.doGet(this.serviceName, "searchInstancesOfClass", params, options).pipe(
@@ -164,8 +164,8 @@ export class SearchServices {
      * @param langs 
      * @param schemes 
      */
-    searchStringList(searchString: string, rolesArray: string[], useLocalName: boolean, searchMode: SearchMode, 
-            langs?: string[], includeLocales?: boolean, schemes?: IRI[], cls?: IRI): Observable<string[]> {
+    searchStringList(searchString: string, rolesArray: string[], useLocalName: boolean, searchMode: SearchMode,
+        langs?: string[], includeLocales?: boolean, schemes?: IRI[], cls?: IRI): Observable<string[]> {
         let params: any = {
             searchString: searchString,
             rolesArray: rolesArray,
@@ -178,9 +178,9 @@ export class SearchServices {
         };
         let options = new STRequestOptions({
             errorHandlers: [{
-                    className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
+                className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
             }]
-        })
+        });
         return this.httpMgr.doGet(this.serviceName, "searchStringList", params, options);
     }
 
@@ -240,9 +240,9 @@ export class SearchServices {
         }
         let options = new STRequestOptions({
             errorHandlers: [{
-                    className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
+                className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
             }]
-        })
+        });
         return this.httpMgr.doPost(this.serviceName, "advancedSearch", params, options).pipe(
             map(stResp => {
                 return ResourceDeserializer.createResourceArray(stResp);
@@ -253,10 +253,10 @@ export class SearchServices {
     private serializeListOfList(lists: IRI[][]): string {
         let listSerialization: string[][] = [];
         lists.forEach((list: IRI[]) => {
-            let l: string[] = []
+            let l: string[] = [];
             list.forEach((res: IRI) => {
                 l.push(res.toNT());
-            })
+            });
             listSerialization.push(l);
         });
         return JSON.stringify(listSerialization);
@@ -273,7 +273,7 @@ export class SearchServices {
             let secondSerialization: string[] = [];
             link.second.forEach((res: Value) => {
                 secondSerialization.push(res.toNT());
-            })
+            });
             linksSerialization.push([link.first.toNT(), secondSerialization]);
         });
         return JSON.stringify(linksSerialization);

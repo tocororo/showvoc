@@ -52,19 +52,19 @@ export class ForceDirectedGraph {
     }
 
     public updateForces() {
-        let chargeForce: d3.ForceManyBody<{}> = this.simulation.force('charge'); //repulsion (if strength negative), attraction (if positive) among nodes
+        let chargeForce: d3.ForceManyBody<any> = this.simulation.force('charge'); //repulsion (if strength negative), attraction (if positive) among nodes
         chargeForce
             // .strength(this.options.forces.charge.strength) 
             .strength((node: Node) => this.getCharge(node, this.links))
             .distanceMin(this.options.forces.charge.distanceMin)
             .distanceMax(this.options.forces.charge.distanceMax);
 
-        let collideForce: d3.ForceCollide<{}> = this.simulation.force('collide'); //avoid collision between nodes in the given radius
+        let collideForce: d3.ForceCollide<any> = this.simulation.force('collide'); //avoid collision between nodes in the given radius
         collideForce
             .strength(this.options.forces.collide.strength)
             .radius(this.options.forces.collide.radius);
 
-        let linkForce: d3.ForceLink<{}, Link> = this.simulation.force('link');
+        let linkForce: d3.ForceLink<any, Link> = this.simulation.force('link');
         linkForce
             .strength(this.options.forces.link.strength)
             .distance(this.options.forces.link.distance);
@@ -127,7 +127,7 @@ export class ForceDirectedGraph {
                 }
             });
         }
-        let linkForce: d3.ForceLink<{}, Link> = this.simulation.force('link');
+        let linkForce: d3.ForceLink<any, Link> = this.simulation.force('link');
         linkForce.links(this.links);
     }
 

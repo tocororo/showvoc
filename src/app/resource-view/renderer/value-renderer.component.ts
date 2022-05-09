@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { AnnotatedValue, ResAttribute, Resource, Value } from 'src/app/models/Resources';
+import { Component, Input, SimpleChanges } from '@angular/core';
+import { AnnotatedValue, ResAttribute, Value } from 'src/app/models/Resources';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 
 @Component({
@@ -95,7 +95,7 @@ export class ValueRendererComponent {
                     this.manchExprStruct.push({ token: " ", class: "" });
                 }
 
-            })
+            });
         }
     }
 

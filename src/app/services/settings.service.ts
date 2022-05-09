@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { ExtensionPoint, Scope, Settings } from '../models/Plugins';
 import { Project } from '../models/Project';
 import { User } from '../models/User';
-import { HttpManager, STRequestOptions } from "../utils/HttpManager";
+import { HttpManager } from "../utils/HttpManager";
 
 @Injectable()
 export class SettingsServices {
@@ -60,7 +60,7 @@ export class SettingsServices {
      * @param scope 
      * @param settings 
      */
-     storeSettings(componentID: string, scope: Scope, settings: any) {
+    storeSettings(componentID: string, scope: Scope, settings: any) {
         let params = {
             componentID: componentID,
             scope: scope,
@@ -77,7 +77,7 @@ export class SettingsServices {
      * @param propertyValue 
      * @returns 
      */
-     storeSetting(componentID: string, scope: Scope, propertyName: string, propertyValue: any) {
+    storeSetting(componentID: string, scope: Scope, propertyName: string, propertyValue: any) {
         let params = {
             componentID: componentID,
             scope: scope,
@@ -115,7 +115,7 @@ export class SettingsServices {
      * @param settings 
      * @returns 
      */
-     storeSettingsDefault(componentID: string, scope: Scope, defaultScope: Scope, settings: any) {
+    storeSettingsDefault(componentID: string, scope: Scope, defaultScope: Scope, settings: any) {
         let params = {
             componentID: componentID,
             scope: scope,
@@ -156,7 +156,7 @@ export class SettingsServices {
             map(stResp => {
                 return Settings.parse(stResp);
             })
-        )
+        );
     }
 
     storeSettingForProjectAdministration(componentID: string, scope: Scope, propertyName: string, propertyValue: any, project: Project, user?: User) {

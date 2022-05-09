@@ -36,7 +36,7 @@ export class LexiconListComponent extends AbstractList {
     initImpl() {
         this.loading = true;
         this.ontolexService.getLexicons().pipe(
-            finalize(() => this.loading = false)
+            finalize(() => { this.loading = false; })
         ).subscribe(
             lexicons => {
                 let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;
@@ -47,7 +47,7 @@ export class LexiconListComponent extends AbstractList {
                         this.activeLexicon = l;
                         break;
                     }
-                };
+                }
                 this.nodes = lexicons;
             }
         );

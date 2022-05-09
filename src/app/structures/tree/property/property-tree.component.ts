@@ -53,13 +53,13 @@ export class PropertyTreeComponent extends AbstractTree {
         if (this.rootProperties) {
             this.loading = true;
             this.propertyService.getPropertiesInfo(this.rootProperties).pipe(
-                finalize(() => this.loading = false)
+                finalize(() => { this.loading = false; })
             ).subscribe(
                 props => {
                     ResourceUtils.sortResources(props, orderAttribute);
                     this.nodes = props;
                 }
-            )
+            );
         } else if (this.resource) {
             //at the moment I don't implement this part since it should not be necessary in ShowVoc since it is in readonly
         } else {
@@ -79,7 +79,7 @@ export class PropertyTreeComponent extends AbstractTree {
             }
             this.loading = true;
             getPropertiesFn.pipe(
-                finalize(() => this.loading = false)
+                finalize(() => { this.loading = false; })
             ).subscribe(
                 props => {
                     ResourceUtils.sortResources(props, orderAttribute);

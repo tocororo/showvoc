@@ -31,7 +31,7 @@ export class SettingSetRendererComponent {
     }
 
     delete(index: number) {
-        this.value.splice(index, 1);        
+        this.value.splice(index, 1);
         this.onModelChange();
     }
 
@@ -57,7 +57,8 @@ export class SettingSetRendererComponent {
     trackByIndex(index: number, obj: any): any {
         if (this.types && this.types[0].name == "IRI") {
             return obj;
-        } else 
-        return index;
+        } else {
+            return index;
+        }
     }
 }

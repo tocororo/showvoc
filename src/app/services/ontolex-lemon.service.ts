@@ -69,7 +69,7 @@ export class OntoLexLemonServices {
      * Returns the 2-digits index of the given lexicalEntry 
      * @param lexicalEntry 
      */
-     getLexicalEntryIndex(lexicalEntry: IRI): Observable<string> {
+    getLexicalEntryIndex(lexicalEntry: IRI): Observable<string> {
         let params: STRequestParams = {
             lexicalEntry: lexicalEntry
         };

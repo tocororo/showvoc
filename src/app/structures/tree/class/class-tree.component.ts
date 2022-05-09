@@ -42,7 +42,7 @@ export class ClassTreeComponent extends AbstractTree {
 
         this.loading = true;
         this.clsService.getClassesInfo(clsTreeRoots).pipe(
-            finalize(() => this.loading = false)
+            finalize(() => { this.loading = false; })
         ).subscribe(
             classes => {
                 let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;

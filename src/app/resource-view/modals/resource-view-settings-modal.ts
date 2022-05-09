@@ -9,12 +9,12 @@ export class ResViewSettingsModal {
 
     constructor(public activeModal: NgbActiveModal) { }
 
-	ok() {
-		this.activeModal.close();
-	}
+    ok() {
+        this.activeModal.close();
+    }
 
-	close() {
-		this.activeModal.dismiss();
-	}
+    close() {
+        this.activeModal.dismiss();
+    }
 
 }

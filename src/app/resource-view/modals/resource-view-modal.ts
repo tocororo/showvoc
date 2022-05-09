@@ -6,28 +6,28 @@ import { ProjectContext } from 'src/app/utils/SVContext';
 import { UIUtils } from 'src/app/utils/UIUtils';
 
 @Component({
-	selector: 'resource-view-modal',
-	templateUrl: './resource-view-modal.html'
+    selector: 'resource-view-modal',
+    templateUrl: './resource-view-modal.html'
 })
 export class ResourceViewModal {
 
-	@Input() resource: Resource;
-	@Input() projectCtx: ProjectContext;
+    @Input() resource: Resource;
+    @Input() projectCtx: ProjectContext;
 
-	context: ResourceViewCtx = ResourceViewCtx.modal;
-    
-	constructor(public activeModal: NgbActiveModal, private elementRef: ElementRef) { }
+    context: ResourceViewCtx = ResourceViewCtx.modal;
 
-	ngAfterViewInit() {
-		UIUtils.setFullSizeModal(this.elementRef);
-	}
+    constructor(public activeModal: NgbActiveModal, private elementRef: ElementRef) { }
 
-	ok() {
-		this.activeModal.close();
-	}
+    ngAfterViewInit() {
+        UIUtils.setFullSizeModal(this.elementRef);
+    }
 
-	close() {
-		this.activeModal.dismiss();
-	}
+    ok() {
+        this.activeModal.close();
+    }
+
+    close() {
+        this.activeModal.dismiss();
+    }
 
 }

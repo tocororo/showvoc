@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { AnnotatedValue, IRI, Literal, PredicateObjects, ResAttribute, Resource, Value } from 'src/app/models/Resources';
+import { AnnotatedValue, IRI, PredicateObjects, Resource, Value } from 'src/app/models/Resources';
 import { SKOS, SKOSXL } from 'src/app/models/Vocabulary';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 
@@ -31,8 +31,8 @@ export class BasicRendererComponent {
                 if (o.getValue() instanceof Resource) {
                     o['clickable'] = true;
                 }
-            })
-        })
+            });
+        });
     }
 
     private getHumanReadablePredicate(predicate: AnnotatedValue<IRI>): string {

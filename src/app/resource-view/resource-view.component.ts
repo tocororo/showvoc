@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { GraphModalServices } from '../graph/modals/graph-modal.service';
-import { AnnotatedValue, IRI, Literal, LocalResourcePosition, PredicateObjects, RemoteResourcePosition, ResAttribute, Resource, ResourcePosition, Value } from '../models/Resources';
+import { AnnotatedValue, IRI, PredicateObjects, ResAttribute, Resource, Value } from '../models/Resources';
 import { PropertyFacet, ResourceViewCtx, ResViewPartition } from '../models/ResourceView';
 import { SemanticTurkey } from '../models/Vocabulary';
 import { ResourceViewServices } from '../services/resource-view.service';
-import { SVContext, ProjectContext } from '../utils/SVContext';
-import { SVProperties } from '../utils/SVProperties';
 import { ResourceDeserializer, ResourceUtils, SortAttribute } from '../utils/ResourceUtils';
+import { ProjectContext, SVContext } from '../utils/SVContext';
+import { SVProperties } from '../utils/SVProperties';
 import { ResViewModalsServices } from './modals/resource-view-modal.service';
 
 @Component({
@@ -38,7 +38,7 @@ export class ResourceViewComponent {
     private unexistingResource: boolean = false; //tells if the requested resource does not exist (empty description)
 
     private btnGraphAvailable: boolean = true;
-    private btnSettingsAvailable: boolean = true
+    private btnSettingsAvailable: boolean = true;
 
     //partitions
     private resViewResponse: any = null; //to store the getResourceView response and avoid to repeat the request when user switches on/off inference
@@ -85,7 +85,7 @@ export class ResourceViewComponent {
         //graph available if RV is not in modal and has no projectCtx overriding the default
         this.btnGraphAvailable = this.projectCtx == null && this.context != ResourceViewCtx.modal;
         //settings available only if there is no context overriding the default
-        this.btnSettingsAvailable = this.projectCtx == null; 
+        this.btnSettingsAvailable = this.projectCtx == null;
 
         if (changes['resource'] && changes['resource'].currentValue) {
             //if not the first change, avoid to refresh res view if resource is not changed
@@ -104,7 +104,7 @@ export class ResourceViewComponent {
         this.loading = true;
         this.resetPartitions();
         this.resViewService.getResourceView(res).pipe(
-            finalize(() => this.loading = false)
+            finalize(() => { this.loading = false; })
         ).subscribe(
             stResp => {
                 this.resViewResponse = stResp;
@@ -417,7 +417,7 @@ export class ResourceViewComponent {
                 name: facetName,
                 value: facetsPartition[facetName].value,
                 explicit: facetsPartition[facetName].explicit
-            })
+            });
         }
         //parse inverseOf partition in facets
         this.inverseofColl = ResourceDeserializer.createPredicateObjectsList(facetsPartition.inverseOf);
@@ -524,7 +524,7 @@ export class ResourceViewComponent {
     }
 
     settings() {
-        this.resViewModals.openSettings()
+        this.resViewModals.openSettings();
     }
 
     openDataGraph() {

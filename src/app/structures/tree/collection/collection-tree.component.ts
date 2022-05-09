@@ -28,7 +28,7 @@ export class CollectionTreeComponent extends AbstractTree {
     initImpl() {
         this.loading = true;
         this.skosService.getRootCollections().pipe(
-            finalize(() => this.loading = false)
+            finalize(() => { this.loading = false; })
         ).subscribe(
             collections => {
                 let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;

@@ -48,7 +48,7 @@ export class LexicalEntryListComponent extends AbstractList {
                     if (this.safeToGo.safe) {
                         this.loading = true;
                         this.ontolexService.getLexicalEntriesByAlphabeticIndex(this.index, this.lexicon).pipe(
-                            finalize(() => this.loading = false)
+                            finalize(() => { this.loading = false; })
                         ).subscribe(
                             entries => {
                                 let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;

@@ -49,7 +49,7 @@ export class ConceptTreeComponent extends AbstractTree {
          * Initialized the tree only if not the first change. Avoid multiple initialization.
          * The first initialization was already fired in ngOnInit of AbstractStructure
          */
-        if (changes['schemes'] && !changes['schemes'].isFirstChange()) { 
+        if (changes['schemes'] && !changes['schemes'].isFirstChange()) {
             this.init();
         }
     }
@@ -63,7 +63,7 @@ export class ConceptTreeComponent extends AbstractTree {
                         this.lastTimeInit = new Date().getTime();
                         this.loading = true;
                         this.skosService.getTopConcepts(this.lastTimeInit, this.schemes).pipe(
-                            finalize(() => this.loading = false)
+                            finalize(() => { this.loading = false; })
                         ).subscribe(
                             data => {
                                 if (data.timestamp != this.lastTimeInit) return;
@@ -79,7 +79,7 @@ export class ConceptTreeComponent extends AbstractTree {
                         );
                     }
                 }
-            )
+            );
         } else if (this.visualizationMode == ConceptTreeVisualizationMode.searchBased) {
             //don't do nothing
         }
@@ -111,7 +111,7 @@ export class ConceptTreeComponent extends AbstractTree {
         let safeness: SafeToGo = safeToGoMap[checksum];
         if (safeness != null) { //found safeness in cache
             this.safeToGo = safeness;
-            return of(null)
+            return of(null);
         } else { //never initialized => count
             this.loading = true;
             return this.skosService.countTopConcepts(this.schemes).pipe(
@@ -121,7 +121,7 @@ export class ConceptTreeComponent extends AbstractTree {
                     safeToGoMap[checksum] = safeness; //cache the safetyness
                     this.safeToGo = safeness;
                     this.translationParam = { elemCount: this.safeToGo.count, safeToGoLimit: this.safeToGoLimit };
-                    return of(null)
+                    return of(null);
                 })
             );
         }

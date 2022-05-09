@@ -23,7 +23,7 @@ export class FilePickerComponent {
 
     ngOnChanges() {
         if (this.size == "xs" || this.size == "sm" || this.size == "lg") {
-            this.inputGroupClass = " input-group-" + this.size
+            this.inputGroupClass = " input-group-" + this.size;
         }
     }
     

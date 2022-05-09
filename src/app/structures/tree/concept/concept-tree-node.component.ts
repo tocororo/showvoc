@@ -32,6 +32,6 @@ export class ConceptTreeNodeComponent extends AbstractTreeNode {
                 return concepts;
             })
         );
-    };
+    }
 
 }

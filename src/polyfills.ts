@@ -55,13 +55,13 @@
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js/dist/zone';  // Included with Angular CLI.
+import 'zone.js/dist/zone'; // Included with Angular CLI.
 
 /* 
 The following probably is needed for ngb toast (once added toast I got error described here 
 (https://stackoverflow.com/questions/57953317/angular-9-introduced-a-global-localize-function-that-needs-to-be-loaded)
 */
-import '@angular/localize/init' 
+import '@angular/localize/init';
 
 
 /***************************************************************************************************

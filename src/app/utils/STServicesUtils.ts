@@ -71,29 +71,29 @@ export class STResponseUtils {
     }
 
     /**
-	 * Returns the exception message
-	 */
+     * Returns the exception message
+     */
     private static getExceptionMessage(stResp: any): string {
         return stResp.stresponse.msg;
     }
 
     /**
-	 * Returns the exception name
-	 */
+     * Returns the exception name
+     */
     private static getExceptionName(stResp: any): string {
         return stResp.stresponse.exception;
     }
 
     /**
-	 * Returns the exception stack trace
-	 */
+     * Returns the exception stack trace
+     */
     private static getExceptionStackTrace(stResp: any): string {
         return stResp.stresponse.stackTrace;
     }
 
-	/**
-	 * Checks if the response is an exception response
-	 */
+    /**
+     * Checks if the response is an exception response
+     */
     private static isError(stResp: any): boolean {
         if (stResp.stresponse != undefined) {
             return stResp.stresponse.type == "error"; //old json responses have stresponse object
@@ -102,16 +102,16 @@ export class STResponseUtils {
         }
     }
 
-	/**
-	 * Returns the exception message
-	 */
+    /**
+     * Returns the exception message
+     */
     private static getErrorMessage(stResp: any): string {
         return stResp.stresponse.msg;
     }
 
-	/**
-	 * Checks if the response is a fail response
-	 */
+    /**
+     * Checks if the response is a fail response
+     */
     private static isFail(stResp: any): boolean {
         if (stResp.stresponse != undefined) {
             return stResp.stresponse.reply.status == "fail"; //old json responses have stresponse object
@@ -120,9 +120,9 @@ export class STResponseUtils {
         }
     }
 
-	/**
-	 * Returns the fail message
-	 */
+    /**
+     * Returns the fail message
+     */
     private static getFailMessage(stResp: any): string {
         return stResp.stresponse.reply.msg;
     }

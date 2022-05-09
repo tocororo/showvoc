@@ -205,7 +205,7 @@ export class RenderingEditor implements ControlValueAccessor {
             //...and shift the position of the languages that follow the deactivated
             this.renderingLanguages.forEach(l => {
                 if (l.position > deactivatedPosition) {
-                    l.position = l.position-1;
+                    l.position -=1;
                 }
             });
 

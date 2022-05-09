@@ -11,7 +11,7 @@ export class AlignmentsModalsServices {
     constructor(private modalService: NgbModal) { }
 
     openAlignments(sourceProject: Project, linkset: LinksetMetadata) {
-    	const modalRef: NgbModalRef = this.modalService.open(AlignmentsModal, new ModalOptions("lg"));
+        const modalRef: NgbModalRef = this.modalService.open(AlignmentsModal, new ModalOptions("lg"));
         modalRef.componentInstance.sourceProject = sourceProject;
         modalRef.componentInstance.linkset = linkset;
         return modalRef.result;

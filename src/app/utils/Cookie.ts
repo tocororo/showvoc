@@ -56,13 +56,13 @@ export class Cookie {
         return value;
     }
 
-     /**
-      * Save the Cookie
-      * @param name 
-      * @param value 
-      * @param attrs 
-      */
-      public static setCookie(name: string, value: any, project?: Project, user?: User, attrs?: CookieAttr) {
+    /**
+     * Save the Cookie
+     * @param name 
+     * @param value 
+     * @param attrs 
+     */
+    public static setCookie(name: string, value: any, project?: Project, user?: User, attrs?: CookieAttr) {
         value = this.convertValueToString(value);
 
         if (value == null) {
@@ -83,7 +83,7 @@ export class Cookie {
         let expires = (attrs && attrs.expires) ? attrs.expires : 365 * 10; //default 10 years
         let dtExpires = new Date(new Date().getTime() + expires * 1000 * 60 * 60 * 24);
         cookieStr += 'expires=' + dtExpires.toUTCString() + ';';
-        
+
         let path: string = (attrs && attrs.path) ? attrs.path : null;
         if (path) {
             cookieStr += "path=" + path + ";";
@@ -113,7 +113,7 @@ export class Cookie {
                     } else {
                         stringArray.push(v);
                     }
-                })
+                });
                 valueAsString = stringArray.join(",");
             }
         } else if (value instanceof Map) {
@@ -125,7 +125,7 @@ export class Cookie {
                     } else {
                         stringMap[key] = v;
                     }
-                })
+                });
                 valueAsString = JSON.stringify(stringMap);
             }
         } else if (value instanceof Value) {
@@ -143,7 +143,7 @@ export class Cookie {
  * Note: path is useful for the translate.lang cookie which if it is set for http://<hostname>/vocbench3 
  * is blocked by the browser for requests toward http://<hostname>/semanticturkey since they have different path
  */
- export interface CookieAttr {
+export interface CookieAttr {
     expires?: number;
-    path?: string; 
+    path?: string;
 }
