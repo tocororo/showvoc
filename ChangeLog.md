@@ -4,7 +4,7 @@ The full changelog of the platform includes also changes brought to the Semantic
 
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
-# 1.2.2 (dd-mm-yyyy)
+# 2.0.0 (dd-05-2022)
   * Enabled support to SAML authentication
   * Added new kind of auhtorized user: SuperUser
   * Added completion for endpoints to use in federated SPARQL queries
