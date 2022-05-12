@@ -198,7 +198,6 @@ export class MetadataComponent implements OnInit {
         if (browserLang.includes("-")) {
             browserLang = browserLang.substring(0, browserLang.indexOf("-"));
             localizedLabel = download.langToLocalizedMap[browserLang];
-            localizedLabel = download.langToLocalizedMap[browserLang];
             if (localizedLabel != null) {
                 return localizedLabel;
             }
