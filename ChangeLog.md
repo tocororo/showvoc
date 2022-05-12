@@ -6,7 +6,8 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
 # 2.0.0 (12-05-2022)
   * Enabled support to SAML authentication
-  * Introduced support for EULogin
+  * Added a metadata summary page for each dataset
+  * Added possibility to create downloadable distribution of datasets
   * Added new kind of authorized user: SuperUser. SuperUser create projects and then get the role Project Manager automatically assigned to them
   * Added completion for endpoints to use in "locally federated" (i.e. different repositories on the same GraphDB instance) SPARQL queries
   * Fixed a bug that prevented to automatically change the alphabetic index in Lexical Entry panel after a search
@@ -22,7 +23,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 # 1.2.0 (26-01-2022)
   * Added possibility to create multiple administrators
   * Made dialogs draggable
-  * Added localization for Spanish, thanks to Juan Antonio Pastor S nchez for the contribution!
+  * Added localization for Spanish, thanks to Juan Antonio Pastor Sanchez for the contribution!
   * Added Manchester Syntax highlighting in resource view
   * Added possibility to hide the dataset name in the Dataset view through the URL parameter "hideDatasetName"
 
