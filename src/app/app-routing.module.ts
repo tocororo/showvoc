@@ -44,17 +44,17 @@ const routes: Routes = [
         { path: "load/stable/:token", component: LoadStableResourceComponent, canActivate: [VisitorAuthGuard] },
         { path: "load/dev/:format/:token", component: LoadDevResourceComponent, canActivate: [VisitorAuthGuard] },
         { path: "ResetPassword/:token", component: ResetPasswordComponent },
-        { path: 'datasets', component: DatasetsComponent, canActivate: [VisitorAuthGuard] },
+        { path: 'datasets', component: DatasetsComponent, canActivate: [VisitorAuthGuard], data: { reuseComponent: true } },
         {
             path: 'datasets/:id', component: DatasetViewComponent, canActivate: [ProjectGuard], //ProjectGuard implicitly requires VisitorAuthGuard
             children: [
                 { path: '', redirectTo: "metadata", pathMatch: 'full' },
-                { path: 'metadata', component: MetadataComponent },
-                { path: 'data', component: DatasetDataComponent },
-                { path: 'sparql', component: SparqlComponent }
+                { path: 'metadata', component: MetadataComponent, data: { reuseComponent: true } },
+                { path: 'data', component: DatasetDataComponent, data: { reuseComponent: true } },
+                { path: 'sparql', component: SparqlComponent, data: { reuseComponent: true } }
             ]
         },
-        { path: 'search', component: SearchComponent, canActivate: [VisitorAuthGuard] },
+        { path: 'search', component: SearchComponent, canActivate: [VisitorAuthGuard], data: { reuseComponent: true } },
         { path: 'alignments', component: AlignmentsComponent, canActivate: [VisitorAuthGuard] },
         { path: '**', component: NotFoundComponent },
     ]}

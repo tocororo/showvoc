@@ -25,6 +25,7 @@
         "@typescript-eslint/no-extra-semi": 1,
         "@typescript-eslint/no-inferrable-types": 0,
         "@typescript-eslint/no-loss-of-precision": 0,
+        "@typescript-eslint/no-non-null-assertion": 0,
         "@typescript-eslint/no-unused-vars": [1, { "vars": "all", "args": "none", "ignoreRestSiblings": false }],
         "@typescript-eslint/no-var-requires": 0,
         "accessor-pairs": 2,

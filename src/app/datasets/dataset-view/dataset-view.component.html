@@ -1,21 +1,5 @@
 <div class="container-fluid my-3">
 
-    <!-- nav-pills navbar, commented in favour of nav-tabs -->
-    <!-- <div class="d-flex border-bottom py-2 px-3 mb-2">
-        <h3 *ngIf="!hideDatasetName" class="m-0" style="display: inline; flex: 1;">{{project.getName()}}</h3>
-        <ul class="nav nav-pills ml-auto">
-            <li class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" (click)="goToRoute('metadata')" [ngClass]="{ active: isActiveRoute('metadata') }">Metadata</a>
-            </li>
-            <li class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" (click)="goToRoute('data')" [ngClass]="{ active: isActiveRoute('data') }">{{'DATA.DATA'|translate}}</a>
-            </li>
-            <li class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" (click)="goToRoute('sparql')" [ngClass]="{ active: isActiveRoute('sparql') }">Sparql</a>
-            </li>
-        </ul>
-    </div> -->
-
     <div class="mb-2" style="position: relative;">
         <h3 *ngIf="!hideDatasetName" style="position: absolute; left: 10px; top: 2px;">{{project.getName()}}</h3>
         <ul class="nav nav-tabs justify-content-end">
