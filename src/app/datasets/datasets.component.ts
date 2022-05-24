@@ -55,16 +55,6 @@ export class DatasetsComponent implements OnInit {
     }
 
     initDatasets() {
-        // this.loading = true;
-        // this.projectService.listProjectsPerRole(ShowVocConstants.rolePublic).pipe(
-        //     finalize(() => { this.loading = false; })
-        // ).subscribe(
-        //     projects => {
-        //         this.allProjects = projects;
-        //         this.filterDatasets();
-        //     }
-        // );
-
         this.loading = true;
         this.projectService.listProjectsPerRole(ShowVocConstants.rolePublic).pipe(
             finalize(() => { this.loading = false; })
@@ -86,6 +76,7 @@ export class DatasetsComponent implements OnInit {
     }
 
     private filterSuperUserAccessibleDatasets(): Observable<void> {
+        //super user cannot access other public datasets for which has no role assigned in, set as not accessible such datasets
         if (SVContext.getLoggedUser().isSuperUser(true)) {
             return this.projectService.listProjects(null, true, true).pipe(
                 map(suProjects => {

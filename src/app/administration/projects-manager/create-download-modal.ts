@@ -41,12 +41,14 @@ export class CreateDownloadModal {
     }
 
     private createDownload(overwrite: boolean): Observable<boolean> {
+        SVContext.setTempProject(this.project);
         return this.downloadService.createDownload(this.fileName, this.localized.getLabel(), this.localized.getLanguage(), this.format, this.zipped, overwrite).pipe(
             map(() => {
                 return true;
             }),
             finalize(() => {
                 this.loading = false;
+                SVContext.removeTempProject();
             }),
             catchError((err: Error) => {
                 //the only error not automatically handled is FileAlreadyExistsException

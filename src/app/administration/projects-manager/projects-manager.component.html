@@ -64,7 +64,7 @@
                         <div class="btn-group btn-group-sm" ngbDropdown placement="bottom-right">
                             <button data-toggle="dropdown" ngbDropdownToggle class="btn dropdown-toggle" 
                                 [ngClass]="{'btn-success': p.role==rolePublic, 'btn-warning': p.role==roleStaging, 'btn-light dropdown-no-arrow': p.role==rolePristine}"
-                                style="font-weight: 500;" [disabled]="p.role==rolePristine || p.createIndex">
+                                style="font-weight: 500;" [disabled]="!isAdmin || p.role==rolePristine || p.createIndex">
                                 {{roleStatusMap[p.role]}}
                             </button>
                             <div class="dropdown-menu" ngbDropdownMenu>

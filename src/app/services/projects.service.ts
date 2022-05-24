@@ -126,7 +126,7 @@ export class ProjectsServices {
         resourceMetadataAssociations?: Pair<RDFResourceRolesEnum, string>[],
         shaclEnabled?: boolean, shaclSettings?: Map<string, any>, trivialInferenceEnabled?: boolean,
         preloadedDataFileName?: string, preloadedDataFormat?: string, transitiveImportAllowance?: TransitiveImportMethodAllowance,
-        openAtStartup?: boolean, globallyAccessible?: boolean, label?: Literal) {
+        openAtStartup?: boolean, universalAccess?: AccessLevel, label?: Literal) {
 
         let params: any = {
             consumer: "SYSTEM",
@@ -156,7 +156,7 @@ export class ProjectsServices {
             preloadedDataFormat: preloadedDataFormat,
             transitiveImportAllowance: transitiveImportAllowance,
             openAtStartup: openAtStartup,
-            globallyAccessible: globallyAccessible,
+            universalAccess: universalAccess,
             label: label
         };
         return this.httpMgr.doPost(this.serviceName, "createProject", params);
