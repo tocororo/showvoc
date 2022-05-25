@@ -194,7 +194,6 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
         // Ex. users/1, users/2, users/3, ...
         const key = this.getFullPath(route);
         this.storedRoutes[key] = { route, handle };
-        console.log("stored", key, this.storedRoutes);
     }
 
     // Should we retrieve a route from the store?

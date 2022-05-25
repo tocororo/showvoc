@@ -129,7 +129,6 @@ export class SearchBarComponent {
         const modalRef: NgbModalRef = this.modalService.open(AdvancedSearchModal, new ModalOptions('xl'));
         modalRef.result.then(
             (resource: AnnotatedValue<Resource>) => {
-                console.log(resource);
                 this.advancedSearchResult.emit(resource);
             },
             () => { }

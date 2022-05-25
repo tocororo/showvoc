@@ -14,6 +14,7 @@ import { SVContext } from '../utils/SVContext';
 import { EditLanguageModal } from './edit-language-modal.component';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ShowVocUrlParams } from '../models/ShowVoc';
+import { ProjectsServices } from '../services/projects.service';
 
 @Component({
     selector: 'search-component',
@@ -47,11 +48,22 @@ export class SearchComponent {
     anyLangFilter: boolean;
     languagesFilter: LanguageFilter[];
 
-    constructor(private globalSearchService: GlobalSearchServices, private resourcesService: ResourcesServices,
+    isSuperUser: boolean;
+    superUserProjects: Project[];
+
+    constructor(private globalSearchService: GlobalSearchServices, private resourcesService: ResourcesServices, private projectService: ProjectsServices,
         private basicModals: BasicModalsServices, private modalService: NgbModal, private router: Router) { }
 
     ngOnInit() {
         this.initCookies();
+        this.isSuperUser = SVContext.getLoggedUser().isSuperUser(true);
+        if (this.isSuperUser) {
+            this.projectService.listProjects(null, true, true).subscribe(
+                projects => {
+                    this.superUserProjects = projects;
+                }
+            );
+        }
     }
 
     searchKeyHandler() {
@@ -133,7 +145,7 @@ export class SearchComponent {
     }
 
     private getComputeResultsShowFn(results: GlobalSearchResult[]): Observable<void> {
-        if (results[0].repository.open) { //if the repository is open, compute the show with a service invokation
+        if (this.isResultAccessible(results[0])) { //if the repository is open (and accessible in case of SU), compute the show with a service invokation
             let resources: IRI[] = [];
             results.forEach(r => {
                 resources.push(r.resource);
@@ -154,6 +166,18 @@ export class SearchComponent {
                 })
             );
         }
+    }
+
+    /**
+     * Tells if a given search result is accessible, namely if the repository/project (which the result belongs to) is open and,
+     * in case of SuperUser, if user is authorized to access project
+     * @param result
+     */
+    isResultAccessible(result: GlobalSearchResult): boolean {
+        //a result is clickable if the related repository is open AND, in case of super user, if the repository is a project for which SU has authorization
+        return result.repository.open && 
+            (!this.isSuperUser || this.superUserProjects.some(p => p.getName() == result.repository.id));
+
     }
 
 

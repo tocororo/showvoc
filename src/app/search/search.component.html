@@ -75,16 +75,16 @@
                     <div *ngFor="let repoId of filteredRepoIds" class="card grouped-search-result">
                         <div class="card-body">
                             <h5 class="mb-2">
-                                <a [routerLink]="" (click)="goToDataset(repoId)" [ngClass]="{ disabled : !groupedSearchResults[repoId][0].repository.open }">
+                                <a [routerLink]="" (click)="goToDataset(repoId)" [ngClass]="{ disabled : !isResultAccessible(groupedSearchResults[repoId][0]) }">
                                     {{repoId}}
                                 </a>
                             </h5>
                             <div *ngFor="let result of groupedSearchResults[repoId]" class="search-result">
                                 <div style="font-size: 1rem">
-                                    <a [routerLink]="" (click)="goToResource(result)" class="text-success" [ngClass]="{ disabled: !result.repository.open }">{{result.show}}</a>
+                                    <a [routerLink]="" (click)="goToResource(result)" class="text-success" [ngClass]="{ disabled: !isResultAccessible(result) }">{{result.show}}</a>
                                 </div>
                                 <div style="font-size: .875rem">
-                                    <a [routerLink]="" (click)="goToResource(result)" class="text-secondary" [ngClass]="{ disabled: !result.repository.open }">{{result.resource.getIRI()}}</a>
+                                    <a [routerLink]="" (click)="goToResource(result)" class="text-secondary" [ngClass]="{ disabled: !isResultAccessible(result) }">{{result.resource.getIRI()}}</a>
                                 </div>
                                 <span class="mt-1">
                                     {{result.details[0].matchedValue.getLabel()}}
