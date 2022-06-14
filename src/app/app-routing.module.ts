@@ -48,7 +48,7 @@ const routes: Routes = [
         {
             path: 'datasets/:id', component: DatasetViewComponent, canActivate: [ProjectGuard], //ProjectGuard implicitly requires VisitorAuthGuard
             children: [
-                { path: '', redirectTo: "metadata", pathMatch: 'full' },
+                { path: '', redirectTo: "data", pathMatch: 'full' },
                 { path: 'metadata', component: MetadataComponent, data: { reuseComponent: true } },
                 { path: 'data', component: DatasetDataComponent, data: { reuseComponent: true } },
                 { path: 'sparql', component: SparqlComponent, data: { reuseComponent: true } }
