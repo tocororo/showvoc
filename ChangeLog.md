@@ -4,8 +4,9 @@ The full changelog of the platform includes also changes brought to the Semantic
 
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
-# 2.0.1 (dd-mm-2022)
-  *
+# 2.1.0 (dd-mm-2022)
+  * Changed default Dataset landing tab from metadata to data
+  * Minor changes and bugfixes
 
 # 2.0.0 (12-05-2022)
   * Enabled support to SAML authentication
