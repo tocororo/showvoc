@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import * as FileSaver from 'file-saver';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
@@ -326,18 +327,17 @@ export class SparqlTabComponent implements OnInit {
         return value;
     }
 
-    private exportAsSpradsheet(format: "xlsx" | "ods") {
+    exportAsSpradsheet(format: "xlsx" | "ods") {
         this.exportInProgress = true;
         this.sparqlService.exportQueryResultAsSpreadsheet(this.queryCache, format, this.inferred).subscribe(
             blob => {
                 this.exportInProgress = false;
-                let exportLink = window.URL.createObjectURL(blob);
-                this.basicModals.downloadLink({ key: "SPARQL.ACTIONS.EXPORT_RESULTS" }, null, exportLink, "sparql_export." + format);
+                FileSaver.saveAs(blob, "sparql_export." + format);
             }
         );
     }
 
-    private exportAsRdf() {
+    exportAsRdf() {
         const modalRef: NgbModalRef = this.modalService.open(ExportResultRdfModal, new ModalOptions());
         modalRef.componentInstance.query = this.queryCache;
         modalRef.componentInstance.inferred = this.inferred;
@@ -349,12 +349,7 @@ export class SparqlTabComponent implements OnInit {
      */
     private downloadSavedResult(fileContent: string, type: "csv" | "tsv" | "json") {
         let data = new Blob([fileContent], { type: 'text/plain' });
-        let textFile = window.URL.createObjectURL(data);
-        let fileName = "result." + type;
-        this.basicModals.downloadLink({ key: "SPARQL.ACTIONS.EXPORT_RESULTS" }, null, textFile, fileName).then(
-            done => { window.URL.revokeObjectURL(textFile); },
-            () => { }
-        );
+        FileSaver.saveAs(data, "result." + type);
     }
 
 }

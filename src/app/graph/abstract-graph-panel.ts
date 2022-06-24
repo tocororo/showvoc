@@ -1,4 +1,5 @@
 import { Directive, Input } from "@angular/core";
+import * as FileSaver from 'file-saver';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { BrowsingModalsServices } from '../modal-dialogs/browsing-modals/browsing-modal.service';
 import { AbstractGraph } from './abstract-graph';
@@ -34,7 +35,7 @@ export abstract class AbstractGraphPanel {
         return (this.selectedElement != null && this.selectedElement instanceof Node);
     }
 
-    private fixNode() {
+    fixNode() {
         let selectedNode = <Node>this.selectedElement;
         selectedNode.fixed = !selectedNode.fixed;
         if (!selectedNode.fixed) {
@@ -48,7 +49,7 @@ export abstract class AbstractGraphPanel {
 
     snapshot() {
         let exportUrl = this.viewChildGraph.getExportUrl();
-        this.basicModals.downloadLink({ key: "GRAPHS.ACTIONS.EXPORT_SNAPSHOT" }, null, exportUrl, "graph.svg");
+        FileSaver.saveAs(exportUrl, "graph.svg");
     }
 
 }
