@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { AnnotatedValue, IRI } from 'src/app/models/Resources';
 import { Node } from "./Node";
 
 export class Link implements d3.SimulationLinkDatum<Node> {
@@ -6,6 +7,10 @@ export class Link implements d3.SimulationLinkDatum<Node> {
 
     source: Node;
     target: Node;
+    // res: IRI; //predicate resource
+    res: AnnotatedValue<IRI>; //predicate resource
+
+    classAxiom: boolean;
 
     /**
      * List of nodes which expansion made "appear" the link.
@@ -16,11 +21,18 @@ export class Link implements d3.SimulationLinkDatum<Node> {
     openBy: Node[];
 
     offset: number = 0; //useful in case there are multiple links for the same source-target pair
+    loop: boolean;
 
-    constructor(source: Node, target: Node) {
+    constructor(source: Node, target: Node, res?: AnnotatedValue<IRI>, classAxiom?: boolean) {
         this.source = source;
         this.target = target;
+        this.res = res;
+        this.classAxiom = classAxiom;
         this.openBy = [];
+    }
+
+    getShow(): string {
+        return this.source.getShow() + " --" + this.res.getShow() + "--> " + this.target.getShow();
     }
 
 }

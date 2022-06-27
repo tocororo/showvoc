@@ -18,10 +18,11 @@
                 <button *ngIf="btnSettingsAvailable" class="btn btn-light btn-sm ml-1" [title]="'COMMONS.SETTINGS'|translate" (click)="settings()">
                     <i class="fas fa-cog"></i>
                 </button>
-                <div *ngIf="btnGraphAvailable" class="btn-group btn-group-sm dropup ml-1" ngbDropdown placement="bottom-right">
+                <div *ngIf="btnGraphAvailable" class="btn-group btn-group-sm ml-1" ngbDropdown placement="bottom-right">
                     <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle></button>
                     <div class="dropdown-menu" ngbDropdownMenu>
-                        <button *ngIf="btnGraphAvailable" class="dropdown-item" (click)="openDataGraph()">{{'RESOURCE_VIEW.ACTIONS.OPEN_GRAP'|translate}}</button>
+                        <button class="dropdown-item" (click)="openInDataGraph()">{{'RESOURCE_VIEW.ACTIONS.SHOW_IN_DATA_GRAPH'|translate}}</button>
+                        <button *ngIf="annotatedResource.getValue().isIRI()" class="dropdown-item" (click)="openInModelGraph()">{{'RESOURCE_VIEW.ACTIONS.SHOW_IN_MODEL_GRAPH'|translate}}</button>
                     </div>
                 </div>
             </div>

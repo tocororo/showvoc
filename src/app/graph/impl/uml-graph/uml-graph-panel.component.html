@@ -1,0 +1,44 @@
+<div class="card card-default vbox">
+    <div class="card-header d-flex">
+       <div class="btn-toolbar" role="toolbar">
+            <button class="btn btn-sm btn-light" (click)="addNode()" [title]="'GRAPHS.ACTIONS.ADD_NODE'|translate">
+                <span class="fas fa-plus"></span>
+            </button>
+            <button class="btn btn-sm btn-light" (click)="removeNode()" [title]="'GRAPHS.ACTIONS.DELETE_SELECTED_NODE'|translate" [disabled]="!activeRemove" >
+                <span class="fas fa-minus"></span>
+            </button>
+        </div> 
+        <span style="flex: 1;"></span>
+        <div class="btn-toolbar">
+            <button class="btn btn-light btn-sm"  [title]="'GRAPHS.ACTIONS.HIDE_GENERIC_LINKS'|translate" (click)="updateArrows()"  [ngClass]="{ active: isHideArrows }">
+                <span class="fas fa-long-arrow-alt-up"></span>
+            </button>
+            <button class="btn btn-light btn-sm" (click)="rendering=!rendering" [title]="'COMMONS.RENDERING'|translate"  [ngClass]="{ active: rendering }">
+                <span class="fas fa-font"></span>
+            </button>
+            <button class="btn btn-light btn-sm" (click)="snapshot()" [title]="'GRAPHS.ACTIONS.EXPORT_SNAPSHOT'|translate">
+                <span class="fas fa-camera"></span>
+            </button>
+            <button type="button" class="btn btn-light btn-sm" [title]="'GRAPHS.ACTIONS.FIX_NODES_POSITION'|translate" (click)="isLock? unfixAll() : fixAll()"  [ngClass]="{ active: isLock }">
+                <span class="fas fa-lock"></span>
+            </button>
+        </div>
+    </div>
+    <div class="card-body hbox">
+
+        <uml-graph class="vbox" [graph]="graph" [rendering]="rendering" [hideArrow]="isHideArrows" [fixed]="isLock" (elementSelected)="onElementSelected($event)"></uml-graph>
+
+        <div class="vbox ml-1" style="flex: initial; width: 300px;">
+            <div class="card vbox">
+                <div class="card-header">
+                    <label></label>
+                    <span style="flex: 1;"></span>
+                </div>
+                <div class="card-body vbox">
+                    <resource-details-panel *ngIf="resourceToDescribe" [resource]="resourceToDescribe"></resource-details-panel>
+                </div>
+            </div>
+           <!-- <force-control-panel [(ngModel)]="forces" (ngModelChange)="onForceChange()" style="margin-top: 4px"></force-control-panel> -->
+        </div>
+    </div>
+</div>

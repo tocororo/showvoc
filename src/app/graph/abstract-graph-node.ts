@@ -51,7 +51,7 @@ export abstract class AbstractGraphNode {
         this.measures = this.node.getNodeMeaseure();
     }
 
-    private updateShow() {
+    protected updateShow() {
         this.show = ResourceUtils.getRendering(this.node.res, this.rendering);
         this.changeDetectorRef.detectChanges(); //fire change detection in order to update the textEl that contains "show"
 

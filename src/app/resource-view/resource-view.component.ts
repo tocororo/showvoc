@@ -37,7 +37,7 @@ export class ResourceViewComponent {
     private unknownHost: boolean = false; //tells if the resource view of the current resource failed to be fetched due to a UnknownHostException
     private unexistingResource: boolean = false; //tells if the requested resource does not exist (empty description)
 
-    private btnGraphAvailable: boolean = true;
+    btnGraphAvailable: boolean = true;
     private btnSettingsAvailable: boolean = true;
 
     //partitions
@@ -527,8 +527,14 @@ export class ResourceViewComponent {
         this.resViewModals.openSettings();
     }
 
-    openDataGraph() {
+    openInDataGraph() {
         this.graphModals.openDataGraph(this.annotatedResource, this.rendering);
+    }
+
+    openInModelGraph() {
+        if (this.annotatedResource.getValue().isIRI()) {
+            this.graphModals.openModelGraph(<AnnotatedValue<IRI>>this.annotatedResource, this.rendering);
+        }
     }
 
     isShowGraphAvailable(): boolean {

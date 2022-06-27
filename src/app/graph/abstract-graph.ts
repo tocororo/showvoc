@@ -10,7 +10,7 @@ import { Node } from "./model/Node";
 export abstract class AbstractGraph {
     @Input() graph: ForceDirectedGraph;
     @Input() rendering: boolean;
-    @Output() elementSelected = new EventEmitter<Node|Link>();
+    @Output() elementSelected = new EventEmitter<any>();
 
     @ViewChild('svg') public svgElement: ElementRef;
     @ViewChild('blockingDiv') public blockingDivElement: ElementRef;
@@ -126,7 +126,8 @@ export abstract class AbstractGraph {
 
 export enum GraphMode {
     dataOriented = "dataOriented",
-    modelOriented = "modelOriented"
+    modelOriented = "modelOriented",
+    umlOriented = "umlOriented"
 }
 
 

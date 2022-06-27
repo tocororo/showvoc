@@ -21,9 +21,8 @@ export class AlignmentLinkComponent extends AbstractLinkComponent {
         }
     }
 
-    updateShow() {
-        this.show = this.showPercentage ? this.link.linkset.linkPercentage+"%" : this.link.linkset.linkCount+"";
-        this.changeDetectorRef.detectChanges(); //fire change detection in order to update the textEl that contains "show"
+    getLinkShow() {
+        return this.showPercentage ? this.link.linkset.linkPercentage+"%" : this.link.linkset.linkCount+"";
     }
 
     initLinkStyle() {

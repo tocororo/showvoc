@@ -10,6 +10,15 @@
 			<button *ngIf="context == 'dataPanel'" class="btn btn-light btn-sm ml-1" [title]="'COMMONS.SETTINGS'|translate" (click)="settings()">
 				<span class="fas fa-cog"></span>
 			</button>
+
+			<div *ngIf="context == 'dataPanel'" class="btn-group btn-group-sm dropup ml-1" ngbDropdown placement="bottom-right">
+				<button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle></button>
+				<div class="dropdown-menu" ngbDropdownMenu>
+					<button class="dropdown-item" (click)="openModelGraph()">{{'DATA.ACTIONS.SHOW_MODEL_GRAPH'|translate}}</button>
+					<button class="dropdown-item" (click)="openUmlGraph()">{{'DATA.ACTIONS.SHOW_CLASS_DIAGRAM'|translate}}</button>
+				</div>
+			</div>
+
         </div>
 	</div>
 	

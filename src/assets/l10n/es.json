@@ -260,7 +260,9 @@
             "SELECT_PROPERTY": "Select property",
             "SELECT_ROOT_CLASS": "Seleccionar clase raíz",
             "SELECT_SCHEME": "Seleccionar esquema",
-            "SHOW_ALL_PROPS": "Mostrar todas las propiedades"
+            "SHOW_ALL_PROPS": "Mostrar todas las propiedades",
+            "SHOW_CLASS_DIAGRAM": "Mostrar diagrama de clases",
+            "SHOW_MODEL_GRAPH": "Mostrar grafo orientado al modelo"
         },
         "CLASS": {
             "CLASS": "Clase",
@@ -395,9 +397,12 @@
     "GRAPHS": {
         "ACTIONS": {
             "ADD_NODE": "Agregar nuevo nodo",
+            "DELETE_SELECTED_NODE": "Eliminar nodo seleccionado",
             "EXPAND_LINKSET": "Expandir conjunto de enlaces",
             "EXPORT_SNAPSHOT": "Exportar una instantánea del grafo (.svg)",
-            "FIX_NODE_POSITION": "Bloquear posición del nodo"
+            "FIX_NODES_POSITION": "Corregir la posición de los nodos",
+            "FIX_NODE_POSITION": "Corregir la posición del nodo",
+            "HIDE_GENERIC_LINKS": "Ocultar enlaces de relación genérica"
         },
         "FORCE_CONTROL": {
             "LENGTH": "Longitud",
@@ -463,8 +468,10 @@
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Está a punto de introducir los metadatos propuestos en el Registro de Metadatos. ¿Está seguro?",
         "ADMIN_CREATED": "Se ha creado la cuenta de administrador. Ahora iniciará sesión automáticamente con el correo electrónico y la contraseña proporcionados.",
         "ALREADY_EXISTING_FILE_OVERWRITE_CONFIRM": "Ya existe un archivo con el mismo nombre. ¿Quieres sobreescribirlo?",
+        "ALREADY_EXISTING_GRAPH_NODE_FOR_RESOURCE": "No se puede añadir un nuevo nodo para {{resource}} porque ya existe un nodo para el mismo recurso",
         "BASEURI_MISSING": "BaseURI falta o no es válido",
         "BASEURI_REQUIRED": "BaseURI obligatorio",
+        "CANNOT_ADD_GRAPH_NODE_FOR_NOT_LOCALLY_DEFINED_RES": "No se puede añadir un nuevo nodo para {{resource}}. En este grafo solo se pueden añadir recursos definidos localmente.",
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "No se puede crear el índice de un conjunto de datos cerrado. Abra el conjunto de datos y vuelva a intentarlo",
         "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "No se pueden crear metadatos para un conjunto de datos cerrado. Abra el conjunto de datos y vuelva a intentarlo",
         "CANNOT_DELETE_OPEN_DATASET": "No se puede eliminar un conjunto de datos abierto. Cierra el conjunto de datos y vuelve a intentarlo",
@@ -581,8 +588,9 @@
     },
     "RESOURCE_VIEW": {
         "ACTIONS": {
-            "OPEN_GRAP": "Abrir la representación gráfica",
-            "SHOW_HIDE_INFERRED": "Mostrar / ocultar información inferida"
+            "SHOW_HIDE_INFERRED": "Mostrar / ocultar información inferida",
+            "SHOW_IN_DATA_GRAPH": "Mostrar en grafo orientado a datos",
+            "SHOW_IN_MODEL_GRAPH": "Mostrar en grafo orientado al modelo"
         },
         "PARTITIONS": {
             "BROADERS": "Genérico",

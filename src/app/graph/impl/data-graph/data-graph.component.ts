@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Output } from "@angular/core";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { GraphModelRecord } from 'src/app/models/Graphs';
@@ -7,8 +7,8 @@ import { AnnotatedValue, IRI, Literal, PredicateObjects, ResAttribute, Resource,
 import { ResViewPartition, ResViewUtils } from 'src/app/models/ResourceView';
 import { GraphServices } from 'src/app/services/graph.service';
 import { ResourceViewServices } from 'src/app/services/resource-view.service';
-import { SVContext } from 'src/app/utils/SVContext';
 import { ResourceDeserializer } from 'src/app/utils/ResourceUtils';
+import { SVContext } from 'src/app/utils/SVContext';
 import { AbstractGraph, GraphMode } from '../../abstract-graph';
 import { D3Service } from '../../d3/d3.service';
 import { GraphModalServices } from '../../modals/graph-modal.service';
@@ -25,6 +25,8 @@ import { Node } from "../../model/Node";
     styleUrls: ['../../graph.css']
 })
 export class DataGraphComponent extends AbstractGraph {
+
+    @Output() elementSelected = new EventEmitter<Node | Link>();
 
     protected mode = GraphMode.dataOriented;
 

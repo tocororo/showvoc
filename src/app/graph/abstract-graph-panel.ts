@@ -15,6 +15,7 @@ export abstract class AbstractGraphPanel {
     abstract viewChildGraph: AbstractGraph;
 
     selectedElement: any; //Node or Link, in the GraphPanel implementations they will be respectively the implementations of Node and Link (es. DataNode|DataLink)
+    isLock: boolean = false;
     forces: GraphForces;
 
     protected basicModals: BasicModalsServices;
@@ -43,6 +44,24 @@ export abstract class AbstractGraphPanel {
             selectedNode.fy = null;
         }
     }
+
+    fixAll() {
+        this.graph.getNodes().forEach(n => {
+            n.fixed = true;
+            n.fx = n.x;
+            n.fy = n.y;
+        });
+        this.isLock = true;
+    }
+    unfixAll() {
+        this.graph.getNodes().forEach(n => {
+            n.fixed = false;
+            n.fx = null;
+            n.fy = null;
+        });
+        this.isLock = false;
+    }
+    
     onElementSelected(element: Node | Link) {
         this.selectedElement = element;
     }

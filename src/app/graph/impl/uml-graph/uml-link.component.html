@@ -1,0 +1,21 @@
+<svg:defs>
+    <svg:marker *ngIf="withMarker && black" [attr.id]="'arrow'+link.index" [attr.class]="'arrow '+arrowClass"
+        viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="7" markerHeight="8" orient="auto">
+        <svg:path d="M1,0 L1,-4 L9,0 L1,4 L1,-4 L1,0">
+            </path>
+    </svg:marker>
+</svg:defs>
+
+<svg:defs>
+    <svg:marker *ngIf="white" [attr.id]="'arrow'+link.index" [attr.class]="'arrow '+arrowClass" viewBox="0 -5 10 10"
+        refX="8" refY="0" markerWidth="14" markerHeight="15" orient="auto">
+        <svg:path d="M1,0 L1,-4 L9,0 L1,4 L1,-4 L1,0">
+            </path>
+    </svg:marker>
+</svg:defs>
+
+
+<svg:path class="link link-uml" [ngClass]="{ 'linkSelected': selected }" style="cursor: pointer;"
+    [attr.marker-end]="'url(#arrow' + link.index + ')'" [attr.d]="computePathUml()" (click)="onClick($event)">
+    <title>{{link.res.getValue().toNT()}}</title>
+</svg:path>

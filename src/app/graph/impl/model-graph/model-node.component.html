@@ -1,0 +1,42 @@
+<svg:g [attr.transform]="'translate(' + node.x + ',' + node.y + ')'">
+    <svg:g (click)="onClick()" (dblclick)="onDblClick()" style="cursor: pointer;">
+
+        <ng-container *ngIf="node.res.getValue().isResource()">
+            <svg:circle *ngIf="nodeShape=='circle'" [attr.class]="'graphNode '+nodeClass" [ngClass]="{ graphNodeSelected: selected }"
+                cx="0" cy="0" [attr.r]="measures.radius">
+            </svg:circle> 
+    
+            <svg:rect *ngIf="nodeShape=='rect'" [attr.class]="'graphNode ' + (!isObjectProperty ? nodeClass : '')" [ngClass]="{ graphNodeSelected: selected }"
+                [attr.fill]="isObjectProperty ? 'url(#'+nodeClass+'Gradient)' : ''"
+                rx="5" ry="5" [attr.x]="-measures.width/2" [attr.y]="-measures.height/2" [attr.width]="measures.width" [attr.height]="measures.height">
+            </svg:rect>
+            
+            <svg:rect *ngIf="nodeShape=='square'" [attr.class]="'graphNode '+nodeClass" [ngClass]="{ graphNodeSelected: selected }" rx="5" ry="5" 
+                [attr.x]="-measures.width/2" [attr.y]="-measures.height/2" [attr.width]="measures.width" [attr.height]="measures.height">
+            </svg:rect>
+            
+            <polygon *ngIf="nodeShape=='octagon'" [attr.points]="octagonPoints" [attr.class]="'graphNode '+nodeClass" [ngClass]="{ graphNodeSelected: selected }"/>
+    
+            <polygon *ngIf="nodeShape=='label'" [attr.points]="labelPoints" stroke-linejoin="round" [attr.class]="'graphNode '+nodeClass" [ngClass]="{ graphNodeSelected: selected }"/>
+            
+            <svg:text *ngIf="deprecated" class="deprecated" style="font-size: 18px;" fill="#8e4a4c" [attr.transform]="'translate(-6, 6)'">D</svg:text>
+        </ng-container>
+
+        <ng-container *ngIf="!node.res.getValue().isResource()">
+            <svg:rect class="graphNode literal" [ngClass]="{ graphNodeSelected: selected }" [attr.x]="-measures.width/2" [attr.y]="-measures.height/2" 
+                [attr.width]="measures.width" [attr.height]="measures.height">
+            </svg:rect>
+        </ng-container>
+    
+    
+        <svg:text #textEl style="visibility: hidden">{{show}}</svg:text>
+        <svg:text text-anchor="middle" dominant-baseline="central">
+            {{normalizedShow}}
+            <title>{{show}}</title>
+        </svg:text>
+        
+        <title>{{node.res.getValue().toNT()}}</title>
+
+        
+    </svg:g>
+</svg:g>

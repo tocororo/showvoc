@@ -260,7 +260,9 @@
             "SELECT_PROPERTY": "Sélectionner une propriété",
             "SELECT_ROOT_CLASS": "Sélectionner la classe racine",
             "SELECT_SCHEME": "Sélectionner un schéma",
-            "SHOW_ALL_PROPS": "Montrer toutes les propriétés"
+            "SHOW_ALL_PROPS": "Montrer toutes les propriétés",
+            "SHOW_CLASS_DIAGRAM": "Afficher le diagramme des classes",
+            "SHOW_MODEL_GRAPH": "Afficher le graphe orienté-modèle"
         },
         "CLASS": {
             "CLASS": "Classe",
@@ -395,9 +397,12 @@
     "GRAPHS": {
         "ACTIONS": {
             "ADD_NODE": "Ajouter un nœud",
+            "DELETE_SELECTED_NODE": "Supprimer le nœud sélectionné",
             "EXPAND_LINKSET": "Développer le jeu de liens",
             "EXPORT_SNAPSHOT": "Exporter une image instantanée du graphe (.svg)",
-            "FIX_NODE_POSITION": "Fixer la position du nœud"
+            "FIX_NODES_POSITION": "Fixer la position des nœuds",
+            "FIX_NODE_POSITION": "Fixer la position du nœud",
+            "HIDE_GENERIC_LINKS": "Masquer les liens de relations génériques"
         },
         "FORCE_CONTROL": {
             "LENGTH": "Longueur",
@@ -463,8 +468,10 @@
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Vous êtes sur le point de soumettre les métadonnées proposées dans le répertoire des métadonnées. Êtes-vous certain ?",
         "ADMIN_CREATED": "Le compte administrateur a été créé. Vous serez désormais automatiquement connecté avec l'adresse e-mail et le mot de passe que vous avez fournis",
         "ALREADY_EXISTING_FILE_OVERWRITE_CONFIRM": "Un fichier portant le même nom existe déjà. Voulez-vous l'écraser ?",
+        "ALREADY_EXISTING_GRAPH_NODE_FOR_RESOURCE": "Impossible d'ajouter un nouveau nœud à {{resource}} car un nœud existe déjà pour la même ressource",
         "BASEURI_MISSING": "L'URI de base est manquante ou non valide",
         "BASEURI_REQUIRED": "URI de base nécessaire",
+        "CANNOT_ADD_GRAPH_NODE_FOR_NOT_LOCALLY_DEFINED_RES": "Impossible d'ajouter un nouveau nœud à {{resource}}. Dans ce graphe, vous pouvez uniquement ajouter des ressources définies localement.",
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "Impossible de créer l'index d'un jeu de données fermé. Veuillez ouvrir le jeu de données et réessayer.",
         "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "Impossible de créer les métadonnées d'un jeu de données fermé. Veuillez ouvrir le jeu de données et réessayer.",
         "CANNOT_DELETE_OPEN_DATASET": "Impossible de supprimer un jeu de données ouvert. Veuillez fermer le jeu de données et réessayer.",
@@ -581,8 +588,9 @@
     },
     "RESOURCE_VIEW": {
         "ACTIONS": {
-            "OPEN_GRAP": "Ouvrir la représentation sous forme de graphe",
-            "SHOW_HIDE_INFERRED": "Montrer/cacher les informations inférées"
+            "SHOW_HIDE_INFERRED": "Montrer/cacher les informations inférées",
+            "SHOW_IN_DATA_GRAPH": "Montrer dans le graphe orienté-données",
+            "SHOW_IN_MODEL_GRAPH": "Montrer dans le graphe orienté-modèle"
         },
         "PARTITIONS": {
             "BROADERS": "Génériques",

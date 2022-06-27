@@ -15,10 +15,18 @@ import { AlignmentGraphComponent } from './impl/alignment-graph/alignment-graph.
 import { AlignmentLinkComponent } from './impl/alignment-graph/alignment-link.component';
 import { AlignmentNodeComponent } from './impl/alignment-graph/alignment-node.component';
 import { DatasetDetailsPanel } from './impl/alignment-graph/dataset-details-panel';
-import { DataGraphPanel } from './impl/data-graph/data-graph-panel';
+import { DataGraphPanel } from './impl/data-graph/data-graph-panel.component';
 import { DataGraphComponent } from './impl/data-graph/data-graph.component';
 import { DataLinkComponent } from './impl/data-graph/data-link.component';
 import { DataNodeComponent } from './impl/data-graph/data-node.component';
+import { ModelGraphPanel } from './impl/model-graph/model-graph-panel.component';
+import { ModelGraphComponent } from './impl/model-graph/model-graph.component';
+import { ModelLinkComponent } from './impl/model-graph/model-link.component';
+import { ModelNodeComponent } from './impl/model-graph/model-node.component';
+import { UmlGraphPanel } from './impl/uml-graph/uml-graph-panel.component';
+import { UmlGraphComponent } from './impl/uml-graph/uml-graph.component';
+import { UmlLinkComponent } from './impl/uml-graph/uml-link.component';
+import { UmlNodeComponent } from './impl/uml-graph/uml-node.component';
 import { DataGraphSettingsModal } from './modals/data-graph-settings-modal';
 import { GraphModal } from './modals/graph-modal';
 import { GraphModalServices } from './modals/graph-modal.service';
@@ -43,6 +51,16 @@ import { ResourceDetailsPanel } from './widget/resource-details-panel';
         DataNodeComponent,
         DataGraphComponent,
         DataGraphPanel,
+
+        ModelLinkComponent,
+        ModelNodeComponent,
+        ModelGraphComponent,
+        ModelGraphPanel,
+
+        UmlLinkComponent,
+        UmlNodeComponent,
+        UmlGraphComponent,
+        UmlGraphPanel,
 
         ForceControlPanel,
         ResourceDetailsPanel,

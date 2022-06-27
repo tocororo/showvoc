@@ -5,8 +5,9 @@ import { Link } from './model/Link';
 
 @Directive()
 export abstract class AbstractLinkComponent {
-    @Output() linkClicked: EventEmitter<Link> = new EventEmitter<Link>();
     @Input() selected: boolean = false;
+    @Input() rendering: boolean;
+    @Output() linkClicked: EventEmitter<Link> = new EventEmitter<Link>();
 
     abstract link: Link; //Input in the implementation
 
@@ -16,6 +17,7 @@ export abstract class AbstractLinkComponent {
     arrowClass: string = "";
 
     show: string;
+    labelRectWidth: number = 0;
 
     protected changeDetectorRef: ChangeDetectorRef;
     constructor(changeDetectorRef: ChangeDetectorRef) {
@@ -63,7 +65,22 @@ export abstract class AbstractLinkComponent {
         return path;
     }
 
-    abstract updateShow(): void;
+    protected updateShow() {
+        this.show = this.getLinkShow();
+        this.labelRectWidth = 0; //reset label rect width so it is computed again with the new show
+        this.changeDetectorRef.detectChanges(); //fire change detection in order to update the textEl that contains "show"
+
+        //compute the new labelRectWidth
+        setTimeout(() => {
+            let padding = 1;
+            if (this.textElement != null) {
+                this.labelRectWidth = this.textElement.nativeElement.getBoundingClientRect().width + padding * 2;
+            }
+        });
+    }
+
+
+    abstract getLinkShow(): string;
 
 
     /**
@@ -90,14 +107,6 @@ export abstract class AbstractLinkComponent {
     getLabelTransform() {
         let labelPosition = this.getLabelPosition();
         return "translate(" + labelPosition.x + "," + labelPosition.y + ")";
-    }
-
-    getLabelRectWidth() {
-        let padding = 1;
-        if (this.textElement != null) {
-            return this.textElement.nativeElement.getBoundingClientRect().width + padding * 2;
-        }
-        return padding * 2;
     }
 
     onClick(event: Event) {

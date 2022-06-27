@@ -281,7 +281,9 @@
             "SELECT_PROPERTY": "Eigenschaft auswählen",
             "SELECT_ROOT_CLASS": "Select root class",
             "SELECT_SCHEME": "Select scheme",
-            "SHOW_ALL_PROPS": "Show all properties"
+            "SHOW_ALL_PROPS": "Show all properties",
+            "SHOW_CLASS_DIAGRAM": "Show class-diagram",
+            "SHOW_MODEL_GRAPH": "Show model-oriented graph"
         },
         "CLASS": {
             "CLASS": "Class",
@@ -416,9 +418,12 @@
     "GRAPHS": {
         "ACTIONS": {
             "ADD_NODE": "Add node",
+            "DELETE_SELECTED_NODE": "Delete selected node",
             "EXPAND_LINKSET": "Expand linkset",
             "EXPORT_SNAPSHOT": "Export a snapshot of the graph (.svg)",
-            "FIX_NODE_POSITION": "Fix node position"
+            "FIX_NODES_POSITION": "Fix nodes position",
+            "FIX_NODE_POSITION": "Fix node position",
+            "HIDE_GENERIC_LINKS": "Hide generic relation links"
         },
         "FORCE_CONTROL": {
             "LENGTH": "Length",
@@ -488,9 +493,11 @@
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "You are going to submit the proposed metadata into the Metadata Registry. Are you sure?",
         "ADMIN_CREATED": "The administrator account has been created. Now you will be automatically logged in with the email and the password you provided",
         "ALREADY_EXISTING_FILE_OVERWRITE_CONFIRM": "A file with the same name already exists. Do you want to overwrite it?",
+        "ALREADY_EXISTING_GRAPH_NODE_FOR_RESOURCE": "Cannot add a new node for {{resource}} since a node for the same resource already exists",
         "AUTH_MODE_CHANGE_WARN": "You're changing the authentication mode. This action could compromise the possibility to access ShowVoc next time you login. Do you want to continue?",
         "BASEURI_MISSING": "BaseURI is missing or not valid",
         "BASEURI_REQUIRED": "BaseURI required",
+        "CANNOT_ADD_GRAPH_NODE_FOR_NOT_LOCALLY_DEFINED_RES": "Cannot add a new node for {{resource}}. In this graph you can only add resources locally defined.",
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "Cannot create the index of a closed dataset. Please, open the dataset and then retry.",
         "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "Cannot create the metadata of a closed dataset. Please, open the dataset and then retry.",
         "CANNOT_DELETE_OPEN_DATASET": "Cannot delete an open dataset. Please, close the dataset and then retry.",
@@ -638,8 +645,9 @@
     },
     "RESOURCE_VIEW": {
         "ACTIONS": {
-            "OPEN_GRAP": "Open graph representation",
-            "SHOW_HIDE_INFERRED": "Show/hide inferred information"
+            "SHOW_HIDE_INFERRED": "Show/hide inferred information",
+            "SHOW_IN_DATA_GRAPH": "Show in data-oriented graph",
+            "SHOW_IN_MODEL_GRAPH": "Show in model-oriented graph"
         },
         "PARTITIONS": {
             "BROADERS": "Broaders",

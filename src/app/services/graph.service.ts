@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { GraphModelRecord } from '../models/Graphs';
-import { AnnotatedValue, IRI, RDFResourceRolesEnum } from '../models/Resources';
+import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from '../models/Resources';
 import { HttpManager } from "../utils/HttpManager";
-import { ResourceUtils } from '../utils/ResourceUtils';
+import { NTriplesUtil } from '../utils/ResourceUtils';
 import { ResourcesServices } from './resources.service';
 
 @Injectable()
@@ -17,7 +17,11 @@ export class GraphServices {
     getGraphModel(): Observable<GraphModelRecord[]> {
         let params: any = {};
         return this.httpMgr.doGet(this.serviceName, "getGraphModel", params).pipe(
-            mergeMap((plainModel: PlainGraphModelRecord[]) => {
+            mergeMap(stResp => {
+                let plainModel: PlainGraphModelRecord[] = [];
+                for (let record of stResp) {
+                    plainModel.push(PlainGraphModelRecord.parse(record));
+                }
                 return this.enrichGraphModelRecords(plainModel);
             })
         );
@@ -28,7 +32,11 @@ export class GraphServices {
             resource: resource
         };
         return this.httpMgr.doGet(this.serviceName, "expandGraphModelNode", params).pipe(
-            mergeMap((plainModel: PlainGraphModelRecord[]) => {
+            mergeMap((stResp) => {
+                let plainModel: PlainGraphModelRecord[] = [];
+                for (let record of stResp) {
+                    plainModel.push(PlainGraphModelRecord.parse(record));
+                }
                 return this.enrichGraphModelRecords(plainModel);
             })
         );
@@ -40,7 +48,11 @@ export class GraphServices {
             role: role
         };
         return this.httpMgr.doGet(this.serviceName, "expandSubResources", params).pipe(
-            mergeMap((plainModel: PlainGraphModelRecord[]) => {
+            mergeMap((stResp) => {
+                let plainModel: PlainGraphModelRecord[] = [];
+                for (let record of stResp) {
+                    plainModel.push(PlainGraphModelRecord.parse(record));
+                }
                 return this.enrichGraphModelRecords(plainModel);
             })
         );
@@ -52,7 +64,11 @@ export class GraphServices {
             role: role
         };
         return this.httpMgr.doGet(this.serviceName, "expandSuperResources", params).pipe(
-            mergeMap((plainModel: PlainGraphModelRecord[]) => {
+            mergeMap((stResp) => {
+                let plainModel: PlainGraphModelRecord[] = [];
+                for (let record of stResp) {
+                    plainModel.push(PlainGraphModelRecord.parse(record));
+                }
                 return this.enrichGraphModelRecords(plainModel);
             })
         );
@@ -62,22 +78,18 @@ export class GraphServices {
         let resURIs: string[] = [];
         //collecting IRIs
         plainModel.forEach(record => {
-            if (resURIs.indexOf(record.source) == -1) {
-                resURIs.push(record.source);
+            if (record.source.isIRI() && resURIs.indexOf(record.source.stringValue()) == -1) {
+                resURIs.push(record.source.stringValue());
             }
-            if (resURIs.indexOf(record.link) == -1) {
-                resURIs.push(record.link);
+            if (resURIs.indexOf(record.link.stringValue()) == -1) {
+                resURIs.push(record.link.stringValue());
             }
-            if (resURIs.indexOf(record.target) == -1) {
-                resURIs.push(record.target);
+            if (record.target.isIRI() && resURIs.indexOf(record.target.stringValue()) == -1) {
+                resURIs.push(record.target.stringValue());
             }
         });
 
-        let unannotatedIRIs: IRI[] = [];
-        resURIs.forEach(i => {
-            unannotatedIRIs.push(new IRI(i));
-        });
-
+        let unannotatedIRIs: IRI[] = resURIs.map(i => new IRI(i));
         if (unannotatedIRIs.length == 0) {
             return of([]);
         }
@@ -86,11 +98,38 @@ export class GraphServices {
             map((annotatedIRIs: AnnotatedValue<IRI>[]) => {
                 let annotatedModel: GraphModelRecord[] = [];
                 plainModel.forEach(record => {
+
+                    let annotatedSource: AnnotatedValue<Resource>;
+                    let annotatedLink: AnnotatedValue<IRI>;
+                    let annotatedTarget: AnnotatedValue<Resource>;
+
+                    if (record.source.isIRI()) {
+                        annotatedSource = annotatedIRIs.find(res => res.getValue().equals(record.source));
+                    }
+                    if (annotatedSource == null) { //not found or blank node
+                        annotatedSource = new AnnotatedValue(record.source);
+                    }
+
+                    annotatedLink = annotatedIRIs.find(res => res.getValue().equals(record.link));
+                    if (annotatedLink == null) { //not found
+                        annotatedLink = new AnnotatedValue(record.link);
+                    }
+
+                    if (record.target.isIRI()) {
+                        annotatedTarget = annotatedIRIs.find(res => res.getValue().equals(record.target));
+                    }
+                    if (annotatedTarget == null) { //not found or blank node
+                        annotatedTarget = new AnnotatedValue(record.target);
+                    }
+
+                    if (record.rangeDatatype) {
+                        annotatedTarget.setAttribute("isDatatype", true);
+                    }
                     annotatedModel.push({
-                        source: annotatedIRIs[ResourceUtils.indexOfNode(annotatedIRIs, new IRI(record.source))],
-                        link: annotatedIRIs[ResourceUtils.indexOfNode(annotatedIRIs, new IRI(record.link))],
-                        target: annotatedIRIs[ResourceUtils.indexOfNode(annotatedIRIs, new IRI(record.target))],
-                        classAxiom: record.classAxiom
+                        source: annotatedSource,
+                        link: annotatedLink,
+                        target: annotatedTarget,
+                        classAxiom: record.classAxiom,
                     });
                 });
                 return annotatedModel;
@@ -100,9 +139,20 @@ export class GraphServices {
 
 }
 
-class PlainGraphModelRecord {
-    source: string;
-    link: string;
-    target: string;
+class PlainGraphModelRecord { //not annotated
+    source: Resource;
+    link: IRI;
+    target: Resource;
     classAxiom: boolean;
+    rangeDatatype: boolean;
+
+    static parse(recordJson: any): PlainGraphModelRecord {
+        return {
+            source: NTriplesUtil.parseResource(recordJson.source),
+            link: NTriplesUtil.parseIRI(recordJson.link),
+            target: NTriplesUtil.parseResource(recordJson.target),
+            classAxiom: recordJson.classAxiom,
+            rangeDatatype: recordJson.rangeDatatype
+        };
+    }
 }

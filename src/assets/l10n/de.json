@@ -260,7 +260,9 @@
             "SELECT_PROPERTY": "Eigenschaft auswählen",
             "SELECT_ROOT_CLASS": "Wurzelklasse auswählen",
             "SELECT_SCHEME": "Schema auswählen",
-            "SHOW_ALL_PROPS": "Alle Eigenschaften anzeigen"
+            "SHOW_ALL_PROPS": "Alle Eigenschaften anzeigen",
+            "SHOW_CLASS_DIAGRAM": "Klassendiagramm anzeigen",
+            "SHOW_MODEL_GRAPH": "Modellorientiertes Diagramm anzeigen"
         },
         "CLASS": {
             "CLASS": "Klasse",
@@ -395,9 +397,12 @@
     "GRAPHS": {
         "ACTIONS": {
             "ADD_NODE": "Knoten hinzufügen",
+            "DELETE_SELECTED_NODE": "Ausgewählten Knoten löschen",
             "EXPAND_LINKSET": "Linkset aufklappen",
             "EXPORT_SNAPSHOT": "Schnappschuss des Diagramms exportieren (.svg)",
-            "FIX_NODE_POSITION": "Knotenposition fixieren"
+            "FIX_NODES_POSITION": "Knotenpositionen fixieren",
+            "FIX_NODE_POSITION": "Knotenposition fixieren",
+            "HIDE_GENERIC_LINKS": "Generische Beziehungslinks ausblenden"
         },
         "FORCE_CONTROL": {
             "LENGTH": "Länge",
@@ -463,8 +468,10 @@
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Sie sind dabei, die vorgeschlagenen Metadaten in das Metadatenregister zu übertragen. Sind Sie sicher?",
         "ADMIN_CREATED": "Das Administratorkonto wurde angelegt. Jetzt werden Sie automatisch mit der E-Mail und dem Passwort, das Sie angegeben haben, eingeloggt.",
         "ALREADY_EXISTING_FILE_OVERWRITE_CONFIRM": "Es existiert bereits eine Datei mit diesem Namen. Datei überschreiben?",
+        "ALREADY_EXISTING_GRAPH_NODE_FOR_RESOURCE": "Es kann kein Knoten für {{resource}} hinzugefügt werden, da der Knoten für diese Ressource bereits vorhanden ist.",
         "BASEURI_MISSING": "BaseURI fehlt oder ist ungültig",
         "BASEURI_REQUIRED": "BaseURI erforderlich",
+        "CANNOT_ADD_GRAPH_NODE_FOR_NOT_LOCALLY_DEFINED_RES": "Es kann kein neuer Knoten für {{resource}} hinzugefügt werden. Zu diesem Diagramm können Sie nur lokal definierte Ressourcen hinzufügen.",
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "Für einen geschlossenen Datensatz kann kein Index erstellt werden. Bitte Datensatz öffnen und noch einmal versuchen.",
         "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "Für einen geschlossenen Datensatz können keine Metadaten erstellt werden. Bitte Datensatz öffnen und noch einmal versuchen.",
         "CANNOT_DELETE_OPEN_DATASET": "Ein geöffneter Datensatz kann nicht gelöscht werden. Bitte Datensatz schließen und noch einmal versuchen.",
@@ -581,8 +588,9 @@
     },
     "RESOURCE_VIEW": {
         "ACTIONS": {
-            "OPEN_GRAP": "Grafikdarstellung öffnen",
-            "SHOW_HIDE_INFERRED": "Abgeleitete Informationen ein- / ausblenden"
+            "SHOW_HIDE_INFERRED": "Abgeleitete Informationen ein- / ausblenden",
+            "SHOW_IN_DATA_GRAPH": "In datenorientiertem Diagramm anzeigen",
+            "SHOW_IN_MODEL_GRAPH": "In modellorientiertes Diagramm anzeigen"
         },
         "PARTITIONS": {
             "BROADERS": "Oberbegriffe",

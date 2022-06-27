@@ -13,7 +13,9 @@
 
 <svg:g [attr.transform]="getLabelTransform()" style="font-size: 9px; cursor: pointer;" (click)="onClick($event)">
     <svg:rect [ngClass]="{ linkSelected: selected }" [attr.x]="-labelRectWidth/2" y="-4" [attr.width]="labelRectWidth" height="8" fill="#ddd"></svg:rect>
+
     <svg:text #textEl style="visibility: hidden">{{show}}</svg:text>
     <svg:text text-anchor="middle" dominant-baseline="central">{{show}}</svg:text>
+
     <title>{{link.res.getValue().toNT()}}</title>
 </svg:g>

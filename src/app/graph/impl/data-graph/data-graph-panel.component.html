@@ -1,0 +1,43 @@
+<div class="card vbox">
+    <div class="card-header d-flex">
+        <div class="btn-toolbar" style="flex: 1;">
+            <button class="btn btn-sm btn-light" (click)="addNode()" [title]="'GRAPHS.ACTIONS.ADD_NODE'|translate">
+                <span class="fas fa-plus"></span>
+            </button>
+        </div>
+        <div class="btn-toolbar float-right">
+            <button class="btn btn-light btn-sm" [ngClass]="{active: rendering}" (click)="rendering=!rendering" [title]="'COMMONS.RENDERING'|translate">
+                <i class="fas fa-font"></i>
+            </button>
+            <button class="btn btn-light btn-sm ml-1" (click)="snapshot()" [title]="'GRAPHS.ACTIONS.EXPORT_SNAPSHOT'|translate">
+                <i class="fas fa-camera"></i>
+            </button>
+            <button class="btn btn-light btn-sm ml-1" (click)="openSettings()" [title]="'COMMONS.SETTINGS'|translate">
+                <span class="fas fa-cog"></span>
+            </button>
+        </div>
+    </div>
+    <div class="card-body hbox">
+        <data-graph class="vbox" [graph]="graph" [rendering]="rendering" (elementSelected)="onElementSelected($event)"></data-graph>
+
+        <div class="vbox ml-1" style="flex: initial; width: 300px;">
+            <div class="card vbox">
+                <div class="card-header" style="min-height: 41px;">
+                    <div *ngIf="isSelectedElementNode()" class="btn-toolbar float-right">
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-light" [ngClass]="{ active: selectedElement?.fixed }" [title]="'GRAPHS.ACTIONS.FIX_NODE_POSITION'|translate" (click)="fixNode()" [disabled]="!selectedElement">
+                                <span class="fas fa-lock"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body vbox">
+                    <resource-details-panel *ngIf="selectedElement?.res" [resource]="selectedElement.res"></resource-details-panel>
+                </div>
+            </div>
+
+            <force-control-panel [(ngModel)]="forces" (ngModelChange)="onForceChange()" class="mt-1"></force-control-panel>
+
+        </div>
+    </div>
+</div>

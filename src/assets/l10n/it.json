@@ -281,7 +281,9 @@
             "SELECT_PROPERTY": "Seleziona proprietà",
             "SELECT_ROOT_CLASS": "Seleziona classe root",
             "SELECT_SCHEME": "Seleziona schema",
-            "SHOW_ALL_PROPS": "Mostra tutte le proprietà"
+            "SHOW_ALL_PROPS": "Mostra tutte le proprietà",
+            "SHOW_CLASS_DIAGRAM": "Mostra class-diagram",
+            "SHOW_MODEL_GRAPH": "Mostra grafo model-oriented"
         },
         "CLASS": {
             "CLASS": "Classe",
@@ -416,9 +418,12 @@
     "GRAPHS": {
         "ACTIONS": {
             "ADD_NODE": "Aggiungi nuovo nodo",
+            "DELETE_SELECTED_NODE": "Rimuovi nodo selezionato",
             "EXPAND_LINKSET": "Espandi linkset",
             "EXPORT_SNAPSHOT": "Esporta un'istantanea del grafo (.svg)",
-            "FIX_NODE_POSITION": "Blocca posizione nodo"
+            "FIX_NODES_POSITION": "Blocca posizione nodi",
+            "FIX_NODE_POSITION": "Blocca posizione nodo",
+            "HIDE_GENERIC_LINKS": "Nascondi link di relazioni generiche"
         },
         "FORCE_CONTROL": {
             "LENGTH": "Lunghezza",
@@ -488,9 +493,11 @@
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Stai per inserire nel Metadata Registry i metadati proposti. Sei sicuro?",
         "ADMIN_CREATED": "L'account amministratore è stato creato. Verrai ora automaticamente loggato con l'email e la password fornite.",
         "ALREADY_EXISTING_FILE_OVERWRITE_CONFIRM": "Esiste già un file con lo stesso nome. Vuoi sovrascriverlo?",
+        "ALREADY_EXISTING_GRAPH_NODE_FOR_RESOURCE": "Impossibile addiungere un nodo per {{resource}}, un nodo per la medesima risorsa già esiste",
         "AUTH_MODE_CHANGE_WARN": "Stai cambiando la modalità di autenticazione. Questa modifica potrebbe compromettere la possibilità di accedere a ShowVoc al prossimo login. Vuoi continuare?",
         "BASEURI_MISSING": "BaseURI mancante o non valido",
         "BASEURI_REQUIRED": "BaseURI necessario",
+        "CANNOT_ADD_GRAPH_NODE_FOR_NOT_LOCALLY_DEFINED_RES": "Impossibile addiungere un nodo per {{resource}}. In questo grafo è possibile aggiungere solo risorse definite localmente.",
         "CANNOT_CREATE_INDEX_OF_CLOSED_DATASET": "Non è possibile creare l'indice di un dataset chiuso. Aprire il dataset e riprovare.",
         "CANNOT_CREATE_METADATA_OF_CLOSED_DATASET": "Non è possibile creare i metadati di un dataset chiuso. Aprire il dataset e riprovare.",
         "CANNOT_DELETE_OPEN_DATASET": "Non è possibile eliminare un dataset aperto. Chiudere il dataset e riprovare.",
@@ -638,8 +645,9 @@
     },
     "RESOURCE_VIEW": {
         "ACTIONS": {
-            "OPEN_GRAP": "Apri la rappresentazione a grafo",
-            "SHOW_HIDE_INFERRED": "Mostra/nascondi informazioni inferite"
+            "SHOW_HIDE_INFERRED": "Mostra/nascondi informazioni inferite",
+            "SHOW_IN_DATA_GRAPH": "Mostra in un grafo orientato ai dati",
+            "SHOW_IN_MODEL_GRAPH": "Mostra in un grafo orientato al modello"
         },
         "PARTITIONS": {
             "BROADERS": "Broader",

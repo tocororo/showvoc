@@ -10,6 +10,7 @@ import { SVContext } from 'src/app/utils/SVContext';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalOptions } from 'src/app/modal-dialogs/Modals';
 import { ClassTreeSettingsModal } from './class-tree-settings-modal';
+import { GraphModalServices } from 'src/app/graph/modals/graph-modal.service';
 
 @Component({
     selector: "class-tree-panel",
@@ -26,7 +27,7 @@ export class ClassTreePanelComponent extends AbstractTreePanel {
 
     filterEnabled: boolean;
 
-    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private modalService: NgbModal) {
+    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private graphModals: GraphModalServices, private modalService: NgbModal) {
         super(basicModals, eventHandler, svProp);
     }
 
@@ -39,6 +40,14 @@ export class ClassTreePanelComponent extends AbstractTreePanel {
 
     refresh() {
         this.viewChildTree.init();
+    }
+
+    openModelGraph() {
+        this.graphModals.openModelGraph(null, this.rendering);
+    }
+
+    openUmlGraph() {
+        this.graphModals.openUmlGraph(this.rendering);
     }
 
     //search handlers

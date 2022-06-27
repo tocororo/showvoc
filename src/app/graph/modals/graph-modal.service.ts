@@ -22,7 +22,7 @@ export class GraphModalServices {
 
     constructor(private modalService: NgbModal, private d3Service: D3Service, private resourceService: ResourcesServices) { }
 
-    openGraphQuertyResult(result: GraphResultBindings[]) {
+    openGraphQueryResult(result: GraphResultBindings[]) {
         //creates nodes and links
         let nodes: Node[] = [];
         let links: DataLink[] = [];
@@ -116,6 +116,15 @@ export class GraphModalServices {
         const modalRef: NgbModalRef = this.modalService.open(GraphModal, new ModalOptions("full"));
         modalRef.componentInstance.graph = graph;
         modalRef.componentInstance.mode = GraphMode.modelOriented;
+        modalRef.componentInstance.rendering = rendering;
+        return modalRef.result;
+    }
+
+    openUmlGraph(rendering: boolean) {
+        let graph = new ForceDirectedGraph([], [], rendering);
+        const modalRef: NgbModalRef = this.modalService.open(GraphModal, new ModalOptions('full'));
+        modalRef.componentInstance.graph = graph;
+        modalRef.componentInstance.mode = GraphMode.umlOriented;
         modalRef.componentInstance.rendering = rendering;
         return modalRef.result;
     }
