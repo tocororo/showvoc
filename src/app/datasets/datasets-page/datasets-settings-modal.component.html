@@ -1,0 +1,38 @@
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{'COMMONS.SETTINGS'|translate}}</h5>
+        <button class="close" (click)="close()">
+            <span>&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">{{'DATA.COMMONS.VISUALIZATION_MODE.MODE'|translate}}</label>
+            <div class="col-sm-8">
+                <div class="d-flex align-items-center">
+                    <select class="form-control" [(ngModel)]="selectedVisualizationMode">
+                        <option *ngFor="let m of visualizationModes" [ngValue]="m">{{m.translationKey|translate}}</option>
+                    </select>
+                    <button *ngIf="isAdmin && selectedVisualizationMode?.mode == 'facet'" class="btn btn-light btn-sm ml-1" (click)="recreateFacetsIndex()" 
+                        [title]="'DATASETS.ACTIONS.RECREATE_FACETS_INDEX'|translate">
+                        <span class="fas fa-redo"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="selectedVisualizationMode?.mode == 'facet'" class="form-group row">
+            <label class="col-sm-4 col-form-label">{{'DATASETS.SETTINGS.FACET'|translate}}</label>
+            <div class="col-sm-8">
+                <select class="form-control" [(ngModel)]="selectedFacet">
+                    <option *ngFor="let f of facets" [ngValue]="f.name">{{f.displayName}}</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
+        <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
+    </div>
+</div>

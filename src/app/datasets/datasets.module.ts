@@ -12,19 +12,27 @@ import { StructuresModule } from '../structures/structures.module';
 import { WidgetModule } from '../widget/widget.module';
 import { DatasetDataComponent } from './data/dataset-data.component';
 import { DatasetViewComponent } from './dataset-view/dataset-view.component';
-import { DatasetsComponent } from './datasets.component';
+import { DatasetsDirsComponent } from './datasets-page/datasets-dirs.component';
+import { DatasetsListComponent } from './datasets-page/datasets-list.component';
+import { DatasetsSettingsModal } from './datasets-page/datasets-settings-modal.component';
+import { DatasetsPageComponent } from './datasets-page/datasets-page.component';
 import { LexicalizationSetsRenderer } from './metadata/lexicalization-sets-renderer.component';
 import { MetadataComponent } from './metadata/metadata.component';
 import { ExportResultRdfModal } from './sparql/export-result-rdf-modal';
 import { SparqlTabComponent } from './sparql/sparql-tab.component';
 import { SparqlComponent } from './sparql/sparql.component';
 import { YasguiComponent } from './sparql/yasgui.component';
+import { DatasetCardComponent } from './datasets-page/dataset-card.component';
 
 @NgModule({
     declarations: [
-        DatasetsComponent,
-        DatasetViewComponent,
+        DatasetCardComponent,
         DatasetDataComponent,
+        DatasetViewComponent,
+        DatasetsPageComponent,
+        DatasetsDirsComponent,
+        DatasetsListComponent,
+        DatasetsSettingsModal,
         ExportResultRdfModal,
         LexicalizationSetsRenderer,
         MetadataComponent,
@@ -49,6 +57,7 @@ import { YasguiComponent } from './sparql/yasgui.component';
         BasicModalsServices
     ],
     entryComponents: [
+        DatasetsSettingsModal,
         ExportResultRdfModal
     ]
 })

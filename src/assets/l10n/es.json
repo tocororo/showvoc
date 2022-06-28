@@ -371,7 +371,8 @@
             "CREATE_METADATA": "Crear metadatos del conjunto de datos",
             "CREATE_REFRESH_METADATA": "Crear / actualizar metadatos del conjunto de datos",
             "DELETE_DATASET": "Eliminar conjunto de datos",
-            "PROFILE_DATASET": "Conjunto de datos de perfil"
+            "PROFILE_DATASET": "Conjunto de datos de perfil",
+            "RECREATE_FACETS_INDEX": "Volver a crear índice de facetas"
         },
         "ATTR": {
             "DATASET_NAME": "Nombre del conjunto de datos",
@@ -385,8 +386,16 @@
         "BROWSE_DATASETS": "Explore el conjunto de datos de {{instanceName}}",
         "DATASET": "Conjunto de datos",
         "DATASETS": "Conjunto de datos",
-        "DATASET_TYPE": "Tipo de conjunto de datos",
-        "ONLY_OPEN": "Solo conjuntos de datos abiertos",
+        "FILTERS": {
+            "DATASET_TYPE": "Tipo de conjunto de datos",
+            "LEXICONS": "Léxico",
+            "ONLY_OPEN": "Solo conjuntos de datos abiertos"
+        },
+        "SETTINGS": {
+            "FACET": "Faceta",
+            "FACET_BASED": "Basado en facetas",
+            "LIST": "Lista"
+        },
         "STATUS": {
             "ALREADY_EXISTING_DATASET": "El conjunto de datos ya existe",
             "DATASET_CREATED": "Conjunto de datos creado",
@@ -497,6 +506,7 @@
         "EMAIL_CONFIG_TEST_INFO": "Esta prueba enviará un correo electrónico a la dirección proporcionada para verificar la configuración",
         "EMAIL_CONFIG_TEST_SUCCESS": "La configuración funciona correctamente. Se ha enviado un correo electrónico de prueba a la dirección de correo electrónico proporcionada.",
         "ENTER_VALID_EMAIL": "Introducir una dirección de correo electrónico válida",
+        "FACETS_INDEX_RECREATED": "El índice de facetas se ha recreado con éxito",
         "INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET": "La creación de índices no está disponible para un conjunto de datos cerrado",
         "INSERT_EMAIL_FOR_RESET_PASSWORD": "Ingrese la dirección de correo electrónico de su cuenta. Recibirá un correo electrónico con instrucciones para restablecer su contraseña",
         "INVALID_EMAIL": "{{email}} no es una dirección de correo electrónico válida.",

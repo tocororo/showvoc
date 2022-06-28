@@ -228,3 +228,20 @@ export enum ProjectFacets {
     prjModel = "prjModel",
     prjValidationEnabled = "prjValidationEnabled",
 }
+
+export enum ProjectViewMode {
+    list = "list",
+    facet = "facet",
+}
+
+export class ProjectUtils {
+
+    //history and validation are not foreseen in SV
+    public static projectFacetsTranslationStruct: { facet: ProjectFacets, translationKey: string }[] = [
+        // { facet: ProjectFacets.prjHistoryEnabled, translationKey: "MODELS.PROJECT.HISTORY" },
+        { facet: ProjectFacets.prjLexModel, translationKey: "MODELS.PROJECT.LEXICALIZATION" },
+        { facet: ProjectFacets.prjModel, translationKey: "MODELS.PROJECT.MODEL" },
+        // { facet: ProjectFacets.prjValidationEnabled, translationKey: "MODELS.PROJECT.VALIDATION" }
+    ];
+
+}

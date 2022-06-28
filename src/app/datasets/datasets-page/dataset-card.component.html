@@ -1,0 +1,25 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title mb-1">
+            <ng-container *ngIf="project.isOpen() && accessible; then accessibleDatasetBlock; else notAccessibleDatasetBlock"></ng-container>
+            <ng-template #accessibleDatasetBlock>
+                <a [routerLink]="" (click)="goToProject(project)">{{project.getName()}}</a>
+            </ng-template>
+            <ng-template #notAccessibleDatasetBlock>
+                <p class="text-muted">{{project.getName()}}</p>
+            </ng-template>
+        </h5>
+        <div class="p-1 border-left border-bottom" style="position: absolute; top: 0; right: 0; border-bottom-left-radius: 5px">
+            <span class="mr-2">
+                <span class="mr-1">{{'MODELS.PROJECT.MODEL'|translate}}:</span><span class="badge badge-info">{{project.getModelType(true)}}</span>
+            </span>
+            <span>
+                <span class="mr-1">{{'MODELS.PROJECT.LEXICALIZATION'|translate}}:</span><span class="badge badge-info">{{project.getLexicalizationModelType(true)}}</span>
+            </span>
+        </div>
+
+        <p class="card-text text-secondary mb-2" style="font-size: 13px;">{{project.getBaseURI()}}</p>
+
+        <p class="card-text text-dark">{{project.getDescription()}}</p>
+    </div>
+</div>

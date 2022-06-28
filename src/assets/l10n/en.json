@@ -392,7 +392,8 @@
             "CREATE_METADATA": "Create dataset metadata",
             "CREATE_REFRESH_METADATA": "Create/refresh dataset metadata",
             "DELETE_DATASET": "Delete dataset",
-            "PROFILE_DATASET": "Profile dataset"
+            "PROFILE_DATASET": "Profile dataset",
+            "RECREATE_FACETS_INDEX": "Recreate facets index"
         },
         "ATTR": {
             "DATASET_NAME": "Dataset Name",
@@ -406,8 +407,17 @@
         "BROWSE_DATASETS": "Browse {{instanceName}} datasets",
         "DATASET": "Dataset",
         "DATASETS": "Datasets",
-        "DATASET_TYPE": "Dataset type",
-        "ONLY_OPEN": "Only open datasets",
+        "FILTERS": {
+            "DATASET_TYPE": "Dataset type",
+            "LEXICONS": "Lexicons",
+            "ONLY_OPEN": "Only open datasets",
+            "ONTOLOGIES": "Ontologies"
+        },
+        "SETTINGS": {
+            "FACET": "Facet",
+            "FACET_BASED": "Facet based",
+            "LIST": "List"
+        },
         "STATUS": {
             "ALREADY_EXISTING_DATASET": "Already existing dataset",
             "DATASET_CREATED": "Dataset created",
@@ -527,6 +537,7 @@
         "EMAIL_CONFIG_TEST_INFO": "This test will send an e-mail to the provided address in order to check the e-mail configuration",
         "EMAIL_CONFIG_TEST_SUCCESS": "The configuration works fine. A test e-mail has been sent to the provided email address.",
         "ENTER_VALID_EMAIL": "Please enter a valid e-mail address",
+        "FACETS_INDEX_RECREATED": "The facets index has been succesfully recreated",
         "INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET": "The index creation is not available for a closed dataset",
         "INSERT_EMAIL_FOR_RESET_PASSWORD": "Insert the e-mail address of your account. You will receive an e-mail with the instructions for resetting the password",
         "INVALID_EMAIL": "{{email}} is not a valid email address.",

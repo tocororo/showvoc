@@ -1,0 +1,59 @@
+<div class="container my-3">
+    <h1>{{'DATASETS.BROWSE_DATASETS'|translate:translationParam}}</h1>
+
+	<div class="hbox">
+
+		<div class="vbox" style="flex: 1">
+			<div class="card">
+				<div class="card-header">
+                    {{'DATASETS.FILTERS.DATASET_TYPE'|translate}}
+				</div>
+				<div class="card-body">
+                    <div *ngFor="let f of datasetTypeFacets" class="form-check">
+						<label class="form-check-label">
+							<input class="form-check-input" type="checkbox" [(ngModel)]="f.active" (ngModelChange)="onFacetChange()">
+							{{f.labelTranslationKey|translate}}
+						</label>
+					</div>
+                </div>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item" style="padding: 6px;">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" [(ngModel)]="openCheck" (ngModelChange)="onFacetChange()">
+                                {{'DATASETS.FILTERS.ONLY_OPEN'|translate}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card vbox ml-2" style="flex: 4;">
+            <div class="card-header d-flex align-items-center">
+                <label style="flex: 1">{{'DATASETS.DATASETS'|translate}}</label>
+                <button class="btn btn-light btn-sm" (click)="refresh()" [title]="'COMMONS.ACTIONS.REFRESH'|translate">
+                    <span class="fas fa-sync"></span>
+                </button>
+                <button class="btn btn-light btn-sm ml-1"  (click)="settings()" [title]="'COMMONS.SETTINGS'|translate">
+                    <span class="fas fa-cog"></span>
+                </button>
+            </div>
+            <div class="card-body scrollableContainer">
+                <datasets-list *ngIf="visualizationMode == 'list'" [filters]="filters"></datasets-list>
+                <datasets-dirs *ngIf="visualizationMode == 'facet'" [filters]="filters"></datasets-dirs>
+            </div>
+            <div class="card-footer">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" [(ngModel)]="filterString" (ngModelChange)="updateFilters()" [placeholder]="'COMMONS.FILTER'|translate">
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <i class="fas fa-filter"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+	</div>
+</div>

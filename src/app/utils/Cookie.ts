@@ -25,6 +25,10 @@ export class Cookie {
     public static SEARCH_INCLUDE_LOCALES = "search.include_locales";
     public static SEARCH_USE_AUTOMOMPLETION = "search.use_autocompletion";
 
+    public static PROJECT_COLLAPSED_DIRS = "project.collapsed_dirs"; //comma separated names of collapsed directories
+    public static PROJECT_VIEW_MODE = "project.view_mode";
+    public static PROJECT_FACET_BAG_OF = "project.facet_bag_of";
+
     public static ALIGNMENT_SEARCH_DATASET_MODE = "alignment.search.dataset_mode";
 
     public static DATASETS_FACETS_TYPE_KOS = "datasets.facets.type.kos";
@@ -36,6 +40,8 @@ export class Cookie {
     public static SEARCH_FILTERS_LANGUAGES = "search.filters.languages";
 
     public static EXPLORE_HIDE_WARNING_MODAL_RES_VIEW = "explore.hide_warning_open_modal_res_view";
+
+
 
     public static WARNING_CUSTOM_ROOT = "warnings.ui.tree.cls.customroot";
     public static WARNING_ADMIN_CHANGE_USER_TYPE = "warnings.administration.change_user_type";

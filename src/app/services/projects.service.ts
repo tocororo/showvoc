@@ -5,7 +5,7 @@ import { TransitiveImportMethodAllowance } from '../models/Metadata';
 import { PluginSpecification, Settings } from '../models/Plugins';
 import { AccessLevel, BackendTypesEnum, Project, RepositoryAccess, RepositorySummary } from '../models/Project';
 import { IRI, Literal, RDFResourceRolesEnum } from '../models/Resources';
-import { Pair } from '../models/Shared';
+import { Multimap, Pair } from '../models/Shared';
 import { HttpManager } from '../utils/HttpManager';
 import { SVContext } from '../utils/SVContext';
 
@@ -72,6 +72,30 @@ export class ProjectsServices {
                     return p1.getName().toLowerCase().localeCompare(p2.getName().toLowerCase());
                 });
                 return projectList;
+            })
+        );
+    }
+
+    retrieveProjects(bagOf?: string, orQueryList?: { [key: string]: any }[][], userDependent?: boolean, onlyOpen?: boolean, role?: string): Observable<Multimap<Project>> {
+        let params = {
+            bagOf: bagOf,
+            orQueryList: orQueryList ? JSON.stringify(orQueryList) : null,
+            userDependent: userDependent,
+            onlyOpen: onlyOpen,
+            role: role
+        };
+        return this.httpMgr.doPost(this.serviceName, "retrieveProjects", params).pipe(
+            map(stResp => {
+                let bagOfProjects: Multimap<Project> = {};
+                for (let bagName of Object.keys(stResp)) {
+                    let projList: Project[] = [];
+                    for (let pJson of stResp[bagName]) {
+                        projList.push(this.parseProject(pJson));
+                    }
+                    projList.sort((p1, p2) => p1.getName().toLocaleLowerCase().localeCompare(p2.getName().toLocaleLowerCase()));
+                    bagOfProjects[bagName] = projList;
+                }
+                return bagOfProjects;
             })
         );
     }
@@ -301,6 +325,39 @@ export class ProjectsServices {
             facetsSchema: JSON.stringify(facetsSchema.getPropertiesAsMap())
         };
         return this.httpMgr.doPost(this.serviceName, "setCustomProjectFacetsSchema", params);
+    }
+
+    getProjectFacetsForm(): Observable<Settings> {
+        let params = {};
+        return this.httpMgr.doGet(this.serviceName, "getProjectFacetsForm", params).pipe(
+            map(stResp => {
+                return Settings.parse(stResp);
+            })
+        );
+    }
+
+    getProjectFacets(project: Project) {
+        let params = {
+            projectName: project.getName()
+        };
+        return this.httpMgr.doGet(this.serviceName, "getProjectFacets", params);
+    }
+
+    createFacetIndex() {
+        let params = {};
+        return this.httpMgr.doPost(this.serviceName, "createFacetIndex", params);
+    }
+
+    recreateFacetIndexForProject(project: Project) {
+        let params = {
+            projectName: project.getName()
+        };
+        return this.httpMgr.doPost(this.serviceName, "recreateFacetIndexForProject", params);
+    }
+
+    getFacetsAndValue(): Observable<Multimap<string>> {
+        let params = {};
+        return this.httpMgr.doGet(this.serviceName, "getFacetsAndValue", params);
     }
 
     private parseProject(projJson: any): Project {

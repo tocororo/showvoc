@@ -11,7 +11,7 @@ import { LoadDevResourceComponent } from './contribution/development/load-dev.co
 import { LoadStableResourceComponent } from './contribution/stable/load-stable.component';
 import { DatasetDataComponent } from './datasets/data/dataset-data.component';
 import { DatasetViewComponent } from './datasets/dataset-view/dataset-view.component';
-import { DatasetsComponent } from './datasets/datasets.component';
+import { DatasetsPageComponent } from './datasets/datasets-page/datasets-page.component';
 import { MetadataComponent } from './datasets/metadata/metadata.component';
 import { SparqlComponent } from './datasets/sparql/sparql.component';
 import { HomeComponent } from './home/home.component';
@@ -44,7 +44,7 @@ const routes: Routes = [
         { path: "load/stable/:token", component: LoadStableResourceComponent, canActivate: [VisitorAuthGuard] },
         { path: "load/dev/:format/:token", component: LoadDevResourceComponent, canActivate: [VisitorAuthGuard] },
         { path: "ResetPassword/:token", component: ResetPasswordComponent },
-        { path: 'datasets', component: DatasetsComponent, canActivate: [VisitorAuthGuard], data: { reuseComponent: true } },
+        { path: 'datasets', component: DatasetsPageComponent, canActivate: [VisitorAuthGuard], data: { reuseComponent: true } },
         {
             path: 'datasets/:id', component: DatasetViewComponent, canActivate: [ProjectGuard], //ProjectGuard implicitly requires VisitorAuthGuard
             children: [

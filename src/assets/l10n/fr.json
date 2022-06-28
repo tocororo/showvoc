@@ -371,7 +371,8 @@
             "CREATE_METADATA": "Créer les métadonnées d'un jeu de données",
             "CREATE_REFRESH_METADATA": "Créer/rafraîchir les métadonnées d'un jeu de données",
             "DELETE_DATASET": "Supprimer un jeu de données",
-            "PROFILE_DATASET": "Profiler un jeu de données"
+            "PROFILE_DATASET": "Profiler un jeu de données",
+            "RECREATE_FACETS_INDEX": "Recréer les index de facettes"
         },
         "ATTR": {
             "DATASET_NAME": "Nom du jeu de données",
@@ -385,8 +386,16 @@
         "BROWSE_DATASETS": "Explorer le jeu de données de {{instanceName}}",
         "DATASET": "Jeu de données",
         "DATASETS": "Jeux de données",
-        "DATASET_TYPE": "Type de jeu de données",
-        "ONLY_OPEN": "Uniquement les jeux de données ouverts",
+        "FILTERS": {
+            "DATASET_TYPE": "Type de jeu de données",
+            "LEXICONS": "Lexiques",
+            "ONLY_OPEN": "Uniquement les jeux de données ouverts"
+        },
+        "SETTINGS": {
+            "FACET": "Facette",
+            "FACET_BASED": "Fondé sur une facette",
+            "LIST": "Liste"
+        },
         "STATUS": {
             "ALREADY_EXISTING_DATASET": "Jeu de données déjà existant",
             "DATASET_CREATED": "Jeu de données créé",
@@ -497,6 +506,7 @@
         "EMAIL_CONFIG_TEST_INFO": "Ce test va envoyer un e-mail à l'adresse électronique fournie, afin de vérifier la configuration de l'e-mail",
         "EMAIL_CONFIG_TEST_SUCCESS": "La configuration est opérationnelle. Un e-mail test a été envoyé à l'adresse électronique fournie.",
         "ENTER_VALID_EMAIL": "Veuillez saisir une adresse électronique valide",
+        "FACETS_INDEX_RECREATED": "L'index des facettes a été recréé avec succès",
         "INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET": "La création d'un index n'est pas disponible pour un jeu de données fermé",
         "INSERT_EMAIL_FOR_RESET_PASSWORD": "Indiquez l'adresse électronique de votre compte. Vous recevrez un e-mail comportant les instructions de réinitialisation de votre mot de passe",
         "INVALID_EMAIL": "{{email}} n'est pas une adresse électronique valide.",

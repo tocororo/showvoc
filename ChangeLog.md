@@ -5,7 +5,8 @@ The full changelog of the platform includes also changes brought to the Semantic
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
 # 2.1.1 (dd-mm-202y)
-  * Added two model-oriented graph and class-diagram (uml-like)
+  * Added model-oriented graph and class-diagram (uml-like)
+  * Implemented the facet-based visualization of datasets
 
 # 2.1.0 (23-06-2022)
   * Changed default Dataset landing tab from metadata to data
@@ -19,6 +20,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
   * Added possibility to create downloadable distribution of datasets
   * Added new kind of authorized user: SuperUser. SuperUser create projects and then get the role Project Manager automatically assigned to them
   * Added completion for endpoints to use in "locally federated" (i.e. different repositories on the same GraphDB instance) SPARQL queries
+  * Added advanced search
   * Fixed a bug that prevented to automatically change the alphabetic index in Lexical Entry panel after a search
   * Fixed a bug that prevented to show search results in Alignments tab when the target dataset was not available
 

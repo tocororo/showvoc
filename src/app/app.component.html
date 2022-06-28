@@ -61,7 +61,7 @@
                         <span class="fas fa-globe-europe"></span>
                     </button>
                     <div class="dropdown-menu" ngbDropdownMenu>
-                        <a *ngFor="let l of translateLangs" class="dropdown-item" (click)="changeLang(l)">
+                        <a *ngFor="let l of translateLangs" href="javascript:void(0)" class="dropdown-item" (click)="changeLang(l)">
                             {{l}}
                             <i *ngIf="translateLang == l" class="fas fa-check float-right"></i>
                         </a>

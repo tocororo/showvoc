@@ -1,0 +1,20 @@
+<div *ngIf="loading" class="spinner-border text-info"></div>
+<ng-container *ngIf="!loading">
+    <div *ngFor="let dir of datasetDirs" class="card mb-3 mt-2 mx-2">
+        <div class="card-header clickable" (click)="toggleDirectory(dir)">
+            <img *ngIf="!dir.open " src="./assets/images/icons/arrow.png" class="arrow-right">
+            <img *ngIf="dir.open " src="./assets/images/icons/arrow.png">
+            <label class="clickable ml-2">
+                <ng-container *ngIf="dir.dirName">{{dir.dirDisplayName}}</ng-container>
+                <ng-container *ngIf="!dir.dirName">Unclassified</ng-container>
+            </label>
+        </div>
+        <div class="card-body">
+            <ng-container *ngIf="dir.open">
+                <ng-container *ngFor="let d of dir.datasets">
+                    <dataset-card *ngIf="isDatasetVisible(d.project)" class="mb-1" [project]="d.project" [accessible]="d.accessible"></dataset-card>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</ng-container>

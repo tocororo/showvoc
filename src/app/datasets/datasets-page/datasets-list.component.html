@@ -1,0 +1,8 @@
+<div *ngIf="loading" class="spinner-border text-info"></div>
+<ng-container *ngIf="!loading">
+
+    <ng-container *ngFor="let d of datasets">
+        <dataset-card *ngIf="isDatasetVisible(d.project)" class="mb-1" [project]="d.project" [accessible]="d.accessible"></dataset-card>
+    </ng-container>
+
+</ng-container>
