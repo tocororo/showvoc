@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalOptions } from '../../modal-dialogs/Modals';
 import { ProjectViewMode } from '../../models/Project';
@@ -37,7 +37,7 @@ export class DatasetsPageComponent implements OnInit {
 
     translationParam: { instanceName: string };
 
-    constructor(private modalService: NgbModal) {}
+    constructor(private modalService: NgbModal, private changeDetectorRef: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.initCookies();
@@ -82,9 +82,8 @@ export class DatasetsPageComponent implements OnInit {
         this.modalService.open(DatasetsSettingsModal, new ModalOptions()).result.then(
             () => {
                 this.initVisualizationMode();
-                setTimeout(() => {
-                    this.refresh();
-                });
+                this.changeDetectorRef.detectChanges();
+                this.refresh();
             },
             () => { }
         );

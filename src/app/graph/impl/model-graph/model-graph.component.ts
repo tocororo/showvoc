@@ -78,10 +78,8 @@ export class ModelGraphComponent extends AbstractGraph {
                 }
             );
         } else { //model graph contains already a root node, so works in "incremental" mode
-            setTimeout(() => {
-                this.incrementalExploration = true; //setTimeout prevents an ExpressionChangedAfterItHasBeenCheckedError caused by this change
-                this.expandNode(this.graph.getNodes()[0], true);
-            });
+            this.incrementalExploration = true; 
+            this.expandNode(this.graph.getNodes()[0], true);
         }
     }
 

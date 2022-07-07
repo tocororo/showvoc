@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbModal, NgbNav } from '@ng-bootstrap/ng-bootstrap';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { CheckOptions, ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
@@ -43,7 +43,7 @@ export class StructureTabsetComponent implements OnInit {
 
     private model: string;
 
-    constructor(private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices, private modalService: NgbModal) { }
+    constructor(private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices, private modalService: NgbModal, private changeDetectorRef: ChangeDetectorRef) { }
 
     ngOnInit() {
         this.model = SVContext.getWorkingProject().getModelType(false);
@@ -89,23 +89,22 @@ export class StructureTabsetComponent implements OnInit {
 
             if (tabToActivate != null && this.isTabVisible(tabToActivate)) {
                 this.viewChildNavbar.select(tabToActivate);
-                setTimeout(() => { //wait for the tab to be activate
-                    if (tabToActivate == RDFResourceRolesEnum.cls) {
-                        this.viewChildClassInstancePanel.selectSearchedResource(annotatedIRI);
-                    } else if (tabToActivate == RDFResourceRolesEnum.concept) {
-                        this.viewChildConceptPanel.selectSearchedResource(annotatedIRI);
-                    } else if (tabToActivate == RDFResourceRolesEnum.conceptScheme) {
-                        this.viewChildSchemePanel.openAt(annotatedIRI);
-                    } else if (tabToActivate == RDFResourceRolesEnum.limeLexicon) {
-                        this.viewChildLexiconPanel.openAt(annotatedIRI);
-                    } else if (tabToActivate == RDFResourceRolesEnum.ontolexLexicalEntry) {
-                        this.viewChildLexialEntryPanel.selectSearchedResource(annotatedIRI);
-                    } else if (tabToActivate == RDFResourceRolesEnum.property) {
-                        this.viewChildPropertyPanel.openAt(annotatedIRI);
-                    } else if (tabToActivate == RDFResourceRolesEnum.skosCollection) {
-                        this.viewChildCollectionPanel.openAt(annotatedIRI);
-                    }
-                });
+                this.changeDetectorRef.detectChanges(); //wait for the tab to be activate
+                if (tabToActivate == RDFResourceRolesEnum.cls) {
+                    this.viewChildClassInstancePanel.selectSearchedResource(annotatedIRI);
+                } else if (tabToActivate == RDFResourceRolesEnum.concept) {
+                    this.viewChildConceptPanel.selectSearchedResource(annotatedIRI);
+                } else if (tabToActivate == RDFResourceRolesEnum.conceptScheme) {
+                    this.viewChildSchemePanel.openAt(annotatedIRI);
+                } else if (tabToActivate == RDFResourceRolesEnum.limeLexicon) {
+                    this.viewChildLexiconPanel.openAt(annotatedIRI);
+                } else if (tabToActivate == RDFResourceRolesEnum.ontolexLexicalEntry) {
+                    this.viewChildLexialEntryPanel.selectSearchedResource(annotatedIRI);
+                } else if (tabToActivate == RDFResourceRolesEnum.property) {
+                    this.viewChildPropertyPanel.openAt(annotatedIRI);
+                } else if (tabToActivate == RDFResourceRolesEnum.skosCollection) {
+                    this.viewChildCollectionPanel.openAt(annotatedIRI);
+                }
             } else { //tabToActivate null means that the resource doesn't belong to any kind handled by the tabset
                 let hideWarning: boolean = Cookie.getCookie(Cookie.EXPLORE_HIDE_WARNING_MODAL_RES_VIEW) == "true";
                 if (hideWarning) {

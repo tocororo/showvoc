@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClassTreePreference } from 'src/app/models/Properties';
 import { SVProperties } from 'src/app/utils/SVProperties';
@@ -34,7 +34,8 @@ export class ClassTreeSettingsModal implements OnInit {
 
     constructor(public activeModal: NgbActiveModal, private svProp: SVProperties,
         private clsService: ClassesServices, private resourceService: ResourcesServices,
-        private basicModals: BasicModalsServices, private browsingModals: BrowsingModalsServices) { }
+        private basicModals: BasicModalsServices, private browsingModals: BrowsingModalsServices, 
+        private changeDetectorRef: ChangeDetectorRef) { }
 
     ngOnInit() {
         let classTreePref: ClassTreePreference = SVContext.getProjectCtx().getProjectPreferences().classTreePreferences;
@@ -106,7 +107,8 @@ export class ClassTreeSettingsModal implements OnInit {
                     //temporarly reset the root class and the restore it (in order to trigger the change detection editable-input)
                     let oldRootClass = this.rootClass;
                     this.rootClass = null;
-                    setTimeout(() => { this.rootClass = oldRootClass; });
+                    this.changeDetectorRef.detectChanges();
+                    this.rootClass = oldRootClass;
                 }
             }
         );

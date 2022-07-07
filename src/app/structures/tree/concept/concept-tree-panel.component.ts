@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
+import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { ConceptTreeVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, ResAttribute } from 'src/app/models/Resources';
 import { ResourcesServices } from 'src/app/services/resources.service';
@@ -40,9 +41,9 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
 
     closedAlert: boolean;
 
-    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties,
-        private skosService: SkosServices, private resourceService: ResourcesServices, private modalService: NgbModal) {
-        super(basicModals, eventHandler, svProp);
+    constructor(basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: SVEventHandler, svProp: SVProperties,
+        private skosService: SkosServices, private resourceService: ResourcesServices, private modalService: NgbModal, private changeDetectorRef: ChangeDetectorRef) {
+        super(basicModals, sharedModals, eventHandler, svProp);
         this.eventSubscriptions.push(eventHandler.schemeChangedEvent.subscribe(
             (schemes: IRI[]) => this.onSchemeChanged(schemes)));
     }
@@ -92,7 +93,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
     changeSchemeSelection() {
         this.skosService.getAllSchemes().subscribe(
             schemes => {
-                this.basicModals.selectResource({ key: "DATA.ACTIONS.SELECT_SCHEME" }, null, schemes, this.rendering, true, true, this.workingSchemes).then(
+                this.sharedModals.selectResource({ key: "DATA.ACTIONS.SELECT_SCHEME" }, null, schemes, this.rendering, true, true, this.workingSchemes).then(
                     (schemes: AnnotatedValue<IRI>[]) => {
                         this.workingSchemes = schemes.map(s => s.getValue());
                         this.schemeChanged.emit(this.workingSchemes);
@@ -114,7 +115,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                 this.selectSearchedResource(results[0]);
             } else {
                 // choose among results
-                this.basicModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
+                this.sharedModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
                     (selectedResources: AnnotatedValue<IRI>[]) => {
                         this.openAt(selectedResources[0]);
                     },
@@ -152,11 +153,10 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                 } else {
                     if (schemes.length == 0) { //searched concept doesn't belong to any scheme => ask switch to no-scheme mode
                         this.basicModals.confirm({ key: "COMMONS.ACTIONS.SEARCH" }, { key: "MESSAGES.SWITCH_NO_SCHEME_CONFIRM", params: { concept: resource.getShow() } }, ModalType.warning).then(
-                            confirm => {
+                            () => {
                                 this.svProp.setActiveSchemes(SVContext.getProjectCtx(), []); //update the active schemes
-                                setTimeout(() => {
-                                    this.openAt(resource); //then open the tree on the searched resource
-                                });
+                                this.changeDetectorRef.detectChanges();
+                                this.openAt(resource); //then open the tree on the searched resource
                             },
                             () => { }
                         );
@@ -170,12 +170,11 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                         }
                         this.resourceService.getResourcesInfo(schemes).subscribe(
                             schemes => {
-                                this.basicModals.selectResource({ key: "COMMONS.ACTIONS.SEARCH" }, message, schemes, this.rendering).then(
+                                this.sharedModals.selectResource({ key: "COMMONS.ACTIONS.SEARCH" }, message, schemes, this.rendering).then(
                                     (schemes: AnnotatedValue<IRI>[]) => {
                                         this.svProp.setActiveSchemes(SVContext.getProjectCtx(), this.workingSchemes.concat(schemes[0].getValue())); //update the active schemes
-                                        setTimeout(() => {
-                                            this.openAt(resource); //then open the tree on the searched resource
-                                        });
+                                        this.changeDetectorRef.detectChanges();
+                                        this.openAt(resource); //then open the tree on the searched resource
                                     },
                                     () => { }
                                 );
@@ -210,9 +209,8 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
             this.viewChildTree.openTreeAt(node, this.workingSchemes);
         } else { //search-based
             this.viewChildTree.forceList([node]);
-            setTimeout(() => {
-                this.viewChildTree.expandPath([node]);
-            });
+            this.changeDetectorRef.detectChanges();
+            this.viewChildTree.expandPath([node]);
         }
     }
 

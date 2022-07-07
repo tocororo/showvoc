@@ -6,6 +6,7 @@ import { SVProperties } from 'src/app/utils/SVProperties';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractListPanel } from '../abstract-list-panel';
 import { SchemeListComponent } from './scheme-list.component';
+import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 
 @Component({
     selector: "scheme-list-panel",
@@ -17,8 +18,8 @@ export class SchemeListPanelComponent extends AbstractListPanel {
 
     panelRole: RDFResourceRolesEnum = RDFResourceRolesEnum.conceptScheme;
 
-    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties) {
-        super(basicModals, eventHandler, svProp);
+    constructor(basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: SVEventHandler, svProp: SVProperties) {
+        super(basicModals, sharedModals, eventHandler, svProp);
     }
 
     handleSearchResults(results: AnnotatedValue<IRI>[]) {
@@ -26,7 +27,7 @@ export class SchemeListPanelComponent extends AbstractListPanel {
             this.openAt(results[0]);
         } else { //multiple results, ask the user which one select
             ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
-            this.basicModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
+            this.sharedModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
                 (selectedResources: AnnotatedValue<IRI>[]) => {
                     this.openAt(selectedResources[0]);
                 },

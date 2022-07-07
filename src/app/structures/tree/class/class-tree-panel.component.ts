@@ -11,6 +11,7 @@ import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalOptions } from 'src/app/modal-dialogs/Modals';
 import { ClassTreeSettingsModal } from './class-tree-settings-modal';
 import { GraphModalServices } from 'src/app/graph/modals/graph-modal.service';
+import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 
 @Component({
     selector: "class-tree-panel",
@@ -27,8 +28,8 @@ export class ClassTreePanelComponent extends AbstractTreePanel {
 
     filterEnabled: boolean;
 
-    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private graphModals: GraphModalServices, private modalService: NgbModal) {
-        super(basicModals, eventHandler, svProp);
+    constructor(basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private graphModals: GraphModalServices, private modalService: NgbModal) {
+        super(basicModals, sharedModals, eventHandler, svProp);
     }
 
     ngOnInit() {
@@ -57,7 +58,7 @@ export class ClassTreePanelComponent extends AbstractTreePanel {
             this.openAt(results[0]);
         } else { //multiple results, ask the user which one select
             ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
-            this.basicModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
+            this.sharedModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
                 (selectedResources: AnnotatedValue<IRI>[]) => {
                     this.openAt(selectedResources[0]);
                 },

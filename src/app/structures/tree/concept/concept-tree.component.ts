@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { finalize, mergeMap } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
@@ -36,9 +36,9 @@ export class ConceptTreeComponent extends AbstractTree {
 
     translationParam: { elemCount: number, safeToGoLimit: number };
 
-    constructor(private skosService: SkosServices, searchService: SearchServices,
-        eventHandler: SVEventHandler, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
-        super(eventHandler, searchService, basicModals, sharedModals);
+    constructor(private skosService: SkosServices, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, 
+        eventHandler: SVEventHandler, changeDetectorRef: ChangeDetectorRef) {
+        super(eventHandler, searchService, basicModals, sharedModals, changeDetectorRef);
     }
 
     /**

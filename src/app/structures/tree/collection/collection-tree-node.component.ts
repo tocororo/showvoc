@@ -1,4 +1,4 @@
-import { Component, QueryList, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, QueryList, ViewChildren } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
@@ -14,8 +14,8 @@ export class CollectionTreeNodeComponent extends AbstractTreeNode {
 
     @ViewChildren(CollectionTreeNodeComponent) viewChildrenNode: QueryList<CollectionTreeNodeComponent>;
 
-    constructor(private skosService: SkosServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
-        super(basicModals, sharedModals);
+    constructor(private skosService: SkosServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, changeDetectorRef: ChangeDetectorRef) {
+        super(basicModals, sharedModals, changeDetectorRef);
     }
 
     /**

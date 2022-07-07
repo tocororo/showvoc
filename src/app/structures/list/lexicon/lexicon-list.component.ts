@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
@@ -19,8 +19,8 @@ export class LexiconListComponent extends AbstractList {
 
     private activeLexicon: AnnotatedValue<IRI>;
 
-    constructor(private ontolexService: OntoLexLemonServices, private svProp: SVProperties, eventHandler: SVEventHandler) {
-        super(eventHandler);
+    constructor(private ontolexService: OntoLexLemonServices, private svProp: SVProperties, eventHandler: SVEventHandler, changeDetectorRef: ChangeDetectorRef) {
+        super(eventHandler, changeDetectorRef);
         //handler when active lexicon is changed programmatically when a searched entry belong to a non active lexicon
         this.eventSubscriptions.push(eventHandler.lexiconChangedEvent.subscribe(
             (lexicon: IRI) => {

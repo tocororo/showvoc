@@ -3,6 +3,7 @@ import { LexicalizationSetMetadata } from "src/app/models/Metadata";
 import { Project } from "src/app/models/Project";
 import { AnnotatedValue, IRI } from "src/app/models/Resources";
 import { MetadataRegistryServices } from "src/app/services/metadata-registry.service";
+import { ChartData } from 'src/app/widget/charts/NgxChartsUtils';
 
 @Component({
     selector: 'lexicalization-sets-renderer',
@@ -19,6 +20,10 @@ export class LexicalizationSetsRenderer {
     @Input() dataset: AnnotatedValue<IRI>;
     lexicalizationSets: LexicalizationSetMetadata[];
 
+    lexSetsChartData: ChartData[];
+
+    sortCriteria: SortCriteria = SortCriteria.language_asc;
+
     constructor(private metadataRegistryService: MetadataRegistryServices) { }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -34,15 +39,43 @@ export class LexicalizationSetsRenderer {
                 this.lexicalizationSets.forEach(l => {
                     l['lexModelPretty'] = Project.getPrettyPrintModelType(l.lexicalizationModel);
                 });
-                this.sortLexicalizationSets("language");
+                this.sortLexicalizationSets();
+
+                this.lexSetsChartData = this.lexicalizationSets.filter(l => l.lexicalizations != null && l.lexicalizations > 0).map(l => {
+                    return {
+                        name: l.language,
+                        value: l.lexicalizations
+                    };
+                });
             }
         );
     }
 
-    sortLexicalizationSets(criteria: 'lexicalizations' | 'language') {
+    switchSort(criteria: "lexicalizations" | "language") {
         if (criteria == "language") {
+            if (this.sortCriteria == SortCriteria.language_asc) {
+                this.sortCriteria = SortCriteria.language_desc;
+            } else {
+                this.sortCriteria = SortCriteria.language_asc;
+            }
+        } else { //lexicalizations
+            if (this.sortCriteria == SortCriteria.lexicalizations_asc) {
+                this.sortCriteria = SortCriteria.lexicalizations_desc;
+            } else {
+                this.sortCriteria = SortCriteria.lexicalizations_asc;
+            }
+        }
+        this.sortLexicalizationSets();
+    }
+
+    private sortLexicalizationSets() {
+        if (this.sortCriteria == SortCriteria.language_asc) {
             this.lexicalizationSets.sort((l1, l2) => {
                 return l1.language.localeCompare(l2.language);
+            });
+        } else if (this.sortCriteria == SortCriteria.language_desc) {
+            this.lexicalizationSets.sort((l1, l2) => {
+                return -l1.language.localeCompare(l2.language);
             });
         } else { //lexicalizations
             this.lexicalizationSets.sort((l1, l2) => {
@@ -52,13 +85,29 @@ export class LexicalizationSetsRenderer {
                 - If none of them has lexicalizations, sort by language
                 */
                 if (l1.lexicalizations && l2.lexicalizations) {
-                    return l2.lexicalizations - l1.lexicalizations;
+                    if (this.sortCriteria == SortCriteria.lexicalizations_asc) {
+                        return l2.lexicalizations - l1.lexicalizations;
+                    } else {
+                        return l1.lexicalizations - l2.lexicalizations;
+                    }
                 } else if (l1.lexicalizations && !l2.lexicalizations) {
-                    return -1;
+                    if (this.sortCriteria == SortCriteria.lexicalizations_asc) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
                 } else if (!l1.lexicalizations && l2.lexicalizations) {
-                    return 1;
+                    if (this.sortCriteria == SortCriteria.lexicalizations_asc) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
                 } else {
-                    return l1.language.localeCompare(l2.language);
+                    if (this.sortCriteria == SortCriteria.lexicalizations_asc) {
+                        return l1.language.localeCompare(l2.language);
+                    } else {
+                        return l2.language.localeCompare(l1.language);
+                    }
                 }
             });
         }
@@ -70,4 +119,11 @@ export class LexicalizationSetsRenderer {
         });
     }
 
+}
+
+enum SortCriteria {
+    lexicalizations_asc = "lexicalizations_asc",
+    lexicalizations_desc = "lexicalizations_desc",
+    language_asc = "language_asc",
+    language_desc = "language_desc",
 }

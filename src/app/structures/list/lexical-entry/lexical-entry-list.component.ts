@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { finalize, mergeMap } from 'rxjs/operators';
 import { LexEntryVisualizationMode, LexicalEntryListPreference, SafeToGo, SafeToGoMap } from 'src/app/models/Properties';
@@ -30,8 +30,8 @@ export class LexicalEntryListComponent extends AbstractList {
 
     translationParam: { elemCount: number, safeToGoLimit: number };
 
-    constructor(private ontolexService: OntoLexLemonServices, eventHandler: SVEventHandler) {
-        super(eventHandler);
+    constructor(private ontolexService: OntoLexLemonServices, eventHandler: SVEventHandler, changeDetectorRef: ChangeDetectorRef) {
+        super(eventHandler, changeDetectorRef);
     }
 
     ngOnChanges(changes: SimpleChanges) {

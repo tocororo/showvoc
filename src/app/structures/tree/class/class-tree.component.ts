@@ -1,4 +1,4 @@
-import { Component, Input, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
@@ -24,8 +24,9 @@ export class ClassTreeComponent extends AbstractTree {
 
     structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.cls;
 
-    constructor(private clsService: ClassesServices, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: SVEventHandler) {
-        super(eventHandler, searchService, basicModals, sharedModals);
+    constructor(private clsService: ClassesServices, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, 
+        eventHandler: SVEventHandler, changeDetectorRef: ChangeDetectorRef) {
+        super(eventHandler, searchService, basicModals, sharedModals, changeDetectorRef);
     }
 
     ngOnChanges(changes: SimpleChanges) {

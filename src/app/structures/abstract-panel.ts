@@ -1,6 +1,7 @@
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
+import { SharedModalsServices } from '../modal-dialogs/shared-modals/shared-modal.service';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from '../models/Resources';
 import { SVEventHandler } from '../utils/SVEventHandler';
 import { SVProperties } from '../utils/SVProperties';
@@ -34,10 +35,12 @@ export abstract class AbstractPanel {
      * CONSTRUCTOR
      */
     protected basicModals: BasicModalsServices;
+    protected sharedModals: SharedModalsServices;
     protected eventHandler: SVEventHandler;
     protected svProp: SVProperties;
-    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties) {
+    constructor(basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: SVEventHandler, svProp: SVProperties) {
         this.basicModals = basicModals;
+        this.sharedModals = sharedModals;
         this.eventHandler = eventHandler;
         this.svProp = svProp;
 

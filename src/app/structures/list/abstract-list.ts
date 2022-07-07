@@ -1,4 +1,4 @@
-import { Directive, QueryList, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Directive, QueryList, ViewChildren } from '@angular/core';
 import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { AnnotatedValue, IRI, ResAttribute } from '../../models/Resources';
 import { AbstractStruct } from '../abstract-structure';
@@ -18,8 +18,10 @@ export abstract class AbstractList extends AbstractStruct {
     /**
      * CONSTRUCTOR
      */
-    constructor(eventHandler: SVEventHandler) {
+    protected changeDetectorRef: ChangeDetectorRef;
+    constructor(eventHandler: SVEventHandler, changeDetectorRef: ChangeDetectorRef) {
         super(eventHandler);
+        this.changeDetectorRef = changeDetectorRef;
     }
 
     /**
@@ -44,22 +46,19 @@ export abstract class AbstractList extends AbstractStruct {
 
     openListAt(node: AnnotatedValue<IRI>) {
         this.ensureNodeVisibility(node);
-        setTimeout( //apply timeout in order to wait that the children node is rendered (in case the openPages has been increased)
-            () => {
-                let childrenNodeComponent = this.viewChildrenNode.toArray();
-                for (let i = 0; i < childrenNodeComponent.length; i++) {
-                    if (childrenNodeComponent[i].node.getValue().equals(node.getValue())) {
-                        if (!childrenNodeComponent[i].node.getAttribute(ResAttribute.SELECTED)) {
-                            childrenNodeComponent[i].selectNode();
-                        }
-                        setTimeout(() => { //give time to update the view (after selectNode the res view could make reduce the size of the tree)
-                            childrenNodeComponent[i].ensureVisible();
-                        });
-                        break;
-                    }
+        this.changeDetectorRef.detectChanges(); //wait that the children node is rendered (in case the openPages has been increased)
+        let childrenNodeComponent = this.viewChildrenNode.toArray();
+        for (let i = 0; i < childrenNodeComponent.length; i++) {
+            if (childrenNodeComponent[i].node.getValue().equals(node.getValue())) {
+                if (!childrenNodeComponent[i].node.getAttribute(ResAttribute.SELECTED)) {
+                    childrenNodeComponent[i].selectNode();
                 }
+                setTimeout(() => { //give time to update the view (after selectNode the res view could make reduce the size of the tree)
+                    childrenNodeComponent[i].ensureVisible();
+                });
+                break;
             }
-        );
+        }
     }
 
     ensureNodeVisibility(resource: AnnotatedValue<IRI>) {

@@ -1,4 +1,4 @@
-import { Directive, QueryList } from '@angular/core';
+import { ChangeDetectorRef, Directive, QueryList } from '@angular/core';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
@@ -36,11 +36,13 @@ export abstract class AbstractTree extends AbstractStruct {
     protected searchService: SearchServices;
     protected basicModals: BasicModalsServices;
     protected sharedModals: SharedModalsServices;
-    constructor(eventHandler: SVEventHandler, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
+    protected changeDetectorRef: ChangeDetectorRef;
+    constructor(eventHandler: SVEventHandler, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, changeDetectorRef: ChangeDetectorRef) {
         super(eventHandler);
         this.searchService = searchService;
         this.basicModals = basicModals;
         this.sharedModals = sharedModals;
+        this.changeDetectorRef = changeDetectorRef;
     }
 
     /**
@@ -94,17 +96,16 @@ export abstract class AbstractTree extends AbstractStruct {
     expandPath(path: AnnotatedValue<IRI>[]) {
         //open tree from root to node
         if (this.ensureRootVisibility(path[0], path)) { //if root is visible
-            setTimeout(() => { //wait the the UI is updated after the (possible) update of rootLimit
-                let childrenNodeComponent = this.viewChildrenNode.toArray();
-                for (let i = 0; i < childrenNodeComponent.length; i++) { //looking for first node (root) to expand
-                    if (childrenNodeComponent[i].node.getValue().equals(path[0].getValue())) {
-                        //let the found node expand itself and the remaining path
-                        path.splice(0, 1);
-                        childrenNodeComponent[i].expandPath(path);
-                        return;
-                    }
+            this.changeDetectorRef.detectChanges(); //wait the the UI is updated after the (possible) update of rootLimit
+            let childrenNodeComponent = this.viewChildrenNode.toArray();
+            for (let i = 0; i < childrenNodeComponent.length; i++) { //looking for first node (root) to expand
+                if (childrenNodeComponent[i].node.getValue().equals(path[0].getValue())) {
+                    //let the found node expand itself and the remaining path
+                    path.splice(0, 1);
+                    childrenNodeComponent[i].expandPath(path);
+                    return;
                 }
-            });
+            }
         }
     }
 

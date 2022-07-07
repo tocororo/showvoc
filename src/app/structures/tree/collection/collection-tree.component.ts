@@ -1,4 +1,4 @@
-import { Component, QueryList, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, QueryList, ViewChildren } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
@@ -21,8 +21,9 @@ export class CollectionTreeComponent extends AbstractTree {
 
     structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.skosCollection;
 
-    constructor(private skosService: SkosServices, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: SVEventHandler) {
-        super(eventHandler, searchService, basicModals, sharedModals);
+    constructor(private skosService: SkosServices, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, 
+        eventHandler: SVEventHandler, changeDetectorRef: ChangeDetectorRef) {
+        super(eventHandler, searchService, basicModals, sharedModals, changeDetectorRef);
     }
 
     initImpl() {

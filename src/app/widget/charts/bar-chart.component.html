@@ -1,0 +1,23 @@
+<div style="width: calc(100% - 250px);">
+   <ngx-charts-bar-vertical
+        [results]="chartData"
+        [xAxis]="true"
+        [yAxis]="true"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        maxXAxisTickLength="40"
+        [legend]="false"
+        [activeEntries]="activeEntries"
+        [scheme]="colorScheme"
+        (dblclick)="onDoubleClick()"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event.value)"
+        (deactivate)="onDeactivate()"
+    >
+    </ngx-charts-bar-vertical>
+</div>
+
+<!-- <series-chart-legend style="width: 250px;" [chartData]="chartData" [colorScheme]="colorScheme" [activeEntries]="activeEntries" [readonly]="readonly"
+    (activate)="onActivate($event)" (deactivate)="onDeactivate()" (dataChanged)="onDataChanged($event)"></series-chart-legend> -->

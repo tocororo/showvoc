@@ -2,6 +2,7 @@ import { Component, Input, ViewChild } from "@angular/core";
 import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions } from "src/app/modal-dialogs/Modals";
+import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { InstanceListVisualizationMode } from "src/app/models/Properties";
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
@@ -31,8 +32,8 @@ export class InstanceListPanelComponent extends AbstractListPanel {
 
     closedAlert: boolean;
 
-    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private modalService: NgbModal) {
-        super(basicModals, eventHandler, svProp);
+    constructor(basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private modalService: NgbModal) {
+        super(basicModals, sharedModals, eventHandler, svProp);
     }
 
     ngOnInit() {
@@ -47,7 +48,7 @@ export class InstanceListPanelComponent extends AbstractListPanel {
                 this.openAt(results[0]);
             } else { //multiple results, ask the user which one select
                 ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
-                this.basicModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
+                this.sharedModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
                     (selectedResources: AnnotatedValue<IRI>[]) => {
                         this.openAt(selectedResources[0]);
                     },

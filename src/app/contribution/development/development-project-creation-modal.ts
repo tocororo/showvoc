@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, ViewChild } from "@angular/core";
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs/operators';
 import { AbstractProjectCreationModal, ConfigurationFilterPredicate } from "src/app/administration/projects-manager/abstract-project-creation-modal";
@@ -36,9 +36,9 @@ export class DevProjectCreationModal extends AbstractProjectCreationModal {
         adminPassword: ""
     };
 
-    constructor(activeModal: NgbActiveModal, settingsService: SettingsServices, extensionsService: ExtensionsServices, modalService: NgbModal,
+    constructor(activeModal: NgbActiveModal, settingsService: SettingsServices, extensionsService: ExtensionsServices, modalService: NgbModal, changeDetectorRef: ChangeDetectorRef,
         private svService: ShowVocServices, private basicModals: BasicModalsServices) {
-        super(activeModal, modalService, extensionsService, settingsService);
+        super(activeModal, modalService, extensionsService, settingsService, changeDetectorRef);
     }
 
     ngOnInit() {

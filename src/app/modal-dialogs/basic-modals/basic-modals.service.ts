@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import { AnnotatedValue, Value } from 'src/app/models/Resources';
 import { Cookie } from 'src/app/utils/Cookie';
 import { CheckOptions, ModalOptions, ModalType, TextOrTranslation, TranslationUtils } from '../Modals';
 import { AlertModal } from './alert-modal/alert-modal';
@@ -10,7 +9,6 @@ import { ConfirmModal } from './confirm-modal/confirm-modal';
 import { DownloadModal } from './download-modal/download-modal';
 import { PromptModal } from './prompt-modal/prompt-modal';
 import { PromptNumberModal } from './prompt-modal/prompt-number-modal';
-import { ResourceSelectionModal } from './selection-modal/resource-selection-modal';
 import { SelectionModal, SelectionOption } from './selection-modal/selection-modal';
 
 @Injectable()
@@ -166,26 +164,6 @@ export class BasicModalsServices {
         modalRef.componentInstance.message = TranslationUtils.getTranslatedText(msg, this.translateService);
         modalRef.componentInstance.options = options;
         if (type != null) modalRef.componentInstance.type = type;
-        return modalRef.result;
-    }
-
-    /**
-     * Opens a modal with an message and a list of selectable options.
-     * @param title the title of the modal dialog
-     * @param message the message to show in the modal dialog body. If null no message will be in the modal
-     * @param resourceList array of available resources
-     * @param rendering in case of array of resources, it tells whether the resources should be rendered
-     * @return if the modal closes with ok returns a promise containing a list of selected resource
-     */
-    selectResource(title: TextOrTranslation, message: TextOrTranslation, resourceList: AnnotatedValue<Value>[], rendering?: boolean, multiselection?: boolean, emptySelectionAllowed?: boolean, selectedResources?: Value[]): Promise<any[]> {
-        const modalRef: NgbModalRef = this.modalService.open(ResourceSelectionModal, new ModalOptions());
-        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
-        modalRef.componentInstance.message = TranslationUtils.getTranslatedText(message, this.translateService);
-        modalRef.componentInstance.resourceList = resourceList;
-        if (rendering != null) modalRef.componentInstance.rendering = rendering;
-        if (multiselection != null) modalRef.componentInstance.multiselection = multiselection;
-        if (emptySelectionAllowed != null) modalRef.componentInstance.emptySelectionAllowed = emptySelectionAllowed;
-        if (selectedResources != null) modalRef.componentInstance.selectedResources = selectedResources;
         return modalRef.result;
     }
 

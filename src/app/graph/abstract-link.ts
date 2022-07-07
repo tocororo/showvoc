@@ -71,12 +71,10 @@ export abstract class AbstractLinkComponent {
         this.changeDetectorRef.detectChanges(); //fire change detection in order to update the textEl that contains "show"
 
         //compute the new labelRectWidth
-        setTimeout(() => {
-            let padding = 1;
-            if (this.textElement != null) {
-                this.labelRectWidth = this.textElement.nativeElement.getBoundingClientRect().width + padding * 2;
-            }
-        });
+        let padding = 1;
+        if (this.textElement != null) {
+            this.labelRectWidth = this.textElement.nativeElement.getBoundingClientRect().width + padding * 2;
+        }
     }
 
 

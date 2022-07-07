@@ -366,7 +366,7 @@ export class AdvancedSearchModal {
                         this.basicModals.alert({ key: "SEARCH.SEARCH" }, { key: "MESSAGES.NO_RESULTS_FOUND" }, ModalType.warning);
                     } else { //1 or more results
                         ResourceUtils.sortResources(searchResult, SortAttribute.show);
-                        this.basicModals.selectResource({ key: "SEARCH.SEARCH" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: searchResult.length } }, searchResult, true).then(
+                        this.sharedModals.selectResource({ key: "SEARCH.SEARCH" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: searchResult.length } }, searchResult, true).then(
                             (selectedResources: AnnotatedValue<Resource>[]) => {
                                 this.activeModal.close(selectedResources[0]);
                             },

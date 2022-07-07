@@ -1,4 +1,4 @@
-import { Directive, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Directive, ViewChild } from "@angular/core";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ModalOptions } from "src/app/modal-dialogs/Modals";
 import { ConfigurableExtensionFactory, ExtensionPointID, Scope, Settings } from "src/app/models/Plugins";
@@ -63,11 +63,13 @@ export abstract class AbstractProjectCreationModal {
     protected modalService: NgbModal;
     protected extensionsService: ExtensionsServices;
     protected settingsService: SettingsServices;
-    constructor(activeModal: NgbActiveModal, modalService: NgbModal, extensionsService: ExtensionsServices, settingsService: SettingsServices) {
+    protected changeDetectorRef: ChangeDetectorRef;
+    constructor(activeModal: NgbActiveModal, modalService: NgbModal, extensionsService: ExtensionsServices, settingsService: SettingsServices, changeDetectorRef: ChangeDetectorRef) {
         this.activeModal = activeModal;
         this.modalService = modalService;
         this.extensionsService = extensionsService;
         this.settingsService = settingsService;
+        this.changeDetectorRef = changeDetectorRef;
     }
 
     abstract ngOnInit(): void;
@@ -106,9 +108,8 @@ export abstract class AbstractProjectCreationModal {
                 if (configFilterPredicate != null) {
                     this.dataRepoExtensions[0].configurations = this.dataRepoExtensions[0].configurations.filter(conf => configFilterPredicate(conf));
                 }
-                setTimeout(() => { //let the dataRepoConfigurator component to be initialized (due to *ngIf="dataRepoExtensions")
-                    this.dataRepoConfigurator.selectExtensionAndConfiguration(this.DEFAULT_REPO_EXTENSION_ID, this.DEFAULT_REPO_CONFIG_TYPE);
-                });
+                this.changeDetectorRef.detectChanges(); //let the dataRepoConfigurator component to be initialized (due to *ngIf="dataRepoExtensions")
+                this.dataRepoConfigurator.selectExtensionAndConfiguration(this.DEFAULT_REPO_EXTENSION_ID, this.DEFAULT_REPO_CONFIG_TYPE);
             }
         );
     }

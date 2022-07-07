@@ -7,6 +7,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 # 2.1.1 (dd-mm-202y)
   * Added model-oriented graph and class-diagram (uml-like)
   * Implemented the facet-based visualization of datasets
+  * Fixed performances issues by replacing usage setTimeout() with ChangeDetectorRef#detectChanges(). Thanks to Saku Seppälä for the contribution!
 
 # 2.1.0 (23-06-2022)
   * Changed default Dataset landing tab from metadata to data

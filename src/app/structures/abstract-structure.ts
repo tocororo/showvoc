@@ -72,7 +72,7 @@ export abstract class AbstractStruct implements OnInit {
     increaseRate: number = this.nodesLimit/5;
     onScroll() {
         let scrollElement: HTMLElement = this.scrollableElement.nativeElement;
-        if (scrollElement.scrollTop === (scrollElement.scrollHeight - scrollElement.offsetHeight)) {
+        if (Math.abs(scrollElement.scrollHeight - scrollElement.offsetHeight - scrollElement.scrollTop) < 2) {
             //bottom reached => increase max range if there are more roots to show
             if (this.nodesLimit < this.nodes.length) { 
                 this.nodesLimit += this.increaseRate;

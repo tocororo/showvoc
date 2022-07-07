@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { ChangeDetectorRef, Component, Input } from "@angular/core";
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs/operators';
 import { AbstractProjectCreationModal } from "src/app/administration/projects-manager/abstract-project-creation-modal";
@@ -28,9 +28,9 @@ export class StableProjectCreationModal extends AbstractProjectCreationModal {
     repositoryAccessList: RepositoryAccessType[] = [RepositoryAccessType.CreateLocal, RepositoryAccessType.CreateRemote];
 
 
-    constructor(activeModal: NgbActiveModal, settingsService: SettingsServices, extensionsService: ExtensionsServices, modalService: NgbModal,
+    constructor(activeModal: NgbActiveModal, settingsService: SettingsServices, extensionsService: ExtensionsServices, modalService: NgbModal, changeDetectorRef: ChangeDetectorRef,
         private svService: ShowVocServices, private basicModals: BasicModalsServices) {
-        super(activeModal, modalService, extensionsService, settingsService);
+        super(activeModal, modalService, extensionsService, settingsService, changeDetectorRef);
     }
 
     ngOnInit() {

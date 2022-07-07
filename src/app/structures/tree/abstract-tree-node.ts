@@ -1,4 +1,4 @@
-import { Directive, ElementRef, QueryList, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Directive, ElementRef, QueryList, SimpleChanges, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
@@ -34,11 +34,13 @@ export abstract class AbstractTreeNode extends AbstractNode {
      */
     private basicModals: BasicModalsServices;
     private sharedModals: SharedModalsServices;
+    private changeDetectorRef: ChangeDetectorRef;
 
-    constructor(basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
+    constructor(basicModals: BasicModalsServices, sharedModals: SharedModalsServices, changeDetectorRef: ChangeDetectorRef) {
         super();
         this.basicModals = basicModals;
         this.sharedModals = sharedModals;
+        this.changeDetectorRef = changeDetectorRef;
     }
 
     /**
@@ -123,12 +125,8 @@ export abstract class AbstractTreeNode extends AbstractNode {
                 this.expandNode().subscribe(
                     () => {
                         //trigger a round of change detection so that the view children are rendered
-                        setTimeout(
-                            () => {
-                                this.expandChild(path);
-                            }
-                        );
-
+                        this.changeDetectorRef.detectChanges();
+                        this.expandChild(path);
                     }
                 );
             } else {

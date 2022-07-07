@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from "@ngx-translate/core";
 import { finalize } from 'rxjs/operators';
@@ -38,9 +38,9 @@ export class CreateProjectModal extends AbstractProjectCreationModal {
     //not used (since in ShowVoc the project creation doesn't support History nor Validation), but still necessary to the createProject()
     private supportRepoId: string;
 
-    constructor(activeModal: NgbActiveModal, settingsService: SettingsServices, extensionsService: ExtensionsServices, modalService: NgbModal,
+    constructor(activeModal: NgbActiveModal, settingsService: SettingsServices, extensionsService: ExtensionsServices, modalService: NgbModal, changeDetectorRef: ChangeDetectorRef,
         private projectService: ProjectsServices, private adminService: AdministrationServices, private basicModals: BasicModalsServices, private translateService: TranslateService) {
-        super(activeModal, modalService, extensionsService, settingsService);
+        super(activeModal, modalService, extensionsService, settingsService, changeDetectorRef);
     }
 
     ngOnInit() {

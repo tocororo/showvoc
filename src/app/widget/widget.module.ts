@@ -4,6 +4,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BarChartComponent } from './charts/bar-chart.component';
+import { PieChartComponent } from './charts/pie-chart.component';
+import { SeriesChartLegendComponent } from './charts/series-chart-legend.component';
 import { SanitizerDirective } from './directives/sanitizer.directive';
 import { ExtensionConfiguratorComponent } from './extensionConfigurator/extension-configurator.component';
 import { InputEditableComponent } from './input-editable/input-editable.component';
@@ -39,9 +43,11 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typedLiteralIn
         DragDropModule,
         FormsModule,
         NgbToastModule,
+        NgxChartsModule,
         TranslateModule,
     ],
     declarations: [
+        BarChartComponent,
         DataSizeRenderer,
         ExtensionConfiguratorComponent,
         FilePickerComponent,
@@ -53,6 +59,7 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typedLiteralIn
         LocalizedEditorModal,
         NestedSettingSetRendererComponent,
         PasswordInputComponent,
+        PieChartComponent,
         RdfResourceComponent,
         RenderingEditor,
         RenderingEditorModal,
@@ -61,6 +68,7 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typedLiteralIn
         ResourcePickerComponent,
         ResizableLayoutComponent,
         SanitizerDirective,
+        SeriesChartLegendComponent,
         SettingMapRendererComponent,
         SettingPropRendererComponent,
         SettingSetRendererComponent,
@@ -71,6 +79,7 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typedLiteralIn
         TypedLiteralInputComponent
     ],
     exports: [
+        BarChartComponent,
         DataSizeRenderer,
         ExtensionConfiguratorComponent,
         FilePickerComponent,
@@ -81,6 +90,7 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typedLiteralIn
         LiteralPickerComponent,
         LocalizedEditorModal,
         PasswordInputComponent,
+        PieChartComponent,
         RdfResourceComponent,
         RenderingEditor,
         RenderingEditorModal,

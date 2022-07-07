@@ -1,4 +1,4 @@
-import { Component, Input, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
@@ -26,9 +26,9 @@ export class PropertyTreeComponent extends AbstractTree {
 
     structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.property;
 
-    constructor(private propertyService: PropertiesServices, eventHandler: SVEventHandler, searchService: SearchServices,
-        basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
-        super(eventHandler, searchService, basicModals, sharedModals);
+    constructor(private propertyService: PropertiesServices, searchService: SearchServices, basicModals: BasicModalsServices, sharedModals: SharedModalsServices, 
+        eventHandler: SVEventHandler, changeDetectorRef: ChangeDetectorRef) {
+        super(eventHandler, searchService, basicModals, sharedModals, changeDetectorRef);
     }
 
     /**

@@ -1,13 +1,12 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { finalize, mergeMap } from 'rxjs/operators';
-import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { InstanceListPreference, InstanceListVisualizationMode, SafeToGo, SafeToGoMap } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, ResAttribute } from 'src/app/models/Resources';
 import { ClassesServices } from 'src/app/services/classes.service';
+import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { SVContext } from 'src/app/utils/SVContext';
 import { SVEventHandler } from 'src/app/utils/SVEventHandler';
-import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { AbstractList } from '../abstract-list';
 
 @Component({
@@ -30,8 +29,8 @@ export class InstanceListComponent extends AbstractList {
 
     translationParam: { count: number, safeToGoLimit: number };
 
-    constructor(private clsService: ClassesServices, private basicModals: BasicModalsServices, eventHandler: SVEventHandler) {
-        super(eventHandler);
+    constructor(private clsService: ClassesServices, eventHandler: SVEventHandler, changeDetectorRef: ChangeDetectorRef) {
+        super(eventHandler, changeDetectorRef);
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -66,10 +65,9 @@ export class InstanceListComponent extends AbstractList {
                 this.resumePendingSearch();
             }
         } else { //class not provided, reset the instance list
-            //setTimeout prevent ExpressionChangedAfterItHasBeenCheckedError on isOpenGraphEnabled('dataOriented') in the parent panel
-            setTimeout(() => {
-                this.setInitialStatus();
-            });
+            this.setInitialStatus();
+            //prevent ExpressionChangedAfterItHasBeenCheckedError on isOpenGraphEnabled('dataOriented') in the parent panel
+            this.changeDetectorRef.detectChanges();
         }
     }
 
@@ -86,9 +84,8 @@ export class InstanceListComponent extends AbstractList {
                 this.openListAt(this.pendingSearchRes); //standard mode => simply open list (focus searched res)
             } else { //search mode => set the pending searched resource as only element of the list and then focus it
                 this.forceList([this.pendingSearchRes]);
-                setTimeout(() => {
-                    this.openListAt(this.pendingSearchRes);
-                });
+                this.changeDetectorRef.detectChanges();
+                this.openListAt(this.pendingSearchRes);
             }
         }
     }

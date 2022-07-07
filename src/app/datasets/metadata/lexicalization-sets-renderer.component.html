@@ -2,14 +2,20 @@
     <div class="card-header d-flex align-items-center">
         <b style="flex: 1;">{{'METADATA.LEXICALIZATION_SET.LEXICAL_ASSETS'|translate}}</b>
 
-        <div class="btn-group btn-group-sm" ngbDropdown>
+        <div class="btn-group btn-group-sm" ngbDropdown autoClose="outside">
             <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle></button>
             <div class="dropdown-menu" ngbDropdownMenu>
-                <button class="dropdown-item" (click)="sortLexicalizationSets('language')">
-                    <span class="fas fa-sort-alpha-down"></span> {{'COMMONS.ACTIONS.SORT_BY_X'|translate}} {{'COMMONS.LANGUAGE.LANGUAGE'|translate}}
+                <button class="dropdown-item" (click)="switchSort('language')">
+                    <span *ngIf="sortCriteria != 'language_desc'" class="fas fa-sort-alpha-down"></span> 
+                    <span *ngIf="sortCriteria == 'language_desc'" class="fas fa-sort-alpha-up"></span> 
+                    {{'COMMONS.ACTIONS.SORT_BY_X'|translate}} {{'COMMONS.LANGUAGE.LANGUAGE'|translate}}
+                    <span *ngIf="sortCriteria == 'language_asc' || sortCriteria == 'language_desc'" class="fas fa-check"></span>
                 </button>
-                <button class="dropdown-item" (click)="sortLexicalizationSets('lexicalizations')">
-                    <span class="fas fa-sort-numeric-down"></span> {{'COMMONS.ACTIONS.SORT_BY_X'|translate}} {{'METADATA.LEXICALIZATION_SET.LEXICALIZATIONS'|translate}}
+                <button class="dropdown-item" (click)="switchSort('lexicalizations')">
+                    <span *ngIf="sortCriteria != 'lexicalizations_asc'" class="fas fa-sort-numeric-down"></span> 
+                    <span *ngIf="sortCriteria == 'lexicalizations_asc'" class="fas fa-sort-numeric-up"></span> 
+                    {{'COMMONS.ACTIONS.SORT_BY_X'|translate}} {{'METADATA.LEXICALIZATION_SET.LEXICALIZATIONS'|translate}}
+                    <span *ngIf="sortCriteria == 'lexicalizations_asc' || sortCriteria == 'lexicalizations_desc'" class="fas fa-check"></span> 
                 </button>
                 <div class="dropdown-divider"></div>
                 <button class="dropdown-item" (click)="collapseAll(false)">
@@ -22,6 +28,11 @@
         </div>
     </div>
     <div class="card-body vbox overflow-auto">
+
+        <!-- <div>
+            <pie-chart *ngIf="lexSetsChartData" [chartData]="lexSetsChartData" [doughnut]="false"></pie-chart>
+        </div> -->
+        
 
         <div *ngFor="let l of lexicalizationSets" class="card m-1" style="min-width: 250px;">
             <div class="card-body">

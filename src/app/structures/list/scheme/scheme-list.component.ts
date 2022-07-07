@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { SkosServices } from 'src/app/services/skos.service';
@@ -17,8 +17,8 @@ export class SchemeListComponent extends AbstractList {
 
     structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.conceptScheme;
 
-    constructor(private skosService: SkosServices, private svProp: SVProperties, eventHandler: SVEventHandler) {
-        super(eventHandler);
+    constructor(private skosService: SkosServices, private svProp: SVProperties, eventHandler: SVEventHandler, changeDetectorRef: ChangeDetectorRef) {
+        super(eventHandler, changeDetectorRef);
         //handler when active schemes is changed programmatically when a searched concept belong to a non active scheme
         this.eventSubscriptions.push(eventHandler.schemeChangedEvent.subscribe(
             (schemes: IRI[]) => {

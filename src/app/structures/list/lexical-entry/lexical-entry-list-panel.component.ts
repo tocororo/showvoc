@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions } from 'src/app/modal-dialogs/Modals';
+import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { LexEntryVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
 import { OntoLexLemonServices } from 'src/app/services/ontolex-lemon.service';
@@ -47,9 +48,9 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
 
     closedAlert: boolean;
 
-    constructor(basicModals: BasicModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private ontolexService: OntoLexLemonServices,
-        private modalService: NgbModal) {
-        super(basicModals, eventHandler, svProp);
+    constructor(basicModals: BasicModalsServices, sharedModals: SharedModalsServices, eventHandler: SVEventHandler, svProp: SVProperties, private ontolexService: OntoLexLemonServices,
+        private modalService: NgbModal, private changeDetectorRef: ChangeDetectorRef) {
+        super(basicModals, sharedModals, eventHandler, svProp);
         this.eventSubscriptions.push(eventHandler.lexiconChangedEvent.subscribe(
             (lexicon: IRI) => this.onLexiconChanged(lexicon))
         );
@@ -96,7 +97,7 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
                 this.openAt(results[0]);
             } else { //multiple results, ask the user which one select
                 ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
-                this.basicModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
+                this.sharedModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
                     (selectedResources: AnnotatedValue<IRI>[]) => {
                         this.openAt(selectedResources[0]);
                     },
@@ -123,12 +124,11 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
                     } else {
                         message += " lexicon. If you want to activate the lexicon and continue the search, please select it and press OK.";
                     }
-                    this.basicModals.selectResource({ key: "COMMONS.ACTIONS.SEARCH" }, message, lexicons, this.rendering).then(
+                    this.sharedModals.selectResource({ key: "COMMONS.ACTIONS.SEARCH" }, message, lexicons, this.rendering).then(
                         (lexicons: AnnotatedValue<Resource>[]) => {
                             this.svProp.setActiveLexicon(SVContext.getProjectCtx(), <IRI>lexicons[0].getValue()); //update the active lexicon
-                            setTimeout(() => { //wait for a change detection round, since after the setActiveLexicon, the lex entry list is reset
-                                this.openAt(resource);
-                            });
+                            this.changeDetectorRef.detectChanges(); //wait for a change detection round, since after the setActiveLexicon, the lex entry list is reset
+                            this.openAt(resource);
                         },
                         () => { }
                     );
@@ -145,16 +145,14 @@ export class LexicalEntryListPanelComponent extends AbstractListPanel {
                     this.firstDigitIndex = index.charAt(0);
                     this.secondDigitIndex = index.charAt(1);
                     this.onDigitChange();
-                    setTimeout(() => {
-                        this.viewChildList.openListAt(node);
-                    });
+                    this.changeDetectorRef.detectChanges();
+                    this.viewChildList.openListAt(node);
                 }
             );
         } else { //search-based
             this.viewChildList.forceList([node]);
-            setTimeout(() => {
-                this.viewChildList.openListAt(node);
-            });
+            this.changeDetectorRef.detectChanges();
+            this.viewChildList.openListAt(node);
         }
     }
 

@@ -1,0 +1,17 @@
+<div style="width: calc(100% - 250px);">
+    <ngx-charts-pie-chart
+        [results]="chartData"
+        [legend]="false"
+        [labels]="false"
+        [doughnut]="doughnut"
+        [activeEntries]="activeEntries"
+        [scheme]="colorScheme"
+        (dblclick)="onDblClick($event)"
+        (activate)="onActivate($event.value)"
+        (deactivate)="onDeactivate()"
+    >
+    </ngx-charts-pie-chart>
+</div>
+
+<series-chart-legend style="width: 250px;" [chartData]="chartData" [colorScheme]="colorScheme" [activeEntries]="activeEntries"
+    (activate)="onActivate($event)" (deactivate)="onDeactivate()" (dataChanged)="onDataChanged($event)"></series-chart-legend>

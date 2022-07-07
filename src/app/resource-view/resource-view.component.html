@@ -22,7 +22,9 @@
                     <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle></button>
                     <div class="dropdown-menu" ngbDropdownMenu>
                         <button class="dropdown-item" (click)="openInDataGraph()">{{'RESOURCE_VIEW.ACTIONS.SHOW_IN_DATA_GRAPH'|translate}}</button>
-                        <button *ngIf="annotatedResource.getValue().isIRI()" class="dropdown-item" (click)="openInModelGraph()">{{'RESOURCE_VIEW.ACTIONS.SHOW_IN_MODEL_GRAPH'|translate}}</button>
+                        <button *ngIf="annotatedResource.getValue().isIRI() && annotatedResource.getAttribute('role') == 'cls'" class="dropdown-item" (click)="openInModelGraph()">
+                            {{'RESOURCE_VIEW.ACTIONS.SHOW_IN_MODEL_GRAPH'|translate}}
+                        </button>
                     </div>
                 </div>
             </div>

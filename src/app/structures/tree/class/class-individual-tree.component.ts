@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from "@angular/core";
 import { AnnotatedValue, IRI } from 'src/app/models/Resources';
 import { SVContext } from 'src/app/utils/SVContext';
 import { SKOS } from '../../../models/Vocabulary';
@@ -28,6 +28,8 @@ export class ClassIndividualTreeComponent {
     currentSchemes: IRI[];//the scheme selecte in the concept tree (only if selected class is skos:Concept)
     selectedInstance: AnnotatedValue<IRI>; //the instance (or concept) selected in the instance list (or concept tree)
 
+    constructor(private changeDetectorRef: ChangeDetectorRef) {}
+
     ngOnInit() {
         if (this.schemes === undefined) { //if @Input scheme is not provided at all, get it from project preference
             this.currentSchemes = SVContext.getProjectCtx().getProjectPreferences().activeSchemes;
@@ -45,9 +47,8 @@ export class ClassIndividualTreeComponent {
             this.selectedInstance = null;
             //when there is only one class, select it automatically
             if (this.roots && this.roots.length == 1) {
-                setTimeout(() => { //give time to initialize child component (without this, openTreeAt in class tree generates error)
-                    this.classTreePanelChild.openAt(new AnnotatedValue(this.roots[0]));
-                });
+                this.changeDetectorRef.detectChanges(); //give time to initialize child component (without this, openTreeAt in class tree generates error)
+                this.classTreePanelChild.openAt(new AnnotatedValue(this.roots[0]));
             }
         }
     }

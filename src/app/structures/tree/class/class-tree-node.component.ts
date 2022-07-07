@@ -1,4 +1,4 @@
-import { Component, Input, QueryList, ViewChildren, SimpleChanges } from '@angular/core';
+import { Component, Input, QueryList, ViewChildren, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
@@ -27,8 +27,8 @@ export class ClassTreeNodeComponent extends AbstractTreeNode {
     showInstanceNumber: boolean = false;
 
     constructor(private clsService: ClassesServices, private eventHandler: SVEventHandler,
-        basicModals: BasicModalsServices, sharedModals: SharedModalsServices) {
-        super(basicModals, sharedModals);
+        basicModals: BasicModalsServices, sharedModals: SharedModalsServices, changeDetectorRef: ChangeDetectorRef) {
+        super(basicModals, sharedModals, changeDetectorRef);
 
         this.eventSubscriptions.push(this.eventHandler.classFilterChangedEvent.subscribe(
             () => this.initShowExpandCollapseBtn()

@@ -2,6 +2,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -49,6 +50,7 @@ let HttpLoaderFactory = (http: HttpClient) => {
         AdministrationModule,
         AlignmentsModule,
         AppRoutingModule,
+        BrowserAnimationsModule,
         BrowserModule,
         ContributionModule,
         DatasetsModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { from, Observable, of } from 'rxjs';
@@ -62,7 +62,7 @@ export class SystemConfigurationComponent implements OnInit {
 
     constructor(private adminService: AdministrationServices, private svService: ShowVocServices, private settingsService: SettingsServices,
         private usersService: UserServices, private basicModals: BasicModalsServices, private modalService: NgbModal,
-        private translateService: TranslateService) { }
+        private translateService: TranslateService, private changeDetectorRef: ChangeDetectorRef) { }
 
     ngOnInit() {
         this.currentUser = SVContext.getLoggedUser();
@@ -405,9 +405,8 @@ export class SystemConfigurationComponent implements OnInit {
             () => { //change rejected, restore previous value
                 //this "hack" is needed in order to force the ngModel to detect the change
                 this.selectedAuthServiceMode = null;
-                setTimeout(() => {
-                    this.selectedAuthServiceMode = oldValue;
-                });
+                this.changeDetectorRef.detectChanges();
+                this.selectedAuthServiceMode = oldValue;
             }
         );
     }
