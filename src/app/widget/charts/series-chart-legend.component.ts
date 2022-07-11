@@ -5,6 +5,7 @@ import { ChartData, NgxChartsUtils } from "./NgxChartsUtils";
 @Component({
     selector: "series-chart-legend",
     templateUrl: "./series-chart-legend.component.html",
+    host: { class: "vbox" },
     styles: [`
     .legend-entry {
         display: flex;

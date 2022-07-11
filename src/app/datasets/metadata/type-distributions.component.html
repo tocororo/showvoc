@@ -13,17 +13,13 @@
             <li *ngIf="activeTab == 'chart'" ngbDropdown class="nav-item">
                 <a href (click)="false" class="nav-link" ngbDropdownToggle></a>
                 <div ngbDropdownMenu>
-                    <button *ngFor="let t of chartTypes" ngbDropdownItem (click)="activeChart = t">
+                    <button *ngFor="let t of chartTypes" ngbDropdownItem (click)="switchChart(t)">
                         {{t}}
                         <span *ngIf="activeChart == t" class="fas fa-check float-right ml-2"></span>
                     </button>
                 </div>
             </li>
         </ul>
-
-        <!-- <select *ngIf="classPartitionsData?.length > 0" class="form-control form-control-sm" style="width: initial;" [(ngModel)]="activeChart" (ngModelChange)="onViewChanged()">
-            <option *ngFor="let t of chartTypes">{{t}}</option>
-        </select> -->
     </div>
     <div class="card-body">
 

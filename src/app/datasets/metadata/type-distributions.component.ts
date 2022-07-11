@@ -74,7 +74,8 @@ export class TypeDistributionsComponent {
         );
     }
 
-    onViewChanged() {
+    switchChart(type: ChartEnum) {
+        this.activeChart = type;
         Cookie.setCookie(Cookie.METADATA_TYPE_DISTRIBUTIONS_CHART_TYPE, this.activeChart);
     }
 

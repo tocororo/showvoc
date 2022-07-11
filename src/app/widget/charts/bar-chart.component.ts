@@ -5,7 +5,6 @@ import { ChartData } from "./NgxChartsUtils";
 @Component({
     selector: "bar-chart",
     templateUrl: "./bar-chart.component.html",
-    host: { class: "d-flex" },
 })
 export class BarChartComponent extends AbstractSeriesChartComponent {
 

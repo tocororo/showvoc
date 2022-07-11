@@ -136,6 +136,11 @@ export class LexicalizationSetsRenderer {
         });
     }
 
+    switchChart(type: ChartEnum) {
+        this.activeChart = type;
+        Cookie.setCookie(Cookie.METADATA_LEX_SETS_CHART_TYPE, this.activeChart);
+    }
+
 }
 
 enum SortCriteria {

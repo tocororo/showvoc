@@ -41,7 +41,7 @@
             <li *ngIf="activeTab == 'chart'" ngbDropdown class="nav-item">
                 <a href (click)="false" class="nav-link" [ngClass]="{ disabled: lexicalizationSets?.length == 0 }" ngbDropdownToggle></a>
                 <div ngbDropdownMenu>
-                    <button *ngFor="let t of chartTypes" ngbDropdownItem (click)="activeChart = t">
+                    <button *ngFor="let t of chartTypes" ngbDropdownItem  (click)="switchChart(t)">
                         {{t}}
                         <span *ngIf="activeChart == t" class="fas fa-check float-right ml-2"></span>
                     </button>
@@ -55,8 +55,8 @@
         <ng-container *ngIf="lexicalizationSets?.length > 0">
 
             <ng-container *ngIf="activeTab == 'chart';">
-                <pie-chart *ngIf="activeChart == 'pie'" [chartData]="lexSetsChartData" [doughnut]="true"></pie-chart>
-                <bar-chart *ngIf="activeChart == 'bar'" [chartData]="lexSetsChartData"></bar-chart>
+                <pie-chart *ngIf="activeChart == 'pie'" class="vbox" [chartData]="lexSetsChartData" [doughnut]="true"></pie-chart>
+                <bar-chart *ngIf="activeChart == 'bar'" class="vbox" [chartData]="lexSetsChartData"></bar-chart>
             </ng-container>
 
             <div *ngIf="activeTab == 'table';" class="overflow-auto">
