@@ -3,32 +3,49 @@ import { LexicalizationSetMetadata } from "src/app/models/Metadata";
 import { Project } from "src/app/models/Project";
 import { AnnotatedValue, IRI } from "src/app/models/Resources";
 import { MetadataRegistryServices } from "src/app/services/metadata-registry.service";
-import { ChartData } from 'src/app/widget/charts/NgxChartsUtils';
+import { Cookie } from 'src/app/utils/Cookie';
+import { ChartData, ChartEnum } from 'src/app/widget/charts/NgxChartsUtils';
 
 @Component({
     selector: 'lexicalization-sets-renderer',
     templateUrl: './lexicalization-sets-renderer.component.html',
     host: { class: "vbox" },
     styles: [`
-    .table > tbody > tr:first-child > td {
-        border-top: none;
-    }
+        .card-header-tabs {
+            margin-bottom: -6px;
+        }
+        .nav-tabs>li>a {
+            padding: 6px;
+        }
     `]
 })
 export class LexicalizationSetsRenderer {
 
     @Input() dataset: AnnotatedValue<IRI>;
+
+    activeTab: "table" | "chart" = "table";
+
     lexicalizationSets: LexicalizationSetMetadata[];
 
-    lexSetsChartData: ChartData[];
-
     sortCriteria: SortCriteria = SortCriteria.language_asc;
+
+    chartTypes: ChartEnum[] = [ChartEnum.bar, ChartEnum.pie];
+    activeChart: ChartEnum = ChartEnum.bar;
+
+    lexSetsChartData: ChartData[];
 
     constructor(private metadataRegistryService: MetadataRegistryServices) { }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['dataset'] && changes['dataset'].currentValue) {
             this.initLexicalizationSets();
+        }
+    }
+
+    ngOnInit() {
+        let chartType: string = Cookie.getCookie(Cookie.METADATA_LEX_SETS_CHART_TYPE);
+        if (chartType in ChartEnum) {
+            this.activeChart = <ChartEnum>chartType;
         }
     }
 

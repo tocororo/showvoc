@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { DatasetMetadata, LexicalizationSetMetadata, LinksetMetadata, ProjectDatasetMapping, Target } from '../models/Metadata';
 import { Project } from '../models/Project';
 import { AnnotatedValue, IRI, Literal, ResourcePosition } from '../models/Resources';
-import { STRequestOptions } from '../utils/HttpManager';
+import { STRequestOptions, STRequestParams } from '../utils/HttpManager';
 import { NTriplesUtil, ResourceDeserializer } from '../utils/ResourceUtils';
 import { StMetadataRegistry } from '../utils/STMetadataRegistry';
 
@@ -20,7 +20,7 @@ export class MetadataRegistryServices {
      * @param dataset 
      */
     getEmbeddedLexicalizationSets(dataset: IRI): Observable<LexicalizationSetMetadata[]> {
-        let params: any = {
+        let params: STRequestParams = {
             dataset: dataset
         };
         return this.httpMgr.doGet(this.serviceName, "getEmbeddedLexicalizationSets", params);
@@ -33,7 +33,7 @@ export class MetadataRegistryServices {
      * @param coalesce whether or not merge linksets for the same pair of datasets
      */
     getEmbeddedLinksets(dataset: IRI, treshold?: number, coalesce?: boolean): Observable<LinksetMetadata[]> {
-        let params: any = {
+        let params: STRequestParams = {
             dataset: dataset,
             treshold: treshold,
             coalesce: coalesce
@@ -82,7 +82,7 @@ export class MetadataRegistryServices {
      * @param projects 
      */
     findDatasetForProjects(projects: Project[]): Observable<ProjectDatasetMapping> {
-        let params: any = {
+        let params: STRequestParams = {
             projects: projects.map(p => p.getName())
         };
         return this.httpMgr.doGet(this.serviceName, "findDatasetForProjects", params).pipe(
@@ -101,7 +101,7 @@ export class MetadataRegistryServices {
      * @param iri 
      */
     findDataset(iri: IRI): Observable<ResourcePosition> {
-        let params: any = {
+        let params: STRequestParams = {
             iri: iri,
         };
         return this.httpMgr.doGet(this.serviceName, "findDataset", params).pipe(
@@ -116,7 +116,7 @@ export class MetadataRegistryServices {
      * @param dataset 
      */
     getDatasetMetadata(dataset: IRI): Observable<DatasetMetadata> {
-        let params: any = {
+        let params: STRequestParams = {
             dataset: dataset
         };
         return this.httpMgr.doGet(this.serviceName, "getDatasetMetadata", params).pipe(
@@ -132,7 +132,7 @@ export class MetadataRegistryServices {
      * @param iri 
      */
     discoverDataset(iri: IRI): Observable<AnnotatedValue<IRI>> {
-        let params: any = {
+        let params: STRequestParams = {
             iri: iri,
         };
         return this.httpMgr.doPost(this.serviceName, "discoverDataset", params).pipe(
@@ -147,7 +147,7 @@ export class MetadataRegistryServices {
      * @param iri 
      */
     discoverDatasetMetadata(iri: IRI): Observable<DatasetMetadata> {
-        let params: any = {
+        let params: STRequestParams = {
             iri: iri
         };
         let options: STRequestOptions = new STRequestOptions({
@@ -160,6 +160,17 @@ export class MetadataRegistryServices {
                 return DatasetMetadata.deserialize(stResp);
             })
         );
+    }
+
+    /**
+     * 
+     * @param dataset 
+     */
+    getClassPartitions(dataset: IRI): Observable<{ [iri: string]: number }> {
+        let params: STRequestParams = {
+            dataset: dataset
+        };
+        return this.httpMgr.doGet(this.serviceName, "getClassPartitions", params);
     }
 
 }

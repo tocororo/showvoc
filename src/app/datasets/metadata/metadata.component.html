@@ -1,6 +1,6 @@
-<resizable-layout orientation="H" mainFlex="10">
-    <ng-container main>
-        <div class="vbox overflow-auto" style="flex: 3;">
+<!-- <resizable-layout orientation="H" mainFlex="4">
+    <ng-container main> -->
+        <div class="vbox overflow-auto" style="flex: 1;">
 
             <div class="card">
                 <div class="card-header">
@@ -143,21 +143,22 @@
                 </div>
             </div>
 
-            <!-- <bar-chart></bar-chart> -->
         </div>
-    </ng-container>
-    <ng-container secondary>
-        <div class="card vbox">
+    <!-- </ng-container>
+    <ng-container secondary> -->
+        <div class="card vbox ml-2">
 
             <div class="card-header">
                 <h5 class="m-0">{{'METADATA.STATS'|translate}}</h5>
             </div>
             <div class="card-body vbox">
 
-                <lexicalization-sets-renderer [dataset]="dataset"></lexicalization-sets-renderer>
+                <type-distributions [dataset]="dataset"></type-distributions>
+
+                <lexicalization-sets-renderer class="mt-2" [dataset]="dataset"></lexicalization-sets-renderer>
 
             </div>
 
         </div>
-    </ng-container>
-</resizable-layout>
+    <!-- </ng-container>
+</resizable-layout> -->

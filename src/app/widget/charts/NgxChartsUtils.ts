@@ -54,8 +54,7 @@ export class NgxChartsUtils {
     }
 }
 
-
-export interface ChartDataChangedEvent {
-    old: ChartData;
-    new: ChartData;
+export enum ChartEnum {
+    bar = "bar",
+    pie = "pie"
 }

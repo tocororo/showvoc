@@ -5,7 +5,7 @@ import { ChartData } from "./NgxChartsUtils";
 @Component({
     selector: "pie-chart",
     templateUrl: "./pie-chart.component.html",
-    host: { class: "hbox" },
+    host: { class: "d-flex" },
 })
 export class PieChartComponent extends AbstractSeriesChartComponent {
 

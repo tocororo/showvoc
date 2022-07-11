@@ -9,7 +9,7 @@ import { ChartData, NgxChartsUtils } from "./NgxChartsUtils";
     .legend-entry {
         display: flex;
         align-items: center;
-        width: 230px;
+        width: 220px;
         font-size: 12px;
         margin: 0.5rem;
     }

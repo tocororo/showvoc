@@ -39,9 +39,10 @@ export class Cookie {
     public static SEARCH_FILTERS_ONLY_OPEN_PROJECTS = "search.filters.only_open_projects";
     public static SEARCH_FILTERS_LANGUAGES = "search.filters.languages";
 
+    public static METADATA_TYPE_DISTRIBUTIONS_CHART_TYPE = "metadata.type_distributions.chart_type";
+    public static METADATA_LEX_SETS_CHART_TYPE = "metadata.lexicalization_sets.chart_type";
+
     public static EXPLORE_HIDE_WARNING_MODAL_RES_VIEW = "explore.hide_warning_open_modal_res_view";
-
-
 
     public static WARNING_CUSTOM_ROOT = "warnings.ui.tree.cls.customroot";
     public static WARNING_ADMIN_CHANGE_USER_TYPE = "warnings.administration.change_user_type";

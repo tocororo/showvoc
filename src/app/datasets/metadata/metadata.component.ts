@@ -43,12 +43,12 @@ export class MetadataComponent implements OnInit {
     dataset: AnnotatedValue<IRI>;
     datasetMetadata: DatasetMetadata;
 
-    distributions: DownloadInfo[] = [];
-
     private readonly PROJ_DOWNLOAD_DIR_PATH = "proj:/download";
+    distributions: DownloadInfo[] = [];
     files: FileInfo[] = [];
 
-    constructor(private metadataRegistryService: MetadataRegistryServices, private downloadService: DownloadServices, 
+
+    constructor(private metadataRegistryService: MetadataRegistryServices, private downloadService: DownloadServices,
         private storageService: StorageServices, private projectService: ProjectsServices,
         private sharedModals: SharedModalsServices, private modalService: NgbModal, private translate: TranslateService) { }
 
@@ -71,6 +71,7 @@ export class MetadataComponent implements OnInit {
                 );
             }
         );
+
 
         this.initFacets();
 
@@ -268,14 +269,14 @@ export class MetadataComponent implements OnInit {
             (entries: DirectoryEntryInfo[]) => {
                 //filter those entries which are files (not dir) and the name is not already returned in the downloads list
                 this.files = entries
-                .filter(e => e.type == EntryType.FILE && !this.distributions.some(d => d.fileName == e.name))
-                .map(e => {
-                    return {
-                        name: e.name,
-                        date: new Date(e.creationTimestamp),
-                        dateLocal: CommonUtils.datetimeToLocale(new Date(e.creationTimestamp))
-                    };
-                });
+                    .filter(e => e.type == EntryType.FILE && !this.distributions.some(d => d.fileName == e.name))
+                    .map(e => {
+                        return {
+                            name: e.name,
+                            date: new Date(e.creationTimestamp),
+                            dateLocal: CommonUtils.datetimeToLocale(new Date(e.creationTimestamp))
+                        };
+                    });
             }
         );
     }

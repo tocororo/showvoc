@@ -1,0 +1,59 @@
+<div class="card">
+    <div class="card-header d-flex align-items-center">
+        <b style="flex: 1;">{{'Type distributions'|translate}}</b>
+
+        <ul class="nav nav-tabs card-header-tabs justify-content-end" style="padding-right: 8px;">
+            <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" (click)="activeTab = 'table'" [ngClass]="{ active: activeTab == 'table' }">Table</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" (click)="activeTab = 'chart'" [ngClass]="{ active: activeTab == 'chart' }">Chart</a>
+            </li>
+            <li *ngIf="activeTab == 'chart'" ngbDropdown class="nav-item">
+                <a href (click)="false" class="nav-link" ngbDropdownToggle></a>
+                <div ngbDropdownMenu>
+                    <button *ngFor="let t of chartTypes" ngbDropdownItem (click)="activeChart = t">
+                        {{t}}
+                        <span *ngIf="activeChart == t" class="fas fa-check float-right ml-2"></span>
+                    </button>
+                </div>
+            </li>
+        </ul>
+
+        <!-- <select *ngIf="classPartitionsData?.length > 0" class="form-control form-control-sm" style="width: initial;" [(ngModel)]="activeChart" (ngModelChange)="onViewChanged()">
+            <option *ngFor="let t of chartTypes">{{t}}</option>
+        </select> -->
+    </div>
+    <div class="card-body">
+
+        <ng-container *ngIf="classPartitionsData?.length > 0;">
+
+            <ng-container *ngIf="activeTab == 'chart';">
+                <pie-chart *ngIf="activeChart == 'pie'" [chartData]="classPartitionsData" [doughnut]="true"></pie-chart>
+                <bar-chart *ngIf="activeChart == 'bar'" [chartData]="classPartitionsData"></bar-chart>
+            </ng-container>
+
+            <ng-container *ngIf="activeTab == 'table';">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr *ngFor="let data of classPartitionsData">
+                            <td>{{data.name}}:</td>
+                            <td>{{data.value}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+
+        </ng-container>
+
+
+
+        <ng-container *ngIf="classPartitionsData?.length == 0;">
+            <div class="alert alert-warning">
+                Distributions not available for this dataset
+            </div>
+        </ng-container>
+
+    </div>
+</div>

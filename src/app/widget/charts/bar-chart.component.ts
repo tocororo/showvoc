@@ -5,7 +5,7 @@ import { ChartData } from "./NgxChartsUtils";
 @Component({
     selector: "bar-chart",
     templateUrl: "./bar-chart.component.html",
-    host: { class: "hbox" },
+    host: { class: "d-flex" },
 })
 export class BarChartComponent extends AbstractSeriesChartComponent {
 
@@ -17,12 +17,6 @@ export class BarChartComponent extends AbstractSeriesChartComponent {
     }
     
     ngOnInit() {
-        this.chartData = [
-            { name: "en", value: 34 },
-            { name: "it", value: 14 },
-            { name: "es", value: 12 },
-            { name: "fr", value: 32 }
-        ];
     }
 
     /**

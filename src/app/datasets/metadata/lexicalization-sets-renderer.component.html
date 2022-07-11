@@ -2,78 +2,115 @@
     <div class="card-header d-flex align-items-center">
         <b style="flex: 1;">{{'METADATA.LEXICALIZATION_SET.LEXICAL_ASSETS'|translate}}</b>
 
-        <div class="btn-group btn-group-sm" ngbDropdown autoClose="outside">
-            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" ngbDropdownToggle></button>
-            <div class="dropdown-menu" ngbDropdownMenu>
-                <button class="dropdown-item" (click)="switchSort('language')">
-                    <span *ngIf="sortCriteria != 'language_desc'" class="fas fa-sort-alpha-down"></span> 
-                    <span *ngIf="sortCriteria == 'language_desc'" class="fas fa-sort-alpha-up"></span> 
-                    {{'COMMONS.ACTIONS.SORT_BY_X'|translate}} {{'COMMONS.LANGUAGE.LANGUAGE'|translate}}
-                    <span *ngIf="sortCriteria == 'language_asc' || sortCriteria == 'language_desc'" class="fas fa-check"></span>
-                </button>
-                <button class="dropdown-item" (click)="switchSort('lexicalizations')">
-                    <span *ngIf="sortCriteria != 'lexicalizations_asc'" class="fas fa-sort-numeric-down"></span> 
-                    <span *ngIf="sortCriteria == 'lexicalizations_asc'" class="fas fa-sort-numeric-up"></span> 
-                    {{'COMMONS.ACTIONS.SORT_BY_X'|translate}} {{'METADATA.LEXICALIZATION_SET.LEXICALIZATIONS'|translate}}
-                    <span *ngIf="sortCriteria == 'lexicalizations_asc' || sortCriteria == 'lexicalizations_desc'" class="fas fa-check"></span> 
-                </button>
-                <div class="dropdown-divider"></div>
-                <button class="dropdown-item" (click)="collapseAll(false)">
-                    <span class="fas fa-expand-alt"></span> {{'COMMONS.ACTIONS.EXPAND_ALL'|translate}}
-                </button>
-                <button class="dropdown-item" (click)="collapseAll(true)">
-                    <span class="fas fa-compress-alt"></span> {{'COMMONS.ACTIONS.COLLAPSE_ALL'|translate}}
-                </button>
-            </div>
-        </div>
+        <ul class="nav nav-tabs card-header-tabs justify-content-end" style="padding-right: 8px;">
+            <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" (click)="activeTab = 'table'" [ngClass]="{ active: activeTab == 'table', disabled: lexicalizationSets?.length == 0 }">
+                    Table
+                </a>
+            </li>
+            <li *ngIf="activeTab == 'table'" ngbDropdown class="nav-item" autoClose="outside">
+                <a href (click)="false" class="nav-link" [ngClass]="{ disabled: lexicalizationSets?.length == 0 }" ngbDropdownToggle></a>
+                <div ngbDropdownMenu>
+                    <button class="dropdown-item" (click)="switchSort('language')">
+                        <span *ngIf="sortCriteria != 'language_desc'" class="fas fa-sort-alpha-down"></span>
+                        <span *ngIf="sortCriteria == 'language_desc'" class="fas fa-sort-alpha-up"></span>
+                        {{'COMMONS.ACTIONS.SORT_BY_X'|translate}} {{'COMMONS.LANGUAGE.LANGUAGE'|translate}}
+                        <span *ngIf="sortCriteria == 'language_asc' || sortCriteria == 'language_desc'" class="fas fa-check"></span>
+                    </button>
+                    <button class="dropdown-item" (click)="switchSort('lexicalizations')">
+                        <span *ngIf="sortCriteria != 'lexicalizations_asc'" class="fas fa-sort-numeric-down"></span>
+                        <span *ngIf="sortCriteria == 'lexicalizations_asc'" class="fas fa-sort-numeric-up"></span>
+                        {{'COMMONS.ACTIONS.SORT_BY_X'|translate}} {{'METADATA.LEXICALIZATION_SET.LEXICALIZATIONS'|translate}}
+                        <span *ngIf="sortCriteria == 'lexicalizations_asc' || sortCriteria == 'lexicalizations_desc'" class="fas fa-check"></span>
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" (click)="collapseAll(false)">
+                        <span class="fas fa-expand-alt"></span> {{'COMMONS.ACTIONS.EXPAND_ALL'|translate}}
+                    </button>
+                    <button class="dropdown-item" (click)="collapseAll(true)">
+                        <span class="fas fa-compress-alt"></span> {{'COMMONS.ACTIONS.COLLAPSE_ALL'|translate}}
+                    </button>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" (click)="activeTab = 'chart'" [ngClass]="{ active: activeTab == 'chart', disabled: lexicalizationSets?.length == 0 }">
+                    Chart
+                </a>
+            </li>
+            <li *ngIf="activeTab == 'chart'" ngbDropdown class="nav-item">
+                <a href (click)="false" class="nav-link" [ngClass]="{ disabled: lexicalizationSets?.length == 0 }" ngbDropdownToggle></a>
+                <div ngbDropdownMenu>
+                    <button *ngFor="let t of chartTypes" ngbDropdownItem (click)="activeChart = t">
+                        {{t}}
+                        <span *ngIf="activeChart == t" class="fas fa-check float-right ml-2"></span>
+                    </button>
+                </div>
+            </li>
+        </ul>
+
     </div>
-    <div class="card-body vbox overflow-auto">
+    <div class="card-body vbox">
 
-        <!-- <div>
-            <pie-chart *ngIf="lexSetsChartData" [chartData]="lexSetsChartData" [doughnut]="false"></pie-chart>
-        </div> -->
-        
+        <ng-container *ngIf="lexicalizationSets?.length > 0">
 
-        <div *ngFor="let l of lexicalizationSets" class="card m-1" style="min-width: 250px;">
-            <div class="card-body">
-                <div class="d-flex align-items-center" class="clickable" [ngClass]="{ 'mb-2': !l['collapsed'] }" (click)="l['collapsed'] = !l['collapsed']">
-                    <span [class]="'fas fa-chevron-' + (l['collapsed'] ? 'right' : 'down')"></span>
-                    <span class="ml-2">{{l.language}}</span>
-                </div>
-                <div *ngIf="!l['collapsed']">
-                    <table class="table table-sm">
-                        <tr>
-                            <td nowrap>{{'MODELS.PROJECT.LEXICALIZATION_MODEL'|translate}}:</td>
-                            <td>{{l['lexModelPretty']}}</td>
-                        </tr>
-                        <tr>
-                            <td nowrap>{{'METADATA.LEXICALIZATION_SET.LEXICALIZATIONS'|translate}}:</td>
-                            <td>{{l.lexicalizations}}</td>
-                        </tr>
-                        <tr>
-                            <td nowrap>{{'METADATA.LEXICALIZATION_SET.LEXICAL_ENTRIES'|translate}}:</td>
-                            <td>{{l.lexicalEntries}}</td>
-                        </tr>
-                        <tr>
-                            <td nowrap>{{'METADATA.LEXICALIZATION_SET.REFERENCES'|translate}}:</td>
-                            <td>{{l.references}}</td>
-                        </tr>
-                        <tr>
-                            <td nowrap>{{'METADATA.LEXICALIZATION_SET.AVG_OF_LEXICALIZATIONS'|translate}}:</td>
-                            <td>{{l.avgNumOfLexicalizations}}</td>
-                        </tr>
-                        <tr>
-                            <td nowrap>{{'METADATA.LEXICALIZATION_SET.PERCENTAGE'|translate}}:</td>
-                            <td>{{l.percentage}}</td>
-                        </tr>
-                        <tr>
-                            <td nowrap>{{'METADATA.LEXICALIZATION_SET.LEXICON_DATASET'|translate}}:</td>
-                            <td>{{l.lexiconDataset}}</td>
-                        </tr>
-                    </table>
+            <ng-container *ngIf="activeTab == 'chart';">
+                <pie-chart *ngIf="activeChart == 'pie'" [chartData]="lexSetsChartData" [doughnut]="true"></pie-chart>
+                <bar-chart *ngIf="activeChart == 'bar'" [chartData]="lexSetsChartData"></bar-chart>
+            </ng-container>
+
+            <div *ngIf="activeTab == 'table';" class="overflow-auto">
+                <div *ngFor="let l of lexicalizationSets" class="card m-1" style="min-width: 250px;">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center" class="clickable" [ngClass]="{ 'mb-2': !l['collapsed'] }" (click)="l['collapsed'] = !l['collapsed']">
+                            <span [class]="'fas fa-chevron-' + (l['collapsed'] ? 'right' : 'down')"></span>
+                            <span class="ml-2">{{l.language}}</span>
+                        </div>
+                        <div *ngIf="!l['collapsed']">
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td nowrap>{{'MODELS.PROJECT.LEXICALIZATION_MODEL'|translate}}:</td>
+                                        <td>{{l['lexModelPretty']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.LEXICALIZATIONS'|translate}}:</td>
+                                        <td>{{l.lexicalizations}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.LEXICAL_ENTRIES'|translate}}:</td>
+                                        <td>{{l.lexicalEntries}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.REFERENCES'|translate}}:</td>
+                                        <td>{{l.references}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.AVG_OF_LEXICALIZATIONS'|translate}}:</td>
+                                        <td>{{l.avgNumOfLexicalizations}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.PERCENTAGE'|translate}}:</td>
+                                        <td>{{l.percentage}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.LEXICON_DATASET'|translate}}:</td>
+                                        <td>{{l.lexiconDataset}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+
+        </ng-container>
+
+        <ng-container *ngIf="lexicalizationSets?.length == 0">
+            <div class="alert alert-warning">
+                Lexicalization sets not available for this dataset
+            </div>
+        </ng-container>
 
     </div>
 </div>
