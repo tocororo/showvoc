@@ -24,10 +24,13 @@ export class TypeDistributionsComponent {
 
     activeTab: "table" | "chart" = "table";
 
-    chartTypes: ChartEnum[] = [ChartEnum.bar, ChartEnum.pie];
+    chartTypes: { value: ChartEnum, translationKey: string }[] = [
+        { value: ChartEnum.bar, translationKey: "COMMONS.CHARTS.BAR_CHART" },
+        { value: ChartEnum.pie, translationKey: "COMMONS.CHARTS.PIE_CHART" }
+    ];
     activeChart: ChartEnum = ChartEnum.bar;
 
-    classPartitionsData: ChartData[];
+    classPartitionsData: ChartData[] = [];
 
 
     constructor(private metadataRegistryService: MetadataRegistryServices) { }
@@ -62,7 +65,13 @@ export class TypeDistributionsComponent {
                 });
 
                 
-                this.classPartitionsData.sort((d1, d2) => d1.name.localeCompare(d2.name));
+                this.classPartitionsData.sort((d1, d2) => {
+                    if (d1.value != d2.value) {
+                        return d2.value - d1.value;
+                    } else {
+                        return d1.name.localeCompare(d2.name);
+                    }
+                });
                 
                 //if there are other entities not included in those classified, add the "other" count
                 let classifiedEntities: number = this.classPartitionsData.reduce((tot, data) => { return tot + data.value; }, 0); //amount of entities grouped under a classification

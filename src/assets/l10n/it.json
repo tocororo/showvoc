@@ -168,6 +168,11 @@
             "TRUE": "Vero",
             "YES": "Sì"
         },
+        "CHARTS": {
+            "BAR_CHART": "A barre",
+            "CHART": "Grafico",
+            "PIE_CHART": "A torta"
+        },
         "CONFIG": {
             "CONFIGURATION": "Configurazione",
             "CONFIGURATION_OF": "Configurazione di",
@@ -613,13 +618,19 @@
             "EMBEDDED_LEXICALIZATION_SETS": "Embedded Lexicalization Sets",
             "LEXICALIZATIONS": "Lessicalizzazioni",
             "LEXICALIZATION_SET": "Lexicalization Set",
-            "LEXICAL_ASSETS": "Assets lessicali",
             "LEXICAL_ENTRIES": "Lexical Entries",
             "LEXICON_DATASET": "Lexicon Dataset",
             "PERCENTAGE": "Percentuale",
             "REFERENCES": "Riferimenti"
         },
-        "STATS": "Statistiche"
+        "STATS": {
+            "LEXICAL_ASSETS": "Assets lessicali",
+            "LEXICAL_ASSETS_UNAVAILABLE": "Assets lessicali non disponibili per questo dataset",
+            "STATS": "Statistiche",
+            "TABLE": "Tabella",
+            "TYPE_DISTRIBUTIONS": "Distribuzioni dei tipi",
+            "TYPE_DISTRIBUTIONS_UNAVAILABLE": "Distribuzioni non disponibili per questo dataset"
+        }
     },
     "MODELS": {
         "PROJECT": {

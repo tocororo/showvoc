@@ -168,6 +168,11 @@
             "TRUE": "True",
             "YES": "Yes"
         },
+        "CHARTS": {
+            "BAR_CHART": "Bar",
+            "CHART": "Chart",
+            "PIE_CHART": "Pie"
+        },
         "CONFIG": {
             "CONFIGURATION": "Configuration",
             "CONFIGURATION_OF": "Configuration of",
@@ -613,13 +618,19 @@
             "EMBEDDED_LEXICALIZATION_SETS": "Embedded Lexicalization Sets",
             "LEXICALIZATIONS": "Lexicalizations",
             "LEXICALIZATION_SET": "Lexicalization Set",
-            "LEXICAL_ASSETS": "Lexical assets",
             "LEXICAL_ENTRIES": "Lexical Entries",
             "LEXICON_DATASET": "Lexicon Dataset",
             "PERCENTAGE": "Percentage",
             "REFERENCES": "References"
         },
-        "STATS": "Stats"
+        "STATS": {
+            "LEXICAL_ASSETS": "Lexical assets",
+            "LEXICAL_ASSETS_UNAVAILABLE": "Lexical assets not available for this dataset",
+            "STATS": "Stats",
+            "TABLE": "Table",
+            "TYPE_DISTRIBUTIONS": "Type distributions",
+            "TYPE_DISTRIBUTIONS_UNAVAILABLE": "Distributions not available for this dataset"
+        }
     },
     "MODELS": {
         "PROJECT": {

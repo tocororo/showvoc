@@ -25,11 +25,14 @@ export class LexicalizationSetsRenderer {
 
     activeTab: "table" | "chart" = "table";
 
-    lexicalizationSets: LexicalizationSetMetadata[];
+    lexicalizationSets: LexicalizationSetMetadata[] = [];
 
     sortCriteria: SortCriteria = SortCriteria.language_asc;
 
-    chartTypes: ChartEnum[] = [ChartEnum.bar, ChartEnum.pie];
+    chartTypes: { value: ChartEnum, translationKey: string }[] = [
+        { value: ChartEnum.bar, translationKey: "COMMONS.CHARTS.BAR_CHART" },
+        { value: ChartEnum.pie, translationKey: "COMMONS.CHARTS.PIE_CHART" }
+    ];
     activeChart: ChartEnum = ChartEnum.bar;
 
     lexSetsChartData: ChartData[];
@@ -58,14 +61,18 @@ export class LexicalizationSetsRenderer {
                 });
                 this.sortLexicalizationSets();
 
-                this.lexSetsChartData = this.lexicalizationSets.filter(l => l.lexicalizations != null && l.lexicalizations > 0).map(l => {
-                    return {
-                        name: l.language,
-                        value: l.lexicalizations
-                    };
-                });
+                this.initChartData();
             }
         );
+    }
+
+    private initChartData() {
+        this.lexSetsChartData = this.lexicalizationSets.filter(l => l.lexicalizations != null && l.lexicalizations > 0).map(l => {
+            return {
+                name: l.language,
+                value: l.lexicalizations
+            };
+        });
     }
 
     switchSort(criteria: "lexicalizations" | "language") {
@@ -83,6 +90,7 @@ export class LexicalizationSetsRenderer {
             }
         }
         this.sortLexicalizationSets();
+        this.initChartData();
     }
 
     private sortLexicalizationSets() {

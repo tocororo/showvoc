@@ -1,11 +1,11 @@
 <div class="card vbox">
     <div class="card-header d-flex align-items-center">
-        <b style="flex: 1;">{{'METADATA.LEXICALIZATION_SET.LEXICAL_ASSETS'|translate}}</b>
+        <b style="flex: 1;">{{'METADATA.STATS.LEXICAL_ASSETS'|translate}}</b>
 
         <ul class="nav nav-tabs card-header-tabs justify-content-end" style="padding-right: 8px;">
             <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" (click)="activeTab = 'table'" [ngClass]="{ active: activeTab == 'table', disabled: lexicalizationSets?.length == 0 }">
-                    Table
+                    {{'METADATA.STATS.TABLE'|translate}}
                 </a>
             </li>
             <li *ngIf="activeTab == 'table'" ngbDropdown class="nav-item" autoClose="outside">
@@ -35,15 +35,15 @@
 
             <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" (click)="activeTab = 'chart'" [ngClass]="{ active: activeTab == 'chart', disabled: lexicalizationSets?.length == 0 }">
-                    Chart
+                    {{'COMMONS.CHARTS.CHART'|translate}}
                 </a>
             </li>
             <li *ngIf="activeTab == 'chart'" ngbDropdown class="nav-item">
                 <a href (click)="false" class="nav-link" [ngClass]="{ disabled: lexicalizationSets?.length == 0 }" ngbDropdownToggle></a>
                 <div ngbDropdownMenu>
-                    <button *ngFor="let t of chartTypes" ngbDropdownItem  (click)="switchChart(t)">
-                        {{t}}
-                        <span *ngIf="activeChart == t" class="fas fa-check float-right ml-2"></span>
+                    <button *ngFor="let t of chartTypes" ngbDropdownItem  (click)="switchChart(t.value)">
+                        {{t.translationKey|translate}}
+                        <span *ngIf="activeChart == t.value" class="fas fa-check float-right ml-2"></span>
                     </button>
                 </div>
             </li>
@@ -108,7 +108,7 @@
 
         <ng-container *ngIf="lexicalizationSets?.length == 0">
             <div class="alert alert-warning">
-                Lexicalization sets not available for this dataset
+                {{'METADATA.STATS.LEXICAL_ASSETS_UNAVAILABLE'|translate}}
             </div>
         </ng-container>
 

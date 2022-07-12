@@ -64,11 +64,13 @@ export class MetadataComponent implements OnInit {
         this.metadataRegistryService.findDatasetForProjects([this.project]).subscribe(
             (datasetsMapping: ProjectDatasetMapping) => {
                 this.dataset = datasetsMapping[this.project.getName()];
-                this.metadataRegistryService.getDatasetMetadata(this.dataset.getValue()).subscribe(
-                    (metadata: DatasetMetadata) => {
-                        this.datasetMetadata = metadata;
-                    }
-                );
+                if (this.dataset != null) { //if project has not been profiled, its dataset IRI is not available in MDR
+                    this.metadataRegistryService.getDatasetMetadata(this.dataset.getValue()).subscribe(
+                        (metadata: DatasetMetadata) => {
+                            this.datasetMetadata = metadata;
+                        }
+                    );
+                }
             }
         );
 
@@ -125,7 +127,7 @@ export class MetadataComponent implements OnInit {
      *      }
      * }
      *
-     * become
+     * to
      *
      * {
      *      key: value1,
