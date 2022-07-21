@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
-import { ModalType } from '../modal-dialogs/Modals';
+import { ModalType, TextOrTranslation } from '../modal-dialogs/Modals';
 import { Project } from '../models/Project';
 import { Properties } from '../models/Properties';
 import { Value } from '../models/Resources';
@@ -323,7 +323,7 @@ export class HttpManager {
                 error.name = "Client Error";
                 error.message = errorMsg;
             } else { //The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong.
-                let errorMsg: string;
+                let errorMsg: TextOrTranslation;
                 if (!err.ok && err.status == 0 && err.statusText == "Unknown Error") { //attribute of error response in case of no backend response
                     errorMsg = "Connection with ST server (" + this.serverhost + ") has failed; please check your internet connection";
                     this.basicModals.alert({ key: "COMMONS.STATUS.ERROR" }, errorMsg, ModalType.error);
@@ -340,7 +340,17 @@ export class HttpManager {
                         error.name = "UnauthorizedRequestError";
                         error.message = err.message;
 
-                        this.basicModals.alert({ key: "COMMONS.STATUS.ERROR" }, errorMsg, ModalType.error).then(
+                        let title: TextOrTranslation = { key: "COMMONS.STATUS.WARNING" };
+                        let modalType: ModalType = ModalType.error;
+
+                        //special case: session expired is handled ad-hoc
+                        if (errorMsg == "Access denied. You need to be logged in") {
+                            title = { key: "COMMONS.STATUS.WARNING" };
+                            errorMsg = { key: "MESSAGES.SESSION_EXPIRED" };
+                            modalType = ModalType.warning;
+                        }
+
+                        this.basicModals.alert(title, errorMsg, modalType).then(
                             () => {
                                 //in case user is not logged at all (probably session timedout), reset context and redirect to home
                                 if (err.status == 401) {
