@@ -21,6 +21,10 @@ import { LexicalizationSetsRenderer } from './metadata/lexicalization-sets-rende
 import { MetadataComponent } from './metadata/metadata.component';
 import { TypeDistributionsComponent } from './metadata/type-distributions.component';
 import { ExportResultRdfModal } from './sparql/export-result-rdf-modal';
+import { QueryParameterForm } from './sparql/query-parameterization/query-parameter-form.component';
+import { QueryParameterizerModal } from './sparql/query-parameterization/query-parameterizer-modal';
+import { QueryResultsComponent } from './sparql/query-results.component';
+import { SparqlTabParametrizedComponent } from './sparql/sparql-tab-parametrized.component';
 import { SparqlTabComponent } from './sparql/sparql-tab.component';
 import { SparqlComponent } from './sparql/sparql.component';
 import { YasguiComponent } from './sparql/yasgui.component';
@@ -37,8 +41,12 @@ import { YasguiComponent } from './sparql/yasgui.component';
         ExportResultRdfModal,
         LexicalizationSetsRenderer,
         MetadataComponent,
+        QueryParameterForm,
+        QueryParameterizerModal,
+        QueryResultsComponent,
         SparqlComponent,
         SparqlTabComponent,
+        SparqlTabParametrizedComponent,
         TypeDistributionsComponent,
         YasguiComponent,
     ],
@@ -60,7 +68,8 @@ import { YasguiComponent } from './sparql/yasgui.component';
     ],
     entryComponents: [
         DatasetsSettingsModal,
-        ExportResultRdfModal
+        ExportResultRdfModal,
+        QueryParameterizerModal,
     ]
 })
 export class DatasetsModule { }

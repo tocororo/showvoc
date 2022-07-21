@@ -1,12 +1,12 @@
-<div class="form-check ml-1">
+<div *ngIf="!readonly" class="form-check ml-1">
     <label class="form-check-label">
         <input class="form-check-input" type="checkbox" [(ngModel)]="fetchFromPrefixCheck" (ngModelChange)="onCheckboxChange()">
-        Fetch prefix from prefix.cc
+        {{'SPARQL.QUERY.FETCH_FROM_PREFIXCC'|translate}}
     </label>
 </div>
 
 <div style="position: relative" class="vbox" [ngClass]="{ 'yasqe-hide-btns' : hideButtons }">
-    <textarea #txtarea></textarea>
+    <textarea #txtarea [ngClass]="{disabled: readonly}"></textarea>
     <div *ngIf="!hideButtons" style="position: absolute; top: 10px; right: 40px; z-index: 5; opacity: 0.7">        
         Powered by <a href="http://about.yasgui.org/" target="_blank">YASGUI</a>
     </div>

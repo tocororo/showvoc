@@ -16,6 +16,7 @@ import * as YASQE from 'yasgui-yasqe';
 })
 export class YasguiComponent {
     @Input() query: string;
+    @Input() readonly: boolean = false;
     @Input() hideButtons: boolean = false;
     @Output() querychange = new EventEmitter<QueryChangedEvent>();
 
@@ -72,6 +73,7 @@ export class YasguiComponent {
                 persistent: null, //avoid same query for all the tabs
                 createShareLink: null, //disable share button
                 extraKeys: { "Ctrl-7": YASQE.commentLines },
+                readOnly: this.readonly
             }
         );
 

@@ -1,0 +1,57 @@
+<div class="hbox">
+
+    <div class="card mr-2" style="flex: 2;" >
+        <div class="card-header d-flex align-items-center">
+            <span style="flex: 1">
+                <label>{{'SPARQL.QUERY.STORED_QUERY'|translate}}: </label> {{storedQueryName}}
+            </span>
+            <button class="btn btn-sm btn-light" (click)="changeStoredQuery()" [title]="'SPARQL.QUERY.CHANGE_STORED_QUERY'|translate">
+                <span class="fas fa-pencil-alt"></span>
+            </button>
+        </div>
+        <div class="card-body vbox">
+            <yasgui [query]="query" (querychange)="onQueryChange($event)" [readonly]="true"></yasgui>
+        </div>
+    </div>
+
+    <div class="vbox">
+        <query-param-form class="vbox" [bindings]="parameterization" (update)="onVarBindingsUpdate($event)"
+            (paramsChange)="onParametrizationsChange($event)"></query-param-form>
+        <div class="d-flex align-items-center mt-2">
+            <label>{{'COMMONS.DESCRIPTION'|translate}}:</label>
+            <textarea class="form-control form-control-sm ml-2" style="resize: none" rows="3" [(ngModel)]="description" (ngModelChange)="onDescriptionChange()"></textarea>
+        </div>
+    </div>
+
+</div>
+
+<!--Commands (submit, clear, inferred, ...)-->
+<div class="mt-2 d-flex align-items-center">
+    <button class="btn btn-sm btn-info" (click)="doQuery()" [disabled]="queryInProgress || !queryValid || queryMode != 'query'">{{'COMMONS.ACTIONS.SUBMIT'|translate}}</button>
+    <button class="btn btn-sm btn-secondary ml-1" (click)="clear()" [disabled]="queryResultResp == null">{{'COMMONS.ACTIONS.CLEAR'|translate}}</button>
+
+    <div class="form-check form-check-inline ml-3">
+        <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="inferred">{{'SPARQL.RESULTS.INCLUDE_INFERRED'|translate}}
+        </label>
+    </div>
+
+    <span style="flex: 1"></span>
+
+    <div *ngIf="isAuthenticatedUser" class="btn-toolbar">
+        <div class="btn-group btn-group-sm">
+            <button class="btn btn-light" [title]="'SPARQL.ACTIONS.SAVE_SPARQL_PARAMETERIZED_QUERY'|translate" (click)="saveConfiguration()" [disabled]="!storedQueryReference">
+                <span class="fas fa-download"></span>
+            </button>
+            <button class="btn btn-light" [title]="'SPARQL.ACTIONS.LOAD_SPARQL_PARAMETERIZED_QUERY'|translate" (click)="loadConfiguration()">
+                <span class="fas fa-upload"></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!--Query result-->
+
+<div *ngIf="queryInProgress" class="spinner-border text-info mt-1"></div>
+
+<query-results *ngIf="queryResultResp" class="mt-2" [queryResultResp]="queryResultResp" [queryCache]="queryCache" [inferred]="inferred"></query-results>

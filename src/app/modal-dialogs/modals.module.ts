@@ -26,6 +26,8 @@ import { PropertyTreeModal } from './browsing-modals/property-tree-modal/propert
 import { SchemeListModal } from './browsing-modals/scheme-list-modal/scheme-list-modal';
 import { CreationModalServices } from './creation-modals/creationModalServices';
 import { NewTypedLiteralModal } from './creation-modals/newTypedLiteralModal/new-typed-literal-modal';
+import { LoadConfigurationModal } from './shared-modals/configuration-store-modal/load-configuration-modal';
+import { StoreConfigurationModal } from './shared-modals/configuration-store-modal/store-configuration-modal';
 import { LanguageSelectorModal } from './shared-modals/languages-selector-modal/languages-selector-modal';
 import { PluginConfigurationModal } from './shared-modals/plugin-configuration/plugin-configuration-modal';
 import { ResourcePickerModal } from './shared-modals/resource-picker-modal/resource-picker-modal';
@@ -44,6 +46,7 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         LanguageSelectorModal,
         LexicalEntryListModal,
         LexiconListModal,
+        LoadConfigurationModal,
         NewTypedLiteralModal,
         PluginConfigurationModal,
         PromptModal,
@@ -52,7 +55,8 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         ResourcePickerModal,
         ResourceSelectionModal,
         SchemeListModal,
-        SelectionModal
+        SelectionModal,
+        StoreConfigurationModal
     ],
     imports: [
         CommonModule, 
@@ -78,6 +82,7 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         LanguageSelectorModal,
         LexicalEntryListModal,
         LexiconListModal,
+        LoadConfigurationModal,
         NewTypedLiteralModal,
         PluginConfigurationModal,
         PromptModal,
@@ -86,7 +91,8 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         ResourcePickerModal,
         ResourceSelectionModal,
         SchemeListModal,
-        SelectionModal
+        SelectionModal,
+        StoreConfigurationModal,
     ]
 })
 export class ModalsModule { }

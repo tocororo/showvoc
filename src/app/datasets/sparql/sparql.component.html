@@ -1,23 +1,37 @@
 <div left class="card vbox">
     <div class="card-body vbox p-0">
-
         <!-- animmation=false is mandatory to prevent issues when yasgui textarea is initialized -->
-        <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" [animation]="false" class="nav-tabs" (navChange)="onTabChange($event)">
-            <li *ngFor="let t of tabs" [ngbNavItem]="'tab'+t.id">
+        <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" [animation]="false" class="nav-tabs">
+            <li *ngFor="let t of tabs" [ngbNavItem]="TAB_ID_PREFIX + t.id">
                 <a ngbNavLink>
-                    <span>Query </span>
+                    <!-- <span>Query </span> -->
+                    <span>
+                        {{t.name}}
+                        <span *ngIf="isAuthenticatedUser && !t.saved">*</span>
+                    </span>
                     <span *ngIf="tabs.length > 1" class="ml-2" (click)="closeTab(t, $event)">
                         <i class="fas fa-times-circle clickable"></i>
                     </span>
                 </a>
                 <ng-template ngbNavContent>
-                    <sparql-tab></sparql-tab>
+                    <sparql-tab *ngIf="t.type == TabType.query"></sparql-tab>
+                    <sparql-tab-param *ngIf="t.type == TabType.parameterization"></sparql-tab-param>
                 </ng-template>
             </li>
-            <li [ngbNavItem]="'addTab'" [disabled]="tabs.length > 10">
-                <a ngbNavLink>
-                    <i class="fas fa-plus clickable"></i>
-                </a>
+            <li class="nav-item-splitted">
+                <div class="btn-group" ngbDropdown>
+                    <button #addBtn class="btn" (click)="addTab(TabType.query)" (mouseup)="addBtn.blur()" [disabled]="tabs.length > tabLimit">
+                        <i class="fas fa-plus clickable"></i>
+                    </button>
+                    <ng-container *ngIf="isAuthenticatedUser">
+                        <button #dropdownBtn class="btn dropdown-toggle" data-toggle="dropdown" (mouseup)="dropdownBtn.blur()"  [disabled]="tabs.length > tabLimit" ngbDropdownToggle>
+                        </button>
+                        <div class="dropdown-menu" ngbDropdownMenu>
+                            <button class="dropdown-item" (click)="addTab(TabType.query)">{{'SPARQL.QUERY.ADD_QUERY_TAB'|translate}}</button>
+                            <button class="dropdown-item" (click)="addTab(TabType.parameterization)">{{'SPARQL.QUERY.ADD_PARAMETERIZED_QUERY_TAB'|translate}}</button>
+                        </div>
+                    </ng-container>
+                  </div>
             </li>
         </ul>
         <div [ngbNavOutlet]="nav"></div>

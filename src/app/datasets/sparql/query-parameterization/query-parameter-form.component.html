@@ -1,0 +1,67 @@
+<div class="card vbox">
+    <div *ngIf="mode=='sparql'" class="card-header d-flex align-items-center">
+        <label style="flex: 1">{{'SPARQL.PARAMETERIZATION.VARIABLE_BINDINGS'|translate}}</label>
+        <div class="btn-toolbar">
+            <button class="btn btn-sm btn-light" [ngClass]="{ active: showDisplayName }" (click)="showDisplayName = !showDisplayName" 
+                [title]="'SPARQL.PARAMETERIZATION.SHOW_VARIABLE_BINDINGS_DISPLAY_NAME'|translate">
+                <span class="fas fa-eye"></span>
+            </button>
+            <button *ngIf="configurable" class="btn btn-sm btn-light ml-1" (click)="editParameterization()" [title]="'COMMONS.ACTIONS.EDIT'|translate">
+                <span class="fas fa-pencil-alt"></span>
+            </button>
+        </div>
+    </div>
+    <div class="card-body vbox table-responsive">
+        <table class="table table-sm table-borderless">
+            <colgroup>
+                <col style="width: 1%">
+                <col>
+                <col style="width: 1%">
+            </colgroup>
+            <tbody>
+                <tr *ngFor="let b of bindingStructs">
+                    <!-- In search mode the assignment should not be shown -->
+                    <ng-container *ngIf="mode=='sparql' || mode=='search' && b.bindingType != 'assignment'">
+                        <td class="text-right align-middle" style="margin-right: 2px;" nowrap>
+                            <div *ngIf="mode == 'sparql'; then sparqlModeBlock; else searchModeBlock"></div>
+                            <ng-template #sparqlModeBlock>
+                                <ng-container *ngIf="showDisplayName">
+                                    <label *ngIf="b.displayName">{{b.displayName}}:</label>
+                                    <label *ngIf="!b.displayName">{{b.varName}}:</label>
+                                </ng-container>
+                                <label *ngIf="!showDisplayName">{{b.varName}}:</label>
+                            </ng-template>
+                            <ng-template #searchModeBlock>
+                                <label *ngIf="b.displayName">{{b.displayName}}:</label>
+                                <label *ngIf="!b.displayName">{{b.varName}}:</label>
+                            </ng-template>
+                        </td>
+
+                        <td>
+                            <ng-container *ngIf="b.bindingType == 'assignment' && b.value">
+                                <input class="form-control form-control-sm" [ngModel]="b.value.toNT()" readonly>
+                            </ng-container>
+        
+                            <ng-container *ngIf="b.bindingType == 'constraint' && b.datatype">
+                                <literal-picker [plain]="false" [typed]="true" size="sm" [datatypes]="[b.datatype]" (literalChanged)="onLiteralChanged(b, $event)">
+                                </literal-picker>
+                            </ng-container>
+        
+                            <ng-container *ngIf="b.bindingType == 'constraint' && b.resourceRole">
+                                <resource-picker [resource]="b.value" [config]="{ roles: [b.resourceRole] }" [editable]="true" size="sm" (resourceChanged)="onResourceChanged(b, $event)">
+                                </resource-picker>
+                            </ng-container>
+                        </td>
+                        <td *ngIf="b.description"><span class="fas fa-info-circle" [title]="b.description"></span></td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="configurable" class="card-footer">
+        <div class="form-check">
+            <input class="form-check-input" id="bindingCheck" type="checkbox" [(ngModel)]="useBindings" (ngModelChange)="emitUpdate()">
+            <label class="form-check-label" for="bindingCheck">{{'SPARQL.PARAMETERIZATION.USE_VARIABLE_BINDINGS'|translate}}</label>
+        </div>
+    </div>
+</div>

@@ -4,8 +4,8 @@ export class ConfigurationComponents {
     // static ADVANCED_GRAPH_APPLICATION_STORE = "it.uniroma2.art.semanticturkey.config.sheet2rdf.AdvancedGraphApplicationStore";
     // static EXPORTER: string = "it.uniroma2.art.semanticturkey.config.exporter.Exporter";
     // static IMPORTER: string = "it.uniroma2.art.semanticturkey.config.importer.Importer";
-    // static SPARQL_PARAMETERIZATION_STORE: string = "it.uniroma2.art.semanticturkey.config.sparql.SPARQLParameterizationStore";
-    // static SPARQL_STORE: string = "it.uniroma2.art.semanticturkey.config.sparql.SPARQLStore";
+    static SPARQL_PARAMETERIZATION_STORE: string = "it.uniroma2.art.semanticturkey.config.sparql.SPARQLParameterizationStore";
+    static SPARQL_STORE: string = "it.uniroma2.art.semanticturkey.config.sparql.SPARQLStore";
     // static CUSTOM_SEARCH_STORE = "it.uniroma2.art.semanticturkey.settings.search.CustomSearchStore";
     static CONTRIBUTION_STORE = {
         ID: "it.uniroma2.art.semanticturkey.config.contribution.ContributionStore",
