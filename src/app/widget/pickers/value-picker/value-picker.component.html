@@ -1,0 +1,16 @@
+<div class="hbox">
+
+    <select [class]="formControlClass + ' mr-2'" style="width: initial" [(ngModel)]="selectedResType" (ngModelChange)="onTypeChange()"
+        [disabled]="disabled">
+        <option *ngFor="let rt of resTypes" [ngValue]="rt">{{rt.show}}</option>
+    </select>
+
+    <div [ngSwitch]="selectedResType.value" style="width: 100%">
+        <resource-picker *ngSwitchCase="'uri'" [resource]="value" [editable]="editable" [size]="size" (resourceChanged)="updateIRI($event)" [disabled]="disabled">
+        </resource-picker>
+
+        <literal-picker *ngSwitchCase="'literal'" [literal]="value" [size]="size" (literalChanged)="updateLiteral($event)" [disabled]="disabled">
+        </literal-picker>
+    </div>
+
+</div>

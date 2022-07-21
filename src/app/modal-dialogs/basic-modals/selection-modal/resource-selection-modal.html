@@ -1,6 +1,6 @@
 <div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
     <div class="modal-header" cdkDragHandle>
-        <h3 class="modal-title text-info">{{title}}</h3>
+        <h5 class="modal-title">{{title}}</h5>
     </div>
     <div class="modal-body vbox">
         <div *ngIf="message" class="alert alert-info">
@@ -10,7 +10,7 @@
             <div class="card-header d-flex">  
                 <div style="flex: 1"></div>
                 <div class="btn-toolbar" role="toolbar">
-                    <button class="btn btn-light btn-xs" [title]="'COMMONS.RENDERING'|translate" (click)="rendering = !rendering" [ngClass]="{active: rendering}">
+                    <button class="btn btn-light btn-sm" [title]="'COMMONS.RENDERING'|translate" (click)="rendering = !rendering" [ngClass]="{active: rendering}">
                         <span class="fas fa-font"></span>
                     </button>
                 </div>

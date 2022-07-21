@@ -9,14 +9,14 @@ import { ResourceUtils, SortAttribute } from "../../utils/ResourceUtils";
 
 @Component({
     selector: "typed-literal-input",
-    templateUrl: "./typedLiteralInputComponent.html",
+    templateUrl: "./typed-literal-input.component.html",
     providers: [{
         provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TypedLiteralInputComponent), multi: true,
     }]
 })
 export class TypedLiteralInputComponent implements ControlValueAccessor {
 
-    @Input() allowedDatatypes: AnnotatedValue<IRI>[]; //the datatypes allowed by the component
+    @Input() allowedDatatypes: IRI[]; //the datatypes allowed by the component
     @Input('datatype') inputDatatype: IRI; //the selected datatype. If provided as input, force the default
     @Output() datatypeChange: EventEmitter<AnnotatedValue<IRI>> = new EventEmitter();
     @Output() langChange: EventEmitter<string> = new EventEmitter();
@@ -49,12 +49,12 @@ export class TypedLiteralInputComponent implements ControlValueAccessor {
                 this.datatypeList = datatypes;
                 //filter out not allowed datatypes
                 if (this.allowedDatatypes != undefined) {
-                    if (this.allowedDatatypes[0].getValue().equals(RDFS.literal)) {
+                    if (this.allowedDatatypes[0].equals(RDFS.literal)) {
                         //if allowedDatatypes contains only rdfs:Literal => allow every datatype
                     } else { //otherwise filter out
                         for (let i = this.datatypeList.length - 1; i >= 0; i--) {
                             //if datatype is not allowed (not among the allowed) remove it
-                            if (!this.allowedDatatypes.some(d => d.getValue().equals(this.datatypeList[i].getValue()))) {
+                            if (!this.allowedDatatypes.some(d => d.equals(this.datatypeList[i].getValue()))) {
                                 this.datatypeList.splice(i, 1);
                             }
                         }

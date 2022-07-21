@@ -10,7 +10,7 @@ import { ResourceSelectionModal } from '../basic-modals/selection-modal/resource
 import { ModalOptions, TextOrTranslation, TranslationUtils } from '../Modals';
 import { LanguageSelectorModal } from './languages-selector-modal/languages-selector-modal';
 import { PluginConfigurationModal, PluginSettingsHandler } from './plugin-configuration/plugin-configuration-modal';
-import { ResourcePickerModal } from './resource-picker-modal/resourcePickerModal';
+import { ResourcePickerModal } from './resource-picker-modal/resource-picker-modal';
 
 @Injectable()
 export class SharedModalsServices {
@@ -53,7 +53,7 @@ export class SharedModalsServices {
      * @param roles 
      * @param editable 
      */
-    pickResource(title: TextOrTranslation, config?: ResourcePickerConfig, editable?: boolean) {
+    pickResource(title: TextOrTranslation, config?: ResourcePickerConfig, editable?: boolean): Promise<AnnotatedValue<Resource>> {
         const modalRef: NgbModalRef = this.modalService.open(ResourcePickerModal, new ModalOptions());
         modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
         if (config != null) modalRef.componentInstance.config = config;

@@ -218,7 +218,7 @@
         "no-sparse-arrays": 2,
         "no-sync": 0,
         "no-tabs": 1,
-        "no-template-curly-in-string": 2,
+        "no-template-curly-in-string": 0,
         "no-ternary": 0,
         "no-this-before-super": 2,
         "no-throw-literal": 2,

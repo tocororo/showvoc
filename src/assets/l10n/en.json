@@ -137,6 +137,7 @@
             "CANCEL": "Cancel",
             "CHECK": "Check",
             "CHECK_ALL": "Check all",
+            "CLEAR": "Clear",
             "CLOSE": "Close",
             "COLLAPSE_ALL": "Collapse all",
             "CONFIRM": "Confirm",
@@ -212,12 +213,14 @@
         "POSITION": "Position",
         "REASON": "Reason",
         "RENDERING": "Rendering",
+        "SCOPE": "Scope",
         "SETTINGS": "Settings",
         "STATUS": {
             "ACTIVE": "Active",
             "ERROR": "Error",
             "INCOMPLETE_FORM": "Incomplete form",
             "INVALID_DATA": "Invalid data",
+            "INVALID_VALUE": "Invalid value",
             "OPERATION_DENIED": "Operation denied",
             "OPERATION_DONE": "Operation done",
             "STATUS": "Status",
@@ -584,6 +587,7 @@
         "RES_NOT_REACHABLE_IN_TREE_THROUGH_DEPRECATED": "Resource {{resource}} is not reachable in the current tree since the path to reach it contains a deprecated node. Enable the show of deprecated resources and repeat the search",
         "SEARCH_INDEX_NOT_FOUND": "Cannot find any index. Please create the index for at least one dataset, then retry.",
         "SELECT_REFERENCED_REPO_TO_DELETE": "The following repositories was referenced by the deleted project. Select the repositories you want to delete.",
+        "SESSION_EXPIRED": "Your session has expired due to inactivity, please press ok to reconnect.",
         "SWITCH_NO_SCHEME_CONFIRM": "Searched concept '{{concept}}' does not belong to any scheme. Do you want to switch to no-scheme mode?",
         "SYSTEM_CONFIG_INTRO": "In this section you can setup some core aspects of the system. This panel can be accessed also later from <i>Administration dashboard</i> > <i>Configuration</i>",
         "SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO": "The system has not been configured in order to create a remote repository. Please provide a configuration to a remote triple store from the administrator dashboard.",
@@ -770,7 +774,46 @@
     },
     "SPARQL": {
         "ACTIONS": {
-            "EXPORT_RESULTS": "Export SPARQL results"
+            "LOAD_SPARQL_PARAMETERIZED_QUERY": "Load SPARQL parameterized query",
+            "LOAD_SPARQL_QUERY": "Load SPARQL query",
+            "SAVE_SPARQL_PARAMETERIZED_QUERY": "Save SPARQL parameterized query",
+            "SAVE_SPARQL_QUERY": "Save SPARQL query",
+            "SAVE_SPARQL_QUERY_PARAMETERIZATION": "Save SPARQL query parameterization",
+            "SELECT_STORED_SPARQL_PARAMETERIZED_QUERY": "Select stored SPARQL parameterized query"
+        },
+        "MESSAGES": {
+            "DUPLICATED_BINDING_NAME": "Duplicated binding name '{{binding}}', please change the name or delete the binding",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_DATATYPE": "Incomplete parameterization for binding '{{binding}}', please set a datatype or delete the binding",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_ROLE": "Incomplete parameterization for binding '{{binding}}', please set a role or delete the binding",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_VALUE": "Incomplete parameterization for binding '{{binding}}', please set a value or delete the binding",
+            "MISSING_BINDING_NAME": "Missing binding name at position {{position}}, please insert a name",
+            "QUERY_PARAMETERIZATION_SAVED": "Query parameterization saved succesfully",
+            "QUERY_SAVED": "Query saved succesfully"
+        },
+        "PARAMETERIZATION": {
+            "BINDING_TYPE": "Binding Type",
+            "DISPLAY_NAME": "Display Name",
+            "QUERY_PARAMETERIZATION": "Query parameterization",
+            "QUERY_PARAMETERS": "Query parameters",
+            "SHOW_VARIABLE_BINDINGS_DISPLAY_NAME": "Show variable bindings display name",
+            "USE_VARIABLE_BINDINGS": "Use variable bindings",
+            "VARIABLE_BINDING": "Variable binding",
+            "VARIABLE_BINDINGS": "Variable bindings"
+        },
+        "QUERY": {
+            "ADD_PARAMETERIZED_QUERY_TAB": "Add parameterized query tab",
+            "ADD_QUERY_TAB": "Add query tab",
+            "CHANGE_STORED_QUERY": "Change stored query",
+            "FETCH_FROM_PREFIXCC": "Fetch prefix from prefix.cc",
+            "PARAMETERIZED_QUERY": "Parameterized query",
+            "STORED_QUERY": "Stored query"
+        },
+        "RESULTS": {
+            "DONE_IN": "Done in",
+            "EXPORT_RESULTS": "Export SPARQL results",
+            "INCLUDE_INFERRED": "Include inferred",
+            "RESULTS_COUNT": "Results count",
+            "SAVE_RESULTS_AS": "Save results as"
         }
     },
     "USER": {

@@ -39,7 +39,7 @@ export class LangStringEditorComponent implements ControlValueAccessor, OnInit {
 
     editLanguage() {
         if (this.disabled) return;
-        this.sharedModals.selectLanguages({ key: "ACTIONS.SELECT_LANGUAGE" }, (this.lang ? [this.lang.tag] : []), true, false).then(
+        this.sharedModals.selectLanguages({ key: "COMMONS.ACTIONS.SELECT_LANGUAGE" }, (this.lang ? [this.lang.tag] : []), true, false).then(
             langs => {
                 this.lang = Languages.getLanguageFromTag(langs[0]);
                 this.onModelChanged();

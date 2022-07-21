@@ -9,14 +9,6 @@ import { ChartData, ChartEnum } from 'src/app/widget/charts/NgxChartsUtils';
 @Component({
     selector: 'type-distributions',
     templateUrl: './type-distributions.component.html',
-    styles: [`
-        .card-header-tabs {
-            margin-bottom: -6px;
-        }
-        .nav-tabs>li>a {
-            padding: 6px;
-        }
-    `]
 })
 export class TypeDistributionsComponent {
 

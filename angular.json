@@ -62,6 +62,12 @@
               "node_modules/d3/dist/d3.min.js",
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/yasgui-yasqe/dist/yasqe.bundled.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "jsprolog",
+              "yasgui-yasqe",
+              "jquery",
+              "file-saver"
             ]
           },
           "configurations": {

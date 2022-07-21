@@ -4,7 +4,7 @@ import { NTriplesUtil } from '../../../utils/ResourceUtils';
 
 @Component({
     selector: 'value-picker',
-    templateUrl: './valuePickerComponent.html',
+    templateUrl: './value-picker.component.html',
 })
 export class ValuePickerComponent {
     
@@ -13,6 +13,7 @@ export class ValuePickerComponent {
     // @Input() disabled: boolean = false;
     @Input() editable: boolean = false; //tells if the value can be manually edited (only for URI)
     @Input() disabled: boolean = false;
+    @Input() size: string;
     @Output() valueChanged = new EventEmitter<AnnotatedValue<Value>>();
 
     resTypes: { show: string, value: RDFTypesEnum }[] = [
@@ -21,10 +22,16 @@ export class ValuePickerComponent {
     ];
     selectedResType: { show: string, value: RDFTypesEnum } = this.resTypes[0];
 
+    formControlClass: string = "form-control";
+
     constructor() { }
 
     ngOnInit() {
         this.init();
+        //if the input size is not valid, set default to "sm"
+        if (this.size == "sm" || this.size == "md" || this.size == "lg") {
+            this.formControlClass += " form-control-" + this.size;
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {

@@ -17,8 +17,9 @@ import { LocalizedEditorModal } from './localized-editor/localized-editor-modal'
 import { PasswordInputComponent } from './password-input/password-input.component';
 import { FilePickerComponent } from './pickers/file-picker/file-picker.component';
 import { LangPickerComponent } from './pickers/lang-picker/lang-picker.component';
-import { LiteralPickerComponent } from './pickers/value-picker/literalPickerComponent';
-import { ResourcePickerComponent } from './pickers/value-picker/resourcePickerComponent';
+import { LiteralPickerComponent } from './pickers/value-picker/literal-picker.component';
+import { ResourcePickerComponent } from './pickers/value-picker/resource-picker.component';
+import { ValuePickerComponent } from './pickers/value-picker/value-picker.component';
 import { RdfResourceComponent } from './rdf-resource/rdf-resource.component';
 import { ResourceListSelectionComponent } from './rdf-resource/resource-list-selection.component';
 import { ResourceListComponent } from './rdf-resource/resource-list.component';
@@ -35,7 +36,7 @@ import { SettingsRendererPanelComponent } from './settings-renderer/settings-ren
 import { SettingsRendererComponent } from './settings-renderer/settings-renderer.component';
 import { ToastsContainer } from './toast/toast-container';
 import { ToastService } from './toast/toast-service';
-import { TypedLiteralInputComponent } from './typed-literal-input/typedLiteralInputComponent';
+import { TypedLiteralInputComponent } from './typed-literal-input/typed-literal-input.component';
 
 @NgModule({
     imports: [
@@ -76,7 +77,8 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typedLiteralIn
         SettingsRendererComponent,
         SettingValueRendererComponent,
         ToastsContainer,
-        TypedLiteralInputComponent
+        TypedLiteralInputComponent,
+        ValuePickerComponent
     ],
     exports: [
         BarChartComponent,
@@ -104,7 +106,8 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typedLiteralIn
         SettingsRendererPanelComponent,
         SettingsRendererComponent,
         ToastsContainer,
-        TypedLiteralInputComponent
+        TypedLiteralInputComponent,
+        ValuePickerComponent
     ],
     entryComponents: [
         RenderingEditorModal

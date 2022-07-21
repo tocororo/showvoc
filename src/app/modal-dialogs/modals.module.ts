@@ -28,7 +28,7 @@ import { CreationModalServices } from './creation-modals/creationModalServices';
 import { NewTypedLiteralModal } from './creation-modals/newTypedLiteralModal/new-typed-literal-modal';
 import { LanguageSelectorModal } from './shared-modals/languages-selector-modal/languages-selector-modal';
 import { PluginConfigurationModal } from './shared-modals/plugin-configuration/plugin-configuration-modal';
-import { ResourcePickerModal } from './shared-modals/resource-picker-modal/resourcePickerModal';
+import { ResourcePickerModal } from './shared-modals/resource-picker-modal/resource-picker-modal';
 import { SharedModalsServices } from './shared-modals/shared-modal.service';
 
 @NgModule({

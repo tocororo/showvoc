@@ -1,4 +1,4 @@
-<div class="input-group input-group-sm">
+<div  [class]="inputGroupClass">
     <input type="text" class="form-control" [ngModel]="literalNT" [disabled]="disabled" readonly>
     <div class="input-group-append">
         <button class="btn btn-outline-info" (click)="pickLiteral()" [disabled]="disabled">

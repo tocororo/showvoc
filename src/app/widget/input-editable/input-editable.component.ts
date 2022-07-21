@@ -5,7 +5,8 @@ import { ModalType } from 'src/app/modal-dialogs/Modals';
 
 @Component({
     selector: 'input-editable',
-    templateUrl: './input-editable.component.html'
+    templateUrl: './input-editable.component.html',
+    styles: [":host { display: block; }"]
 })
 export class InputEditableComponent implements OnInit {
     @Input() value: any;
@@ -17,8 +18,10 @@ export class InputEditableComponent implements OnInit {
     @Input() step: number; //Useful only if type = "number"
     @Input() allowEmpty: boolean = false; //if true allow the value to be replaced with empty string
     @Input() disabled: boolean = false;
+    @Input() editOnInit: boolean = false;
 
     @Output() valueEdited = new EventEmitter<any>();
+    @Output() editCanceled = new EventEmitter();
 
     inputClass = "input-group input-group-";
     private inputType = "text";
@@ -40,6 +43,10 @@ export class InputEditableComponent implements OnInit {
         }
 
         this.pristineValue = this.value;
+
+        if (this.editOnInit) {
+            this.edit();
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -48,11 +55,11 @@ export class InputEditableComponent implements OnInit {
         }
     }
 
-    private edit() {
+    edit() {
         this.editInProgress = true;
     }
 
-    private confirmEdit() {
+    confirmEdit() {
         if (this.value == undefined || this.value.trim() == "") {
             if (this.allowEmpty) {
                 this.value = null;
@@ -69,9 +76,10 @@ export class InputEditableComponent implements OnInit {
         this.valueEdited.emit(this.value);
     }
 
-    private cancelEdit() {
+    cancelEdit() {
         this.editInProgress = false;
         this.value = this.pristineValue; //restore initial value
+        this.editCanceled.emit();
     }
 
 }

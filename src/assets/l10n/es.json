@@ -126,6 +126,7 @@
             "CANCEL": "Cancelar",
             "CHECK": "Seleccionar",
             "CHECK_ALL": "Seleccionar todo",
+            "CLEAR": "Limpiar",
             "CLOSE": "Cerrar",
             "CONFIRM": "Confirmar",
             "CREATE": "Crear",
@@ -186,12 +187,14 @@
         "POSITION": "Posición",
         "REASON": "Razón",
         "RENDERING": "Representación",
+        "SCOPE": "Alcance",
         "SETTINGS": "Ajustes",
         "STATUS": {
             "ACTIVE": "Activo",
             "ERROR": "Error",
             "INCOMPLETE_FORM": "Formulario incompleto",
             "INVALID_DATA": "Datos no válidos",
+            "INVALID_VALUE": "Valor no válido",
             "OPERATION_DENIED": "Operación denegada",
             "OPERATION_DONE": "Operación realizada",
             "STATUS": "Estado",
@@ -694,7 +697,46 @@
     },
     "SPARQL": {
         "ACTIONS": {
-            "EXPORT_RESULTS": "Exportar resultados SPARQL"
+            "LOAD_SPARQL_PARAMETERIZED_QUERY": "Cargar consulta parametrizada SPARQL",
+            "LOAD_SPARQL_QUERY": "Cargar consulta SPARQL",
+            "SAVE_SPARQL_PARAMETERIZED_QUERY": "Guardar consulta con parámetros SPARQL",
+            "SAVE_SPARQL_QUERY": "Guardar consulta SPARQL",
+            "SAVE_SPARQL_QUERY_PARAMETERIZATION": "Guardar parametrización de consultas SPARQL",
+            "SELECT_STORED_SPARQL_PARAMETERIZED_QUERY": "Seleccionar consulta parametrizada SPARQL almacenada"
+        },
+        "MESSAGES": {
+            "DUPLICATED_BINDING_NAME": "Nombre de enlace duplicado '{{enlace}}', cambie el nombre o elimine el enlace",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_DATATYPE": "Parametrización incompleta para el enlace '{{enlace}}', establezca un tipo de datos o elimine el enlace",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_ROLE": "parametrización incompleto para la unión '{{}} vinculante', ajuste en un papel o eliminar la unión",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_VALUE": "parametrización incompleto para la unión '{{}} vinculante', establezca un valor o eliminar la unión",
+            "MISSING_BINDING_NAME": "Falta el nombre de enlace en la posición {{position}}, inserte un nombre",
+            "QUERY_PARAMETERIZATION_SAVED": "La parametrización de la consulta se guardó correctamente",
+            "QUERY_SAVED": "La consulta se guardó correctamente"
+        },
+        "PARAMETERIZATION": {
+            "BINDING_TYPE": "Tipo de vinculación",
+            "DISPLAY_NAME": "Nombre para mostrar",
+            "QUERY_PARAMETERIZATION": "Parametrización de consultas",
+            "QUERY_PARAMETERS": "Parámetros de consulta",
+            "SHOW_VARIABLE_BINDINGS_DISPLAY_NAME": "Mostrar nombre para mostrar vinculaciones de variables",
+            "USE_VARIABLE_BINDINGS": "Usar vinculaciones de variables",
+            "VARIABLE_BINDING": "Vinculación de variable",
+            "VARIABLE_BINDINGS": "Vinculaciones de variables"
+        },
+        "QUERY": {
+            "ADD_PARAMETERIZED_QUERY_TAB": "Añadir pestaña de consulta parametrizada",
+            "ADD_QUERY_TAB": "Añadir pestaña de consulta",
+            "CHANGE_STORED_QUERY": "Cambiar consulta almacenada",
+            "FETCH_FROM_PREFIXCC": "Obtener prefijo desde prefix.cc",
+            "PARAMETERIZED_QUERY": "Consulta parametrizada",
+            "STORED_QUERY": "Consulta almacenada"
+        },
+        "RESULTS": {
+            "DONE_IN": "Hecho en",
+            "EXPORT_RESULTS": "Exportar resultados SPARQL",
+            "INCLUDE_INFERRED": "Incluir inferidos",
+            "RESULTS_COUNT": "Recuento de resultados",
+            "SAVE_RESULTS_AS": "Guardar resultados como"
         }
     },
     "USER": {

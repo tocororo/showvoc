@@ -126,6 +126,7 @@
             "CANCEL": "Effacer",
             "CHECK": "Vérifier",
             "CHECK_ALL": "Tout vérifier",
+            "CLEAR": "Effacer",
             "CLOSE": "Fermer",
             "CONFIRM": "Confirmer",
             "CREATE": "Créer",
@@ -186,12 +187,14 @@
         "POSITION": "Position",
         "REASON": "Raison",
         "RENDERING": "Rendu",
+        "SCOPE": "Champ d'application",
         "SETTINGS": "Réglages",
         "STATUS": {
             "ACTIVE": "Actif",
             "ERROR": "Erreur",
             "INCOMPLETE_FORM": "Formulaire incomplet",
             "INVALID_DATA": "Donnée non valide",
+            "INVALID_VALUE": "Valeur non valide",
             "OPERATION_DENIED": "Opération refusée",
             "OPERATION_DONE": "Opération réalisée",
             "STATUS": "Statut",
@@ -694,7 +697,46 @@
     },
     "SPARQL": {
         "ACTIONS": {
-            "EXPORT_RESULTS": "Exporter les résultats SPARQL"
+            "LOAD_SPARQL_PARAMETERIZED_QUERY": "Charger une requête SPARQL paramétrée",
+            "LOAD_SPARQL_QUERY": "Charger une requête SPARQL",
+            "SAVE_SPARQL_PARAMETERIZED_QUERY": "Sauvegarder une requête SPARQL paramétrée",
+            "SAVE_SPARQL_QUERY": "Sauvegarder une requête SPARQL",
+            "SAVE_SPARQL_QUERY_PARAMETERIZATION": "Sauvegarder la paramétrisation d'une requête SPARQL",
+            "SELECT_STORED_SPARQL_PARAMETERIZED_QUERY": "Sélectionner une paramétrisation de requête SPARQL sauvegardée"
+        },
+        "MESSAGES": {
+            "DUPLICATED_BINDING_NAME": "Le nom du lien '{{binding}}' est en double, veuillez changer le nom ou supprimer le lien",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_DATATYPE": "La paramétrisation du lien '{{binding}}' est incomplète, veuillez sélectionner un type de données ou supprimer le lien",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_ROLE": "La paramétrisation du lien '{{binding}}' est incomplète, veuillez sélectionner un rôle ou supprimer le lien",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_VALUE": "La paramétrisation du lien '{{binding}}' est incomplète, veuillez sélectionner une valeur ou supprimer le lien",
+            "MISSING_BINDING_NAME": "Un nom de lien est manquant à la position {{position}}, veuillez saisir un nom",
+            "QUERY_PARAMETERIZATION_SAVED": "Le paramétrage de la requête a été sauvegardé avec succès",
+            "QUERY_SAVED": "Requête sauvegardée avec succès"
+        },
+        "PARAMETERIZATION": {
+            "BINDING_TYPE": "Type de lien",
+            "DISPLAY_NAME": "Nom d'affichage",
+            "QUERY_PARAMETERIZATION": "Paramétrisation de requête",
+            "QUERY_PARAMETERS": "Paramètres de requête",
+            "SHOW_VARIABLE_BINDINGS_DISPLAY_NAME": "Montrer le nom d'affichage du lien de la variable",
+            "USE_VARIABLE_BINDINGS": "Utiliser les liens de la variable",
+            "VARIABLE_BINDING": "Lien de la variable",
+            "VARIABLE_BINDINGS": "Liens de la variable"
+        },
+        "QUERY": {
+            "ADD_PARAMETERIZED_QUERY_TAB": "Ajouter un onglet de requête paramétrée",
+            "ADD_QUERY_TAB": "Ajouter un onglet de requête",
+            "CHANGE_STORED_QUERY": "Modifier la requête sauvegardée",
+            "FETCH_FROM_PREFIXCC": "Récupérer le préfixe depuis prefix.cc",
+            "PARAMETERIZED_QUERY": "Requête paramétrée",
+            "STORED_QUERY": "Requête sauvegardée"
+        },
+        "RESULTS": {
+            "DONE_IN": "Réalisé en",
+            "EXPORT_RESULTS": "Exporter les résultats SPARQL",
+            "INCLUDE_INFERRED": "Inclure les inférés",
+            "RESULTS_COUNT": "Comptage des résultats",
+            "SAVE_RESULTS_AS": "Sauvegarder les résultats en tant que"
         }
     },
     "USER": {

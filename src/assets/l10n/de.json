@@ -126,6 +126,7 @@
             "CANCEL": "Abbrechen",
             "CHECK": "Prüfen",
             "CHECK_ALL": "Alle markieren",
+            "CLEAR": "Leeren",
             "CLOSE": "Schließen",
             "CONFIRM": "Bestätigen",
             "CREATE": "Erstellen",
@@ -186,12 +187,14 @@
         "POSITION": "Position",
         "REASON": "Reasoning",
         "RENDERING": "Rendern",
+        "SCOPE": "Umfang",
         "SETTINGS": "Einstellungen",
         "STATUS": {
             "ACTIVE": "Aktiv",
             "ERROR": "Fehler",
             "INCOMPLETE_FORM": "Unvollständiges Formular",
             "INVALID_DATA": "Ungültige Daten",
+            "INVALID_VALUE": "Ungültiger Wert",
             "OPERATION_DENIED": "Operation abgelehnt",
             "OPERATION_DONE": "Operation beendet",
             "STATUS": "Status",
@@ -390,7 +393,7 @@
             "DATASET_TYPE": "Datensatz-Typ",
             "LEXICONS": "Lexika",
             "ONLY_OPEN": "Nur offene Datensätze"
-        }, 
+        },
         "SETTINGS": {
             "FACET": "Facette",
             "FACET_BASED": "Facettenbasiert",
@@ -694,7 +697,46 @@
     },
     "SPARQL": {
         "ACTIONS": {
-            "EXPORT_RESULTS": "SPARQL-Ergebnisse exportieren"
+            "LOAD_SPARQL_PARAMETERIZED_QUERY": "Parametrisierte SPARQL-Abfrage laden",
+            "LOAD_SPARQL_QUERY": "SPARQL-Abfrage laden",
+            "SAVE_SPARQL_PARAMETERIZED_QUERY": "Parametrisierte SPARQL-Abfrage speichern",
+            "SAVE_SPARQL_QUERY": "SPARQL-Abfrage speichern",
+            "SAVE_SPARQL_QUERY_PARAMETERIZATION": "SPARQL-Abfrageparametrierung speichern",
+            "SELECT_STORED_SPARQL_PARAMETERIZED_QUERY": "Gespeicherte parametrisierte SPARQL-Abfrage auswählen"
+        },
+        "MESSAGES": {
+            "DUPLICATED_BINDING_NAME": "Doppelter Bindungsname '{{binding}}'. Bitte Namen ändern oder die Bindung löschen.",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_DATATYPE": "Unvollständige Parametrierung für die Bindung '{{binding}}'. Bitte Datentyp angeben oder die Bindung löschen.",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_ROLE": "Unvollständiger Parametrierung für die Bindung '{{binding}}'. Bitte eine Rolle festlegen oder die Bindung löschen.",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_VALUE": "Unvollständige Parametrierung für die Bindung '{{binding}}'. Bitte einen Wert festlegen oder die Bindung löschen.",
+            "MISSING_BINDING_NAME": "Fehlender Bindungsname an Position {{position}}. Bitte einen Namen eingeben.",
+            "QUERY_PARAMETERIZATION_SAVED": "Abfrageparametrierung erfolgreich gespeichert",
+            "QUERY_SAVED": "Abfrage erfolgreich gespeichert"
+        },
+        "PARAMETERIZATION": {
+            "BINDING_TYPE": "Bindungsart",
+            "DISPLAY_NAME": "Anzeigename",
+            "QUERY_PARAMETERIZATION": "Abfrage-Parametrierung",
+            "QUERY_PARAMETERS": "Abfrage-Parameter",
+            "SHOW_VARIABLE_BINDINGS_DISPLAY_NAME": "Anzeigenamen für Variablenbindungen anzeigen",
+            "USE_VARIABLE_BINDINGS": "Variablenbindungen verwenden",
+            "VARIABLE_BINDING": "Variablenbindung",
+            "VARIABLE_BINDINGS": "Variablenbindungen"
+        },
+        "QUERY": {
+            "ADD_PARAMETERIZED_QUERY_TAB": "Registerkarte \"Parametrisierte Abfrage\" hinzufügen",
+            "ADD_QUERY_TAB": "Registerkarte \"Abfrage\" hinzufügen",
+            "CHANGE_STORED_QUERY": "Gespeicherte Abfrage ändern",
+            "FETCH_FROM_PREFIXCC": "Präfixe aus prefix.cc abrufen",
+            "PARAMETERIZED_QUERY": "Parametrisierte Abfrage",
+            "STORED_QUERY": "Gespeicherte Abfrage"
+        },
+        "RESULTS": {
+            "DONE_IN": "Fertig in",
+            "EXPORT_RESULTS": "SPARQL-Ergebnisse exportieren",
+            "INCLUDE_INFERRED": "Abgeleitete einbeziehen",
+            "RESULTS_COUNT": "Anzahl Ergebnisse",
+            "SAVE_RESULTS_AS": "Ergebnisse speichern unter"
         }
     },
     "USER": {

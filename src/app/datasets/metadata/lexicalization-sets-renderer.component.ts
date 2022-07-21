@@ -10,14 +10,6 @@ import { ChartData, ChartEnum } from 'src/app/widget/charts/NgxChartsUtils';
     selector: 'lexicalization-sets-renderer',
     templateUrl: './lexicalization-sets-renderer.component.html',
     host: { class: "vbox" },
-    styles: [`
-        .card-header-tabs {
-            margin-bottom: -6px;
-        }
-        .nav-tabs>li>a {
-            padding: 6px;
-        }
-    `]
 })
 export class LexicalizationSetsRenderer {
 

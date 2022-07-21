@@ -9,7 +9,7 @@ import { OntoLex, OWL, RDFS, SKOS } from '../../../models/Vocabulary';
 
 @Component({
     selector: 'resource-picker',
-    templateUrl: './resourcePickerComponent.html',
+    templateUrl: './resource-picker.component.html',
     styles: [":host { display: block; }"]
 })
 export class ResourcePickerComponent {
@@ -56,6 +56,8 @@ export class ResourcePickerComponent {
         if (this.resource) {
             if (typeof this.resource == 'string') {
                 this.resource = new AnnotatedValue(new IRI(this.resource));
+            } else if (this.resource instanceof IRI) {
+                this.resource = new AnnotatedValue(this.resource);
             }
             this.resourceIRI = this.resource.getValue().getIRI();
         } else {

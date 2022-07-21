@@ -137,6 +137,7 @@
             "CANCEL": "Cancella",
             "CHECK": "Seleziona",
             "CHECK_ALL": "Seleziona tutto",
+            "CLEAR": "Pulisci",
             "CLOSE": "Chiudi",
             "COLLAPSE_ALL": "Collassa tutto",
             "CONFIRM": "Conferma",
@@ -212,12 +213,14 @@
         "POSITION": "Posizione",
         "REASON": "Motivo",
         "RENDERING": "Rendering",
+        "SCOPE": "Scope",
         "SETTINGS": "Impostazioni",
         "STATUS": {
             "ACTIVE": "Attivo",
             "ERROR": "Errore",
             "INCOMPLETE_FORM": "Form incompleto",
             "INVALID_DATA": "Dati non validi",
+            "INVALID_VALUE": "Valore non valido",
             "OPERATION_DENIED": "Operazione negata",
             "OPERATION_DONE": "Operazione completata",
             "STATUS": "Stato",
@@ -584,6 +587,7 @@
         "RES_NOT_REACHABLE_IN_TREE_THROUGH_DEPRECATED": "La risorsa {{resource}} non è raggiungibile nell'albero corrente dal momento che il path per raggiungerlo contiene una risorsa deprecata. Abilita la visualizzazione di risorse deprecate e ripeti la ricerca.",
         "SEARCH_INDEX_NOT_FOUND": "Indice non trovato. E' necessario creare l'indice per almeno un dataset, quindi riprovare.",
         "SELECT_REFERENCED_REPO_TO_DELETE": "Il progetto eliminato faceva riferimento ai seguenti repository. Seleziona i repository che vuoi eliminare.",
+        "SESSION_EXPIRED": "La sessione è scaduta a causa dell'inattività, premere ok per riconnettersi.",
         "SWITCH_NO_SCHEME_CONFIRM": "Il concetto cercato '{{concept}}' non appartiene ad alcuno schema. Vuoi passare alla modalità no-scheme?",
         "SYSTEM_CONFIG_INTRO": "In questa sezione è possibile impostare alcuni aspetti principali del sistema. Questo pannello può essere acceduto anche più tardi da <i>Dashboard di amministrazione</i> > <i>Configurazione</i>",
         "SYSTEM_NOT_CONFIGURED_FOR_REMOTE_REPO": "Il sistema non è stato configurato per creare un repository remoto. Si prega di fornire una configurazione di un triple store remoto tramite la dashboard di amministrazione.",
@@ -770,7 +774,46 @@
     },
     "SPARQL": {
         "ACTIONS": {
-            "EXPORT_RESULTS": "Esporta risultati SPARQL"
+            "LOAD_SPARQL_PARAMETERIZED_QUERY": "Carica SPARQL query parametrizzata",
+            "LOAD_SPARQL_QUERY": "Carica query",
+            "SAVE_SPARQL_PARAMETERIZED_QUERY": "Salva SPARQL query parametrizzata",
+            "SAVE_SPARQL_QUERY": "Salva SPARQL query",
+            "SAVE_SPARQL_QUERY_PARAMETERIZATION": "Salva parametrizzazione query SPARQL",
+            "SELECT_STORED_SPARQL_PARAMETERIZED_QUERY": "Seleziona query SPARQL parametrizzata"
+        },
+        "MESSAGES": {
+            "DUPLICATED_BINDING_NAME": "Nome binding duplicato '{{binding}}'. Cambia il nome o elimina il binding.",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_DATATYPE": "Parametrizzazione incompleta per il binding '{{binding}}'. Indica un datatype o cancella il binding",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_ROLE": "Parametrizzazione incompleta per il binding '{{binding}}'. Indica un ruolo o cancella il binding",
+            "INCOMPLETE_BINDING_PARAMETERIZATION_VALUE": "Parametrizzazione incompleta per il binding '{{binding}}'. Indica un valore o cancella il binding",
+            "MISSING_BINDING_NAME": "Nome binding mancante in posizione {{position}}. Inserisci un nome.",
+            "QUERY_PARAMETERIZATION_SAVED": "Parametrizzazione query salvata con successo",
+            "QUERY_SAVED": "Query salvata con successo"
+        },
+        "PARAMETERIZATION": {
+            "BINDING_TYPE": "Tipo di binding",
+            "DISPLAY_NAME": "Display Name",
+            "QUERY_PARAMETERIZATION": "Parametrizzazione query",
+            "QUERY_PARAMETERS": "Parametri query",
+            "SHOW_VARIABLE_BINDINGS_DISPLAY_NAME": "Mostra il diplay name del binding delle variabili",
+            "USE_VARIABLE_BINDINGS": "Usa binding delle variabili",
+            "VARIABLE_BINDING": "Binding variabile",
+            "VARIABLE_BINDINGS": "Binding variabili"
+        },
+        "QUERY": {
+            "ADD_PARAMETERIZED_QUERY_TAB": "Aggiungi tab per query parametrizzata",
+            "ADD_QUERY_TAB": "Aggiungi tab per query",
+            "CHANGE_STORED_QUERY": "Modifica query memorizzata",
+            "FETCH_FROM_PREFIXCC": "Recupera prefissi da prefix.cc",
+            "PARAMETERIZED_QUERY": "Query parametrizzata",
+            "STORED_QUERY": "Query memorizzata"
+        },
+        "RESULTS": {
+            "DONE_IN": "Completato in",
+            "EXPORT_RESULTS": "Esporta risultati SPARQL",
+            "INCLUDE_INFERRED": "Includi inferite",
+            "RESULTS_COUNT": "Conteggio risultati",
+            "SAVE_RESULTS_AS": "Salva risultati come"
         }
     },
     "USER": {

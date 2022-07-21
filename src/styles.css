@@ -372,6 +372,14 @@ label {
     display: flex !important;
 }
 
+.card-header-tabs {
+    margin-bottom: -6px;
+}
+
+.card-header-tabs.nav-tabs>li>a {
+    padding: 6px;
+}
+
 ul.nav-tabs {
     padding-left: 3px;
     padding-top: 3px;
@@ -380,6 +388,34 @@ ul.nav-tabs {
 .nav-tabs>li>a {
     font-size: 14px;
     padding: 8px;
+}
+
+.nav-item-splitted .btn-group>.btn {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    color: #007bff;
+    font-size: 14px;
+    margin-bottom: -1px;
+    padding: 8px;
+}
+.nav-item-splitted .btn-group>.btn:hover {
+    border: 1px solid;
+    border-color: #e9ecef #e9ecef #dee2e6;
+    color: #0056b3;
+}
+.nav-item-splitted .btn-group:not(:first-child)>.btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.nav-item-splitted .btn-group:not(:last-child)>.btn {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.nav-link>span {
+    cursor: pointer;
 }
 
 .card-header {
@@ -488,4 +524,12 @@ ngb-modal-window.modal {
 }
 .dropdown-menu-sm > .dropdown-divider {
     margin: .125rem 0 0 !important;
+}
+
+.popover {
+    max-width: 500px;
+}
+.popover-body {
+    max-height: 200px;
+    overflow-y: auto;
 }
