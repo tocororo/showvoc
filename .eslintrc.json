@@ -255,7 +255,7 @@
         "no-whitespace-before-property": 2,
         "no-with": 2,
         "nonblock-statement-body-position": 2,
-        "object-curly-newline": 2,
+        "object-curly-newline": 1,
         "object-curly-spacing": 0,
         "object-property-newline": 0,
         "object-shorthand": 0,

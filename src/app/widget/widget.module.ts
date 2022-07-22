@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { QueryParameterForm } from '../datasets/sparql/query-parameterization/query-parameter-form.component';
 import { BarChartComponent } from './charts/bar-chart.component';
 import { PieChartComponent } from './charts/pie-chart.component';
 import { SeriesChartLegendComponent } from './charts/series-chart-legend.component';
@@ -61,6 +62,7 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typed-literal-
         NestedSettingSetRendererComponent,
         PasswordInputComponent,
         PieChartComponent,
+        QueryParameterForm,
         RdfResourceComponent,
         RenderingEditor,
         RenderingEditorModal,
@@ -93,6 +95,7 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typed-literal-
         LocalizedEditorModal,
         PasswordInputComponent,
         PieChartComponent,
+        QueryParameterForm,
         RdfResourceComponent,
         RenderingEditor,
         RenderingEditorModal,

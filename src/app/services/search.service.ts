@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { SearchMode, StatusFilter } from "../models/Properties";
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource, Value } from '../models/Resources';
 import { TripleForSearch } from '../models/Search';
-import { HttpManager, STRequestOptions } from "../utils/HttpManager";
+import { HttpManager, STRequestOptions, STRequestParams } from "../utils/HttpManager";
 import { ResourceDeserializer } from '../utils/ResourceUtils';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class SearchServices {
      */
     searchResource(searchString: string, rolesArray: string[], useLocalName: boolean, useURI: boolean, useNotes: boolean,
         searchMode: SearchMode, langs?: string[], includeLocales?: boolean, schemes?: IRI[]): Observable<AnnotatedValue<Resource>[]> {
-        let params: any = {
+        let params: STRequestParams = {
             searchString: searchString,
             rolesArray: rolesArray,
             useLocalName: useLocalName,
@@ -52,19 +52,54 @@ export class SearchServices {
     }
 
     /**
-     * 
-     * @param searchString 
-     * @param useLocalName 
-     * @param useURI 
+     * Searches a resource in the model
+     * @param cls class to which the searched instance should belong
+     * @param searchString the string to search
+     * @param useLocalName tells if the searched string should be searched in the local name (as well as in labels)
+     * @param useURI tells if the searched string should be searched in the entire URI (as well as in labels)
      * @param useNotes tells if the searched string should be searched in the notes
-     * @param searchMode 
-     * @param lexicons 
-     * @param langs 
-     * @param includeLocales 
+     * @param searchMode available searchMode values: "contain", "start", "end", "exact"
+     * @param langs List of langTags, restricts the lexicalization search to only a set of languages
+     * @return an array of resources
      */
+    searchInstancesOfClass(cls: IRI, searchString: string, useLocalName: boolean, useURI: boolean, useNotes: boolean,
+        searchMode: SearchMode, langs?: string[], includeLocales?: boolean, options?: STRequestOptions): Observable<AnnotatedValue<IRI>[]> {
+        let params: STRequestParams = {
+            cls: cls,
+            searchString: searchString,
+            useLocalName: useLocalName,
+            useURI: useURI,
+            useNotes: useNotes,
+            searchMode: searchMode,
+            langs: langs,
+            includeLocales: includeLocales
+        };
+        options = new STRequestOptions({
+            errorHandlers: [{
+                className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
+            }]
+        }).merge(options);
+        return this.httpMgr.doGet(this.serviceName, "searchInstancesOfClass", params, options).pipe(
+            map(stResp => {
+                return ResourceDeserializer.createIRIArray(stResp);
+            })
+        );
+    }
+
+    /**
+    * 
+    * @param searchString 
+    * @param useLocalName 
+    * @param useURI 
+    * @param useNotes tells if the searched string should be searched in the notes
+    * @param searchMode 
+    * @param lexicons 
+    * @param langs 
+    * @param includeLocales 
+    */
     searchLexicalEntry(searchString: string, useLocalName: boolean, useURI: boolean, useNotes: boolean, searchMode: SearchMode,
         lexicons?: IRI[], langs?: string[], includeLocales?: boolean): Observable<AnnotatedValue<IRI>[]> {
-        let params: any = {
+        let params: STRequestParams = {
             searchString: searchString,
             useLocalName: useLocalName,
             useURI: useURI,
@@ -87,45 +122,6 @@ export class SearchServices {
     }
 
     /**
-     * Searches a resource in the model
-     * @param cls class to which the searched instance should belong
-     * @param searchString the string to search
-     * @param useLocalName tells if the searched string should be searched in the local name (as well as in labels)
-     * @param useURI tells if the searched string should be searched in the entire URI (as well as in labels)
-     * @param useNotes tells if the searched string should be searched in the notes
-     * @param searchMode available searchMode values: "contain", "start", "end", "exact"
-     * @param langs List of langTags, restricts the lexicalization search to only a set of languages
-     * @return an array of resources
-     */
-    searchInstancesOfClass(cls: IRI, searchString: string, useLocalName: boolean, useURI: boolean, useNotes: boolean,
-        searchMode: SearchMode, langs?: string[], includeLocales?: boolean, options?: STRequestOptions): Observable<AnnotatedValue<IRI>[]> {
-        let params: any = {
-            cls: cls,
-            searchString: searchString,
-            useLocalName: useLocalName,
-            useURI: useURI,
-            useNotes: useNotes,
-            searchMode: searchMode,
-        };
-        if (langs != null) {
-            params.langs = langs;
-        }
-        if (includeLocales != null) {
-            params.includeLocales = includeLocales;
-        }
-        options = new STRequestOptions({
-            errorHandlers: [{
-                className: "it.uniroma2.art.semanticturkey.exceptions.SearchStatusException", action: 'warning'
-            }]
-        }).merge(options);
-        return this.httpMgr.doGet(this.serviceName, "searchInstancesOfClass", params, options).pipe(
-            map(stResp => {
-                return ResourceDeserializer.createIRIArray(stResp);
-            })
-        );
-    }
-
-    /**
      * Returns the shortest path from a root to the given resource
      * @param resource
      * @param role role of the given resource, available roles: "concept", "cls", "property"
@@ -134,7 +130,7 @@ export class SearchServices {
      * @return an array of resources
      */
     getPathFromRoot(resource: IRI, role: RDFResourceRolesEnum, schemes?: IRI[], root?: IRI) {
-        let params: any = {
+        let params: STRequestParams = {
             role: role,
             resourceURI: resource,
             schemesIRI: schemes,
@@ -166,7 +162,7 @@ export class SearchServices {
      */
     searchStringList(searchString: string, rolesArray: string[], useLocalName: boolean, searchMode: SearchMode,
         langs?: string[], includeLocales?: boolean, schemes?: IRI[], cls?: IRI): Observable<string[]> {
-        let params: any = {
+        let params: STRequestParams = {
             searchString: searchString,
             rolesArray: rolesArray,
             useLocalName: useLocalName,
@@ -207,36 +203,22 @@ export class SearchServices {
         ingoingLinks?: { first: IRI, second: Value[] }[], outgoingLinks?: { first: IRI, second: Value[] }[],
         outgoingSearch?: TripleForSearch[]): Observable<AnnotatedValue<Resource>[]> {
 
-        let params: any = {
+        let params: STRequestParams = {
             statusFilter: statusFilter,
-            searchMode: searchMode
+            searchMode: searchMode,
+            langs: langs,
+            includeLocales: includeLocales,
+            types: types ? this.serializeListOfList(types) : null,
+            schemes: schemes ? this.serializeListOfList(schemes) : null,
+            ingoingLinks: ingoingLinks ? this.serializeLinks(ingoingLinks) : null,
+            outgoingLinks: outgoingLinks ? this.serializeLinks(outgoingLinks) : null,
+            outgoingSearch: outgoingSearch ? this.serializeSearchLinks(outgoingSearch) : null,
         };
         if (searchString != null) {
             params.searchString = searchString;
             params.useLocalName = useLocalName;
             params.useURI = useURI;
             params.useNotes = useNotes;
-        }
-        if (langs != null) {
-            params.langs = langs;
-        }
-        if (includeLocales != null) {
-            params.includeLocales = includeLocales;
-        }
-        if (types != null) {
-            params.types = this.serializeListOfList(types);
-        }
-        if (schemes != null) {
-            params.schemes = this.serializeListOfList(schemes);
-        }
-        if (ingoingLinks != null) {
-            params.ingoingLinks = this.serializeLinks(ingoingLinks);
-        }
-        if (outgoingLinks != null) {
-            params.outgoingLinks = this.serializeLinks(outgoingLinks);
-        }
-        if (outgoingSearch != null) {
-            params.outgoingSearch = this.serializeSearchLinks(outgoingSearch);
         }
         let options = new STRequestOptions({
             errorHandlers: [{
@@ -297,11 +279,23 @@ export class SearchServices {
         return JSON.stringify(serialization);
     }
 
+    customSearch(searchParameterizationReference: string, boundValues: Map<string, Value>): Observable<AnnotatedValue<Resource>[]> {
+        let params: STRequestParams = {
+            searchParameterizationReference: searchParameterizationReference,
+            boundValues: boundValues
+        };
+        return this.httpMgr.doGet(this.serviceName, "customSearch", params).pipe(
+            map(stResp => {
+                return ResourceDeserializer.createResourceArray(stResp);
+            })
+        );
+    }
+
 
     searchAlignedResources(searchString: string, useLocalName: boolean, useURI: boolean, searchMode: SearchMode,
         useNotes?: boolean, langs?: string[], includeLocales?: boolean,
         predList?: IRI[], maxNumOfResPerQuery?: number): Observable<AnnotatedValue<Resource>[]> {
-        let params: any = {
+        let params: STRequestParams = {
             searchString: searchString,
             useLocalName: useLocalName,
             useURI: useURI,

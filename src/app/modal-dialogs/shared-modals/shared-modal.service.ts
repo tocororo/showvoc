@@ -72,7 +72,7 @@ export class SharedModalsServices {
      * @param rendering in case of array of resources, it tells whether the resources should be rendered
      * @return if the modal closes with ok returns a promise containing a list of selected resource
      */
-    selectResource(title: TextOrTranslation, message: TextOrTranslation, resourceList: AnnotatedValue<Value>[], rendering?: boolean, multiselection?: boolean, emptySelectionAllowed?: boolean, selectedResources?: Value[]): Promise<any[]> {
+    selectResource(title: TextOrTranslation, message: TextOrTranslation, resourceList: AnnotatedValue<Value>[], rendering?: boolean, multiselection?: boolean, emptySelectionAllowed?: boolean, selectedResources?: Value[]): Promise<AnnotatedValue<Value>[]> {
         const modalRef: NgbModalRef = this.modalService.open(ResourceSelectionModal, new ModalOptions());
         modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
         modalRef.componentInstance.message = TranslationUtils.getTranslatedText(message, this.translateService);

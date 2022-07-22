@@ -9,6 +9,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
   * Implemented the facet-based visualization of datasets
   * Implemented storage of SPARQL queries (for authenticated user only)
   * Added parameterized SPARQL queries (for authenticated user only)
+  * Added statistical charts in Metadata page
   * Fixed performances issues by replacing usage setTimeout() with ChangeDetectorRef#detectChanges(). Thanks to Saku Seppälä for the contribution!
 
 # 2.1.0 (23-06-2022)
