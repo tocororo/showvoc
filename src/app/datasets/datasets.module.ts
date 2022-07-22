@@ -41,7 +41,6 @@ import { YasguiComponent } from './sparql/yasgui.component';
         ExportResultRdfModal,
         LexicalizationSetsRenderer,
         MetadataComponent,
-        QueryParameterForm,
         QueryParameterizerModal,
         QueryResultsComponent,
         SparqlComponent,
