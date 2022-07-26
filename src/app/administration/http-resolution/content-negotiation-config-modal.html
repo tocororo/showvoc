@@ -1,0 +1,42 @@
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{'Content negotiation configuration'|translate}}</h5>
+        <button class="close" (click)="close()">
+            <span>&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="card vbox">
+            <div class="card-header d-flex align-items-center">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link" (click)="activeTab = 'rewritingRules'" [ngClass]="{ active: activeTab == 'rewritingRules' }">
+                            {{'Rewriting rules'|translate}}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link" (click)="activeTab = 'inverseRewritingRules'" [ngClass]="{ active: activeTab == 'inverseRewritingRules' }">
+                            {{'Inverse rewriting rules'|translate}}
+                        </a>
+                    </li>
+                </ul>
+
+                <span style="flex: 1;"></span>
+
+                <button class="btn btn-light btn-sm text-right" (click)="addRule()">
+                    <span class="fas fa-plus"></span>
+                </button>
+            </div>
+            <div class="card-body vbox">
+                <rewriting-rules *ngIf="activeTab == 'rewritingRules'" [rules]="rewritingRules"></rewriting-rules>
+                <inverse-rewriting-rules *ngIf="activeTab == 'inverseRewritingRules'" [rules]="inverseRewritingRules"></inverse-rewriting-rules>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-primary" (click)="ok()">Ok</button>
+        <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CANCEL'|translate}}</button>
+    </div>
+</div>

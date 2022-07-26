@@ -1,0 +1,180 @@
+<div class="vbox overflow-auto">
+
+    <div *ngFor="let rule of rules; let last=last; trackBy: trackByIndex" class="card mb-3">
+        <div class="card-body p-2">
+            <table class="table table-sm table-borderless">
+                <colgroup>
+                    <col>
+                    <col style="width: 70%">
+                    <col style="width: 1%">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td><label class="col-form-label">Source URI RegExp</label></td>
+                        <td><input class="form-control" [(ngModel)]="rule.sourceRDFresURIregExp"></td>
+                        <td>
+                            <button class="btn btn-sm btn-light" [ngbPopover]="popContentSource" container="body">
+                                <span class="fas fa-info-circle"></span>
+                            </button>
+                            <ng-template #popContentSource>
+                                <div style="width: 350px;">
+                                    Regular expression for matching input resource URI. Named capturing group are also supported
+                                    (e.g. <code class="text-nowrap">?&lt;baseuri&gt;</code>, <code class="text-nowrap">?&lt;localname&gt;</code>, ...)
+                                    and can be referred in <i>Target URI exp</i>.<br>
+                                    A dedicated <code class="text-nowrap">?&lt;format&gt;</code> named group <b>must</b> be used in order to detect the format (eventually it can be mapped/trasformed by means the "Format map")
+                                </div>
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="col-form-label">Target URI exp</label>
+                        </td>
+                        <td><input class="form-control" [(ngModel)]="rule.targetResURIExp"></td>
+                        <td>
+                            <button class="btn btn-sm btn-light" [ngbPopover]="popContentTarget" container="body">
+                                <span class="fas fa-info-circle"></span>
+                            </button>
+                            <ng-template #popContentTarget>
+                                <div style="width: 350px;">
+                                    Replacement string expression. It can include special replacement patterns by means capturing groups like <code>$n</code>, where <code>n</code> is a positive integer (e.g. <code>$1</code>, <code>$2</code>, ...), and named capturing groups like <code class="text-nowrap">$&lt;name&gt;</code> where <code>name</code> is the identifier of a named group (e.g. <code class="text-nowrap">$&lt;baseuri&gt;</code>, <code class="text-nowrap">$&lt;localname&gt;</code>, ...)
+                                </div>
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="col-form-label">Format mapping</label>
+                        </td>
+                        <td>
+                            <div *ngIf="rule.formatMapSupport.length == 0" class="d-flex align-items-center">
+                                <span style="flex: 1;"></span>
+                                <button class="btn btn-sm btn-light" (click)="addFormatMapping(rule)">
+                                    <span class="fas fa-plus"></span>
+                                </button>
+                            </div>
+                            <div *ngFor="let entry of rule.formatMapSupport; let index=index; let last=last;" class="d-flex align-items-center" [ngClass]="{'mb-1': !last}">
+                                <input class="form-control" [(ngModel)]="entry.key">
+                                <select class="form-control ml-2" [(ngModel)]="entry.value">
+                                    <option *ngFor="let f of formatValues">{{f}}</option>
+                                </select>
+                                <div class="text-nowrap ml-2" style="min-width: 62px">
+                                    <button class="btn btn-sm btn-light" (click)="deleteFormatMapping(rule, index)">
+                                        <span class="fas fa-trash"></span>
+                                    </button>
+                                    <button *ngIf="last" class="btn btn-sm btn-light ml-1" (click)="addFormatMapping(rule)">
+                                        <span class="fas fa-plus"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-light" [ngbPopover]="popContentMap" container="body">
+                                <span class="fas fa-info-circle"></span>
+                            </button>
+                            <ng-template #popContentMap>
+                                <div style="width: 350px;">
+                                    Optional mappings for transforming the format detected in 'Source URI RegExp' into a format supported by the content negotiation in ShowVoc
+                                    (<ng-container *ngFor="let f of formatValues; let last=last"><code>{{f}}</code><span *ngIf="!last">,</span></ng-container>)
+                                </div>
+                            </ng-template>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="card-footer">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-light btn-sm" (click)="rule.testing = !rule.testing">
+                    Test
+                    <span *ngIf="!rule.testing" class="fas fa-angle-down"></span>
+                    <span *ngIf="rule.testing" class="fas fa-angle-up"></span>
+                </button>
+                <span style="flex: 1;"></span>
+                <div class="ml-3 pl-2 border-left">
+                    <button class="btn btn-light" (click)="deleteRule(rule)">
+                        <span class="fas fa-trash"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div *ngIf="rule.testing" class="container border-top mt-2 pt-2">
+                <div class="row align-items-center mb-1">
+                    <label class="col-2">
+                        Input URI
+                    </label>
+                    <div class="col-10">
+                        <div class="input-group input-group-sm">
+                            <input class="form-control" [(ngModel)]="rule.testRuleSource" placeholder="http://test#example.rdf">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" (click)="testRule(rule)" [disabled]="!rule.testRuleSource">
+                                    <span class="fas fa-check"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-container *ngIf="rule.testRuleResult?.matched">
+                    <div class="row align-items-center mb-1">
+                        <label class="col-2">
+                            Output URI
+                        </label>
+                        <div class="col-10">
+                            <div class="form-control form-control-sm">{{rule.testRuleResult.output}}</div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mb-1">
+                        <label class="col-2">
+                            Output format
+                        </label>
+                        <div class="col-10">
+                            <div class="form-control form-control-sm">{{rule.testRuleResult.format}}</div>
+                        </div>
+                    </div>
+                    <div *ngIf="rule.testRuleResult.entries" class="row align-items-center mb-1">
+                        <label class="col-2">
+                            Matched groups
+                        </label>
+                        <div class="col-10">
+                            <div class="card small">
+                                <div class="card-body py-1">
+                                    <div *ngFor="let e of rule.testRuleResult.entries; let index=index" class="row">
+                                        <div class="col-2">
+                                            <span class="text-monospace">${{index}}</span>:
+                                        </div>
+                                        <div class="col-10">{{e}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="rule.testRuleResult.groups" class="row align-items-center mb-1">
+                        <label class="col-2 col-form-label">
+                            Named groups
+                        </label>
+                        <div class="col-10">
+                            <div class="card small">
+                                <div class="card-body py-1">
+                                    <div *ngFor="let item of rule.testRuleResult.groups | keyvalue" class="row">
+                                        <div class="col-2">
+                                            <span class="text-monospace">{{item.key}}</span>:
+                                        </div>
+                                        <span class="col-10">{{item.value}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="rule.testRuleResult && !rule.testRuleResult.matched">
+                    <span class="fas fa-exclamation-triangle mr-2"></span>
+                    Input URI doesn't match 'Source URI RegExp'
+                </ng-container>
+            </div>
+        </div>
+        
+    </div>
+
+</div>

@@ -12,11 +12,13 @@ export enum SettingsEnum {
     conceptTree = "conceptTree",
     disableContributions = "disableContributions",
     instanceList = "instanceList",
+    inverseRewritingRules = "inverseRewritingRules",
     languages = "languages",
     lexEntryList = "lexEntryList",
     mail = "mail",
     showvoc = "showvoc",
     remoteConfigs = "remoteConfigs",
+    rewritingRules = "rewritingRules",
     showFlags = "showFlags",
     superUserList = "superUserList",
 }

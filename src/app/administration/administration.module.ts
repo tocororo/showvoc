@@ -3,12 +3,16 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContributionModule } from '../contribution/contribution.module';
 import { UserModule } from '../user/user.module';
 import { WidgetModule } from '../widget/widget.module';
 import { AdminDashboardComponent } from './admin-dashboard.component';
+import { ContentNegotiationConfigurationModal } from './http-resolution/content-negotiation-config-modal';
+import { HttpResolutionComponent } from './http-resolution/http-resolution.component';
+import { InverseRewritingRulesComponent } from './http-resolution/inverse-rewriting-rules.component';
+import { RewritingRulesComponent } from './http-resolution/rewriting-rules.component';
 import { CreateDownloadModal } from './projects-manager/create-download-modal';
 import { CreateProjectModal } from './projects-manager/create-project-modal';
 import { LoadDataModal } from './projects-manager/load-data-modal';
@@ -26,18 +30,22 @@ import { SystemConfigurationComponent } from './system-configuration/system-conf
 @NgModule({
     declarations: [
         AdminDashboardComponent,
+        ContentNegotiationConfigurationModal,
         CreateDownloadModal,
         CreateProjectModal,
         DeleteRemoteRepoModal,
         DeleteRemoteRepoReportModal,
         LoadDataModal,
         LoadDownloadModal,
+        HttpResolutionComponent,
         InitialConfigurationComponent,
+        InverseRewritingRulesComponent,
         ProjectsManagerComponent,
         ProjectSettingsModal,
         RemoteAccessConfigModal,
         RemoteRepoEditorModal,
         RemoteRepoSelectionModal,
+        RewritingRulesComponent,
         SystemConfigurationComponent,
     ],
     imports: [
@@ -46,6 +54,7 @@ import { SystemConfigurationComponent } from './system-configuration/system-conf
         DragDropModule,
         FormsModule,
         NgbDropdownModule,
+        NgbPopoverModule,
         RouterModule,
         TranslateModule,
         UserModule,
@@ -54,6 +63,7 @@ import { SystemConfigurationComponent } from './system-configuration/system-conf
     exports: [],
     providers: [],
     entryComponents: [
+        ContentNegotiationConfigurationModal,
         CreateDownloadModal,
         CreateProjectModal,
         DeleteRemoteRepoModal,

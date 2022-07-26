@@ -10,6 +10,7 @@ import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.
 import { ResourceViewModule } from '../resource-view/resource-view.module';
 import { StructuresModule } from '../structures/structures.module';
 import { WidgetModule } from '../widget/widget.module';
+import { DataComponent } from './data.component';
 import { DatasetDataComponent } from './data/dataset-data.component';
 import { DatasetViewComponent } from './dataset-view/dataset-view.component';
 import { DatasetCardComponent } from './datasets-page/dataset-card.component';
@@ -21,7 +22,6 @@ import { LexicalizationSetsRenderer } from './metadata/lexicalization-sets-rende
 import { MetadataComponent } from './metadata/metadata.component';
 import { TypeDistributionsComponent } from './metadata/type-distributions.component';
 import { ExportResultRdfModal } from './sparql/export-result-rdf-modal';
-import { QueryParameterForm } from './sparql/query-parameterization/query-parameter-form.component';
 import { QueryParameterizerModal } from './sparql/query-parameterization/query-parameterizer-modal';
 import { QueryResultsComponent } from './sparql/query-results.component';
 import { SparqlTabParametrizedComponent } from './sparql/sparql-tab-parametrized.component';
@@ -31,6 +31,7 @@ import { YasguiComponent } from './sparql/yasgui.component';
 
 @NgModule({
     declarations: [
+        DataComponent,
         DatasetCardComponent,
         DatasetDataComponent,
         DatasetViewComponent,

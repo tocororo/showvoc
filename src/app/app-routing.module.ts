@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminDashboardComponent } from './administration/admin-dashboard.component';
+import { HttpResolutionComponent } from './administration/http-resolution/http-resolution.component';
 import { ProjectsManagerComponent } from './administration/projects-manager/projects-manager.component';
 import { InitialConfigurationComponent } from './administration/system-configuration/initial-configuration.component';
 import { SystemConfigurationComponent } from './administration/system-configuration/system-configuration.component';
@@ -9,6 +10,7 @@ import { ContributionsManagerComponent } from './contribution/administration/con
 import { ContributionComponent } from './contribution/contribution.component';
 import { LoadDevResourceComponent } from './contribution/development/load-dev.component';
 import { LoadStableResourceComponent } from './contribution/stable/load-stable.component';
+import { DataComponent } from './datasets/data.component';
 import { DatasetDataComponent } from './datasets/data/dataset-data.component';
 import { DatasetViewComponent } from './datasets/dataset-view/dataset-view.component';
 import { DatasetsPageComponent } from './datasets/datasets-page/datasets-page.component';
@@ -27,6 +29,7 @@ const routes: Routes = [
     { path: '', canActivate: [SystemSettingsGuard], children: [ //this empty parent route is needed in order to apply the SystemSettingsGuard to the whole application
         { path: '', redirectTo: "/home", pathMatch: 'full' },
         { path: "home", component: HomeComponent, canActivate: [VisitorAuthGuard], runGuardsAndResolvers: 'always' }, //VisitorAuthGuard needed in order to redirect to the registration page if no user is registered
+        { path: "data", component: DataComponent, canActivate: [VisitorAuthGuard] },
         { path: "login", component: LoginComponent },
         { path: "registration", component: RegistrationComponent },
         { path: "profile", component: UserProfileComponent, canActivate: [SuperUserAuthGuard] },
@@ -36,7 +39,8 @@ const routes: Routes = [
                 { path: '', redirectTo: "projects", pathMatch: 'full' },
                 { path: 'projects', component: ProjectsManagerComponent },
                 { path: 'contributions', component: ContributionsManagerComponent, canActivate: [AdminAuthGuard] },
-                { path: 'config', component: SystemConfigurationComponent, canActivate: [AdminAuthGuard] }
+                { path: 'config', component: SystemConfigurationComponent, canActivate: [AdminAuthGuard] },
+                { path: 'http-res', component: HttpResolutionComponent, canActivate: [AdminAuthGuard] },
             ]
         },
         { path: "sysconfig", component: InitialConfigurationComponent, canActivate: [AdminAuthGuard] },
