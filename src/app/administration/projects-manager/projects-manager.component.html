@@ -42,8 +42,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let p of projectList">
-                    <td class="text-center">
-                        <a [routerLink]="" (click)="goToProject(p)" [ngClass]="{ disabled: !p.isOpen() || p.role == rolePristine}">{{p.getName()}}</a>
+                    <td class="text-center" style="max-width: 400px;" [title]="p.getName()">
+                        <a [routerLink]="" (click)="goToProject(p)" class="d-block ellipsable" [ngClass]="{ disabled: !p.isOpen() || p.role == rolePristine}">
+                            {{p.getName()}}
+                        </a>
                     </td>
                     <td class="text-center">
                         <button class="btn btn-sm btn-light" style="width: 32px;" (click)="openCloseProject(p)" [ngClass]="{ active: p.isOpen() }" [disabled]="!isAdmin || p.creatingIndex || p.creatingMetadata">

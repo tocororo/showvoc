@@ -20,8 +20,8 @@
             </thead>
             <tbody>
                 <tr *ngFor="let m of mappings">
-                    <td class="align-middle text-center">
-                        {{m.project.getName()}}
+                    <td class="align-middle text-center" style="max-width: 500px;" [title]="m.project.getName()">
+                        <div class="ellipsable">{{m.project.getName()}}</div>
                     </td>
                     <td class="align-middle text-center">
                         <button class="btn btn-light btn-sm" [ngClass]="{ 'active': m.enabled }" (click)="enableResolution(m)">

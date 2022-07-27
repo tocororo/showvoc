@@ -84,10 +84,10 @@ export class DataComponent {
             {
                 relativeTo: this.activatedRoute,
                 queryParams: {
-                    [ShowVocUrlParams.resId]: resourceIRI,
-                    "resURI": null
+                    [ShowVocUrlParams.resId]: resourceIRI, //set resId
+                    "resURI": null //remove resURI
                 },
-                queryParamsHandling: 'merge', // remove to replace all query params by provided
+                queryParamsHandling: 'merge', //keep other params
             });
     }
 
@@ -112,7 +112,14 @@ export class DataComponent {
                 } else { //project not found, redirect to home
                     this.basicModals.alert({ key: "DATASETS.STATUS.DATASET_NOT_FOUND" }, { key: "MESSAGES.UNEXISTING_OR_INACCESSIBLE_DATASET", params: { datasetId: projectName } }, ModalType.warning).then(
                         () => {
-                            this.router.navigate(['/home'], { queryParamsHandling: "merge" });
+                            this.router.navigate(
+                                ['/home'], 
+                                { 
+                                    queryParams: {
+                                        [ShowVocUrlParams.resId]: null, //remove resId
+                                    },
+                                    queryParamsHandling: "merge" //and keep other params
+                                });
                         }
                     );
                     return of(false);

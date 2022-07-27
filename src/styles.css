@@ -274,6 +274,13 @@ a.disabled {
     opacity: .7;
 }
 
+
+.ellipsable {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap !important;
+}
+
 /* ====================== */
 
 /* YASQE extension */

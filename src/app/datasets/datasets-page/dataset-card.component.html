@@ -1,15 +1,12 @@
 <div class="card">
-    <div class="card-body">
+    <div #cardBody class="card-body">
         <h5 class="card-title mb-1">
-            <ng-container *ngIf="project.isOpen() && accessible; then accessibleDatasetBlock; else notAccessibleDatasetBlock"></ng-container>
-            <ng-template #accessibleDatasetBlock>
-                <a [routerLink]="" (click)="goToProject(project)">{{project.getName()}}</a>
-            </ng-template>
-            <ng-template #notAccessibleDatasetBlock>
-                <p class="text-muted">{{project.getName()}}</p>
-            </ng-template>
+            <a #titleLink [routerLink]="" class="ellipsable d-inline-block" [ngClass]="{ 'disabled text-muted': !(project.isOpen() && accessible) }" 
+                [ngStyle]="{ 'max-width': titleMaxWidth }" [title]="project.getName()" (click)="goToProject(project)">
+                {{project.getName()}}
+            </a>
         </h5>
-        <div class="p-1 border-left border-bottom" style="position: absolute; top: 0; right: 0; border-bottom-left-radius: 5px">
+        <div #modelBadge class="p-1 border-left border-bottom" style="position: absolute; top: 0; right: 0; border-bottom-left-radius: 5px">
             <span class="mr-2">
                 <span class="mr-1">{{'MODELS.PROJECT.MODEL'|translate}}:</span><span class="badge badge-info">{{project.getModelType(true)}}</span>
             </span>
