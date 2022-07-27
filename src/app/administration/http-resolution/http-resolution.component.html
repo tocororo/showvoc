@@ -1,5 +1,16 @@
 <div class="card vbox">
-    <div class="card-header">Http resolution</div>
+    <div class="card-header d-flex align-items-center">
+        <span style="flex: 1;">{{'HTTP_RESOLUTION.HTTP_RESOLUTION'|translate}}</span>
+        <button class="btn btn-sm btn-light" [ngbPopover]="popContent">
+            <span class="fas fa-info-circle"></span>
+        </button>
+        <ng-template #popContent>
+            <div style="width: 350px;">
+                Here it is possible to activate support for HTTP resolution and to provide regular expressions to match an input URI and determine the dataset that will handle such URI.<br>
+                By clicking on <span class="fas fa-cog"></span> it is then possible to configure the content negotiation by providing rewriting rules.
+            </div>
+        </ng-template>
+    </div>
 
     <div class="card-body vbox scrollableContainer">
         <table class="table table-sm">
@@ -13,7 +24,7 @@
                 <tr>
                     <th class="text-center border-top-0">{{'DATASETS.ATTR.DATASET_NAME'|translate}}</th>
                     <th class="text-center border-top-0">{{'COMMONS.STATUS.ACTIVE'|translate}}</th>
-                    <th class="text-center border-top-0">Regular expression</th>
+                    <th class="text-center border-top-0">{{'HTTP_RESOLUTION.REGEXP'|translate}}</th>
                     <!-- <th class="text-center border-top-0 text-nowrap">Cont-neg</th> -->
                     <th class="text-center border-top-0"></th>
                 </tr>

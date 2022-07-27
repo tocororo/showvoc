@@ -507,6 +507,36 @@
             "WELCOME": "Benvenuto nel dataset browser {{instanceName}}!"
         }
     },
+    "HTTP_RESOLUTION": {
+        "CONTENT_NEGOTIATION_CONFIG": "Configurazione content negotiation",
+        "HTTP_RESOLUTION": "Http resolution",
+        "MESSAGES": {
+            "ALREADY_EXISTING_REGEXP_FOR_DATASET": "Espressione regolare già esistente per il dataset corrente",
+            "DUPLICATE_FORMAT_MAPPING_INV_RULE": "Rilevata una regola di riscrittura inversa con mapping duplicati per lo stesso formato",
+            "EMPTY_SOURCE_REGEXP_INV_RULE": "Rilevata una regola di riscrittura inversa con RegExp sorgente vuota",
+            "EMPTY_SOURCE_REGEXP_RULE": "Rilevata una regola di riscrittura con RegExp sorgente vuota",
+            "EMTPTY_TARGET_EXP_INV_RULE": "Rilevata una regola di riscrittura inversa con espressione target vuota",
+            "EMTPTY_TARGET_EXP_RULE": "Rilevata una regola di riscrittura con espressione target vuota",
+            "MISSING_FORMAT_INV_RULE": "Rilevata una regola di riscrittura inversa con named group {{namedGroup}} mancante",
+            "MULTIPLE_MATCHING_REGEXP": "Rilevate espressioni regolari per più dataset che matchano l'input ({{datasets}}). Ciò potrebbe portare a comportamenti indesiderati.",
+            "NO_MATCHING_INPUT_URI": "L'URI di input non matcha 'RegExp URI sorgente'",
+            "NO_MATCHING_REGEXP": "Nessuna espressione regolare matcha l'input fornito"
+        },
+        "REGEXP": "Espressione regolare",
+        "RULES": {
+            "FORMAT": "Formato",
+            "FORMAT_MAPPING": "Mappatura formati",
+            "INPUT_URI": "Input URI",
+            "INV_REWRITING_RULES": "Regole di riscrittura inverse",
+            "MATCHED_GROUPS": "Matched groups",
+            "NAMED_GROUPS": "Named groups",
+            "OUTPUT_FORMAT": "Formato di output",
+            "OUTPUT_URI": "Output URI",
+            "REWRITING_RULES": "Regole di riscrittura",
+            "SOURCE_URI_REGEXP": "RegExp URI sorgente",
+            "TARGET_URI_EXP": "Espressione URI target"
+        }
+    },
     "MESSAGES": {
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Stai per inserire nel Metadata Registry i metadati proposti. Sei sicuro?",
         "ADMIN_CREATED": "L'account amministratore è stato creato. Verrai ora automaticamente loggato con l'email e la password fornite.",

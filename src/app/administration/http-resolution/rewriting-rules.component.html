@@ -10,7 +10,7 @@
                 </colgroup>
                 <tbody>
                     <tr>
-                        <td><label class="col-form-label">Source URI RegExp</label></td>
+                        <td><label class="col-form-label">{{'HTTP_RESOLUTION.RULES.SOURCE_URI_REGEXP'|translate}}</label></td>
                         <td><input class="form-control" [(ngModel)]="rule.sourceURIRegExp"></td>
                         <td>
                             <button class="btn btn-sm btn-light" [ngbPopover]="popContentSource" container="body">
@@ -18,7 +18,7 @@
                             </button>
                             <ng-template #popContentSource>
                                 <div style="width: 350px;">
-                                    Regular expression for matching input resource URI. Named capturing group are also supported 
+                                    Regular expression for matching input resource URI. Named capturing group are supported 
                                     (e.g. <code class="text-nowrap">?&lt;baseuri&gt;</code>, <code class="text-nowrap">?&lt;localname&gt;</code>, ...)
                                     and can be referred in <i>Target URI exp</i>.
                                 </div>
@@ -27,7 +27,9 @@
                     </tr>
                     <tr>
                         <td>
-                            <label class="col-form-label">Format</label>
+                            <label class="col-form-label">
+                                {{'HTTP_RESOLUTION.RULES.FORMAT'|translate}}
+                            </label>
                         </td>
                         <td>
                             <div class="d-flex align-items-center">
@@ -44,8 +46,9 @@
                             </button>
                             <ng-template #popContentFormat>
                                 <div style="width: 350px;">
+                                    Tells the requested format that the rule covers. Two special formats are available:
                                     <ul>
-                                        <li><code>all</code>: A shortcut for all formats. Simply, the transformation rule is fired in any case, whatever the format.</li>
+                                        <li><code>all</code>: A shortcut for all formats. Simply, the rule is fired in any case, whatever the format.</li>
                                         <li><code>alldata</code>: A shortcut for all RDF data formats, thus excluding requests for HTML. Thus it is fired in all cases of known RDF formats, but not for HTML.</li>
                                     </ul>
                                 </div>
@@ -54,7 +57,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label class="col-form-label">Target URI exp</label>
+                            <label class="col-form-label">{{'HTTP_RESOLUTION.RULES.TARGET_URI_EXP'|translate}}</label>
                         </td>
                         <td><input class="form-control" [(ngModel)]="rule.targetURIExp"></td>
                         <td>
@@ -64,7 +67,7 @@
                             <ng-template #popContentTarget>
                                 <div style="width: 350px;">
                                     <p>
-                                        Replacement string expression. It can include special replacement patterns by means capturing groups like <code>$n</code>, where <code>n</code> is a positive integer (e.g. <code>$1</code>, <code>$2</code>, ...), and named capturing groups like <code class="text-nowrap">$&lt;name&gt;</code> where <code>name</code> is the identifier of a named group (e.g. <code class="text-nowrap">$&lt;baseuri&gt;</code>, <code class="text-nowrap">$&lt;localname&gt;</code>, ...).<br>
+                                        Replacement string expression. It can include capturing groups like <code>$n</code>, where <code>n</code> is a positive integer (e.g. <code>$1</code>, <code>$2</code>, ...), and named capturing groups like <code class="text-nowrap">$&lt;name&gt;</code> where <code>name</code> is the identifier of a named group (e.g. <code class="text-nowrap">$&lt;baseuri&gt;</code>, <code class="text-nowrap">$&lt;localname&gt;</code>, ...).<br>
                                         Moreover the following placeholder are foreseen:
                                     </p>
                                     <ul>
@@ -101,7 +104,7 @@
             <div *ngIf="rule.testing" class="container border-top mt-2 pt-2">
                 <div class="row align-items-center mb-1">
                     <label class="col-2">
-                        Input URI
+                        {{'HTTP_RESOLUTION.RULES.INPUT_URI'|translate}}
                     </label>
                     <div class="col-10">
                         <div class="input-group input-group-sm">
@@ -117,7 +120,7 @@
                 <ng-container *ngIf="rule.testRuleResult?.matched">
                     <div class="row align-items-center mb-1">
                         <label class="col-2">
-                            Output URI
+                            {{'HTTP_RESOLUTION.RULES.OUTPUT_URI'|translate}}
                         </label>
                         <div class="col-10">
                             <div class="form-control form-control-sm">{{rule.testRuleResult.output}}</div>
@@ -125,7 +128,7 @@
                     </div>
                     <div *ngIf="rule.testRuleResult.entries" class="row align-items-center mb-1">
                         <label class="col-2">
-                            Matched groups
+                            {{'HTTP_RESOLUTION.RULES.MATCHED_GROUPS'|translate}}
                         </label>
                         <div class="col-10">
                             <div class="card small">
@@ -142,7 +145,7 @@
                     </div>
                     <div *ngIf="rule.testRuleResult.groups" class="row align-items-center mb-1">
                         <label class="col-2">
-                            Named groups
+                            {{'HTTP_RESOLUTION.RULES.NAMED_GROUPS'|translate}}
                         </label>
                         <div class="col-10">
                             <div class="card small">
@@ -160,7 +163,7 @@
                 </ng-container>
                 <ng-container *ngIf="rule.testRuleResult && !rule.testRuleResult.matched">
                     <span class="fas fa-exclamation-triangle mr-2"></span>
-                    Input URI doesn't match 'Source URI RegExp'
+                    {{'HTTP_RESOLUTION.MESSAGES.NO_MATCHING_INPUT_URI'|translate}}
                 </ng-container>
             </div>
         </div>

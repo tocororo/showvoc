@@ -1,6 +1,6 @@
 <div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
     <div class="modal-header" cdkDragHandle>
-        <h5 class="modal-title">{{'Content negotiation configuration'|translate}}</h5>
+        <h5 class="modal-title">{{'HTTP_RESOLUTION.CONTENT_NEGOTIATION_CONFIG'|translate}}</h5>
         <button class="close" (click)="close()">
             <span>&times;</span>
         </button>
@@ -12,19 +12,54 @@
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
                         <a href="javascript:void(0)" class="nav-link" (click)="activeTab = 'rewritingRules'" [ngClass]="{ active: activeTab == 'rewritingRules' }">
-                            {{'Rewriting rules'|translate}}
+                            {{'HTTP_RESOLUTION.RULES.REWRITING_RULES'|translate}}
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="javascript:void(0)" class="nav-link" (click)="activeTab = 'inverseRewritingRules'" [ngClass]="{ active: activeTab == 'inverseRewritingRules' }">
-                            {{'Inverse rewriting rules'|translate}}
+                            {{'HTTP_RESOLUTION.RULES.INV_REWRITING_RULES'|translate}}
                         </a>
                     </li>
                 </ul>
 
                 <span style="flex: 1;"></span>
 
-                <button class="btn btn-light btn-sm text-right" (click)="addRule()">
+
+                <button class="btn btn-sm btn-light" [ngbPopover]="popContent">
+                    <span class="fas fa-info-circle"></span>
+                </button>
+                <ng-template #popContent>
+                    <div style="width: 400px;">
+                        This editor allows the configuration of content negotiation through the definition of <i>Rewriting rules</i>
+                        and <i>Inverse rewriting rules</i>.
+                        <ul>
+                            <li>
+                                The former describe how a request for a resource URI gets transformed into a URI pointing to the HTML page or a RDF format-serialized description of the resource. E.g.
+                                <div class="px-2 py-1">
+                                    <i>http://example#resource_123</i> &#8594;
+                                    <div class="pl-3 py-1">
+                                        <i>http://example/page/resource_123</i><br>
+                                        or<br>
+                                        <i>http://example/data/resource_123.ttl</i>
+                                    </div>
+                                </div>
+                                Each rewriting rule is defined by a triple <i>Source URI RegExp</i>, <i>Format</i> and <i>Target URI exp</i>.
+                            </li>
+                            <li>
+                                <i>Inverse rewriting rules</i> define the inverse conversion, namely from the HTML page URL or the RDF page URL to the resource URI. E.g.
+                                <div class="px-2 py-1">
+                                    <i>http://example/page/resource_123</i> or <i>http://example/data/resource_123.ttl</i> &#8594;
+                                    <div class="pl-3 py-1">
+                                        <i>http://example#resource_123</i>
+                                    </div>
+                                </div>
+                                Each rule is a triple <i>Source URI RegExp</i>, <i>Target URI exp</i> and <i>Format mapping</i>.
+                            </li>
+                        </ul>
+                    </div>
+                </ng-template>
+
+                <button class="btn btn-light btn-sm ml-2" (click)="addRule()">
                     <span class="fas fa-plus"></span>
                 </button>
             </div>

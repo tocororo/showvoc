@@ -507,6 +507,36 @@
             "WELCOME": "Welcome to {{instanceName}} dataset browser!"
         }
     },
+    "HTTP_RESOLUTION": {
+        "CONTENT_NEGOTIATION_CONFIG": "Content negotiation configuration",
+        "HTTP_RESOLUTION": "Http resolution",
+        "MESSAGES": {
+            "ALREADY_EXISTING_REGEXP_FOR_DATASET": "Regular expression already existing for the current dataset",
+            "DUPLICATE_FORMAT_MAPPING_INV_RULE": "Detected an inverse rewriting rule with duplicated mappings for the same format",
+            "EMPTY_SOURCE_REGEXP_INV_RULE": "Detected an inverse rewriting rule with empty source RegExp",
+            "EMPTY_SOURCE_REGEXP_RULE": "Detected a rewriting rule with empty source RegExp",
+            "EMTPTY_TARGET_EXP_INV_RULE": "Detected an inverse rewriting rule with empty target expression",
+            "EMTPTY_TARGET_EXP_RULE": "Detected a rewriting rule with empty target expression",
+            "MISSING_FORMAT_INV_RULE": "Detected an inverse rewriting rule with missing {{namedGroup}} named group",
+            "MULTIPLE_MATCHING_REGEXP": "Found regular expressions for multiple datasets that matches this input ({{datasets}}). This might lead to undesired behaviour.",
+            "NO_MATCHING_INPUT_URI": "Input URI doesn't match 'Source URI RegExp'",
+            "NO_MATCHING_REGEXP": "No regular expressions matches this input"
+        },
+        "REGEXP": "Regular expression",
+        "RULES": {
+            "FORMAT": "Format",
+            "FORMAT_MAPPING": "Format mapping",
+            "INPUT_URI": "Input URI",
+            "INV_REWRITING_RULES": "Inverse rewriting rules",
+            "MATCHED_GROUPS": "Matched groups",
+            "NAMED_GROUPS": "Named groups",
+            "OUTPUT_FORMAT": "Output format",
+            "OUTPUT_URI": "Output URI",
+            "REWRITING_RULES": "Rewriting rules",
+            "SOURCE_URI_REGEXP": "Source URI RegExp",
+            "TARGET_URI_EXP": "Target URI exp"
+        }
+    },
     "MESSAGES": {
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "You are going to submit the proposed metadata into the Metadata Registry. Are you sure?",
         "ADMIN_CREATED": "The administrator account has been created. Now you will be automatically logged in with the email and the password you provided",

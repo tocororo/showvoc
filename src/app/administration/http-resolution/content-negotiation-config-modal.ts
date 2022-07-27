@@ -62,7 +62,7 @@ export class ContentNegotiationConfigurationModal {
         for (let rule of this.rewritingRules) {
             //checks on source regular expressions
             if (rule.sourceURIRegExp == "") {
-                this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "Detected a rewriting rule with empty source RegExp" }, ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "HTTP_RESOLUTION.MESSAGES.EMPTY_SOURCE_REGEXP_RULE" }, ModalType.warning);
                 return false;
             } else {
                 let reValid = HttpResolutionUtils.isValidRegExp(rule.sourceURIRegExp);
@@ -73,7 +73,7 @@ export class ContentNegotiationConfigurationModal {
             }
             //checks on target regular expressions
             if (rule.targetURIExp == "") {
-                this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "Detected a rewriting rule with empty target expression" }, ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "HTTP_RESOLUTION.MESSAGES.EMTPTY_TARGET_EXP_RULE" }, ModalType.warning);
                 return false;
             } else {
                 let reValid = HttpResolutionUtils.isValidRegExp(rule.targetURIExp);
@@ -87,7 +87,7 @@ export class ContentNegotiationConfigurationModal {
         for (let rule of this.inverseRewritingRules) {
             //checks on source regular expressions
             if (rule.sourceRDFresURIregExp == "") {
-                this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "Detected an inverse rewriting rule with empty source RegExp" }, ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "HTTP_RESOLUTION.MESSAGES.EMPTY_SOURCE_REGEXP_INV_RULE" }, ModalType.warning);
                 return false;
             } else {
                 let reValid = HttpResolutionUtils.isValidRegExp(rule.sourceRDFresURIregExp);
@@ -96,13 +96,13 @@ export class ContentNegotiationConfigurationModal {
                     return false;
                 }
                 if (!rule.sourceRDFresURIregExp.includes(this.FORMAT_NAMED_GROUP)) {
-                    this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "Detected an inverse rewriting rule with missing " + this.FORMAT_NAMED_GROUP + " named group" }, ModalType.warning);
+                    this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "HTTP_RESOLUTION.MESSAGES.MISSING_FORMAT_INV_RULE", params: { namedGroup: this.FORMAT_NAMED_GROUP } }, ModalType.warning);
                     return false;
                 }
             }
             //checks on target regular expressions
             if (rule.targetResURIExp == "") {
-                this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "Detected an inverse rewriting rule with empty target expression" }, ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "HTTP_RESOLUTION.MESSAGES.EMTPTY_TARGET_EXP_INV_RULE" }, ModalType.warning);
                 return false;
             } else {
                 let reValid = HttpResolutionUtils.isValidRegExp(rule.targetResURIExp);
@@ -113,7 +113,7 @@ export class ContentNegotiationConfigurationModal {
             }
             //checks on format mappings
             if (rule.formatMapSupport && rule.formatMapSupport.some((m, pos, list) => list.findIndex(el => el.key == m.key) != pos)) {
-                this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "Detected an inverse rewriting rule with duplicated mappings for the same format" }, ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "HTTP_RESOLUTION.MESSAGES.DUPLICATE_FORMAT_MAPPING_INV_RULE" }, ModalType.warning);
                 return false;
             }
         }

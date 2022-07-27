@@ -69,7 +69,7 @@ export class HttpResolutionComponent {
 
     confirmAddRegexp(mapping: MappingStruct, newRegexp: string) {
         if (mapping.uriRegexp.includes(newRegexp)) {
-            this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "Regular expression already existing for the current dataset" }, ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "HTTP_RESOLUTION.MESSAGES.ALREADY_EXISTING_REGEXP_FOR_DATASET" }, ModalType.warning);
             mapping.pendingRegexp = null;
             return;
         }
@@ -107,11 +107,11 @@ export class HttpResolutionComponent {
     testResolution() {
         let mappingCandidates: MappingStruct[] = this.mappings.filter(m => m.uriRegexp.some(regexp => this.testInput.match(regexp)));
         if (mappingCandidates.length == 0) {
-            this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "No regular expressions matches this input" }, ModalType.warning);
+            this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "HTTP_RESOLUTION.MESSAGES.NO_MATCHING_REGEXP" }, ModalType.warning);
         } else if (mappingCandidates.length > 1) {
             this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, {
-                key: "Found regular expressions for multiple datasets that matches this input (" +
-                    mappingCandidates.map(m => m.project.getName()).join(", ") + "). This might leads to undesired behaviour"
+                key: "HTTP_RESOLUTION.MESSAGES.MULTIPLE_MATCHING_REGEXP", 
+                params: { datasets: mappingCandidates.map(m => m.project.getName()).join(", ") }
             }, ModalType.warning);
             return;
         } else {
@@ -142,10 +142,6 @@ export class HttpResolutionComponent {
         for (let m of this.mappings) {
             if (!m.enabled) continue;
             for (let regexp of m.uriRegexp) {
-                if (regexp.trim() == "") {
-                    this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "Detected empty regexp mapped to dataset " + m.project.getName() }, ModalType.warning);
-                    return;
-                }
                 if (!this.isValidRegExp(regexp)) {
                     return;
                 }
