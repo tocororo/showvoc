@@ -18,7 +18,7 @@
                     </div>
                     <div *ngIf="adminList" class="card-body scrollableContainer" style="max-height: 200px;">
                         <div *ngFor="let u of adminList">
-                            <div class="listItem">
+                            <div class="listItem d-flex align-items-center">
                                 <div style="flex: 1; white-space: nowrap">
                                     <b>{{u.getShow()}}</b>
                                     <span class="text-muted">&nbsp;({{u.getEmail()}})</span>
@@ -50,7 +50,7 @@
                     </div>
                     <div *ngIf="superUserList" class="card-body scrollableContainer" style="max-height: 200px;">
                         <div *ngFor="let u of superUserList">
-                            <div class="listItem">
+                            <div class="listItem d-flex align-items-center">
                                 <div style="flex: 1; white-space: nowrap">
                                     <b>{{u.getShow()}}</b>
                                     <span class="text-muted">&nbsp;({{u.getEmail()}})</span>

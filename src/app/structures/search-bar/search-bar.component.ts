@@ -118,13 +118,6 @@ export class SearchBarComponent {
         );
     }
 
-    /**
-     * Advanced search is available only if the panel is in the data page (not in modals)
-     */
-    showAdvSearch(): boolean {
-        return this.context == TreeListContext.dataPanel;
-    }
-
     advancedSearch() {
         const modalRef: NgbModalRef = this.modalService.open(AdvancedSearchModal, new ModalOptions('xl'));
         modalRef.result.then(

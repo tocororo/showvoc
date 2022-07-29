@@ -3,14 +3,13 @@
     <input type="text" class="form-control form-control-sm" [(ngModel)]="searchStr" (keydown.enter)="doSearch()" [placeholder]="'COMMONS.ACTIONS.SEARCH'|translate" [disabled]="disabled">
 
     <div class="btn-toolbar ml-1" style="flex-wrap: nowrap">
-        <div class="btn-group btn-group-sm" ngbDropdown placement="top-right">
+        <div class="btn-group btn-group-sm" ngbDropdown placement="top-right" container="body">
             <button class="btn btn-info" (click)="doSearch()" [disabled]="disabled || loading">
                 <i *ngIf="!loading" class="fas fa-search"></i>
                 <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
             </button>
-            <ng-container *ngIf="showAdvSearch()">
-                <button class="btn btn-outline-info dropdown-toggle px-1" data-toggle="dropdown" ngbDropdownToggle>
-                </button>
+            <ng-container *ngIf="context == 'dataPanel'">
+                <button class="btn btn-outline-info dropdown-toggle px-1" data-toggle="dropdown" ngbDropdownToggle></button>
                 <div class="dropdown-menu" ngbDropdownMenu>
                     <button class="dropdown-item" (click)="advancedSearch()">{{'SEARCH.ADV_SEARCH.ADVANCED_SEARCH'|translate}}</button>
                 </div>

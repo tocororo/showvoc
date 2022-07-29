@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
@@ -18,8 +18,6 @@ import { SVContext } from 'src/app/utils/SVContext';
     templateUrl: "./advanced-search-modal.html"
 })
 export class AdvancedSearchModal {
-
-    @ViewChild('blockingDiv', { static: true }) public blockingDivElement: ElementRef;
 
     loading: boolean;
 

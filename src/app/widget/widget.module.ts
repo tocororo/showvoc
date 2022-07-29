@@ -6,6 +6,7 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { QueryParameterForm } from '../datasets/sparql/query-parameterization/query-parameter-form.component';
+import { YasguiComponent } from '../datasets/sparql/yasgui.component';
 import { BarChartComponent } from './charts/bar-chart.component';
 import { PieChartComponent } from './charts/pie-chart.component';
 import { SeriesChartLegendComponent } from './charts/series-chart-legend.component';
@@ -80,7 +81,8 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typed-literal-
         SettingValueRendererComponent,
         ToastsContainer,
         TypedLiteralInputComponent,
-        ValuePickerComponent
+        ValuePickerComponent,
+        YasguiComponent
     ],
     exports: [
         BarChartComponent,
@@ -110,7 +112,8 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typed-literal-
         SettingsRendererComponent,
         ToastsContainer,
         TypedLiteralInputComponent,
-        ValuePickerComponent
+        ValuePickerComponent,
+        YasguiComponent
     ],
     entryComponents: [
         RenderingEditorModal

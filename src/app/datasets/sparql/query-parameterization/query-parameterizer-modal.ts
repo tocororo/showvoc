@@ -174,12 +174,12 @@ export class QueryParameterizerModal {
             let b: BindingStruct = this.bindings[i];
 
             if (b.varName == null || b.varName.trim() == "") { //check if name is not set
-                this.basicModals.alert({ key: "STATUS.WARNING" }, { key: "SPARQL.MESSAGES.MISSING_BINDING_NAME", params: { position: i + 1 } }, ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "SPARQL.MESSAGES.MISSING_BINDING_NAME", params: { position: i + 1 } }, ModalType.warning);
                 return;
             }
 
             if (varBindings[b.varName] != null) {
-                this.basicModals.alert({ key: "STATUS.WARNING" }, { key: "SPARQL.MESSAGES.DUPLICATED_BINDING_NAME", params: { binding: b.varName } }, ModalType.warning);
+                this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "SPARQL.MESSAGES.DUPLICATED_BINDING_NAME", params: { binding: b.varName } }, ModalType.warning);
                 return;
             }
 
@@ -190,20 +190,20 @@ export class QueryParameterizerModal {
             };
             if (b.bindingType.value == BindingTypeEnum.assignment) {
                 if (b.value == null) { //check if type is assignment and the resource is not set
-                    this.basicModals.alert({ key: "STATUS.WARNING" }, { key: "SPARQL.MESSAGES.INCOMPLETE_BINDING_PARAMETERIZATION_VALUE", params: { binding: b.varName } }, ModalType.warning);
+                    this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "SPARQL.MESSAGES.INCOMPLETE_BINDING_PARAMETERIZATION_VALUE", params: { binding: b.varName } }, ModalType.warning);
                     return;
                 }
                 varBindings[b.varName].value = b.value;
             } else if (b.bindingType.value == BindingTypeEnum.constraint) {
                 if (b.bindingType.specialization == "role") {
                     if (b.resourceRole == null) { //check if type is constraint and the role is not set
-                        this.basicModals.alert({ key: "STATUS.WARNING" }, { key: "SPARQL.MESSAGES.INCOMPLETE_BINDING_PARAMETERIZATION_ROLE", params: { binding: b.varName } }, ModalType.warning);
+                        this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "SPARQL.MESSAGES.INCOMPLETE_BINDING_PARAMETERIZATION_ROLE", params: { binding: b.varName } }, ModalType.warning);
                         return;
                     }
                     varBindings[b.varName].resourceRole = b.resourceRole;
                 } else if (b.bindingType.specialization == "datatype") {
                     if (b.datatype == null) { //check if type is constraint and the datatype is not set
-                        this.basicModals.alert({ key: "STATUS.WARNING" }, { key: "SPARQL.MESSAGES.INCOMPLETE_BINDING_PARAMETERIZATION_DATATYPE", params: { binding: b.varName } }, ModalType.warning);
+                        this.basicModals.alert({ key: "COMMONS.STATUS.WARNING" }, { key: "SPARQL.MESSAGES.INCOMPLETE_BINDING_PARAMETERIZATION_DATATYPE", params: { binding: b.varName } }, ModalType.warning);
                         return;
                     }
                     varBindings[b.varName].datatype = b.datatype.getValue().toNT();

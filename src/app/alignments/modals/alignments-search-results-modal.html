@@ -13,7 +13,7 @@
             </div>
             <div class="card-body scrollableContainer">
                 <div *ngFor="let r of sourceResults">
-                    <div class="listItem">
+                    <div class="listItem d-flex">
                         <rdf-resource [resource]="r" (click)="openSourceResource(r)" style="cursor: pointer;"></rdf-resource>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
             </div>
             <div class="card-body scrollableContainer">
                 <div *ngFor="let r of targetResults">
-                    <div class="listItem">
+                    <div class="listItem d-flex">
                         <rdf-resource [resource]="r" (click)="openTargetResource(r)" style="cursor: pointer;"></rdf-resource>
                     </div>
                 </div>

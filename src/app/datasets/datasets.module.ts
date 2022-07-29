@@ -27,7 +27,6 @@ import { QueryResultsComponent } from './sparql/query-results.component';
 import { SparqlTabParametrizedComponent } from './sparql/sparql-tab-parametrized.component';
 import { SparqlTabComponent } from './sparql/sparql-tab.component';
 import { SparqlComponent } from './sparql/sparql.component';
-import { YasguiComponent } from './sparql/yasgui.component';
 
 @NgModule({
     declarations: [
@@ -48,7 +47,6 @@ import { YasguiComponent } from './sparql/yasgui.component';
         SparqlTabComponent,
         SparqlTabParametrizedComponent,
         TypeDistributionsComponent,
-        YasguiComponent,
     ],
     imports: [
         AlignmentsModule,

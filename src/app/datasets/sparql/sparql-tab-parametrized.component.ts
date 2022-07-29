@@ -125,7 +125,7 @@ export class SparqlTabParametrizedComponent extends AbstractSparqlTabComponent {
         };
         this.sharedModals.storeConfiguration({ key: "SPARQL.ACTIONS.SAVE_SPARQL_QUERY_PARAMETERIZATION" }, ConfigurationComponents.SPARQL_PARAMETERIZATION_STORE, config, this.parametrizationRef).then(
             (relativeRef: string) => {
-                this.basicModals.alert({ key: "STATUS.OPERATION_DONE" }, { key: "SPARQL.MESSAGES.QUERY_PARAMETERIZATION_SAVED" });
+                this.basicModals.alert({ key: "COMMONS.STATUS.OPERATION_DONE" }, { key: "SPARQL.MESSAGES.QUERY_PARAMETERIZATION_SAVED" });
                 this.parametrizationRef = relativeRef;
                 this.updateName.emit(relativeRef.substring(relativeRef.indexOf(":") + 1));
                 this.savedStatus.emit(true);

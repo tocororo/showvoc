@@ -227,8 +227,6 @@ rdf-resource > .rdfResourceText {
     padding: 3px;
     width: 100%;
     min-height: 24px;
-    display: flex;
-    align-items: center;
 }
 .listItem:hover {
     background-color: #e5f3ff;

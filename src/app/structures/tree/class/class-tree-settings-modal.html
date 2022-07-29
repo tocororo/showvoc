@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="card-body scrollableContainer" style="min-height: 100px;">
-                        <div *ngFor="let f of filterMapRes" class="listItem" (click)="selectFilteredClass(f.cls)"
+                        <div *ngFor="let f of filterMapRes" class="listItem d-flex" (click)="selectFilteredClass(f.cls)"
                             [ngClass]="{ active: f.cls == selectedFilteredClass }">
                             <rdf-resource [resource]="f.cls" [rendering]="renderingClasses"></rdf-resource>
                         </div>
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="card-body scrollableContainer">
-                        <div *ngFor="let f of getFilterSubClasses()" class="listItem">
+                        <div *ngFor="let f of getFilterSubClasses()" class="listItem d-flex align-items-center">
                             <input type="checkbox" class="mr-1" [(ngModel)]="f.checked" [disabled]="f.disabled">
                             <rdf-resource [resource]="f.resource" [rendering]="renderingFilter" style="flex: 1;"></rdf-resource>
                             <span *ngIf="f.checked" class="fas fa-eye"></span>
