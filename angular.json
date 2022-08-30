@@ -55,15 +55,28 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/codemirror/lib/codemirror.css",
+              "node_modules/codemirror/addon/hint/show-hint.css",
               "node_modules/yasgui-yasqe/dist/yasqe.min.css",
               "src/styles.css"
             ],
             "scripts": [
+              "node_modules/codemirror/lib/codemirror.js",
+              "node_modules/codemirror/addon/mode/simple.js",
+              "node_modules/codemirror/addon/mode/overlay.js",
+              "node_modules/codemirror/addon/comment/comment.js",
+              "node_modules/codemirror/addon/edit/matchbrackets.js",
+              "node_modules/codemirror/addon/edit/closebrackets.js",
+              "node_modules/codemirror/addon/hint/show-hint.js",
+              "node_modules/codemirror/addon/search/searchcursor.js",
+              "node_modules/codemirror/mode/xml/xml.js",
               "node_modules/d3/dist/d3.min.js",
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/yasgui-yasqe/dist/yasqe.bundled.js"
+              "node_modules/yasgui-yasqe/dist/yasqe.bundled.js",
+              "src/app/widget/codemirror/mustache-editor/mustache.js"
             ],
             "allowedCommonJsDependencies": [
+              "@ctrl/ngx-codemirror",
               "jsprolog",
               "yasgui-yasqe",
               "jquery",

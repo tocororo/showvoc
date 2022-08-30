@@ -12,6 +12,7 @@ import { AlignmentsModule } from './alignments/alignments.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContributionModule } from './contribution/contribution.module';
+import { CustomServicesModule } from './custom-services/custom-services.module';
 import { CustomReuseStrategy } from './CustomReuseStrategy';
 import { DatasetsModule } from './datasets/datasets.module';
 import { GraphModule } from './graph/graph.module';
@@ -53,6 +54,7 @@ let HttpLoaderFactory = (http: HttpClient) => {
         BrowserAnimationsModule,
         BrowserModule,
         ContributionModule,
+        CustomServicesModule,
         DatasetsModule,
         GraphModule,
         ModalsModule,

@@ -6,6 +6,7 @@ import { Settings } from 'src/app/models/Plugins';
 import { AnnotatedValue, Resource, Value } from 'src/app/models/Resources';
 import { ProjectContext } from 'src/app/utils/SVContext';
 import { ResourcePickerConfig } from 'src/app/widget/pickers/value-picker/resource-picker.component';
+import { StorageManagerModal } from 'src/app/widget/storage-manager/storage-manager-modal';
 import { ResourceViewModal } from '../../resource-view/modals/resource-view-modal';
 import { ResourceSelectionModal } from '../basic-modals/selection-modal/resource-selection-modal';
 import { ModalOptions, TextOrTranslation, TranslationUtils } from '../Modals';
@@ -81,6 +82,14 @@ export class SharedModalsServices {
         if (multiselection != null) modalRef.componentInstance.multiselection = multiselection;
         if (emptySelectionAllowed != null) modalRef.componentInstance.emptySelectionAllowed = emptySelectionAllowed;
         if (selectedResources != null) modalRef.componentInstance.selectedResources = selectedResources;
+        return modalRef.result;
+    }
+
+    storageManager(title: TextOrTranslation, selectedFiles: string[], multiselection?: boolean): Promise<string[]> {
+        const modalRef: NgbModalRef = this.modalService.open(StorageManagerModal, new ModalOptions('lg'));
+        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
+        modalRef.componentInstance.selectedFiles = selectedFiles;
+        modalRef.componentInstance.multiselection = multiselection;
         return modalRef.result;
     }
 

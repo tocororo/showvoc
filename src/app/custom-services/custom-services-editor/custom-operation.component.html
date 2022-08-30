@@ -1,0 +1,62 @@
+<div class="card card-default vbox">
+    <div class="card-header d-flex align-items-center">
+        <label style="flex: 1">
+            {{operation.name}}
+        </label>
+        <div *ngIf="!readonly" class="btn-toolbar" role="toolbar">
+            <div class="btn-group btn-group-xs">
+                <button class="btn btn-light" (click)="editOperation()" [title]="'COMMONS.ACTIONS.EDIT'|translate">
+                    <span class="fas fa-pencil-alt"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body vbox scrollableContainer">
+
+        <div class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">{{'COMMONS.NAME'|translate}}:</label>
+                <div style="flex: 1">
+                    <span class="form-control" style="background-color: #eee; font-family: monospace;">{{operation.name}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">{{'CUSTOM_SERVICES.OPERATION.AUTHORIZATION'|translate}}:</label>
+                <div style="flex: 1">
+                    <span class="form-control" style="background-color: #eee; font-family: monospace;">{{operation.authorization}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">{{'CUSTOM_SERVICES.OPERATION.PARAMETERS'|translate}}:</label>
+                <div style="flex: 1">
+                    <span *ngIf="parameters.length == 0" class="form-control" style="background-color: #eee;"></span>
+                    <div *ngFor="let p of parameters" class="hbox" style="align-items: center; margin-bottom: 2px;">
+                        <span class="form-control" style="background-color: #eee; font-family: monospace;">{{p.prettyPrint}}</span>
+                        <span *ngIf="!p.required" class="fas fa-question-circle" style="margin: 0px 4px;" [title]="'CUSTOM_SERVICES.OPERATION.OPTIONAL_PARAMETER'|translate"></span>
+                        <span *ngIf="p.required" class="fas fa-exclamation-circle" style="margin: 0px 4px;" [title]="'CUSTOM_SERVICES.OPERATION.MANDATORY_PARAMETER'|translate"></span>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">{{'CUSTOM_SERVICES.OPERATION.RETURNS'|translate}}:</label>
+                <div style="flex: 1">
+                    <span class="form-control" style="background-color: #eee; font-family: monospace;">{{returns}}</span>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isSparql" class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">Sparql:</label>
+                <div class="vbox" style="align-self: stretch;">
+                    <yasgui [query]="operation['sparql']" readonly="true" hideButtons="true"></yasgui>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

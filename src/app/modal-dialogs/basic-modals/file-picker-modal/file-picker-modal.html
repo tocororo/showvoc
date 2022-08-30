@@ -1,0 +1,21 @@
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{title}}</h5>
+        <button class="close" (click)="close()">
+            <span>&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div *ngIf="message" class="alert alert-info mb-1">
+            {{message}}
+        </div>
+
+        <file-picker (fileChanged)="fileChangeEvent($event)" [accept]="accept"></file-picker>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-primary" (click)="ok()" [disabled]="!pickedFile">Ok</button>
+        <button class="btn btn-sm btn-secondary" (click)="close()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
+    </div>
+</div>

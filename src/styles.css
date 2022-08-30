@@ -279,6 +279,14 @@ a.disabled {
     white-space: nowrap !important;
 }
 
+/* Like the previous, but the ellipsis is on the left (e.g. "...long text") */
+.ellipsable-left {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap !important;
+    direction: rtl;
+}
+
 /* ====================== */
 
 /* YASQE extension */
@@ -300,6 +308,42 @@ a.disabled {
 .yasqe .CodeMirror-fullscreen { z-index: 999 !important; }
 .yasqe .yasqe_buttons { top: 4px; right: 6px !important;} 
 .yasqe-hide-btns .yasqe_buttons { display: none; }
+
+.CodeMirror {
+    border: 1px solid #ddd;
+    /*Border of textare of CodeMirror (just in the editors, because in yasqe there is already)*/
+    height: auto;
+    flex: 1;
+}
+
+/* height auto in CodeMirror let the textarea of codemirror fill the available space.
+With the following classes is possible to limit the height of the editor to the given max-height */
+.CodeMirror-sm .CodeMirror-scroll { max-height: 200px !important; }
+.CodeMirror-md .CodeMirror-scroll { max-height: 300px !important; }
+.CodeMirror-lg .CodeMirror-scroll { max-height: 400px !important; }
+
+.CodeMirror-scroll {
+    min-height: 100px;
+    margin-right: 0px;
+    flex: 1;
+}
+
+ngx-codemirror.disabled .CodeMirror {
+    background: #eee;
+}
+
+/* It is necessary to visualize hints form  */
+.CodeMirror-hints { z-index: 1000000 !important; }
+.CodeMirror-hints li { border-radius: 0px !important; }
+/* it is necessary to visualize a divisor inside hints window */
+.hint-separator { border-top: 1px solid rgb(220, 220, 220); }
+
+.cm-s-default .cm-variable-4 {
+    color: #c00
+}
+.cm-mustache {
+    color: #0ca;
+}
 
 /* Bootstrap extension */
 

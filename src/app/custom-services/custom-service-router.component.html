@@ -1,0 +1,21 @@
+<div class="vbox">
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a href="javascript:void(0)" class="nav-link" [ngClass]="{active : currentRoute == 'customService' }" (click)="currentRoute = 'customService'">{{'CUSTOM_SERVICES.CUSTOM_SERVICES'|translate}}</a>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:void(0)" class="nav-link" [ngClass]="{active : currentRoute == 'reporter' }" (click)="currentRoute = 'reporter'">Reports</a>
+        </li>
+    </ul>
+
+    <!--Tabs content-->
+    <div class="tab-content border border-top-0 rounded p-2">
+        <div [ngClass]="{vbox : currentRoute == 'customService'}" [hidden]="currentRoute != 'customService'">
+            <custom-services-component></custom-services-component>
+        </div>
+        <div [ngClass]="{vbox : currentRoute == 'reporter'}" [hidden]="currentRoute != 'reporter'">
+            <invokable-reporters-component></invokable-reporters-component>
+        </div>
+    </div>
+</div>

@@ -130,6 +130,7 @@
             "CLOSE": "Cerrar",
             "CONFIRM": "Confirmar",
             "CREATE": "Crear",
+            "DEPLOY": "Desplegar",
             "EDIT": "Editar",
             "LOAD": "Cargar",
             "PICK_RESOURCE": "Seleccionar recurso",
@@ -155,10 +156,12 @@
         "CONFIG": {
             "CONFIGURATION": "Configuración",
             "CONFIGURATION_OF": "Configuración de",
+            "CONFIGURATION_REQUIRED": "Configuración requerida",
             "CONFIGURE": "Configurar",
             "DUPLICATED_CONFIGURATION": "Configuración duplicada",
             "LOAD_CONFIGURATION": "Cargar configuración",
             "MISSING_CONFIGURATION": "Falta configuración",
+            "NO_CONFIG_FOUND": "No se encontró ninguna configuración. Por favor, crea una nueva",
             "PASSWORD": "Contraseña",
             "REPO_CONFIGURATION": "Configuración del repositorio",
             "SAVE_CONFIGURATION": "Guardar configuración",
@@ -176,6 +179,7 @@
             "LANGUAGES": "Idiomas",
             "NO_LANG_INFO": "Ningún idioma seleccionado implica todos los idiomas"
         },
+        "LEVEL": "Nivel",
         "MANDATORY_FIELD": "Campo obligatorio",
         "NAME": "Nombre",
         "OPTIONAL_FIELD": "Campo opcional",
@@ -187,6 +191,7 @@
         "POSITION": "Posición",
         "REASON": "Razón",
         "RENDERING": "Representación",
+        "REQUIRED": "Requerido",
         "SCOPE": "Alcance",
         "SETTINGS": "Ajustes",
         "STATUS": {
@@ -200,7 +205,9 @@
             "STATUS": "Estado",
             "WARNING": "Advertencia"
         },
+        "TEMPLATE": "Plantilla",
         "TITLE": "Título",
+        "TYPE": "Tipo",
         "VALUE": "Valor"
     },
     "CONTRIBUTIONS": {
@@ -247,6 +254,82 @@
             "CONTRIBUTION_MANAGER": "Administrador de contribuciones",
             "CONTRIBUTION_TYPE": "Tipo de contribución",
             "SUBMITTED": "Enviado"
+        }
+    },
+    "CUSTOM_SERVICES": {
+        "ACTIONS": {
+            "CREATE_CUSTOM_OPERATION": "Crear operación personalizada",
+            "CREATE_CUSTOM_SERVICE": "Crear servicio personalizado",
+            "DELETE_CUSTOM_SERVICE": "Eliminar CustomService",
+            "EDIT_CUSTOM_OPERATION": "Editar operación personalizada"
+        },
+        "AUTH_HELPER": {
+            "CAPABILITIES_DOCUMENTATION_REF": "Para obtener más detalles sobre el vocabulario de capacidades, consulte el <a href = \"http://vocbench.uniroma2.it/doc/user/roles_adm.jsf#capabilities_vocabulary\" target=\"blank\">documentación</a>.",
+            "LANG_REQUIREMENT": {
+                "LANGUAGE_REQUIREMENT": "Requisito de idioma",
+                "LANGUAGE_REQUIREMENT_INFO": "Determina si la operación requiere que el usuario que realiza la operación tenga asignado un idioma específico. Es posible seleccionar un idioma entre los disponibles en VB o dejar que el sistema lo infiera a partir de un parámetro de la operación.",
+                "REQUIRE_NONE": "Ninguno",
+                "REQUIRE_PARAMETER_LANG": "Requiere el idioma de un parámetro",
+                "REQUIRE_SPECIFIC_LANG": "Requiere un idioma específico"
+            },
+            "NO_PARAM_OPERATION": "La operación no prevé ningún parámetro",
+            "OPERATION_AUTH": "Autorización de operación",
+            "PARAMETER": "Parámetro",
+            "RESTRICTION": "Restricción",
+            "SCOPE_INFO": "Refina el alcance del tipo seleccionado",
+            "TYPE_RESTR": {
+                "RESTRICTION_NONE": "Ninguno",
+                "RESTRICTION_TO_PARAMETER_TYPE": "Restringir al tipo de parámetro",
+                "RESTRICTION_TO_SPECIFIC_TYPE": "Restringir a un tipo específico",
+                "TYPE_RESTRICTION": "Tipo de restricción",
+                "TYPE_RESTRICTION_INFO": "Determina si la capacidad <i> rdf </i> es necesaria en un tipo de recurso específico. Es posible seleccionar un tipo entre los disponibles en VB o dejar que el sistema infiera el tipo a partir de un parámetro del operación."
+            }
+        },
+        "CUSTOM_SERVICES": "Servicios personalizados",
+        "FORCE_RELOAD": "Forzar la recarga desde el sistema de archivos",
+        "FORCE_RELOAD_INFO": "Recargar servicios (útil cuando los Servicios personalizados se cambian / cargan manualmente)",
+        "MESSAGES": {
+            "CANNOT_PARSE_AUTH": "No se puede analizar la autorización que está intentando editar ({{auth}}). El formulario no se ha restaurado.",
+            "DELETE_CUSTOM_SERVICE_CONFIRM": "Estás eliminando el CustomService seleccionado. ¿Estás seguro?",
+            "EMPTY_PARAM_NAME": "Un parámetro proporcionado tiene un nombre vacío",
+            "INVALID_NAME": "El nombre proporcionado no es válido",
+            "INVALID_PARAM_NAME": "El nombre del parámetro {{param}} no es válido",
+            "INVALID_PARAM_TYPE": "El tipo de parámetro {{param}} no es válido",
+            "INVALID_RETURN_TYPE": "El tipo de devoluciones proporcionado no es válido",
+            "INVALID_SPARQL_QUERY": "La consulta SPARQL proporcionada no es válida",
+            "MISSING_REQUIRED_FIELD": "Falta el campo obligatorio {{fieldName}}"
+        },
+        "OPERATION": {
+            "AUTHORIZATION": "Autorización",
+            "MANDATORY_PARAMETER": "Parámetro obligatorio",
+            "OPTIONAL_PARAMETER": "Parámetro opcional",
+            "PARAMETERS": "Parámetros",
+            "PARAM_HELPER": {
+                "ALLOWED_PARAM_TYPES_ARE": "Los tipos de parámetros permitidos son",
+                "ALLOWED_RETURN_TYPE": "El tipo de retorno permitido depende de la operación SPARQL real",
+                "INTRO": [
+                    "Los parámetros se asignan a variables con el mismo nombre en la consulta SPARQL. Los parámetros reales que se pasan a un servicio al momento de la invocación están vinculados previamente a la variable correspondiente en la consulta SPARQL. Una variable reservada es",
+                    "que está vinculado por defecto al grafo de trabajo del proyecto."
+                ],
+                "LIST_T_WHERE": "dónde",
+                "T_TYPE_OPT2": {
+                    "BE": "ser",
+                    "MIGHT_BE": "podría ser",
+                    "WHERE": "donde"
+                },
+                "T_TYPE_OPT2_ADDENDA": [
+                    "en este caso, SELECT debe devolver una variable más variables adicionales",
+                    "para atributos adicionales"
+                ],
+                "T_TYPE_OTP1": "podría ser cualquiera de los tipos de parámetros aceptados anteriormente (en este caso, SELECT debe devolver una variable)"
+            },
+            "RETURNS": "Regresar"
+        },
+        "SERVICE": {
+            "DESCRIPTION_INFO": "Una descripción de este servicio personalizado",
+            "ID_INFO": "Un identificador único",
+            "SERVICE_NAME": "Nombre del servicio",
+            "SERVICE_NAME_INFO": "El nombre utilizado para agrupar todas las operaciones definidas por este servicio personalizado"
         }
     },
     "DATA": {
@@ -368,6 +451,17 @@
             "SCHEMES": "Esquemas"
         }
     },
+    "DATA_MANAGEMENT": {
+        "EXPORT": {
+            "DEPLOY": {
+                "DEPLOYER": "Implementador",
+                "DEPLOYMENT": "Implementación",
+                "DEPLOY_TO_TRIPLE_STORE": "Implementar en triplestore",
+                "SAVE_TO_FILE": "Guardar en archivo",
+                "USE_CUSTOM_DEPLOYER": "Usar implementador personalizado"
+            }
+        }
+    },
     "DATASETS": {
         "ACTIONS": {
             "CREATE_DATASET": "Crear conjunto de datos",
@@ -476,6 +570,37 @@
             "WELCOME": "¡Bienvenido al navegador de conjuntos de datos {{instanceName}}!"
         }
     },
+    "INVOKABLE_REPORTERS": {
+        "ACTIONS": {
+            "COMPILE_REPORT": "Compilar informe",
+            "CREATE_INVOKABLE_REPORT": "Crear informe invocable",
+            "CREATE_SERVICE_INVOCATION": "Crear invocación de servicio",
+            "DELETE_INVOKABLE_REPORT": "Eliminar informe invocable",
+            "EDIT_INVOKABLE_REPORT": "Editar informe invocable",
+            "EDIT_SERVICE_INVOCATION": "Editar invocación de servicio"
+        },
+        "DESTINATION_PATH": "Ruta de destino",
+        "INVOCATION": {
+            "ARGUMENTS": "Argumentos",
+            "CUSTOM_OPERATIONS": "Operaciones personalizadas",
+            "INVALID_UPDATE_OPERATION": "El invocador de informes no puede definir una invocación de servicio que se ejecute y actualice, únicamente puede explotar operaciones personalizadas de solo lectura. La operación seleccionada no es una operación de lectura, por lo que no se puede usar",
+            "NO_PARAM_OPERATION_INFO": "Esta operación no tiene parámetros, se puede invocar sin ninguna configuración",
+            "OPERATION": "Operación",
+            "SEE_CUSTOM_OPERATIONS_DETAILS": "Ver detalles de la operación personalizada",
+            "SERVICE": "Servicio",
+            "TEMPLATE_INFO": "Una plantilla para representar una sección individual. La plantilla debe ajustarse al lenguaje de plantillas de Mustache"
+        },
+        "INVOKABLE_REPORTS": "Informes invocables",
+        "MESSAGES": {
+            "ALREADY_EXISTING_INVOKABLE_REPORTER_ID": "Ya existe un informador invocable con el mismo ID. Cambie el ID y vuelva a intentarlo",
+            "DELETE_INVOKABLE_REPORT_CONFIRM": "Está eliminando el Informe invocable seleccionado. ¿Está seguro?",
+            "NO_PERMISSION_FOR_SERVICE_INVOCATION": "No tiene suficientes privilegios para invocar una (o más) invocaciones de servicio realizadas por este informe.",
+            "NO_SERVICE_INVOCATION_PROVIDED": "No se puede compilar el informador porque no se ha proporcionado ninguna invocación de servicio"
+        },
+        "REPORT": "Informe",
+        "RESULT": "Resultado",
+        "SOURCE_PATH": "Ruta de origen"
+    },
     "MESSAGES": {
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Está a punto de introducir los metadatos propuestos en el Registro de Metadatos. ¿Está seguro?",
         "ADMIN_CREATED": "Se ha creado la cuenta de administrador. Ahora iniciará sesión automáticamente con el correo electrónico y la contraseña proporcionados.",
@@ -502,6 +627,7 @@
         "DATA_LOADED": "Datos cargados correctamente",
         "DATA_REPO_NOT_CONFIGURED": "El repositorio de datos debe estar configurado",
         "DELETE_DATASET_CONFIRM_WARN": "Advertencia, esta operación eliminará el conjunto de datos. ¿Quieres continuar?",
+        "DEPLOYER_NOT_CONFIGURED": "El implementador debe configurarse",
         "DIFFERENT_CONFIRM_PASSWORD": "La contraseña y la confirmación de la contraseña son diferentes.",
         "DUPLICATED_SERVER_URL_CONFIG": "Ya existe una configuración para la misma URL del servidor",
         "EMAIL_CONFIG_CHANGED": "La configuración del correo electrónico ha sido modificada, primero debe confirmar los cambios.",
@@ -524,6 +650,7 @@
         "METADATA_NOT_FOUND_PROFILE_CONFIRM": "No se encontraron metadatos del conjunto de datos '{{datasetName}}' en MetadataRegistry. ¿Desea perfilar el conjunto de datos? (Requerido para la funcionalidad de alineación)",
         "METADATA_NOT_FOUND_PROFILE_DATASET": "No hay metadatos sobre el conjunto de datos actual en MetadataRegistry. Perfile el conjunto de datos haciendo clic en el botón <i class=\"fas fa-chart-bar\"></i>.",
         "MISSING_MANDATORY_FIELD": "Falta el campo obligatorio: '{{missingField}}'",
+        "MISSING_REQUIRED_PARAM": "Falta el parámetro obligatorio '{{parma}}'",
         "NO_CONVERSION_FORMAT_SELECTED": "La opción 'Conversión necesaria' está marcada pero no se ha seleccionado ningún formato.",
         "NO_METADATA_PROVIDED": "No se proporcionaron metadatos",
         "NO_RESULTS_FOUND": "No se encontraron resultados",
@@ -658,6 +785,13 @@
             "TYPES": "Tipos"
         },
         "ANY_LANGUAGE": "Cualquier idioma",
+        "CUSTOM_SEARCH": {
+            "CUSTOM_SEARCH": "Búsqueda personalizada",
+            "LOAD_CUSTOM_SEARCH": "Cargar búsqueda personalizada almacenada",
+            "NO_PARAM_SEARCH": "Esta búsqueda no tiene parámetros, por lo que solo se puede ejecutar como está",
+            "SHOW_HIDE_SPARQL_DETAILS": "Mostrar / ocultar detalles de SPARQL sobre la búsqueda personalizada",
+            "STORE_CUSTOM_SEARCH": "Búsqueda personalizada almacenada"
+        },
         "EDIT_LANGS": {
             "ADD_LANG": "Agregar idioma",
             "EDIT_LANGS": "Cambiar idiomas",
@@ -665,6 +799,11 @@
         },
         "FILTERS": "Filtros",
         "INDEX_NOT_FOUND": "Índice no encontrado",
+        "MESSAGES": {
+            "MISSING_VARIABLE_BINDING": "Falta el enlace de variable '{{enlace}}'",
+            "REFERENCED_SPARQL_QUERY_NOT_EXISTING": "La consulta SPARQL almacenada a la que hace referencia la búsqueda personalizada seleccionada ya no existe",
+            "STORED_PARAMETERIZED_QUERY_ALREADY_ADDED": "La consulta SPARQL parametrizada almacenada '{{ref}}' ya está en la lista de búsqueda personalizada almacenada. No se añadirá"
+        },
         "NO_RESOURCE_FOUND_FOR": "No se encontraron recursos para",
         "ONLY_OPEN": "Solo abierto",
         "RESOURCE_NOT_REACHABLE": "Recurso no accesible",
@@ -762,10 +901,20 @@
         "USER_DETAILS": "Detalles del usuario"
     },
     "WIDGETS": {
+        "FILE_PICKER": {
+            "BROWSE": "Examinar",
+            "SELECT_A_FILE": "Seleccionar un fichero"
+        },
         "SETTINGS_RENDERER": {
             "ADD_OPTIONAL_VALUE": "Agregar valor opcional",
             "DELETE_OPTIONAL_VALUE": "Eliminar valor opcional",
             "UNKNOWN_TYPE_WARN": "Este parámetro tiene un tipo desconocido ({{propTypeName}}). El valor ingresado se interpretará como un valor JSON de bajo nivel"
+        },
+        "STORAGE_MGR": {
+            "CREATE_DIR": "Crear directorio",
+            "LEVEL_UP": "Subir de nivel",
+            "STORAGE_MANAGER": "Administrador de almacenamiento",
+            "UPLOAD_FILE": "Subir archivo"
         }
     }
 }

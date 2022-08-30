@@ -10,6 +10,7 @@ import { ContributionsManagerComponent } from './contribution/administration/con
 import { ContributionComponent } from './contribution/contribution.component';
 import { LoadDevResourceComponent } from './contribution/development/load-dev.component';
 import { LoadStableResourceComponent } from './contribution/stable/load-stable.component';
+import { CustomServiceRouterComponent } from './custom-services/custom-service-router.component';
 import { DataComponent } from './datasets/data.component';
 import { DatasetDataComponent } from './datasets/data/dataset-data.component';
 import { DatasetViewComponent } from './datasets/dataset-view/dataset-view.component';
@@ -55,7 +56,8 @@ const routes: Routes = [
                 { path: '', redirectTo: "data", pathMatch: 'full' },
                 { path: 'metadata', component: MetadataComponent, data: { reuseComponent: true } },
                 { path: 'data', component: DatasetDataComponent, data: { reuseComponent: true } },
-                { path: 'sparql', component: SparqlComponent, data: { reuseComponent: true } }
+                { path: 'sparql', component: SparqlComponent, data: { reuseComponent: true } },
+                { path: "custom-services", component: CustomServiceRouterComponent, canActivate: [SuperUserAuthGuard] },
             ]
         },
         { path: 'search', component: SearchComponent, canActivate: [VisitorAuthGuard], data: { reuseComponent: true } },

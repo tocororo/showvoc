@@ -1,0 +1,21 @@
+<div class="card card-default vbox">
+    <div class="card-header d-flex align-items-center">
+        <label style="flex: 1;">{{'INVOKABLE_REPORTERS.INVOKABLE_REPORTS'|translate}}</label>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group btn-group-sm">
+                <button class="btn btn-light" (click)="createReporter()" [title]="'COMMONS.ACTIONS.CREATE'|translate">
+                    <span class="fas fa-plus"></span>
+                </button>
+                <button class="btn btn-light" (click)="deleteReporter()" [title]="'COMMONS.ACTIONS.DELETE'|translate" [disabled]="!selectedReporter">
+                    <span class="fas fa-minus"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body vbox scrollableContainer">
+        <div *ngFor="let r of reporters" class="listItem ellipsable-left" [ngClass]="{ active: selectedReporter == r }" (click)="selectReporter(r)">
+            {{r.identifier}}
+        </div>
+    </div>
+</div>
+<invokable-reporter *ngIf="selectedReporter" style="flex: 4; margin-left: 6px;" [ref]="selectedReporter"></invokable-reporter>

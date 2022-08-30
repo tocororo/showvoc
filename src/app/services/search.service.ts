@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Scope, Settings } from '../models/Plugins';
 import { SearchMode, StatusFilter } from "../models/Properties";
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource, Value } from '../models/Resources';
 import { TripleForSearch } from '../models/Search';
@@ -289,6 +290,34 @@ export class SearchServices {
                 return ResourceDeserializer.createResourceArray(stResp);
             })
         );
+    }
+
+    /**
+     * 
+     * @param scope 
+     */
+    getCustomSearchSettings(scope: Scope): Observable<Settings> {
+        let params = {
+            scope: scope
+        };
+        return this.httpMgr.doGet(this.serviceName, "getCustomSearchSettings", params).pipe(
+            map(stResp => {
+                return Settings.parse(stResp);
+            })
+        );
+    }
+
+    /**
+     * 
+     * @param scope 
+     * @param settings 
+     */
+    storeCustomSearchSettings(scope: Scope, settings: any) {
+        let params = {
+            scope: scope,
+            settings: JSON.stringify(settings)
+        };
+        return this.httpMgr.doPost(this.serviceName, "storeCustomSearchSettings", params);
     }
 
 

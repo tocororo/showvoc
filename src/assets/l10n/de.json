@@ -130,6 +130,7 @@
             "CLOSE": "Schließen",
             "CONFIRM": "Bestätigen",
             "CREATE": "Erstellen",
+            "DEPLOY": "Bereitstellen",
             "EDIT": "Bearbeiten",
             "LOAD": "Laden",
             "PICK_RESOURCE": "Ressource auswählen",
@@ -155,10 +156,12 @@
         "CONFIG": {
             "CONFIGURATION": "Konfiguration",
             "CONFIGURATION_OF": "Konfiguration von",
+            "CONFIGURATION_REQUIRED": "Konfiguration erforderlich",
             "CONFIGURE": "Konfigurieren",
             "DUPLICATED_CONFIGURATION": "Duplizierte Konfiguration",
             "LOAD_CONFIGURATION": "Konfiguration laden",
             "MISSING_CONFIGURATION": "Fehlende Konfiguration",
+            "NO_CONFIG_FOUND": "Keine Konfiguration gefunden. Bitte neue Konfiguration erstellen.",
             "PASSWORD": "Passwort",
             "REPO_CONFIGURATION": "Repo-Konfiguration",
             "SAVE_CONFIGURATION": "Konfiguration speichern",
@@ -176,6 +179,7 @@
             "LANGUAGES": "Sprachen",
             "NO_LANG_INFO": "Keine ausgewählte Sprache bedeutet alle Sprachen"
         },
+        "LEVEL": "Ebene",
         "MANDATORY_FIELD": "Pflichtfeld",
         "NAME": "Name",
         "OPTIONAL_FIELD": "Optionales Feld",
@@ -187,6 +191,7 @@
         "POSITION": "Position",
         "REASON": "Reasoning",
         "RENDERING": "Rendern",
+        "REQUIRED": "Erforderlich",
         "SCOPE": "Umfang",
         "SETTINGS": "Einstellungen",
         "STATUS": {
@@ -200,7 +205,9 @@
             "STATUS": "Status",
             "WARNING": "Warnung"
         },
+        "TEMPLATE": "Vorlage",
         "TITLE": "Titel",
+        "TYPE": "Typ",
         "VALUE": "Wert"
     },
     "CONTRIBUTIONS": {
@@ -247,6 +254,82 @@
             "CONTRIBUTION_MANAGER": "Beiträge-Manager",
             "CONTRIBUTION_TYPE": "Beitragstyp",
             "SUBMITTED": "Eingereicht"
+        }
+    },
+    "CUSTOM_SERVICES": {
+        "ACTIONS": {
+            "CREATE_CUSTOM_OPERATION": "Benutzerdefinierte Operation erstellen",
+            "CREATE_CUSTOM_SERVICE": "Benutzerdefinierten Service erstellen",
+            "DELETE_CUSTOM_SERVICE": "Benutzerdefinierten Service löschen",
+            "EDIT_CUSTOM_OPERATION": "Benutzerdefinierte Operation bearbeiten"
+        },
+        "AUTH_HELPER": {
+            "CAPABILITIES_DOCUMENTATION_REF": "Weitere Informationen zum Fähigkeitsvokabular finden Sie in der <a href=\"http://vocbench.uniroma2.it/doc/user/roles_adm.jsf#capabilities_vocabulary\" target=\"_blank\">-Dokumentation</a>.",
+            "LANG_REQUIREMENT": {
+                "LANGUAGE_REQUIREMENT": "Sprachanforderungen",
+                "LANGUAGE_REQUIREMENT_INFO": "Legt fest, ob für die Operation erforderlich ist, dass dem Benutzer, der die Operation ausführt, eine bestimmte Sprache zugewiesen ist. Es ist möglich, eine Sprache unter den in VB verfügbaren auszuwählen oder vom System aus einem Parameter der Operation ableiten zu lassen.",
+                "REQUIRE_NONE": "Keine",
+                "REQUIRE_PARAMETER_LANG": "Sprache eines Parameters erforderlich",
+                "REQUIRE_SPECIFIC_LANG": "Eine bestimmte Sprache erforderlich"
+            },
+            "NO_PARAM_OPERATION": "Die Operation erfordert keinen Parameter",
+            "OPERATION_AUTH": "Autorisierung für Operationen",
+            "PARAMETER": "Parameter",
+            "RESTRICTION": "Restriktion",
+            "SCOPE_INFO": "Verfeinert den Bereich des ausgewählten Typs",
+            "TYPE_RESTR": {
+                "RESTRICTION_NONE": "Keine",
+                "RESTRICTION_TO_PARAMETER_TYPE": "Auf den Typ eines Parameters beschränken",
+                "RESTRICTION_TO_SPECIFIC_TYPE": "Auf einen bestimmten Typ beschränken",
+                "TYPE_RESTRICTION": "Typ-Einschränkung",
+                "TYPE_RESTRICTION_INFO": "Legt fest, ob die Fähigkeit <i>rdf</i> für einen bestimmten Ressourcentyp erforderlich ist. Es ist möglich, einen Typ unter den in VB verfügbaren auszuwählen oder das System den Typ aus einem Parameter der Operation ableiten zu lassen."
+            }
+        },
+        "CUSTOM_SERVICES": "Benutzerdefinierte Dienste",
+        "FORCE_RELOAD": "Erneutes Laden aus dem Dateisystem erzwingen",
+        "FORCE_RELOAD_INFO": "Dienste neu laden (nützlich, wenn benutzerdefinierte Dienste manuell geändert / geladen wurden)",
+        "MESSAGES": {
+            "CANNOT_PARSE_AUTH": "Die zu bearbeitende Autorisierung kann nicht analysiert werden ({{auth}}). Das Formular wurde nicht wiederhergestellt.",
+            "DELETE_CUSTOM_SERVICE_CONFIRM": "Sie sind dabei, den ausgewählten CustomService zu löschen. Sind Sie sicher?",
+            "EMPTY_PARAM_NAME": "Ein angegebener Parameter hat einen leeren Namen",
+            "INVALID_NAME": "Der angegebene Name ist ungültig",
+            "INVALID_PARAM_NAME": "Der Parametername {{param}} ist ungültig",
+            "INVALID_PARAM_TYPE": "Der Typ des Parameters {{param}} ist ungültig",
+            "INVALID_RETURN_TYPE": "Der angegebene Rückgabetyp ist ungültig",
+            "INVALID_SPARQL_QUERY": "Die bereitgestellte SPARQL-Abfrage ist ungültig",
+            "MISSING_REQUIRED_FIELD": "Das erforderliche Feld {{fieldName}} fehlt"
+        },
+        "OPERATION": {
+            "AUTHORIZATION": "Berechtigung",
+            "MANDATORY_PARAMETER": "Obligatorischer Parameter",
+            "OPTIONAL_PARAMETER": "Optionaler Parameter",
+            "PARAMETERS": "Parameter",
+            "PARAM_HELPER": {
+                "ALLOWED_PARAM_TYPES_ARE": "Die zulässigen Parametertypen sind",
+                "ALLOWED_RETURN_TYPE": "Der zulässige Rückgabetyp hängt von der tatsächlichen SPARQL-Operation ab",
+                "INTRO": [
+                    "Die Parameter werden Variablen mit demselben Namen in der SPARQL-Abfrage zugeordnet. Tatsächliche Parameter, die beim Aufruf an einen Dienst übergeben werden, sind in der SPARQL-Abfrage an die entsprechende Variable gebunden. Eine reservierte Variable ist",
+                    "die standardmäßig an den Working Graph des Projekts gebunden ist."
+                ],
+                "LIST_T_WHERE": "wobei",
+                "T_TYPE_OPT2": {
+                    "BE": "ist",
+                    "MIGHT_BE": "kann sein",
+                    "WHERE": "wobei"
+                },
+                "T_TYPE_OPT2_ADDENDA": [
+                    "In diesem Fall muss SELECT eine Variable plus zusätzliche Variablen zurückgeben",
+                    "für zusätzliche Attribute"
+                ],
+                "T_TYPE_OTP1": "kann einer der oben akzeptierten Parametertypen sein (in diesem Fall muss SELECT eine Variable zurückgeben)"
+            },
+            "RETURNS": "Rückgabe"
+        },
+        "SERVICE": {
+            "DESCRIPTION_INFO": "Eine Beschreibung dieses benutzerdefinierten Dienstes",
+            "ID_INFO": "Eine eindeutige ID",
+            "SERVICE_NAME": "Name des Dienstes",
+            "SERVICE_NAME_INFO": "Der Name, der zum Gruppieren aller von diesem benutzerdefinierten Dienst definierten Vorgänge verwendet wird"
         }
     },
     "DATA": {
@@ -368,6 +451,17 @@
             "SCHEMES": "Schemata"
         }
     },
+    "DATA_MANAGEMENT": {
+        "EXPORT": {
+            "DEPLOY": {
+                "DEPLOYER": "Bereitsteller",
+                "DEPLOYMENT": "Bereitstellung",
+                "DEPLOY_TO_TRIPLE_STORE": "Im Tripel-Store bereitstellen",
+                "SAVE_TO_FILE": "Als Datei speichern",
+                "USE_CUSTOM_DEPLOYER": "Benutzerdefinierten Deployer verwenden"
+            }
+        }
+    },
     "DATASETS": {
         "ACTIONS": {
             "CREATE_DATASET": "Datensatz erstellen",
@@ -476,6 +570,37 @@
             "WELCOME": "Willkommen beim {{instanceName}} Datensatz-Browser!"
         }
     },
+    "INVOKABLE_REPORTERS": {
+        "ACTIONS": {
+            "COMPILE_REPORT": "Bericht erstellen",
+            "CREATE_INVOKABLE_REPORT": "Aufrufbaren Bericht erstellen",
+            "CREATE_SERVICE_INVOCATION": "Serviceaufruf erstellen",
+            "DELETE_INVOKABLE_REPORT": "Aufrufbaren Bericht löschen",
+            "EDIT_INVOKABLE_REPORT": "Aufrufbaren Bericht bearbeiten",
+            "EDIT_SERVICE_INVOCATION": "Serviceaufruf bearbeiten"
+        },
+        "DESTINATION_PATH": "Zielpfad",
+        "INVOCATION": {
+            "ARGUMENTS": "Argumente",
+            "CUSTOM_OPERATIONS": "Benutzerdefinierte Operationen",
+            "INVALID_UPDATE_OPERATION": "Der aufrufbare Reporter kann keinen Dienstaufruf definieren, der einen Update durchführt, er kann nur read-only Custom Operations verwenden. Die ausgewählte Operation ist keine Leseoperation und kann daher nicht ausgeführt werden.",
+            "NO_PARAM_OPERATION_INFO": "Diese Operation hat keine Parameter, sie kann ohne Konfiguration aufgerufen werden",
+            "OPERATION": "Operation",
+            "SEE_CUSTOM_OPERATIONS_DETAILS": "Siehe Details zu benutzerdefinierten Vorgängen",
+            "SERVICE": "Service",
+            "TEMPLATE_INFO": "Eine Vorlage zum Rendern eines einzelnen Abschnitts. Die Vorlage muss der Template-Sprache Mustache entsprechen."
+        },
+        "INVOKABLE_REPORTS": "Aufrufbare Berichte",
+        "MESSAGES": {
+            "ALREADY_EXISTING_INVOKABLE_REPORTER_ID": "Es gibt bereits einen Invokable Reporter mit dieser ID. Bitte ID ändern und noch einmal versuchen",
+            "DELETE_INVOKABLE_REPORT_CONFIRM": "Sie löschen den ausgewählten aufrufbaren Bericht. Sind Sie sicher?",
+            "NO_PERMISSION_FOR_SERVICE_INVOCATION": "Ihre Rechte sind nicht ausreichend, um einen (oder mehrere) Dienste aufzurufen, die von diesem Bericht ausgeführt werden.",
+            "NO_SERVICE_INVOCATION_PROVIDED": "Der Reporter kann nicht kompiliert werden, da keinen Dienstaufruf enthält"
+        },
+        "REPORT": "Bericht",
+        "RESULT": "Ergebnis",
+        "SOURCE_PATH": "Quellpfad"
+    },
     "MESSAGES": {
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Sie sind dabei, die vorgeschlagenen Metadaten in das Metadatenregister zu übertragen. Sind Sie sicher?",
         "ADMIN_CREATED": "Das Administratorkonto wurde angelegt. Jetzt werden Sie automatisch mit der E-Mail und dem Passwort, das Sie angegeben haben, eingeloggt.",
@@ -502,6 +627,7 @@
         "DATA_LOADED": "Daten erfolgreich geladen",
         "DATA_REPO_NOT_CONFIGURED": "Das Daten-Repository muss konfiguriert werden",
         "DELETE_DATASET_CONFIRM_WARN": "Achtung, dieser Vorgang löscht den Datensatz. Sind Sie sicher, dass Sie fortfahren wollen?",
+        "DEPLOYER_NOT_CONFIGURED": "Der Deployer muss konfiguriert werden.",
         "DIFFERENT_CONFIRM_PASSWORD": "Passwort und bestätigtes Passwort sind unterschiedlich.",
         "DUPLICATED_SERVER_URL_CONFIG": "Für diese Server-URL existiert bereits eine Konfiguration.",
         "EMAIL_CONFIG_CHANGED": "Die E-Mail-Konfiguration wurde geändert. Bitte Änderungen bestätigen.",
@@ -524,6 +650,7 @@
         "METADATA_NOT_FOUND_PROFILE_CONFIRM": "Es wurden keine Metadaten zum Datensatz '{{datasetName}}' in der MetadataRegistry gefunden. Möchten Sie ein Profil des Datensatzes erstellen? (Das ist für die Alignment-Funktionalität erforderlich.)",
         "METADATA_NOT_FOUND_PROFILE_DATASET": "Es wurden keine Metadaten über den aktuellen Datensatz in der MetadataRegistry gefunden. Bitte erstellen Sie ein Profil des Datensatzes, indem Sie auf die Schaltfläche <i class=\"fas fa-chart-bar\"></i> klicken.",
         "MISSING_MANDATORY_FIELD": "Fehlendes Pflichtfeld '{{missingField}}'",
+        "MISSING_REQUIRED_PARAM": "Der erforderliche Parameter '{{parma}}' fehlt",
         "NO_CONVERSION_FORMAT_SELECTED": "Das Häkchen bei \"Konvertierung erforderlich\" ist gesetzt, aber es wurde kein Format ausgewählt",
         "NO_METADATA_PROVIDED": "Es sind keine Metadaten vorhanden",
         "NO_RESULTS_FOUND": "Keine Ergebnisse gefunden",
@@ -658,6 +785,13 @@
             "TYPES": "Typen"
         },
         "ANY_LANGUAGE": "Beliebige Sprache",
+        "CUSTOM_SEARCH": {
+            "CUSTOM_SEARCH": "Benutzerdefinierte Suche",
+            "LOAD_CUSTOM_SEARCH": "Gespeicherte benutzerdefinierte Suche laden",
+            "NO_PARAM_SEARCH": "Diese Suche hat keine Parameter und kann daher nur so ausgeführt werden, wie sie ist.",
+            "SHOW_HIDE_SPARQL_DETAILS": "Ein- / Ausblenden von SPARQL-Details zur benutzerdefinierten Suche",
+            "STORE_CUSTOM_SEARCH": "Gespeicherte benutzerdefinierte Suche"
+        },
         "EDIT_LANGS": {
             "ADD_LANG": "Sprache hinzufügen",
             "EDIT_LANGS": "Sprachen bearbeiten",
@@ -665,6 +799,11 @@
         },
         "FILTERS": "Filter",
         "INDEX_NOT_FOUND": "Index nicht gefunden",
+        "MESSAGES": {
+            "MISSING_VARIABLE_BINDING": "Fehlende Variablenbindung '{{binding}}'",
+            "REFERENCED_SPARQL_QUERY_NOT_EXISTING": "Die gespeicherte SPARQL-Abfrage, die von der ausgewählten benutzerdefinierten Suche referenziert wird, ist nicht mehr vorhanden.",
+            "STORED_PARAMETERIZED_QUERY_ALREADY_ADDED": "Die parametrisierte SPARQL-Abfrage '{{ref}}' befindet sich bereits in der Liste der gespeicherten benutzerdefinierten Suchen. Sie wird nicht hinzugefügt."
+        },
         "NO_RESOURCE_FOUND_FOR": "Keine Ressource gefunden für",
         "ONLY_OPEN": "Nur offen",
         "RESOURCE_NOT_REACHABLE": "Ressource nicht erreichbar",
@@ -762,10 +901,20 @@
         "USER_DETAILS": "Nutzerdetails"
     },
     "WIDGETS": {
+        "FILE_PICKER": {
+            "BROWSE": "Durchsuchen",
+            "SELECT_A_FILE": "Eine Datei auswählen"
+        },
         "SETTINGS_RENDERER": {
             "ADD_OPTIONAL_VALUE": "Optionalen Wert hinzufügen",
             "DELETE_OPTIONAL_VALUE": "Optionalen Wert löschen",
             "UNKNOWN_TYPE_WARN": "Dieser Parameter hat einen unbekannten Typ ({{propTypeName}}). Der eingegebene Wert wird als low-level JSON-Wert interpretiert"
+        },
+        "STORAGE_MGR": {
+            "CREATE_DIR": "Verzeichnis erstellen",
+            "LEVEL_UP": "Eine Ebene höher",
+            "STORAGE_MANAGER": "Speichermanager",
+            "UPLOAD_FILE": "Datei hochladen"
         }
     }
 }

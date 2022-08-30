@@ -1,0 +1,75 @@
+<div class="card card-default vbox">
+    <div class="card-header d-flex align-items-center">
+        <label style="flex: 1">{{id}}</label>
+
+        <div class="btn-group btn-group-sm">
+            <button class="btn btn-light" (click)="initCustomService()" [title]="'COMMONS.ACTIONS.REFRESH'|translate">
+                <span class="fas fa-redo"></span>
+            </button>
+            <div class="btn-group btn-group-sm" ngbDropdown>
+                <button class="btn btn-light dropdown-toggle" style="padding: 1px 3px;" data-toggle="dropdown" ngbDropdownToggle>
+                </button>
+                <div class="dropdown-menu float-right" ngbDropdownMenu>
+                    <a class="dropdown-item" (click)="reload()" [title]="'CUSTOM_SERVICES.FORCE_RELOAD_INFO'|translate">
+                        {{'CUSTOM_SERVICES.FORCE_RELOAD'|translate}}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div *ngIf="form" class="card-body vbox">
+
+        <!-- Name -->
+        <div class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">
+                    {{form.name.displayName}}
+                    <span class="fas fa-info-circle" [title]="form.name.description"></span>
+                </label>
+                <input-editable style="flex: 1;" [value]="form.name.value" (valueEdited)="updateName($event)"></input-editable>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">
+                    {{form.description.displayName}}
+                    <span class="fas fa-info-circle" [title]="form.description.description"></span>
+                </label>
+                <input-editable style="flex: 1;" [value]="form.description.value" (valueEdited)="updateDescription($event)" [allowEmpty]="true"></input-editable>
+            </div>
+        </div>
+
+        <!-- Operations -->
+        <div class="hbox">
+            <div class="card card-default vbox">
+                <div class="card-header d-flex align-items-center">
+                    <label style="flex: 1">
+                        {{form.operations.displayName}}
+                        <span class="fas fa-info-circle" [title]="form.operations.description"></span>
+                    </label>
+                    <div class="btn-toolbar">
+                        <div class="btn-group btn-group-xs">
+                            <button class="btn btn-light" (click)="createOperation()" [title]="'COMMONS.ACTIONS.CREATE'|translate">
+                                <span class="fas fa-plus"></span>
+                            </button>
+                            <button class="btn btn-light" (click)="deleteOperation()" [title]="'COMMONS.ACTIONS.DELETE'|translate" [disabled]="!selectedOperation">
+                                <span class="fas fa-minus"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body vbox scrollableContainer">
+                    <div *ngFor="let o of form.operations.value" class="listItem" [ngClass]="{ active: selectedOperation == o }" (click)="selectOperation(o)">
+                        {{o.name}}
+                    </div>
+                </div>
+            </div>
+            <custom-operation *ngIf="selectedOperation" style="margin-left: 4px; flex: 4;" [operation]="selectedOperation" (update)="onOperationUpdate()">
+            </custom-operation>
+        </div>
+
+    </div>
+</div>

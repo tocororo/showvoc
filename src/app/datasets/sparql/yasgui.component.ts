@@ -99,7 +99,9 @@ export class YasguiComponent {
      * Note: this operation reset the caret at the beginning of the editor, so use it with caution.
      */
     public forceContentUpdate() {
-        this.yasqe.setValue(this.query);
+        if (this.query != null) {
+            this.yasqe.setValue(this.query);
+        }
         this.yasqe.refresh(); //this fixes strange issues with gutter (see https://github.com/codemirror/CodeMirror/issues/4412)
         this.collapsePrefixDeclaration();
     }

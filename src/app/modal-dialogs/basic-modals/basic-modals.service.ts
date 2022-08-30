@@ -7,6 +7,7 @@ import { AlertModal } from './alert-modal/alert-modal';
 import { ConfirmCheckModal } from './confirm-modal/confirm-check-modal';
 import { ConfirmModal } from './confirm-modal/confirm-modal';
 import { DownloadModal } from './download-modal/download-modal';
+import { FilePickerModal } from './file-picker-modal/file-picker-modal';
 import { PromptModal } from './prompt-modal/prompt-modal';
 import { PromptNumberModal } from './prompt-modal/prompt-number-modal';
 import { SelectionModal, SelectionOption } from './selection-modal/selection-modal';
@@ -181,6 +182,21 @@ export class BasicModalsServices {
         modalRef.componentInstance.message = TranslationUtils.getTranslatedText(msg, this.translateService);
         modalRef.componentInstance.downloadLink = downloadLink;
         modalRef.componentInstance.fileName = fileName;
+        return modalRef.result;
+    }
+
+    /**
+     * Opens a modal with a link to download a file
+     * @param title the title of the modal dialog
+     * @param msg the message to show in the modal dialog body. If null no message will be in the modal
+     * @param downloadLink link for download
+     * @param fileName name of the file to download
+     */
+    selectFile(title: TextOrTranslation, msg?: TextOrTranslation, accept?: string): Promise<File> {
+        const modalRef: NgbModalRef = this.modalService.open(FilePickerModal, new ModalOptions());
+        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
+        modalRef.componentInstance.message = TranslationUtils.getTranslatedText(msg, this.translateService);
+        if (accept != null) modalRef.componentInstance.accept = accept;
         return modalRef.result;
     }
 

@@ -7,6 +7,7 @@ import { AlignmentServices } from './alignment.service';
 import { AuthServices } from "./auth.service";
 import { ClassesServices } from './classes.service';
 import { ConfigurationsServices } from './configuration.service';
+import { CustomServiceServices } from './custom-service-.service';
 import { DatatypesServices } from './datatypesServices';
 import { DownloadServices } from './download.service';
 import { ExportServices } from './export.service';
@@ -16,6 +17,7 @@ import { GraphServices } from './graph.service';
 import { HttpResolutionServices } from './http-resolution.service';
 import { IndividualsServices } from './individuals.service';
 import { InputOutputServices } from './input-output.service';
+import { InvokableReportersServices } from './invokable-reporters.service';
 import { MapleServices } from './maple.service';
 import { MetadataRegistryServices } from './metadata-registry.service';
 import { MetadataServices } from './metadata.service';
@@ -26,6 +28,7 @@ import { RepositoriesServices } from './repositories.service';
 import { ResourceViewServices } from './resource-view.service';
 import { ResourcesServices } from './resources.service';
 import { SearchServices } from './search.service';
+import { ServicesServices } from './services.service';
 import { SettingsServices } from './settings.service';
 import { ShowVocServices } from './showvoc.service';
 import { SkosServices } from './skos.service';
@@ -43,6 +46,7 @@ import { UserServices } from './user.service';
         AuthServices,
         ClassesServices,
         ConfigurationsServices,
+        CustomServiceServices,
         DatatypesServices,
         DownloadServices,
         ExportServices,
@@ -53,10 +57,12 @@ import { UserServices } from './user.service';
         HttpResolutionServices,
         IndividualsServices,
         InputOutputServices,
+        InvokableReportersServices,
         MapleServices,
         MetadataServices,
         MetadataRegistryServices,
         OntoLexLemonServices,
+        ServicesServices,
         ShowVocServices,
         ProjectsServices,
         PropertiesServices,

@@ -22,10 +22,10 @@
         <button class="btn btn-light" (click)="configure()" [disabled]="disabled">{{'COMMONS.CONFIG.CONFIGURE'|translate}}</button>
         <ng-container *ngIf="storeable">
             <button class="btn btn-light" [title]="'COMMONS.CONFIG.SAVE_CONFIGURATION'|translate" (click)="saveConfig()" [disabled]="disabled">
-                <span class="fas fa-save"></span>
+                <span class="fas fa-download"></span>
             </button>
             <button class="btn btn-light" [title]="'COMMONS.CONFIG.LOAD_CONFIGURATION'|translate" (click)="loadConfig()" [disabled]="disabled">
-                <span class="fas fa-save"></span>
+                <span class="fas fa-upload"></span>
             </button>
         </ng-container>
     </span>

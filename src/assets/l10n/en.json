@@ -143,6 +143,7 @@
             "CONFIRM": "Confirm",
             "CREATE": "Create",
             "DELETE": "Delete",
+            "DEPLOY": "Deploy",
             "DOWNLOAD": "Download",
             "EDIT": "Edit",
             "EXPAND_ALL": "Expand all",
@@ -177,10 +178,12 @@
         "CONFIG": {
             "CONFIGURATION": "Configuration",
             "CONFIGURATION_OF": "Configuration of",
+            "CONFIGURATION_REQUIRED": "Configuration required",
             "CONFIGURE": "Configure",
             "DUPLICATED_CONFIGURATION": "Duplicated configuration",
             "LOAD_CONFIGURATION": "Load configuration",
             "MISSING_CONFIGURATION": "Missing configuration",
+            "NO_CONFIG_FOUND": "No configuration found. Please, create a new one",
             "PASSWORD": "Password",
             "REPO_CONFIGURATION": "Repo Configuration",
             "SAVE_CONFIGURATION": "Save configuration",
@@ -202,6 +205,7 @@
             "LANGUAGES": "Languages",
             "NO_LANG_INFO": "No language selected implicitly means all languages"
         },
+        "LEVEL": "Level",
         "MANDATORY_FIELD": "Mandatory field",
         "NAME": "Name",
         "OPTIONAL_FIELD": "Optional field",
@@ -213,6 +217,7 @@
         "POSITION": "Position",
         "REASON": "Reason",
         "RENDERING": "Rendering",
+        "REQUIRED": "Required",
         "SCOPE": "Scope",
         "SETTINGS": "Settings",
         "STATUS": {
@@ -226,7 +231,9 @@
             "STATUS": "Status",
             "WARNING": "Warning"
         },
+        "TEMPLATE": "Template",
         "TITLE": "Title",
+        "TYPE": "Type",
         "VALUE": "Value"
     },
     "CONTRIBUTIONS": {
@@ -273,6 +280,82 @@
             "CONTRIBUTION_MANAGER": "Contributions manager",
             "CONTRIBUTION_TYPE": "Contribution type",
             "SUBMITTED": "Submitted"
+        }
+    },
+    "CUSTOM_SERVICES": {
+        "ACTIONS": {
+            "CREATE_CUSTOM_OPERATION": "Create Custom Operation",
+            "CREATE_CUSTOM_SERVICE": "Create Custom Service",
+            "DELETE_CUSTOM_SERVICE": "Delete CustomService",
+            "EDIT_CUSTOM_OPERATION": "Edit Custom Operation"
+        },
+        "AUTH_HELPER": {
+            "CAPABILITIES_DOCUMENTATION_REF": "For further details about the capability vocabulary, please refer to the dedicated <a href=\"http://vocbench.uniroma2.it/doc/user/roles_adm.jsf#capabilities_vocabulary\" target=\"_blank\">documentation</a>.",
+            "LANG_REQUIREMENT": {
+                "LANGUAGE_REQUIREMENT": "Language requirement",
+                "LANGUAGE_REQUIREMENT_INFO": "Determines if the operation requires that the user which performs the operation has a specific language assigned. It is possible to select a language among those available in VB or to let the system infer it from a parameter of the operation.",
+                "REQUIRE_NONE": "None",
+                "REQUIRE_PARAMETER_LANG": "Require the language of a parameter",
+                "REQUIRE_SPECIFIC_LANG": "Require a specific language"
+            },
+            "NO_PARAM_OPERATION": "The operation does not foreseen any parameter",
+            "OPERATION_AUTH": "Operation authorization",
+            "PARAMETER": "Parameter",
+            "RESTRICTION": "Restriction",
+            "SCOPE_INFO": "Refines the scope of the selected type",
+            "TYPE_RESTR": {
+                "RESTRICTION_NONE": "None",
+                "RESTRICTION_TO_PARAMETER_TYPE": "Restrict to the type of a parameter",
+                "RESTRICTION_TO_SPECIFIC_TYPE": "Restrict to a specific type",
+                "TYPE_RESTRICTION": "Type restriction",
+                "TYPE_RESTRICTION_INFO": "Determines if the <i>rdf</i> capability is required on a specific resource type. It is possible to select a type among those available in VB or to let the system infer the type from a parameter of the operation."
+            }
+        },
+        "CUSTOM_SERVICES": "Custom Services",
+        "FORCE_RELOAD": "Force reload from filesystem",
+        "FORCE_RELOAD_INFO": "Reload services (useful when the Custom Services are changed/loaded manually)",
+        "MESSAGES": {
+            "CANNOT_PARSE_AUTH": "Unable to parse authorization you're trying to edit ({{auth}}). The form has not been restored.",
+            "DELETE_CUSTOM_SERVICE_CONFIRM": "You are deleting the selected CustomService. Are you sure?",
+            "EMPTY_PARAM_NAME": "A provided parameter has an empty name",
+            "INVALID_NAME": "The provided name is not valid",
+            "INVALID_PARAM_NAME": "The parameter name {{param}} is not valid",
+            "INVALID_PARAM_TYPE": "The type of the parameter {{param}} is not valid",
+            "INVALID_RETURN_TYPE": "The provided Returns type is not valid",
+            "INVALID_SPARQL_QUERY": "The provided SPARQL query is not valid",
+            "MISSING_REQUIRED_FIELD": "The required field {{fieldName}} is missing"
+        },
+        "OPERATION": {
+            "AUTHORIZATION": "Authorization",
+            "MANDATORY_PARAMETER": "Mandatory parameter",
+            "OPTIONAL_PARAMETER": "Optional parameter",
+            "PARAMETERS": "Parameters",
+            "PARAM_HELPER": {
+                "ALLOWED_PARAM_TYPES_ARE": "The allowed parameter types are",
+                "ALLOWED_RETURN_TYPE": "The allowed return type depends on the actual SPARQL operation",
+                "INTRO": [
+                    "The parameters are mapped to variables with the same name in the SPARQL query. Actual parameters passed to a service upon invocation are pre-bound to the corresponding variable in the SPARQL query. A reserved variable is",
+                    "which is bound by default to the working graph of the project."
+                ],
+                "LIST_T_WHERE": "where",
+                "T_TYPE_OPT2": {
+                    "BE": "be",
+                    "MIGHT_BE": "might be",
+                    "WHERE": "where"
+                },
+                "T_TYPE_OPT2_ADDENDA": [
+                    "for additional attibutes",
+                    "in this case the SELECT must return one variable plus additional variables"
+                ],
+                "T_TYPE_OTP1": "might be any of the above accepted parameter types (in this case the SELECT must return one variable)"
+            },
+            "RETURNS": "Returns"
+        },
+        "SERVICE": {
+            "DESCRIPTION_INFO": "A description of this custom service",
+            "ID_INFO": "A unique identifier",
+            "SERVICE_NAME": "Service name",
+            "SERVICE_NAME_INFO": "The name used to group all operations defined by this custom service"
         }
     },
     "DATA": {
@@ -392,6 +475,17 @@
             "CONCEPT_SCHEME": "Concept Scheme",
             "SCHEME": "Scheme",
             "SCHEMES": "Schemes"
+        }
+    },
+    "DATA_MANAGEMENT": {
+        "EXPORT": {
+            "DEPLOY": {
+                "DEPLOYER": "Deployer",
+                "DEPLOYMENT": "Deployment",
+                "DEPLOY_TO_TRIPLE_STORE": "Deploy to triple store",
+                "SAVE_TO_FILE": "Save to file",
+                "USE_CUSTOM_DEPLOYER": "Use custom deployer"
+            }
         }
     },
     "DATASETS": {
@@ -537,6 +631,37 @@
             "TARGET_URI_EXP": "Target URI exp"
         }
     },
+    "INVOKABLE_REPORTERS": {
+        "ACTIONS": {
+            "COMPILE_REPORT": "Compile report",
+            "CREATE_INVOKABLE_REPORT": "Create Invokable Report",
+            "CREATE_SERVICE_INVOCATION": "Create Service Invocation",
+            "DELETE_INVOKABLE_REPORT": "Delete Invokable Report",
+            "EDIT_INVOKABLE_REPORT": "Edit Invokable Report",
+            "EDIT_SERVICE_INVOCATION": "Edit Service Invocation"
+        },
+        "DESTINATION_PATH": "Destination path",
+        "INVOCATION": {
+            "ARGUMENTS": "Arguments",
+            "CUSTOM_OPERATIONS": "Custom Operations",
+            "INVALID_UPDATE_OPERATION": "Invokable reporter cannot define a service invocation that executes and update, it can only exploit read-only Custom Operations. The selected operation is not a read operation, so it cannot be used.",
+            "NO_PARAM_OPERATION_INFO": "This operations has no parameters, it can be invoked without any configuration",
+            "OPERATION": "Operation",
+            "SEE_CUSTOM_OPERATIONS_DETAILS": "See custom operation details",
+            "SERVICE": "Service",
+            "TEMPLATE_INFO": "A template for rendering an individual section. The template must conform to Mustache templating language"
+        },
+        "INVOKABLE_REPORTS": "Invokable Reports",
+        "MESSAGES": {
+            "ALREADY_EXISTING_INVOKABLE_REPORTER_ID": "An Invokable Reporter with the same id already exists. Please change the ID and retry",
+            "DELETE_INVOKABLE_REPORT_CONFIRM": "You are deleting the selected Invokable Report. Are you sure?",
+            "NO_PERMISSION_FOR_SERVICE_INVOCATION": "You have not enough priviledges for invoking one (or more) service invocation performed by this report.",
+            "NO_SERVICE_INVOCATION_PROVIDED": "The reporter cannot be compiled since it has no service invocation provided"
+        },
+        "REPORT": "Report",
+        "RESULT": "Result",
+        "SOURCE_PATH": "Source path"
+    },
     "MESSAGES": {
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "You are going to submit the proposed metadata into the Metadata Registry. Are you sure?",
         "ADMIN_CREATED": "The administrator account has been created. Now you will be automatically logged in with the email and the password you provided",
@@ -567,6 +692,7 @@
         "DATA_REPO_NOT_CONFIGURED": "The data repository requires to be configured",
         "DELETE_DATASET_CONFIRM_WARN": "Attention, this operation will delete the dataset. Do you want to continue?",
         "DELETE_USER_CONFIRM_WARN": "Attention, this operation will delete user {{user}}. Do you want to continue?",
+        "DEPLOYER_NOT_CONFIGURED": "The deployer needs to be configured",
         "DIFFERENT_CONFIRM_PASSWORD": "Password and confirmed password are different.",
         "DOWNLOAD_CREATED": "Distribution download created successfully",
         "DUPLICATED_SERVER_URL_CONFIG": "A configuration for the same server URL already exists",
@@ -590,6 +716,7 @@
         "METADATA_NOT_FOUND_PROFILE_CONFIRM": "Unable to find metadata about the dataset '{{datasetName}}' in the MetadataRegistry. Do you want to profile the dataset? (required for the alignment feature)",
         "METADATA_NOT_FOUND_PROFILE_DATASET": "Unable to find metadata about the current dataset in the MetadataRegistry. Please profile the dataset by clicking the <i class=\"fas fa-chart-bar\"></i> button.",
         "MISSING_MANDATORY_FIELD": "Missing mandatory field '{{missingField}}'",
+        "MISSING_REQUIRED_PARAM": "The required parameter '{{parma}}' is missing",
         "NO_CONVERSION_FORMAT_SELECTED": "The 'Conversion required' is checked, but no format has been selected",
         "NO_METADATA_PROVIDED": "No metadata has been provided",
         "NO_RESULTS_FOUND": "No results found",
@@ -759,6 +886,13 @@
             "TYPES": "Types"
         },
         "ANY_LANGUAGE": "Any language",
+        "CUSTOM_SEARCH": {
+            "CUSTOM_SEARCH": "Custom Search",
+            "LOAD_CUSTOM_SEARCH": "Load Stored Custom Search",
+            "NO_PARAM_SEARCH": "This search has no parameters so can only be run as is.",
+            "SHOW_HIDE_SPARQL_DETAILS": "Show/hide SPARQL details about the custom search",
+            "STORE_CUSTOM_SEARCH": "Stored Custom Search"
+        },
         "DISABLE_FILTER": "Disable filter",
         "EDIT_LANGS": {
             "ADD_LANG": "Add language",
@@ -767,6 +901,11 @@
         },
         "FILTERS": "Filters",
         "INDEX_NOT_FOUND": "Index not found",
+        "MESSAGES": {
+            "MISSING_VARIABLE_BINDING": "Missing variable binding '{{binding}}'",
+            "REFERENCED_SPARQL_QUERY_NOT_EXISTING": "The stored SPARQL query referenced by the selected custom search does not exist anymore.",
+            "STORED_PARAMETERIZED_QUERY_ALREADY_ADDED": "The stored parameterized SPARQL query '{{ref}}' is already in the Stored Custom Search list. It will not be added"
+        },
         "NO_RESOURCE_FOUND_FOR": "No resource found for",
         "ONLY_OPEN": "Only open",
         "RESOURCE_NOT_REACHABLE": "Resource not reachable",
@@ -869,10 +1008,20 @@
         "USER_DETAILS": "User details"
     },
     "WIDGETS": {
+        "FILE_PICKER": {
+            "BROWSE": "Browse",
+            "SELECT_A_FILE": "Select a file"
+        },
         "SETTINGS_RENDERER": {
             "ADD_OPTIONAL_VALUE": "Add optional value",
             "DELETE_OPTIONAL_VALUE": "Delete optional value",
             "UNKNOWN_TYPE_WARN": "This parameter has an unknown type ({{propTypeName}}). The entered value will be interpreted as a low-level JSON value"
+        },
+        "STORAGE_MGR": {
+            "CREATE_DIR": "Create directory",
+            "LEVEL_UP": "Level up",
+            "STORAGE_MANAGER": "Storage manager",
+            "UPLOAD_FILE": "Upload file"
         }
     }
 }

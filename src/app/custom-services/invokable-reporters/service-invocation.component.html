@@ -1,0 +1,87 @@
+<div class="card card-default vbox">
+    <div class="card-header d-flex align-items-center">
+        <label style="flex: 1">
+            {{invocation.label}}
+        </label>
+        <div class="btn-toolbar">
+            <div class="btn-group btn-group-xs">
+                <button class="btn btn-light" (click)="editInvocation()" [title]="'COMMONS.ACTIONS.EDIT'|translate">
+                    <span class="fas fa-pencil-alt"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body vbox scrollableContainer">
+        <div class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">{{'MODELS.RESOURCE.LABEL'|translate}}:</label>
+                <div style="flex: 1">
+                    <input class="form-control form-control-sm" [ngModel]="invocation.label" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">{{'COMMONS.DESCRIPTION'|translate}}:</label>
+                <div style="flex: 1">
+                    <input class="form-control form-control-sm" [ngModel]="invocation.description" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">Extension path:</label>
+                <div style="flex: 1">
+                    <input class="form-control form-control-sm" [ngModel]="invocation.extensionPath" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">{{'INVOKABLE_REPORTERS.INVOCATION.SERVICE'|translate}}:</label>
+                <div style="flex: 1">
+                    <input class="form-control form-control-sm" [ngModel]="invocation.service" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">{{'INVOKABLE_REPORTERS.INVOCATION.OPERATION'|translate}}:</label>
+                <div style="flex: 1">
+                    <input class="form-control form-control-sm" [ngModel]="invocation.operation" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">{{'INVOKABLE_REPORTERS.INVOCATION.ARGUMENTS'|translate}}:</label>
+                <div class="card card-default" style="flex: 1; min-height: 28px;">
+                    <div class="card-body">
+                        <table *ngIf="invocation.arguments" class="table table-borderless table-sm" style="font-family: monospace;">
+                            <colgroup>
+                                <col style="width: 1%;">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                <tr *ngFor="let argName of objectKeys(invocation.arguments)">
+                                    <td><label>{{argName}}</label></td>
+                                    <td>
+                                        <input class="form-control form-control-sm" [ngModel]="invocation.arguments[argName]" readonly>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="gridRow">
+            <div class="gridEntry">
+                <label class="entryLabel">{{'COMMONS.TEMPLATE'|translate}}:</label>
+                <div style="flex: 1">
+                    <mustache-editor [ngModel]="invocation.template" [disabled]="true"></mustache-editor>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

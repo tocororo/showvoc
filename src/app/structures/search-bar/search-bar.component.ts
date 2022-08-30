@@ -1,18 +1,20 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalOptions, ModalType } from 'src/app/modal-dialogs/Modals';
-import { SearchMode, SearchSettings, ClassIndividualPanelSearchMode } from 'src/app/models/Properties';
+import { ClassIndividualPanelSearchMode, SearchMode, SearchSettings } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, Resource } from 'src/app/models/Resources';
 import { SearchServices } from 'src/app/services/search.service';
+import { SVContext } from 'src/app/utils/SVContext';
 import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { SVProperties } from 'src/app/utils/SVProperties';
-import { SearchSettingsModal } from './search-settings-modal';
-import { finalize } from 'rxjs/operators';
-import { SVContext } from 'src/app/utils/SVContext';
-import { AdvancedSearchModal } from './advanced-search-modal';
 import { TreeListContext } from 'src/app/utils/UIUtils';
+import { AdvancedSearchModal } from './advanced-search-modal';
+import { CustomSearchModal } from './custom-search-modal';
+import { LoadCustomSearchModal } from './load-custom-search-modal';
+import { SearchSettingsModal } from './search-settings-modal';
 
 @Component({
     selector: "search-bar",
@@ -123,6 +125,24 @@ export class SearchBarComponent {
         modalRef.result.then(
             (resource: AnnotatedValue<Resource>) => {
                 this.advancedSearchResult.emit(resource);
+            },
+            () => { }
+        );
+    }
+
+    customSearch() {
+        const modalRef: NgbModalRef = this.modalService.open(LoadCustomSearchModal, new ModalOptions());
+        modalRef.result.then(
+            customSearchRef => {
+                const modalRef: NgbModalRef = this.modalService.open(CustomSearchModal, new ModalOptions());
+                modalRef.componentInstance.searchParameterizationReference = customSearchRef;
+                modalRef.result.then(
+                    (resource: AnnotatedValue<Resource>) => {
+                        //exploit the same event (and related handler) of advanced search
+                        this.advancedSearchResult.emit(resource);
+                    },
+                    () => { }
+                );
             },
             () => { }
         );

@@ -1,12 +1,8 @@
 import { Settings, STProperties, Scope } from "./Plugins";
 
 export class ConfigurationComponents {
-    // static ADVANCED_GRAPH_APPLICATION_STORE = "it.uniroma2.art.semanticturkey.config.sheet2rdf.AdvancedGraphApplicationStore";
     // static EXPORTER: string = "it.uniroma2.art.semanticturkey.config.exporter.Exporter";
     // static IMPORTER: string = "it.uniroma2.art.semanticturkey.config.importer.Importer";
-    static SPARQL_PARAMETERIZATION_STORE: string = "it.uniroma2.art.semanticturkey.config.sparql.SPARQLParameterizationStore";
-    static SPARQL_STORE: string = "it.uniroma2.art.semanticturkey.config.sparql.SPARQLStore";
-    // static CUSTOM_SEARCH_STORE = "it.uniroma2.art.semanticturkey.settings.search.CustomSearchStore";
     static CONTRIBUTION_STORE = {
         ID: "it.uniroma2.art.semanticturkey.config.contribution.ContributionStore",
         CONFIG_IMPL: {
@@ -15,6 +11,11 @@ export class ConfigurationComponents {
             STABLE: "it.uniroma2.art.semanticturkey.config.contribution.StoredStableResourceContributionConfiguration"
         }
     };
+    static CUSTOM_SEARCH_STORE = "it.uniroma2.art.semanticturkey.settings.search.CustomSearchStore";
+    static CUSTOM_SERVICE_DEFINITION_STORE = "it.uniroma2.art.semanticturkey.config.customservice.CustomServiceDefinitionStore";
+    static INVOKABLE_REPORER_STORE = "it.uniroma2.art.semanticturkey.config.invokablereporter.InvokableReporterStore";
+    static SPARQL_PARAMETERIZATION_STORE: string = "it.uniroma2.art.semanticturkey.config.sparql.SPARQLParameterizationStore";
+    static SPARQL_STORE: string = "it.uniroma2.art.semanticturkey.config.sparql.SPARQLStore";
 }
 
 export class Reference {

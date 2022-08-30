@@ -1,0 +1,13 @@
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{title}}</h5>
+    </div>
+    <div class="modal-body vbox">
+
+        <custom-operation [operation]="operation" readonly="true"></custom-operation>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-light btn-sm" (click)="ok()">{{'COMMONS.ACTIONS.CLOSE'|translate}}</button>
+    </div>
+</div>

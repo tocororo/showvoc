@@ -18,6 +18,8 @@ import { ListNodeComponent } from './list/list-node.component';
 import { SchemeListPanelComponent } from './list/scheme/scheme-list-panel.component';
 import { SchemeListComponent } from './list/scheme/scheme-list.component';
 import { AdvancedSearchModal } from './search-bar/advanced-search-modal';
+import { CustomSearchModal } from './search-bar/custom-search-modal';
+import { LoadCustomSearchModal } from './search-bar/load-custom-search-modal';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SearchSettingsModal } from './search-bar/search-settings-modal';
 import { StructureTabsetComponent } from './structure-tabset/structure-tabset.component';
@@ -54,6 +56,7 @@ import { PropertyTreeComponent } from './tree/property/property-tree.component';
         ConceptTreeNodeComponent,
         ConceptTreePanelComponent,
         ConceptTreeSettingsModal,
+        CustomSearchModal,
         InstanceListComponent,
         InstanceListPanelComponent,
         InstanceListSettingsModal,
@@ -63,6 +66,7 @@ import { PropertyTreeComponent } from './tree/property/property-tree.component';
         LexicalEntryListPanelComponent,
         LexicalEntryListSettingsModal,
         ListNodeComponent,
+        LoadCustomSearchModal,
         PropertyTreeComponent,
         PropertyTreeNodeComponent,
         PropertyTreePanelComponent,
@@ -100,6 +104,7 @@ import { PropertyTreeComponent } from './tree/property/property-tree.component';
         ConceptTreeSettingsModal,
         InstanceListSettingsModal,
         LexicalEntryListSettingsModal,
+        LoadCustomSearchModal,
         SearchSettingsModal
     ]
 })

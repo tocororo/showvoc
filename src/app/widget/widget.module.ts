@@ -2,6 +2,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -10,12 +11,12 @@ import { YasguiComponent } from '../datasets/sparql/yasgui.component';
 import { BarChartComponent } from './charts/bar-chart.component';
 import { PieChartComponent } from './charts/pie-chart.component';
 import { SeriesChartLegendComponent } from './charts/series-chart-legend.component';
+import { MustacheEditorComponent } from './codemirror/mustache-editor/mustache-editor.component';
 import { SanitizerDirective } from './directives/sanitizer.directive';
 import { ExtensionConfiguratorComponent } from './extensionConfigurator/extension-configurator.component';
 import { InputEditableComponent } from './input-editable/input-editable.component';
 import { LangStringEditorComponent } from './langstring-editor/langstring-editor.component';
 import { LanguageItemComponent } from './language-item/language-item.component';
-import { LocalizedEditorModal } from './localized-editor/localized-editor-modal';
 import { PasswordInputComponent } from './password-input/password-input.component';
 import { FilePickerComponent } from './pickers/file-picker/file-picker.component';
 import { LangPickerComponent } from './pickers/lang-picker/lang-picker.component';
@@ -25,7 +26,6 @@ import { ValuePickerComponent } from './pickers/value-picker/value-picker.compon
 import { RdfResourceComponent } from './rdf-resource/rdf-resource.component';
 import { ResourceListSelectionComponent } from './rdf-resource/resource-list-selection.component';
 import { ResourceListComponent } from './rdf-resource/resource-list.component';
-import { RenderingEditorModal } from './rendering-editor/rendering-editor-modal';
 import { RenderingEditor } from './rendering-editor/rendering-editor.component';
 import { ResizableLayoutComponent } from './resizable-layout/resizable-layout.component';
 import { DataSizeRenderer } from './settings-renderer/datasize-renderer';
@@ -42,6 +42,7 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typed-literal-
 
 @NgModule({
     imports: [
+        CodemirrorModule,
         CommonModule,
         DragDropModule,
         FormsModule,
@@ -59,14 +60,13 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typed-literal-
         LangStringEditorComponent,
         LanguageItemComponent,
         LiteralPickerComponent,
-        LocalizedEditorModal,
+        MustacheEditorComponent,
         NestedSettingSetRendererComponent,
         PasswordInputComponent,
         PieChartComponent,
         QueryParameterForm,
         RdfResourceComponent,
         RenderingEditor,
-        RenderingEditorModal,
         ResourceListComponent,
         ResourceListSelectionComponent,
         ResourcePickerComponent,
@@ -94,13 +94,12 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typed-literal-
         LangStringEditorComponent,
         LanguageItemComponent,
         LiteralPickerComponent,
-        LocalizedEditorModal,
+        MustacheEditorComponent,
         PasswordInputComponent,
         PieChartComponent,
         QueryParameterForm,
         RdfResourceComponent,
         RenderingEditor,
-        RenderingEditorModal,
         ResourceListComponent,
         ResourceListSelectionComponent,
         ResourcePickerComponent,
@@ -116,7 +115,6 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typed-literal-
         YasguiComponent
     ],
     entryComponents: [
-        RenderingEditorModal
     ],
     providers: [
         ToastService

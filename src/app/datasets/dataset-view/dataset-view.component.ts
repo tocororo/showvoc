@@ -19,10 +19,13 @@ export class DatasetViewComponent {
 
     hideDatasetName: boolean;
 
+    isUserAuthorized: boolean;
+
     constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
         this.project = SVContext.getWorkingProject();
+        this.isUserAuthorized = SVContext.getLoggedUser().isSuperUser(false);
         this.activatedRoute.queryParams.subscribe(
             params => {
                 this.hideDatasetName = params[ShowVocUrlParams.hideDatasetName] == "true";

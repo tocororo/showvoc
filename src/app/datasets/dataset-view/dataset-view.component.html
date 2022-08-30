@@ -2,15 +2,26 @@
 
     <div class="mb-2" style="position: relative;">
         <h3 *ngIf="!hideDatasetName" style="position: absolute; left: 10px; top: 2px;">{{project.getName()}}</h3>
-        <ul class="nav nav-tabs justify-content-end">
-            <li class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" (click)="goToRoute('metadata')" [ngClass]="{ active: isActiveRoute('metadata') }">Metadata</a>
-            </li>
+        <ul class="nav nav-tabs justify-content-end pr-3">
             <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" (click)="goToRoute('data')" [ngClass]="{ active: isActiveRoute('data') }">{{'DATA.DATA'|translate}}</a>
             </li>
-            <li class="nav-item mr-3">
+            <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" (click)="goToRoute('sparql')" [ngClass]="{ active: isActiveRoute('sparql') }">Sparql</a>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" (click)="goToRoute('metadata')" [ngClass]="{ active: isActiveRoute('metadata') }">Metadata</a>
+            </li>
+            <li *ngIf="isUserAuthorized" class="nav-item dropdown" ngbDropdown>
+                <a  href="javascript:void(0)" class="nav-link dropdown-toggle" [ngClass]="{ active: isActiveRoute('custom-services') }"
+                    data-toggle="dropdown" ngbDropdownToggle>Tools
+                </a>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <a href="javascript:void(0)" class="dropdown-item d-flex align-items-center" (click)="goToRoute('custom-services')">
+                        Custom Services and Reports
+                        <i *ngIf="isActiveRoute('custom-services')" class="fas fa-check ml-2"></i>
+                    </a>
+                </div>
             </li>
         </ul>
     </div>

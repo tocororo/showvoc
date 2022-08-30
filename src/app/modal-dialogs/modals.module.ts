@@ -5,12 +5,16 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ResourceViewModule } from '../resource-view/resource-view.module';
 import { StructuresModule } from '../structures/structures.module';
+import { LocalizedEditorModal } from '../widget/localized-editor/localized-editor-modal';
+import { RenderingEditorModal } from '../widget/rendering-editor/rendering-editor-modal';
+import { StorageManagerModal } from '../widget/storage-manager/storage-manager-modal';
 import { WidgetModule } from '../widget/widget.module';
 import { AlertModal } from './basic-modals/alert-modal/alert-modal';
 import { BasicModalsServices } from './basic-modals/basic-modals.service';
 import { ConfirmCheckModal } from './basic-modals/confirm-modal/confirm-check-modal';
 import { ConfirmModal } from './basic-modals/confirm-modal/confirm-modal';
 import { DownloadModal } from './basic-modals/download-modal/download-modal';
+import { FilePickerModal } from './basic-modals/file-picker-modal/file-picker-modal';
 import { PromptModal } from './basic-modals/prompt-modal/prompt-modal';
 import { PromptNumberModal } from './basic-modals/prompt-modal/prompt-number-modal';
 import { ResourceSelectionModal } from './basic-modals/selection-modal/resource-selection-modal';
@@ -43,19 +47,23 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         ConfirmCheckModal,
         ConfirmModal,
         DownloadModal,
+        FilePickerModal,
         LanguageSelectorModal,
         LexicalEntryListModal,
         LexiconListModal,
         LoadConfigurationModal,
+        LocalizedEditorModal,
         NewTypedLiteralModal,
         PluginConfigurationModal,
         PromptModal,
         PromptNumberModal,
         PropertyTreeModal,
+        RenderingEditorModal,
         ResourcePickerModal,
         ResourceSelectionModal,
         SchemeListModal,
         SelectionModal,
+        StorageManagerModal,
         StoreConfigurationModal
     ],
     imports: [
@@ -68,7 +76,10 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         WidgetModule,  
     ],
     providers: [
-        BasicModalsServices, BrowsingModalsServices, CreationModalServices, SharedModalsServices
+        BasicModalsServices,
+        BrowsingModalsServices,
+        CreationModalServices,
+        SharedModalsServices
     ],
     entryComponents: [
         AlertModal,
@@ -79,19 +90,23 @@ import { SharedModalsServices } from './shared-modals/shared-modal.service';
         ConfirmCheckModal,
         ConfirmModal,
         DownloadModal,
+        FilePickerModal,
         LanguageSelectorModal,
         LexicalEntryListModal,
         LexiconListModal,
         LoadConfigurationModal,
+        LocalizedEditorModal,
         NewTypedLiteralModal,
         PluginConfigurationModal,
         PromptModal,
         PromptNumberModal,
         PropertyTreeModal,
+        RenderingEditorModal,
         ResourcePickerModal,
         ResourceSelectionModal,
         SchemeListModal,
         SelectionModal,
+        StorageManagerModal,
         StoreConfigurationModal,
     ]
 })

@@ -130,6 +130,7 @@
             "CLOSE": "Fermer",
             "CONFIRM": "Confirmer",
             "CREATE": "Créer",
+            "DEPLOY": "Déployer",
             "EDIT": "Éditer",
             "LOAD": "Charger",
             "PICK_RESOURCE": "Sélectionner une ressource",
@@ -155,10 +156,12 @@
         "CONFIG": {
             "CONFIGURATION": "Configuration",
             "CONFIGURATION_OF": "Configuration de",
+            "CONFIGURATION_REQUIRED": "Configuration nécessaire",
             "CONFIGURE": "Configurer",
             "DUPLICATED_CONFIGURATION": "Configuration dupliquée",
             "LOAD_CONFIGURATION": "Charger la configuration",
             "MISSING_CONFIGURATION": "Configuration manquante",
+            "NO_CONFIG_FOUND": "Aucune configuration trouvée. Créez-en une nouvelle",
             "PASSWORD": "Mot de passe",
             "REPO_CONFIGURATION": "Configuration de l'entrepôt",
             "SAVE_CONFIGURATION": "Sauvegarder la configuration",
@@ -176,6 +179,7 @@
             "LANGUAGES": "Langues",
             "NO_LANG_INFO": "Aucune langue sélectionnée équivaut implicitement à toutes les langues"
         },
+        "LEVEL": "Niveau",
         "MANDATORY_FIELD": "Champ obligatoire",
         "NAME": "Nom",
         "OPTIONAL_FIELD": "Champ facultatif",
@@ -187,6 +191,7 @@
         "POSITION": "Position",
         "REASON": "Raison",
         "RENDERING": "Rendu",
+        "REQUIRED": "Nécessaire",
         "SCOPE": "Champ d'application",
         "SETTINGS": "Réglages",
         "STATUS": {
@@ -200,7 +205,9 @@
             "STATUS": "Statut",
             "WARNING": "Avertissement"
         },
+        "TEMPLATE": "Modèle",
         "TITLE": "Titre",
+        "TYPE": "Type",
         "VALUE": "Valeur"
     },
     "CONTRIBUTIONS": {
@@ -247,6 +254,82 @@
             "CONTRIBUTION_MANAGER": "Gestionnaire de contributions",
             "CONTRIBUTION_TYPE": "Type de contribution",
             "SUBMITTED": "Soumis"
+        }
+    },
+    "CUSTOM_SERVICES": {
+        "ACTIONS": {
+            "CREATE_CUSTOM_OPERATION": "Créer une opération personnalisée",
+            "CREATE_CUSTOM_SERVICE": "Créer un service personnalisé",
+            "DELETE_CUSTOM_SERVICE": "Supprimer un service personnalisé",
+            "EDIT_CUSTOM_OPERATION": "Editer une opération personnalisée"
+        },
+        "AUTH_HELPER": {
+            "CAPABILITIES_DOCUMENTATION_REF": "Pour plus de détails au sujet du vocabulaire des capacités, référez-vous à la <a href=\"http://vocbench.uniroma2.it/doc/user/roles_adm.jsf#capabilities_vocabulary\" target=\"_blank\">documentation</a>.",
+            "LANG_REQUIREMENT": {
+                "LANGUAGE_REQUIREMENT": "Exigence linguistique",
+                "LANGUAGE_REQUIREMENT_INFO": "Détermine si l'opération nécessite qu'une langue spécifique ait été attribuée à l'utilisateur qui la réalise. Il est possible de sélectionner une langue parmi celles qui sont disponibles dans VocBench ou de laisser le système la calculer à partir d'un paramètre de l'opération.",
+                "REQUIRE_NONE": "Aucun",
+                "REQUIRE_PARAMETER_LANG": "Nécessite la langue d'un paramètre",
+                "REQUIRE_SPECIFIC_LANG": "Nécessite une langue spécifique"
+            },
+            "NO_PARAM_OPERATION": "L'opération ne prévoit aucun paramètre",
+            "OPERATION_AUTH": "Autorisation de l'opération",
+            "PARAMETER": "Paramètre",
+            "RESTRICTION": "Restriction",
+            "SCOPE_INFO": "Affine la portée du type sélectionné",
+            "TYPE_RESTR": {
+                "RESTRICTION_NONE": "Aucun",
+                "RESTRICTION_TO_PARAMETER_TYPE": "Restreint au type d'un paramètre",
+                "RESTRICTION_TO_SPECIFIC_TYPE": "Restreint à un type spécifique",
+                "TYPE_RESTRICTION": "Restriction sur le type",
+                "TYPE_RESTRICTION_INFO": "Détermine si la capacité <i>rdf</i> est requise pour un type de resssource spécifique. Il est possible de sélectionner un type parmi ceux qui sont disponibles dans VocBench ou de laisser le système calculer le type à partir d'un paramètre de l'opération."
+            }
+        },
+        "CUSTOM_SERVICES": "Services personnalisés",
+        "FORCE_RELOAD": "Forcer le rechargement du filesystem",
+        "FORCE_RELOAD_INFO": "Services de rechargement (utiles lorsque les services personnalisés sont modifiés/chargés manuellement)",
+        "MESSAGES": {
+            "CANNOT_PARSE_AUTH": "Impossible de parser l'autorisation que vous essayez d'éditer ({{auth}}). Le formulaire n'a pas été restauré.",
+            "DELETE_CUSTOM_SERVICE_CONFIRM": "Vous êtes sur le point de supprimer le formulaire personnalisé sélectionné. Êtes-vous certain ?",
+            "EMPTY_PARAM_NAME": "Un paramètre fourni ne possède pas de nom",
+            "INVALID_NAME": "Le nom fourni n'est pas valide",
+            "INVALID_PARAM_NAME": "Le nom de paramètre {{param}} n'est pas valide",
+            "INVALID_PARAM_TYPE": "Le type du paramètre {{param}} n'est pas valide",
+            "INVALID_RETURN_TYPE": "Le type de retour fourni n'est pas valide",
+            "INVALID_SPARQL_QUERY": "La requête SPARQL fournie n'est pas valide",
+            "MISSING_REQUIRED_FIELD": "Le champ obligatoire {{fieldName}} est manquant"
+        },
+        "OPERATION": {
+            "AUTHORIZATION": "Autorisation",
+            "MANDATORY_PARAMETER": "Paramètre obligatoire",
+            "OPTIONAL_PARAMETER": "Paramètre optionnel",
+            "PARAMETERS": "Paramètres",
+            "PARAM_HELPER": {
+                "ALLOWED_PARAM_TYPES_ARE": "Les types de paramètres autorisés sont",
+                "ALLOWED_RETURN_TYPE": "Les types de retours autorisés dépendent de l'opération SPARQL actuelle",
+                "INTRO": [
+                    "Les paramètres correspondent à des variables portant le même nom dans la requête SPARQL. Les paramètres passés dans l'appel à un service sont liés à la variable correspondante dans la requête SPARQL. Une variable réservée est",
+                    "qui est liée par défaut au graphe de travail du projet."
+                ],
+                "LIST_T_WHERE": "où",
+                "T_TYPE_OPT2": {
+                    "BE": "est",
+                    "MIGHT_BE": "peut être",
+                    "WHERE": "où"
+                },
+                "T_TYPE_OPT2_ADDENDA": [
+                    "Dans ce cas SELECT doit retourner une seule variable plus des paramètres additionnels",
+                    "pour les attributs additionnels"
+                ],
+                "T_TYPE_OTP1": "peut être n'importe lequel des types de paramètre acceptés ci-dessus (dans ce cas SELECT doit retourner une seule variable)"
+            },
+            "RETURNS": "Retourne"
+        },
+        "SERVICE": {
+            "DESCRIPTION_INFO": "Une description de ce service personnalisé",
+            "ID_INFO": "Un identifiant unique",
+            "SERVICE_NAME": "Nom du service",
+            "SERVICE_NAME_INFO": "Le nom utilisé pour regrouper toutes les opérations définies par ce service personnalisé"
         }
     },
     "DATA": {
@@ -368,6 +451,17 @@
             "SCHEMES": "Schémas"
         }
     },
+    "DATA_MANAGEMENT": {
+        "EXPORT": {
+            "DEPLOY": {
+                "DEPLOYER": "Déployeur",
+                "DEPLOYMENT": "Déploiement",
+                "DEPLOY_TO_TRIPLE_STORE": "Déployer le triple store",
+                "SAVE_TO_FILE": "Sauvegarder vers le fichier",
+                "USE_CUSTOM_DEPLOYER": "Utiliser le déployeur personnalisé"
+            }
+        }
+    },
     "DATASETS": {
         "ACTIONS": {
             "CREATE_DATASET": "Créer un jeu de données",
@@ -476,6 +570,37 @@
             "WELCOME": "Bienvenue dans l'explorateur de jeux de données {{instanceName}} !"
         }
     },
+    "INVOKABLE_REPORTERS": {
+        "ACTIONS": {
+            "COMPILE_REPORT": "Générer le rapport",
+            "CREATE_INVOKABLE_REPORT": "Créer un rapport invocable",
+            "CREATE_SERVICE_INVOCATION": "Créer une invocation de service",
+            "DELETE_INVOKABLE_REPORT": "Supprimer un rapport invocable",
+            "EDIT_INVOKABLE_REPORT": "Éditer un rapport invocable",
+            "EDIT_SERVICE_INVOCATION": "Éditer une invocation de service"
+        },
+        "DESTINATION_PATH": "Chemin de destination",
+        "INVOCATION": {
+            "ARGUMENTS": "Arguments",
+            "CUSTOM_OPERATIONS": "Opérations personnalisées",
+            "INVALID_UPDATE_OPERATION": "Un rapporteur invocable ne peut pas définir une invocation de service qui exécute et met à jour, il peut uniquement exploiter des opérations personnalisées en lecture seule. L'opération sélectionnée n'est pas une opération de lecture, elle ne peut donc pas être utilisée.",
+            "NO_PARAM_OPERATION_INFO": "Cette opération n'a pas de paramètres, elle peut être invoquée sans aucune configuration",
+            "OPERATION": "Opération",
+            "SEE_CUSTOM_OPERATIONS_DETAILS": "Voir les détails de l'opération personnalisée",
+            "SERVICE": "Service",
+            "TEMPLATE_INFO": "Un modèle de rendu d'une section individuelle. Le modèle doit être conforme au langage de modélisation Mustache"
+        },
+        "INVOKABLE_REPORTS": "Rapports invocables",
+        "MESSAGES": {
+            "ALREADY_EXISTING_INVOKABLE_REPORTER_ID": "Un rapporteur invocable ayant le même ID existe déjà. Veuillez changer l'ID et réessayer",
+            "DELETE_INVOKABLE_REPORT_CONFIRM": "Vous êtes sur le point de supprimer le rapport invocable sélectionné. Êtes-vous certain ?",
+            "NO_PERMISSION_FOR_SERVICE_INVOCATION": "Vous n'avez pas un niveau d'autorisation vous permettant d'appeler une ou plusieurs des invocations à des service exécutés par ce rapport",
+            "NO_SERVICE_INVOCATION_PROVIDED": "Le rapport ne peut pas être compilé car il n'y a aucune invocation à un service"
+        },
+        "REPORT": "Rapport",
+        "RESULT": "Résultat",
+        "SOURCE_PATH": "Chemin source"
+    },
     "MESSAGES": {
         "ACCEPT_METADATA_CONTRIBUTION_CONFIRM": "Vous êtes sur le point de soumettre les métadonnées proposées dans le répertoire des métadonnées. Êtes-vous certain ?",
         "ADMIN_CREATED": "Le compte administrateur a été créé. Vous serez désormais automatiquement connecté avec l'adresse e-mail et le mot de passe que vous avez fournis",
@@ -502,6 +627,7 @@
         "DATA_LOADED": "Les données ont été chargées avec succès",
         "DATA_REPO_NOT_CONFIGURED": "L'entrepôt de données doit être configuré",
         "DELETE_DATASET_CONFIRM_WARN": "Attention, cette opération va supprimer le jeu de données. Voulez-vous poursuivre ?",
+        "DEPLOYER_NOT_CONFIGURED": "Le déployeur doit être configuré",
         "DIFFERENT_CONFIRM_PASSWORD": "Le mot de passe et sa confirmation sont différents.",
         "DUPLICATED_SERVER_URL_CONFIG": "Une configuration existe déjà pour le même URL de serveur",
         "EMAIL_CONFIG_CHANGED": "La configuration de l'e-mail a été modifiée, vous devez au préalable soumettre les modifications.",
@@ -524,6 +650,7 @@
         "METADATA_NOT_FOUND_PROFILE_CONFIRM": "Impossible de trouver les métadonnées du jeu de données '{{datasetName}}' dans le registre des métadonnées. Voulez-vous profiler le jeu de données ? (nécessaire pour les fonctionnalités d'alignement)",
         "METADATA_NOT_FOUND_PROFILE_DATASET": "Impossible de trouver les métadonnées du jeu de données courant dans le registre des métadonnées. Veuillez profiler le jeu de données en cliquant sur le bouton <i class=\"fas fa-chart-bar\"></i>.",
         "MISSING_MANDATORY_FIELD": "Le champ obligatoire '{{missingField}}' est manquant",
+        "MISSING_REQUIRED_PARAM": "Le paramètre obligatoire '{{parma}}' est manquant",
         "NO_CONVERSION_FORMAT_SELECTED": "L'option 'Conversion demandée' est cochée, mais aucun format n'a été sélectionné",
         "NO_METADATA_PROVIDED": "Aucune métadonné n'a été fournie",
         "NO_RESULTS_FOUND": "Aucun résultat trouvé",
@@ -658,6 +785,13 @@
             "TYPES": "Types"
         },
         "ANY_LANGUAGE": "N'importe quelle langue",
+        "CUSTOM_SEARCH": {
+            "CUSTOM_SEARCH": "Recherche personnalisée",
+            "LOAD_CUSTOM_SEARCH": "Charger les recherches personnalisées sauvegardées",
+            "NO_PARAM_SEARCH": "Cette recherche n'a pas de paramètres et peut donc être executée que telle quelle",
+            "SHOW_HIDE_SPARQL_DETAILS": "Montrer/Cacher les détaisl SPARQL concernant la recherche personnalisée",
+            "STORE_CUSTOM_SEARCH": "Recherche personnalisée sauvegardée"
+        },
         "EDIT_LANGS": {
             "ADD_LANG": "Ajouter une langue",
             "EDIT_LANGS": "Éditer les langues",
@@ -665,6 +799,11 @@
         },
         "FILTERS": "Filtres",
         "INDEX_NOT_FOUND": "Index non trouvé",
+        "MESSAGES": {
+            "MISSING_VARIABLE_BINDING": "La variable de lien '{{binding}}' est manquante",
+            "REFERENCED_SPARQL_QUERY_NOT_EXISTING": "La requête SPARQL référencée par la requête personnalisée sélectionnée n'existe plus.",
+            "STORED_PARAMETERIZED_QUERY_ALREADY_ADDED": "La requête SPARQL paramétrée '{{ref}}' est déjà dans la liste des recherches personnalisées sauvegardées. Elle ne sera pas ajoutée"
+        },
         "NO_RESOURCE_FOUND_FOR": "Aucune ressource trouvée pour",
         "ONLY_OPEN": "Uniquement les ouverts",
         "RESOURCE_NOT_REACHABLE": "Ressource non accessible",
@@ -762,10 +901,20 @@
         "USER_DETAILS": "Informations utilisateurs"
     },
     "WIDGETS": {
+        "FILE_PICKER": {
+            "BROWSE": "Parcourir",
+            "SELECT_A_FILE": "Sélectionner un fichier"
+        },
         "SETTINGS_RENDERER": {
             "ADD_OPTIONAL_VALUE": "Ajouter une valeur optionnelle",
             "DELETE_OPTIONAL_VALUE": "Supprimer une valeur optionnelle",
             "UNKNOWN_TYPE_WARN": "Ce paramètre possède une type ({{propTypeName}}) inconnu. La valeur saisie sera interprétée comme une valeur JSON de bas niveau"
+        },
+        "STORAGE_MGR": {
+            "CREATE_DIR": "Créer un répertoire",
+            "LEVEL_UP": "Mettre à niveau",
+            "STORAGE_MANAGER": "Gestionnaire de sauvegarde",
+            "UPLOAD_FILE": "Charger un fichier "
         }
     }
 }
