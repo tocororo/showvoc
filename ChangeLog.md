@@ -9,6 +9,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
   * Implemented the facet-based visualization of datasets
   * Introduced Customizable Reports for internal users
   * Introduced Custom Services for internal users
+  * Implemented Custom Search
   * Implemented storage of SPARQL queries (for authenticated user only)
   * Added parameterized SPARQL queries (for authenticated user only)
   * Added statistical charts in Metadata page
