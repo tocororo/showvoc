@@ -1,4 +1,5 @@
 import Prolog from 'jsprolog';
+import { Scope } from '../models/Plugins';
 import { AnnotatedValue, Resource, Value } from '../models/Resources';
 import { User } from "../models/User";
 import { SVContext } from './SVContext';
@@ -50,6 +51,26 @@ export class AuthorizationEvaluator {
     public static isAuthorized(action: STActionsEnum, resource?: AnnotatedValue<Resource>, langValue?: AnnotatedValue<Value>): boolean {
         let goal: string = this.actionAuthGoalMap[action]; //retrieves the action goal and call isGaolAuthorized
         return AuthorizationEvaluator.isGaolAuthorized(goal, resource, langValue);
+    }
+
+    public static isSettingsActionAuthorized(scope: Scope, crud: string) {
+        if (scope == Scope.SYSTEM) {
+            return SVContext.getLoggedUser().isSuperUser(false);
+        } else if (scope == Scope.PROJECT) {
+            if (crud == "R") { //only read
+                return true; //PROJECT settings can be read by any user (e.g. project languages)
+            } else {
+                return AuthorizationEvaluator.isGaolAuthorized('auth(pm(project, _), "' + crud + '").');
+            }
+        } else if (scope == Scope.PROJECT_GROUP) {
+            if (crud == "R") { //only read
+                return true; //PROJECT_GROUP settings can be read by any user (e.g. group limitations)
+            } else {
+                return AuthorizationEvaluator.isGaolAuthorized('auth(pm(project, group), "' + crud + '").');
+            }
+        } else { //USER, USER_PROJECT
+            return true; //it is enough that the user is logged
+        }
     }
 
     /**

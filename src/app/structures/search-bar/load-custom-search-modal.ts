@@ -6,6 +6,8 @@ import { LoadConfigurationModalReturnData } from 'src/app/modal-dialogs/shared-m
 import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared-modal.service';
 import { SearchServices } from 'src/app/services/search.service';
 import { SettingsServices } from 'src/app/services/settings.service';
+import { AuthorizationEvaluator } from 'src/app/utils/AuthorizationEvaluator';
+import { SVContext } from 'src/app/utils/SVContext';
 import { ConfigurationComponents, Reference } from "../../models/Configuration";
 import { Scope, Settings } from "../../models/Plugins";
 
@@ -23,17 +25,32 @@ export class LoadCustomSearchModal {
     references: Reference[];
     selectedRef: Reference;
 
+    isAuthenticatedUser: boolean;
+    isUpdateAuthorized: boolean;
+    isDeleteAuthorized: boolean;
+
     constructor(public activeModal: NgbActiveModal, private settingsService: SettingsServices, private searchService: SearchServices,
         private basicModals: BasicModalsServices, private sharedModals: SharedModalsServices) { }
 
     ngOnInit() {
+
+        this.isAuthenticatedUser = SVContext.getLoggedUser().isSuperUser(false);
         this.settingsService.getSettingsScopes(ConfigurationComponents.CUSTOM_SEARCH_STORE).subscribe(
             scopes => {
                 this.scopes = scopes;
+                if (!this.isAuthenticatedUser) { 
+                    //visitor user can only see system/project search (it wouldn't make sense to allow to see user level search if it's not even possible to create them)
+                    this.scopes = this.scopes.filter(s => s == Scope.SYSTEM || s == Scope.PROJECT);
+                }
                 this.selectedScope = this.scopes[0];
-                this.initReferences();
+                this.onScopeChanged();
             }
         );
+    }
+
+    onScopeChanged() {
+        this.initReferences();
+        this.initAuthorization();
     }
 
     initReferences() {
@@ -51,6 +68,11 @@ export class LoadCustomSearchModal {
                 }
             }
         );
+    }
+
+    private initAuthorization() {
+        this.isUpdateAuthorized = AuthorizationEvaluator.isSettingsActionAuthorized(this.selectedScope, "U");
+        this.isDeleteAuthorized = AuthorizationEvaluator.isSettingsActionAuthorized(this.selectedScope, "D");
     }
 
     add() {
