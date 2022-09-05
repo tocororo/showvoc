@@ -1,0 +1,58 @@
+<div class="card vbox blockingDivHost">
+    <div class="card-header d-flex align-items-center">
+        <label style="flex: 1;">{{'METADATA.LEXICALIZATION_SET.EMBEDDED_LEXICALIZATION_SETS'|translate}}:</label>
+        
+        <div *ngIf="dataset.nature != 'PROJECT'" class="btn-group">
+            <div *ngIf="addEmbeddedLexicalizationSetAuthorized" class="btn-group" [title]="'METADATA.METADATA_REGISTRY.ACTIONS.ADD_EMBEDDED_LEXICALIZATION_SET'|translate" ngbDropdown>
+                <button class="btn btn-sm btn-light dropdown-toggle dropdown-no-arrow" data-toggle="dropdown" ngbDropdownToggle [disabled]="assessing">
+                    <span *ngIf="!assessing" class="fas fa-plus"></span>
+                    <div *ngIf="assessing" class="spinner-border spinner-border-sm"></div>
+                </button>
+                <div class="dropdown-menu float-right" ngbDropdownMenu>
+                    <a (click)="addEmbeddedLexicalizationSet()" class="dropdown-item text-nowrap">
+                        {{'METADATA.METADATA_REGISTRY.ACTIONS.ADD_EMBEDDED_LEXICALIZATION_SET'|translate}}
+                    </a>
+                    <a (click)="assessLexicalizationModel()" class="dropdown-item text-nowrap" [ngClass]="{disabled : lexicalizationSets?.length != 0}">
+                        {{'METADATA.METADATA_REGISTRY.ACTIONS.ASSESS_LEXICALIZATION_MODEL'|translate}}
+                    </a>
+                </div>
+            </div>
+            <button *ngIf="removeEmbeddedLexicalizationSetAuthorized" class="btn btn-sm btn-light" [title]="'METADATA.METADATA_REGISTRY.ACTIONS.DELETE_EMBEDDED_LEXICALIZATION_SET'|translate" 
+                (click)="deleteEmbeddedLexicalizationSet()" [disabled]="!selectedLexicalizationSet">
+                <span class="fas fa-minus"></span>
+            </button>
+            <button *ngIf="removeEmbeddedLexicalizationSetAuthorized" class="btn btn-sm btn-light" [title]="'METADATA.METADATA_REGISTRY.ACTIONS.DELETE_ALL_EMBEDDED_LEXICALIZATION_SET'|translate" 
+                (click)="deleteAllEmbeddedLexicalizationSet()" [disabled]="lexicalizationSets?.length == 0 || deleting">
+                <span *ngIf="!deleting" class="far fa-trash-alt"></span>
+                <div *ngIf="deleting" class="spinner-border spinner-border-sm"></div>
+            </button>
+        </div>
+
+        <div class="ml-1" ngbDropdown autoClose="outside">
+            <button data-toggle="dropdown" ngbDropdownToggle class="btn btn-sm dropdown-toggle"></button>
+            <div ngbDropdownMenu class="dropdown-menu" ngbDropdownMenu>
+                <button class="dropdown-item" (click)="sortLexicalizationSets('language')">
+                    <span *ngIf="lexSetSort != 'lang_desc'" class="fas fa-sort-alpha-down"></span>
+                    <span *ngIf="lexSetSort == 'lang_desc'" class="fas fa-sort-alpha-up"></span>
+                    {{'COMMONS.ACTIONS.SORT_BY_X'|translate}} {{'COMMONS.LANGUAGE.LANGUAGE'|translate}}
+                    <span *ngIf="lexSetSort == 'lang_asc' || lexSetSort == 'lang_desc'" class="fas fa-check ml-1"></span>
+                </button>
+                <button class="dropdown-item" (click)="sortLexicalizationSets('lexicalizations')">
+                    <span *ngIf="lexSetSort != 'lex_desc'" class="fas fa-sort-numeric-down"></span>
+                    <span *ngIf="lexSetSort == 'lex_desc'" class="fas fa-sort-numeric-up"></span>
+                    {{'COMMONS.ACTIONS.SORT_BY_X'|translate}} {{'METADATA.LEXICALIZATION_SET.LEXICALIZATIONS'|translate}}
+                    <span *ngIf="lexSetSort == 'lex_asc' || lexSetSort == 'lex_desc'" class="fas fa-check ml-1"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body scrollableContainer">
+        <div *ngIf="loading && !lexicalizationSets" class="spinner-border spinner-border-sm"></div>
+        <lexicalization-set-metadata *ngFor="let ls of lexicalizationSets" class="mb-2"
+            [lexicalizationSetMetadata]="ls" [dataset]="dataset"
+            (click)="selectLexicalizationSet(ls)" [ngClass]="{ activePanel : ls == selectedLexicalizationSet }"
+            [disabled]="!updateEmbeddedLexicalizationSetAuthorized || dataset.nature == 'PROJECT'">
+        </lexicalization-set-metadata>
+    </div>
+
+</div>

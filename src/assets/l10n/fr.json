@@ -179,6 +179,7 @@
             "LANGUAGES": "Langues",
             "NO_LANG_INFO": "Aucune langue sélectionnée équivaut implicitement à toutes les langues"
         },
+        "LEGEND": "Légende",
         "LEVEL": "Niveau",
         "MANDATORY_FIELD": "Champ obligatoire",
         "NAME": "Nom",
@@ -483,6 +484,7 @@
         "BROWSE_DATASETS": "Explorer le jeu de données de {{instanceName}}",
         "DATASET": "Jeu de données",
         "DATASETS": "Jeux de données",
+        "DATASET_CATALOG": "Catalogue du jeu de données",
         "FILTERS": {
             "DATASET_TYPE": "Type de jeu de données",
             "LEXICONS": "Lexiques",
@@ -639,6 +641,8 @@
         "INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET": "La création d'un index n'est pas disponible pour un jeu de données fermé",
         "INSERT_EMAIL_FOR_RESET_PASSWORD": "Indiquez l'adresse électronique de votre compte. Vous recevrez un e-mail comportant les instructions de réinitialisation de votre mot de passe",
         "INVALID_EMAIL": "{{email}} n'est pas une adresse électronique valide.",
+        "INVALID_IRI": "{{iri}} n'est pas un IRI valide",
+        "INVALID_LANG_TAG": "{{lang}} n'est pas une étiquette de langue valide",
         "INVALID_SEARCH_STRING": "Veuillez saisir une chaîne de caractères valide pour la recherche",
         "LANGUAGE_ALREAY_IN_LIST": "La langue '{{lang}}' figure déjà dans la liste.",
         "LANGUAGE_DUPLICATED": "La langue '{{lang}}' figure en double dans la liste.",
@@ -692,6 +696,28 @@
         "VB_CONFIG_TEST_SUCCESS": "La configuration a été testée avec succès.",
         "X_SEARCH_RESOURCES_FOUND": "{{results}} resultats trouvés",
         "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "Vous allez recevoir un e-mail contenant les informations de connexion à VocBench."
+    },
+    "METADATA": {
+        "METADATA_REGISTRY": {
+            "ACTIONS": {
+                "ADD_EMBEDDED_LEXICALIZATION_SET": "Ajouter un jeu de lexicalisation intégré",
+                "ASSESS_LEXICALIZATION_MODEL": "Évaluer le modèle de lexicalisation",
+                "DELETE_ALL_EMBEDDED_LEXICALIZATION_SET": "Supprimer tous les jeux de lexicalisation intégrés",
+                "DELETE_EMBEDDED_LEXICALIZATION_SET": "Supprimer le jeu de lexicalisation intégré",
+                "DISCOVER_DATASET": "Trouver un jeu de données"
+            },
+            "DATASET_METADATA": {
+                "DEREFERENCEABLE": "Déréférençable",
+                "DEREFERENCIATION_SYSTEM": "Système de déréférencement",
+                "IDENTITY": "Identité",
+                "ISSUED": "Publié",
+                "MODIFIED": "Modifié",
+                "NO_AGGREGATION": "Aucune agrégation",
+                "NO_AGGREGATION_INFO": "Si cette option est cochés, cela signifie que l'agrégation pourrait être supportée, mais que son support est insuffisant pour les objectifs de VocBench",
+                "VERSION_INFO": "Information de version"
+            },
+            "METADATA_REGISTRY": "Registre des métadonnées"
+        }
     },
     "MODELS": {
         "PROJECT": {

@@ -74,12 +74,12 @@ export class Target {
 }
 
 export class DatasetMetadata {
-    public identity: string;
-    public uriSpace: string;
-    public title: string;
-    public dereferenciationSystem: string;
-    public sparqlEndpointMetadata: SparqlEndpointMetadata;
-    public versionInfo: string;
+    identity: string;
+    uriSpace: string;
+    title: string;
+    dereferenciationSystem: string;
+    sparqlEndpointMetadata: SparqlEndpointMetadata;
+    versionInfo: string;
 
     public static deserialize(datasetMetadataJson: any): DatasetMetadata {
         let sparqlEndpointMetadata: SparqlEndpointMetadata = SparqlEndpointMetadata.deserialize(datasetMetadataJson.sparqlEndpointMetadata);
@@ -94,13 +94,93 @@ export class DatasetMetadata {
     }
 }
 
+export class CatalogRecord2 {
+    identity: IRI;
+    dataset: DatasetMetadata2;
+    issued: Date;
+    modified?: Date;
+
+    public static parse(catalogRecordJson: any): CatalogRecord2 {
+        let record = new CatalogRecord2();
+        record.identity = new IRI(catalogRecordJson.identity);
+        record.dataset = DatasetMetadata2.parse(catalogRecordJson.dataset);
+        record.issued = new Date(catalogRecordJson.issued);
+        record.modified = catalogRecordJson.modified ? new Date(catalogRecordJson.modified) : null;
+        return record;
+    }
+}
+
+export class DatasetMetadata2 {
+
+    identity: IRI;
+    uriSpace: string;
+    otherURISpaces: string[];
+    nature: DatasetNature;
+    titles: Literal[];
+    projectName?: string;
+    descriptions: Literal[];
+    role: DatasetRole;
+    versionInfo: string;
+    versionNotes: string;
+    dereferenciationSystem?: string;
+    sparqlEndpoint?: SparqlEndpointMetadata;
+
+    public static parse(datasetMetadataJson: any): DatasetMetadata2 {
+        let dataset = new DatasetMetadata2();
+        dataset.identity = new IRI(datasetMetadataJson.identity);
+        dataset.uriSpace = datasetMetadataJson.uriSpace;
+        dataset.otherURISpaces = datasetMetadataJson.otherURISpaces;
+        dataset.nature = datasetMetadataJson.nature;
+        dataset.titles = datasetMetadataJson.titles.map((t: string) => NTriplesUtil.parseLiteral(t));
+        dataset.projectName = datasetMetadataJson.projectName;
+        dataset.descriptions = datasetMetadataJson.descriptions.map((d: string) => NTriplesUtil.parseLiteral(d));
+        dataset.role = datasetMetadataJson.role;
+        dataset.versionInfo = datasetMetadataJson.versionInfo;
+        dataset.versionNotes = datasetMetadataJson.versionNotes;
+        dataset.sparqlEndpoint = SparqlEndpointMetadata.deserialize(datasetMetadataJson.sparqlEndpoint);
+        dataset.dereferenciationSystem = datasetMetadataJson.dereferenciationSystem;
+        return dataset;
+    }
+}
+
+export enum DatasetNature {
+    ABSTRACT = "ABSTRACT",
+    PROJECT = "PROJECT",
+    SPARQL_ENDPOINT = "SPARQL_ENDPOINT",
+    RDF4J_REPOSITORY = "RDF4J_REPOSITORY",
+    GRAPHDB_REPOSITORY = "GRAPHDB_REPOSITORY",
+    MIX = "MIX"
+}
+
+export enum DatasetRole {
+    ROOT = "ROOT",
+    VERSION = "VERSION",
+    MASTER = "MASTER",
+    LOD = "LOD"
+}
+
+export interface Distribution {
+    nature: IRI;
+    //according the nature, the following are required
+    identity?: string;
+    sparqlEndpoint?: string;
+    projectName?: string;
+}
+
+export interface AbstractDatasetAttachment {
+    abstractDataset: string;
+    relation: IRI;
+    versionInfo?: string;
+    versionNotes?: Literal;
+}
+
 export class SparqlEndpointMetadata {
     id: string;
-    limitations: string[];
+    limitations?: string[];
     public static deserialize(metadataJson: any): SparqlEndpointMetadata {
         if (metadataJson) {
             return {
-                id: NTriplesUtil.parseIRI(metadataJson['@id']).getIRI(),
+                id: metadataJson['@id'],
                 limitations: metadataJson.limitations
             };
         } else {

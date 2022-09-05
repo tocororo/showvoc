@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DatasetMetadata, LexicalizationSetMetadata, LinksetMetadata, ProjectDatasetMapping, Target } from '../models/Metadata';
+import { AbstractDatasetAttachment, CatalogRecord2, DatasetMetadata, Distribution, LexicalizationSetMetadata, LinksetMetadata, ProjectDatasetMapping, Target } from '../models/Metadata';
 import { Project } from '../models/Project';
 import { AnnotatedValue, IRI, Literal, ResourcePosition } from '../models/Resources';
 import { STRequestOptions, STRequestParams } from '../utils/HttpManager';
@@ -18,12 +18,275 @@ export class MetadataRegistryServices {
     /**
      * 
      * @param dataset 
+     * @param lexicalizationModel 
+     * @param language 
+     * @param lexicalizationSet 
+     * @param lexiconDataset 
+     * @param references 
+     * @param lexicalEntries 
+     * @param lexicalizations 
+     * @param percentage 
+     * @param avgNumOfLexicalizations 
+     */
+    addEmbeddedLexicalizationSet(dataset: IRI, lexicalizationModel: IRI, language: string,
+        lexicalizationSet?: IRI, lexiconDataset?: IRI, references?: number, lexicalEntries?: number,
+        lexicalizations?: number, percentage?: number, avgNumOfLexicalizations?: number) {
+        let params: STRequestParams = {
+            dataset: dataset,
+            lexicalizationModel: lexicalizationModel,
+            language: language
+        };
+        if (lexicalizationSet != null) {
+            params.lexicalizationSet = lexicalizationSet;
+        }
+        if (lexiconDataset != null) {
+            params.lexiconDataset = lexiconDataset;
+        }
+        if (references != null) {
+            params.references = references;
+        }
+        if (lexicalEntries != null) {
+            params.lexicalEntries = lexicalEntries;
+        }
+        if (lexicalizations != null) {
+            params.lexicalizations = lexicalizations;
+        }
+        if (percentage != null) {
+            params.percentage = percentage;
+        }
+        if (avgNumOfLexicalizations != null) {
+            params.avgNumOfLexicalizations = avgNumOfLexicalizations;
+        }
+        return this.httpMgr.doPost(this.serviceName, "addEmbeddedLexicalizationSet", params);
+    }
+
+    /**
+     * 
+     * @param lexicalizationSet 
+     */
+    deleteEmbeddedLexicalizationSet(lexicalizationSet: IRI) {
+        let params: STRequestParams = {
+            lexicalizationSet: lexicalizationSet
+        };
+        return this.httpMgr.doPost(this.serviceName, "deleteEmbeddedLexicalizationSet", params);
+    }
+
+    /**
+     * 
+     * @param dataset 
      */
     getEmbeddedLexicalizationSets(dataset: IRI): Observable<LexicalizationSetMetadata[]> {
         let params: STRequestParams = {
             dataset: dataset
         };
         return this.httpMgr.doGet(this.serviceName, "getEmbeddedLexicalizationSets", params);
+    }
+
+    setTitle(dataset: IRI, title: Literal) {
+        let params: STRequestParams = {
+            dataset: dataset,
+            title: title
+        };
+        return this.httpMgr.doPost(this.serviceName, "setTitle", params);
+    }
+
+    deleteTitle(dataset: IRI, title?: Literal) {
+        let params: STRequestParams = {
+            dataset: dataset,
+            title: title
+        };
+        return this.httpMgr.doPost(this.serviceName, "deleteTitle", params);
+    }
+
+    setDescription(dataset: IRI, description: Literal) {
+        let params: STRequestParams = {
+            dataset: dataset,
+            description: description
+        };
+        return this.httpMgr.doPost(this.serviceName, "setDescription", params);
+    }
+
+    deleteDescription(dataset: IRI, description?: Literal) {
+        let params: STRequestParams = {
+            dataset: dataset,
+            description: description
+        };
+        return this.httpMgr.doPost(this.serviceName, "deleteDescription", params);
+    }
+
+    /**
+     * Sets whether a dataset is derefereanceable or not. If value is true, then sets
+     * mdreg:standardDereferenciation and if false sets mdreg:noDereferenciation. If
+     * is not passed, the dereferenciation system is left unspecified.
+     * @param dataset 
+     * @param value 
+     */
+    setDereferenciability(dataset: IRI, value?: boolean) {
+        let params: STRequestParams = {
+            dataset: dataset,
+        };
+        if (value != null) {
+            params.value = value;
+        }
+        return this.httpMgr.doPost(this.serviceName, "setDereferenciability", params);
+    }
+
+    /**
+     * Sets the SPARQL endpoint of a dataset.
+     * @param dataset 
+     * @param endpoint If null the endpoint is left unspecified
+     */
+    setSPARQLEndpoint(dataset: IRI, endpoint?: IRI) {
+        let params: STRequestParams = {
+            dataset: dataset,
+        };
+        if (endpoint != null) {
+            params.endpoint = endpoint;
+        }
+        return this.httpMgr.doPost(this.serviceName, "setSPARQLEndpoint", params);
+    }
+
+    /**
+     * 
+     * @param endpoint 
+     * @param limitation 
+     */
+    setSPARQLEndpointLimitation(endpoint: IRI, limitation?: IRI) {
+        let params: STRequestParams = {
+            endpoint: endpoint,
+        };
+        if (endpoint != null) {
+            params.limitation = limitation;
+        }
+        return this.httpMgr.doPost(this.serviceName, "setSPARQLEndpointLimitation", params);
+    }
+
+    /**
+     * 
+     * @param endpoint 
+     * @param limitation 
+     */
+    removeSPARQLEndpointLimitation(endpoint: IRI, limitation?: IRI) {
+        let params: STRequestParams = {
+            endpoint: endpoint,
+        };
+        if (endpoint != null) {
+            params.limitation = limitation;
+        }
+        return this.httpMgr.doPost(this.serviceName, "removeSPARQLEndpointLimitation", params);
+    }
+
+    /**
+     * Deletes a catalog record
+     * @param catalogRecord 
+     */
+    deleteCatalogRecord(catalogRecord: IRI) {
+        let params: STRequestParams = {
+            catalogRecord: catalogRecord,
+        };
+        return this.httpMgr.doPost(this.serviceName, "deleteCatalogRecord", params);
+    }
+
+    /**
+     * 
+     * @param dataset 
+     */
+    getDatasetMetadata(dataset: IRI): Observable<DatasetMetadata> {
+        let params: STRequestParams = {
+            dataset: dataset
+        };
+        return this.httpMgr.doGet(this.serviceName, "getDatasetMetadata", params).pipe(
+            map(stResp => {
+                return DatasetMetadata.deserialize(stResp);
+            })
+        );
+    }
+
+    /**
+     * Consults the dataset (in the best possible way going from more to less noble availabilities:
+     * localProject --> SPARQLendpoint --> http-dereferenciation) in order to assess its lexicalization model.
+     * @param dataset 
+     */
+    assessLexicalizationModel(dataset: IRI) {
+        let params: STRequestParams = {
+            dataset: dataset,
+        };
+        let options: STRequestOptions = new STRequestOptions({
+            errorHandlers: [
+                { className: "it.uniroma2.art.maple.orchestration.AssessmentException", action: "warning" },
+            ]
+        });
+        return this.httpMgr.doPost(this.serviceName, "assessLexicalizationModel", params, options);
+    }
+
+    /**
+     * 
+     * @param projects 
+     */
+    findDatasetForProjects(projects: Project[]): Observable<ProjectDatasetMapping> {
+        let params: STRequestParams = {
+            projects: projects.map(p => p.getName())
+        };
+        return this.httpMgr.doGet(this.serviceName, "findDatasetForProjects", params).pipe(
+            map(stResp => {
+                let mappings: ProjectDatasetMapping = {};
+                for (let key in stResp) {
+                    mappings[key] = ResourceDeserializer.createIRI(stResp[key]);
+                }
+                return mappings;
+            })
+        );
+    }
+
+    /**
+     * Find a dataset matching the given IRI.
+     * @param iri 
+     */
+    findDataset(iri: IRI): Observable<ResourcePosition> {
+        let params: STRequestParams = {
+            iri: iri,
+        };
+        return this.httpMgr.doGet(this.serviceName, "findDataset", params).pipe(
+            map(resp => {
+                return ResourcePosition.deserialize(resp);
+            })
+        );
+    }
+
+    /**
+     * Discover the metadata for a dataset given an IRI. If discovery is unsuccessful, an exception is thrown.
+     * Returns the id of the metadataDataset found.
+     * @param iri 
+     */
+    discoverDataset(iri: IRI): Observable<AnnotatedValue<IRI>> {
+        let params: STRequestParams = {
+            iri: iri,
+        };
+        return this.httpMgr.doPost(this.serviceName, "discoverDataset", params).pipe(
+            map(stResp => {
+                return ResourceDeserializer.createIRI(stResp);
+            })
+        );
+    }
+
+    /**
+     * 
+     * @param iri 
+     */
+    discoverDatasetMetadata(iri: IRI): Observable<DatasetMetadata> {
+        let params: STRequestParams = {
+            iri: iri
+        };
+        let options: STRequestOptions = new STRequestOptions({
+            errorHandlers: [{
+                className: "it.uniroma2.art.semanticturkey.exceptions.DeniedOperationException", action: 'skip'
+            }]
+        });
+        return this.httpMgr.doGet(this.serviceName, "discoverDatasetMetadata", params, options).pipe(
+            map(stResp => {
+                return DatasetMetadata.deserialize(stResp);
+            })
+        );
     }
 
     /**
@@ -79,91 +342,6 @@ export class MetadataRegistryServices {
 
     /**
      * 
-     * @param projects 
-     */
-    findDatasetForProjects(projects: Project[]): Observable<ProjectDatasetMapping> {
-        let params: STRequestParams = {
-            projects: projects.map(p => p.getName())
-        };
-        return this.httpMgr.doGet(this.serviceName, "findDatasetForProjects", params).pipe(
-            map(stResp => {
-                let mappings: ProjectDatasetMapping = {};
-                for (let key in stResp) {
-                    mappings[key] = ResourceDeserializer.createIRI(stResp[key]);
-                }
-                return mappings;
-            })
-        );
-    }
-
-    /**
-     * Find a dataset matching the given IRI.
-     * @param iri 
-     */
-    findDataset(iri: IRI): Observable<ResourcePosition> {
-        let params: STRequestParams = {
-            iri: iri,
-        };
-        return this.httpMgr.doGet(this.serviceName, "findDataset", params).pipe(
-            map(resp => {
-                return ResourcePosition.deserialize(resp);
-            })
-        );
-    }
-
-    /**
-     * 
-     * @param dataset 
-     */
-    getDatasetMetadata(dataset: IRI): Observable<DatasetMetadata> {
-        let params: STRequestParams = {
-            dataset: dataset
-        };
-        return this.httpMgr.doGet(this.serviceName, "getDatasetMetadata", params).pipe(
-            map(stResp => {
-                return DatasetMetadata.deserialize(stResp);
-            })
-        );
-    }
-
-    /**
-     * Discover the metadata for a dataset given an IRI. If discovery is unsuccessful, an exception is thrown.
-     * Returns the id of the metadataDataset found.
-     * @param iri 
-     */
-    discoverDataset(iri: IRI): Observable<AnnotatedValue<IRI>> {
-        let params: STRequestParams = {
-            iri: iri,
-        };
-        return this.httpMgr.doPost(this.serviceName, "discoverDataset", params).pipe(
-            map(stResp => {
-                return ResourceDeserializer.createIRI(stResp);
-            })
-        );
-    }
-
-    /**
-     * 
-     * @param iri 
-     */
-    discoverDatasetMetadata(iri: IRI): Observable<DatasetMetadata> {
-        let params: STRequestParams = {
-            iri: iri
-        };
-        let options: STRequestOptions = new STRequestOptions({
-            errorHandlers: [{
-                className: "it.uniroma2.art.semanticturkey.exceptions.DeniedOperationException", action: 'skip'
-            }]
-        });
-        return this.httpMgr.doGet(this.serviceName, "discoverDatasetMetadata", params, options).pipe(
-            map(stResp => {
-                return DatasetMetadata.deserialize(stResp);
-            })
-        );
-    }
-
-    /**
-     * 
      * @param dataset 
      */
     getClassPartitions(dataset: IRI): Observable<{ [iri: string]: number }> {
@@ -171,6 +349,98 @@ export class MetadataRegistryServices {
             dataset: dataset
         };
         return this.httpMgr.doGet(this.serviceName, "getClassPartitions", params);
+    }
+
+
+
+    createConcreteDataset(datasetLocalName: string, uriSpace: string, title?: Literal, description?: Literal,
+        dereferenceable?: boolean, distribution?: Distribution, abstractDatasetAttachment?: AbstractDatasetAttachment): Observable<IRI> {
+        let params: STRequestParams = {
+            datasetLocalName: datasetLocalName,
+            uriSpace: uriSpace,
+            title: title,
+            description: description,
+            dereferenceable: dereferenceable,
+            distribution: new Map([
+                ["nature", distribution.nature.getIRI()],
+                ["identity", distribution.identity],
+                ["sparqlEndpoint", distribution.sparqlEndpoint],
+                ["projectName", distribution.projectName]
+            ]),
+            abstractDatasetAttachment: abstractDatasetAttachment ? this.getAbstractDatasetAttachmentAsParam(abstractDatasetAttachment) : null
+        };
+        return this.httpMgr.doPost(this.serviceName, "createConcreteDataset", params);
+    }
+
+
+    listRootDatasets(): Observable<CatalogRecord2[]> {
+        let params: STRequestParams = {};
+        return this.httpMgr.doGet(this.serviceName, "listRootDatasets", params).pipe(
+            map(resp => {
+                let records: CatalogRecord2[] = resp.map((r: any) => CatalogRecord2.parse(r));
+                return records;
+            })
+        );
+    }
+
+    listConnectedDatasets(abstractDataset: IRI): Observable<CatalogRecord2[]> {
+        let params: STRequestParams = {
+            abstractDataset: abstractDataset,
+        };
+        return this.httpMgr.doGet(this.serviceName, "listConnectedDatasets", params).pipe(
+            map(resp => {
+                let records: CatalogRecord2[] = resp.map((r: any) => CatalogRecord2.parse(r));
+                return records;
+            })
+        );
+    }
+
+    connectToAbstractDataset(dataset: IRI, abstractDatasetAttachment: AbstractDatasetAttachment) {
+        let params: STRequestParams = {
+            dataset: dataset,
+            abstractDatasetAttachment: this.getAbstractDatasetAttachmentAsParam(abstractDatasetAttachment),
+        };
+        return this.httpMgr.doPost(this.serviceName, "connectToAbstractDataset", params);
+    }
+
+
+    disconnectFromAbstractDataset(dataset: IRI, abstractDataset: IRI) {
+        let params: STRequestParams = {
+            dataset: dataset,
+            abstractDataset: abstractDataset,
+        };
+        let options: STRequestOptions = new STRequestOptions({
+            errorHandlers: [
+                { className: "java.lang.IllegalArgumentException", action: "warning" },
+            ]
+        });
+        return this.httpMgr.doPost(this.serviceName, "disconnectFromAbstractDataset", params, options);
+    }
+
+    spawnNewAbstractDataset(dataset1: IRI, abstractDatasetAttachment1: AbstractDatasetAttachment,
+        dataset2: IRI, abstractDatasetAttachment2: AbstractDatasetAttachment,
+        datasetLocalName: string, uriSpace: string, title?: Literal, description?: Literal) {
+        let params: STRequestParams = {
+            dataset1: dataset1,
+            abstractDatasetAttachment1: this.getAbstractDatasetAttachmentAsParam(abstractDatasetAttachment1),
+            dataset2: dataset2,
+            abstractDatasetAttachment2: this.getAbstractDatasetAttachmentAsParam(abstractDatasetAttachment2),
+            datasetLocalName: datasetLocalName,
+            uriSpace: uriSpace,
+            title: title,
+            description: description,
+        };
+        return this.httpMgr.doPost(this.serviceName, "spawnNewAbstractDataset", params);
+
+    }
+
+    private getAbstractDatasetAttachmentAsParam(abstractDatasetAttachment: AbstractDatasetAttachment): Map<string, string> {
+        return new Map([
+            ["abstractDataset", abstractDatasetAttachment.abstractDataset],
+            ["relation", abstractDatasetAttachment.relation.getIRI()],
+            ["versionInfo", abstractDatasetAttachment.versionInfo],
+            ["versionNotes", abstractDatasetAttachment.versionNotes ? abstractDatasetAttachment.versionNotes.toNT() : null]
+        ]);
     }
 
 }

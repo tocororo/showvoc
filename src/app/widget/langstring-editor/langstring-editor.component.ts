@@ -16,20 +16,26 @@ export class LangStringEditorComponent implements ControlValueAccessor, OnInit {
 
     @Input() disabled: boolean = false;
     @Input() lang: Language; //language (can be initially set)
+    @Input() size: string;
+
+    inputCls: string = "";
+
     stringValue: string; // string value of the literal
 
     private literalValue: Literal; // the rdf:langString being edited (the model) 
 
-    public constructor(private sharedModals: SharedModalsServices) {
-    }
+    public constructor(private sharedModals: SharedModalsServices) {}
 
     ngOnInit(): void {
+        if (this.size != null && (this.size == "xs" || this.size == "sm" || this.size == "lg")) {
+            this.inputCls = " form-control-" + this.size;
+        }
         this.initLang();
     }
 
     initLang() {
         if (this.lang == null) {
-            this.lang = Languages.getLanguageFromTag(Languages.priorityLangs[0]);
+            this.lang = Languages.NO_LANG;
         }
     }
 
@@ -75,7 +81,9 @@ export class LangStringEditorComponent implements ControlValueAccessor, OnInit {
 
         if (this.literalValue) {
             this.stringValue = this.literalValue.getLabel();
-            this.lang = Languages.getLanguageFromTag(this.literalValue.getLanguage());
+            if (this.literalValue.getLanguage() != null) { //prevent error if literal without lang
+                this.lang = Languages.getLanguageFromTag(this.literalValue.getLanguage());
+            }
         } else {
             this.stringValue = null;
         }

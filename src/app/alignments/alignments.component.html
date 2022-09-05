@@ -26,7 +26,7 @@
     </div>
 
     <div *ngIf="activeAspect == aspectTable" class="container vbox">
-        <alignments-table *ngIf="datasetIRI" [sourceProject]="selectedSourceProject" [dataset]="datasetIRI"></alignments-table>
+        <alignments-table *ngIf="datasetIRI" [sourceProject]="selectedSourceProject" [dataset]="datasetIRI.getValue()"></alignments-table>
     </div>
 
     <div *ngIf="activeAspect == aspectGraph" class="container-fluid vbox">

@@ -1,8 +1,9 @@
-<div class="container my-3">
+<div class="container-fluid my-3">
 
     <div *ngIf="isAdmin" class="mb-2">
         <div class="btn-group btn-group-sm">
             <button class="btn btn-outline-info" [routerLink]="['projects']" routerLinkActive="active">{{'DATASETS.DATASETS'|translate}}</button>
+            <button class="btn btn-outline-info" [routerLink]="['mdr']" routerLinkActive="active">{{'METADATA.METADATA_REGISTRY.METADATA_REGISTRY'|translate}}</button>
             <button class="btn btn-outline-info" [routerLink]="['http-res']" routerLinkActive="active">{{'Http resolution'|translate}}</button>
             <button class="btn btn-outline-info" [routerLink]="['contributions']" routerLinkActive="active">{{'CONTRIBUTIONS.CONTRIBUTIONS'|translate}}</button>
         </div>

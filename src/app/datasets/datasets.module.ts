@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlignmentsModule } from '../alignments/alignments.module';
+import { MetadataRegistryModule } from '../metadata-registry/metadata-registry.module';
 import { BasicModalsServices } from '../modal-dialogs/basic-modals/basic-modals.service';
 import { ResourceViewModule } from '../resource-view/resource-view.module';
 import { StructuresModule } from '../structures/structures.module';
@@ -53,6 +54,7 @@ import { SparqlComponent } from './sparql/sparql.component';
         CommonModule,
         DragDropModule,
         FormsModule,
+        MetadataRegistryModule,
         NgbDropdownModule,
         NgbNavModule,
         ResourceViewModule,

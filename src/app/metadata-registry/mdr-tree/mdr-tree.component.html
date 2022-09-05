@@ -1,0 +1,21 @@
+<div class="vbox overflow-auto">
+    <table class="table table-sm table-borderless">
+        <colgroup>
+            <col class="narrowCol">
+            <col>
+            <col class="modifiedCol">
+            <col class="issuedCol">
+        </colgroup>
+        <thead class="border-bottom">
+            <tr>
+                <th></th>
+                <th class="text-center">{{'DATASETS.DATASET'|translate}}</th>
+                <th class="text-center">{{'METADATA.METADATA_REGISTRY.DATASET_METADATA.ISSUED'|translate}}</th>
+                <th class="text-center">{{'METADATA.METADATA_REGISTRY.DATASET_METADATA.MODIFIED'|translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <mdr-tree-node *ngFor="let d of rootDatasets" [record]="d" [root]="true" (nodeSelected)="onNodeSelected($event)"></mdr-tree-node>
+        </tbody>
+    </table>
+</div>

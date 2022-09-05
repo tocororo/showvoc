@@ -179,6 +179,7 @@
             "LANGUAGES": "Sprachen",
             "NO_LANG_INFO": "Keine ausgewählte Sprache bedeutet alle Sprachen"
         },
+        "LEGEND": "Legende",
         "LEVEL": "Ebene",
         "MANDATORY_FIELD": "Pflichtfeld",
         "NAME": "Name",
@@ -483,6 +484,7 @@
         "BROWSE_DATASETS": " {{instanceName}} Datensätze durchsuchen",
         "DATASET": "Datensatz",
         "DATASETS": "Datensätze",
+        "DATASET_CATALOG": "Datensatzkatalog",
         "FILTERS": {
             "DATASET_TYPE": "Datensatz-Typ",
             "LEXICONS": "Lexika",
@@ -639,6 +641,8 @@
         "INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET": "Die Indexerstellung ist bei einem geschlossenen Dataset nicht verfügbar",
         "INSERT_EMAIL_FOR_RESET_PASSWORD": "Geben Sie die E-Mail-Adresse Ihres Kontos ein. Sie erhalten eine E-Mail mit den Anweisungen zum Zurücksetzen des Passworts.",
         "INVALID_EMAIL": "{{email}} ist keine gültige E-Mail Adresse.",
+        "INVALID_IRI": "{{iri}} ist keine gültige IRI",
+        "INVALID_LANG_TAG": "{{lang}} ist kein gültiges Sprach-Tag",
         "INVALID_SEARCH_STRING": "Bitte geben Sie eine gültige Zeichenfolge für die Suche ein",
         "LANGUAGE_ALREAY_IN_LIST": "Die Sprache '{{lang}}' ist bereits in der Liste enthalten.",
         "LANGUAGE_DUPLICATED": "Die Sprache '{{lang}}' ist in der Liste doppelt vorhanden.",
@@ -692,6 +696,28 @@
         "VB_CONFIG_TEST_SUCCESS": "Die Konfiguration wurde erfolgreich getestet.",
         "X_SEARCH_RESOURCES_FOUND": "{{results}} Ergebnisse gefunden",
         "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "Sie erhalten in Kürze eine E-Mail mit Ihren Zugangsdaten zu VocBench."
+    },
+    "METADATA": {
+        "METADATA_REGISTRY": {
+            "ACTIONS": {
+                "ADD_EMBEDDED_LEXICALIZATION_SET": "Embedded Lexicalization Set hinzufügen",
+                "ASSESS_LEXICALIZATION_MODEL": "Lexikalisierungsmodell untersuchen",
+                "DELETE_ALL_EMBEDDED_LEXICALIZATION_SET": "Alle eingebetteten Lexikalisierungssätze löschen",
+                "DELETE_EMBEDDED_LEXICALIZATION_SET": "Embedded Lexicalization Set löschen",
+                "DISCOVER_DATASET": "Datensatz entdecken"
+            },
+            "DATASET_METADATA": {
+                "DEREFERENCEABLE": "Dereferenzierbar",
+                "DEREFERENCIATION_SYSTEM": "Dereferenzierungssystem",
+                "IDENTITY": "Identität",
+                "ISSUED": "Veröffentlicht",
+                "MODIFIED": "Geändert",
+                "NO_AGGREGATION": "Keine Aggregation",
+                "NO_AGGREGATION_INFO": "Wenn diese Option aktiviert ist, bedeutet dies, dass die Aggregation möglicherweise unterstützt wird, ihre Unterstützung jedoch für die Zwecke von Vocbench nicht ausreicht.",
+                "VERSION_INFO": "Versions-Information"
+            },
+            "METADATA_REGISTRY": "Metadaten-Registratur"
+        }
     },
     "MODELS": {
         "PROJECT": {

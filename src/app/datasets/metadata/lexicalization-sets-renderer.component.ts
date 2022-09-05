@@ -1,4 +1,5 @@
-import { Component, Input, SimpleChanges } from "@angular/core";
+import { Component, Input, QueryList, SimpleChanges, ViewChildren } from "@angular/core";
+import { LexicalizationSetMetadataComponent } from 'src/app/metadata-registry/lexicalization-sets-panel/lexicalization-set-metadata.component';
 import { LexicalizationSetMetadata } from "src/app/models/Metadata";
 import { Project } from "src/app/models/Project";
 import { AnnotatedValue, IRI } from "src/app/models/Resources";
@@ -12,6 +13,8 @@ import { ChartData, ChartEnum } from 'src/app/widget/charts/NgxChartsUtils';
     host: { class: "vbox" },
 })
 export class LexicalizationSetsRenderer {
+
+    @ViewChildren(LexicalizationSetMetadataComponent) viewChildrenLexSetMetadata: QueryList<LexicalizationSetMetadataComponent>;
 
     @Input() dataset: AnnotatedValue<IRI>;
 
@@ -131,9 +134,7 @@ export class LexicalizationSetsRenderer {
     }
 
     collapseAll(collapse: boolean) {
-        this.lexicalizationSets.forEach(l => {
-            l['collapsed'] = collapse;
-        });
+        this.viewChildrenLexSetMetadata.forEach(ls => { ls.collapsed = !ls.collapsed; });
     }
 
     switchChart(type: ChartEnum) {

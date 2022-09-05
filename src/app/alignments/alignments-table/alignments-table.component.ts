@@ -2,7 +2,7 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { LinksetMetadata } from 'src/app/models/Metadata';
 import { Project } from 'src/app/models/Project';
-import { IRI, AnnotatedValue } from 'src/app/models/Resources';
+import { IRI } from 'src/app/models/Resources';
 import { MetadataRegistryServices } from 'src/app/services/metadata-registry.service';
 import { AlignmentsModalsServices } from '../modals/alignments-modal.service';
 
@@ -22,7 +22,9 @@ import { AlignmentsModalsServices } from '../modals/alignments-modal.service';
 export class AlignmentsTableComponent {
 
     @Input() sourceProject: Project;
-    @Input() dataset: AnnotatedValue<IRI>;
+    @Input() dataset: IRI;
+    @Input() allowExplainMapping: boolean = true; //this component is used in multiple places (e.g. MDR and Alignments page)
+        //in MDR there is no "sourceProject" so the mappings should not be explained
 
     linksets: LinksetMetadata[];
 
@@ -41,7 +43,7 @@ export class AlignmentsTableComponent {
         this.loading = true;
         this.linksets = null;
 
-        this.metadataRegistryService.getEmbeddedLinksets(this.dataset.getValue(), null, true).pipe(
+        this.metadataRegistryService.getEmbeddedLinksets(this.dataset, null, true).pipe(
             finalize(() => { this.loading = false; })
         ).subscribe(
             linksets => {
@@ -51,7 +53,9 @@ export class AlignmentsTableComponent {
     }
 
     showMappings(linkset: LinksetMetadata) {
-        this.alignmentsModals.openAlignments(this.sourceProject, linkset);
+        if (this.allowExplainMapping) {
+            this.alignmentsModals.openAlignments(this.sourceProject, linkset);
+        }
     }
 
 }

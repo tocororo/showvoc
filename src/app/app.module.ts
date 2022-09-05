@@ -17,6 +17,7 @@ import { CustomReuseStrategy } from './CustomReuseStrategy';
 import { DatasetsModule } from './datasets/datasets.module';
 import { GraphModule } from './graph/graph.module';
 import { HomeComponent } from './home/home.component';
+import { MetadataRegistryModule } from './metadata-registry/metadata-registry.module';
 import { ModalsModule } from './modal-dialogs/modals.module';
 import { NotFoundComponent } from './not-found.component';
 import { PreferencesModule } from './preferences/preferences.module';
@@ -57,6 +58,7 @@ let HttpLoaderFactory = (http: HttpClient) => {
         CustomServicesModule,
         DatasetsModule,
         GraphModule,
+        MetadataRegistryModule,
         ModalsModule,
         NgbModule,
         PreferencesModule,

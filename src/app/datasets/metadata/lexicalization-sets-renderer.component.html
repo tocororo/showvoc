@@ -41,7 +41,7 @@
             <li *ngIf="activeTab == 'chart'" ngbDropdown class="nav-item">
                 <a href (click)="false" class="nav-link" [ngClass]="{ disabled: lexicalizationSets?.length == 0 }" ngbDropdownToggle></a>
                 <div ngbDropdownMenu>
-                    <button *ngFor="let t of chartTypes" ngbDropdownItem  (click)="switchChart(t.value)">
+                    <button *ngFor="let t of chartTypes" ngbDropdownItem (click)="switchChart(t.value)">
                         {{t.translationKey|translate}}
                         <span *ngIf="activeChart == t.value" class="fas fa-check float-right ml-2"></span>
                     </button>
@@ -60,48 +60,10 @@
             </ng-container>
 
             <div *ngIf="activeTab == 'table';" class="overflow-auto">
-                <div *ngFor="let l of lexicalizationSets" class="card m-1" style="min-width: 250px;">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center" class="clickable" [ngClass]="{ 'mb-2': !l['collapsed'] }" (click)="l['collapsed'] = !l['collapsed']">
-                            <span [class]="'fas fa-chevron-' + (l['collapsed'] ? 'right' : 'down')"></span>
-                            <span class="ml-2">{{l.language}}</span>
-                        </div>
-                        <div *ngIf="!l['collapsed']">
-                            <table class="table table-sm">
-                                <tbody>
-                                    <tr>
-                                        <td nowrap>{{'MODELS.PROJECT.LEXICALIZATION_MODEL'|translate}}:</td>
-                                        <td>{{l['lexModelPretty']}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.LEXICALIZATIONS'|translate}}:</td>
-                                        <td>{{l.lexicalizations}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.LEXICAL_ENTRIES'|translate}}:</td>
-                                        <td>{{l.lexicalEntries}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.REFERENCES'|translate}}:</td>
-                                        <td>{{l.references}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.AVG_OF_LEXICALIZATIONS'|translate}}:</td>
-                                        <td>{{l.avgNumOfLexicalizations}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.PERCENTAGE'|translate}}:</td>
-                                        <td>{{l.percentage}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.LEXICON_DATASET'|translate}}:</td>
-                                        <td>{{l.lexiconDataset}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <lexicalization-set-metadata *ngFor="let ls of lexicalizationSets" class="mb-2"
+                    [lexicalizationSetMetadata]="ls" [dataset]="dataset"
+                    [readonly]="true">
+                </lexicalization-set-metadata>
             </div>
 
         </ng-container>

@@ -18,6 +18,7 @@ import { DatasetsPageComponent } from './datasets/datasets-page/datasets-page.co
 import { MetadataComponent } from './datasets/metadata/metadata.component';
 import { SparqlComponent } from './datasets/sparql/sparql.component';
 import { HomeComponent } from './home/home.component';
+import { MetadataRegistryComponent } from './metadata-registry/metadata-registry.component';
 import { NotFoundComponent } from './not-found.component';
 import { SearchComponent } from './search/search.component';
 import { LoginComponent } from './user/login.component';
@@ -42,6 +43,7 @@ const routes: Routes = [
                 { path: 'contributions', component: ContributionsManagerComponent, canActivate: [AdminAuthGuard] },
                 { path: 'config', component: SystemConfigurationComponent, canActivate: [AdminAuthGuard] },
                 { path: 'http-res', component: HttpResolutionComponent, canActivate: [AdminAuthGuard] },
+                { path: 'mdr', component: MetadataRegistryComponent, canActivate: [AdminAuthGuard] },
             ]
         },
         { path: "sysconfig", component: InitialConfigurationComponent, canActivate: [AdminAuthGuard] },

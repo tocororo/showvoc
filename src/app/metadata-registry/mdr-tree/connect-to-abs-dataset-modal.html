@@ -1,0 +1,51 @@
+<div cdkDrag class="vbox" cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+    <div class="modal-header" cdkDragHandle>
+        <h5 class="modal-title">{{'METADATA.METADATA_REGISTRY.ACTIONS.CONNECT_TO_ABS_DATASET'|translate}}</h5>
+    </div>
+    <div class="modal-body">
+
+        <table class="table table-sm table-borderless">
+            <colgroup>
+                <col style="width: 1%;">
+                <col>
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td nowrap><label>{{'METADATA.METADATA_REGISTRY.DATASET_METADATA.NATURE.ABSTRACT_DATASET'|translate}}:</label></td>
+                    <td>
+                        <select class="form-control" [(ngModel)]="abstractDatasetAttached">
+                            <option *ngFor="let d of abstractDatasets" [ngValue]="d">{{d.dataset['localizedTitle']}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td nowrap><label>{{'COMMONS.RELATION'|translate}}:</label></td>
+                    <td>
+                        <select class="form-control" [(ngModel)]="absDatasetRelation">
+                            <option *ngFor="let r of datasetRelationOpts" [ngValue]="r.id">{{r.label}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <ng-container *ngIf="absDatasetRelation == 'version'">
+                    <tr>
+                        <td nowrap><label>{{'METADATA.METADATA_REGISTRY.DATASET_METADATA.VERSION_INFO'|translate}}:</label></td>
+                        <td>
+                            <input class="form-control" [(ngModel)]="versionInfo">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap><label>{{'METADATA.METADATA_REGISTRY.DATASET_METADATA.VERSION_NOTES'|translate}}:</label></td>
+                        <td>
+                            <lang-string-editor [(ngModel)]="versionNotes"></lang-string-editor>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+        
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-sm" (click)="ok()">Ok</button>
+        <button class="btn btn-light btn-sm" (click)="cancel()">{{'COMMONS.ACTIONS.CANCEL'|translate}}</button>
+    </div>
+</div>

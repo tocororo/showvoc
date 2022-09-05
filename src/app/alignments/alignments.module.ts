@@ -39,6 +39,7 @@ import { AlignmentsSearchResultsModal } from './modals/alignments-search-results
         WidgetModule
     ],
     exports: [
+        AlignmentsTableComponent,
         AlignmentsTreePanelComponent,
         AlignmentsView
     ],

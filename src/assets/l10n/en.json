@@ -205,6 +205,7 @@
             "LANGUAGES": "Languages",
             "NO_LANG_INFO": "No language selected implicitly means all languages"
         },
+        "LEGEND": "Legend",
         "LEVEL": "Level",
         "MANDATORY_FIELD": "Mandatory field",
         "NAME": "Name",
@@ -509,6 +510,7 @@
         "BROWSE_DATASETS": "Browse {{instanceName}} datasets",
         "DATASET": "Dataset",
         "DATASETS": "Datasets",
+        "DATASET_CATALOG": "Dataset Catalog",
         "FILTERS": {
             "DATASET_TYPE": "Dataset type",
             "LEXICONS": "Lexicons",
@@ -705,6 +707,8 @@
         "INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET": "The index creation is not available for a closed dataset",
         "INSERT_EMAIL_FOR_RESET_PASSWORD": "Insert the e-mail address of your account. You will receive an e-mail with the instructions for resetting the password",
         "INVALID_EMAIL": "{{email}} is not a valid email address.",
+        "INVALID_IRI": "{{iri}} is not a valid IRI",
+        "INVALID_LANG_TAG": "{{lang}} is not a valid language tag",
         "INVALID_SEARCH_STRING": "Please enter a valid string to search",
         "LANGUAGE_ALREAY_IN_LIST": "Language '{{lang}}' is already in the list.",
         "LANGUAGE_DUPLICATED": "Language '{{lang}}' is duplicated in the list.",
@@ -763,6 +767,7 @@
         "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "You will soon recieve an email containing details for connecting to the VocBench."
     },
     "METADATA": {
+        "DATASET_CATALOG": "Datensatzkatalog",
         "DISTRIBUTIONS": {
             "COMPRESS": "Compress (.zip)",
             "CREATION_DATE": "Creation date",
@@ -783,6 +788,41 @@
             "LEXICON_DATASET": "Lexicon Dataset",
             "PERCENTAGE": "Percentage",
             "REFERENCES": "References"
+        },
+        "METADATA_REGISTRY": {
+            "ACTIONS": {
+                "ADD_EMBEDDED_LEXICALIZATION_SET": "Add Embedded Lexicalization Set",
+                "ASSESS_LEXICALIZATION_MODEL": "Assess Lexicalization Model",
+                "CONNECT_TO_ABS_DATASET": "Connect to abstract dataset",
+                "CREATE_CONCRETE_DATASET": "Create concrete dataset",
+                "DELETE_ALL_EMBEDDED_LEXICALIZATION_SET": "Delete All Embedded Lexicalization Set",
+                "DELETE_EMBEDDED_LEXICALIZATION_SET": "Delete Embedded Lexicalization Set",
+                "DISCONNECT_FROM_ABS_DATASET": "Disconnect from abstract dataset",
+                "DISCOVER_DATASET": "Discover dataset",
+                "DISCOVER_DATASET_IRI_INFO": "This IRI can be directly the IRI of the VoID description of the Dataset (the instance of void:Dataset) or the IRI of any resource in the Dataset that points to this VoID description",
+                "SELECT_CONCRETE_DATASET": "Select concrete dataset",
+                "SPAWN_ABSTRACT_DATASET": "Spawn abstract dataset"
+            },
+            "DATASET_METADATA": {
+                "DEREFERENCEABLE": "Dereferenceable",
+                "DEREFERENCIATION_SYSTEM": "Dereferenciation System",
+                "IDENTITY": "Identity",
+                "ISSUED": "Issued",
+                "MODIFIED": "Modified",
+                "NATURE": {
+                    "ABSTRACT_DATASET": "Abstract dataset",
+                    "CONCRETE_DATASET": "Concrete dataset",
+                    "DATASET_NATURE": "Dataset nature",
+                    "DATASET_ROLE": "Dataset Role",
+                    "RDF4J_REPO": "RDF4J Repository",
+                    "VB_PROJECT": "VB Project"
+                },
+                "NO_AGGREGATION": "No aggregation",
+                "NO_AGGREGATION_INFO": "If checked it means that the aggregation may be supported, but its support is insufficient for the purposes of Vocbench",
+                "VERSION_INFO": "Version Info",
+                "VERSION_NOTES": "Version notes"
+            },
+            "METADATA_REGISTRY": "Metadata Registry"
         },
         "STATS": {
             "LEXICAL_ASSETS": "Lexical assets",

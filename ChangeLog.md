@@ -7,6 +7,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 # 2.1.1 (dd-mm-202y)
   * Added model-oriented graph and class-diagram (uml-like)
   * Implemented the facet-based visualization of datasets
+  * Implemented MetadataRegistry
   * Introduced Customizable Reports for internal users
   * Introduced Custom Services for internal users
   * Implemented Custom Search

@@ -179,6 +179,7 @@
             "LANGUAGES": "Idiomas",
             "NO_LANG_INFO": "Ningún idioma seleccionado implica todos los idiomas"
         },
+        "LEGEND": "Leyenda",
         "LEVEL": "Nivel",
         "MANDATORY_FIELD": "Campo obligatorio",
         "NAME": "Nombre",
@@ -483,6 +484,7 @@
         "BROWSE_DATASETS": "Explore el conjunto de datos de {{instanceName}}",
         "DATASET": "Conjunto de datos",
         "DATASETS": "Conjunto de datos",
+        "DATASET_CATALOG": "Catálogo de conjuntos de datos",
         "FILTERS": {
             "DATASET_TYPE": "Tipo de conjunto de datos",
             "LEXICONS": "Léxico",
@@ -639,6 +641,8 @@
         "INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET": "La creación de índices no está disponible para un conjunto de datos cerrado",
         "INSERT_EMAIL_FOR_RESET_PASSWORD": "Ingrese la dirección de correo electrónico de su cuenta. Recibirá un correo electrónico con instrucciones para restablecer su contraseña",
         "INVALID_EMAIL": "{{email}} no es una dirección de correo electrónico válida.",
+        "INVALID_IRI": "{{iri}} no es un IRI válido",
+        "INVALID_LANG_TAG": "{{lang}} no es una etiqueta de idioma válida",
         "INVALID_SEARCH_STRING": "Introduzca una cadena válida",
         "LANGUAGE_ALREAY_IN_LIST": "El idioma '{{lang}}' ya está en la lista.",
         "LANGUAGE_DUPLICATED": "El idioma '{{lang}}' está duplicado en la lista.",
@@ -692,6 +696,28 @@
         "VB_CONFIG_TEST_SUCCESS": "La configuración se ha probado correctamente.",
         "X_SEARCH_RESOURCES_FOUND": "{{resultados}} resultados encontrados",
         "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "En breve recibirá un correo electrónico con los detalles para acceder a VocBench."
+    },
+    "METADATA": {
+        "METADATA_REGISTRY": {
+            "ACTIONS": {
+                "ADD_EMBEDDED_LEXICALIZATION_SET": "añadir conjunto de Lexicalización integrado",
+                "ASSESS_LEXICALIZATION_MODEL": "Evaluar modelo de Lexicalización",
+                "DELETE_ALL_EMBEDDED_LEXICALIZATION_SET": "Eliminar todo el conjunto de Lexicalización integrado",
+                "DELETE_EMBEDDED_LEXICALIZATION_SET": "Eliminar conjunto de Lexicalización integrado",
+                "DISCOVER_DATASET": "Descubrir conjunto de datos"
+            },
+            "DATASET_METADATA": {
+                "DEREFERENCEABLE": "Desreferenciable",
+                "DEREFERENCIATION_SYSTEM": "Sistema de desreferenciación",
+                "IDENTITY": "Identidad",
+                "ISSUED": "Emitido",
+                "MODIFIED": "Modificado",
+                "NO_AGGREGATION": "Sin agregación",
+                "NO_AGGREGATION_INFO": "Si está marcado, significa que la agregación puede ser compatible, pero su soporte es insuficiente para los propósitos de Vocbench",
+                "VERSION_INFO": "Información de la versión"
+            },
+            "METADATA_REGISTRY": "Registro de metadatos"
+        }
     },
     "MODELS": {
         "PROJECT": {

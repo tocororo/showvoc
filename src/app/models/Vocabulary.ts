@@ -288,3 +288,39 @@ export class SemanticTurkey {
 
     public static noAggregation = "http://semanticturkey.uniroma2.it/ns/mdr#noAggregation";
 }
+
+export class MdrVoc {
+    public static uri = "http://semanticturkey.uniroma2.it/ns/mdr";
+    public static namespace = MdrVoc.uri + "#";
+    public static prefix = "mdr";
+
+    public static dereferenciationSystem = new IRI(MdrVoc.namespace + "dereferenciationSystem");
+    public static standardDereferenciation = new IRI(MdrVoc.namespace + "standardDereferenciation");
+    public static noDereferenciation = new IRI(MdrVoc.namespace + "noDereferenciation");
+    public static sparqlEndpointLimitation = new IRI(MdrVoc.namespace + "sparqlEndpointLimitation");
+    public static noAggregation = new IRI(MdrVoc.namespace + "noAggregation");
+
+    public static SPARQLEndpoint = new IRI(MdrVoc.namespace + "SPARQLEndpoint");
+    public static RDF4JHTTPRepository = new IRI(MdrVoc.namespace + "RDF4JHTTPRepository");
+    public static GRAPHDBRepository = new IRI(MdrVoc.namespace + "GRAPHDBRepository");
+
+    public static lod = new IRI(MdrVoc.namespace + "lod");
+    public static master = new IRI(MdrVoc.namespace + "master");
+}
+
+export class StMdr {
+    public static uri = "http://semanticturkey.uniroma2.it/ns/stmdr";
+    public static namespace = StMdr.uri + "#";
+    public static prefix = "stmdr";
+
+    public static Project = new IRI(StMdr.namespace + "Project");
+}
+
+export class Dcat {
+    public static uri = "http://www.w3.org/ns/dcat";
+    public static namespace = Dcat.uri + "#";
+    public static prefix = "dcat";
+
+    public static hasVersion = new IRI(Dcat.namespace + "hasVersion");
+    public static isVersionOf = new IRI(Dcat.namespace + "isVersionOf");
+}

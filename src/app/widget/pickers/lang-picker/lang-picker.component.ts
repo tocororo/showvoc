@@ -46,11 +46,12 @@ export class LangPickerComponent implements ControlValueAccessor {
         //Init languages list considering only languages assigned to user and allowed in project
         this.languageList = []; //intersection between language available in project and language assigned to user.
         if (!this.config.projectAware) {
-            this.languageList = SVContext.getSystemSettings().languages;
+            this.languageList = SVContext.getSystemSettings().languages.slice();
             //if a subset of languages are provided, take only them
             if (this.config.languages != null) {
                 this.languageList = this.languageList.filter((l: Language) => { 
-                    return this.config.languages.some(confLang => confLang.toLocaleLowerCase() == l.tag.toLocaleLowerCase());
+                    //check l.tag difference from null (handle no lang case)
+                    return this.config.languages.some(confLang => confLang && confLang.toLocaleLowerCase() == l.tag.toLocaleLowerCase());
                 });
             }
         } else {
@@ -63,23 +64,30 @@ export class LangPickerComponent implements ControlValueAccessor {
                 });
             }
         }
+        if (this.config.allowNoLang) {
+            this.languageList.unshift(Languages.NO_LANG);
+        }
     }
 
     ngAfterViewInit() {
-        setTimeout(() => { //timout to prevent ExpressionChangedAfterItHasBeenCheckedError in the container component
+        setTimeout(() => { //timout to prevent ExpressionChangedAfterItHasBeenCheckedError in the parent component
             //if there is some language available set the selected language in the picker
             if (this.languageList.length > 0) { 
                 if (this.language == undefined) { //no language specified as @Input
-                    //set the default editing language (if in a project)
-                    if (SVContext.getProjectCtx() != null) {
-                        //set the selected based on the priority list
-                        for (let priorityLang of Languages.priorityLangs) {
-                            this.language = this.languageList.find(l => l.tag == priorityLang);
-                            if (this.language != null) break;
-                        }
-                        //language null means that no language in languageList is in priority list, so set as selected the first language available
-                        if (this.language == null) {
-                            this.language = this.languageList[0];
+                    if (this.config.allowNoLang) {
+                        this.language = Languages.NO_LANG;
+                    } else {
+                        //set the default editing language (if in a project)
+                        if (SVContext.getProjectCtx() != null) {
+                            //set the selected based on the priority list
+                            for (let priorityLang of Languages.priorityLangs) {
+                                this.language = this.languageList.find(l => l.tag == priorityLang);
+                                if (this.language != null) break;
+                            }
+                            //language null means that no language in languageList is in priority list, so set as selected the first language available
+                            if (this.language == null) {
+                                this.language = this.languageList[0];
+                            }
                         }
                     }
                 } else {
@@ -140,5 +148,6 @@ export class LangPickerConfig {
     projectAware: boolean = true; //if true, limits the languages to the project-user constraints. If false takes into account every system languages.
     constrain: boolean = false; //if true, the selection of language is constrained only to the bound language (language set through ngModel)
     locale: boolean = false; //(used only when constrain is true) if true, the language selection allows also the locales of the bound language (compatibly with the user assigned langugages)
+    allowNoLang: boolean = false;
     languages: string[]; //if provided, the available languages are limited to these language tags (compatibly with the user assigned langugages)
 }

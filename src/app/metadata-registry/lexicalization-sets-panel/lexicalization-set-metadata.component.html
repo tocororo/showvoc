@@ -1,0 +1,105 @@
+<div class="card">
+    <div class="card-body">
+        <div *ngIf="readonly" class="d-flex align-items-center" class="clickable" [ngClass]="{ 'mb-2': !collapsed }" (click)="collapsed = !collapsed">
+            <span [class]="'fas fa-chevron-' + (collapsed ? 'right' : 'down')"></span>
+            <span class="ml-2">{{language}}</span>
+        </div>
+        <div *ngIf="!collapsed">
+            <table class="table table-sm">
+                <tbody>
+                    <tr *ngIf="!readonly">
+                        <td nowrap class="border-top-0"><label>{{'COMMONS.LANGUAGE.LANGUAGE'|translate}}:</label></td>
+                        <td class="border-top-0">
+                            <input-editable [value]="language" (valueEdited)="updateLanguage($event)" [readonly]="disabled"></input-editable>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap>{{'MODELS.PROJECT.LEXICALIZATION_MODEL'|translate}}:</td>
+                        <td>
+                            <ng-container *ngIf="readonly; then modelReadonly; else modelEditable"></ng-container>
+                            <ng-template #modelReadonly>
+                                {{lexicalizationModel}}
+                            </ng-template>
+                            <ng-template #modelEditable>
+                                <input-editable type="select" [options]="lexicalModelOpts" [value]="lexicalizationModel" (valueEdited)="updateLexicalizationModel($event)" [readonly]="disabled">
+                                </input-editable>
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.LEXICALIZATIONS'|translate}}:</td>
+                        <td>
+                            <ng-container *ngIf="readonly; then lexicalizationsReadonly; else lexicalizationsEditable"></ng-container>
+                            <ng-template #modelReadonly>
+                                {{lexicalizations}}
+                            </ng-template>
+                            <ng-template #modelEditable>
+                                <input-editable type="number" [value]="lexicalizations" min="0" step="1" (valueEdited)="updateLexicalizations($event)" [readonly]="disabled"></input-editable>
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.LEXICAL_ENTRIES'|translate}}:</td>
+                        <td>
+                            <ng-container *ngIf="readonly; then lexicalizationsReadonly; else lexicalizationsEditable"></ng-container>
+                            <ng-template #lexicalizationsReadonly>
+                                {{lexicalEntries}}
+                            </ng-template>
+                            <ng-template #lexicalizationsEditable>
+                                <input-editable type="number" [value]="lexicalEntries" min="0" step="1" (valueEdited)="updateLexicalEntries($event)" [readonly]="readonly"></input-editable>
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.REFERENCES'|translate}}:</td>
+                        <td>
+                            <ng-container *ngIf="readonly; then referencesReadonly; else referencesEditable"></ng-container>
+                            <ng-template #referencesReadonly>
+                                {{references}}
+                            </ng-template>
+                            <ng-template #referencesEditable>
+                                <input-editable type="number" [value]="references" min="0" step="1" (valueEdited)="updateReferences($event)" [readonly]="disabled"></input-editable>
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.AVG_OF_LEXICALIZATIONS'|translate}}:</td>
+                        <td>
+                            <ng-container *ngIf="readonly; then avgNumOfLexicalizationsReadonly; else avgNumOfLexicalizationsEditable"></ng-container>
+                            <ng-template #avgNumOfLexicalizationsReadonly>
+                                {{avgNumOfLexicalizations}}
+                            </ng-template>
+                            <ng-template #avgNumOfLexicalizationsEditable>
+                                <input-editable type="number" [value]="avgNumOfLexicalizations" min="0" (valueEdited)="updateAvgNumOfLexicalizations($event)" [readonly]="readonly"></input-editable>
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.PERCENTAGE'|translate}}:</td>
+                        <td>
+                            <ng-container *ngIf="readonly; then percentageReadonly; else percentageEditable"></ng-container>
+                            <ng-template #percentageReadonly>
+                                {{percentage}}
+                            </ng-template>
+                            <ng-template #percentageEditable>
+                                <input-editable type="number" [value]="percentage" min="0" max="1" step="0.01" (valueEdited)="updatePercentage($event)" [readonly]="readonly"></input-editable>
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap>{{'METADATA.LEXICALIZATION_SET.LEXICON_DATASET'|translate}}:</td>
+                        <td>
+                            <ng-container *ngIf="readonly; then lexiconDatasetReadonly; else lexiconDatasetEditable"></ng-container>
+                            <ng-template #lexiconDatasetReadonly>
+                                {{lexiconDataset}}
+                            </ng-template>
+                            <ng-template #lexiconDatasetEditable>
+                                <input-editable [value]="lexiconDataset" (valueEdited)="updateLexiconDataset($event)" [readonly]="disabled"></input-editable>
+                            </ng-template>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

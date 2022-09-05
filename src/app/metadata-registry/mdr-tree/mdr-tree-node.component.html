@@ -1,0 +1,19 @@
+<tr [ngClass]="{ 'table-primary': record['selected'] }">
+    <td class="clickable pr-0">
+        <div style="width: 16px">
+            <ng-container *ngIf="showExpandCollapseBtn">
+                <img *ngIf="!open" src="./assets/images/icons/arrow.png" class="arrow-right" (click)="expandNode()">
+                <img *ngIf="open" src="./assets/images/icons/arrow.png" (click)="collapseNode()">
+            </ng-container>
+        </div>
+    </td>
+    <td (click)="selectNode()" class="clickable mr-2" [ngClass]="{ 'pl-4': !root }" nowrap>
+        <dataset-resource [dataset]="record.dataset"></dataset-resource>
+    </td>
+    <td class="text-center clickable" (click)="selectNode()">{{issuedLocal}}</td>
+    <td class="text-center clickable" (click)="selectNode()">{{modifiedLocal}}</td>
+</tr>
+
+<ng-container *ngIf="record.dataset.nature && open && children.length > 0">
+    <mdr-tree-node *ngFor="let d of children" [record]="d" [root]="false" (nodeSelected)="onNodeSelected($event)"></mdr-tree-node>
+</ng-container>

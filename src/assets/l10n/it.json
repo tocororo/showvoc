@@ -205,6 +205,7 @@
             "LANGUAGES": "Lingue",
             "NO_LANG_INFO": "Nessuna lingua selezionata implica tutte le lingue"
         },
+        "LEGEND": "Legenda",
         "LEVEL": "Livello",
         "MANDATORY_FIELD": "Campo obbligatorio",
         "NAME": "Nome",
@@ -509,6 +510,7 @@
         "BROWSE_DATASETS": "Esplora dataset di {{instanceName}}",
         "DATASET": "Dataset",
         "DATASETS": "Dataset",
+        "DATASET_CATALOG": "Dataset Catalog",
         "FILTERS": {
             "DATASET_TYPE": "Tipo dataset",
             "LEXICONS": "Lessici",
@@ -705,6 +707,8 @@
         "INDEX_CREATION_NOT_AVAILABLE_FOR_CLOSED_DATASET": "La creazione dell'indice non è disponibile per un dataset chiuso",
         "INSERT_EMAIL_FOR_RESET_PASSWORD": "Inserisci l'indirizzo email del tuo account. Riceverai una email con le istruzioni per resettare la password",
         "INVALID_EMAIL": "{{email}} non è un indirizzo email valido.",
+        "INVALID_IRI": "{{iri}} non è un IRI valido",
+        "INVALID_LANG_TAG": "{{lang}} non è un language tag valido",
         "INVALID_SEARCH_STRING": "Inserire una stringa valida",
         "LANGUAGE_ALREAY_IN_LIST": "La lingua '{{lang}}' è già nella lista.",
         "LANGUAGE_DUPLICATED": "La lingua '{{lang}}' è duplicata nella lista.",
@@ -783,6 +787,51 @@
             "LEXICON_DATASET": "Lexicon Dataset",
             "PERCENTAGE": "Percentuale",
             "REFERENCES": "Riferimenti"
+        },
+        "METADATA_REGISTRY": {
+            "ACTIONS": {
+                "ADD_EMBEDDED_LEXICALIZATION_SET": "Aggiungi Embedded Lexicalization Set",
+                "ASSESS_LEXICALIZATION_MODEL": "Scopri modello di lessicalizzazione",
+                "CONNECT_TO_ABS_DATASET": "Collega ad un dataset astratto",
+                "CREATE_CONCRETE_DATASET": "Crea dataset concreto",
+                "DELETE_ALL_EMBEDDED_LEXICALIZATION_SET": "Cancella tutti gli Embedded Lexicalization Set",
+                "DELETE_EMBEDDED_LEXICALIZATION_SET": "Cancella Embedded Lexicalization Set",
+                "DISCONNECT_FROM_ABS_DATASET": "Scollega da dataset astratto",
+                "DISCOVER_DATASET": "Trova dataset",
+                "DISCOVER_DATASET_IRI_INFO": "Questo IRI può direttamente essere l'IRI del descrittore VoID del Dataset (istanza di void:Dataset) o l'IRI di una qualsiasi risorsa nel Dataset che punta a tale descrittore VoID",
+                "SELECT_CONCRETE_DATASET": "Seleziona dataset concreto",
+                "SPAWN_ABSTRACT_DATASET": "Genera dataset astratto"
+            },
+            "DATASET_METADATA": {
+                "DEREFERENCEABLE": "Dereferenziabile",
+                "DEREFERENCIATION_SYSTEM": "Sistema di dereferenziazione",
+                "IDENTITY": "Identità",
+                "ISSUED": "Pubblicato",
+                "MODIFIED": "Modificato",
+                "NATURE": {
+                    "ABSTRACT_DATASET": "Dataset astratto",
+                    "CONCRETE_DATASET": "Dataset concreto",
+                    "DATASET_NATURE": "Natura dataset",
+                    "DATASET_ROLE": "Ruolo dataset",
+                    "RDF4J_REPO": "RDF4J Repository",
+                    "VB_PROJECT": "Progetto VB"
+                },
+                "NO_AGGREGATION": "No aggregazione",
+                "NO_AGGREGATION_INFO": "Se spuntato, significa che l'aggregazione potrebbe essere supportata, ma il suo supporto è insufficiente per i propositi di Vocbench",
+                "VERSION_INFO": "Info versione",
+                "VERSION_NOTES": "Note versione"
+            },
+            "LEXICALIZATION_SET": {
+                "AVG_OF_LEXICALIZATIONS": "Q.tà media di lessicalizzazioni",
+                "EMBEDDED_LEXICALIZATION_SETS": "Lexicalization Sets embedded",
+                "LEXICALIZATIONS": "Lessicalizzazioni",
+                "LEXICALIZATION_SET": "Lexicalization Set",
+                "LEXICAL_ENTRIES": "Lexical Entries",
+                "LEXICON_DATASET": "Lexicon Dataset",
+                "PERCENTAGE": "Percentuale",
+                "REFERENCES": "Riferimenti"
+            },
+            "METADATA_REGISTRY": "Registro Metadati"
         },
         "STATS": {
             "LEXICAL_ASSETS": "Assets lessicali",

@@ -115,11 +115,11 @@ export class BasicModalsServices {
      * @param inputOptional 
      * @param options 
      */
-    prompt(title: TextOrTranslation, label?: { value: string, tooltip?: string }, msg?: TextOrTranslation, value?: string, hideClose?: boolean, inputOptional?: boolean, options?: ModalOptions): Promise<string> {
+    prompt(title: TextOrTranslation, label?: { value: TextOrTranslation, tooltip?: TextOrTranslation }, msg?: TextOrTranslation, value?: string, hideClose?: boolean, inputOptional?: boolean, options?: ModalOptions): Promise<string> {
         let _options: ModalOptions = new ModalOptions().merge(options);
         const modalRef: NgbModalRef = this.modalService.open(PromptModal, _options);
         modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
-        modalRef.componentInstance.label = label;
+        modalRef.componentInstance.label = TranslationUtils.translateObject(label, ["value", "tooltip"], this.translateService);
         modalRef.componentInstance.message = TranslationUtils.getTranslatedText(msg, this.translateService);
         modalRef.componentInstance.value = value;
         modalRef.componentInstance.hideClose = hideClose;

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, SimpleChanges, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, SimpleChanges, ViewChild } from "@angular/core";
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from 'src/app/modal-dialogs/Modals';
@@ -19,7 +19,6 @@ import { InvokableReporterModalServices } from "./modals/invokable-reporter-moda
 export class InvokableReporterComponent {
     @Input() ref: Reference;
 
-    @ViewChild('blockingDiv', { static: true }) public blockingDivElement: ElementRef;
     @ViewChild("deployerConfigurator", { static: false }) deployerConfigurator: ExtensionConfiguratorComponent;
 
     private reporter: InvokableReporter;

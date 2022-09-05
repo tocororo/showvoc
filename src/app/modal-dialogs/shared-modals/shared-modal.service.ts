@@ -5,6 +5,7 @@ import { Reference } from 'src/app/models/Configuration';
 import { Settings } from 'src/app/models/Plugins';
 import { AnnotatedValue, Resource, Value } from 'src/app/models/Resources';
 import { ProjectContext } from 'src/app/utils/SVContext';
+import { LocalizedEditorModal, LocalizedMap } from 'src/app/widget/localized-editor/localized-editor-modal';
 import { ResourcePickerConfig } from 'src/app/widget/pickers/value-picker/resource-picker.component';
 import { StorageManagerModal } from 'src/app/widget/storage-manager/storage-manager-modal';
 import { ResourceViewModal } from '../../resource-view/modals/resource-view-modal';
@@ -144,6 +145,14 @@ export class SharedModalsServices {
         if (allowLoad !== undefined) modalRef.componentInstance.allowLoad = allowLoad;
         if (allowDelete !== undefined) modalRef.componentInstance.allowDelete = allowDelete;
         if (additionalReferences !== undefined) modalRef.componentInstance.additionalReferences = additionalReferences;
+        return modalRef.result;
+    }
+
+    localizedEditor(title: TextOrTranslation, localizedMap: LocalizedMap, allowEmpty?: boolean): Promise<LocalizedMap> {
+        const modalRef: NgbModalRef = this.modalService.open(LocalizedEditorModal, new ModalOptions('lg'));
+        modalRef.componentInstance.title = TranslationUtils.getTranslatedText(title, this.translateService);
+        modalRef.componentInstance.localizedMap = localizedMap;
+        modalRef.componentInstance.allowEmpty = allowEmpty;
         return modalRef.result;
     }
 

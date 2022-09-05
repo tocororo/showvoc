@@ -1,0 +1,45 @@
+<div class="hbox">
+
+    <mdr-tree-panel (nodeSelected)="onCatalogSelected($event)"></mdr-tree-panel>
+
+    <div *ngIf="selectedCatalogRecord2" class="card card-default vbox ml-2">
+        <div class="card-header d-flex align-items-center" style="min-height: 42px;">
+            <label style="flex: 1;">{{'DATASETS.DATASET'|translate}}:</label>
+            <button *ngIf="selectedCatalogRecord2?.dataset.nature == 'PROJECT'" class="btn btn-light btn-sm" (click)="profileProject()" [title]="'DATASETS.ACTIONS.PROFILE_DATASET'|translate">
+                <span *ngIf="!profilationLoading" class="fas fa-align-right" style="transform: rotate(90deg)"></span>
+                <span *ngIf="profilationLoading" class="spinner-border spinner-border-sm"></span>
+            </button>
+        </div>
+        <div class="card-body vbox">
+
+            <dataset-metadata class="d-flex" style="max-height: 40vh;" [dataset]="selectedCatalogRecord2.dataset" [disabled]="profilationLoading"></dataset-metadata>
+
+            <div *ngIf="selectedCatalogRecord2?.dataset.nature != 'ABSTRACT'" class="vbox mt-2">
+
+                <ul class="nav nav-tabs" (click)="$event.preventDefault()">
+                    <li class="nav-item">
+                        <a class="nav-link" [ngClass]="{ active : activeTab == 'lexicalizationSets' }" (click)="activeTab = 'lexicalizationSets'">
+                            {{'METADATA.LEXICALIZATION_SET.EMBEDDED_LEXICALIZATION_SETS'|translate}}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [ngClass]="{ active : activeTab == 'linksets' }" (click)="activeTab = 'linksets'">
+                            Embedded Linksets
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content border border-top-0 rounded-bottom p-2">
+                    <div [hidden]="activeTab != 'lexicalizationSets'" class="vbox">
+                        <lexicalization-sets-panel [dataset]="selectedCatalogRecord2.dataset"></lexicalization-sets-panel>
+                    </div>
+                    <div [hidden]="activeTab != 'linksets'" class="vbox">
+                        <alignments-table [dataset]="selectedCatalogRecord2.dataset.identity" [allowExplainMapping]="false"></alignments-table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

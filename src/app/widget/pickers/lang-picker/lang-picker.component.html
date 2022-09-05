@@ -1,7 +1,9 @@
 <span class="d-flex align-items-center">
-    <select [(ngModel)]="language" (ngModelChange)="onLangChange()" [class]="selectClass" style="margin-right: 4px;" 
-        [disabled]="isDisabled() || readonly">
-        <option *ngFor="let l of languageList" [ngValue]="l">{{l.name}} ({{l.tag}})</option>
+    <select [(ngModel)]="language" (ngModelChange)="onLangChange()" [class]="selectClass" style="margin-right: 4px;" [disabled]="isDisabled() || readonly">
+        <option *ngFor="let l of languageList" [ngValue]="l">
+            {{l.name}}
+            <ng-container *ngIf="l.tag">({{l.tag}})</ng-container>
+        </option>
     </select>
     <lang-item *ngIf="showFlag && language" [language]="language" [showName]="false"></lang-item>
 </span>

@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let l of linksets" (click)="showMappings(l)"  style="cursor: pointer">
+                <tr *ngFor="let l of linksets" (click)="showMappings(l)" [ngClass]="{ clickable: allowExplainMapping }">
                     <td>{{l.getTargetDatasetShow()}}</td>
                     <td>
                         <ng-container *ngIf="!showPercentage">{{l.linkCount}}</ng-container>

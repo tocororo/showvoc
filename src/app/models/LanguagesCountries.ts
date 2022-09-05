@@ -1,4 +1,5 @@
 import { SVContext } from "../utils/SVContext";
+import { Literal } from './Resources';
 
 export class Countries {
     
@@ -36,6 +37,8 @@ export class Countries {
 }
 
 export class Languages {
+
+    static readonly NO_LANG: Language = { name: "None", tag: null };
 
     static priorityLangs = ["en", "fr", "it", "es", "de"];
     
@@ -128,4 +131,51 @@ export class Language {
 export class LanguageConstraint {
     public constrain: boolean; //if true, constrain the selection of a language only to a given language
     public locale: boolean; //if true, allow the selection of also the locale of a given language
+}
+
+
+export class LanguageUtils {
+
+    /**
+     * returns the localized value according the following order:
+     * - the language set for interface translation
+     * - the browser language
+     * - priority languages in VB
+     * - first localized available
+     */
+    static getLocalizedLiteral(localizedList: Literal[], translationLang?: string): Literal {
+        let localized: Literal;
+        if (translationLang != null) {
+            localized = localizedList.find(t => t.getLanguage() == translationLang);
+            if (localized != null) {
+                return localized;
+            }
+        }
+
+        //if not found, try with the browser language
+        let browserLang = navigator.language || navigator['userLanguage'];
+        localized = localizedList.find(t => t.getLanguage() == browserLang);
+        if (localized != null) {
+            return localized;
+        }
+        //if the browser language has a country code (e.g. en-GB, it-IT), look only for the lang code
+        if (browserLang.includes("-")) {
+            browserLang = browserLang.substring(0, browserLang.indexOf("-"));
+            localized = localizedList.find(t => t.getLanguage() == browserLang);
+            if (localized != null) {
+                return localized;
+            }
+        }
+        
+        //if still not found, returns the first according priority langs
+        let prioritizedLang = Languages.priorityLangs.find(l => localizedList.some(t => t.getLanguage() == l));
+        localized = localizedList.find(t => t.getLanguage() == prioritizedLang);
+        if (localized != null) {
+            return localized;
+        }
+
+        //still not found, returns the first available
+        return localizedList[0];
+    }
+
 }

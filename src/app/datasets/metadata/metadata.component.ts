@@ -20,7 +20,7 @@ import { ProjectsServices } from "src/app/services/projects.service";
 import { StorageServices } from "src/app/services/storage.service";
 import { AuthorizationEvaluator, STActionsEnum } from "src/app/utils/AuthorizationEvaluator";
 import { SVContext } from "src/app/utils/SVContext";
-import { LocalizedEditorModal, LocalizedMap } from "src/app/widget/localized-editor/localized-editor-modal";
+import { LocalizedMap } from "src/app/widget/localized-editor/localized-editor-modal";
 
 @Component({
     selector: 'metadata-component',
@@ -249,12 +249,17 @@ export class MetadataComponent implements OnInit {
     }
 
     editDistributionLabels(download: DownloadInfo) {
-        const modalRef: NgbModalRef = this.modalService.open(LocalizedEditorModal, new ModalOptions('lg'));
-        modalRef.componentInstance.title = this.translate.instant("METADATA.DISTRIBUTIONS.DISTRIBUTION_LABELS");
-        modalRef.componentInstance.localizedMap = download.langToLocalizedMap;
-        modalRef.result.then(
+        let localizeMap: LocalizedMap = new Map();
+        for (let lang in download.langToLocalizedMap) {
+            localizeMap.set(lang, download.langToLocalizedMap[lang]);
+        }
+        this.sharedModals.localizedEditor({ key: "METADATA.DISTRIBUTIONS.DISTRIBUTION_LABELS" }, localizeMap, false).then(
             (map: LocalizedMap) => {
-                this.downloadService.updateLocalizedMap(download.fileName, map).subscribe(
+                let newMap: { [lang: string]: string } = {};
+                map.forEach((label, lang) => {
+                    newMap[lang] = label;
+                });
+                this.downloadService.updateLocalizedMap(download.fileName, newMap).subscribe(
                     () => {
                         this.initDistributions().subscribe();
                     }
@@ -319,7 +324,7 @@ export class MetadataComponent implements OnInit {
 interface DownloadInfo {
     fileName: string;
     localizedLabel: string;
-    langToLocalizedMap: { [key: string]: string }
+    langToLocalizedMap: { [lang: string]: string };
     date: Date;
     dateLocal: string;
     format: string;
