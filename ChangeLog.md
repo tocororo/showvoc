@@ -4,6 +4,9 @@ The full changelog of the platform includes also changes brought to the Semantic
 
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
+# 2.2.1 (dd-mm-202y)
+  * 
+
 # 2.2.0 (27-09-2022)
   * Added model-oriented graph and class-diagram (uml-like)
   * Implemented the facet-based visualization of datasets
