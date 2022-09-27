@@ -4,7 +4,7 @@ The full changelog of the platform includes also changes brought to the Semantic
 
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
-# 2.1.1 (dd-mm-202y)
+# 2.2.0 (27-09-2022)
   * Added model-oriented graph and class-diagram (uml-like)
   * Implemented the facet-based visualization of datasets
   * Implemented MetadataRegistry
@@ -14,6 +14,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
   * Implemented storage of SPARQL queries (for authenticated user only)
   * Added parameterized SPARQL queries (for authenticated user only)
   * Added statistical charts in Metadata page
+  * Implemented support for HTTP resolution and content-negotiation
   * Fixed performances issues by replacing usage setTimeout() with ChangeDetectorRef#detectChanges(). Thanks to Saku Seppälä for the contribution!
 
 # 2.1.0 (23-06-2022)
