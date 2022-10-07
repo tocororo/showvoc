@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 import { from, Observable, of } from "rxjs";
 import { catchError, finalize, map, mergeMap } from "rxjs/operators";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
@@ -29,9 +30,10 @@ export class CreateDownloadModal {
 
     loading: boolean;
 
-    constructor(public activeModal: NgbActiveModal, private downloadService: DownloadServices, private basicModals: BasicModalsServices) { }
+    constructor(public activeModal: NgbActiveModal, private downloadService: DownloadServices, private basicModals: BasicModalsServices, private translateService: TranslateService) { }
 
     ngOnInit() {
+        this.localized = new Literal("Dist " + new Date().toLocaleDateString(), this.translateService.currentLang);
         this.downloadService.getAvailableFormats().subscribe(
             formats => {
                 this.formats = formats;

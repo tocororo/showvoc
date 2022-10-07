@@ -5,7 +5,7 @@
             <img [src]="flagImgSrc" [ngClass]="{ disabled : disabled }">
         </ng-template>
         <ng-template #unknownFlag>
-            <div class="flagShape" [ngStyle]="{ opacity: disabled ? 0.5 : initial, width: langTagWidth + 'px' }"></div>
+            <div class="flagShape bg-info" [ngStyle]="{ opacity: disabled ? 0.5 : initial, width: langTagWidth + 'px' }"></div>
             <span class="flagShape langTagSpan" style="color: white;" [ngStyle]="{ width: langTagWidth + 'px' }">{{language.tag}}</span>
         </ng-template>
     </div>
