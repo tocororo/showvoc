@@ -1,6 +1,6 @@
 {
   "name": "showvoc",
-  "version": "2.2.1",
+  "version": "2.2.2-SNAPSHOT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
