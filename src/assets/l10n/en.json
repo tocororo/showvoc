@@ -614,7 +614,7 @@
             "EMTPTY_TARGET_EXP_INV_RULE": "Detected an inverse rewriting rule with empty target expression",
             "EMTPTY_TARGET_EXP_RULE": "Detected a rewriting rule with empty target expression",
             "MISSING_FORMAT_INV_RULE": "Detected an inverse rewriting rule with missing {{namedGroup}} named group",
-            "MULTIPLE_MATCHING_REGEXP": "Found regular expressions for multiple datasets that matches this input ({{datasets}}). This might lead to undesired behaviour.",
+            "MULTIPLE_MATCHING_REGEXP": "Found regular expressions for multiple datasets that match this input ({{datasets}}). This might lead to undesired behaviour.",
             "NO_MATCHING_INPUT_URI": "Input URI doesn't match 'Source URI RegExp'",
             "NO_MATCHING_REGEXP": "No regular expressions matches this input"
         },
