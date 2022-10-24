@@ -1,5 +1,5 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
-import { AnnotatedValue, ResAttribute, Value } from 'src/app/models/Resources';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { AnnotatedValue, ResAttribute, Resource, Value } from 'src/app/models/Resources';
 import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 
 @Component({
@@ -12,12 +12,16 @@ export class ValueRendererComponent {
     @Input() value: AnnotatedValue<Value>;
     @Input() rendering: boolean = true; //if true the resource should be rendered with the show, with the qname otherwise
 
+    @Output() dblclickObj: EventEmitter<AnnotatedValue<Value>> = new EventEmitter<AnnotatedValue<Value>>();
+
     renderedValue: string;
 
     lang: string; //language of the resource
 
     manchExpr: boolean = false;
     private manchExprStruct: { token: string, class: string }[] = [];
+
+    collMembers: AnnotatedValue<Value>[]; //in ordered collection members, member list value has the AnnotatedValue members as attribute 
 
     constructor() { }
 
@@ -33,6 +37,7 @@ export class ValueRendererComponent {
         this.initRenderedValue();
         this.initLang();
         this.initManchExpr();
+        this.initMembersColl();
     }
 
     private initLang() {
@@ -41,6 +46,17 @@ export class ValueRendererComponent {
 
     private initRenderedValue() {
         this.renderedValue = ResourceUtils.getRendering(this.value, this.rendering);
+    }
+
+    private initMembersColl() {
+        this.collMembers = this.value.getAttribute("members");
+        if (this.collMembers) {
+            this.collMembers.forEach(c => {
+                if (c.getValue() instanceof Resource) {
+                    c['clickable'] = true;
+                }
+            });
+        }
     }
 
     private initManchExpr() {
@@ -78,7 +94,7 @@ export class ValueRendererComponent {
             ];
 
             let show = this.value.getShow();
-            show = show.replace(/([\{\[\(\}\]\)])/g, " $1 ").replace(/\s+/g, " ").trim(); //add spaces before and after brackets, remove multiple spaces, remove ending space
+            show = show.replace(/([\\{\\[\\(\\}\]\\)])/g, " $1 ").replace(/\s+/g, " ").trim(); //add spaces before and after brackets, remove multiple spaces, remove ending space
             let splitted: string[] = show.split(" ");
             this.manchExprStruct = [];
             splitted.forEach((s, idx, array) => {
@@ -104,6 +120,13 @@ export class ValueRendererComponent {
             return new RegExp("(?:" + tokensList.join("|") + ")\\b");
         } else {
             return new RegExp("(?:" + tokensList.join("|") + ")\\b", "i");
+        }
+    }
+
+    objectDblClick(obj: AnnotatedValue<Value>, event: Event) {
+        event.stopPropagation();
+        if (obj.getValue() instanceof Resource) {
+            this.dblclickObj.emit(obj);
         }
     }
 

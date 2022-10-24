@@ -4,7 +4,7 @@
     </div>
     <div class="property-value-col">
         <div *ngFor="let obj of po.getObjects()" class="property-value" [ngClass]="{ clickable: obj.clickable }" (dblclick)="objectDblClick(obj)">
-            <value-renderer [value]="obj" [rendering]="rendering"></value-renderer>
+            <value-renderer [value]="obj" [rendering]="rendering" (dblclickObj)="objectDblClick($event)"></value-renderer>
         </div>
     </div>
 </div>

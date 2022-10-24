@@ -6,6 +6,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
 # 2.2.2 (dd-mm-202y)
   * Added possibility to insert custom content into the home page blank section
+  * Enabled visualization of ordered collection members in ResourceView
 
 # 2.2.1 (19-10-2022)
   * Minor changes

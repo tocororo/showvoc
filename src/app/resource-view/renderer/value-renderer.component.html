@@ -10,3 +10,12 @@
     </span>
     <span *ngIf="lang" class="ml-1">({{lang}})</span>
 </ng-template>
+
+<div *ngIf="collMembers" class="card m-2 mt-3">
+    <div class="card-header">Members</div>
+    <div class="card-body">
+        <div *ngFor="let member of collMembers" class="property-value" [ngClass]="{ clickable: member.clickable }" (dblclick)="objectDblClick(member, $event)">
+            <value-renderer [value]="member" [rendering]="rendering"></value-renderer>
+        </div>
+    </div>
+</div>
