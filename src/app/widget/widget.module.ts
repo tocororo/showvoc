@@ -11,6 +11,7 @@ import { YasguiComponent } from '../datasets/sparql/yasgui.component';
 import { BarChartComponent } from './charts/bar-chart.component';
 import { PieChartComponent } from './charts/pie-chart.component';
 import { SeriesChartLegendComponent } from './charts/series-chart-legend.component';
+import { HtmlEditorComponent } from './codemirror/html-editor/html-editor.component';
 import { MustacheEditorComponent } from './codemirror/mustache-editor/mustache-editor.component';
 import { SanitizerDirective } from './directives/sanitizer.directive';
 import { ExtensionConfiguratorComponent } from './extensionConfigurator/extension-configurator.component';
@@ -55,6 +56,7 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typed-literal-
         DataSizeRenderer,
         ExtensionConfiguratorComponent,
         FilePickerComponent,
+        HtmlEditorComponent,
         InputEditableComponent,
         LangPickerComponent,
         LangStringEditorComponent,
@@ -89,6 +91,7 @@ import { TypedLiteralInputComponent } from './typed-literal-input/typed-literal-
         DataSizeRenderer,
         ExtensionConfiguratorComponent,
         FilePickerComponent,
+        HtmlEditorComponent,
         InputEditableComponent,
         LangPickerComponent,
         LangStringEditorComponent,

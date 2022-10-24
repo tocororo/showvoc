@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SVContext } from '../utils/SVContext';
 
 @Component({
@@ -20,12 +21,28 @@ export class HomeComponent implements OnInit {
 
     translationParam: { instanceName: string };
 
-    constructor() { }
+    safeCustomContentFromPref: SafeHtml;
+    safeCustomContentFromFile: SafeHtml;
+
+    constructor(private sanitizer: DomSanitizer) { }
 
     ngOnInit() {
         this.instanceName = window['showvoc_instance_name'];
         this.translationParam = { instanceName: this.instanceName };
         this.showContribution = !SVContext.getSystemSettings().disableContributions;
+
+        let homeContent = SVContext.getSystemSettings().homeContent;
+        if (homeContent != null) {
+            this.safeCustomContentFromPref = this.sanitizer.bypassSecurityTrustHtml(homeContent);
+        }
+
+        fetch("assets/ext/home/custom_content.html").then(
+            res => res.text()
+        ).then(
+            htmlContent => {
+                this.safeCustomContentFromFile = this.sanitizer.bypassSecurityTrustHtml(htmlContent);
+            }
+        );
     }
 
 }

@@ -69,6 +69,11 @@
                 "SSL_PROTOCOLS": "Protocolli SSL",
                 "SSL_PROTOCOLS_INFO": "Specifica i protocolli SSL protocols abilitati per la connessione SSL"
             },
+            "HOME_PAGE": {
+                "HOME_CONTENT": "Contenuto dell'Home page",
+                "HOME_CONTENT_INFO": "Qui è possibile scrivere del contenuto formattato in HTML che verrà mostrato nella home page",
+                "PREVIEW": "Anteprima"
+            },
             "OTHER": {
                 "AUTH_MODE": "Modelità di autenticazione",
                 "DISABLE_CONTRIBUTION": "Disattiva la possibilità di contribuire a ShowVoc",

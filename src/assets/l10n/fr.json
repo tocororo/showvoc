@@ -68,6 +68,11 @@
                 "SSL_PROTOCOLS": "Protocoles SSL",
                 "SSL_PROTOCOLS_INFO": "Spécifie les protocoles SSL qui seront autorisés pour les connexions SSL"
             },
+            "HOME_PAGE": {
+                "HOME_CONTENT": "Contenu de la page d'accueil",
+                "HOME_CONTENT_INFO": "Vous pouvez saisir ici un texte formaté en HTML qui sera publié sur la page d'accueil",
+                "PREVIEW": "Prévisualiser"
+            },
             "OTHER": {
                 "DISABLE_CONTRIBUTION": "Désactiver l'option \"contribuer à ShowVoc\"",
                 "OTHER_SETTINGS": "Autres réglages"

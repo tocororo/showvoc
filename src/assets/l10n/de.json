@@ -68,6 +68,11 @@
                 "SSL_PROTOCOLS": "SSL-Protokolle",
                 "SSL_PROTOCOLS_INFO": "Gibt die SSL-Protokolle an, die für SSL-Verbindungen aktiviert werden sollen"
             },
+            "HOME_PAGE": {
+                "HOME_CONTENT": "Inhalt der Startseite",
+                "HOME_CONTENT_INFO": "Hier können Sie HTML-formatierten Textinhalt schreiben, der auf der Startseite angezeigt wird",
+                "PREVIEW": "Vorschau"
+            },
             "OTHER": {
                 "DISABLE_CONTRIBUTION": "Option \"zu ShowVoc beitragen\" deaktivieren",
                 "OTHER_SETTINGS": "Weitere Einstellungen"

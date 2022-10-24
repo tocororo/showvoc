@@ -69,6 +69,11 @@
                 "SSL_PROTOCOLS": "SSL protocols",
                 "SSL_PROTOCOLS_INFO": "Specifies the SSL protocols that will be enabled for SSL connections"
             },
+            "HOME_PAGE": {
+                "HOME_CONTENT": "Home page content",
+                "HOME_CONTENT_INFO": "Here you can write HTML-formatted text content that will be shown in the home page",
+                "PREVIEW": "Preview"
+            },
             "OTHER": {
                 "AUTH_MODE": "Authentication mode",
                 "DISABLE_CONTRIBUTION": "Deactivate the \"contribute to ShowVoc\" option",

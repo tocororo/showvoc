@@ -405,6 +405,10 @@ export class SVProperties {
         return cookieValue != "false"; //default true
     }
 
+    setHomeContent(homeContent: string): Observable<void> {
+        SVContext.getSystemSettings().homeContent = homeContent;
+        return this.settingsService.storeSetting(ExtensionPointID.ST_CORE_ID, Scope.SYSTEM, SettingsEnum.homeContent, homeContent);
+    }
 
     setSearchSettings(projectCtx: ProjectContext, settings: SearchSettings) {
         let projectPreferences: ProjectPreferences = projectCtx.getProjectPreferences();
@@ -426,6 +430,7 @@ export class SVProperties {
             map(settings => {
                 let systemSettings: SystemSettings = new SystemSettings();
                 systemSettings.showFlags = settings.getPropertyValue(SettingsEnum.showFlags);
+                systemSettings.homeContent = settings.getPropertyValue(SettingsEnum.homeContent);
                 let systemLanguages: Language[] = settings.getPropertyValue(SettingsEnum.languages);
                 Languages.sortLanguages(systemLanguages);
                 systemSettings.languages = systemLanguages;

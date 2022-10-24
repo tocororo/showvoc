@@ -11,6 +11,7 @@ export enum SettingsEnum {
     authService = "authService",
     conceptTree = "conceptTree",
     disableContributions = "disableContributions",
+    homeContent = "homeContent",
     instanceList = "instanceList",
     inverseRewritingRules = "inverseRewritingRules",
     languages = "languages",
@@ -222,6 +223,7 @@ export class ProjectSettings {
  */
 export class SystemSettings {
     showFlags: boolean = true;
+    homeContent: string;
     languages: Language[];
     disableContributions: boolean = false;
     authService: AuthServiceMode = AuthServiceMode.Default;

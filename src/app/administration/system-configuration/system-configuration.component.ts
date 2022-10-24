@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { from, Observable, of } from 'rxjs';
@@ -16,6 +17,7 @@ import { UserServices } from 'src/app/services/user.service';
 import { RegistrationModal } from 'src/app/user/registration-modal';
 import { Cookie } from 'src/app/utils/Cookie';
 import { SVContext } from 'src/app/utils/SVContext';
+import { SVProperties } from 'src/app/utils/SVProperties';
 
 @Component({
     selector: 'system-config',
@@ -53,6 +55,11 @@ export class SystemConfigurationComponent implements OnInit {
 
     testEmailConfigLoading: boolean;
 
+    /* Home content */
+    homeContent: string;
+    private homeContentPristine: string;
+    safeHomeContent: SafeHtml;
+
     /* Other */
     disableContributions: boolean;
 
@@ -61,8 +68,8 @@ export class SystemConfigurationComponent implements OnInit {
 
 
     constructor(private adminService: AdministrationServices, private svService: ShowVocServices, private settingsService: SettingsServices,
-        private usersService: UserServices, private basicModals: BasicModalsServices, private modalService: NgbModal,
-        private translateService: TranslateService, private changeDetectorRef: ChangeDetectorRef) { }
+        private usersService: UserServices, private svProp: SVProperties, private basicModals: BasicModalsServices, private modalService: NgbModal,
+        private translateService: TranslateService, private changeDetectorRef: ChangeDetectorRef, private sanitizer: DomSanitizer) { }
 
     ngOnInit() {
         this.currentUser = SVContext.getLoggedUser();
@@ -79,6 +86,7 @@ export class SystemConfigurationComponent implements OnInit {
                 this.initOtherConfig(settings);
             }
         );
+        this.initHomeContent(); //already initialized as system startup setting
     }
 
 
@@ -377,6 +385,41 @@ export class SystemConfigurationComponent implements OnInit {
         }
         return false;
     }
+
+    /* ============================
+     * Home content
+     * ============================ */
+
+    private initHomeContent() {
+        this.homeContent = SVContext.getSystemSettings().homeContent;
+        this.homeContentPristine = this.homeContent;
+        if (this.homeContent != null) {
+            this.previewHomeContent();
+        }
+    }
+
+    previewHomeContent() {
+        this.safeHomeContent = null;
+        if (this.homeContent) {
+            this.safeHomeContent = this.sanitizer.bypassSecurityTrustHtml(this.homeContent);
+        }
+    }
+
+    updateHomeContent() {
+        if (this.homeContent.trim() == "") {
+            this.homeContent = null;
+        }
+        this.svProp.setHomeContent(this.homeContent).subscribe(
+            () => {
+                this.homeContentPristine = this.homeContent;
+            }
+        );
+    }
+
+    isHomeContentChanged(): boolean {
+        return this.homeContent != this.homeContentPristine;
+    }
+
 
     /* ============================
      * Others

@@ -1,6 +1,6 @@
 <div class="vbox">
 
-	<div class="container mt-3" style="flex: 1;">
+	<div class="container mt-3 vbox">
 		<div class="jumbotron">
 			<ng-container *ngIf="instanceName">
 				<div class="d-flex align-items-center">
@@ -41,6 +41,11 @@
 					<a class="btn btn-info" [routerLink]="['/contribution']" queryParamsHandling="merge">{{'HOME.WELCOME_WO_INST_NAME.CONTRIBUTE_TO'|translate}}</a>
 				</ng-container>
 			</ng-container>
+		</div>
+
+		<div class="d-flex flex-column overflow-auto">
+			<div *ngIf="safeCustomContentFromPref" [innerHTML]="safeCustomContentFromPref"></div>
+			<div *ngIf="safeCustomContentFromFile" [innerHTML]="safeCustomContentFromFile"></div>
 		</div>
 	</div>
 

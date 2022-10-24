@@ -327,6 +327,25 @@
 
         <div class="card mb-2">
             <div class="card-header">
+                <label>{{'ADMINISTRATION.SYSTEM.HOME_PAGE.HOME_CONTENT'|translate}}:</label>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info mb-2">
+                    {{'ADMINISTRATION.SYSTEM.HOME_PAGE.HOME_CONTENT_INFO'|translate}}
+                </div>
+                <div class="hbox">
+                    <html-editor [(ngModel)]="homeContent"></html-editor>
+                    <div class="ml-2" style="flex: 1; border: 1px solid #ddd; border-radius: 4px; margin-left: 4px;" [innerHTML]="safeHomeContent"></div>
+                </div>
+            </div>
+            <div class="card-footer" style="text-align: right;">
+                <button class="btn btn-info btn-sm" (click)="previewHomeContent()">{{'ADMINISTRATION.SYSTEM.HOME_PAGE.PREVIEW'|translate}}</button>
+                <button type="submit" class="btn btn-light btn-sm ml-2" (click)="updateHomeContent()" [disabled]="!isHomeContentChanged()">{{'COMMONS.ACTIONS.SUBMIT'|translate}}</button>
+            </div>
+        </div>
+
+        <div class="card mb-2">
+            <div class="card-header">
                 <label>{{'ADMINISTRATION.SYSTEM.OTHER.OTHER_SETTINGS'|translate}}:</label>
             </div>
             <div class="card-body">
