@@ -5,7 +5,8 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { CreateDownloadModal } from "src/app/administration/projects-manager/create-download-modal";
 import { LoadDownloadModal } from "src/app/administration/projects-manager/load-download-modal";
-import { ModalOptions } from "src/app/modal-dialogs/Modals";
+import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
+import { ModalOptions, ModalType } from "src/app/modal-dialogs/Modals";
 import { SharedModalsServices } from "src/app/modal-dialogs/shared-modals/shared-modal.service";
 import { Languages } from "src/app/models/LanguagesCountries";
 import { DatasetMetadata, ProjectDatasetMapping } from "src/app/models/Metadata";
@@ -49,7 +50,7 @@ export class MetadataComponent implements OnInit {
 
 
     constructor(private metadataRegistryService: MetadataRegistryServices, private downloadService: DownloadServices,
-        private storageService: StorageServices, private projectService: ProjectsServices,
+        private storageService: StorageServices, private projectService: ProjectsServices, private basicModals: BasicModalsServices,
         private sharedModals: SharedModalsServices, private modalService: NgbModal, private translate: TranslateService) { }
 
     ngOnInit() {
@@ -229,10 +230,15 @@ export class MetadataComponent implements OnInit {
     }
 
     deleteDistribution(download: DownloadInfo) {
-        this.downloadService.removeDownload(download.fileName).subscribe(
+        this.basicModals.confirm({ key: "COMMONS.STATUS.WARNING" }, { key: "MESSAGES.DELETE_DATASET_CONFIRM_WARN" }, ModalType.warning).then(
             () => {
-                this.distributions.splice(this.distributions.indexOf(download), 1);
-            }
+                this.downloadService.removeDownload(download.fileName).subscribe(
+                    () => {
+                        this.distributions.splice(this.distributions.indexOf(download), 1);
+                    }
+                );
+            },
+            () => {}
         );
     }
 
@@ -300,10 +306,15 @@ export class MetadataComponent implements OnInit {
     }
 
     deleteFile(file: FileInfo) {
-        this.storageService.deleteFile(file.name).subscribe(
+        this.basicModals.confirm({ key: "COMMONS.STATUS.WARNING" }, { key: "MESSAGES.DELETE_DATASET_CONFIRM_WARN" }, ModalType.warning).then(
             () => {
-                this.files.splice(this.files.indexOf(file), 1);
-            }
+                this.storageService.deleteFile(this.PROJ_DOWNLOAD_DIR_PATH + "/" + file.name).subscribe(
+                    () => {
+                        this.files.splice(this.files.indexOf(file), 1);
+                    }
+                );
+            },
+            () => {}
         );
     }
 
