@@ -239,6 +239,7 @@
         },
         "TEMPLATE": "Template",
         "TITLE": "Title",
+        "TOOLS": "Tools",
         "TYPE": "Type",
         "VALUE": "Value"
     },
