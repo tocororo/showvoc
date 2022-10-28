@@ -159,7 +159,7 @@ export class StorageManagerModal {
     }
 
     uploadFile() {
-        this.basicModals.selectFile("Upload file").then(
+        this.basicModals.selectFile({ key: "COMMONS.ACTIONS.UPLOAD_FILE" }).then(
             (file: File) => {
                 let newFilePath = this.path;
                 if (!newFilePath.endsWith("/")) {

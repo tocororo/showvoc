@@ -6,7 +6,8 @@ import { PluginSpecification, Settings } from '../models/Plugins';
 import { AccessLevel, BackendTypesEnum, Project, RepositoryAccess, RepositorySummary } from '../models/Project';
 import { IRI, Literal, RDFResourceRolesEnum } from '../models/Resources';
 import { Multimap, Pair } from '../models/Shared';
-import { HttpManager } from '../utils/HttpManager';
+import { ShowVocConstants } from '../models/ShowVoc';
+import { HttpManager, STRequestParams } from '../utils/HttpManager';
 import { SVContext } from '../utils/SVContext';
 
 @Injectable()
@@ -152,7 +153,7 @@ export class ProjectsServices {
         preloadedDataFileName?: string, preloadedDataFormat?: string, transitiveImportAllowance?: TransitiveImportMethodAllowance,
         openAtStartup?: boolean, universalAccess?: AccessLevel, label?: Literal) {
 
-        let params: any = {
+        let params: STRequestParams = {
             consumer: "SYSTEM",
             projectName: projectName,
             baseURI: baseURI,
@@ -181,7 +182,8 @@ export class ProjectsServices {
             transitiveImportAllowance: transitiveImportAllowance,
             openAtStartup: openAtStartup,
             universalAccess: universalAccess,
-            label: label
+            label: label,
+            appCtx: ShowVocConstants.appCtx
         };
         return this.httpMgr.doPost(this.serviceName, "createProject", params);
     }

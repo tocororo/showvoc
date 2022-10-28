@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { from, Observable, of } from "rxjs";
-import { catchError, map, mergeMap } from "rxjs/operators";
+import { catchError, finalize, map, mergeMap } from "rxjs/operators";
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
 import { ModalType } from "src/app/modal-dialogs/Modals";
 import { Project } from 'src/app/models/Project';
@@ -80,15 +80,20 @@ export class LoadDownloadModal {
     ok() {
         this.loading = true;
         SVContext.setTempProject(this.project);
-        this.createFile(this.file, "proj:/download/" + this.fileName, false).subscribe(
-            (success: boolean) => {
-                if (success) {
-                    this.basicModals.alert({ key: "COMMONS.STATUS.OPERATION_DONE" }, { key: "MESSAGES.FILE_UPLOADED" });
-                    SVContext.removeTempProject();
-                    this.activeModal.close();
+        this.createFile(this.file, "proj:/download/" + this.fileName, false)
+            .pipe(
+                finalize(() => {
+                    this.loading = false;
+                })
+            ).subscribe(
+                (success: boolean) => {
+                    if (success) {
+                        this.basicModals.alert({ key: "COMMONS.STATUS.OPERATION_DONE" }, { key: "MESSAGES.FILE_UPLOADED" });
+                        SVContext.removeTempProject();
+                        this.activeModal.close();
+                    }
                 }
-            }
-        );
+            );
     }
 
     close() {
