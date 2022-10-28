@@ -4,6 +4,9 @@ The full changelog of the platform includes also changes brought to the Semantic
 
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
+# 2.3.1 (dd-mm-202y)
+  * 
+
 # 2.3.0 (28-10-2022)
   * Added possibility to insert custom content into the home page blank section
   * Enabled visualization of ordered collection members in ResourceView
