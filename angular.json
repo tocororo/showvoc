@@ -134,5 +134,8 @@
       }
     }
   },
-  "defaultProject": "showvoc"
+  "defaultProject": "showvoc",
+  "cli": {
+    "analytics": false
+  }
 }

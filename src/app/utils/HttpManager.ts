@@ -9,8 +9,8 @@ import { Project } from '../models/Project';
 import { Properties } from '../models/Properties';
 import { Value } from '../models/Resources';
 import { Cookie } from './Cookie';
-import { SVContext, ProjectContext } from './SVContext';
 import { STResponseUtils } from './STServicesUtils';
+import { ProjectContext, SVContext } from './SVContext';
 
 @Injectable()
 export class HttpManager {
@@ -442,7 +442,8 @@ export class HttpManager {
 
         let st_path: string = window['st_path']; //url path (optional)
 
-        let serverhost = protocol + "//" + host + ":" + port;
+        // let serverhost = protocol + "//" + host + ":" + port;
+        let serverhost = protocol + "//" + host;
         if (st_path != null) {
             serverhost += "/" + st_path;
         }
