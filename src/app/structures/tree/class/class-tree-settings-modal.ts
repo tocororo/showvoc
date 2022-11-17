@@ -76,7 +76,8 @@ export class ClassTreeSettingsModal implements OnInit {
         this.browsingModals.browseClassTree({ key: "DATA.ACTIONS.SELECT_ROOT_CLASS" }, [RDFS.resource]).then(
             (cls: AnnotatedValue<IRI>) => {
                 let model: string = SVContext.getWorkingProject().getModelType();
-                if ((model == RDFS.uri && !cls.getValue().equals(RDFS.resource)) || //root different from rdfs:Resource in RDFS model
+                if (
+                    (model == RDFS.uri && !cls.getValue().equals(RDFS.resource)) || //root different from rdfs:Resource in RDFS model
                     (!cls.getValue().equals(RDFS.resource) && !cls.getValue().equals(OWL.thing)) //root different from rdfs:Resource and owl:Thing in other models
                 ) {
                     this.basicModals.confirmCheckCookie({ key: "COMMONS.STATUS.WARNING" }, { key: "MESSAGES.CUSTOM_ROOT_WARN" }, Cookie.WARNING_CUSTOM_ROOT, ModalType.warning).then(
@@ -85,6 +86,8 @@ export class ClassTreeSettingsModal implements OnInit {
                         },
                         () => { }
                     );
+                } else {
+                    this.rootClass = cls;
                 }
             },
             () => { }
@@ -222,6 +225,7 @@ export class ClassTreeSettingsModal implements OnInit {
             this.svProp.setClassTreeFilter({ map: filterMap, enabled: this.filterEnabled });
         }
 
+        console.log(this.pristinePref.rootClassUri, this.rootClass.getValue().getIRI());
         if (this.pristinePref.rootClassUri != this.rootClass.getValue().getIRI()) {
             this.svProp.setClassTreeRoot(this.rootClass.getValue().getIRI());
         }
