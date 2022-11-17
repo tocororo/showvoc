@@ -558,6 +558,10 @@
                 "di"
             ]
         },
+        "MESSAGES": {
+            "TOO_MUCH_LINKS_GRAPH_WARN_CONFIRM": "Il grafo che stai cercando di mostrare ha una gran quantità di relazioni ({{relCount}}). Si potrebbe verificare un calo delle prestazioni all'aumentare degli elementi nel grafo. Vuoi mostrare comunque il grafo?\n\nAlternatively it is available an 'incremental' explorable model-oriented graph (from the Class-tree: select a resource, then from the contextual menu 'Show model graph rooted on the selected node').",
+            "TOO_MUCH_NODES_GRAPH_WARN_CONFIRM": "Il grafo che stai cercando di mostrare ha una gran quantità di nodi ({{nodesCount}}). Si potrebbe verificare un calo delle prestazioni all'aumentare degli elementi nel grafo. Vuoi mostrare comunque il grafo?"
+        },
         "PARTITIONS_FILTER": {
             "ALL_PARTITIONS_HIDDEN_WARN": "Se tutte le partizioni sono nascoste, l'espansione di un nodo non produrrà alcun effetto",
             "CHECK_PARTITION_FOR_ALL_TYPES": "Rendi visibile la partizione selezionata per tutti i tipi",

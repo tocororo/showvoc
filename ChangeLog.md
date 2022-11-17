@@ -6,6 +6,7 @@ https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
 # 2.3.1 (dd-mm-202y)
   * Fixed a bug that prevented to customize the class tree root
+  * Added missing translations
 
 # 2.3.0 (28-10-2022)
   * Added possibility to insert custom content into the home page blank section

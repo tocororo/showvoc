@@ -530,6 +530,10 @@
                 "de"
             ]
         },
+        "MESSAGES": {
+            "TOO_MUCH_LINKS_GRAPH_WARN_CONFIRM": "El grafo que está intentando mostrar tiene una gran cantidad de relaciones ({{relCount}}). Se podría experimentar una disminución del rendimiento con una cantidad creciente de elementos visuales en el grafo. ¿Desea mostrar el grafo de todos modos? \n\nAlternativamente, está disponible un grafo orientado al modelo explorable 'incremental' (desde el árbol de clases: seleccione un recurso, luego desde el menú contextual 'Mostrar grafo de modelo arraigado en el nodo seleccionado'). ",
+            "TOO_MUCH_NODES_GRAPH_WARN_CONFIRM": "El grafo que está intentando mostrar tiene una gran cantidad de nodos ({{nodesCount}}). Se podría experimentar una disminución del rendimiento con una cantidad creciente de elementos visuales en el grafo. ¿Desea mostrar el grafo de todos modos? "
+        },
         "PARTITIONS_FILTER": {
             "ALL_PARTITIONS_HIDDEN_WARN": "Si todas las particiones están ocultas, expandir un nodo no tendrá ningún efecto",
             "CHECK_PARTITION_FOR_ALL_TYPES": "Hacer que la partición seleccionada sea visible para todos los tipos",

@@ -53,7 +53,7 @@ export class UmlGraphComponent extends AbstractGraph {
                 this.updateForces(f);
                 let graph = this.convertModelToGraph(graphModel);
                 if (graph.nodes.length > this.nodeLimit) {
-                    this.basicModals.confirm({ key: "COMMONS.STATUS.WARNING" }, { key: "MESSAGES.TOO_MUCH_NODES_GRAPH_WARN_CONFIRM", params: { nodesCount: graph.nodes.length } },
+                    this.basicModals.confirm({ key: "COMMONS.STATUS.WARNING" }, { key: "GRAPHS.MESSAGES.TOO_MUCH_NODES_GRAPH_WARN_CONFIRM", params: { nodesCount: graph.nodes.length } },
                         ModalType.warning
                     ).then(
                         confirm => {
