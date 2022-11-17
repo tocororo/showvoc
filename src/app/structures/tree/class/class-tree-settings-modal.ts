@@ -225,7 +225,6 @@ export class ClassTreeSettingsModal implements OnInit {
             this.svProp.setClassTreeFilter({ map: filterMap, enabled: this.filterEnabled });
         }
 
-        console.log(this.pristinePref.rootClassUri, this.rootClass.getValue().getIRI());
         if (this.pristinePref.rootClassUri != this.rootClass.getValue().getIRI()) {
             this.svProp.setClassTreeRoot(this.rootClass.getValue().getIRI());
         }

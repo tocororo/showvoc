@@ -5,6 +5,7 @@ The full changelog of the platform includes also changes brought to the Semantic
 https://bitbucket.org/art-uniroma2/semantic-turkey/src/master/ChangeLog.txt
 
 # 2.3.1 (dd-mm-202y)
+  * Fixed bug that prevented to access Data page and to focus resources through direct links
   * Fixed a bug that prevented to customize the class tree root
   * Added missing translations
 
