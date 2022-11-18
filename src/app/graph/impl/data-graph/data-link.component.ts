@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, Input, SimpleChanges } from '@angular/core';
 import { RDFResourceRolesEnum } from 'src/app/models/Resources';
-import { ResourceUtils } from 'src/app/utils/ResourceUtils';
 import { AbstractLinkComponent } from '../../abstract-link';
 import { DataLink } from '../../model/DataLink';
 
@@ -23,7 +22,9 @@ export class DataLinkComponent extends AbstractLinkComponent {
     }
 
     getLinkShow() {
-        return ResourceUtils.getRendering(this.link.res, this.rendering);
+        //see https://art-uniroma2.atlassian.net/browse/ST-2265
+        // return ResourceUtils.getRendering(this.link.res, this.rendering);
+        return this.link.res.getShow();
     }
 
     initLinkStyle() {
