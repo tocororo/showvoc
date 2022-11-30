@@ -21,6 +21,7 @@ import { HomeComponent } from './home/home.component';
 import { MetadataRegistryComponent } from './metadata-registry/metadata-registry.component';
 import { NotFoundComponent } from './not-found.component';
 import { SearchComponent } from './search/search.component';
+import { TranslationComponent } from './translation/translation.component';
 import { LoginComponent } from './user/login.component';
 import { RegistrationComponent } from './user/registration.component';
 import { ResetPasswordComponent } from './user/reset-password.component';
@@ -63,6 +64,7 @@ const routes: Routes = [
             ]
         },
         { path: 'search', component: SearchComponent, canActivate: [VisitorAuthGuard], data: { reuseComponent: true } },
+        { path: 'translation', component: TranslationComponent, canActivate: [VisitorAuthGuard], data: { reuseComponent: true } },
         { path: 'alignments', component: AlignmentsComponent, canActivate: [VisitorAuthGuard] },
         { path: '**', component: NotFoundComponent },
     ]}

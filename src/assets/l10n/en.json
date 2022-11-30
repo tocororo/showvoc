@@ -215,6 +215,7 @@
         "MANDATORY_FIELD": "Mandatory field",
         "NAME": "Name",
         "OPTIONAL_FIELD": "Optional field",
+        "OPTIONS": "Options",
         "PAGING": {
             "NEXT_PAGE": "Next page",
             "PAGE_OF_TOT": "of",
@@ -779,7 +780,6 @@
         "YOU_WILL_RECIEVE_EMAIL_FOR_ACCESS_VB": "You will soon recieve an email containing details for connecting to the VocBench."
     },
     "METADATA": {
-        "DATASET_CATALOG": "Datensatzkatalog",
         "DISTRIBUTIONS": {
             "COMPRESS": "Compress (.zip)",
             "CREATION_DATE": "Creation date",
@@ -952,6 +952,7 @@
             "LANG_TAG": "Language tag"
         },
         "FILTERS": "Filters",
+        "GLOBAL_SEARCH": "Global search",
         "INDEX_NOT_FOUND": "Index not found",
         "MESSAGES": {
             "MISSING_VARIABLE_BINDING": "Missing variable binding '{{binding}}'",
@@ -1036,6 +1037,14 @@
             "RESULTS_COUNT": "Results count",
             "SAVE_RESULTS_AS": "Save results as"
         }
+    },
+    "TRANSLATION": {
+        "CASE_SENSITIVE": "Case sensitive",
+        "INCLUDE_CLOSED_DATASETS": "Include closed datasets",
+        "SOURCE_LANGS": "Source languages",
+        "TARGET_LANGS": "Target languages",
+        "TRANSLATE": "Translate",
+        "TRANSLATION": "Translation"
     },
     "USER": {
         "ATTR": {

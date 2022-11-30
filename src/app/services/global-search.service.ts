@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IRI, Literal } from '../models/Resources';
-import { GlobalSearchResult, SearchResultDetails } from '../models/Search';
+import { GlobalSearchResult, SearchResultDetails, TranslationResult } from '../models/Search';
 import { HttpManager, STRequestOptions } from "../utils/HttpManager";
 
 @Injectable()
@@ -61,6 +61,39 @@ export class GlobalSearchServices {
                 return parsedSearchResults;
             })
         );
+    }
+
+    translation(searchString: string, searchLangs: string[], transLangs: string[], caseSensitive?: boolean, debug?: boolean): Observable<TranslationResult[]> {
+        let params: any = {
+            searchString: searchString,
+            searchLangs: searchLangs,
+            transLangs: transLangs,
+            caseSensitive: caseSensitive,
+            debug: debug,
+        };
+        return this.httpMgr.doGet(this.serviceName, "translation", params);
+        // .pipe(
+        //     map(results => {
+        //         let parsedResults: TranslationResult[] = [];
+        //         results.forEach((element: any) => {
+        //             let r: TranslationResult = {
+        //                 resource: new IRI(element.resource),
+        //                 resourceLocalName: element.resourceLocalName,
+        //                 resourceType: new IRI(element.resourceType),
+        //                 role: element.role,
+        //                 repository: element.repository,
+        //                 // descriptions: this.parseTranslationDetails(element.descriptions),
+        //                 // matches: this.parseTranslationDetails(element.matches),
+        //                 // translations: this.parseTranslationDetails(element.translations),
+        //                 descriptions: element.descriptions,
+        //                 matches: element.matches,
+        //                 translations: element.translations,
+        //             };
+        //             parsedResults.push(r);
+        //         });
+        //         return parsedResults;
+        //     })
+        // );
     }
 
 }

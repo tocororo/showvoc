@@ -23,6 +23,7 @@ import { NotFoundComponent } from './not-found.component';
 import { PreferencesModule } from './preferences/preferences.module';
 import { SearchModule } from './search/search.module';
 import { STServicesModule } from './services/st-services.module';
+import { TranslationModule } from './translation/translation.module';
 import { UserModule } from './user/user.module';
 import { GUARD_PROVIDERS } from './utils/CanActivateGuards';
 import { DatatypeValidator } from './utils/DatatypeValidator';
@@ -63,6 +64,7 @@ let HttpLoaderFactory = (http: HttpClient) => {
         NgbModule,
         PreferencesModule,
         SearchModule,
+        TranslationModule,
         STServicesModule,
         TranslateModule.forRoot({
             defaultLanguage: 'en',

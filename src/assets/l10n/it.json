@@ -215,6 +215,7 @@
         "MANDATORY_FIELD": "Campo obbligatorio",
         "NAME": "Nome",
         "OPTIONAL_FIELD": "Campo opzionale",
+        "OPTIONS": "Opzioni",
         "PAGING": {
             "NEXT_PAGE": "Pagina successiva",
             "PAGE_OF_TOT": "di",
@@ -833,16 +834,6 @@
                 "VERSION_INFO": "Info versione",
                 "VERSION_NOTES": "Note versione"
             },
-            "LEXICALIZATION_SET": {
-                "AVG_OF_LEXICALIZATIONS": "Q.tà media di lessicalizzazioni",
-                "EMBEDDED_LEXICALIZATION_SETS": "Lexicalization Sets embedded",
-                "LEXICALIZATIONS": "Lessicalizzazioni",
-                "LEXICALIZATION_SET": "Lexicalization Set",
-                "LEXICAL_ENTRIES": "Lexical Entries",
-                "LEXICON_DATASET": "Lexicon Dataset",
-                "PERCENTAGE": "Percentuale",
-                "REFERENCES": "Riferimenti"
-            },
             "METADATA_REGISTRY": "Registro Metadati"
         },
         "STATS": {
@@ -961,6 +952,7 @@
             "LANG_TAG": "Tag lingua"
         },
         "FILTERS": "Filtri",
+        "GLOBAL_SEARCH": "Ricerca globale",
         "INDEX_NOT_FOUND": "Indice non trovato",
         "MESSAGES": {
             "MISSING_VARIABLE_BINDING": "Binding variabile '{{binding}}' mancante",
@@ -1045,6 +1037,14 @@
             "RESULTS_COUNT": "Conteggio risultati",
             "SAVE_RESULTS_AS": "Salva risultati come"
         }
+    },
+    "TRANSLATION": {
+        "CASE_SENSITIVE": "Case sensitive",
+        "INCLUDE_CLOSED_DATASETS": "Includi dataset chiusi",
+        "SOURCE_LANGS": "Lingue sorgente",
+        "TARGET_LANGS": "Lingue destinazione",
+        "TRANSLATE": "Traduci",
+        "TRANSLATION": "Traduzione"
     },
     "USER": {
         "ATTR": {
