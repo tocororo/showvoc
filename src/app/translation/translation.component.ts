@@ -91,6 +91,11 @@ export class TranslationComponent {
                     } else {
                         this.groupedResults[r.repository.id] = [r];
                     }
+                    /* 
+                    post processing of response content:
+                    - no need to show empty rows for those languages that don't have translations
+                    - sort translation values with this order: skos:prefLabel, skos:altLabel, other predicates, skos:hiddenLabel
+                    */
                     r.translations = r.translations.filter(t => t.values.some(v => v.type == "lexicalization")); //filter out from translations those elements which have no values
                 });
 

@@ -6,11 +6,13 @@ import { RouterModule } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { WidgetModule } from '../widget/widget.module';
+import { TranslationResultComponent } from './translation-result.component';
 import { TranslationComponent } from './translation.component';
 
 @NgModule({
     declarations: [
-        TranslationComponent
+        TranslationComponent,
+        TranslationResultComponent
     ],
     imports: [
         CommonModule,

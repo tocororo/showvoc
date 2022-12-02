@@ -111,33 +111,7 @@
                                 </a>
                             </h5>
                             <div *ngFor="let result of groupedResults[repoId]; let last=last" [ngClass]="{ 'border-bottom mb-3 pb-3': !last }">
-                                <div style="font-size: 1rem">
-                                    <a [routerLink]="" (click)="goToResource(result)" class="text-success" [ngClass]="{ disabled: !isResultAccessible(result) }">
-                                        <ng-container *ngFor="let m of result.matches; let lastMatch=last">
-                                            <ng-container *ngFor="let v of m.values">
-                                                {{v.value}} ({{m.lang}})
-                                                <ng-container *ngIf="!lastMatch">, </ng-container>
-                                            </ng-container>
-                                        </ng-container>
-                                    </a>
-                                </div>
-                                <div style="font-size: .875rem">
-                                    <a [routerLink]="" (click)="goToResource(result)" class="text-secondary" [ngClass]="{ disabled: !isResultAccessible(result) }">{{result.resource}}</a>
-                                </div>
-                                <div class="mt-2">
-                                    <div *ngFor="let t of result.translations" class="d-flex py-3">
-                                        <div class="col-1 d-flex align-items-center justify-content-between">
-                                            <b>{{t.lang}}</b>
-                                            <i class="fas fa-arrow-right"></i>
-                                        </div>
-                                        <div class="col-11">
-                                            <div *ngFor="let v of t.values; let lastValue=last" [ngClass]="{'pb-1': !lastValue}">
-                                                <span *ngIf="v.type == 'lexicalization'" style="order: 1;">{{v.value}}</span>
-                                                <span *ngIf="v.type == 'note'" class="text-muted" style="font-size: .875rem; order: 2;">{{v.value}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <translation-result [result]="result" [accessible]="isResultAccessible(result)"></translation-result>
                             </div>
                         </div>
                     </div>
