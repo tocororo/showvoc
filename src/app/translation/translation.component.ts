@@ -91,7 +91,7 @@ export class TranslationComponent {
                     } else {
                         this.groupedResults[r.repository.id] = [r];
                     }
-                    r.translations = r.translations.filter(t => t.values.length > 0); //filter out from translations those elements which have no values
+                    r.translations = r.translations.filter(t => t.values.some(v => v.type == "lexicalization")); //filter out from translations those elements which have no values
                 });
 
                 this.filterSearchResults();
