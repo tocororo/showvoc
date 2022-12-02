@@ -16,7 +16,7 @@
             <label>{{'TRANSLATION.SOURCE_LANGS'|translate}}</label>
             <div class="d-flex align-items-center">
                 <div class="hbox tile-group overflow-auto flex-nowrap" style="height: calc(3em + 2px);">
-                    <div *ngFor="let l of sourceLangs; let indexValue = index;" class="d-flex align-items-center">
+                    <div *ngFor="let l of sourceLangs; let index = index;" class="d-flex align-items-center">
                         <span class="tile">
                             <span>({{l.tag}}) {{l.name}}</span>
                             <span class="far fa-times-circle ml-1" (click)="removeLang(sourceLangs, index)"
@@ -41,7 +41,7 @@
             <label>{{'TRANSLATION.TARGET_LANGS'|translate}}</label>
             <div class="d-flex align-items-center">
                 <div class="hbox tile-group overflow-auto flex-nowrap" style="height: calc(3em + 2px);">
-                    <div *ngFor="let l of targetLangs; let indexValue = index;" class="d-flex align-items-center">
+                    <div *ngFor="let l of targetLangs; let index = index;" class="d-flex align-items-center">
                         <span class="tile">
                             <span>({{l.tag}}) {{l.name}}</span>
                             <span class="far fa-times-circle ml-1" (click)="removeLang(targetLangs, index)"
@@ -125,22 +125,18 @@
                                     <a [routerLink]="" (click)="goToResource(result)" class="text-secondary" [ngClass]="{ disabled: !isResultAccessible(result) }">{{result.resource}}</a>
                                 </div>
                                 <div class="mt-2">
-                                    <ng-container *ngFor="let t of result.translations">
-                                        <div *ngIf="t.values.length > 0">
-                                            <div class="d-flex my-1">
-                                                <div class="col-1 d-flex align-items-center justify-content-between">
-                                                    <b>{{t.lang}}</b>
-                                                    <i class="fas fa-arrow-right"></i>
-                                                </div>
-                                                <div class="col-11">
-                                                    <div *ngFor="let v of t.values">
-                                                        <span>{{v.value}}</span>
-                                                        <span class="badge ml-3" style="opacity: .8;" [ngClass]="{ 'badge-warning': v.type == 'lexicalization', 'badge-primary': v.type == 'note'}" [title]="v.predicate">{{v.type}}</span>
-                                                    </div>
-                                                </div>
+                                    <div *ngFor="let t of result.translations" class="d-flex py-3">
+                                        <div class="col-1 d-flex align-items-center justify-content-between">
+                                            <b>{{t.lang}}</b>
+                                            <i class="fas fa-arrow-right"></i>
+                                        </div>
+                                        <div class="col-11">
+                                            <div *ngFor="let v of t.values; let lastValue=last" [ngClass]="{'pb-1': !lastValue}">
+                                                <span *ngIf="v.type == 'lexicalization'" style="order: 1;">{{v.value}}</span>
+                                                <span *ngIf="v.type == 'note'" class="text-muted" style="font-size: .875rem; order: 2;">{{v.value}}</span>
                                             </div>
                                         </div>
-                                    </ng-container>
+                                    </div>
                                 </div>
                             </div>
                         </div>
