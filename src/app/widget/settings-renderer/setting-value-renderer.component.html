@@ -20,7 +20,7 @@
     </ng-container>
     -->
 
-    <lang-string-editor *ngSwitchCase="'Literal'" [(ngModel)]="value" (ngModelChange)="onModelChange()" [disabled]="disabled"></lang-string-editor>
+    <lang-string-editor *ngSwitchCase="'Literal'" [(ngModel)]="value" (ngModelChange)="onModelChange()" [disabled]="disabled" [allowNoLang]="false"></lang-string-editor>
 
     <nested-settings-renderer *ngSwitchCase="'Properties'" [(ngModel)]="value" [schema]="type.schema" (ngModelChange)="updatePropertiesValue($event)" [disabled]="disabled">
     </nested-settings-renderer>

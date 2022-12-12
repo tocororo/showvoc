@@ -16,6 +16,7 @@ export class LangStringEditorComponent implements ControlValueAccessor, OnInit {
 
     @Input() disabled: boolean = false;
     @Input() lang: Language; //language (can be initially set)
+    @Input() allowNoLang: boolean = true;
     @Input() size: string;
 
     inputCls: string = "";
@@ -36,6 +37,9 @@ export class LangStringEditorComponent implements ControlValueAccessor, OnInit {
     initLang() {
         if (this.lang == null) {
             this.lang = Languages.NO_LANG;
+            if (!this.allowNoLang) {
+                this.lang = Languages.getLanguageFromTag(Languages.priorityLangs[0]);
+            }
         }
     }
 
