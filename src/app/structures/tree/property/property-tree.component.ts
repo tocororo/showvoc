@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, QueryList, ViewChildren } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { BasicModalsServices } from 'src/app/modal-dialogs/basic-modals/basic-modals.service';
@@ -6,8 +6,8 @@ import { SharedModalsServices } from 'src/app/modal-dialogs/shared-modals/shared
 import { AnnotatedValue, IRI, RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { PropertiesServices } from 'src/app/services/properties.service';
 import { SearchServices } from 'src/app/services/search.service';
-import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
+import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { AbstractTree } from '../abstract-tree';
 import { PropertyTreeNodeComponent } from './property-tree-node.component';
 
@@ -34,12 +34,12 @@ export class PropertyTreeComponent extends AbstractTree {
     /**
      * Called when @Input resource changes, reinitialize the tree
      */
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['resource']) {
-            this.init();
-        }
-    }
-
+    // ngOnChanges(changes: SimpleChanges) {
+    //     if (changes['resource']) {
+    //         this.init();
+    //     }
+    // }
+    
     initImpl() {
         //sort by show if rendering is active, uri otherwise
         let orderAttribute: SortAttribute = this.rendering ? SortAttribute.show : SortAttribute.value;

@@ -9,6 +9,7 @@ import { ConceptTreeVisualizationMode } from 'src/app/models/Properties';
 import { AnnotatedValue, IRI, RDFResourceRolesEnum, ResAttribute } from 'src/app/models/Resources';
 import { ResourcesServices } from 'src/app/services/resources.service';
 import { SkosServices } from 'src/app/services/skos.service';
+import { ResourceUtils, SortAttribute } from 'src/app/utils/ResourceUtils';
 import { SVContext } from 'src/app/utils/SVContext';
 import { SVEventHandler } from 'src/app/utils/SVEventHandler';
 import { SVProperties } from 'src/app/utils/SVProperties';
@@ -115,6 +116,7 @@ export class ConceptTreePanelComponent extends AbstractTreePanel {
                 this.selectSearchedResource(results[0]);
             } else {
                 // choose among results
+                ResourceUtils.sortResources(results, this.rendering ? SortAttribute.show : SortAttribute.value);
                 this.sharedModals.selectResource({ key: "SEARCH.SEARCH_RESULTS" }, { key: "MESSAGES.X_SEARCH_RESOURCES_FOUND", params: { results: results.length } }, results, this.rendering).then(
                     (selectedResources: AnnotatedValue<IRI>[]) => {
                         this.openAt(selectedResources[0]);

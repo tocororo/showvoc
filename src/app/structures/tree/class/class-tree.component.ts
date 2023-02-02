@@ -30,7 +30,7 @@ export class ClassTreeComponent extends AbstractTree {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['roots']) {
+        if (changes['roots'] && !changes['roots'].firstChange) {
             this.init();
         }
     }
