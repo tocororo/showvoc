@@ -36,7 +36,7 @@ var st_path;
  * A custom name for the current ShowVoc instance. 
  * If provided, the instance name will be visible in the Home and Datasets page.
  */
-// var showvoc_instance_name = "ShowVoc";
+var showvoc_instance_name = "ShowVoc - Sceiba Vocabularies";
 
 /**
  * A list of l10n supported languages in addition to those already factory provided.
