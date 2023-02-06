@@ -24,3 +24,28 @@ export class TripleForSearch {
     searchString: string;
     mode: SearchMode;
 }
+
+export class TranslationResult {
+    resource: string;
+    resourceLocalName: string;
+    resourceType: string;
+    role: RDFResourceRolesEnum;
+    repository: {
+        id: string;
+        open: boolean;
+    };
+    matches: TranslationDetail[];
+    descriptions: TranslationDetail[];
+    translations: TranslationDetail[];
+}
+
+export class TranslationDetail {
+    lang: string;
+    values: TranslationValue[];
+}
+
+export class TranslationValue {
+    value: string;
+    predicate: string;
+    type: "lexicalization" | "note";
+}

@@ -1,0 +1,41 @@
+<div>
+    <a [routerLink]="" (click)="goToResource(result)" class="text-success" [ngClass]="{ disabled: !accessible }">
+        <ng-container *ngFor="let lex of matchedResLexicalizations; let firstLex=first; let lastLex=last">
+            <ng-container *ngFor="let v of lex.values; let firstValue=first; let lastValue=last">
+                {{v.value}} ({{lex.lang}})<ng-container *ngIf="!(lastLex && lastValue)">,</ng-container>
+            </ng-container>
+        </ng-container>
+    </a>
+</div>
+
+<div style="font-size: .95rem">
+    <ng-container *ngFor="let def of matchedResDefinitions">
+        <ng-container *ngFor="let v of def.values let firstValue=first; let lastValue=last">
+            {{v.value}} ({{def.lang}})<ng-container *ngIf="!(lastLex && lastValue)">,</ng-container>
+        </ng-container>
+    </ng-container>
+</div>
+
+<div style="font-size: .875rem">
+    <a [routerLink]="" (click)="goToResource(result)" class="text-muted" [ngClass]="{ disabled: !accessible }">{{matchedResUri}}</a>
+</div>
+
+
+<div class="mt-2">
+    <div *ngFor="let t of translations" class="d-flex py-3">
+        <div class="col-1 d-flex align-items-center justify-content-between">
+            <b>{{t.lang}}</b>
+            <i class="fas fa-arrow-right"></i>
+        </div>
+        <div class="col-11">
+            <div *ngFor="let l of t.lexicalizations; let lastValue=last" [ngClass]="{'pb-1': !lastValue}">
+                {{l.value}}
+            </div>
+            <div class="text-muted pt-1">
+                <div *ngFor="let d of t.definitions; let lastValue=last" [ngClass]="{'pb-1': !lastValue}" style="font-size: .875rem; order: 2;">
+                    {{d.value}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

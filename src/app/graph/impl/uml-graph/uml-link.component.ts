@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { RDFResourceRolesEnum } from 'src/app/models/Resources';
 import { RDFS } from 'src/app/models/Vocabulary';
-import { GraphUtils, Point } from '../../model/GraphUtils';
+import { ArrowPosition, GraphUtils, Point } from '../../model/GraphUtils';
 import { Link } from '../../model/Link';
 import { UmlLink } from '../../model/UmlLink';
 
@@ -28,7 +28,6 @@ export class UmlLinkComponent {
 
     private initLinkStyle() {
         if (this.link.res != null) {
-
             if (this.link.isReflexive()) {
                 this.withMarker = false;
                 this.black = false;
@@ -41,15 +40,12 @@ export class UmlLinkComponent {
             } else {
                 let role: RDFResourceRolesEnum = this.link.getRole();
                 this.arrowClass = role + "Arrow";
-
             }
-
         }
 
     }
 
     computePathUml() {
-
         let source: Point = new Point(this.link.source.x, this.link.source.y);
         let target: Point = new Point(this.link.target.x, this.link.target.y);
         let isSubClassOf: boolean = false;
@@ -75,7 +71,7 @@ export class UmlLinkComponent {
                 return pi.property.equals(this.link.res) && pi.range.equals(this.link.target.res);
             });
             if (propInfo != null) { //found
-                let endpoint;
+                let endpoint: ArrowPosition;
                 if (propInfo.property.getValue().equals(RDFS.subClassOf)) {
                     isSubClassOf = true;
                 }
@@ -86,10 +82,9 @@ export class UmlLinkComponent {
                 path = path + " M" + (source.x + (propInfo.x - 3)) + " " + (source.y + propInfo.y + 7);
                 source.x += (propInfo.x - 3);
                 source.y = source.y + propInfo.y + 7;
-                //endpoint = GraphUtils.positionArrow(source, target, this.link );
-                endpoint = GraphUtils.positionArrow(source, target, this.link, isSubClassOf);
+                endpoint = GraphUtils.getArrowPosition(source, target, this.link, isSubClassOf);
 
-                if (endpoint.directionRight === true) {
+                if (endpoint.directionRight) {
                     path = path + " M" + endpoint.x + " " + source.y;
                     path = path + " L" + (endpoint.x + ((this.link.target.getNodeWidth() / 2) + 5)) + " " + source.y;
                     source.x = endpoint.x + (this.link.target.getNodeWidth() / 2) + 5;
@@ -98,7 +93,7 @@ export class UmlLinkComponent {
                     path = path + " L" + (target.x + this.link.target.getNodeWidth() / 2) + " " + this.link.target.y;
                     return path;
 
-                } else if (endpoint.directionLeft === true) {
+                } else if (endpoint.directionLeft) {
                     path = path + " M" + endpoint.x + " " + source.y;
                     path = path + " L" + (endpoint.x - ((this.link.target.getNodeWidth() / 2) + 5)) + " " + source.y;
                     source.x = endpoint.x - ((this.link.target.getNodeWidth() / 2) + 5);
@@ -107,7 +102,7 @@ export class UmlLinkComponent {
                     return path;
                 }
 
-                if (endpoint.straightArrow === false || endpoint.isSubClassOf === true) {
+                if (!endpoint.straightArrow || endpoint.isSubClassOf) {
                     path = path + " " + endpoint.x + " " + source.y;
 
                 }

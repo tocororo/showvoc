@@ -64,7 +64,7 @@ export class ModelGraphComponent extends AbstractGraph {
                     let links: Link[] = this.convertModelToLinks(graphModel);
 
                     if (links.length > this.linkLimit) {
-                        this.basicModals.confirm({ key: "COMMONS.STATUS.WARNING" }, { key: "MESSAGES.TOO_MUCH_LINKS_GRAPH_WARN_CONFIRM", params: { relCount: links.length } },
+                        this.basicModals.confirm({ key: "COMMONS.STATUS.WARNING" }, { key: "GRAPHS.MESSAGES.TOO_MUCH_LINKS_GRAPH_WARN_CONFIRM", params: { relCount: links.length } },
                             ModalType.warning
                         ).then(
                             () => {

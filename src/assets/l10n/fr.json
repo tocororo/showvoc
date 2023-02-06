@@ -530,6 +530,10 @@
                 "parmi"
             ]
         },
+        "MESSAGES": {
+            "TOO_MUCH_LINKS_GRAPH_WARN_CONFIRM": "Le graphe que vous essayez d'afficher possède un nombre de relations important ({{relCount}}). Une baisse des performances peut être constatée lorsque le nombre d'éléments visuels du graphe augmente. Voulez-vous afficher le graphe malgré tout ?\n\nUne alternative consiste à utiliser le graphe orienté-modèle explorable de manière 'incrémentale' (à partir de l'arbre des classes : sélectionner une ressource, puis dans le menu contextuel choisir 'Afficher le graphe centré sur le nœud sélectionné').",
+            "TOO_MUCH_NODES_GRAPH_WARN_CONFIRM": "Le graphe que vous essayez d'afficher possède un nombre de nœuds important ({{nodesCount}}). Une baisse des performances peut être constatée lorsque le nombre d'éléments visuels du graphe augmente. Voulez-vous afficher le graphe malgré tout ?"
+        },
         "PARTITIONS_FILTER": {
             "ALL_PARTITIONS_HIDDEN_WARN": "Si toutes les partitions sont masquées l'expansion d'un nœud sera sans effet",
             "CHECK_PARTITION_FOR_ALL_TYPES": "Rendre visible la partition sélectionnée pour tous les types",

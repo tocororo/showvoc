@@ -530,6 +530,10 @@
                 "von"
             ]
         },
+        "MESSAGES": {
+            "TOO_MUCH_LINKS_GRAPH_WARN_CONFIRM": "Der darzustellende Graph weist eine hohe Anzahl von Beziehungen auf ({{relCount}}). Bei einer wachsenden Anzahl visueller Elemente kann ein Leistungsabfall auftreten. Möchten Sie das Diagramm trotzdem anzeigen? \n\nAlternativ ist ein 'inkrementelles' interaktives modellorientiertes Diagramm verfügbar. (Aus dem Klassenbaum: Eine Ressource auswählen und dann aus dem Kontextmenü 'Auf dem ausgewählten Knoten verwurzeltes Modelldiagramm anzeigen').",
+            "TOO_MUCH_NODES_GRAPH_WARN_CONFIRM": "Das Diagramm, das Sie anzeigen möchten, weist eine hohe Anzahl von Knoten auf ({{nodesCount}}). Ein Leistungsabfall kann bei einer wachsenden Anzahl visueller Elemente in der Grafik auftreten. Möchten Sie das Diagramm trotzdem anzeigen?"
+        },
         "PARTITIONS_FILTER": {
             "ALL_PARTITIONS_HIDDEN_WARN": "Wenn alle Partitionen ausgeblendet sind, hat die Erweiterung eines Knotens keine Auswirkung",
             "CHECK_PARTITION_FOR_ALL_TYPES": "Ausgewählte Partition in allen Rollen aktivieren",

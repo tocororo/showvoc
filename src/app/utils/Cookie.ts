@@ -39,6 +39,11 @@ export class Cookie {
     public static SEARCH_FILTERS_ONLY_OPEN_PROJECTS = "search.filters.only_open_projects";
     public static SEARCH_FILTERS_LANGUAGES = "search.filters.languages";
 
+    public static TRANSLATION_FILTERS_ONLY_OPEN_PROJECTS = "translation.filters.only_open_projects";
+    public static TRANSLATION_CASE_SENSITIVE = "translation.case_sensitive";
+    public static TRANSLATION_SOURCE_LANGUAGES = "translation.source_languages";
+    public static TRANSLATION_TARGET_LANGUAGES = "translation.target_languages";
+
     public static METADATA_TYPE_DISTRIBUTIONS_CHART_TYPE = "metadata.type_distributions.chart_type";
     public static METADATA_LEX_SETS_CHART_TYPE = "metadata.lexicalization_sets.chart_type";
 

@@ -18,7 +18,7 @@ export class InstanceListComponent extends AbstractList {
     @Input() cls: AnnotatedValue<IRI>;
     @Output() requireSettings = new EventEmitter<void>(); //requires to the parent panel to open/change settings
 
-    structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.conceptScheme;
+    structRole: RDFResourceRolesEnum = RDFResourceRolesEnum.individual;
 
     private pendingSearchCls: IRI; //class of a searched instance that is waiting to be selected once the list is initialized
 

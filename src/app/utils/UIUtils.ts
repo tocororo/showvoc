@@ -4,10 +4,6 @@ import { OWL, RDF, XmlSchema } from '../models/Vocabulary';
 
 export class UIUtils {
 
-    private static availableFlagLang = ["ar", "be", "bg", "bn", "cs", "da", "de", "el", "en", "en-GB", "en-US", "es", "et", "fa", "fr", "fi", "ga", 
-        "hi", "hr", "hu", "hy", "id", "it", "ja", "ka", "km", "ko", "lv", "nl", "no", "pl", "pt", "ro", "ru", "sk", "sl", "sq", "sr", "sv",
-        "th", "tr", "uk", "vi", "zh"];
-
     private static classImgSrc = "./assets/images/icons/res/class.png";
     private static classImportedImgSrc = "./assets/images/icons/res/class_imported.png";
     private static classDeprecatedImgSrc = "./assets/images/icons/res/class_deprecated.png";
@@ -337,7 +333,7 @@ export class UIUtils {
 
     static getFlagImgSrc(langTag: string): string {
         let imgSrc: string;
-        if (langTag != null && this.availableFlagLang.indexOf(langTag) != -1) {
+        if (langTag != null) {
             imgSrc = "./assets/images/flags/flag_" + langTag + ".png";
         } else {
             imgSrc = "./assets/images/flags/flag_unknown.png";

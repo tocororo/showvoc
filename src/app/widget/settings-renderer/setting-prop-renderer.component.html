@@ -46,7 +46,7 @@
             </ng-container>
              -->
              
-            <lang-string-editor *ngSwitchCase="'Literal'" [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled"></lang-string-editor>
+            <lang-string-editor *ngSwitchCase="'Literal'" [(ngModel)]="prop.value" (ngModelChange)="onModelChanged()" [disabled]="disabled" [allowNoLang]="false"></lang-string-editor>
 
             <setting-set *ngSwitchCase="'List'" [collapsable]="!prop.required" [value]="prop.value" [types]="prop.type.typeArguments" 
                 (valueChanged)="updateSetValue(prop, $event)" [disabled]="disabled"></setting-set>

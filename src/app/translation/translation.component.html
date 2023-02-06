@@ -1,0 +1,126 @@
+<div class="container my-3">
+
+    <h1>{{'TRANSLATION.TRANSLATION'|translate}}</h1>
+
+    <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="searchString" (keydown.enter)="searchKeyHandler()" [placeholder]="'TRANSLATION.TRANSLATE'|translate">
+        <div class="input-group-append">
+            <button class="btn btn-info" (click)="translate()" [disabled]="!searchString || loading">
+                <i class="fas fa-play"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="d-flex mt-2">
+        <div style="width: 47%;">
+            <label>{{'TRANSLATION.SOURCE_LANGS'|translate}}</label>
+            <div class="d-flex align-items-center">
+                <div class="hbox tile-group overflow-auto flex-nowrap" style="height: calc(3em + 2px);">
+                    <div *ngFor="let l of sourceLangs; let index = index;" class="d-flex align-items-center">
+                        <span class="tile">
+                            <span>({{l.tag}}) {{l.name}}</span>
+                            <span class="far fa-times-circle ml-1" (click)="removeLang(sourceLangs, index)"
+                                style="cursor: pointer"
+                                onmouseover="this.classList.remove('far'); this.classList.add('fas')"
+                                onmouseout="this.classList.remove('fas'); this.classList.add('far')">
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <button class="btn btn-light btn-sm ml-1" (click)="editSourceLangs()">
+                    <span class="fas fa-pencil-alt"></span>
+                </button>
+            </div>
+        </div>
+        <div class="d-flex align-items-end mx-auto">
+            <button class="btn btn-light mb-1" (click)="switchLangs()" [disabled]="sourceLangs.length == 0 && targetLangs.length == 0">
+                <i class="fas fa-exchange-alt"></i>
+            </button>
+        </div>
+        <div style="width: 47%;">
+            <label>{{'TRANSLATION.TARGET_LANGS'|translate}}</label>
+            <div class="d-flex align-items-center">
+                <div class="hbox tile-group overflow-auto flex-nowrap" style="height: calc(3em + 2px);">
+                    <div *ngFor="let l of targetLangs; let index = index;" class="d-flex align-items-center">
+                        <span class="tile">
+                            <span>({{l.tag}}) {{l.name}}</span>
+                            <span class="far fa-times-circle ml-1" (click)="removeLang(targetLangs, index)"
+                                style="cursor: pointer"
+                                onmouseover="this.classList.remove('far'); this.classList.add('fas')"
+                                onmouseout="this.classList.remove('fas'); this.classList.add('far')">
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <button class="btn btn-light btn-sm ml-1" (click)="editTargetLangs()">
+                    <span class="fas fa-pencil-alt"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center mt-2">
+        <span class="text-muted">{{'COMMONS.OPTIONS'|translate}}: </span>
+        <div class="custom-control custom-checkbox ml-3">
+            <input type="checkbox" class="custom-control-input" id="datasetCheck" [(ngModel)]="includeClosedDatasets" (ngModelChange)="updateProjectFilter()">
+            <label class="custom-control-label" for="datasetCheck">{{'TRANSLATION.INCLUDE_CLOSED_DATASETS'|translate}}</label>
+        </div>
+        <div class="custom-control custom-checkbox ml-3">
+            <input type="checkbox" class="custom-control-input" id="caseCheck" [(ngModel)]="caseSensitive" (ngModelChange)="onCaseSensitiveChange()">
+            <label class="custom-control-label" for="caseCheck">{{'TRANSLATION.CASE_SENSITIVE'|translate}}</label>
+        </div>
+    </div>
+
+
+
+    <div *ngIf="loading" class="spinner-border text-info"></div>
+
+    <ng-container *ngIf="!loading && groupedResults">
+
+
+        <!-- No results found -->
+        <h5 *ngIf="filteredRepoIds.length == 0" class="text-secondary">{{'SEARCH.NO_RESOURCE_FOUND_FOR'|translate}} '{{lastSearch}}'</h5>
+        <!-- Results found -->
+        <ng-container *ngIf="filteredRepoIds.length != 0">
+            <div class="my-2">
+                <h5 class="text-secondary" style="display: inline;">
+                    {{resultsCount}}
+                    {{'SEARCH.X_MATCHES_IN_N_DATASETS.0'|translate}}
+                    {{filteredRepoIds.length}}
+                    {{'SEARCH.X_MATCHES_IN_N_DATASETS.1'|translate}}
+                </h5>
+                <h6 *ngIf="excludedResultsCount > 0" class="text-secondary ml-1" style="display: inline;">
+                    (
+                    {{'SEARCH.X_HIDDEN_IN_N_DATASETS.0'|translate}}:
+                    {{excludedResultsCount}}
+                    {{'SEARCH.X_HIDDEN_IN_N_DATASETS.1'|translate}}
+                    {{excludedRepoCount}}
+                    {{'SEARCH.X_HIDDEN_IN_N_DATASETS.2'|translate}}.
+                    <button class="btn btn-link btn-xs mb-1" (click)="disableClosedProjectFilter()">{{'SEARCH.DISABLE_FILTER'|translate}}</button>
+                    )
+                </h6>
+            </div>
+
+            <div class="card vbox mt-1">
+                <div class="card-body vbox scrollableContainer">
+                    <div *ngFor="let repoId of filteredRepoIds" class="card mb-2">
+                        <div class="card-body p-2">
+                            <h5 class="mb-2">
+                                <a [routerLink]="" (click)="goToDataset(repoId)" [ngClass]="{ disabled : !isResultAccessible(groupedResults[repoId][0]) }">
+                                    {{repoId}}
+                                </a>
+                            </h5>
+                            <div *ngFor="let result of groupedResults[repoId]; let last=last" [ngClass]="{ 'border-bottom mb-3 pb-3': !last }">
+                                <translation-result [result]="result" [accessible]="isResultAccessible(result)"></translation-result>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+
+    </ng-container>
+
+
+</div>

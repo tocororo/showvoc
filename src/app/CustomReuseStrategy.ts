@@ -220,12 +220,6 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
 
     // Retrieve from the store (just the Handle)
     retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
-        //if project was changed, do not return anything and reset the routes
-        if (SVContext.isResetRoutes()) {
-            SVContext.setResetRoutes(false); //reset projectChanged
-            this.clearAllRoutes();
-            return null;
-        }
         const key = this.getFullPath(route);
         if (!route.routeConfig || !this.storedRoutes[key]) return null;
         return this.storedRoutes[key].handle;
@@ -233,6 +227,12 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
 
     // Should the route be reused?
     shouldReuseRoute(previous: ActivatedRouteSnapshot, next: ActivatedRouteSnapshot): boolean {
+        //if project was changed, do not return anything and reset the routes
+        if (SVContext.isResetRoutes()) {
+            SVContext.setResetRoutes(false); //reset projectChanged
+            this.clearAllRoutes();
+            return false;
+        }
         const isSameConfig = previous.routeConfig === next.routeConfig;
         const shouldReuse = !next.data.noReuse;
         return isSameConfig && shouldReuse;
@@ -262,7 +262,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
                     if (a[prop] != b[prop]) {
                         return false;
                     }
-                } 
+                }
             } else {
                 return false;
             }
@@ -273,7 +273,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     /**
      * Destroys the components of all stored routes (resets the strategy).
      */
-    clearAllRoutes() {
+    private clearAllRoutes() {
         for (const key in this.storedRoutes) {
             this.destroyComponent(this.storedRoutes[key].handle);
         }

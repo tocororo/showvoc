@@ -45,12 +45,16 @@ export class LanguageItemComponent {
         this.eventSubscriptions.forEach(s => s.unsubscribe());
     }
 
-    private initFlagImgSrc() {
+    onImgError() {
+        this.initFlagImgSrc(true);
+    }
+
+    private initFlagImgSrc(error?: boolean) {
         if (this.language.tag == Languages.NO_LANG.tag) {
             this.flagImgSrc = "./assets/images/icons/res/string.png";
         } else {
-            if (this.svProp.getShowFlags()) {
-                this.flagImgSrc = UIUtils.getFlagImgSrc(this.language.tag);
+            if (this.svProp.getShowFlags() && !error) {
+                this.flagImgSrc = "./assets/images/flags/flag_" + this.language.tag + ".png";
             } else {
                 this.flagImgSrc = UIUtils.getFlagImgSrc(null); //null makes return unknown flag => do not show flag
             }
